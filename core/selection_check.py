@@ -1,12 +1,13 @@
 """Does excluding Dolci-contaminated conversations select different texts?
 
-    python selection_check.py
+    python -m core.selection_check
 
 Compares the held-out WildChat sample (data/texts.jsonl, results/scores/base.csv) with the
 contaminated texts of the earlier unfiltered sample (results_v0/: same seed and stream, so its
 clean texts reappear in the held-out sample and the rest are the ones the filter removed).
 Reports means, Cohen's d, Welch's t with a permutation p-value, and a Mann-Whitney p-value
-(normal approximation) for token lengths and base-model plain-prose NLL.
+(normal approximation) for token lengths and base-model plain-prose NLL. The defaults point at
+the frozen pre-capstone runs (results/, results_v0/), which is where this check was done.
 """
 
 import argparse
@@ -16,8 +17,8 @@ import math
 import numpy as np
 import pandas as pd
 
-from check_contamination import norm
-from render import load_jsonl
+from core.check_contamination import norm
+from core.render import load_jsonl
 
 
 def mann_whitney_p(a, b):

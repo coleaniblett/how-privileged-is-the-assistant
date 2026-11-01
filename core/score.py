@@ -1,7 +1,7 @@
 """Per-token NLL of the content tokens in every condition, for one model.
 
-    python score.py --model sft                     # a stage name from config.MODELS, or any HF id
-    python score.py --model HuggingFaceTB/SmolLM2-135M-Instruct --tokenizer HuggingFaceTB/SmolLM2-135M-Instruct
+    python -m core.score --model sft                # a stage name from config.MODELS, or any HF id
+    python -m core.score --model HuggingFaceTB/SmolLM2-135M-Instruct --tokenizer HuggingFaceTB/SmolLM2-135M-Instruct
 
 Writes <out>/<stage>.csv with columns text_id, source, kind, condition, n_tokens, mean_nll,
 mean_nll_from1, mean_entropy, mean_entropy_from1 (_from1: content positions 1+, i.e. without the first
@@ -19,8 +19,8 @@ import torch
 import torch.nn.functional as F
 from transformers import AutoModelForCausalLM
 
-import config
-from render import load_jsonl, load_tokenizer, render_all
+from core import config
+from core.render import load_jsonl, load_tokenizer, render_all
 
 
 def resolve(model_arg, stage=None):
@@ -102,7 +102,7 @@ def main():
     ap.add_argument("--limit", type=int)
     ap.add_argument("--batch-size", type=int, default=8)  # fp32 7B on 48 GB: 16 runs short on long texts
     ap.add_argument("--preceding-turn", action="store_true", default=config.PRECEDING_TURN)
-    ap.add_argument("--out", default="results/scores")
+    ap.add_argument("--out", default=config.core_dir("scores"))
     args = ap.parse_args()
 
     model_id, stage = resolve(args.model, args.stage)

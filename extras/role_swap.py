@@ -1,9 +1,9 @@
 """Role-swapped conversations: the same turns under the normal and the flipped role labels.
 
-    python role_swap.py prepare                 # -> data/swap.jsonl (300 held-out WildChat conversations)
-    python role_swap.py replies                 # adds OLMo 3 7B Instruct's greedy reply to each P1 (GPU)
-    python role_swap.py score --model sft       # -> results/role_swap/<stage>.csv
-    python role_swap.py analyze                 # -> results/role_swap.md, results/role_swap_summary.csv
+    python -m extras.role_swap prepare              # -> data/swap.jsonl (300 held-out WildChat conversations)
+    python -m extras.role_swap replies              # adds OLMo 3 7B Instruct's greedy reply to each P1 (GPU)
+    python -m extras.role_swap score --model sft    # -> results/<run>/extras/role_swap/<stage>.csv
+    python -m extras.role_swap analyze              # -> results/<run>/extras/role_swap.md, role_swap_summary.csv
 
 Each conversation is a user turn P1, the assistant's reply R1 and the user's next turn P2, from
 English WildChat-1M, skipping any conversation whose P1 or P2 (or conversation_hash) is in the
@@ -31,12 +31,14 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 
-import config
-from render import AlignmentError, encode, load_jsonl, load_tokenizer, render_conversation
+from core import config
+from core.render import AlignmentError, encode, load_jsonl, load_tokenizer, render_conversation
+from core.stats import bootstrap_ci, stage_order
 
 LABELINGS = {"normal": ["user", "assistant", "user"], "flipped": ["assistant", "user", "assistant"]}
 SCORED = {"R1": 1, "P2": 2}  # turn name -> index in the conversation
 DATA_PATH = "data/swap.jsonl"
+OUT_DIR = config.measure_dir("extras")
 
 
 def wildchat_triples(seed):
@@ -66,7 +68,7 @@ def render_both(tok, turns):
 
 
 def prepare(args):
-    from check_contamination import dolci_turns, is_contaminated
+    from core.check_contamination import dolci_turns, is_contaminated
 
     tok = load_tokenizer(args.tokenizer)
     turns = dolci_turns()
@@ -106,8 +108,8 @@ def prepare(args):
 
 def replies(args):
     """Add OLMo 3 7B Instruct's greedy reply to each P1 as r1_olmo (None if it fails the filters)."""
-    from add_replies import greedy_replies
-    from score import load_model, resolve
+    from core.add_replies import greedy_replies
+    from core.score import load_model, resolve
 
     model_id, _ = resolve(args.model)
     tok = load_tokenizer(args.tokenizer)
@@ -151,7 +153,7 @@ def score_seqs(tok, rows):
 def score(args):
     import torch
 
-    from score import load_model, resolve, spans_nll
+    from core.score import load_model, resolve, spans_nll
 
     model_id, stage = resolve(args.model, args.stage)
     tok = load_tokenizer(args.tokenizer)
@@ -171,13 +173,6 @@ def score(args):
     print(f"{model_id}: wrote {len(nll)} rows to {path}")
 
 
-def bootstrap_ci(x, n_boot, rng):
-    x = np.asarray(x)
-    idx = rng.integers(0, len(x), size=(n_boot, len(x)))
-    lo, hi = np.percentile(x[idx].mean(axis=1), [2.5, 97.5])
-    return x.mean(), lo, hi
-
-
 def ci_cell(x, n_boot, rng):
     m, lo, hi = bootstrap_ci(x, n_boot, rng)
     return f"{m:.3f} [{lo:.3f}, {hi:.3f}]", (m, lo, hi)
@@ -194,7 +189,7 @@ def analyze(args):
     frames = {os.path.basename(p)[:-4]: pd.read_csv(p) for p in glob.glob(os.path.join(args.scores, "*.csv"))}
     if not frames:
         raise SystemExit(f"no score CSVs in {args.scores}")
-    stages = [s for s in config.STAGES if s in frames] + sorted(s for s in frames if s not in config.STAGES)
+    stages = stage_order(frames)
     rng = np.random.default_rng(args.seed)
     summary = []
 
@@ -336,11 +331,11 @@ def main():
     p.add_argument("--dataset", default=DATA_PATH)
     p.add_argument("--limit", type=int)
     p.add_argument("--batch-size", type=int, default=4)  # three turns: sequences up to ~1k tokens, fp32
-    p.add_argument("--out", default="results/role_swap")
+    p.add_argument("--out", default=os.path.join(OUT_DIR, "role_swap"))
     p = sub.add_parser("analyze")
-    p.add_argument("--scores", default="results/role_swap")
+    p.add_argument("--scores", default=os.path.join(OUT_DIR, "role_swap"))
     p.add_argument("--dataset", default=DATA_PATH)
-    p.add_argument("--out-dir", default="results")
+    p.add_argument("--out-dir", default=OUT_DIR)
     p.add_argument("--n-boot", type=int, default=10_000)
     p.add_argument("--seed", type=int, default=config.SEED)
     args = ap.parse_args()

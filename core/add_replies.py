@@ -1,6 +1,6 @@
 """Add a model-written assistant source: a greedy reply to each user text of one source.
 
-    python add_replies.py                     # OLMo 3 7B Instruct replies to the WildChat user turns
+    python -m core.add_replies                # OLMo 3 7B Instruct replies to the WildChat user turns
 
 Each user text is rendered as the only user turn with the Instruct chat template (default system
 turn included) and the reply is decoded greedily for up to --max-new-tokens tokens. Replies that
@@ -17,10 +17,10 @@ from collections import Counter
 
 import torch
 
-import config
-from prepare_data import clean, usable
-from render import encode, load_jsonl, load_tokenizer
-from score import load_model, resolve
+from core import config
+from core.prepare_data import clean, usable
+from core.render import encode, load_jsonl, load_tokenizer
+from core.score import load_model, resolve
 
 
 def stop_ids(tok):

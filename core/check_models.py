@@ -1,6 +1,6 @@
 """Verify model IDs, licenses and chat templates via the HF API (no weights downloaded).
 
-    python check_models.py      # writes docs/models.md
+    python -m core.check_models      # writes docs/models.md
 
 Downloads the Instruct tokenizer + config, fetches only the tokenizer files of the
 other checkpoints, and checks the three post-trained checkpoints share one chat template
@@ -8,6 +8,12 @@ and all four share one tokenizer. Both checks are semantic: templates are compar
 they render for a plain user/assistant exchange (the files differ in a tool-handling
 null check), tokenizers by vocab + merges + added tokens (the files differ in how merges
 are serialized and in the names/ids of a few reserved tokens).
+
+TODO(breadth arm): this checks config.MODELS, i.e. the default family only, and the stage
+names "sft", "dpo", "instruct", "base" are hard-coded below. Before adding Gemma 4 or Qwen3
+entries to config.FAMILIES, generalize it to take --family, verify each family's model IDs
+exist and its instruct chat template places content verbatim (core.render.template_parts),
+and record the result in docs/models.md.
 """
 
 import hashlib
@@ -16,7 +22,7 @@ import json
 from huggingface_hub import HfApi, hf_hub_download
 from transformers import AutoConfig, AutoTokenizer
 
-import config
+from core import config
 
 DEMO = [{"role": "user", "content": "USER"}, {"role": "assistant", "content": "ASSISTANT"}]
 

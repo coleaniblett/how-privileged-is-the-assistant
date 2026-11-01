@@ -1,6 +1,7 @@
-"""Raw NLL, slot effects and role-specific quantities per text source, with bootstrap CIs.
+"""Vestigial regression: raw NLL, slot effects and role-specific quantities per text source, with bootstrap CIs.
 
-    python analyze.py                    # reads results/scores/*.csv (+ results/generations/*_counts.csv)
+    python -m measures.vestigial_regression.analyze   # reads results/<run>/core/scores/*.csv
+                                                      # (+ results/<run>/vestigial_regression/generations/*_counts.csv)
 
 A text set is one (source, kind), e.g. wildchat user or olmo-instruct assistant. Sets are never
 pooled. Every text is scored in every slot; per set and stage we report
@@ -12,55 +13,28 @@ pooled. Every text is scored in every slot; per set and stage we report
 Each is reported without the first content token (default: a first-turn assistant header makes the
 post-trained models expect <|im_start|>, so that token costs 2-14 nats whatever the text) and over
 all tokens; the figures use the default.
-95% bootstrap CIs are over texts. Writes results/summary.csv, results/results.md and one
-figure per text set, results/nll_<source>_<kind>.png (stage on x, one line per slot).
+95% bootstrap CIs are over texts. Writes <out>/summary.csv, <out>/results.md and one
+figure per text set, <out>/nll_<source>_<kind>.png (stage on x, one line per slot).
 
-If score.py saved per-token NLLs (<scores>/<stage>_tokens.parquet), also writes results/position.md
-and results/position_<source>_<kind>.png: mean NLL by content-token position per slot and stage,
+If core/score.py saved per-token NLLs (<scores>/<stage>_tokens.parquet), also writes <out>/position.md
+and <out>/position_<source>_<kind>.png: mean NLL by content-token position per slot and stage,
 and the slot difference by position, over texts with at least --positions tokens.
+
+Loading, bootstrap CIs, per-position arrays and the negligibility rule come from core.stats; this
+module holds only the VR-specific quantities, tables and figures.
 """
 
 import argparse
 import glob
 import os
 
-import matplotlib
+import numpy as np
+import pandas as pd
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
-
-import config  # noqa: E402
-
-SOURCE_ORDER = ["wildchat", "oasst1", "olmo-instruct"]
-SLOT_NAMES = {"user": "user slot", "asst": "assistant slot", "plain": "plain (no slot)"}
-
-
-def load_scores(score_dir):
-    frames = {os.path.basename(p)[:-4]: pd.read_csv(p) for p in glob.glob(os.path.join(score_dir, "*.csv"))}
-    if not frames:
-        raise SystemExit(f"no score CSVs in {score_dir}")
-    stages = [s for s in config.STAGES if s in frames] + sorted(s for s in frames if s not in config.STAGES)
-    return {s: frames[s] for s in stages}
-
-
-def text_sets(frames):
-    sets = {(src, kind) for df in frames.values() for src, kind in zip(df.source, df.kind)}
-    rank = lambda s: (s[1] != "user", SOURCE_ORDER.index(s[0]) if s[0] in SOURCE_ORDER else len(SOURCE_ORDER), s[0])
-    return sorted(sets, key=rank)
-
-
-def set_name(src, kind):
-    return f"{src} {kind}"
-
-
-def bootstrap_ci(x, n_boot, rng):
-    x = np.asarray(x)
-    idx = rng.integers(0, len(x), size=(n_boot, len(x)))
-    lo, hi = np.percentile(x[idx].mean(axis=1), [2.5, 97.5])
-    return x.mean(), lo, hi
-
+from core import config
+from core.plots import plt, stage_errorbars
+from core.stats import (SLOT_NAMES, bootstrap_ci, load_scores, negligible_from, position_arrays, set_name,
+                        summary_table, text_sets, token_tables)
 
 EXCL0, ALL = "excl. position 0", "all tokens"
 
@@ -114,8 +88,7 @@ def plot(summary, out_dir):
         for a, slot in config.SLOTS:
             d = g[g.quantity.str.startswith(f"NLL {SLOT_NAMES[a]} (") & g.quantity.str.endswith(label)]
             d = d.set_index("stage").reindex(stages)
-            ax.errorbar(x, d["mean"], yerr=[d["mean"] - d["lo"], d["hi"] - d["mean"]], capsize=3, marker="o",
-                        linestyle=":" if slot is None else "-", label=SLOT_NAMES[a])
+            stage_errorbars(ax, x, d, linestyle=":" if slot is None else "-", label=SLOT_NAMES[a])
         ax.set_xticks(x, stages)
         ax.set_xlabel("post-training stage")
         ax.set_ylabel(f"mean per-token NLL of content, {label} (nats)")
@@ -129,27 +102,13 @@ def plot(summary, out_dir):
     return paths
 
 
-def fmt(r):
-    return f"{r['mean']:.3f} [{r['lo']:.3f}, {r['hi']:.3f}]"
-
-
-def table(summary, select, index):
-    d = summary[select(summary)].copy()
-    d["text set"] = [set_name(s, k) for s, k in zip(d.source, d.kind)]
-    d["cell"] = d.apply(fmt, axis=1)
-    order = list(dict.fromkeys(zip(*(d[c] for c in index)) if len(index) > 1 else d[index[0]]))
-    wide = d.pivot_table(index=index, columns="stage", values="cell", aggfunc="first")
-    wide = wide.reindex(order)[list(dict.fromkeys(summary["stage"]))]
-    return wide.reset_index().to_markdown(index=False)
-
-
 def section(summary, heading, note, select, index):
     """Markdown lines: the position-0-excluded table (default), then the all-tokens table."""
     md = ["", heading, ""] + ([note, ""] if note else [])
     for label, suffix in ((EXCL0, " (default)"), (ALL, "")):
         sel = lambda d, label=label: select(d.quantity) & d.quantity.str.endswith(label)
         if sel(summary).any():
-            md += [f"### {label}{suffix}", "", table(summary, sel, index), ""]
+            md += [f"### {label}{suffix}", "", summary_table(summary, sel, index), ""]
     return md
 
 
@@ -167,9 +126,9 @@ def results_table(summary, gen_dir):
     md += ["", "## Slot effect: NLL(user slot) - NLL(assistant slot)", ""]
     if (summary.quantity == f"slot effect, {EXCL0}").any():
         md += [f"### Slot effect, {EXCL0} (default)", "",
-               table(summary, lambda d: d.quantity == f"slot effect, {EXCL0}", ["text set"]), "",
+               summary_table(summary, lambda d: d.quantity == f"slot effect, {EXCL0}", ["text set"]), "",
                f"### Slot effect, {ALL}", ""]
-    md += [table(summary, lambda d: d.quantity == f"slot effect, {ALL}", ["text set"]),
+    md += [summary_table(summary, lambda d: d.quantity == f"slot effect, {ALL}", ["text set"]),
           ""]
     md += section(summary, "## Role-specific: NLL(own slot) - NLL(plain)",
                   "user@user - user@plain for user text; asst@asst - asst@plain for assistant text.",
@@ -179,7 +138,7 @@ def results_table(summary, gen_dir):
         if sel(summary).any():
             md += ["", f"## Mean next-token entropy by text set and slot, {label}{note}", "",
                    "Entropy (nats) of the model's next-token distribution at each content token, averaged per text.", "",
-                   table(summary, sel, ["text set", "quantity"])]
+                   summary_table(summary, sel, ["text set", "quantity"])]
     counts = sorted(glob.glob(os.path.join(gen_dir, "*_counts.csv")))
     if counts:
         g = pd.concat(pd.read_csv(p) for p in counts).set_index("stage")
@@ -189,48 +148,6 @@ def results_table(summary, gen_dir):
                "ended_turn); assistant_register and repetition_loop: checked on the user portion only.", "",
                g.to_markdown()]
     return "\n".join(md) + "\n"
-
-
-def token_tables(score_dir, stages):
-    """{stage: per-token NLL frame} for stages that have a <stage>_tokens.parquet."""
-    out = {}
-    for s in stages:
-        path = os.path.join(score_dir, f"{s}_tokens.parquet")
-        if os.path.exists(path):
-            out[s] = pd.read_parquet(path)
-    return out
-
-
-def position_arrays(tokens, src, kind, n_pos):
-    """(text ids, {slot abbr: array [texts, n_pos]}, {slot abbr: per-text mean beyond n_pos}) for texts
-    with at least n_pos content tokens, so every position averages over the same texts."""
-    k = config.KIND_ABBR[kind]
-    d = tokens[(tokens.source == src) & (tokens.kind == kind)]
-    length = d[d.condition == f"{k}@user"].groupby("text_id", observed=True).position.max() + 1
-    ids = length[length >= n_pos].index
-    d = d[d.text_id.isin(ids)]
-    arrays, tails = {}, {}
-    for a, _ in config.SLOTS:
-        c = d[d.condition == f"{k}@{a}"]
-        head = c[c.position < n_pos].pivot(index="text_id", columns="position", values="nll").reindex(ids)
-        arrays[a] = head.to_numpy()
-        tails[a] = c[c.position >= n_pos].groupby("text_id", observed=True).nll.mean().reindex(ids)
-    return ids, arrays, tails
-
-
-def negligible_from(diff, margin, n_boot, rng):
-    """First position p from which the slot difference is negligible: every per-position mean from p on is
-    within +-margin (no spike left) and the mean over positions p..end has a 95% CI inside +-margin
-    (no steady offset). None if no such p within the positions given."""
-    m = diff.mean(axis=0)
-    idx = rng.integers(0, len(diff), size=(n_boot, len(diff)))
-    for p in range(diff.shape[1]):
-        if np.abs(m[p:]).max() >= margin:
-            continue
-        lo, hi = np.percentile(diff[:, p:].mean(axis=1)[idx].mean(axis=1), [2.5, 97.5])
-        if -margin < lo and hi < margin:
-            return p
-    return None
 
 
 def position_analysis(tokens, sets, n_pos, margin, n_boot, seed, out_dir):
@@ -336,13 +253,15 @@ def position_analysis(tokens, sets, n_pos, margin, n_boot, seed, out_dir):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--scores", default="results/scores")
-    ap.add_argument("--generations", default="results/generations")
-    ap.add_argument("--out", default="results")
+    ap.add_argument("--scores", default=config.core_dir("scores"))
+    ap.add_argument("--generations", default=os.path.join(config.measure_dir("vestigial_regression"), "generations"),
+                    help="flagged samples (flags.py), for the *_counts.csv tables")
+    ap.add_argument("--out", default=config.measure_dir("vestigial_regression"))
     ap.add_argument("--n-boot", type=int, default=10_000)
     ap.add_argument("--seed", type=int, default=config.SEED)
     ap.add_argument("--positions", type=int, default=40, help="content-token positions in the position analysis")
-    ap.add_argument("--margin", type=float, default=0.05, help="nats; slot difference counted as negligible within this")
+    ap.add_argument("--margin", type=float, default=config.MIN_EFFECT_NATS,
+                    help="nats; slot difference counted as negligible within this")
     args = ap.parse_args()
 
     frames = load_scores(args.scores)

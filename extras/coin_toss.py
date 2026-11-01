@@ -1,8 +1,8 @@
 """Coin-toss spillover: does a preference stated by the assistant tilt the predicted coin outcome?
 
-    python coin_toss.py build                # -> data/coin_toss.jsonl (40 conversations x 3 conditions)
-    python coin_toss.py score --model sft    # -> results/coin_toss/<stage>.csv
-    python coin_toss.py analyze              # -> results/coin_toss.md
+    python -m extras.coin_toss build                # -> data/coin_toss.jsonl (40 conversations x 3 conditions)
+    python -m extras.coin_toss score --model sft    # -> results/<run>/extras/coin_toss/<stage>.csv
+    python -m extras.coin_toss analyze              # -> results/<run>/extras/coin_toss.md
 
 Each conversation has three turns with the default system turn: a user opener about settling
 something with a fair coin, a neutral assistant reply, and a user turn ending "I flipped the
@@ -31,10 +31,12 @@ import os
 import numpy as np
 import pandas as pd
 
-import config
-from render import encode, load_jsonl, load_tokenizer, render_conversation
+from core import config
+from core.render import encode, load_jsonl, load_tokenizer, render_conversation
+from core.stats import bootstrap_ci, stage_order
 
 DATA_PATH = "data/coin_toss.jsonl"
+OUT_DIR = config.measure_dir("extras")
 CONDITIONS = ["assistant", "user", "none"]
 OUTCOMES = ["heads", "tails"]
 ROLES = ["user", "assistant", "user"]
@@ -116,7 +118,7 @@ def prompt_ids(tok, turns):
 def score(args):
     import torch
 
-    from score import load_model, resolve, spans_nll
+    from core.score import load_model, resolve, spans_nll
 
     model_id, stage = resolve(args.model, args.stage)
     tok = load_tokenizer(args.tokenizer)
@@ -145,13 +147,6 @@ def score(args):
     print(f"{model_id}: wrote {len(keys)} rows to {path}")
 
 
-def bootstrap_ci(x, n_boot, rng):
-    x = np.asarray(x)
-    idx = rng.integers(0, len(x), size=(n_boot, len(x)))
-    lo, hi = np.percentile(x[idx].mean(axis=1), [2.5, 97.5])
-    return x.mean(), lo, hi
-
-
 def log_odds(df, rows):
     """conv_id x condition table of log P(preferred) - log P(other), and of P(heads) + P(tails)."""
     pref = {r["id"]: r["preferred"] for r in rows}
@@ -168,7 +163,7 @@ def analyze(args):
     frames = {os.path.basename(p)[:-4]: pd.read_csv(p) for p in glob.glob(os.path.join(args.scores, "*.csv"))}
     if not frames:
         raise SystemExit(f"no score CSVs in {args.scores}")
-    stages = [s for s in config.STAGES if s in frames] + sorted(s for s in frames if s not in config.STAGES)
+    stages = stage_order(frames)
     rows = load_jsonl(args.dataset)
     rng = np.random.default_rng(args.seed)
     lo = {}
@@ -226,12 +221,12 @@ def main():
     p.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
     p.add_argument("--dataset", default=DATA_PATH)
     p.add_argument("--batch-size", type=int, default=32)
-    p.add_argument("--out", default="results/coin_toss")
+    p.add_argument("--out", default=os.path.join(OUT_DIR, "coin_toss"))
     p = sub.add_parser("analyze")
-    p.add_argument("--scores", default="results/coin_toss")
+    p.add_argument("--scores", default=os.path.join(OUT_DIR, "coin_toss"))
     p.add_argument("--dataset", default=DATA_PATH)
     p.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
-    p.add_argument("--out-dir", default="results")
+    p.add_argument("--out-dir", default=OUT_DIR)
     p.add_argument("--n-boot", type=int, default=10_000)
     p.add_argument("--seed", type=int, default=config.SEED)
     args = ap.parse_args()

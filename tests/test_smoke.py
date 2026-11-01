@@ -1,7 +1,8 @@
-"""End-to-end smoke test on CPU: prepare_data -> add_replies -> score -> generate -> analyze with SmolLM2-135M-Instruct.
+"""End-to-end smoke test on CPU: prepare_data -> add_replies -> score -> generate -> VR flags -> analyze with
+SmolLM2-135M-Instruct, plus the extras (role swap, coin toss).
 
 Uses oasst1 pairs without the Dolci exclusion so it stays small and fast. The same model is
-scored under two stage labels so analyze.py has more than one stage to plot.
+scored under two stage labels so the analysis has more than one stage to plot.
 """
 
 import json
@@ -13,32 +14,35 @@ import pandas as pd
 import pytest
 import torch
 
-import config
-from render import Rendered, load_jsonl, load_tokenizer, render_all
-from score import content_nll, load_model
+from core import config
+from core.render import Rendered, load_jsonl, load_tokenizer, render_all
+from core.score import content_nll, load_model
 
 MODEL = "HuggingFaceTB/SmolLM2-135M-Instruct"
 STAGES = ["base", "instruct"]
 ROOT = Path(__file__).resolve().parents[1]
+FLAGS = {"ended_turn", "handoff_to_assistant", "assistant_register", "repetition_loop"}
 
 
-def run(*args):
-    subprocess.run([sys.executable, *args], check=True, cwd=ROOT)
+def run(module, *args):
+    subprocess.run([sys.executable, "-m", module, *args], check=True, cwd=ROOT)
 
 
 @pytest.fixture(scope="module")
 def pipeline(tmp_path_factory):
     d = tmp_path_factory.mktemp("smoke")
     common = ["--tokenizer", MODEL]
-    run("prepare_data.py", "--pairs", "oasst1", "--extra-user", "none", "--no-exclude-dolci", *common, "--n", "10",
+    run("core.prepare_data", "--pairs", "oasst1", "--extra-user", "none", "--no-exclude-dolci", *common, "--n", "10",
         "--n-prefill", "3", "--out", str(d / "texts.jsonl"), "--prefill-out", str(d / "prefill.jsonl"))
-    run("add_replies.py", "--model", MODEL, *common, "--dataset", str(d / "texts.jsonl"), "--prompt-source", "oasst1",
+    run("core.add_replies", "--model", MODEL, *common, "--dataset", str(d / "texts.jsonl"), "--prompt-source", "oasst1",
         "--source", "smollm")
     for stage in STAGES:
-        run("score.py", "--model", MODEL, "--stage", stage, *common, "--dataset", str(d / "texts.jsonl"),
+        run("core.score", "--model", MODEL, "--stage", stage, *common, "--dataset", str(d / "texts.jsonl"),
             "--batch-size", "4", "--out", str(d / "scores"))
-        run("generate.py", "--model", MODEL, "--stage", stage, *common, "--prefill", str(d / "prefill.jsonl"),
+        run("core.generate", "--model", MODEL, "--stage", stage, *common, "--prefill", str(d / "prefill.jsonl"),
             "--samples", "2", "--max-new-tokens", "16", "--out", str(d / "generations"))
+    run("measures.vestigial_regression.flags", *common, "--generations", str(d / "generations"),
+        "--out", str(d / "vr_generations"))
     # three-turn conversations stitched from the oasst1 pairs, for the role-swap path
     rows = load_jsonl(d / "texts.jsonl")
     users = [r["text"] for r in rows if r["source"] == "oasst1" and r["kind"] == "user"]
@@ -46,18 +50,18 @@ def pipeline(tmp_path_factory):
     with open(d / "swap.jsonl", "w", encoding="utf-8") as f:
         for i in range(4):
             f.write(json.dumps(dict(id=f"swap-{i:04d}", p1=users[i], r1=assts[i], p2=users[i + 1])) + "\n")
-    run("role_swap.py", "replies", "--model", MODEL, *common, "--dataset", str(d / "swap.jsonl"), "--max-new-tokens", "64")
-    run("coin_toss.py", "build", "--n-items", "4", "--out", str(d / "coin_toss.jsonl"))
+    run("extras.role_swap", "replies", "--model", MODEL, *common, "--dataset", str(d / "swap.jsonl"), "--max-new-tokens", "64")
+    run("extras.coin_toss", "build", "--n-items", "4", "--out", str(d / "coin_toss.jsonl"))
     for stage in STAGES:
-        run("role_swap.py", "score", "--model", MODEL, "--stage", stage, *common, "--dataset", str(d / "swap.jsonl"),
+        run("extras.role_swap", "score", "--model", MODEL, "--stage", stage, *common, "--dataset", str(d / "swap.jsonl"),
             "--out", str(d / "role_swap"))
-        run("coin_toss.py", "score", "--model", MODEL, "--stage", stage, *common, "--dataset", str(d / "coin_toss.jsonl"),
+        run("extras.coin_toss", "score", "--model", MODEL, "--stage", stage, *common, "--dataset", str(d / "coin_toss.jsonl"),
             "--out", str(d / "coin_toss"))
-    run("role_swap.py", "analyze", "--scores", str(d / "role_swap"), "--dataset", str(d / "swap.jsonl"),
+    run("extras.role_swap", "analyze", "--scores", str(d / "role_swap"), "--dataset", str(d / "swap.jsonl"),
         "--out-dir", str(d), "--n-boot", "200")
-    run("coin_toss.py", "analyze", "--scores", str(d / "coin_toss"), "--dataset", str(d / "coin_toss.jsonl"),
+    run("extras.coin_toss", "analyze", "--scores", str(d / "coin_toss"), "--dataset", str(d / "coin_toss.jsonl"),
         *common, "--out-dir", str(d), "--n-boot", "200")
-    run("analyze.py", "--scores", str(d / "scores"), "--generations", str(d / "generations"),
+    run("measures.vestigial_regression.analyze", "--scores", str(d / "scores"), "--generations", str(d / "vr_generations"),
         "--out", str(d), "--n-boot", "200", "--positions", "10")
     return d
 
@@ -96,13 +100,29 @@ def test_scores(pipeline):
         assert (df.groupby("text_id").n_tokens.nunique() == 1).all()
 
 
-def test_generations_and_analysis(pipeline):
+def test_generations_and_flags(pipeline):
+    """core.generate writes raw samples; the VR flags step adds the user portion and flags without altering them."""
     for stage in STAGES:
-        lines = load_jsonl(pipeline / "generations" / f"{stage}.jsonl")
-        assert len(lines) == 3 * 2
-        assert {"ended_turn", "handoff_to_assistant", "assistant_register", "repetition_loop"} <= set(lines[0])
+        raw = load_jsonl(pipeline / "generations" / f"{stage}.jsonl")
+        assert len(raw) == 3 * 2
+        assert set(raw[0]) == {"prefill_id", "sample", "prefill", "continuation", "stopped_on_eos"}
+        flagged = load_jsonl(pipeline / "vr_generations" / f"{stage}.jsonl")
+        assert len(flagged) == len(raw)
+        for r, f in zip(raw, flagged):
+            assert {k: f[k] for k in ("prefill_id", "sample", "prefill", "continuation")} == {
+                k: r[k] for k in ("prefill_id", "sample", "prefill", "continuation")}
+            assert FLAGS <= set(f) and f["continuation"].startswith(f["user_portion"])
+        counts = pd.read_csv(pipeline / "vr_generations" / f"{stage}_counts.csv")
+        assert list(counts.columns) == ["stage", "n", "ended_turn", "handoff_to_assistant", "assistant_register",
+                                        "repetition_loop"]
+        assert counts.n.iloc[0] == len(raw)
+        assert counts.ended_turn.iloc[0] == sum(f["ended_turn"] for f in flagged)
+
+
+def test_analysis(pipeline):
     md = (pipeline / "results.md").read_text()
     assert "Raw mean NLL" in md and "Slot effect" in md and "Role-specific" in md
+    assert "Prefilled user-turn continuations" in md
     for src, kind in text_sets(load_jsonl(pipeline / "texts.jsonl")):
         assert f"{src} {kind}" in md
         assert (pipeline / f"nll_{src}_{kind}.png").stat().st_size > 0

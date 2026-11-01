@@ -1,11 +1,13 @@
 """Match texts against OLMo 3 Instruct post-training data (Dolci SFT, DPO and RL sets).
 
-    python check_contamination.py      # overlap of data/texts.jsonl, per source and kind
+    python -m core.check_contamination      # overlap of data/texts.jsonl, per source and kind
 
 Matching is exact after whitespace normalization. SFT and DPO store chat messages; the RL
 set stores each prompt as one "user: ...\\nassistant: ..." string, so its turns are parsed
 out, and its WildChat-derived prompts also carry WildChat's conversation_hash, which is
 matched as well. prepare_data.py uses dolci_turns() to exclude contaminated conversations.
+Only the OLMo 3 family has open post-training data; for other families this check cannot
+be run (config.FAMILIES[...]["contamination_check"]), which every report of their results says.
 """
 
 import argparse
@@ -14,8 +16,8 @@ import re
 
 from datasets import load_dataset
 
-import config
-from render import load_jsonl
+from core import config
+from core.render import load_jsonl
 
 DOLCI = {
     "sft": "allenai/Dolci-Instruct-SFT",

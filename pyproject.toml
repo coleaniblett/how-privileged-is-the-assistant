@@ -1,7 +1,7 @@
 [project]
 name = "vestigial-user"
 version = "0.1.0"
-description = "Does post-training make a model treat the assistant slot differently from the user slot?"
+description = "Is the assistant a privileged persona? Vestigial regression, logit distortion and overgeneralization across post-training stages."
 requires-python = ">=3.11,<3.14"
 dependencies = [
     "torch>=2.5",

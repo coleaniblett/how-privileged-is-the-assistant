@@ -2,12 +2,16 @@
 
 import os
 from collections import Counter
+from pathlib import Path
 
 import pytest
 
-import config
-from generate import flags, stop_ids, turn_markers, user_portion
-from render import AlignmentError, load_jsonl, load_tokenizer, render, render_all, template_parts
+from core import config
+from core.generate import stop_ids
+from core.render import AlignmentError, load_jsonl, load_tokenizer, render, render_all, template_parts, turn_markers
+from measures.vestigial_regression.flags import flags, user_portion
+
+ROOT = Path(__file__).resolve().parents[1]
 
 EDGE_CASES = [
     "Hello there.",
@@ -104,7 +108,7 @@ def test_flags_use_user_portion_only(tok):
 
 @pytest.mark.parametrize("text", EDGE_CASES)
 def test_role_swap_content_identical_across_labelings(tok, text):
-    from role_swap import LABELINGS, render_both
+    from extras.role_swap import LABELINGS, render_both
 
     turns = [text, "A reply: " + text, text + " (follow-up)"]
     out = render_both(tok, turns)
@@ -123,10 +127,10 @@ def test_coin_toss_prompts(tok, tmp_path):
     import subprocess
     import sys
 
-    from coin_toss import CONDITIONS, OUTCOMES, prompt_ids, variants
+    from extras.coin_toss import CONDITIONS, OUTCOMES, prompt_ids, variants
 
     out = tmp_path / "coin.jsonl"
-    subprocess.run([sys.executable, "coin_toss.py", "build", "--out", str(out)], check=True)
+    subprocess.run([sys.executable, "-m", "extras.coin_toss", "build", "--out", str(out)], check=True, cwd=ROOT)
     rows = load_jsonl(out)
     assert len(rows) == 40 and {r["preferred"] for r in rows} == set(OUTCOMES)
     for r in rows:

@@ -1,7 +1,7 @@
 """Sample held-out user + assistant texts and a user-turn prefill set.
 
-    python prepare_data.py                                  # WildChat pairs + oasst1 user prompts
-    python prepare_data.py --pairs oasst1 --extra-user none --no-exclude-dolci   # smoke test
+    python -m core.prepare_data                             # WildChat pairs + oasst1 user prompts
+    python -m core.prepare_data --pairs oasst1 --extra-user none --no-exclude-dolci   # smoke test
 
 Pair source (default WildChat-1M): first user turn + first assistant reply of each conversation.
 Extra user source (default oasst1): root prompts only. Conversations whose user turn appears in
@@ -22,8 +22,8 @@ from collections import Counter
 
 from datasets import load_dataset
 
-import config
-from render import AlignmentError, load_tokenizer, render
+from core import config
+from core.render import AlignmentError, load_tokenizer, render
 
 
 def wildchat_pairs(seed):
@@ -104,7 +104,7 @@ def usable(tok, text):
 
 def sample(source, stream, tok, n, turns, kinds):
     """First n candidates from stream whose texts pass every filter. kinds: ("user",) or ("user", "assistant")."""
-    from check_contamination import is_contaminated
+    from core.check_contamination import is_contaminated
 
     rows, seen, stats = [], set(), Counter()
     for src_id, user, asst in stream:
@@ -165,7 +165,7 @@ def main():
     tok = load_tokenizer(args.tokenizer)
     turns = None
     if args.exclude_dolci:
-        from check_contamination import dolci_turns
+        from core.check_contamination import dolci_turns
 
         turns = dolci_turns()
     rows = sample(args.pairs, SOURCES[args.pairs](args.seed), tok, args.n, turns, ("user", "assistant"))

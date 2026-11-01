@@ -7,7 +7,7 @@ own and the full sequence must equal prefix + content + suffix tokenized separat
 this rules out merges at the header/footer boundary and makes the content tokens
 identical in every condition, plain-prose control included.
 
-    python render.py --tokenizer allenai/Olmo-3-7B-Instruct --n 2   # dump examples per source to docs/
+    python -m core.render --tokenizer allenai/Olmo-3-7B-Instruct --n 2   # dump examples per source to docs/
 """
 
 import argparse
@@ -16,7 +16,7 @@ from dataclasses import dataclass
 
 from transformers import AutoTokenizer
 
-import config
+from core import config
 
 SENTINEL = "CONTENT"
 
@@ -66,6 +66,16 @@ def template_parts(tok, slot, preceding=False):
         raise AlignmentError("template does not place content verbatim exactly once")
     prefix, suffix = s.split(SENTINEL)
     return prefix, suffix
+
+
+def turn_markers(tok):
+    """End-of-user-turn string and the user->assistant handoff string from the template."""
+    _, user_suffix = template_parts(tok, "user")
+    s = tok.apply_chat_template(
+        [{"role": "user", "content": SENTINEL}, {"role": "assistant", "content": SENTINEL + "2"}], tokenize=False
+    )
+    handoff = s.split(SENTINEL)[1]
+    return user_suffix.strip(), handoff.strip()
 
 
 def doc_start_ids(tok):
