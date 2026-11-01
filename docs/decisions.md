@@ -61,3 +61,13 @@ per-position arrays and the negligibility rule in `core/stats.py`, plotting setu
 quantities, tables and figures in `measures/vestigial_regression/analyze.py`. `config.FAMILIES` holds model
 families with their own stage lists (only OLMo 3 7B so far). New outputs go to `results/<run>/` (core/,
 <measure>/, extras/); `results/`, `results_preceding/` and `results_v0/` are frozen pilot runs.
+
+## 2026-11-01: exploratory open-user-turn samples (outside every verdict)
+
+`exploration/shiller_user_turns/` qualitatively reproduces the user-turn observations of Shiller's "Cursory
+Exploration" on OLMo 3 7B, Qwen3-8B/32B and Gemma 4 E4B/31B (instruct, plus base where one exists). It is
+exploratory: no pre-registered criteria, and no measure reads it. Its model list lives in its own `models.py`,
+not in `core/config.py`, so that the measures' model list stays unchanged (the OLMo IDs come from config).
+Nothing in `core/` or `measures/` changed. `pyproject.toml` gains an optional `quant` extra (bitsandbytes,
+`uv sync --extra quant`) for 8-bit loading of the 31B/32B models on 48 GB cards. A plain `uv sync` is
+unaffected.

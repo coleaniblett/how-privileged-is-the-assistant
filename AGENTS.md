@@ -121,6 +121,10 @@ through the same contamination filter.
 Likelihood minimal pairs (assistant-trait vs plain continuation) in plain context with the assistant slot as
 positive control; interp arm (assistant direction per stage); behavioral companion (assistant-tic counts).
 
+## Exploratory work
+
+- `exploration/shiller_user_turns/`: open user turns across OLMo/Qwen3/Gemma 4, qualitatively reproducing Shiller's cursory exploration; outside every verdict (README there).
+
 ## Commands
 
 ```bash

@@ -16,6 +16,10 @@ dependencies = [
     "pytest>=8.0",
 ]
 
+[project.optional-dependencies]
+# 8-bit loading for the 31B/32B models on 48 GB cards (exploration/shiller_user_turns): uv sync --extra quant
+quant = ["bitsandbytes>=0.45"]
+
 [tool.uv]
 package = false
 
