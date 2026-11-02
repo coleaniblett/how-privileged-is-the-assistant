@@ -2,4 +2,4 @@ model,condition,n,precision,ended_turn,handoff_to_assistant,new_user_turn,assist
 gemma4-31b-it,empty,5,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.4,0.0,0.0,0.4,0.4,0.0,0.0,0.4,0.8,0.8
 gemma4-31b-it,ordinary,100,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.26,0.0,0.0,0.26,0.26,0.0,0.0,0.75,0.42,0.27
 gemma4-31b-it,register,50,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.06,0.0,0.0,0.24,0.24,0.0,0.0,0.4,0.76,0.8
-gemma4-31b-it,norm,5,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.0,0.0,0.0,1.0,1.0,0.0,0.0,1.0,0.0,0.0
+gemma4-31b-it,norm,50,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.0,0.0,0.0,0.7,0.7,0.0,0.0,1.0,0.0,0.0
