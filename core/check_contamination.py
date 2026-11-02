@@ -37,11 +37,11 @@ def rl_turns(prompt):
     return list(zip(parts[1::2], parts[2::2]))
 
 
-def dolci_turns(names=tuple(DOLCI)):
+def dolci_turns(names=tuple(DOLCI), revisions=None):
     """{name: {"user": set, "assistant": set, "hash": set}} of normalized turn texts per Dolci set."""
     out = {}
     for name in names:
-        ds = load_dataset(DOLCI[name], split="train")
+        ds = load_dataset(DOLCI[name], split="train", revision=(revisions or {}).get(name))
         seen = {"user": set(), "assistant": set(), "hash": set()}
         if name == "rl":
             for batch in ds.select_columns(["prompt", "conversation_hash"]).iter(batch_size=10_000):
@@ -67,6 +67,27 @@ def dolci_turns(names=tuple(DOLCI)):
 def is_contaminated(turns, text, role="user", conv_hash=None):
     t = norm(text)
     return any(t in s[role] or (conv_hash and conv_hash in s["hash"]) for s in turns.values())
+
+
+def contamination_record(turns, text, conv_hash=None):
+    """Auditable normalized exact matches against BOTH training roles and WildChat hashes.
+
+    None means no check, not a negative result. An index returned by dolci_turns covers
+    the named sets only; absence of a match is not a broader contamination guarantee.
+    Caller records dataset revisions/scope in its manifest.
+    """
+    if not turns:
+        return {"status": "unchecked", "checked_datasets": [], "matches": []}
+    matches = []
+    for name, seen in sorted(turns.items()):
+        for role in ("user", "assistant"):
+            if norm(text) in seen[role]:
+                matches.append({"training_dataset": DOLCI[name], "kind": "normalized_exact_text",
+                                "training_role": role})
+        if conv_hash and conv_hash in seen["hash"]:
+            matches.append({"training_dataset": DOLCI[name], "kind": "conversation_hash"})
+    return {"status": "matched" if matches else "no_exact_match",
+            "checked_datasets": [DOLCI[n] for n in sorted(turns)], "matches": matches}
 
 
 def main():

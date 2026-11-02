@@ -99,6 +99,8 @@ results/<run>/vestigial_regression/    results.md, summary.csv, nll_*.png, posit
                                        generations/<stage>.jsonl (flagged) and <stage>_counts.csv
 results/<run>/logit_distortion/, results/<run>/overgeneralization/    their tables and figures
 results/<run>/extras/                  role_swap/, coin_toss/, role_swap.md, coin_toss.md, *_summary.csv
+candidates/logit_distortion/<build>/   original-conversation candidates (core.build_conversations): unchecked, not
+                                       core.score input; docs/conversation_candidates.md
 ```
 
 Frozen, never modified, moved or overwritten: `data/` (regenerate only through the documented commands),
@@ -149,4 +151,6 @@ uv run python -m core.render                     # -> docs/rendered_examples.md
 bash scripts/run_gpu.sh                          # everything, per checkpoint -> results/olmo3-7b/
 RUN=olmo3-7b_preceding bash scripts/run_gpu.sh --preceding-turn      # robustness run
 uv run python -m measures.vestigial_regression.analyze               # re-analyze from results/olmo3-7b/core/
+uv run python -m core.build_conversations --out candidates/logit_distortion/<new>  # conversation candidates (no weights)
+uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v1  # offline verify + audit
 ```

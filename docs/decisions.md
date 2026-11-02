@@ -312,3 +312,32 @@ are exactly `prefill_id, sample, prefill, continuation, stopped_on_eos` as befor
 (the legacy OLMo layout keeps the old format). `flags.py` uses the ids when present and re-tokenizes the user portion otherwise (which can miss a
 no-space loop that merges into fewer tokens). The measure's own `*_counts.csv` gained a `token_loop` column; `test_smoke.py`'s pinned column list
 was updated for it.
+## 2026-11-02: core: separate original-conversation candidates for logit distortion
+
+Added `core.build_conversations`, source adapters in `core.conversations`, and `core.conversation_audit`.
+This is an alternative text route for the measure, added alongside (not replacing) the isolated authorship sets
+merged earlier today (`core.prepare_data --authorship`, `data/texts_authorship.jsonl`), which are unchanged. Which
+route logit distortion uses is an open decision for Grace with Cole (STATUS.md); no measure outcome criteria or
+analysis code changed. OASST1 uses one seeded, continuous
+root-to-leaf branch with actual ancestors; WildChat and original UltraChat retain their existing exchanges.
+All conversations have at least two completed exchanges. Separate target records preserve exactly the
+preceding original messages; ineligible intermediate turns remain available as context. Authorship labels
+retain source-specific bases, especially WildChat's human-submitted assumption.
+
+New candidate output is `candidates/logit_distortion/pilot_v1/`, not legacy `data/` or frozen results. The
+bounded pilot uses 300 inspected candidates per source and 8 selected conversations per source. Its
+20–300 target-token / 4096 preceding-context-token limits are provisional inspection settings, not final
+matching criteria. Sources remain separate, and windows are explicitly not uniform corpus samples.
+The pilot is contamination-unchecked. `check_contamination` gains an optional revision map for its existing
+Dolci loader and an additive auditable matcher covering both target roles, conversation hashes, and context
+messages. Existing calls/flags/output formats remain compatible. No model weights, scoring, or generation
+are required by the new builder. Original-context scoring integration is a subsequent task; the versioned
+candidate format is deliberately distinct from `core.score`'s isolated-turn input, and `core.score` now exits with an
+error on any input row carrying `format=conversation_candidates_v1` (`config.CONVERSATION_FORMAT`) instead of
+scoring it without its history. Legacy rows have no `format` field, so existing inputs, flags and outputs are
+unchanged. The branch was written at 16:35 UTC on the pre-family `main` and integrated onto `main` after the
+family and authorship commits; the pilot was rebuilt from the integrated code and compared with the original build.
+
+See `docs/conversation_candidates.md` for schema verification, sampling, exact reproduction/audit/test
+commands, limitations, and the source-attributed bounded sample. Final sizes, source composition, length
+matching, and contamination policy must be decided from the audit before examining model outcomes.

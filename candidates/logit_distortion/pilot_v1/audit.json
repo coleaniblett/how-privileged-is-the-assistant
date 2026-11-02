@@ -1,0 +1,654 @@
+{
+  "candidate_only": true,
+  "cells": [
+    {
+      "authorship": "human",
+      "contamination_status": {
+        "unchecked": 18
+      },
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 10,
+      "eligible_follow_up": 5,
+      "eligible_opening": 5,
+      "eligible_preceding_context_tokens": {
+        "max": 380,
+        "median": 42.0,
+        "min": 0,
+        "n": 10,
+        "p25": 0.0,
+        "p75": 261.75,
+        "p95": 351.2
+      },
+      "eligible_target_tokens": {
+        "max": 71,
+        "median": 34.0,
+        "min": 20,
+        "n": 10,
+        "p25": 27.5,
+        "p75": 43.5,
+        "p95": 60.65
+      },
+      "excluded": 8,
+      "exclusion_reasons": {
+        "target_too_short": 8
+      },
+      "follow_up": 10,
+      "group": "human_user",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 609,
+        "median": 77.5,
+        "min": 0,
+        "n": 18,
+        "p25": 0.0,
+        "p75": 201.5,
+        "p95": 414.35
+      },
+      "role": "user",
+      "source": "oasst1",
+      "target_tokens": {
+        "max": 71,
+        "median": 20.5,
+        "min": 6,
+        "n": 18,
+        "p25": 11.0,
+        "p75": 36.0,
+        "p95": 51.45
+      },
+      "targets": 18
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {
+        "unchecked": 16
+      },
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 13,
+      "eligible_follow_up": 8,
+      "eligible_opening": 5,
+      "eligible_preceding_context_tokens": {
+        "max": 406,
+        "median": 104,
+        "min": 40,
+        "n": 13,
+        "p25": 72.0,
+        "p75": 235.0,
+        "p95": 382.6
+      },
+      "eligible_target_tokens": {
+        "max": 268,
+        "median": 101,
+        "min": 37,
+        "n": 13,
+        "p25": 50.0,
+        "p75": 230.0,
+        "p95": 266.2
+      },
+      "excluded": 3,
+      "exclusion_reasons": {
+        "target_too_long": 1,
+        "target_too_short": 2
+      },
+      "follow_up": 8,
+      "group": "human_assistant",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 406,
+        "median": 94.5,
+        "min": 40,
+        "n": 16,
+        "p25": 60.0,
+        "p75": 189.25,
+        "p95": 376.75
+      },
+      "role": "assistant",
+      "source": "oasst1",
+      "target_tokens": {
+        "max": 322,
+        "median": 89.0,
+        "min": 5,
+        "n": 16,
+        "p25": 43.25,
+        "p75": 232.0,
+        "p95": 281.5
+      },
+      "targets": 16
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {},
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "model_user",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "role": "user",
+      "source": "oasst1",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {},
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "model_assistant",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "role": "assistant",
+      "source": "oasst1",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {},
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "human_user",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "role": "user",
+      "source": "ultrachat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {},
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "human_assistant",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "role": "assistant",
+      "source": "ultrachat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {
+        "unchecked": 38
+      },
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 26,
+      "eligible_follow_up": 25,
+      "eligible_opening": 1,
+      "eligible_preceding_context_tokens": {
+        "max": 1077,
+        "median": 504.0,
+        "min": 0,
+        "n": 26,
+        "p25": 336.0,
+        "p75": 782.75,
+        "p95": 1070.0
+      },
+      "eligible_target_tokens": {
+        "max": 45,
+        "median": 29.5,
+        "min": 20,
+        "n": 26,
+        "p25": 25.5,
+        "p75": 38.0,
+        "p95": 44.75
+      },
+      "excluded": 12,
+      "exclusion_reasons": {
+        "target_too_short": 12
+      },
+      "follow_up": 30,
+      "group": "model_user",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 1077,
+        "median": 379.5,
+        "min": 0,
+        "n": 38,
+        "p25": 145.0,
+        "p75": 664.75,
+        "p95": 1058.0
+      },
+      "role": "user",
+      "source": "ultrachat",
+      "target_tokens": {
+        "max": 45,
+        "median": 26.0,
+        "min": 8,
+        "n": 38,
+        "p25": 18.0,
+        "p75": 31.75,
+        "p95": 44.15
+      },
+      "targets": 38
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {
+        "unchecked": 38
+      },
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 38,
+      "eligible_follow_up": 30,
+      "eligible_opening": 8,
+      "eligible_preceding_context_tokens": {
+        "max": 1113,
+        "median": 420.5,
+        "min": 41,
+        "n": 38,
+        "p25": 165.0,
+        "p75": 700.75,
+        "p95": 1101.5
+      },
+      "eligible_target_tokens": {
+        "max": 296,
+        "median": 141.5,
+        "min": 68,
+        "n": 38,
+        "p25": 121.0,
+        "p75": 216.0,
+        "p95": 282.3
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 30,
+      "group": "model_assistant",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 1113,
+        "median": 420.5,
+        "min": 41,
+        "n": 38,
+        "p25": 165.0,
+        "p75": 700.75,
+        "p95": 1101.5
+      },
+      "role": "assistant",
+      "source": "ultrachat",
+      "target_tokens": {
+        "max": 296,
+        "median": 141.5,
+        "min": 68,
+        "n": 38,
+        "p25": 121.0,
+        "p75": 216.0,
+        "p95": 282.3
+      },
+      "targets": 38
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {
+        "unchecked": 37
+      },
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 19,
+      "eligible_follow_up": 14,
+      "eligible_opening": 5,
+      "eligible_preceding_context_tokens": {
+        "max": 3232,
+        "median": 719,
+        "min": 0,
+        "n": 19,
+        "p25": 196.5,
+        "p75": 1258.5,
+        "p95": 2380.6
+      },
+      "eligible_target_tokens": {
+        "max": 299,
+        "median": 33,
+        "min": 20,
+        "n": 19,
+        "p25": 24.0,
+        "p75": 121.0,
+        "p95": 278.3
+      },
+      "excluded": 18,
+      "exclusion_reasons": {
+        "target_too_long": 2,
+        "target_too_short": 16
+      },
+      "follow_up": 29,
+      "group": "human_user",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 3879,
+        "median": 808,
+        "min": 0,
+        "n": 37,
+        "p25": 393.0,
+        "p75": 1881.0,
+        "p95": 3266.4
+      },
+      "role": "user",
+      "source": "wildchat",
+      "target_tokens": {
+        "max": 2476,
+        "median": 21,
+        "min": 4,
+        "n": 37,
+        "p25": 10.0,
+        "p75": 35.0,
+        "p95": 536.8
+      },
+      "targets": 37
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {},
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "human_assistant",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "role": "assistant",
+      "source": "wildchat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {},
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "model_user",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "role": "user",
+      "source": "wildchat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {
+        "unchecked": 37
+      },
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 22,
+      "eligible_follow_up": 18,
+      "eligible_opening": 4,
+      "eligible_preceding_context_tokens": {
+        "max": 3896,
+        "median": 817.5,
+        "min": 39,
+        "n": 22,
+        "p25": 472.75,
+        "p75": 1651.0,
+        "p95": 2303.7
+      },
+      "eligible_target_tokens": {
+        "max": 277,
+        "median": 176.5,
+        "min": 38,
+        "n": 22,
+        "p25": 140.25,
+        "p75": 202.0,
+        "p95": 263.1
+      },
+      "excluded": 15,
+      "exclusion_reasons": {
+        "target_too_long": 14,
+        "target_too_short": 1
+      },
+      "follow_up": 29,
+      "group": "model_assistant",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 3896,
+        "median": 1118,
+        "min": 39,
+        "n": 37,
+        "p25": 442.0,
+        "p75": 1913.0,
+        "p95": 3440.2
+      },
+      "role": "assistant",
+      "source": "wildchat",
+      "target_tokens": {
+        "max": 799,
+        "median": 210,
+        "min": 18,
+        "n": 37,
+        "p25": 168.0,
+        "p75": 409.0,
+        "p95": 547.0
+      },
+      "targets": 37
+    }
+  ],
+  "groups": {
+    "human_assistant": {
+      "eligible": 13,
+      "targets": 16
+    },
+    "human_user": {
+      "eligible": 29,
+      "targets": 55
+    },
+    "model_assistant": {
+      "eligible": 60,
+      "targets": 75
+    },
+    "model_user": {
+      "eligible": 26,
+      "targets": 38
+    }
+  },
+  "sources": {
+    "oasst1": {
+      "adapter_accepted": 50,
+      "conversation_budget_shortfall": 0,
+      "conversation_exclusions": {
+        "conversation_budget": 42,
+        "non_english_branch": 192,
+        "too_few_exchanges": 50,
+        "unreviewed_or_deleted_branch": 8
+      },
+      "dataset": "OpenAssistant/oasst1",
+      "duplicate_conversations": 0,
+      "eligible_targets": 23,
+      "exchanges_histogram": {
+        "2": 8
+      },
+      "exchanges_per_conversation": {
+        "max": 2,
+        "median": 2.0,
+        "min": 2,
+        "n": 8,
+        "p25": 2.0,
+        "p75": 2.0,
+        "p95": 2.0
+      },
+      "input_rows_sha256": "a5c8cc7c8c0d2ac07920751effdb7061120b67f7fff76064f33b8cfbe75cbeef",
+      "inspected_candidates": 300,
+      "revision": "fdf72ae0827c1cda404aff25b6603abec9e3399b",
+      "rows_read": 4401,
+      "selected_conversations": 8,
+      "split": "validation",
+      "system_messages": 0,
+      "targets": 34,
+      "trees_in_complete_split": 518,
+      "window": "complete split read; first roots in encounter order"
+    },
+    "ultrachat": {
+      "adapter_accepted": 300,
+      "conversation_budget_shortfall": 0,
+      "conversation_exclusions": {
+        "conversation_budget": 292
+      },
+      "dataset": "openbmb/UltraChat",
+      "duplicate_conversations": 0,
+      "eligible_targets": 64,
+      "exchanges_histogram": {
+        "3": 3,
+        "5": 3,
+        "7": 2
+      },
+      "exchanges_per_conversation": {
+        "max": 7,
+        "median": 5.0,
+        "min": 3,
+        "n": 8,
+        "p25": 3.0,
+        "p75": 5.5,
+        "p95": 7.0
+      },
+      "input_rows_sha256": "115ce757ab95020a0f26a3d9a10958ffd1a6368f2e60b6f12a49821b1c69b179",
+      "inspected_candidates": 300,
+      "revision": "f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0",
+      "rows_read": 300,
+      "selected_conversations": 8,
+      "split": "train",
+      "system_messages": 0,
+      "targets": 76,
+      "window": "first rows in dataset iteration order; no corpus shuffle"
+    },
+    "wildchat": {
+      "adapter_accepted": 71,
+      "conversation_budget_shortfall": 0,
+      "conversation_exclusions": {
+        "conversation_budget": 63,
+        "non_english_conversation": 129,
+        "non_english_message": 26,
+        "too_few_exchanges": 74
+      },
+      "dataset": "allenai/WildChat-1M",
+      "duplicate_conversations": 0,
+      "eligible_targets": 41,
+      "exchanges_histogram": {
+        "2": 3,
+        "3": 2,
+        "5": 1,
+        "9": 1,
+        "11": 1
+      },
+      "exchanges_per_conversation": {
+        "max": 11,
+        "median": 3.0,
+        "min": 2,
+        "n": 8,
+        "p25": 2.0,
+        "p75": 6.0,
+        "p95": 10.3
+      },
+      "input_rows_sha256": "4ea60afcfe76dc84cc4cd79b05d7a0115c78e73bdf15cf2d061b183e131e24ab",
+      "inspected_candidates": 300,
+      "revision": "7d6490e462285cf85d91eabea0f9a954fbddcd1f",
+      "rows_read": 300,
+      "selected_conversations": 8,
+      "split": "train",
+      "system_messages": 0,
+      "targets": 74,
+      "window": "first rows in dataset iteration order; no corpus shuffle"
+    }
+  },
+  "totals": {
+    "conversations": 24,
+    "eligible": 128,
+    "excluded": 56,
+    "targets": 184
+  }
+}

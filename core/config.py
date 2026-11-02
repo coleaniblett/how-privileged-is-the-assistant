@@ -192,3 +192,13 @@ def conditions(kind):
 GEN_MAX_NEW_TOKENS = 120
 GEN_TEMPERATURE = 0.7
 GEN_SAMPLES = 3
+
+# Conversation candidates are a separate, versioned format, never legacy isolated texts.
+# core.score refuses records carrying this format: original-context scoring is a later task.
+CONVERSATION_FORMAT = "conversation_candidates_v1"
+CONVERSATION_SOURCES = {
+    "oasst1": {"dataset": DATASET_IDS["oasst1"], "split": "validation"},
+    "wildchat": {"dataset": DATASET_IDS["wildchat"], "split": "train"},
+    "ultrachat": {"dataset": "openbmb/UltraChat", "split": "train"},
+}
+CONVERSATION_CANDIDATES_DIR = "candidates/logit_distortion/pilot_v1"

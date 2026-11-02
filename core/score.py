@@ -24,6 +24,14 @@ from core import config
 from core.render import load_jsonl, load_tokenizer, render_all
 
 
+def reject_conversation_candidates(rows, path):
+    """Conversation-candidate records (core.build_conversations) carry their original history, which this
+    isolated-turn scorer would ignore; scoring them here would not be conversational scoring."""
+    if any(isinstance(row, dict) and row.get("format") == config.CONVERSATION_FORMAT for row in rows):
+        raise SystemExit(f"{path}: {config.CONVERSATION_FORMAT} records are not core.score input; "
+                         "original-context scoring is not implemented yet (docs/conversation_candidates.md)")
+
+
 def resolve(model_arg, stage=None):
     model_id = config.MODELS.get(model_arg, model_arg)
     if stage is None:
@@ -149,7 +157,9 @@ def main():
 
     model_id, stage = resolve(args.model, args.stage)
     tok = load_tokenizer(args.tokenizer)
-    rows = first_n_per_set(load_jsonl(args.dataset)[: args.limit], args.n_per_set)
+    rows = load_jsonl(args.dataset)
+    reject_conversation_candidates(rows, args.dataset)
+    rows = first_n_per_set(rows[: args.limit], args.n_per_set)
     by_id = {row["id"]: row for row in rows}
     assert len(by_id) == len(rows), "text ids must be unique"
     items = []

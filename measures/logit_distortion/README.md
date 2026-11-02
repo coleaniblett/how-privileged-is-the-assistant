@@ -4,6 +4,15 @@
 computed yet. The pre-registered criteria below are frozen once results for this measure exist under
 `results/<run>/logit_distortion/` (AGENTS.md).
 
+## Candidate data construction (2026-11-02)
+
+The original-conversation candidate builder is implemented in `core.build_conversations`; see
+[its specification and reproduction commands](../../docs/conversation_candidates.md) and the
+[pilot audit](../../candidates/logit_distortion/pilot_v1/audit.md). These are unchecked candidates,
+not held-out scoring inputs. This is an alternative to the isolated authorship sets described below
+(`data/texts_authorship.jsonl`, unchanged); which route the measure uses is still open. Original-context
+scoring integration is a subsequent task. No analysis or pre-registered outcome criteria were changed.
+
 ## Spec
 
 We compute the calibration gap (mean NLL minus mean next-token entropy) on user text in the user slot and
