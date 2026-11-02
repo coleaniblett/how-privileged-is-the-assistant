@@ -91,3 +91,29 @@ report both raw effects). Its most persona-relevant result: a belief held by the
 role-play persona far more than one held by a role-played character (possible future overgeneralization item).
 
 Stale elsewhere: the `AGENTS.md` measures table still says overgeneralization is "in design; nothing implemented".
+
+## Update (2026-11-02, second session)
+
+- `build_items.py` written and run. Sources: fiction `euclaise/writingprompts`, forum `webis/tldr-17` (loads with
+  `revision="refs/convert/parquet"`), news `vblagoje/cc_news`, email `corbt/enron-emails` (hard-wrapped lines
+  unwrapped, quoted/forwarded parts cut), speech `nbroad/mediasum` (parquet revision; `SPEAKER: utterance` lines,
+  C is the next sentence of the same speaker). Fiction drops ~94% of stories for PTB/curly-quote spacing artefacts.
+  `data/overgeneralization_passages.jsonl`: 320 passages (48 assigned + 16 reserve per genre); the sentence-level
+  Dolci filter dropped 2 of 480 candidates (news). Phrasing names are proposals (`PHRASINGS` in build_items.py).
+- **Next:** write `insertions.jsonl` (T, H, N per assigned passage; reject + replace from reserve where unusable),
+  then `build_items merge`, then point `ITEMS_PATH` at `data/overgeneralization_items.jsonl`.
+- `minimal_pairs analyze` now also reports score levels in the assistant and user contexts at every stage,
+  base included (the Qwen3 "base model is a reader too" lesson).
+- `persona_carryover.py` (descriptive extra): recreates the Qwen3 persona-carryover lesson. Built
+  (`data/persona_carryover.jsonl`, 36 items x 2 beliefs x 6 conditions), OLMo rendering and a SmolLM2 smoke run
+  tested, and scored on all four OLMo stages in fp32 (`results/olmo3-7b/overgeneralization/persona_carryover.md`).
+  Result: the prediction (leak gap > 0) holds at every stage and grows from base (+0.67 nats) to Instruct (+3.0;
+  change from base excludes zero from DPO on), with the same-holder controls passing pooled. But only at base does
+  the Assistant's belief carry into the new persona *positively* (and only for coin and path); from DPO on, new
+  personas move *away* from the previous speaker's belief, by about 4.3 nats for a character's belief and 1.3 for
+  the Assistant's. So the gap is relative: the new persona contradicts a previous character more than it
+  contradicts the Assistant. Confound: in the character condition role-play is already under way at the switch.
+  Per-domain controls fail in places (path after SFT; coin character->same after DPO).
+- Moved to arena9-marble (RTX 4090, 24 GB): fp32 OLMo scoring does not fit there; bf16 must be validated against
+  fp32 and logged in docs/decisions.md before scoring there.
+- Tests: 11 in `tests/test_overgeneralization.py` pass.

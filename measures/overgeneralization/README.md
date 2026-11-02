@@ -32,6 +32,12 @@ normalized between the two poles, and track the projection of non-assistant text
 **Behavioral companion.** Counts of assistant tics (the four traits above, plus the register phrases of
 `measures/vestigial_regression/flags.py`) in sampled continuations of the same non-assistant passages.
 
+**Persona carryover (descriptive extra, outside the verdict).** `persona_carryover.py`: a skewed belief (coin,
+trail fork, boxes) is voiced either by the Assistant or by a character it role-plays; then the user asks for a
+prediction from a new role-played persona (or from the holder again, the positive control). Does the Assistant's
+belief carry into the new persona more than the character's? Recreates a lesson from earlier Qwen3 work (not a
+result here) on this repo's models; prediction and readout are fixed in its docstring.
+
 **Exploratory only.** User/assistant representational convergence (do user-slot and assistant-slot
 representations move together across stages?) is exploratory and is *not* the overgeneralization test.
 
@@ -105,10 +111,16 @@ uses no trait data; if so, record that here and in `docs/decisions.md` before sc
 
 ## Running
 
-Primary measure only (`minimal_pairs.py`). The items default to the drafts in `example_items.jsonl` until the
-full set is built under `data/`. Not yet in `scripts/run_gpu.sh`.
+Primary measure (`minimal_pairs.py`). The items default to the drafts in `example_items.jsonl` until the
+full set is built under `data/` (`build_items.py`: passages, then hand-written insertions, then merge). Not yet in
+`scripts/run_gpu.sh`.
 
 ```bash
+uv run python -m measures.overgeneralization.build_items passages                 # -> data/overgeneralization_passages.jsonl (streams sources + Dolci)
+uv run python -m measures.overgeneralization.build_items merge                    # + insertions.jsonl -> data/overgeneralization_items.jsonl
+uv run python -m measures.overgeneralization.persona_carryover build              # -> data/persona_carryover.jsonl
+uv run python -m measures.overgeneralization.persona_carryover score --model base  # per stage, fp32 (GPU for OLMo)
+uv run python -m measures.overgeneralization.persona_carryover analyze            # -> persona_carryover.md, _summary.csv
 uv run python -m measures.overgeneralization.minimal_pairs score --model base     # per stage, fp32 (GPU for OLMo)
 uv run python -m measures.overgeneralization.minimal_pairs analyze                # results.md, summary.csv
 uv run pytest tests/test_overgeneralization.py                                    # CPU: OLMo rendering, verdict logic, SmolLM2 smoke run

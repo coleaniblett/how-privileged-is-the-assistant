@@ -211,7 +211,11 @@ def run_analysis(frames, items=None, delta=0.25, match_bound=2.0, max_len_diff=2
     md += table("sharpening change", "plain", "Sharpening diagnostic, plain: change from base in log P(N+C) - log P(H+C)")
     for v in VARIANTS:
         md += table(f"logprob {v}", "plain", f"Absolute log P({v} continuation), plain context")
-    md += table("score", "plain", "Score level (T vs H), plain context")
+    # the base model reads chat-formatted text too, so its slot scores move as well: report levels per context
+    for ctx in CONTEXTS:
+        md += table("score", ctx, f"Score level (T vs H), {ctx} context, every stage including base")
+    for v in ("trait", "human"):
+        md += table(f"logprob {v}", "assistant", f"Absolute log P({v} continuation), assistant slot")
 
     if items is not None and any("phrasing" in it for it in items):
         ph = pd.Series({it["id"]: it.get("phrasing", "") for it in items}, name="phrasing")
