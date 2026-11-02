@@ -27,6 +27,8 @@ def drv(tmp_path_factory):
 
 def test_dry_run_lists_every_checkpoint_in_order_and_writes_nothing(tmp_path):
     env = {**os.environ, "OVERNIGHT_LOGS": str(tmp_path)}
+    snapshot = lambda: sorted(str(p) for p in (ROOT / "results").rglob("*") if "capstone" in str(p))
+    before = snapshot()
     out = subprocess.run([sys.executable, str(ROOT / "scripts" / "overnight_collect.py"), "--dry-run"], capture_output=True, text=True,
                          cwd=ROOT, env=env, check=True).stdout
     order = [l.split("=====")[1].split("(")[0].strip() for l in out.splitlines() if "=====" in l]
@@ -35,7 +37,7 @@ def test_dry_run_lists_every_checkpoint_in_order_and_writes_nothing(tmp_path):
     assert out.count("[dry run]") == 8 * 3 + 2 * 2  # scores, authorship scores, generation per checkpoint + the two think-off score tasks per Qwen checkpoint
     assert "--n-per-set 100" in out and out.count("--save-ids") == 8 and out.count("assistant_think_block'] = False") == 4
     assert "results/capstone_think_off/qwen3-8b/core/scores" in out and "results/capstone/qwen3-8b/core/scores" in out
-    assert not (ROOT / "results" / "capstone").exists()
+    assert snapshot() == before  # a dry run adds nothing under results/
 
 
 @pytest.fixture(scope="module")
@@ -97,3 +99,157 @@ def test_generation_integrity(drv, tiny_outputs, tmp_path):
     noids = tmp_path / "noids.jsonl"
     noids.write_text("\n".join(json.dumps({k: v for k, v in x.items() if k != "continuation_ids"}) for x in rows) + "\n")
     assert not drv.check_generations(str(noids), pre, samples=3, max_new=8)["ok"]
+
+
+# --- resilience: atomic outputs, the supervisor, the lock, the status command ---------------------------------------------------
+
+import fcntl  # noqa: E402
+import textwrap  # noqa: E402
+
+WRITE = "import sys; open(sys.argv[1] + '/x.csv', 'w').write('1'); open(sys.argv[1] + '/x_tokens.parquet', 'w').write('2')"
+FILES = ["x.csv", "x_tokens.parquet"]
+
+
+@pytest.fixture
+def quiet(drv, monkeypatch):
+    monkeypatch.setattr(drv, "gpu_busy", lambda: [])  # never wait on the real GPU in a test
+    drv.SUMMARY["tasks"].clear()
+    return drv
+
+
+def test_a_successful_task_is_moved_into_place_whole_and_never_redone(quiet, tmp_path):
+    out = str(tmp_path / "out")
+    r = quiet.run_task("t_ok", [sys.executable, "-c", WRITE, "{OUT}"], out, FILES, False)
+    assert r["status"] == "ok" and sorted(os.listdir(out)) == sorted(FILES)  # no .tmp_ directory left behind
+    again = quiet.run_task("t_ok", [sys.executable, "-c", "raise SystemExit(9)", "{OUT}"], out, FILES, False)
+    assert again["status"].startswith("skipped") and (Path(out) / "x.csv").read_text() == "1"  # existing output untouched
+
+
+def test_a_failed_task_leaves_nothing_in_the_output_directory(quiet, tmp_path):
+    out = str(tmp_path / "out")
+    code = "import sys; open(sys.argv[1] + '/x.csv', 'w').write('partial'); raise SystemExit(2)"
+    r = quiet.run_task("t_fail", [sys.executable, "-c", code, "{OUT}"], out, FILES, False)
+    assert r["status"].startswith("failed") and not os.path.exists(os.path.join(out, "x.csv"))
+    assert not any(n.startswith(".tmp_") for n in os.listdir(out))
+
+
+def test_a_leftover_temp_directory_and_log_from_an_interrupted_attempt_are_handled(quiet, tmp_path):
+    out = tmp_path / "out"
+    (out / ".tmp_t_resume").mkdir(parents=True)
+    (out / ".tmp_t_resume" / "x.csv").write_text("truncated by a kill")
+    log = Path(quiet.LOGS) / "t_resume.log"
+    log.parent.mkdir(parents=True, exist_ok=True)
+    log.write_text("log of the interrupted attempt")
+    r = quiet.run_task("t_resume", [sys.executable, "-c", WRITE, "{OUT}"], str(out), FILES, False)
+    assert r["status"] == "ok" and (out / "x.csv").read_text() == "1" and not (out / ".tmp_t_resume").exists()
+    kept = [p for p in log.parent.glob("t_resume.interrupted-*.log")]
+    assert len(kept) == 1 and kept[0].read_text() == "log of the interrupted attempt"  # kept, not overwritten
+
+
+def test_out_of_memory_is_retried_once_with_half_the_batch_size(quiet, tmp_path):
+    code = textwrap.dedent("""
+        import sys
+        bs, out = int(sys.argv[2]), sys.argv[3]
+        if bs > 2:
+            print('torch.OutOfMemoryError: CUDA out of memory'); raise SystemExit(1)
+        open(out + '/x.csv', 'w').write(str(bs)); open(out + '/x_tokens.parquet', 'w').write('2')
+    """)
+    out = str(tmp_path / "out")
+    r = quiet.run_task("t_oom", [sys.executable, "-c", code, "--batch-size", "4", "{OUT}"], out, FILES, False, batch_arg=True)
+    assert r["status"] == "ok after out-of-memory retry" and r["retries"] == 1 and (Path(out) / "x.csv").read_text() == "2"
+    r2 = quiet.run_task("t_other", [sys.executable, "-c", "raise SystemExit(5)", "--batch-size", "4", "{OUT}"], str(tmp_path / "o2"), FILES, False, batch_arg=True)
+    assert r2["status"].startswith("failed") and r2["retries"] == 0  # any other failure is not retried
+
+
+def supervise(tmp_path, driver_body, **env):
+    stub = tmp_path / "driver.sh"
+    stub.write_text(driver_body)
+    e = {**os.environ, "OVERNIGHT_LOGS": str(tmp_path / "logs"), "OVERNIGHT_DRIVER": str(stub), "RESTART_WAIT": "0", **env}
+    p = subprocess.run(["bash", str(ROOT / "scripts" / "overnight_supervise.sh")], capture_output=True, text=True, cwd=ROOT, env=e, timeout=60)
+    return p, (tmp_path / "logs" / "supervisor.log").read_text() if (tmp_path / "logs" / "supervisor.log").exists() else ""
+
+
+def test_supervisor_restarts_a_driver_that_dies_until_the_plan_completes(tmp_path):
+    counter = tmp_path / "n"
+    body = f'n=$(cat {counter} 2>/dev/null || echo 0); echo $((n+1)) > {counter}; [ "$n" -ge 2 ] && exit 0; exit 1\n'
+    p, log = supervise(tmp_path, body, MAX_RESTARTS="5")
+    assert p.returncode == 0 and log.count("starting the driver") == 3 and "plan complete" in log
+
+
+def test_supervisor_gives_up_after_the_restart_limit_and_stops_on_a_held_driver_lock(tmp_path):
+    p, log = supervise(tmp_path, "exit 1\n", MAX_RESTARTS="2")
+    assert p.returncode == 1 and log.count("starting the driver") == 3 and "giving up" in log
+    p, log = supervise(tmp_path / "b", "exit 3\n") if (tmp_path / "b").mkdir() is None else (None, "")
+    assert p.returncode == 3 and log.count("starting the driver") == 1
+
+
+def test_only_one_supervisor_at_a_time(tmp_path):
+    logs = tmp_path / "logs"
+    logs.mkdir()
+    with open(logs / ".supervisor.lock", "w") as held:
+        fcntl.flock(held, fcntl.LOCK_EX)
+        e = {**os.environ, "OVERNIGHT_LOGS": str(logs), "OVERNIGHT_DRIVER": "/bin/true"}
+        p = subprocess.run(["bash", str(ROOT / "scripts" / "overnight_supervise.sh")], capture_output=True, text=True, cwd=ROOT, env=e, timeout=30)
+    assert p.returncode == 3 and "already running" in p.stdout
+
+
+def test_status_command_tells_alive_stale_and_not_running_apart(tmp_path):
+    import datetime
+    fmt = lambda dt: dt.strftime("%Y-%m-%d %H:%M:%S UTC")
+    now = datetime.datetime.now(datetime.timezone.utc)
+    e = {**os.environ, "OVERNIGHT_LOGS": str(tmp_path)}
+    run = lambda: subprocess.run([sys.executable, str(ROOT / "scripts" / "overnight_status.py")], capture_output=True, text=True, cwd=ROOT, env=e).stdout
+    assert "NOT RUNNING" in run()
+    (tmp_path / "status.json").write_text(json.dumps({"pid": os.getpid(), "heartbeat": fmt(now), "task": "t", "since": fmt(now)}))
+    assert "driver: ALIVE" in run() and "current task: t" in run()
+    (tmp_path / "status.json").write_text(json.dumps({"pid": os.getpid(), "heartbeat": fmt(now - datetime.timedelta(minutes=10))}))
+    assert "STALE" in run()
+    (tmp_path / "status.json").write_text(json.dumps({"pid": 2 ** 22 + 12345, "heartbeat": fmt(now)}))
+    assert "NOT RUNNING" in run()
+
+
+def test_launcher_script_parses():
+    subprocess.run(["bash", "-n", str(ROOT / "scripts" / "overnight_launch.sh")], check=True)
+
+
+def test_children_die_with_the_driver_and_orphans_are_swept(drv):
+    import signal as sg
+    import time as tm
+    # 1. setpriv --pdeathsig: kill -9 the parent, the child is terminated by the kernel
+    code = ("import subprocess, sys, time; p = subprocess.Popen(sys.argv[1:]); print(p.pid, flush=True); time.sleep(60)")
+    parent = subprocess.Popen([sys.executable, "-c", code, *drv.die_with_parent(["sleep", "60"])], stdout=subprocess.PIPE, text=True)
+    child = int(parent.stdout.readline())
+    for _ in range(100):  # let setpriv install the signal and exec the command (the driver has run for seconds before any kill)
+        if os.path.exists(f"/proc/{child}") and open(f"/proc/{child}/cmdline").read().startswith("sleep"):
+            break
+        tm.sleep(0.05)
+    assert open(f"/proc/{child}/cmdline").read().startswith("sleep")
+    parent.send_signal(sg.SIGKILL)
+    parent.wait()
+    for _ in range(50):
+        if not os.path.exists(f"/proc/{child}") or open(f"/proc/{child}/stat").read().rsplit(")", 1)[1].split()[0] == "Z":
+            break
+        tm.sleep(0.1)
+    assert not os.path.exists(f"/proc/{child}") or open(f"/proc/{child}/stat").read().rsplit(")", 1)[1].split()[0] == "Z"
+    # 2. an orphan that looks like a collector child is swept; an unrelated process is not
+    marker = "--run capstone_orphan_test"
+    subprocess.run(["bash", "-c", f"(cd {ROOT} && {sys.executable} -c 'import time; time.sleep(120)' core.score {marker} &) ; "
+                                   f"(cd {ROOT} && {sys.executable} -c 'import time; time.sleep(120)' unrelated {marker} &)"], check=True)
+    tm.sleep(1)
+    swept = drv.sweep_orphans(match=marker)
+    assert len(swept) == 1
+    tm.sleep(1)
+    def python_procs(word):
+        out = []
+        for d in os.listdir("/proc"):
+            try:
+                argv = open(f"/proc/{d}/cmdline", "rb").read().split(b"\0")
+            except OSError:
+                continue
+            if d.isdigit() and "python" in os.path.basename(argv[0].decode()) and word.encode() in argv and marker.encode() in b" ".join(argv):
+                out.append(int(d))
+        return out
+    left = python_procs("unrelated")
+    assert len(left) == 1  # the unrelated process survived the sweep
+    for pid in left:
+        os.kill(pid, sg.SIGKILL)

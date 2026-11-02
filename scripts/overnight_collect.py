@@ -11,6 +11,12 @@ Rules: never overwrite an existing output (a finished task is skipped); disk is 
 weights and then the regenerable datasets cache, if needed); out-of-memory is retried once with half the batch size (generation: once, unchanged);
 any other failure is logged and the next checkpoint starts; each checkpoint is removed from the HF cache after use; integrity checks run after every
 checkpoint; everything is logged under results/capstone/logs/ (driver.log, one log per task, summary.json).
+
+Resilience (a session or connection reset must not cost more than the task in flight): run it through scripts/overnight_launch.sh, which starts
+scripts/overnight_supervise.sh in a tmux session. A finished task is never redone (its outputs exist), and a task writes into a temp directory
+that is moved into place only when it has succeeded, so a kill mid-task leaves no truncated output; an interrupted task's log is kept under a new
+name and its temp directory removed. One driver at a time (a lock), SIGHUP is ignored, and a heartbeat plus status.json show whether it is alive
+(scripts/overnight_status.py). Exit code 0 means the whole plan was attempted; 3 means another driver holds the lock.
 """
 
 import argparse
@@ -19,9 +25,12 @@ import glob
 import json
 import math
 import os
+import fcntl
 import shutil
+import signal
 import subprocess
 import sys
+import threading
 import time
 import traceback
 
@@ -121,55 +130,152 @@ def oom(log_path):
     return "out of memory" in tail or "outofmemoryerror" in tail
 
 
-def run_task(name, cmd, out_files, dry_run, batch_arg=None):
-    """Run one process; skip if its outputs exist; one retry on out-of-memory. Returns a result dict."""
+def die_with_parent(cmd):
+    """Prefix a command so the kernel terminates it if this driver dies (setpriv --pdeathsig): a hard kill of the driver must not leave a
+    core.score on the GPU for the restarted driver to collide with."""
+    return ["setpriv", "--pdeathsig", "TERM", "--"] + cmd if shutil.which("setpriv") else cmd
+
+
+def sweep_orphans(match="--run capstone"):
+    """Terminate leftover core.score / core.generate processes of a previous driver: same working directory as this repo, a command line with
+    `match`, a Python interpreter as the program (not a shell that merely mentions it), and a parent that is not this process. Only ever our own earlier children (one driver at a time is enforced by the lock)."""
+    me, killed = os.getpid(), []
+    for d in os.listdir("/proc"):
+        if not d.isdigit() or int(d) == me:
+            continue
+        try:
+            cwd = os.readlink(f"/proc/{d}/cwd")
+            text = open(f"/proc/{d}/cmdline", "rb").read().replace(b"\0", b" ").decode(errors="ignore")
+            ppid = int(open(f"/proc/{d}/stat").read().rsplit(")", 1)[1].split()[1])
+        except OSError:
+            continue
+        first = os.path.basename(text.split()[0]) if text.split() else ""
+        if (cwd == ROOT and "python" in first and ("core.score" in text or "core.generate" in text) and match in text and ppid != me):
+            killed.append((int(d), text[:140]))
+    for pid, text in killed:
+        log(f"sweeping a leftover process of an earlier driver: pid {pid}: {text}")
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except OSError:
+            continue
+    t0 = time.time()
+    while time.time() - t0 < 30 and any(os.path.exists(f"/proc/{pid}") for pid, _ in killed):
+        time.sleep(1)
+    for pid, _ in killed:
+        if os.path.exists(f"/proc/{pid}"):
+            try:
+                os.kill(pid, signal.SIGKILL)
+            except OSError:
+                pass
+    return [pid for pid, _ in killed]
+
+
+def rotate_log(log_path):
+    """Keep the log of an interrupted attempt under a new name instead of overwriting it."""
+    if os.path.exists(log_path):
+        stamp = datetime.datetime.fromtimestamp(os.path.getmtime(log_path), datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        os.replace(log_path, log_path.replace(".log", f".interrupted-{stamp}.log"))
+
+
+def run_task(name, cmd, out_dir, out_names, dry_run, batch_arg=None):
+    """Run one process whose command contains the placeholder {OUT}. It writes into a temp directory under out_dir; the files named in
+    out_names are moved into out_dir only after a clean exit (the completion marker, the first name, last), so out_dir never holds a partial
+    output. Skip if the outputs exist; one retry on out-of-memory. Returns a result dict."""
+    final = [os.path.join(out_dir, n) for n in out_names]
     res = dict(task=name, started=now(), status=None, seconds=None, retries=0, cmd=" ".join(cmd[:12]) + (" ..." if len(cmd) > 12 else ""))
-    if all(os.path.exists(f) for f in out_files):
+    if all(os.path.exists(f) for f in final):
         res.update(status="skipped (outputs exist, never overwritten)", seconds=0)
         log(f"{name}: outputs exist, skipped")
         SUMMARY["tasks"].append(res)
         return res
     if dry_run:
         res.update(status="dry run", seconds=0)
-        log(f"[dry run] {name}: {' '.join(cmd)}")
+        log(f"[dry run] {name}: {' '.join(cmd).replace('{OUT}', out_dir)}")
         return res
+    tmp = os.path.join(out_dir, f".tmp_{name}")
+    if os.path.isdir(tmp):  # left by an interrupted attempt: our own incomplete temp output, never a result
+        shutil.rmtree(tmp)
+        log(f"{name}: removed the temp directory of an interrupted attempt ({tmp})")
     wait_for_gpu()
+    set_status(task=name, since=now())
     t0 = time.time()
     for attempt in (0, 1):
         log_path = os.path.join(LOGS, f"{name}{'_retry' if attempt else ''}.log")
-        c = list(cmd)
+        rotate_log(log_path)
+        c = [x.replace("{OUT}", tmp) for x in cmd]
         if attempt and batch_arg:
             i = c.index("--batch-size")
             c[i + 1] = str(max(1, int(c[i + 1]) // 2))
+        os.makedirs(tmp, exist_ok=True)
         log(f"{name}: start{' (retry, ' + ' '.join(c[c.index('--batch-size'):c.index('--batch-size') + 2]) + ')' if attempt and batch_arg else ' (retry)' if attempt else ''}")
         with open(log_path, "w", encoding="utf-8") as lf:
-            rc = subprocess.run(c, stdout=lf, stderr=subprocess.STDOUT).returncode
-        if rc == 0 and all(os.path.exists(f) for f in out_files):
+            rc = subprocess.run(die_with_parent(c), stdout=lf, stderr=subprocess.STDOUT).returncode
+        if rc == 0 and all(os.path.exists(os.path.join(tmp, n)) for n in out_names):
+            os.makedirs(out_dir, exist_ok=True)
+            for n in reversed(out_names):  # the completion marker (first name) is moved last
+                os.replace(os.path.join(tmp, n), os.path.join(out_dir, n))
+            shutil.rmtree(tmp, ignore_errors=True)
             res.update(status="ok" if not attempt else "ok after out-of-memory retry", retries=attempt)
             break
         was_oom = oom(log_path)
         log(f"{name}: failed (exit {rc}){' - out of memory' if was_oom else ''}; see {log_path}")
         res.update(status=f"failed (exit {rc}){' out of memory' if was_oom else ''}", retries=attempt)
+        shutil.rmtree(tmp, ignore_errors=True)
         if attempt == 0 and was_oom:
             continue
         break
     res["seconds"] = round(time.time() - t0, 1)
     log(f"{name}: {res['status']} in {res['seconds']:.0f}s")
     SUMMARY["tasks"].append(res)
+    set_status(task=None, last=name, last_status=res["status"])
     save_summary()
     return res
 
 
-def score_cmd(family, run, stage, dataset, out, n_per_set, off=False):
+def score_cmd(family, run, stage, dataset, n_per_set, off=False):
     bs = str(config.family_settings(family)["batch_size"])
-    args = ["--family", family, "--run", run, "--model", stage, "--dataset", dataset, "--out", out, "--batch-size", bs]
+    args = ["--family", family, "--run", run, "--model", stage, "--dataset", dataset, "--out", "{OUT}", "--batch-size", bs]
     if n_per_set:
         args += ["--n-per-set", str(n_per_set)]
     return ([PY, "-c", OFF_CODE] if off else [PY, "-m", "core.score"]) + args
 
 
-def gen_cmd(family, run, stage, out):
-    return [PY, "-m", "core.generate", "--family", family, "--run", run, "--model", stage, "--prefill", PREFILL, "--save-ids", "--out", out]
+def gen_cmd(family, run, stage):
+    return [PY, "-m", "core.generate", "--family", family, "--run", run, "--model", stage, "--prefill", PREFILL, "--save-ids", "--out", "{OUT}"]
+
+
+# --- heartbeat, status, lock -----------------------------------------------------------------------------------------------
+
+STATUS = {}
+
+
+def set_status(**kw):
+    STATUS.update(kw, pid=os.getpid(), updated=now())
+    tmp = os.path.join(LOGS, "status.json.tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(STATUS, f, indent=1)
+    os.replace(tmp, os.path.join(LOGS, "status.json"))
+
+
+def start_heartbeat(period=30):
+    def beat():
+        while True:
+            try:
+                set_status(heartbeat=now())
+            except Exception:  # noqa: BLE001
+                pass
+            time.sleep(period)
+    threading.Thread(target=beat, daemon=True).start()
+
+
+def take_lock():
+    f = open(os.path.join(LOGS, ".driver.lock"), "w")
+    try:
+        fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        print("another overnight_collect.py holds the lock; exiting", flush=True)
+        sys.exit(3)
+    return f  # keep a reference: the lock lives as long as the file object
 
 
 # --- integrity checks ------------------------------------------------------------------------------------------------------
@@ -285,8 +391,8 @@ def collect(family, stage, n_per_set, dry_run):
             tasks = [("scores", TEXTS, os.path.join(base, "scores")), ("authorship", AUTHORSHIP, os.path.join(base, "scores_authorship"))]
             for label, ds, out in tasks:
                 f = os.path.join(out, f"{stage}.csv")
-                r = run_task(f"{family}_{stage}_{label}{suffix}", score_cmd(family, run, stage, ds, out, n_per_set, bool(off)),
-                             [f, f.replace(".csv", "_tokens.parquet")], dry_run, batch_arg=True)
+                r = run_task(f"{family}_{stage}_{label}{suffix}", score_cmd(family, run, stage, ds, n_per_set, bool(off)),
+                             out, [f"{stage}.csv", f"{stage}_tokens.parquet"], dry_run, batch_arg=True)
                 if r["status"].startswith("failed"):
                     ck["failed"] = True
                     raise RuntimeError(f"{r['task']} failed")
@@ -295,7 +401,7 @@ def collect(family, stage, n_per_set, dry_run):
             if not off:
                 gout = os.path.join(base, "generations")
                 g = os.path.join(gout, f"{stage}.jsonl")
-                r = run_task(f"{family}_{stage}_generation", gen_cmd(family, run, stage, gout), [g], dry_run)
+                r = run_task(f"{family}_{stage}_generation", gen_cmd(family, run, stage), gout, [f"{stage}.jsonl"], dry_run)
                 if r["status"].startswith("failed"):
                     ck["failed"] = True
                     raise RuntimeError(f"{r['task']} failed")
@@ -322,6 +428,13 @@ def main():
     ap.add_argument("--only", help="comma-separated families (default: all, in plan order)")
     args = ap.parse_args()
     os.makedirs(LOGS, exist_ok=True)
+    signal.signal(signal.SIGHUP, signal.SIG_IGN)  # a closed terminal or dropped connection must not stop the run (children inherit this)
+    lock = None if args.dry_run else take_lock()  # noqa: F841
+    if not args.dry_run:
+        start_heartbeat()
+        swept = sweep_orphans()
+        if swept:
+            SUMMARY["notes"].append(f"swept leftover processes of an earlier driver: {swept}")
     SUMMARY["started"] = now()
     log(f"overnight collection start (dry run: {args.dry_run}); branch {subprocess.run(['git', 'branch', '--show-current'], capture_output=True, text=True).stdout.strip()}; "
         f"HEAD {subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()}")
