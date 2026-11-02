@@ -1,6 +1,7 @@
 """Per-token NLL of the content tokens in every condition, for one model.
 
     python -m core.score --model sft                # a stage name from config.MODELS, or any HF id
+    python -m core.score --family gemma4-31b --model instruct   # another family -> results/<run>/<family>/core/scores
     python -m core.score --model HuggingFaceTB/SmolLM2-135M-Instruct --tokenizer HuggingFaceTB/SmolLM2-135M-Instruct
 
 Writes <out>/<stage>.csv with columns text_id, source, kind, condition, n_tokens, mean_nll,
@@ -30,14 +31,32 @@ def resolve(model_arg, stage=None):
     return model_id, stage
 
 
-def load_model(model_id, dtype=None):
+def load_model(model_id, dtype=None, offload=False, gpu_gib=34, cpu_gib=900):
     """dtype None: bf16 on GPU, fp32 on CPU. Scoring passes fp32: in bf16 a text's NLL shifts by
-    up to ~0.05 nats with batch composition (measured on OLMo 3 7B), comparable to slot effects."""
+    up to ~0.05 nats with batch composition (measured on OLMo 3 7B), comparable to slot effects.
+
+    offload=True places the weights with device_map="auto": as many layers as fit in gpu_gib GiB on the GPU, the rest in
+    CPU RAM and streamed in on every forward pass. The arithmetic is unchanged (fp32 stays fp32); it is what lets a 31B
+    model be scored in fp32 on a 48 GB card, at a fraction of the speed. Ported from the pilot's nll_arm/score.py."""
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if dtype is None:
         dtype = torch.bfloat16 if device == "cuda" else torch.float32
+    if offload:
+        if device != "cuda":
+            raise SystemExit("offload needs a GPU (device_map='auto' with a CPU spill)")
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id, dtype=dtype, device_map="auto", max_memory={0: f"{gpu_gib}GiB", "cpu": f"{cpu_gib}GiB"}).eval()
+        return model, "cuda:0"
     model = AutoModelForCausalLM.from_pretrained(model_id, dtype=dtype).to(device).eval()
     return model, device
+
+
+def describe_placement(model):
+    """Where the weights ended up, for the log line (absent hf_device_map: everything on one device)."""
+    dm = getattr(model, "hf_device_map", None)
+    if dm:
+        return f"{sum(1 for v in dm.values() if v in (0, 'cuda:0'))}/{len(dm)} modules on the GPU"
+    return f"all on {next(model.parameters()).device}"
 
 
 @torch.no_grad()
@@ -94,16 +113,24 @@ def save_token_nll(path, nll, meta, ent=None):
 
 
 def main():
+    config.family_from_argv()  # --family switches MODELS / STAGES / TEMPLATE_MODEL before the defaults below are read
+    fam = config.family_settings()
     ap = argparse.ArgumentParser()
+    ap.add_argument("--family", help=f"one of {', '.join(config.FAMILIES)}; outputs go to results/<run>/<family>/core/scores")
+    ap.add_argument("--run", help=f"run directory under results/ (with --family: default {config.DEFAULT_RUN})")
     ap.add_argument("--model", required=True)
     ap.add_argument("--stage", help="label for the output file (default: stage name or model id)")
     ap.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
     ap.add_argument("--dataset", default=config.DATA_PATH)
     ap.add_argument("--limit", type=int)
-    ap.add_argument("--batch-size", type=int, default=8)  # fp32 7B on 48 GB: 16 runs short on long texts
+    ap.add_argument("--batch-size", type=int, default=fam["batch_size"])  # fp32 7B on 48 GB: 16 runs short on long texts
+    ap.add_argument("--offload", action=argparse.BooleanOptionalAction, default=fam["offload"],
+                    help="fp32 weights split between GPU and CPU RAM (default: the family's setting)")
+    ap.add_argument("--gpu-gib", type=int, default=fam["gpu_gib"], help="GiB of weights allowed on the GPU with --offload")
     ap.add_argument("--preceding-turn", action="store_true", default=config.PRECEDING_TURN)
-    ap.add_argument("--out", default=config.core_dir("scores"))
+    ap.add_argument("--out", help="default: config.core_dir('scores', run)")
     args = ap.parse_args()
+    args.out = args.out or config.core_dir("scores", args.run)
 
     model_id, stage = resolve(args.model, args.stage)
     tok = load_tokenizer(args.tokenizer)
@@ -115,7 +142,8 @@ def main():
         for cond, r in render_all(tok, row, args.preceding_turn).items():
             items.append(((row["id"], cond), r))
 
-    model, device = load_model(model_id, torch.float32)
+    model, device = load_model(model_id, torch.float32, offload=args.offload, gpu_gib=args.gpu_gib)
+    print(f"{model_id}: {describe_placement(model)}, dtype {next(model.parameters()).dtype}", flush=True)
     n_vocab = model.get_input_embeddings().num_embeddings
     assert max(max(r.input_ids) for _, r in items) < n_vocab, "tokenizer ids exceed model vocab"
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id

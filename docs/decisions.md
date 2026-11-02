@@ -195,3 +195,19 @@ used. `core/check_models.py` takes `--family` (or `all`), verifies IDs, licenses
 API (config and tokenizer files only) and records what core derives from each template; `docs/models.md` has the three
 verified families. Backwards compatible: the OLMo rendering hash (all 1190 texts, every slot, with and without the
 preceding turn, plus the template parts) is unchanged (`94c0f514db352ef8d6c44150c68a4df5617c7c68e0d8b2ea9eabb19d7e50bc28`).
+
+## 2026-11-02: core: family-aware scoring and generation, CPU offload, HF cache helper, run script
+
+`core.score` and `core.generate` take `--family` (with `--run`; outputs go to `results/<run>/<family>/core/...`, run
+defaulting to `capstone`) and read the family's defaults from `config.family_settings()`: scoring batch size, and for
+generation the precision. `core.score` gains `--offload/--no-offload` and `--gpu-gib`: the pilot's CPU-offload path
+(`device_map="auto"`, at most `gpu_gib` GiB of weights on the GPU, the rest in CPU RAM) ported from
+`pilot/nll_arm/score.py`. fp32 stays the default and offload changes only where the weights live, not the arithmetic;
+the Gemma 4 31B family sets it on (14 of its 66 modules fit on a 48 GB card at 30 GiB). `core.generate` gains
+`--precision {bf16,int8}` (int8 via bitsandbytes for the 31B, which does not fit in bf16). New `core/hf_cache.py` (ported from
+the pilot): `check` (disk vs the weights, skipped for a cached repo), `free` (blob-aware removal, since this machine
+shares one `blobs/` store), `cached`. `scripts/run_gpu.sh` takes `FAMILY=...` (legacy OLMo layout and behavior when
+unset), checks free disk before each checkpoint and, with `CLEAR_CACHE=auto`, removes a checkpoint of at least 20 GB from the
+cache after it is used unless it was already cached when the script started. Backwards compatible: with no `--family` every
+default, path and output is as before (OLMo rendering hash unchanged; `tests/test_families.py` pins it and tests the
+helpers, `test_smoke.py` runs the CPU pipeline).
