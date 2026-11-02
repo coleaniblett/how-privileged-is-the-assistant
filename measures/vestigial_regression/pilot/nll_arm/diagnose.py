@@ -180,7 +180,6 @@ def main():
 
     bl, per_text = bpb_table(tokens, tok, texts, rng)
     L += ["## 1d. Bits per byte", "", *bl, ""]
-    pd.to_pickle(per_text, os.path.join(HERE, f"bpb_{tag}.pkl"))
     with open(os.path.join(HERE, f"diagnostics_{tag}.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
     print("\n".join(L))

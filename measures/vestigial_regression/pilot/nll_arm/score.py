@@ -57,9 +57,10 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(
         args.model, dtype=torch.float32, device_map="auto",
         max_memory={0: f"{args.gpu_gib}GiB", "cpu": "900GiB"}).eval()
-    n_gpu = sum(1 for v in model.hf_device_map.values() if v in (0, "cuda:0"))
-    print(f"loaded in {time.time() - t0:.0f}s; {n_gpu}/{len(model.hf_device_map)} modules on the GPU, "
-          f"dtype {next(model.parameters()).dtype}", flush=True)
+    dm = getattr(model, "hf_device_map", None)  # absent when the whole model sits on one device
+    where = (f"{sum(1 for v in dm.values() if v in (0, 'cuda:0'))}/{len(dm)} modules on the GPU" if dm
+             else f"all on {next(model.parameters()).device}")
+    print(f"loaded in {time.time() - t0:.0f}s; {where}, dtype {next(model.parameters()).dtype}", flush=True)
     assert max(max(r.input_ids) for _, r in items) < model.get_input_embeddings().num_embeddings
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
 

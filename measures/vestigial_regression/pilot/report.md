@@ -169,6 +169,177 @@ excluding zero, in both user sources.
   `results/exploration/shiller_user_turns/`, so the existing exploration script is being run on it (all four
   conditions, its default settings). The 20-sample blind labelling then follows the rule above.
 
+## Step 3: Qwen3-8B as a negative control
+
+Setup and template setting: see "Step 3 setup" above (template default; assistant slot is the header followed by the
+text; render checks pass for all 90 texts). Qwen3-8B-Base and Qwen3-8B were scored in fp32 entirely on the GPU
+(24 s each), same 90 texts and settings. Tables: `nll_arm/compare_qwen.md`, `nll_arm/cross_family.md`; plots
+`nll_arm/position_change_qwen_*.png`. Qwen weights cleared from the HF cache afterwards (Qwen3-8B instruct was
+downloaded by the exploration run; see "Not done" for what remains cached).
+
+**Is Qwen a negative control?** `results/exploration/shiller_user_turns/` had no Qwen3-8B samples, so the existing
+exploration script was run on it (all four conditions, bf16, its defaults; 205 samples, now committed there). Twenty
+random `ordinary` samples (seed 3, labelled before looking at flags; `qwen3-8b_generation_labels.csv`): **11 stay in
+the user's voice, 9 do not** (7 answer or reason as the assistant, e.g. `Okay, so I need to figure out…` or a
+`</think>` answer; 2 repeat a sentence verbatim). More than half, so by the pre-committed rule Qwen is a negative
+control, but not a clean one: about a third of its samples leak assistant-style thinking, as Shiller observed. For
+contrast, Gemma's 60 README-arm samples had 0 in the user's voice. (The measure's own `assistant_register` flag fired on
+0 of these 20, including the assistant answers.)
+
+**Qwen change from its own base, paired over texts** (`compare_qwen.md`):
+
+| quantity, IT − base | nats/token | bits/byte |
+|---|---|---|
+| wildchat user: `user@user − user@plain` | +0.44 [+0.26, +0.62] | +0.14 [+0.09, +0.20] |
+| oasst1 user: `user@user − user@plain` | +0.39 [+0.25, +0.52] | +0.13 [+0.08, +0.17] |
+| wildchat assistant: `asst@asst − asst@plain` | +0.30 [+0.19, +0.41] | +0.09 [+0.06, +0.12] |
+
+Qwen's user-text term therefore **also rises by more than 0.05 nats with the CI excluding zero in both sources**, i.e.
+the step-2 rule is met by the negative control too. Qwen's assistant-text term rises with it (+0.30), where Gemma's
+fell (−2.17): Qwen's rise is not user-specific, Gemma's is. Also: Qwen base's plain control sits 1.0-1.2 nats above
+its own chat-slot values (`user@user − user@plain` −1.04 / −1.19), whereas Gemma base's three slots agree to within
+0.12 nats; the plain reference behaves differently by family, which is why cross-family comparisons use change from
+base in bits per byte.
+
+**Cross-family** (`cross_family.md`; 30 shared texts per source; bits/byte, `user@user − user@plain`, IT − base):
+
+| user source | Gemma | Qwen | Gemma − Qwen, paired |
+|---|---|---|---|
+| wildchat | +1.096 [+0.853, +1.384] | +0.144 [+0.091, +0.200] | **+0.952 [+0.674, +1.248]** |
+| oasst1 | +1.164 [+0.943, +1.370] | +0.125 [+0.083, +0.165] | **+1.039 [+0.814, +1.257]** |
+
 ## Outcome
 
-_Step 3 to be filled in._
+Pre-committed rules, as written before any result (see "Pre-committed rules"):
+
+| rule | result |
+|---|---|
+| Step 1: rendering problem? | **Yes, rule (ii):** Gemma's assistant slot lacked the empty thought channel that its generation prompt always adds. Fixed in core (`fbda26a`, OLMo byte-identical), re-scored. User-text role-specific terms unchanged; slot effects and assistant-text terms changed (earlier +1 nat slot effects were an artifact). |
+| Step 2: proxy flags Gemma (criterion 1 against Gemma base, both user sources) | **MET.** +2.94 [+2.40, +3.44] and +3.63 [+2.91, +4.32] nats/token; assistant-text term moves the opposite way (−2.17). |
+| Step 3: Qwen is a negative control (> half of 20 samples stay in user voice) | **Met, narrowly:** 11 of 20; about a third leak assistant-style thinking. |
+| Rule A: Gemma meets criterion 1 and Qwen does not | **NOT MET.** Qwen meets criterion 1 as well (+0.44, +0.39 nats). |
+| Rule B: Gemma's change exceeds Qwen's in bits/byte, paired CI excluding zero, both sources | **MET.** +0.95 [+0.67, +1.25] and +1.04 [+0.81, +1.26] bits/byte. |
+| The measure discriminates (A or B) | **Yes, through rule B only.** |
+
+Reading: the proxy flags the model we know shows vestigial regression, and it separates it from Qwen by magnitude
+(about 8 times larger in bits per byte) and by direction of the assistant-text term (opposite sign for Gemma, same
+sign for Qwen). It does not separate them by the criterion's 0.05-nat threshold alone, since the negative control
+also clears that. An absolute threshold at that size would call Qwen3-8B regressed.
+
+Caveats: n = 30 texts per set (25 and 9 texts with at least 40 tokens for position analyses); one checkpoint pair per
+family; Gemma is 31B and Qwen 8B, and the two post-training pipelines differ in more than regression, so the
+cross-family difference is not attributable to regression alone; Qwen is an imperfect negative control (9 of 20
+samples leak); my labels (generations and the flag-arm labels) are one reader's and need a teammate's check; the
+hypothesis set and rules were written by the agent that ran the pilot and are not a registered measure criterion.
+
+**Not done / not run:** a Qwen sensitivity run with the empty think block in the assistant slot (only descriptive
+terms would change); any OLMo re-run; significance tests per position; a sweep over more texts; the measure's own
+generation flags were not applied to Qwen beyond the 20 labelled samples; the exploration's Qwen3-8B hand-labelling
+sheet. Qwen3-8B (instruct) weights were downloaded by the exploration run and are still in the HF cache apart from
+what `hf_cache free` removed; Gemma 31B IT and base weights are cleared (the IT tokenizer files were re-downloaded).
+
+## Appendix: the flag, sampling and NLL arms (earlier experiments, from README.md; unchanged except the correction note)
+
+**Exploratory, n = 30 + 18.** Outside every verdict. Does not touch the measure's code, README or
+pre-registered criteria; imports `ASSISTANT_REGISTER` and `repetition_loop` from `../flags.py` unchanged.
+
+**Question.** The Gemma open-user-turn samples (`results/exploration/shiller_user_turns/gemma4-31b-it.jsonl`)
+are, by eye, mostly vestigial regression: the model loops or answers as the assistant instead of continuing the
+user. Does the measure's current generation-flag approach, plus the README's criterion 4 (a spec addition, not
+implemented in the measure), class such samples as vestigial regression?
+
+**Method.**
+- `labels.csv`: 30 random samples (`random.Random(1)` shuffle of the 205 rows), labelled `degenerate` or
+  `switched to assistant` by the agent that wrote this pilot, reading the text only (flags were not computed
+  until afterwards). **A teammate should check these labels.**
+- `run.py`: recomputes `assistant_register` and `repetition_loop` on the stored user portion (cut at Gemma's
+  end-of-turn / turn-open / stop tokens); `ended_turn` and `handoff_to_assistant` come from the exploration run.
+  Criterion 4: `repetition_loop` or `handoff` → vestigial; `assistant_register` without handoff →
+  overgeneralization; else unclassified.
+- Control: the text after the prefill sentence of 18 real WildChat user turns (`data/prefill.jsonl` →
+  `data/texts.jsonl`; 2 of the 20 had under 50 chars left), first 600 chars. There are **no** user-voice
+  samples among Gemma's outputs to serve as negatives.
+
+**Result** (full table and misses: `results.md`, per sample: `per_sample.csv`).
+
+| | n | classed vestigial |
+|---|---|---|
+| degenerate loops | 8 | 8 (100%) |
+| switched to assistant | 22 | 3 (14%); 7 classed overgeneralization, 12 unclassified |
+| real user text (control) | 18 | 0; 2 classed overgeneralization |
+
+**Reading.**
+1. Word-level loops are caught (`repetition_loop`). Loops without spaces (`////`, `KNDKND…`) are not, and the
+   exploration's `token_loop` flag is not part of the measure; none happened to fall in this labelled sample.
+2. Assistant switches are mostly missed. Gemma starts them with `<|channel>thought\n<channel|>`, which is
+   neither an end-of-turn nor a turn-open marker, so the "user portion" runs into the assistant answer, and
+   `handoff_to_assistant` is 0 for all 30. The register regex only matches stock phrases ("I'd be happy to"),
+   so most answers (`The answer is a **Green Apple**`) match nothing. 12 of 22 are unclassified.
+3. Criterion 4 as written would send 7 of the 22 to overgeneralization. By eye these are the same switch
+   into the assistant, not a user voice with assistant traits. Whether the rule should distinguish them is a
+   spec question for the owner.
+4. The control is not clean: 2 of 18 real turns contain "As an AI" in prompt-engineering text.
+
+**Run.** `uv run python -m measures.vestigial_regression.pilot.run` from the repo root (no GPU).
+
+## Second experiment: the README's own sampling arm, run fresh on Gemma 4 31B-it
+
+GPU run, 2026-11-02: the 20 `data/prefill.jsonl` sentences × 3 samples × 120 new tokens, T=0.7, seed 0, stopping
+only at end of text, int8 (the 62 GB model does not fit this 48 GB GPU in bf16), sampled with
+`exploration.shiller_user_turns.generate --conditions ordinary` into `gemma4-31b-it/` (rows and meta). No core
+or measure code was changed. `readme_arm.py` applies the same flags and criterion 4 as above;
+`labels_readme_arm.csv` holds my labels, made on shuffled output before the flags were computed
+(**a teammate should check them**). Results: `readme_arm.md`, `readme_arm.csv`.
+
+| label (by eye) | n | classed vestigial | overgeneralization | unclassified |
+|---|---|---|---|---|
+| degenerate loop | 17 | 17 | 0 | 0 |
+| switched to assistant | 43 | 0 | 14 | 29 |
+
+README criterion 3 counts out of 60: `ended_turn` 15, `handoff_to_assistant` 0, `assistant_register` 14,
+`repetition_loop` 17.
+
+- All 60 samples are vestigial regression by eye, so the 17 the rule calls vestigial are all correct, but with no
+  user-voice samples this says nothing about false alarms (the real-user-text control above does: 0 of 18).
+- The rule finds only loops. None of the 43 assistant switches is classed vestigial, and 14 would be reported as
+  overgeneralization instead. Same finding as the first experiment, on fresh samples.
+- The NLL slot-effect arm is below.
+
+## Third experiment: the README's NLL slot-effect arm on Gemma 4 31B-it
+
+`nll_arm/score.py` scores the README's slot conditions (`user@user`, `user@asst`, `user@plain`, and the same for
+assistant text) with core's own rendering and span-NLL code, in **fp32 with CPU offload** (14 of 66 modules on the
+48 GB GPU, the rest streamed from RAM), so AGENTS.md's fp32 rule holds without an exception. First 30 texts of each
+of wildchat user, oasst1 user and wildchat assistant (270 sequences, 611 s). `nll_arm/analyze.py` writes
+`nll_arm/results.md`. **No Gemma base was scored** (62 GB, no disk): the reference is OLMo 3 7B base from the
+frozen held-out run, which we take to show no vestigial regression. Differences are within-text, so raw NLL levels
+(much higher for Gemma-it: 3.2 nats on plain encyclopedic prose) cancel, but the comparison is across models, unpaired.
+
+**Correction (same day, after step 1 of `report.md`).** The scores first reported here rendered Gemma's assistant slot
+without the empty thought channel (`<|channel>thought\n<channel|>`) that Gemma's generation prompt always adds
+after `<|turn>model\n`. Fixed in `core/render.py` (logged in `docs/decisions.md`) and re-scored; the pre-fix scores
+are kept in `nll_arm/scores_before_fix/`. Only assistant-slot conditions changed, so the role-specific user-text
+term (`user@user − user@plain`) is unchanged; every slot effect and every assistant-text number moved.
+
+| user text, change from OLMo base | slot effect `user@user − user@asst` | role-specific `user@user − user@plain` |
+|---|---|---|
+| wildchat | +5.69 [+5.19, +6.18] (was +0.98, artifact) | +3.12 [+2.60, +3.62] (unchanged) |
+| oasst1 | +6.49 [+6.03, +6.96] (was +1.11, artifact) | +3.84 [+3.15, +4.51] (unchanged) |
+
+(OLMo instruct for scale: slot effect −0.05, role-specific −0.41 / −0.33.) Both README directions still hold for
+Gemma-it, well past 0.05 nats. With the correct assistant slot, user text is about 6 nats *more* expected in the
+assistant slot than the user slot. Assistant text now behaves as a model that has learned the assistant role would
+show it: `asst@asst − asst@plain` = −2.1 nats (before the fix it was +1.3). The assistant slot with the thought
+channel makes any text more expected than plain prose, user text included (`user@asst − user@plain` about −2.0),
+so the slot effect for user text mixes a user-specific part with that general effect; the role-specific terms are
+the cleaner contrast, and they are unchanged.
+
+Checks and caveats:
+- Offload path verified: fp32 offload and on-GPU int8 agree to 0.05–0.25 nats on 5 texts, and unpadded, padded and
+  eager-attention scores of one text agree to 3e-4 nats.
+- Assistant text has a slot effect too (+4.5), and user text in the assistant slot is also below plain, so the slot
+  effect alone does not show a user-specific loss. The role-specific terms do: user text +3.1/+3.8 in its own
+  slot, assistant text −2.1 in its own.
+- No same-model base, so the README's control (`user@plain` drift) and "change from base" are not tested; n = 30 per
+  set; no per-position analysis (the first-position header effect is only avoided by dropping position 0).
+- A first scoring attempt at batch size 16 ran out of GPU memory (262k vocabulary); the run uses batch size 4.
