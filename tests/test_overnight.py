@@ -1,0 +1,99 @@
+"""The overnight collection driver (scripts/overnight_collect.py): the plan in a dry run, and its integrity checks on real core output
+from the tiny CPU model, including that they catch corrupted files."""
+
+import importlib.util
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+import pandas as pd
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+TINY = "HuggingFaceTB/SmolLM2-135M-Instruct"
+CPU = {**os.environ, "CUDA_VISIBLE_DEVICES": ""}
+
+
+@pytest.fixture(scope="module")
+def drv(tmp_path_factory):
+    os.environ["OVERNIGHT_LOGS"] = str(tmp_path_factory.mktemp("logs"))
+    spec = importlib.util.spec_from_file_location("overnight_collect", ROOT / "scripts" / "overnight_collect.py")
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+def test_dry_run_lists_every_checkpoint_in_order_and_writes_nothing(tmp_path):
+    env = {**os.environ, "OVERNIGHT_LOGS": str(tmp_path)}
+    out = subprocess.run([sys.executable, str(ROOT / "scripts" / "overnight_collect.py"), "--dry-run"], capture_output=True, text=True,
+                         cwd=ROOT, env=env, check=True).stdout
+    order = [l.split("=====")[1].split("(")[0].strip() for l in out.splitlines() if "=====" in l]
+    assert order == ["gemma4-31b base", "gemma4-31b instruct", "olmo3-7b base", "olmo3-7b sft", "olmo3-7b dpo", "olmo3-7b instruct",
+                     "qwen3-8b base", "qwen3-8b instruct"]
+    assert out.count("[dry run]") == 8 * 3 + 2 * 2  # scores, authorship scores, generation per checkpoint + the two think-off score tasks per Qwen checkpoint
+    assert "--n-per-set 100" in out and out.count("--save-ids") == 8 and out.count("assistant_think_block'] = False") == 4
+    assert "results/capstone_think_off/qwen3-8b/core/scores" in out and "results/capstone/qwen3-8b/core/scores" in out
+    assert not (ROOT / "results" / "capstone").exists()
+
+
+@pytest.fixture(scope="module")
+def tiny_outputs(tmp_path_factory):
+    d = tmp_path_factory.mktemp("tiny")
+    rows = [json.loads(l) for l in open(ROOT / "data" / "texts_authorship.jsonl")]
+    sub = []
+    for key in [("oasst1", "assistant"), ("ultrachat", "user"), ("ultrachat", "assistant")]:
+        sub += [r for r in rows if (r["source"], r["kind"]) == key][:3]
+    (d / "data.jsonl").write_text("\n".join(json.dumps(r) for r in sub) + "\n")
+    pre = [json.loads(l) for l in open(ROOT / "data" / "prefill_100.jsonl")][:3]
+    (d / "prefill.jsonl").write_text("\n".join(json.dumps(r) for r in pre) + "\n")
+    subprocess.run([sys.executable, "-m", "core.score", "--model", TINY, "--stage", "t", "--tokenizer", TINY, "--dataset", str(d / "data.jsonl"),
+                    "--n-per-set", "2", "--out", str(d / "scores"), "--batch-size", "4"], check=True, cwd=ROOT, env=CPU)
+    subprocess.run([sys.executable, "-m", "core.generate", "--model", TINY, "--stage", "t", "--tokenizer", TINY, "--prefill", str(d / "prefill.jsonl"),
+                    "--samples", "3", "--max-new-tokens", "8", "--save-ids", "--out", str(d / "gens")], check=True, cwd=ROOT, env=CPU)
+    return d
+
+
+def test_score_integrity_passes_on_real_output(drv, tiny_outputs):
+    r = drv.check_scores(str(tiny_outputs / "scores" / "t.csv"), str(tiny_outputs / "data.jsonl"), 2, TINY)
+    assert r["ok"], r["issues"]
+    assert r["stats"]["texts"] == 6 and r["stats"]["rows"] == 18 and r["stats"]["nonfinite_summary_values"] == 0
+
+
+def test_score_integrity_catches_corruption(drv, tiny_outputs, tmp_path):
+    csv = tiny_outputs / "scores" / "t.csv"
+    pq = tiny_outputs / "scores" / "t_tokens.parquet"
+    df = pd.read_csv(csv)
+    cases = {}
+    bad = df.copy(); bad.loc[0, "mean_entropy"] = float("nan"); cases["nan"] = bad
+    cases["missing row"] = df.iloc[1:]
+    inf = df.copy(); inf.loc[2, "mean_nll"] = float("inf"); cases["inf"] = inf
+    for name, frame in cases.items():
+        p = tmp_path / f"{name.replace(' ', '_')}.csv"
+        frame.to_csv(p, index=False)
+        (tmp_path / f"{name.replace(' ', '_')}_tokens.parquet").write_bytes(pq.read_bytes())
+        r = drv.check_scores(str(p), str(tiny_outputs / "data.jsonl"), 2, TINY)
+        assert not r["ok"], name
+    tok = pd.read_parquet(pq)
+    tok.loc[0, "entropy"] = float("nan")
+    p = tmp_path / "tok.csv"
+    df.to_csv(p, index=False)
+    tok.to_parquet(tmp_path / "tok_tokens.parquet")
+    assert not drv.check_scores(str(p), str(tiny_outputs / "data.jsonl"), 2, TINY)["ok"]
+    wrong_n = drv.check_scores(str(csv), str(tiny_outputs / "data.jsonl"), 1, TINY)  # expecting a different number of texts
+    assert not wrong_n["ok"]
+
+
+def test_generation_integrity(drv, tiny_outputs, tmp_path):
+    g = tiny_outputs / "gens" / "t.jsonl"
+    pre = str(tiny_outputs / "prefill.jsonl")
+    r = drv.check_generations(str(g), pre, samples=3, max_new=8)
+    assert r["ok"], r["issues"]
+    rows = [json.loads(l) for l in open(g)]
+    short = tmp_path / "short.jsonl"
+    short.write_text("\n".join(json.dumps(x) for x in rows[:-1]) + "\n")
+    assert not drv.check_generations(str(short), pre, samples=3, max_new=8)["ok"]
+    noids = tmp_path / "noids.jsonl"
+    noids.write_text("\n".join(json.dumps({k: v for k, v in x.items() if k != "continuation_ids"}) for x in rows) + "\n")
+    assert not drv.check_generations(str(noids), pre, samples=3, max_new=8)["ok"]
