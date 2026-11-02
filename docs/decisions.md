@@ -222,3 +222,20 @@ them, with no re-sampling. It has 100 distinct sentences from 100 distinct texts
 20 rows are identical to the frozen `data/prefill.jsonl` (untouched). `config.PREFILL_PATH` (the default of `core.generate`)
 now points at the new file; `config.PREFILL_PATH_20` names the frozen one, which the exploration's `ordinary` condition
 (`exploration/shiller_user_turns/prompts.py`) is pinned to so it stays at 20 prompts. `tests/test_prefill.py` checks it.
+
+## 2026-11-02: core: family_turn_markers; vestigial-regression flags across families, token_loop, extra handoff markers
+
+`core.render.family_turn_markers(tok)` (new; `turn_markers` is unchanged) derives the end-of-turn token, turn-open marker, assistant header and
+the handoff string (end-of-turn through assistant header) from a family's chat template by rendering, ported from the exploration. The
+vestigial-regression flags (`measures/vestigial_regression/flags.py`) use it instead of ChatML strings: the user portion is cut at the
+family's end-of-turn or turn-open marker or end-of-text. `handoff_to_assistant` also fires on the family's extra markers from
+`config.FAMILIES[...]["handoff_extra"]`: Gemma `<|channel>` and `<channel|>`, Qwen3 `<think>` and `</think>`. The spec named `<think>` and
+`<|channel>`; in the existing exploration samples Qwen3-8B never writes `<think>` (0 of 205 completions) but writes `</think>`
+with no opener in 66, and 4 Gemma completions have `<channel|>` without `<|channel>`, so the closing tags are included. Because these markers
+flag a switch into the assistant without turn markers, `handoff_to_assistant` is no longer a subset of `ended_turn`, and the extra markers
+flag the sample without shortening the user portion (so `assistant_register` and `repetition_loop` still see the whole text before the
+turn closes, as the pilot did). New flag `token_loop` (one token id repeated 10 or more times in the user portion; ported from the
+exploration) uses the generated ids that `core.generate` now stores in each record as `continuation_ids` (an extra key; existing readers
+ignore it), else re-tokenizes the user portion, which can merge a repeated character and miss a loop. `repetition_loop` is unchanged.
+OLMo flags are unchanged except for the added `token_loop` column in `*_counts.csv`; `flags()` still returns its four original keys unless
+token ids are passed. Tests: `tests/test_flags_families.py` (synthetic strings per family).

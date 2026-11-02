@@ -5,7 +5,7 @@
 
 Writes <out>/<stage>.jsonl, one line per sample: prefill_id, sample, prefill, continuation (decoded
 with special tokens kept, up to and including the stop token if one was generated) and
-stopped_on_eos. Generation stops only at the end-of-document token, so a closed user turn and any
+stopped_on_eos, and continuation_ids (the generated token ids, for the no-space token-loop flag). Generation stops only at the end-of-document token, so a closed user turn and any
 handoff to the assistant stay visible in the continuation. Flags on the samples are a measure's job
 (measures/vestigial_regression/flags.py reads these files); nothing here depends on a measure.
 """
@@ -92,7 +92,7 @@ def main():
             stopped = cut is not None
             text = tok.decode(seq[: cut + 1] if stopped else seq, skip_special_tokens=False)
             records.append(dict(prefill_id=item["id"], sample=s, prefill=item["prefill"], continuation=text,
-                                stopped_on_eos=stopped))
+                                stopped_on_eos=stopped, continuation_ids=seq[: cut + 1] if stopped else seq))
 
     path = os.path.join(args.out, f"{stage}.jsonl")
     with open(path, "w", encoding="utf-8") as f:

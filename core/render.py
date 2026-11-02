@@ -106,6 +106,34 @@ def turn_markers(tok):
     return user_suffix.strip(), handoff.strip()
 
 
+def family_turn_markers(tok):
+    """Turn delimiters derived from the chat template by rendering (nothing is hard-coded per family):
+    end_of_turn       closes the user turn (<|im_end|>, <turn|>)
+    turn_open         opens any turn (<|im_start|>, <|turn>)
+    user_header       turn_open + the user role name
+    assistant_header  turn_open + the assistant role name (<|im_start|>assistant, <|turn>model)
+    handoff           end_of_turn through assistant_header as the template writes them between two turns
+                      (core's turn_markers handoff also includes Qwen3's empty think block; this stops at the header)
+    Ported from exploration/shiller_user_turns/render.py; turn_markers() above is unchanged."""
+    prefix, suffix = template_parts(tok, "user", opening=False)
+    end = suffix.strip()
+    specials = sorted(special_strings(tok), key=len, reverse=True)
+    before_role = prefix[: prefix.rstrip().rfind("user")]
+    turn_open = next((t for t in specials if before_role.endswith(t)), None)
+    if not end or not turn_open:
+        raise AlignmentError(f"could not derive turn markers (end={end!r}, turn_open={turn_open!r})")
+    s = tok.apply_chat_template(
+        [{"role": "user", "content": SENTINEL}, {"role": "assistant", "content": SENTINEL + "2"}], tokenize=False)
+    between = s.split(SENTINEL)[1]
+    i = between.find(turn_open)
+    if i < 0:
+        raise AlignmentError("assistant turn does not start with the turn-open marker")
+    header = between[i:].split("\n")[0].strip()
+    user_header = prefix[len(before_role) - len(turn_open):].strip()
+    return dict(end_of_turn=end, turn_open=turn_open, user_header=user_header, assistant_header=header,
+                handoff=between[: i + len(header)].strip())
+
+
 def doc_start_ids(tok):
     """Token(s) that open a plain-prose document, so its first content token is scored."""
     vocab = tok.get_vocab()

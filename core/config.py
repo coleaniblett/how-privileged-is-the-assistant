@@ -44,14 +44,14 @@ FAMILIES = {
         "gpu_gib": 30,
         "batch_size": 4,
         "gen_precision": "int8",
-        "handoff_extra": ["<|channel>"],
+        "handoff_extra": ["<|channel>", "<channel|>"],
     },
     "qwen3-8b": {
         "stages": {"base": "Qwen/Qwen3-8B-Base", "instruct": "Qwen/Qwen3-8B"},
         "template": "Qwen/Qwen3-8B",
         "contamination_check": False,
         "batch_size": 4,
-        "handoff_extra": ["<think>"],
+        "handoff_extra": ["<think>", "</think>"],
         "assistant_think_block": False,
     },
 }

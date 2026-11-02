@@ -39,8 +39,8 @@ def test_families_have_stages_and_template():
         assert "base" in fam["stages"] and "instruct" in fam["stages"]
         assert st["dtype"] == "fp32" and st["batch_size"] >= 1
     assert config.family_settings("gemma4-31b")["offload"] and config.family_settings("gemma4-31b")["gen_precision"] == "int8"
-    assert config.family_settings("gemma4-31b")["handoff_extra"] == ["<|channel>"]
-    assert config.family_settings("qwen3-8b")["handoff_extra"] == ["<think>"]
+    assert config.family_settings("gemma4-31b")["handoff_extra"] == ["<|channel>", "<channel|>"]
+    assert config.family_settings("qwen3-8b")["handoff_extra"] == ["<think>", "</think>"]
     assert config.family_settings("qwen3-8b")["assistant_think_block"] is False  # the pilot's setting
     with pytest.raises(KeyError):
         config.family_settings("nope")

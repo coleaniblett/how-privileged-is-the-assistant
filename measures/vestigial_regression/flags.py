@@ -6,10 +6,15 @@ Writes <out>/<stage>.jsonl (one line per sample, with the user portion and the f
 <out>/<stage>_counts.csv (totals per flag), for every stage found in --generations.
 
 Flags per sample:
-    ended_turn            closed the user turn (<|im_end|> or end of document)
-    handoff_to_assistant  wrote the assistant header after closing the turn (a subset of ended_turn)
+    ended_turn            closed the user turn (the family's end-of-turn token, or end of document)
+    handoff_to_assistant  wrote the assistant header after closing the turn, or any of the family's extra handoff markers
+                          (config.FAMILIES[...]["handoff_extra"]: Gemma's thought channel, Qwen3's think tags), which
+                          mark a switch into the assistant even without turn markers (so it is not a subset of ended_turn)
     assistant_register    assistant phrases in the user portion (text before the turn closes)
     repetition_loop       a word 4-gram repeated 3+ times in the user portion
+    token_loop            one token id repeated 10+ times in a row in the user portion (loops without spaces, which
+                          repetition_loop misses). Ported from exploration/shiller_user_turns/flags.py; uses the generated
+                          token ids when core.generate stored them (continuation_ids), else re-tokenizes the user portion
 A post-trained model usually finishes the user's message, closes the turn and then answers as
 the assistant, so register and repetition are checked on the user portion only.
 
@@ -28,7 +33,7 @@ import re
 from collections import Counter
 
 from core import config
-from core.render import load_jsonl, load_tokenizer, turn_markers
+from core.render import family_turn_markers, load_jsonl, load_tokenizer
 
 ASSISTANT_REGISTER = re.compile(
     r"\b(I'd be (happy|glad) to|I would be (happy|glad) to|Certainly[,!.]|Sure[,!]|Of course[,!.]"
@@ -36,7 +41,8 @@ ASSISTANT_REGISTER = re.compile(
     r"|Let me know if|feel free to)",
     re.I,
 )
-FLAG_NAMES = ["ended_turn", "handoff_to_assistant", "assistant_register", "repetition_loop"]
+FLAG_NAMES = ["ended_turn", "handoff_to_assistant", "assistant_register", "repetition_loop", "token_loop"]
+TOKEN_RUN = 10
 
 
 def repetition_loop(text, n=4, k=3):
@@ -45,28 +51,69 @@ def repetition_loop(text, n=4, k=3):
     return any(c >= k for c in grams.values())
 
 
+_MARKERS = {}
+
+
+def markers_for(tok):
+    """family_turn_markers(tok), cached per tokenizer."""
+    key = getattr(tok, "name_or_path", id(tok))
+    if key not in _MARKERS:
+        _MARKERS[key] = family_turn_markers(tok)
+    return _MARKERS[key]
+
+
 def user_portion(text, tok):
-    """Continuation text before the model closes (or abandons) the user turn."""
-    cut = min((text.find(t) for t in ("<|im_end|>", "<|im_start|>", tok.eos_token) if t and t in text), default=len(text))
+    """Continuation text before the model closes (or abandons) the user turn: cut at the family's end-of-turn or
+    turn-open marker (derived from its template) or the end-of-text token. Extra handoff markers do not cut it."""
+    m = markers_for(tok)
+    cut = min((text.find(t) for t in (m["end_of_turn"], m["turn_open"], tok.eos_token) if t and t in text), default=len(text))
     return text[:cut]
 
 
-def flags(text, user_text, stopped_on_eos, end_marker, handoff):
-    return dict(
+def max_run(ids):
+    best = cur = 0
+    for i, t in enumerate(ids):
+        cur = cur + 1 if i and t == ids[i - 1] else 1
+        best = max(best, cur)
+    return best
+
+
+def flags(text, user_text, stopped_on_eos, end_marker, handoff, extra_handoff=(), user_ids=None):
+    """The sample's flags. extra_handoff: strings that count as a handoff wherever they appear in `text`. user_ids: token ids
+    of the user portion; token_loop is reported only when they are given (so existing callers see the four original keys)."""
+    out = dict(
         ended_turn=bool(stopped_on_eos or (end_marker and end_marker in text)),
-        handoff_to_assistant=bool(handoff and handoff in text),
+        handoff_to_assistant=bool((handoff and handoff in text) or any(m and m in text for m in extra_handoff)),
         assistant_register=bool(ASSISTANT_REGISTER.search(user_text)),
         repetition_loop=repetition_loop(user_text),
     )
+    if user_ids is not None:
+        out["token_loop"] = max_run(user_ids) >= TOKEN_RUN
+    return out
 
 
-def flag_samples(samples, tok):
-    """(flagged records, totals) for the raw samples of one stage (core/generate.py rows)."""
-    end_marker, handoff = turn_markers(tok)
+def user_portion_ids(sample, user_text, tok):
+    """Token ids of the user portion: the stored generated ids cut at the first turn/stop token, else re-tokenized text."""
+    ids = sample.get("continuation_ids")
+    if ids is None:
+        return tok(user_text, add_special_tokens=False)["input_ids"]
+    m = markers_for(tok)
+    stop = {tok.convert_tokens_to_ids(t) for t in (m["end_of_turn"], m["turn_open"], tok.eos_token) if t}
+    stop |= {tok.get_vocab()["<|endoftext|>"]} if "<|endoftext|>" in tok.get_vocab() else set()
+    cut = next((i for i, t in enumerate(ids) if t in stop), len(ids))
+    return ids[:cut]
+
+
+def flag_samples(samples, tok, family=None):
+    """(flagged records, totals) for the raw samples of one stage (core/generate.py rows). family: a config.FAMILIES key
+    whose extra handoff markers apply (default: the active family)."""
+    m = markers_for(tok)
+    extra = config.family_settings(family)["handoff_extra"]
     totals, records = Counter(), []
     for r in samples:
         user_text = user_portion(r["continuation"], tok)
-        f = flags(r["continuation"], user_text, r["stopped_on_eos"], end_marker, handoff)
+        f = flags(r["continuation"], user_text, r["stopped_on_eos"], m["end_of_turn"], m["handoff"], extra,
+                  user_portion_ids(r, user_text, tok))
         totals.update({k: int(v) for k, v in f.items()})
         totals["n"] += 1
         records.append(dict(prefill_id=r["prefill_id"], sample=r["sample"], prefill=r["prefill"],
@@ -87,12 +134,17 @@ def write_stage(out_dir, stage, records, totals):
 
 
 def main():
+    config.family_from_argv()  # --family switches TEMPLATE_MODEL and the extra handoff markers before the defaults below
     ap = argparse.ArgumentParser()
-    ap.add_argument("--generations", default=config.core_dir("generations"), help="core samples, <stage>.jsonl")
+    ap.add_argument("--family", help=f"one of {', '.join(config.FAMILIES)}")
+    ap.add_argument("--run", help="run directory under results/ (with --family: default capstone)")
+    ap.add_argument("--generations", help="core samples, <stage>.jsonl (default: results/<run>[/<family>]/core/generations)")
     ap.add_argument("--stage", help="one stage only (default: every <stage>.jsonl in --generations)")
     ap.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
-    ap.add_argument("--out", default=os.path.join(config.measure_dir("vestigial_regression"), "generations"))
+    ap.add_argument("--out", help="default: results/<run>[/<family>]/vestigial_regression/generations")
     args = ap.parse_args()
+    args.generations = args.generations or config.core_dir("generations", args.run)
+    args.out = args.out or os.path.join(config.measure_dir("vestigial_regression", args.run), "generations")
 
     tok = load_tokenizer(args.tokenizer)
     paths = ([os.path.join(args.generations, f"{args.stage}.jsonl")] if args.stage
@@ -101,7 +153,7 @@ def main():
         raise SystemExit(f"no sample files in {args.generations}")
     for path in paths:
         stage = os.path.basename(path)[:-6]
-        records, totals = flag_samples(load_jsonl(path), tok)
+        records, totals = flag_samples(load_jsonl(path), tok, args.family)
         write_stage(args.out, stage, records, totals)
         print(f"{stage}: {dict(totals)}")
 
