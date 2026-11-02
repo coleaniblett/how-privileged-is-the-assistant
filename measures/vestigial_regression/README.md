@@ -1,6 +1,6 @@
 # Vestigial regression
 
-**Shiller's form:** dominance. **Owner:** TBD.
+**Shiller's form:** dominance. **Owner:** Cole.
 
 ## Status
 
