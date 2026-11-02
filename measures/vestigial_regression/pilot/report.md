@@ -122,6 +122,35 @@ expected than plain prose (user text too, about −2.0), so the slot effect mixe
 one; the role-specific terms are the cleaner contrast. What is still unexplained is why `user@user` is 3 nats worse
 than plain at every position; the Gemma base run (step 2) shows whether post-training made it so.
 
+## Step 2: Gemma 4 31B base
+
+Base verified through the HF API (`google/gemma-4-31B`, apache-2.0, 62.5 GB), scored on the same 90 texts and
+slots as IT, rendered with the IT template (including the step-1 assistant-slot fix), fp32 with CPU offload, batch
+size 4 (603 s). Full tables, paired over texts: `nll_arm/compare_gemma.md`; position plots
+`nll_arm/position_change_gemma_*.png`. Weights cleared from the HF cache afterwards.
+
+Base is a normal language model in this pipeline: plain-prose NLL is 2.68 / 2.60 / 1.78 nats/token (wildchat user /
+oasst1 user / wildchat assistant text), and base has no role asymmetry (`user@user − user@plain` +0.01, `user@asst`
+within 0.12 of `user@user`). So the high IT values in step 1 come from post-training, not from the pipeline.
+
+| user text, IT − base, paired over texts | nats/token | bits/byte |
+|---|---|---|
+| wildchat: `user@user − user@plain` | +2.94 [+2.40, +3.44] | +1.10 [+0.84, +1.38] |
+| oasst1: `user@user − user@plain` | +3.63 [+2.91, +4.32] | +1.16 [+0.95, +1.37] |
+| wildchat: slot effect `user@user − user@asst` (descriptive) | +5.74 [+5.23, +6.24] | +2.07 [+1.80, +2.44] |
+| oasst1: slot effect (descriptive) | +6.59 [+6.13, +7.05] | +2.15 [+1.97, +2.35] |
+
+**Pre-committed rule (step 2): MET.** `user@user − user@plain` rises by far more than 0.05 nats, with the CI
+excluding zero, in both user sources.
+
+- Assistant-text role-specific term, IT − base: **−2.17 [−2.60, −1.73]**, the opposite sign. The effect is not a
+  general property of chat slots: assistant text becomes *more* expected in the assistant slot while user text becomes
+  *less* expected in the user slot, the asymmetry the README describes.
+- Position: the IT − base change in the user-text term is largest at positions 1-4 (+6.9 wildchat, +10.0 oasst1) and
+  decays but persists at positions 20-39 (+4.2, +3.1); base is flat at about 0 from position 1 on.
+- Caveats: n = 30 per set (25 and 9 texts for the position analysis); one checkpoint pair; the assistant slot's
+  extra thought channel makes any text more expected there, so the slot effects are descriptive only.
+
 ## Outcome
 
-_Steps 2 and 3 to be filled in._
+_Step 3 to be filled in._
