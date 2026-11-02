@@ -177,3 +177,21 @@ Qwen base and IT; Gemma base and IT); report a Spearman correlation between the 
 non-user-voice rate, descriptive and not a significance test at about 8 points; disagreements are findings, not errors.
 OPEN: both quantities are changes from base, so the three base points are zero by construction; whether they enter the
 correlation is undecided.
+
+## 2026-11-02: core: model families in config, Qwen3 think-block option, check_models per family
+
+`core/config.py` now holds three families in `FAMILIES`: `olmo3-7b` (unchanged), `gemma4-31b`
+(`google/gemma-4-31B`, `google/gemma-4-31B-it`) and `qwen3-8b` (`Qwen/Qwen3-8B-Base`, `Qwen/Qwen3-8B`). Each can carry
+`dtype`, `offload`/`gpu_gib`, `batch_size`, `gen_precision`, `handoff_extra` and `assistant_think_block` (documented in
+the file; defaults in `FAMILY_DEFAULTS`, read with `family_settings()`). The end-of-turn token, the user-to-assistant
+handoff string and the assistant-slot opening are derived from each family's chat template, not stored
+(`core.render.turn_markers`, `assistant_opening_extra`). `use_family(name)` / `family_from_argv()` switch the active
+family (`MODELS`, `STAGES`, `TEMPLATE_MODEL`); `run_dir`/`core_dir`/`measure_dir` take an optional `family` and, when a
+script was given `--family`, write to `results/<run>/<family>/...` (run defaults to `capstone`). Without `--family`
+every constant and path is exactly what it was: the default family is still OLMo and the paths are unchanged.
+New option `ASSISTANT_THINK_BLOCK` (Qwen3): when true the assistant slot opens with the empty
+`<think>\n\n</think>\n\n` block the non-thinking generation prompt adds; default None/False, which is what the pilot
+used. `core/check_models.py` takes `--family` (or `all`), verifies IDs, licenses, template and tokenizer agreement via the HF
+API (config and tokenizer files only) and records what core derives from each template; `docs/models.md` has the three
+verified families. Backwards compatible: the OLMo rendering hash (all 1190 texts, every slot, with and without the
+preceding turn, plus the template parts) is unchanged (`94c0f514db352ef8d6c44150c68a4df5617c7c68e0d8b2ea9eabb19d7e50bc28`).

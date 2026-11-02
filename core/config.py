@@ -10,6 +10,19 @@ import os
 # checkpoint whose tokenizer and chat template render every stage of that family (so token
 # sequences are identical across stages). contamination_check: whether the family's
 # post-training data is open, so test texts can be filtered for overlap (OLMo 3: Dolci).
+# Optional per-family settings (defaults in FAMILY_DEFAULTS; read them with family_settings()):
+#   dtype            scoring dtype, "fp32" everywhere (AGENTS.md: bf16 shifts NLL with batch composition)
+#   offload, gpu_gib place weights with device_map="auto": at most gpu_gib GiB on the GPU, the rest in CPU RAM
+#                    (needed to score a 31B model in fp32 on a 48 GB card; arithmetic is unchanged)
+#   batch_size       scoring batch size (a 262k-vocabulary model needs a small one: logits dominate memory)
+#   gen_precision    generation precision: "bf16" or "int8" (bitsandbytes; needs `uv sync --extra quant`)
+#   handoff_extra    strings whose presence in a continuation counts as a switch to the assistant even without
+#                    the template's turn markers (Gemma's thought channel, Qwen3's think block)
+#   assistant_think_block  Qwen3 only: render the assistant slot with the empty "<think>\n\n</think>\n\n" block
+#                    (None/False: as the template renders a stored assistant-only turn, what the pilot used)
+# The end-of-turn token and the user->assistant handoff string are not stored here: they are derived
+# from each family's chat template (core.render.turn_markers), and the assistant-slot opening from its
+# generation prompt (core.render.assistant_opening_extra).
 FAMILIES = {
     "olmo3-7b": {
         "stages": {
@@ -21,23 +34,80 @@ FAMILIES = {
         "template": "allenai/Olmo-3-7B-Instruct",
         "contamination_check": True,
     },
-    # TODO(breadth arm): base vs instruct pairs from other families, each as its own entry with
-    # stages {"base": ..., "instruct": ...}, template = the instruct checkpoint and
-    # contamination_check = False (their post-training data is not open; say so wherever their
-    # results appear). Candidates: Gemma 4 31B + Qwen3-14B or Qwen3-30B-A3B on 80 GB GPUs,
-    # otherwise Gemma 4 E4B + Qwen3-8B. Qwen3-32B has no published base checkpoint. Verify the
-    # Gemma 4 model IDs and chat templates with core/check_models.py before adding them here.
+    # Breadth arm. Their post-training data is not open, so test texts cannot be checked for contamination:
+    # say so wherever their results appear. Qwen3-32B has no published base checkpoint.
+    "gemma4-31b": {
+        "stages": {"base": "google/gemma-4-31B", "instruct": "google/gemma-4-31B-it"},
+        "template": "google/gemma-4-31B-it",
+        "contamination_check": False,
+        "offload": True,
+        "gpu_gib": 30,
+        "batch_size": 4,
+        "gen_precision": "int8",
+        "handoff_extra": ["<|channel>"],
+    },
+    "qwen3-8b": {
+        "stages": {"base": "Qwen/Qwen3-8B-Base", "instruct": "Qwen/Qwen3-8B"},
+        "template": "Qwen/Qwen3-8B",
+        "contamination_check": False,
+        "batch_size": 4,
+        "handoff_extra": ["<think>"],
+        "assistant_think_block": False,
+    },
 }
 
+FAMILY_DEFAULTS = dict(dtype="fp32", offload=False, gpu_gib=34, cpu_gib=900, batch_size=8, gen_precision="bf16",
+                       handoff_extra=[], assistant_think_block=None)
+
+
+def family_settings(name=None):
+    """A family's entry with FAMILY_DEFAULTS filled in (the active family if name is None)."""
+    name = name or FAMILY
+    if name not in FAMILIES:
+        raise KeyError(f"unknown family {name!r}; known: {', '.join(FAMILIES)}")
+    return {**FAMILY_DEFAULTS, **FAMILIES[name]}
+
+
 # The family scored by default. MODELS/STAGES/TEMPLATE_MODEL are that family's, so every
-# script keeps working unchanged; a --family flag selecting another entry is a TODO.
+# script keeps working unchanged; a script's --family flag switches them with use_family().
 FAMILY = "olmo3-7b"
+FAMILY_DEFAULT_NAME = FAMILY  # the family that owns the top of docs/models.md
 MODELS = FAMILIES[FAMILY]["stages"]
 STAGES = list(MODELS)
 
 # Every stage (base included) is scored with this tokenizer and chat template,
 # so token sequences are identical across stages.
 TEMPLATE_MODEL = FAMILIES[FAMILY]["template"]
+
+# Qwen3 only: whether the assistant slot carries the empty think block. None = as the template renders it.
+ASSISTANT_THINK_BLOCK = None
+
+# Set by use_family() only when a script was given --family explicitly. Output paths then gain the family
+# (results/<run>/<family>/...); without it every path is exactly what it was before families existed.
+EXPLICIT_FAMILY = None
+DEFAULT_RUN = "capstone"  # run directory used with an explicit --family when no --run is given
+
+
+def use_family(name):
+    """Make `name` the active family: MODELS, STAGES, TEMPLATE_MODEL and the assistant-slot setting follow it."""
+    global FAMILY, MODELS, STAGES, TEMPLATE_MODEL, ASSISTANT_THINK_BLOCK, EXPLICIT_FAMILY
+    st = family_settings(name)
+    FAMILY, MODELS, STAGES, TEMPLATE_MODEL = name, st["stages"], list(st["stages"]), st["template"]
+    ASSISTANT_THINK_BLOCK = st["assistant_think_block"]
+    EXPLICIT_FAMILY = name
+
+
+def family_from_argv(argv=None):
+    """Scan argv for --family NAME, activate it, and return the name (None if absent). Call before building an
+    argparse parser, so defaults that read config.TEMPLATE_MODEL / config.MODELS see the chosen family."""
+    import sys
+    args = list(sys.argv[1:] if argv is None else argv)
+    for i, a in enumerate(args):
+        name = a.split("=", 1)[1] if a.startswith("--family=") else (args[i + 1] if a == "--family" and i + 1 < len(args) else None)
+        if name:
+            use_family(name)
+            return name
+    return None
 
 # Text sources. Each row of data/texts.jsonl is one text with a source and a kind
 # ("user" or "assistant"); sources are analyzed separately and never pooled.
@@ -74,18 +144,22 @@ RESULTS_ROOT = "results"
 RUN = FAMILY
 
 
-def run_dir(run=None):
+def run_dir(run=None, family=None):
+    """results/<run>, or results/<run>/<family> for an explicit family (default run: DEFAULT_RUN)."""
+    family = family or EXPLICIT_FAMILY
+    if family:
+        return os.path.join(RESULTS_ROOT, run or DEFAULT_RUN, family)
     return os.path.join(RESULTS_ROOT, run or RUN)
 
 
-def core_dir(kind, run=None):
+def core_dir(kind, run=None, family=None):
     """kind: "scores" or "generations"."""
-    return os.path.join(run_dir(run), "core", kind)
+    return os.path.join(run_dir(run, family), "core", kind)
 
 
-def measure_dir(name, run=None):
+def measure_dir(name, run=None, family=None):
     """name: a measure ("vestigial_regression", ...) or "extras"."""
-    return os.path.join(run_dir(run), name)
+    return os.path.join(run_dir(run, family), name)
 
 
 # The smallest NLL-based effect we count, in nats (the negligibility margin of the position

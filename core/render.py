@@ -75,7 +75,12 @@ def assistant_opening_extra(tok, preceding=False):
     if stored.count(SENTINEL) != 1:
         return ""
     stored_prefix = stored.split(SENTINEL)[0]
-    return gen[len(stored_prefix) :] if gen.startswith(stored_prefix) and len(gen) > len(stored_prefix) else ""
+    extra = gen[len(stored_prefix) :] if gen.startswith(stored_prefix) and len(gen) > len(stored_prefix) else ""
+    # Qwen3 option (config.ASSISTANT_THINK_BLOCK, off by default): open the assistant slot with the empty think block
+    # that the template's non-thinking generation prompt adds. A no-op for templates without a <think> token.
+    if not extra and getattr(config, "ASSISTANT_THINK_BLOCK", None) and "<think>" in tok.get_vocab():
+        extra = "<think>\n\n</think>\n\n"
+    return extra
 
 
 def template_parts(tok, slot, preceding=False, opening=True):
