@@ -4,14 +4,22 @@
 computed yet. The pre-registered criteria below are frozen once results for this measure exist under
 `results/<run>/logit_distortion/` (AGENTS.md).
 
-## Candidate data construction (2026-11-02)
+## Data route and candidate construction (2026-11-02)
 
-The original-conversation candidate builder is implemented in `core.build_conversations`; see
-[its specification and reproduction commands](../../docs/conversation_candidates.md) and the
-[pilot audit](../../candidates/logit_distortion/pilot_v1/audit.md). These are unchecked candidates,
-not held-out scoring inputs. This is an alternative to the isolated authorship sets described below
-(`data/texts_authorship.jsonl`, unchanged); which route the measure uses is still open. Original-context
-scoring integration is a subsequent task. No analysis or pre-registered outcome criteria were changed.
+**Primary data route (Grace's decision, 2026-11-02):** existing, original multi-exchange conversations from
+OASST1, WildChat and UltraChat, each target scored with its full original preceding history. Role and
+authorship: OASST1 human user / human assistant; WildChat human-submitted user / model assistant; UltraChat
+model user / model assistant; sources are analyzed separately. The isolated authorship sets described below
+(`data/texts_authorship.jsonl`, unchanged) remain available for a separate comparison.
+
+Candidates are built by `core.build_conversations`; see [its specification and reproduction
+commands](../../docs/conversation_candidates.md). Current candidate pilot:
+[`pilot_v2` audit](../../candidates/logit_distortion/pilot_v2/audit.md) and
+[inspection notes](../../candidates/logit_distortion/pilot_v2/inspection.md): 24 conversations, 184 targets,
+Dolci exact-match checked in both roles; 92 provisionally eligible. These are candidates, not final scoring
+inputs: final sizes and thresholds are chosen from the audit before outcomes are seen, and original-context
+scoring is a subsequent task (`core.score` refuses these records). No analysis or pre-registered outcome
+criteria were changed.
 
 ## Spec
 

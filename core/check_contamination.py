@@ -17,7 +17,7 @@ import re
 from datasets import load_dataset
 
 from core import config
-from core.render import load_jsonl
+from core.render import load_jsonl, reject_conversation_candidates
 
 DOLCI = {
     "sft": "allenai/Dolci-Instruct-SFT",
@@ -72,9 +72,10 @@ def is_contaminated(turns, text, role="user", conv_hash=None):
 def contamination_record(turns, text, conv_hash=None):
     """Auditable normalized exact matches against BOTH training roles and WildChat hashes.
 
-    None means no check, not a negative result. An index returned by dolci_turns covers
-    the named sets only; absence of a match is not a broader contamination guarantee.
-    Caller records dataset revisions/scope in its manifest.
+    Status: "unchecked" (no index), "matched", "no_exact_match" (every set in DOLCI checked, no
+    hit) or "incomplete" (no hit, but only some DOLCI sets were checked; not a negative result).
+    An index returned by dolci_turns covers the named sets only; absence of a match is not a
+    broader contamination guarantee. Caller records dataset revisions/scope in its manifest.
     """
     if not turns:
         return {"status": "unchecked", "checked_datasets": [], "matches": []}
@@ -86,7 +87,8 @@ def contamination_record(turns, text, conv_hash=None):
                                 "training_role": role})
         if conv_hash and conv_hash in seen["hash"]:
             matches.append({"training_dataset": DOLCI[name], "kind": "conversation_hash"})
-    return {"status": "matched" if matches else "no_exact_match",
+    status = "matched" if matches else "no_exact_match" if set(turns) >= set(DOLCI) else "incomplete"
+    return {"status": status,
             "checked_datasets": [DOLCI[n] for n in sorted(turns)], "matches": matches}
 
 
@@ -95,8 +97,8 @@ def main():
     ap.add_argument("--dataset", default=config.DATA_PATH)
     args = ap.parse_args()
 
+    rows = reject_conversation_candidates(load_jsonl(args.dataset), args.dataset)  # before the large Dolci load
     turns = dolci_turns()
-    rows = load_jsonl(args.dataset)
     hits = collections.defaultdict(collections.Counter)
     totals = collections.Counter()
     for r in rows:

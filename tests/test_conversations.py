@@ -207,7 +207,7 @@ def test_contamination_both_roles_independent_assistant_and_context():
     turns = {"sft": {"user": {"matched user"}, "assistant": {"matched assistant"}, "hash": set()}}
     cs, _, _ = adapt([ultra(texts=["unmatched prompt", "matched  assistant", "matched user", "unmatched reply"])])
     ts = make_targets(cs, Tokenizer(), SETTINGS, turns)
-    assert ts[0]["contamination"]["status"] == "no_exact_match"
+    assert ts[0]["contamination"]["status"] == "incomplete"  # no hit, but not every Dolci set was checked
     for t in ts[1:3]:
         assert "contamination_target" in t["exclusion_reasons"]
         assert t["contamination"]["matches"][0]["training_dataset"] == DOLCI["sft"]
@@ -217,7 +217,11 @@ def test_contamination_both_roles_independent_assistant_and_context():
     assert len(ts[3]["contaminated_context_message_ids"]) == 2
     assert is_contaminated(turns, "matched assistant", role="assistant")  # legacy API
     assert contamination_record(None, "matched user")["status"] == "unchecked"
-    assert contamination_record(turns, "MATCHED user")["status"] == "no_exact_match"
+    assert contamination_record(turns, "MATCHED user")["status"] == "incomplete"  # only sft indexed
+    assert [t["context_contamination_status"] for t in ts] == ["no_context", "incomplete", "matched", "matched"]
+    full = {name: {"user": set(), "assistant": set(), "hash": set()} for name in DOLCI}
+    assert contamination_record(full, "anything")["status"] == "no_exact_match"
+    assert contamination_record({**full, "sft": turns["sft"]}, "matched user")["status"] == "matched"
 
 
 def test_hash_contamination_and_cross_role_match():
@@ -337,3 +341,44 @@ def test_core_score_refuses_conversation_candidates():
             reject_conversation_candidates(records, "candidates.jsonl")
     legacy = [{"id": "x", "source": "wildchat", "kind": "user", "text": "hello"}]
     reject_conversation_candidates(legacy, config.DATA_PATH)  # legacy isolated texts pass unchanged
+
+
+def test_target_and_history_contamination_recorded_separately():
+    """A clean target after a contaminated history: target status stays its own; history flags it."""
+    full = {name: {"user": set(), "assistant": set(), "hash": set()} for name in DOLCI}
+    full["dpo"]["assistant"].add("matched answer")
+    cs, _, _ = adapt([ultra(texts=["first question", "matched answer", "second question", "final reply"])])
+    ts = make_targets(cs, Tokenizer(), SETTINGS, full)
+    assert [t["contamination"]["status"] for t in ts] == ["no_exact_match", "matched", "no_exact_match", "no_exact_match"]
+    assert [t["context_contamination_status"] for t in ts] == ["no_context", "no_exact_match", "matched", "matched"]
+    assert ts[2]["contaminated_context_message_ids"] == [cs[0]["messages"][1]["message_id"]]
+    assert ts[2]["exclusion_reasons"] == ["contamination_context"]
+    # The matched message is never removed: later histories still contain it verbatim.
+    assert ts[3]["preceding_messages"][1]["content"] == "matched answer"
+    assert all(m["contamination"]["checked_datasets"] == sorted(DOLCI.values()) for m in cs[0]["messages"])
+    assert make_targets(adapt([ultra()])[0], Tokenizer(), SETTINGS)[1]["context_contamination_status"] == "unchecked"
+
+
+@pytest.mark.parametrize("module", ["core.render", "core.check_contamination", "core.add_replies"])
+def test_isolated_entry_points_refuse_candidates(module, tmp_path, monkeypatch):
+    """Every CLI that reads isolated texts via --dataset fails explicitly, before loading models or Dolci."""
+    import importlib, runpy, sys
+    import core.check_contamination as contamination
+    monkeypatch.setattr(contamination, "dolci_turns", lambda *a, **k: pytest.fail("Dolci loaded"))
+    cs, _, _ = adapt([ultra()])
+    path = tmp_path / "targets.jsonl"
+    path.write_text("\n".join(json.dumps(t) for t in make_targets(cs, Tokenizer(), SETTINGS)) + "\n")
+    if module == "core.add_replies":
+        importlib.import_module(module)
+        monkeypatch.setattr(sys.modules[module], "load_model", lambda *a: pytest.fail("model loaded"))
+        monkeypatch.setattr(sys.modules[module], "load_tokenizer", lambda *a: None)
+        monkeypatch.setattr(sys, "argv", [module, "--dataset", str(path)])
+        with pytest.raises(SystemExit, match="not core.score input"):
+            sys.modules[module].main()
+        return
+    if module == "core.render":
+        monkeypatch.setattr("core.render.AutoTokenizer.from_pretrained", lambda *a, **k: None)
+    monkeypatch.setattr(sys, "argv", [module, "--dataset", str(path), "--out", str(tmp_path / "x.md")]
+                        if module == "core.render" else [module, "--dataset", str(path)])
+    with pytest.raises(SystemExit, match="not core.score input"):
+        runpy.run_module(module, run_name="__main__")

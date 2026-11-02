@@ -232,6 +232,16 @@ def select_conversations(candidates, settings):
     return sorted(selected, key=lambda c: (c["source"], c["conversation_id"])), rejected
 
 
+def context_contamination_status(context):
+    """Preceding history, summarized separately from the target: "no_context" for an empty history,
+    else the weakest-evidence status over its messages ("matched" > "unchecked" > "incomplete" >
+    "no_exact_match"), so a history is clear only if every message in it was fully checked."""
+    if not context:
+        return "no_context"
+    statuses = {p["contamination"]["status"] for p in context}
+    return next(s for s in ("matched", "unchecked", "incomplete", "no_exact_match") if s in statuses)
+
+
 def make_targets(conversations, tokenizer, settings, contamination=None):
     targets = []
     seen_text = {}
@@ -268,6 +278,7 @@ def make_targets(conversations, tokenizer, settings, contamination=None):
             else:
                 seen_text[key] = tid
             context_matches = [p["message_id"] for p in context if p["contamination"]["matches"]]
+            context_status = context_contamination_status(context)
             if m["contamination"]["matches"]:
                 reasons.append("contamination_target")
             if context_matches:
@@ -282,5 +293,6 @@ def make_targets(conversations, tokenizer, settings, contamination=None):
                             "turn_position": "opening" if role_counts[m["role"]] == 1 else "follow_up",
                             "target_tokens": tokens, "preceding_context_tokens": context_tokens,
                             "eligible": not reasons, "exclusion_reasons": reasons, "duplicate_of": duplicate_of,
-                            "contamination": m["contamination"], "contaminated_context_message_ids": context_matches})
+                            "contamination": m["contamination"], "context_contamination_status": context_status,
+                            "contaminated_context_message_ids": context_matches})
     return targets

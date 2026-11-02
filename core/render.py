@@ -232,6 +232,20 @@ def load_jsonl(path):
         return [json.loads(line) for line in f]
 
 
+def reject_conversation_candidates(rows, path):
+    """Refuse original-conversation records (core.build_conversations) in an isolated-text entry point.
+
+    Those records carry original preceding history that isolated-turn rendering ignores, so accepting
+    them would silently produce isolated, not conversational, results. Legacy rows have no "format"
+    field and pass unchanged. Raises SystemExit naming the file.
+    """
+    if any(isinstance(row, dict) and row.get("format") == config.CONVERSATION_FORMAT for row in rows):
+        raise SystemExit(f"{path}: {config.CONVERSATION_FORMAT} records are not core.score input; "
+                         "they are not isolated texts, and original-context scoring is not implemented yet "
+                         "(docs/conversation_candidates.md)")
+    return rows
+
+
 def dump_examples(tok, rows, path, preceding=False):
     lines = [
         "# Rendered examples",
@@ -268,7 +282,7 @@ if __name__ == "__main__":
     args = ap.parse_args()
     tok = load_tokenizer(args.tokenizer)
     rows, count = [], {}
-    for row in load_jsonl(args.dataset):
+    for row in reject_conversation_candidates(load_jsonl(args.dataset), args.dataset):
         key = (row["source"], row["kind"])
         if count.get(key, 0) < args.n:
             count[key] = count.get(key, 0) + 1

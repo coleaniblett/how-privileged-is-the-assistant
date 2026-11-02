@@ -62,6 +62,9 @@ def audit(conversations, targets, rejected, source_info, settings):
                 "duplicate_targets": sum(t["duplicate_of"] is not None for t in rows),
                 "contamination_status": dict(sorted(Counter(t["contamination"]["status"] for t in rows).items())),
             })
+            if any("context_contamination_status" in t for t in targets):  # absent from pilot_v1 records
+                cells[-1]["context_contamination_status"] = dict(sorted(Counter(
+                    t["context_contamination_status"] for t in rows).items()))
     return {"candidate_only": True, "sources": sources, "cells": cells,
             "totals": {"conversations": len(conversations), "targets": len(targets),
                        "eligible": sum(t["eligible"] for t in targets),
@@ -99,7 +102,9 @@ def audit_markdown(report):
         def fmt(key):
             return " / ".join(str(cell[key][k]) for k in ("min", "median", "p95", "max"))
         lines.append(f"| {cell['source']} / {cell['group']} | {fmt('target_tokens')} | "
-                     f"{fmt('preceding_context_tokens')} | {cell['exclusion_reasons']} | {cell['contamination_status']} |")
+                     f"{fmt('preceding_context_tokens')} | {cell['exclusion_reasons']} | {cell['contamination_status']}"
+                     + (f"; context {cell['context_contamination_status']}" if "context_contamination_status" in cell else "")
+                     + " |")
     lines.extend(["", "Exact text matching normalizes whitespace only (case and punctuation preserved); duplicate originals remain unchanged. "
                   "No exact match, when checked, is not a guarantee against paraphrase, substring, or unexamined training data overlap. "
                   "See manifest.json for check scope/revisions and examples.md for complete conversations and target mappings.", ""])
@@ -135,7 +140,7 @@ def verify_build(path):
     """Offline artifact integrity, context invariants, and audit reconciliation."""
     from pathlib import Path
     import hashlib
-    from core.conversations import FORMAT, Settings
+    from core.conversations import FORMAT, Settings, context_contamination_status
 
     path = Path(path)
     manifest = json.loads((path / "manifest.json").read_text())
@@ -165,7 +170,12 @@ def verify_build(path):
                 or target["role"] != msg["role"] or target["authorship"] != msg["authorship"]
                 or target["group"] != f"{msg['authorship']}_{msg['role']}"
                 or target["has_preceding_conversation"] != bool(i)
-                or target["eligible"] != (not target["exclusion_reasons"])):
+                or target["eligible"] != (not target["exclusion_reasons"])
+                or target["contamination"] != msg.get("contamination", target["contamination"])
+                or target["contaminated_context_message_ids"] != [
+                    p["message_id"] for p in conv["messages"][:i] if p["contamination"]["matches"]]
+                or target.get("context_contamination_status", context_contamination_status(conv["messages"][:i]))
+                != context_contamination_status(conv["messages"][:i])):
             raise ValueError(f"target invariant failed: {target['target_id']}")
     report = audit(conversations, targets, rejected, manifest["sources"], Settings(**manifest["settings"]))
     # Round-trip normalizes JSON object keys, including integer histogram bins.

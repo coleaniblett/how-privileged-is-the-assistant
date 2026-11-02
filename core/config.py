@@ -201,4 +201,4 @@ CONVERSATION_SOURCES = {
     "wildchat": {"dataset": DATASET_IDS["wildchat"], "split": "train"},
     "ultrachat": {"dataset": "openbmb/UltraChat", "split": "train"},
 }
-CONVERSATION_CANDIDATES_DIR = "candidates/logit_distortion/pilot_v1"
+CONVERSATION_CANDIDATES_DIR = "candidates/logit_distortion/pilot_v2"  # pilot_v1: same sample, Dolci unchecked

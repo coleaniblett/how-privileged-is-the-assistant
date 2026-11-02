@@ -19,7 +19,7 @@ import torch
 
 from core import config
 from core.prepare_data import clean, usable
-from core.render import encode, load_jsonl, load_tokenizer
+from core.render import encode, load_jsonl, load_tokenizer, reject_conversation_candidates
 from core.score import load_model, resolve
 
 
@@ -69,7 +69,8 @@ def main():
 
     model_id, _ = resolve(args.model)
     tok = load_tokenizer(args.tokenizer)
-    rows = [r for r in load_jsonl(args.dataset) if r["source"] != args.source]
+    rows = [r for r in reject_conversation_candidates(load_jsonl(args.dataset), args.dataset)
+            if r["source"] != args.source]
     prompts = [r for r in rows if r["source"] == args.prompt_source and r["kind"] == "user"]
     model, device = load_model(model_id)  # bf16 on GPU, as for generate.py
     replies = greedy_replies(model, device, tok, [r["text"] for r in prompts], args.max_new_tokens, args.batch_size)

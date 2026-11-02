@@ -341,3 +341,37 @@ family and authorship commits; the pilot was rebuilt from the integrated code an
 See `docs/conversation_candidates.md` for schema verification, sampling, exact reproduction/audit/test
 commands, limitations, and the source-attributed bounded sample. Final sizes, source composition, length
 matching, and contamination policy must be decided from the audit before examining model outcomes.
+
+## 2026-11-02: logit distortion uses original conversations (primary route); core: Dolci-checked candidate pilot
+
+**Decision (Grace, measure owner):** logit distortion's primary data are existing, original conversations
+with at least two complete exchanges from OASST1, WildChat and UltraChat; each target keeps its exact original
+preceding history. No new dataset source. Role × authorship: OASST1 human/human, WildChat human-submitted user
+(a provenance label, not proof of composition) / model assistant, UltraChat model/model; sources stay separate.
+The isolated authorship sets (`data/texts_authorship.jsonl`) and `data/texts.jsonl` are unchanged and remain
+available for a separate comparison. This supersedes "which route ... is an open decision" in the entry below.
+No hypothesis threshold, verdict rule or pre-registered criterion changed.
+
+Why the isolated files cannot simply be joined into conversations: verified today, all 300 OASST1 `pair_id`s
+occur in both `data/texts.jsonl` (user) and `data/texts_authorship.jsonl` (assistant), and 294 of the 300 pairs
+have different `source_id`s; `pair_id` reflects sampling order in each file. The legacy sampler also checked
+only user text against Dolci when it kept an assistant reply. Both are left as they are (legacy data unchanged).
+
+`core:` changes, all backwards-compatible:
+- `check_contamination.contamination_record` reports `incomplete` (instead of `no_exact_match`) when no hit was
+  found but not every Dolci set was indexed. `dolci_turns`, `is_contaminated` and the CLI are unchanged.
+- Conversation targets gain `context_contamination_status` (history summarized separately from the target);
+  the audit reports it when present, so `pilot_v1` still verifies unchanged.
+- The refusal of conversation-candidate rows moved to `core.render.reject_conversation_candidates` and now also
+  guards `core.render`, `core.add_replies` and `core.check_contamination` (before any model or Dolci load);
+  `core.score` behaves as before and still exports the name. Legacy rows have no `format` field and pass.
+- `config.CONVERSATION_CANDIDATES_DIR` now names `pilot_v2`.
+
+Pilot: `candidates/logit_distortion/pilot_v2/` is `pilot_v1`'s sample rebuilt with `--check-dolci` (pinned
+SFT/DPO/RL revisions). Exclusion policy, unchanged from the builder: a target is ineligible if its own text or
+any preceding message has a whitespace-normalized exact match (or the WildChat hash is in Dolci-RL); matched
+messages are never removed from histories. Result: 8 of 184 messages matched, all WildChat user turns (7 of 8
+WildChat conversations); eligible targets fall from 128 to 92, WildChat from 41 to 5. Reported as a shortage;
+filters were not relaxed. How to sample WildChat (e.g. a conversation-level Dolci filter before the budget) and
+final sizes/thresholds are Grace's decisions before scoring (`pilot_v2/inspection.md`). Exact matching does not
+cover paraphrase, substrings, RL completions or pretraining data.

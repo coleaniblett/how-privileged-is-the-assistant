@@ -21,15 +21,7 @@ import torch.nn.functional as F
 from transformers import AutoModelForCausalLM
 
 from core import config
-from core.render import load_jsonl, load_tokenizer, render_all
-
-
-def reject_conversation_candidates(rows, path):
-    """Conversation-candidate records (core.build_conversations) carry their original history, which this
-    isolated-turn scorer would ignore; scoring them here would not be conversational scoring."""
-    if any(isinstance(row, dict) and row.get("format") == config.CONVERSATION_FORMAT for row in rows):
-        raise SystemExit(f"{path}: {config.CONVERSATION_FORMAT} records are not core.score input; "
-                         "original-context scoring is not implemented yet (docs/conversation_candidates.md)")
+from core.render import load_jsonl, load_tokenizer, reject_conversation_candidates, render_all  # noqa: F401 (re-exported)
 
 
 def resolve(model_arg, stage=None):

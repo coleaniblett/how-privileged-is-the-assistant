@@ -3,15 +3,33 @@
 This is **data construction and inspection only**. The new `conversation_candidates_v1` format stores
 original conversations separately from possible scoring targets. It is not the `id/source/kind/text`
 isolated-turn format consumed by `core.score`. **Do not pass these records to `core.score`: original-context
-scoring integration is a subsequent task.** `core.score` refuses them with an error (every record carries
-`format=conversation_candidates_v1`). No model scoring, generation, or logit-distortion analysis was
-performed for this build. Existing preparation/scoring interfaces and frozen data/results are unchanged.
+scoring integration is a subsequent task.** Every isolated-text entry point that reads `--dataset`
+(`core.score`, `core.render`, `core.add_replies`, `core.check_contamination`) exits with an error on any row
+carrying `format=conversation_candidates_v1`, before loading a model or Dolci (`core.render.reject_conversation_candidates`).
+No model scoring, generation, or logit-distortion analysis was performed for any build. Existing
+preparation/scoring interfaces and frozen data/results are unchanged.
 
-This route sits alongside, and does not replace, the isolated authorship sets built by
-`core.prepare_data --authorship` (`data/texts_authorship.jsonl`, unchanged). Which route logit distortion
-uses is an open decision (STATUS.md). The measure's pre-registered outcome criteria are unchanged. Final sample
-size, matching criteria, source weights, and token thresholds remain to be chosen from this audit before
-examining model outcomes.
+**Route (decided 2026-11-02 by Grace, the measure owner):** existing, original multi-exchange conversations
+from OASST1, WildChat and UltraChat, each target keeping its full preceding history, are logit distortion's
+**primary** data route. The isolated authorship sets (`core.prepare_data --authorship`,
+`data/texts_authorship.jsonl`, unchanged) remain available for a separate comparison. The measure's
+pre-registered outcome criteria and the hypothesis/verdict rules are unchanged. Final sample size, matching
+criteria, source weights, and token thresholds are chosen from this audit before examining model outcomes.
+
+**Current pilot:** `candidates/logit_distortion/pilot_v2/`, Dolci-checked in both roles (see Contamination).
+`pilot_v1/` is the same sample built without the Dolci check; it is kept unchanged for provenance and
+still verifies, but is superseded.
+
+### Do not rebuild conversations from the isolated files
+
+The isolated files cannot be joined into conversations. `pair_id` was assigned by sampling order,
+independently in each file. Checked 2026-11-02 on the committed data: all 300 OASST1 `pair_id`s in
+`data/texts.jsonl` (user turns) also occur in `data/texts_authorship.jsonl` (assistant replies), and 294 of
+those 300 pairs have **different** OASST1 `source_id`s, so a `pair_id` join would pair unrelated messages.
+(UltraChat user/assistant rows within `texts_authorship.jsonl` do share source IDs, but are single turns
+without history.) The legacy isolated sampler also checked only the user text against Dolci even when it
+retained an assistant reply (`prepare_data`: `is_contaminated(turns, user, "user", ...)`). Legacy data are left
+unchanged; this builder checks every message in both roles.
 
 ## Sources and verified schemas
 
@@ -121,13 +139,34 @@ The candidate builder does not impose the old isolated renderer's whitespace con
 
 ## Contamination
 
-The committed pilot is **unchecked candidates**, not held-out or clean. `checked_datasets=[]` and
-`status=unchecked` occur on every message/target. Eligibility only means passing the provisional enabled
-filters; it is not contamination clearance.
+`pilot_v2` was built with `--check-dolci` against pinned revisions of all three Dolci-Instruct sets (SFT,
+DPO, RL; revisions in `manifest.json`). `pilot_v1` is **unchecked**: `checked_datasets=[]` and
+`status=unchecked` on every message/target. Without `--check-dolci` a build is unchecked; eligibility then
+only means passing the provisional length/duplicate filters, not contamination clearance.
 
-Optional `--check-dolci` reuses `core.check_contamination.dolci_turns` with pinned revisions of the full
-named SFT/DPO/RL training splits. This may require large dataset downloads; it is deliberately off by
-default for the bounded pilot. SFT scans messages; DPO scans both chosen and rejected messages; RL scans
+Per-message status (`contamination.status`, also copied onto each target for its own text):
+
+| status | meaning |
+|---|---|
+| `unchecked` | no Dolci index was supplied |
+| `incomplete` | no hit, but only some of the Dolci sets were indexed: **not** a negative result |
+| `no_exact_match` | all three Dolci sets indexed, no whitespace-normalized exact hit in either training role and no conversation-hash hit |
+| `matched` | at least one hit; `matches` lists dataset, kind and training role |
+
+Targets record the history separately: `context_contamination_status` is `no_context` for an empty history,
+otherwise the weakest status over the preceding messages (`matched` > `unchecked` > `incomplete` >
+`no_exact_match`), and `contaminated_context_message_ids` lists matched history messages. The field is new in
+`pilot_v2` (absent in `pilot_v1` records, whose audit still verifies).
+
+**Exclusion policy:** a target is ineligible (`contamination_target`) if its own text matched, and
+(`contamination_context`) if any preceding message matched. A matched message is **never removed** from the
+conversation or from later histories, and the conversation is not altered; its later targets are flagged
+instead. A WildChat conversation-hash hit marks every message of that conversation as matched. Unchecked and
+incomplete statuses are not exclusion reasons by themselves, but such a build must not be described as
+checked, clean, or held out.
+
+`--check-dolci` reuses `core.check_contamination.dolci_turns` with pinned revisions of the full
+named SFT/DPO/RL training splits (about 4 GB in the HF cache). It is off by default. SFT scans messages; DPO scans both chosen and rejected messages; RL scans
 parsed prompt turns and WildChat conversation hashes. Every original message, **including assistant
 responses independently of their user prompt**, is matched against normalized text from both training
 roles. Hits record training dataset, match kind, and training role, or a conversation-hash match. Targets
@@ -142,8 +181,17 @@ Other model families' undisclosed training data remain outside this check.
 
 ## Reproduce and inspect
 
-From repository root, use the locked project environment (`uv sync --locked`). No model checkpoints or GPU
-jobs are needed. Build to a **new directory**; the builder refuses to overwrite any existing destination:
+From repository root, use the locked project environment (`uv sync --locked`) or `/opt/arena-env`. No model
+checkpoints or GPU jobs are needed (only the tokenizer files). Build to a **new directory**; the builder refuses
+to overwrite any existing destination. The `pilot_v2` command adds the Dolci check to the command below:
+
+```bash
+  --check-dolci --dolci-revision sft=bd3c8f3a9b2cc5a9682e44b96ddd0bb2ff027221 \
+  --dolci-revision dpo=aed155cf32e809b590490b6c3577ee4b0d0a5019 \
+  --dolci-revision rl=1a8d79b1012d77e4bb1fd7f699c5c7eb33ef931e
+```
+
+The `pilot_v1` (unchecked) command:
 
 ```bash
 uv run python -m core.build_conversations \
@@ -159,6 +207,7 @@ uv run python -m core.build_conversations \
 # Offline: verify hashes, all context prefixes, one target per message, and recompute the audit.
 uv run python -m core.conversation_audit --input /tmp/logit-conversation-reproduction
 uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v1
+uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v2
 
 # Focused local fixture tests and existing tokenizer-only compatibility tests; no model scoring.
 uv run pytest tests/test_conversations.py tests/test_render_olmo.py tests/test_render_gemma.py -q
@@ -174,9 +223,11 @@ code, tokenizer, settings, and package versions; there is no wall-clock timestam
 The offline audit checks artifacts, not remote availability or original-source authenticity; pinned input
 hashes and the independent source comparison recorded in the inspection notes address reproduction.
 
-The new documented output location is `candidates/logit_distortion/pilot_v1/`. It contains the entire bounded
-24-conversation sample and its 184 targets (about 1.5 MB including repeated contexts), audit JSON/Markdown,
-all candidate exclusion reasons, complete readable examples, and a manifest. None are model outcomes or
-stored under frozen `data/` or results paths. `examples.md` selects one shortest complete conversation per
-source only to make reading easier; this does not affect selection. See [inspection notes](../candidates/logit_distortion/pilot_v1/inspection.md)
-for the actual counts, findings, and remaining decisions.
+Output locations: `candidates/logit_distortion/pilot_v2/` (current, Dolci-checked) and `pilot_v1/` (same
+sample, unchecked, superseded). Each holds the bounded 24-conversation sample and its 184 targets (about
+1.5 MB including repeated contexts), audit JSON/Markdown, all candidate exclusion reasons, complete readable
+examples, and a manifest. None are model outcomes or stored under frozen `data/` or results paths.
+`examples.md` selects one shortest complete conversation per source only to make reading easier; this does
+not affect selection. Hand-written inspection notes: [pilot_v2](../candidates/logit_distortion/pilot_v2/inspection.md)
+(contamination findings, current counts, decisions before scoring) and [pilot_v1](../candidates/logit_distortion/pilot_v1/inspection.md)
+(source and length findings, still valid for the shared sample).
