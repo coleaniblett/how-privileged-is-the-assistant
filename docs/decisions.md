@@ -71,3 +71,20 @@ not in `core/config.py`, so that the measures' model list stays unchanged (the O
 Nothing in `core/` or `measures/` changed. `pyproject.toml` gains an optional `quant` extra (bitsandbytes,
 `uv sync --extra quant`) for 8-bit loading of the 31B/32B models on 48 GB cards. A plain `uv sync` is
 unaffected.
+
+## 2026-11-02: core: Gemma assistant slot opens with the empty thought channel
+
+`core/render.py` gains `assistant_opening_extra(tok)` and a `template_parts(..., opening=True)` argument. The
+extra is whatever the template's generation prompt adds after the assistant header beyond how it renders a stored
+assistant turn, measured after a neutral user turn. It is empty for OLMo 3 and for Qwen3 at its default thinking
+setting; for Gemma 4 it is `<|channel>thought\n<channel|>` (the template's generation prompt is
+`<|turn>model\n<|channel>thought\n<channel|>`, and the model writes those tokens itself at the start of every
+sample). Without it the assistant slot is off-distribution: the first content token costs about 30 nats, because the
+model puts nearly all probability on `<|channel>`. Backwards compatible: existing callers and the user and plain
+conditions are unchanged. OLMo rendering is byte-identical: a hash over all 1190 texts in every slot, with and
+without the preceding turn, plus the template parts, is the same before and after
+(`94c0f514db352ef8d6c44150c68a4df5617c7c68e0d8b2ea9eabb19d7e50bc28`); `tests/test_render_gemma.py` is new and the
+existing render and smoke tests pass. Effect on the Gemma 4 31B IT pilot (90 texts): assistant-slot NLL falls from
+9.2 to 4.5 nats/token (wildchat user text) and from 6.6 to 3.2 (wildchat assistant text); user and plain
+conditions are identical, so `user@user − user@plain` is unchanged. Scores made before the fix are kept in
+`measures/vestigial_regression/pilot/nll_arm/scores_before_fix/`.
