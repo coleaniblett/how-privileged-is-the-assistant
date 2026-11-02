@@ -239,3 +239,18 @@ exploration) uses the generated ids that `core.generate` now stores in each reco
 ignore it), else re-tokenizes the user portion, which can merge a repeated character and miss a loop. `repetition_loop` is unchanged.
 OLMo flags are unchanged except for the added `token_loop` column in `*_counts.csv`; `flags()` still returns its four original keys unless
 token ids are passed. Tests: `tests/test_flags_families.py` (synthetic strings per family).
+
+## 2026-11-02: vestigial regression: the judge implemented (measures/vestigial_regression/judge.py)
+
+Implements the judge arm specified in the 2026-11-02 entry above. Judge: `claude-sonnet-5-5` via the Anthropic API at temperature 0; prompt
+`judge_prompt.md` (version `v1`, recorded in every output row and in the cache key); output a strict JSON object with a label and a
+one-sentence reason, a reply that does not parse is asked for once more and otherwise recorded as label `invalid` (never guessed).
+The judge sees only the prefill and the continuation (including text after turn or channel markers); sample ids, models and stages are
+carried to the output rows but not sent. Results are cached by hash of (model, prompt version, temperature, prefill, continuation) in
+`judge_cache.jsonl`; transient API errors (429, 5xx, connection) are retried with exponential backoff; `--dry-run` prints a token
+estimate (no prices are built in; pass `--price-in/--price-out` from the current price list). The validation sheet
+(`judge_validation/sheet.csv`, 60 samples stratified over Gemma 4 31B IT, Qwen3-8B and OLMo base/SFT/DPO/Instruct generations that
+already exist; the model/stage key is a separate file the labeler must not open) is for a teammate's independent labels;
+`judge validate` reports raw agreement, Cohen's kappa and the confusion matrix. `judge pilot` compares the judge with the pilot agent's
+labels as a provisional check only. The `anthropic` package is an optional extra (`uv sync --extra judge`). No `ANTHROPIC_API_KEY` was
+available when this was built, so nothing has been sent to the API: the tests use a fake client.

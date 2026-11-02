@@ -19,6 +19,8 @@ dependencies = [
 [project.optional-dependencies]
 # 8-bit loading for the 31B/32B models on 48 GB cards (exploration/shiller_user_turns): uv sync --extra quant
 quant = ["bitsandbytes>=0.45"]
+# the LLM judge arm (measures/vestigial_regression/judge.py): uv sync --extra judge; needs ANTHROPIC_API_KEY
+judge = ["anthropic>=0.40"]
 
 [tool.uv]
 package = false
