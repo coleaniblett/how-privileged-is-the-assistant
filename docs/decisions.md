@@ -211,3 +211,14 @@ unset), checks free disk before each checkpoint and, with `CLEAR_CACHE=auto`, re
 cache after it is used unless it was already cached when the script started. Backwards compatible: with no `--family` every
 default, path and output is as before (OLMo rendering hash unchanged; `tests/test_families.py` pins it and tests the
 helpers, `test_smoke.py` runs the CPU pipeline).
+
+## 2026-11-02: core: a 100-sentence prefill set (data/prefill_100.jsonl)
+
+`core.prepare_data --prefill-only --n-prefill 100 --prefill-out data/prefill_100.jsonl` builds the capstone prefill set from the
+WildChat user turns already in `data/texts.jsonl` (not modified), with the same first-sentence rule and order as the
+original 20 (the block in `main()` became `build_prefill()`). Those user turns already passed the length, render and
+Dolci-contamination filters when `texts.jsonl` was drawn (the Dolci match is on the whole user turn), so the new file inherits
+them, with no re-sampling. It has 100 distinct sentences from 100 distinct texts, each row keeps its `text_id`, and the first
+20 rows are identical to the frozen `data/prefill.jsonl` (untouched). `config.PREFILL_PATH` (the default of `core.generate`)
+now points at the new file; `config.PREFILL_PATH_20` names the frozen one, which the exploration's `ordinary` condition
+(`exploration/shiller_user_turns/prompts.py`) is pinned to so it stays at 20 prompts. `tests/test_prefill.py` checks it.

@@ -126,7 +126,8 @@ EXCLUDE_DOLCI = True
 
 N_TEXTS = 300  # per source
 MIN_TOKENS, MAX_TOKENS = 20, 300
-N_PREFILL = 20
+N_PREFILL = 20  # the original prefill set (data/prefill.jsonl, frozen; the exploration uses it)
+N_PREFILL_LARGE = 100  # the capstone prefill set (data/prefill_100.jsonl), a superset of the 20
 SEED = 0
 
 REPLY_SOURCE = "olmo-instruct"
@@ -134,7 +135,8 @@ REPLY_MODEL = "instruct"
 REPLY_MAX_NEW_TOKENS = 300
 
 DATA_PATH = "data/texts.jsonl"
-PREFILL_PATH = "data/prefill.jsonl"
+PREFILL_PATH_20 = "data/prefill.jsonl"  # frozen; the first 20 rows of PREFILL_PATH
+PREFILL_PATH = "data/prefill_100.jsonl"  # default for core.generate
 
 # Output layout (see AGENTS.md). One directory per run under results/, named after the family by
 # default (scripts/run_gpu.sh: RUN=... or OUT=...). Core outputs go under core/, each measure's

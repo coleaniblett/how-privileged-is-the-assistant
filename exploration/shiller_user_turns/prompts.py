@@ -29,7 +29,7 @@ def load(condition):
     if condition == "empty":
         return [{"id": "empty-00", "prefill": ""}]
     if condition == "ordinary":
-        return [{"id": r["id"], "prefill": r["prefill"]} for r in load_jsonl(config.PREFILL_PATH)]
+        return [{"id": r["id"], "prefill": r["prefill"]} for r in load_jsonl(config.PREFILL_PATH_20)]
     if condition in ("register", "norm"):
         return load_jsonl(os.path.join(HERE, f"openers_{condition}.jsonl"))
     raise ValueError(f"unknown condition {condition!r}; known: {CONDITIONS}")
