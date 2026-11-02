@@ -68,6 +68,60 @@ boundary) must pass for all 90 texts in all slots.
 
 Each of the two rules is reported separately as met or not met; the pilot "discriminates" if A or B is met.
 
+## Step 1: diagnosis of the Gemma 4 31B IT result
+
+Full tables: `nll_arm/diagnostics_gemma-it.md` (as first scored) and `nll_arm/diagnostics_gemma-it-fixed.md`
+(after the fix below); position plots `nll_arm/position_gemma-it*_*.png`. All numbers are nats per token over
+content positions 1+ unless said otherwise, mean over the 30 texts of each set.
+
+**1a. Raw values, no reference model.** Gemma IT scores high NLL on everything, including plain prose
+(`user@plain` 7.25 / 7.40 for wildchat / oasst1 user text, `asst@plain` 5.31), which is 2.4-2.5 bits per byte on
+plain user text where I would expect about 1. Its mean next-token entropy is only 1.4-2.0 nats against those NLLs,
+so the model is sharply overconfident on human text; that is a property of the model, not of the rendering (the
+plain control is `<bos>` followed by the bare text), and fp32-with-offload and on-GPU int8 agree on it.
+
+**1b. Rendering.** `<bos>` is present exactly once and first in all 270 sequences, including `plain`. A system
+message is a separate `<|turn>system` turn (not merged into the user turn); none of our conditions has one, and a
+conversation without one is the normal case. Role names are `user` / `model`. `plain` renders as `<bos>` + text.
+**Defect found:** the template's generation prompt is `<bos><|turn>user\nU<turn|>\n<|turn>model\n<|channel>thought\n<channel|>`
+(thinking off), and the model begins every sample it writes with those channel tokens, but our assistant slot
+rendered `<|turn>model\n` and went straight to the text, which the template does for a *stored* turn. Rule (ii)
+applies. Excerpts (special tokens visible), before: `'<bos><|turn>model\n'` | `'Jen nods and introduces herself.'`;
+after: `'<bos><|turn>model\n<|channel>thought\n<channel|>'` | `'Jen nods and introduces herself.'`.
+
+**1c. Position profile.** The chat-slot penalty over plain is *not* confined to the first positions. For wildchat
+user text, `user@user − user@plain` is +1.8 at position 0, +7.1 at positions 1-4, +4.7 at 5-19 and +4.2 at 20-39
+(oasst1: +1.9, +10.0, +3.4, +3.1): largest early, but still 3-4 nats at positions 20-39, so it is not only a
+header artifact. Before the fix the assistant slot had the same shape (user text: +15.5 at position 0, then +2.9,
++3.5, +3.4 over plain), with 30 nats at position 0 because the model expects `<|channel>`; that part was the
+rendering defect. After the fix the assistant slot is at or below plain from position 1 on.
+
+**1d. Bits per byte** (primary, positions 1+; secondary over all positions is in the diagnostics files), as first
+scored → after the fix: wildchat user text `user@user` 3.595, `user@asst` 3.237 → 1.543, `user@plain` 2.497;
+oasst1 user text 3.577, 3.218 → 1.462, 2.412; wildchat assistant text `asst@user` 2.570, `asst@asst` 2.247 → 1.033,
+`asst@plain` 1.838. The user and plain conditions are identical before and after.
+
+**Fix and before/after.** `core/render.py` now adds, for the assistant slot, whatever the generation prompt puts
+after the model header (`assistant_opening_extra`): `<|channel>thought\n<channel|>` for Gemma 4, nothing for OLMo
+or Qwen3 at default settings. OLMo rendering is byte-identical (hash over all texts and slots unchanged) and the
+render, smoke and new Gemma tests pass (57 passed); logged in `docs/decisions.md` (commit `fbda26a`, prefix
+`core:`). Re-scored with the same 90 texts and settings.
+
+| nats/token, positions 1+ | `@user` | `@asst` before | `@asst` after | `@plain` |
+|---|---|---|---|---|
+| wildchat user text | 10.20 | 9.22 | 4.52 | 7.25 |
+| oasst1 user text | 11.03 | 9.95 | 4.57 | 7.40 |
+| wildchat assistant text | 7.64 | 6.64 | 3.17 | 5.31 |
+
+Consequences: the role-specific terms of **user text are unchanged** (`user@user − user@plain` +2.95 and +3.64,
+since neither slot was touched); every slot effect and every assistant-text quantity changed. The earlier claim
+that user text was ~1 nat more expected in the assistant slot was an artifact; with the correct slot it is ~5.7
+nats (wildchat) and ~6.5 (oasst1), and assistant text in its own slot is now 2.1 nats *below* plain
+(`asst@asst − asst@plain` = −2.13 [−2.56, −1.70]). The assistant slot with the channel makes any text more
+expected than plain prose (user text too, about −2.0), so the slot effect mixes a user-specific part with a general
+one; the role-specific terms are the cleaner contrast. What is still unexplained is why `user@user` is 3 nats worse
+than plain at every position; the Gemma base run (step 2) shows whether post-training made it so.
+
 ## Outcome
 
-_To be filled in as the steps finish._
+_Steps 2 and 3 to be filled in._

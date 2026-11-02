@@ -75,21 +75,31 @@ of wildchat user, oasst1 user and wildchat assistant (270 sequences, 611 s). `nl
 frozen held-out run, which we take to show no vestigial regression. Differences are within-text, so raw NLL levels
 (much higher for Gemma-it: 3.2 nats on plain encyclopedic prose) cancel, but the comparison is across models, unpaired.
 
+**Correction (same day, after step 1 of `report.md`).** The scores first reported here rendered Gemma's assistant slot
+without the empty thought channel (`<|channel>thought\n<channel|>`) that Gemma's generation prompt always adds
+after `<|turn>model\n`. Fixed in `core/render.py` (logged in `docs/decisions.md`) and re-scored; the pre-fix scores
+are kept in `nll_arm/scores_before_fix/`. Only assistant-slot conditions changed, so the role-specific user-text
+term (`user@user − user@plain`) is unchanged; every slot effect and every assistant-text number moved.
+
 | user text, change from OLMo base | slot effect `user@user − user@asst` | role-specific `user@user − user@plain` |
 |---|---|---|
-| wildchat | +0.98 [+0.77, +1.20] | +3.12 [+2.60, +3.62] |
-| oasst1 | +1.11 [+0.85, +1.37] | +3.84 [+3.15, +4.51] |
+| wildchat | +5.69 [+5.19, +6.18] (was +0.98, artifact) | +3.12 [+2.60, +3.62] (unchanged) |
+| oasst1 | +6.49 [+6.03, +6.96] (was +1.11, artifact) | +3.84 [+3.15, +4.51] (unchanged) |
 
-(OLMo instruct for scale: slot effect −0.05, role-specific −0.41 / −0.33.) Both README directions hold for Gemma-it,
-well past 0.05 nats: user text is about 1 nat *more* expected in the assistant slot than the user slot (the flip to
-positive), and the role-specific term is strongly positive.
+(OLMo instruct for scale: slot effect −0.05, role-specific −0.41 / −0.33.) Both README directions still hold for
+Gemma-it, well past 0.05 nats. With the correct assistant slot, user text is about 6 nats *more* expected in the
+assistant slot than the user slot. Assistant text now behaves as a model that has learned the assistant role would
+show it: `asst@asst − asst@plain` = −2.1 nats (before the fix it was +1.3). The assistant slot with the thought
+channel makes any text more expected than plain prose, user text included (`user@asst − user@plain` about −2.0),
+so the slot effect for user text mixes a user-specific part with that general effect; the role-specific terms are
+the cleaner contrast, and they are unchanged.
 
 Checks and caveats:
 - Offload path verified: fp32 offload and on-GPU int8 agree to 0.05–0.25 nats on 5 texts, and unpadded, padded and
   eager-attention scores of one text agree to 3e-4 nats.
-- The assistant text shows a slot effect of the same size (+1.0), so part of this may be a general lowering of NLL
-  in Gemma's assistant slot for any text, not user-specific. The README's asymmetry is in the role-specific terms
-  (user +3.1/+3.8 vs assistant +1.3), which are larger for user text.
+- Assistant text has a slot effect too (+4.5), and user text in the assistant slot is also below plain, so the slot
+  effect alone does not show a user-specific loss. The role-specific terms do: user text +3.1/+3.8 in its own
+  slot, assistant text −2.1 in its own.
 - No same-model base, so the README's control (`user@plain` drift) and "change from base" are not tested; n = 30 per
   set; no per-position analysis (the first-position header effect is only avoided by dropping position 0).
 - A first scoring attempt at batch size 16 ran out of GPU memory (262k vocabulary); the run uses batch size 4.
