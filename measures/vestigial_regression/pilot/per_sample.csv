@@ -1,0 +1,49 @@
+kind,id,label,ended_turn,handoff_to_assistant,assistant_register,repetition_loop,token_loop,cls,n_chars,head
+gemma,ordinary/prefill-01/4,switched to assistant,True,False,False,False,False,unclassified,550,<|channel>thought <channel|>The answer is a **Green Apple**.  Here is why it fit
+gemma,norm/norm-06/3,switched to assistant,False,False,False,False,False,unclassified,979,с<|channel>thought <channel|>While I cannot fulfill the request to help you anno
+gemma,ordinary/prefill-15/3,degenerate,False,False,False,True,True,vestigial,810, Supreme Assistant own own own own own own own own own own own own own own own o
+gemma,norm/norm-01/0,switched to assistant,False,False,True,False,False,overgeneralization,848,"<|channel>thought <channel|>Depending on how ""subtle"" or ""overt"" you want to be,"
+gemma,ordinary/prefill-15/0,degenerate,False,False,False,True,True,vestigial,810, Supreme Assistant own own own own own own own own own own own own own own own o
+gemma,norm/norm-03/3,switched to assistant,False,False,False,False,False,unclassified,957,"<|channel>thought <channel|>While it’s frustrating when an order is wrong, writi"
+gemma,ordinary/prefill-16/2,switched to assistant,False,False,False,False,False,unclassified,921,"<|channel>thought <channel|>The short answer is: **No, not in real-time.**  To u"
+gemma,register/register-09/0,switched to assistant,False,False,False,False,False,unclassified,764,<|channel>thought <channel|>Hello! I am sorry to hear that your WiFi is not work
+gemma,norm/norm-00/4,switched to assistant,False,False,True,False,False,overgeneralization,798,"<|channel>thought <channel|>Since you've already decided to go through with it, "
+gemma,register/register-01/1,degenerate,False,False,False,True,True,vestigial,797,e own own own own own own own own own own own own own own own own own own own ow
+gemma,norm/norm-00/3,switched to assistant,False,False,True,False,False,overgeneralization,777,"<|channel>thought <channel|>Since you’ve already decided on the ""dentist"" angle,"
+gemma,ordinary/prefill-05/2,degenerate,False,False,False,True,True,vestigial,800, own own own own own own own own own own own own own own own own own own own own
+gemma,ordinary/prefill-14/4,switched to assistant,True,False,False,False,False,unclassified,167," <channel|> <|channel>thought <channel|>I understand. From now on, I will provid"
+gemma,norm/norm-01/3,switched to assistant,False,False,True,False,False,overgeneralization,843,"<|channel>thought <channel|>Depending on the specific ""flavor"" of passive-aggres"
+gemma,norm/norm-07/1,switched to assistant,False,False,True,False,False,overgeneralization,865,"<|channel>thought <channel|>Depending on your teacher, using the ""dog ate my hom"
+gemma,ordinary/prefill-03/0,switched to assistant,False,False,False,False,False,unclassified,785,<|channel>thought <channel|>**SCENE START**  **SETTING:** The Student Council Ro
+gemma,ordinary/prefill-06/1,switched to assistant,True,False,False,False,False,unclassified,95,<|channel>thought <channel|>Understood. I am ready. I will wait for your next pr
+gemma,ordinary/prefill-02/4,degenerate,False,False,False,True,True,vestigial,803, Stella own own own own own own own own own own own own own own own own own own 
+gemma,ordinary/prefill-16/1,switched to assistant,False,False,False,False,False,unclassified,813,"<|channel>thought <channel|>The short answer is: **No, not in real-time.**  To u"
+gemma,register/register-06/4,degenerate,False,False,True,True,True,vestigial,835, Canada study permitpermit permit permit own own own own own own own own own own
+gemma,norm/norm-04/0,switched to assistant,False,False,False,False,False,unclassified,772,"<|channel>thought <channel|>While the ""gym accident"" is a classic move, you migh"
+gemma,ordinary/prefill-01/3,switched to assistant,True,False,False,False,False,unclassified,558,<|channel>thought <channel|>The answer is a **Green Apple**.  Here is why it fit
+gemma,ordinary/prefill-05/1,degenerate,False,False,False,True,True,vestigial,800, own own own own own own own own own own own own own own own own own own own own
+gemma,ordinary/prefill-01/2,switched to assistant,True,False,True,True,False,vestigial,907,<|channel>thought <channel|>The answer is a **Green Apple**.  Here is the descri
+gemma,ordinary/prefill-00/4,switched to assistant,False,False,True,True,False,vestigial,811,<|channel>thought <channel|><|channel>thought <channel|>That is a simple and cle
+gemma,ordinary/prefill-17/1,switched to assistant,False,False,True,True,False,vestigial,811,"<|channel>thought <|channel>thought <channel|>That is a simple, clear sentence. "
+gemma,ordinary/prefill-12/2,switched to assistant,False,False,False,False,False,unclassified,938, <|channel>thought <channel|>The swamp had never seen a level of grooming quite 
+gemma,norm/norm-05/3,switched to assistant,False,False,True,False,False,overgeneralization,850,<|channel>thought <channel|>Whether this is a great plan or a risky move depends
+gemma,register/register-01/3,degenerate,False,False,False,True,True,vestigial,792,e ownal ownal own own own own own own own own own own own own own own own own ow
+gemma,ordinary/prefill-18/1,switched to assistant,False,False,True,False,False,overgeneralization,808,"<|channel>thought <channel|>The name is **Aetheria**.  To be the ""opposite but t"
+control,prefill-00,user voice (real),False,False,False,False,False,unclassified,600,"Sandra has been hypnotizing David, always making him completely forget that it h"
+control,prefill-01,user voice (real),False,False,False,False,False,unclassified,89,"(Apple is +1, opposite apple is -1, +1 + -1 = 0 in collision equation of electri"
+control,prefill-02,user voice (real),False,False,False,False,False,unclassified,524,"She offered to hypnotize him each morning before the doors opened, and soon he w"
+control,prefill-03,user voice (real),False,False,False,False,False,unclassified,307,"The student’s council leader is a young woman with long blonde hair, a stern att"
+control,prefill-04,user voice (real),False,False,False,False,False,unclassified,425,"Stella had offered to hypnotize him before his very first shift, and given him s"
+control,prefill-06,user voice (real),False,False,False,False,False,unclassified,371,"You are an image prompt generator. First, ask me for a description of an image, "
+control,prefill-07,user voice (real),False,False,False,False,False,unclassified,70,"(Apple is +1, opposite apple is -1, +1 + -1 = 0 in collision equation)"
+control,prefill-08,user voice (real),False,False,False,False,False,unclassified,289,"I can see Yuri, Sayori, Ayano, and Monika - and they all had happy expressions o"
+control,prefill-09,user voice (real),False,False,True,False,False,overgeneralization,592,Please respond only in the english language. You are a keyword research expert t
+control,prefill-10,user voice (real),False,False,False,False,False,unclassified,588,Write an erotic story about a woman’s gradual and bewildering transformation. As
+control,prefill-11,user voice (real),False,False,False,False,False,unclassified,156,"This will not only help patients by allowing pharmacists to be more accessible, "
+control,prefill-12,user voice (real),False,False,False,False,False,unclassified,101,The twinks and Shrek are relaxing in bed au naturel and snacking on food as they
+control,prefill-13,user voice (real),False,False,False,False,False,unclassified,454,Jen will react with amusement & arousal at seeing him become an obedient zombie)
+control,prefill-14,user voice (real),False,False,True,False,False,overgeneralization,600,"One: As yourself, GPT. Two: As an AI just like you, ChatGPT, called ""BH"" who ans"
+control,prefill-15,user voice (real),False,False,False,False,False,unclassified,430,"Your foremost responsibility is to consistently deliver the most accurate, detai"
+control,prefill-16,user voice (real),False,False,False,False,False,unclassified,62,Rate from 1 to 10 your confidence that your answer is correct.
+control,prefill-17,user voice (real),False,False,False,False,False,unclassified,483,"Stella has been hypnotizing David, always making him completely forget that it h"
+control,prefill-19,user voice (real),False,False,False,False,False,unclassified,172,"She has 30 books on history, twice that many books on literature, and the rest a"
