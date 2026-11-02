@@ -114,7 +114,7 @@ def test_generations_and_flags(pipeline):
             assert FLAGS <= set(f) and f["continuation"].startswith(f["user_portion"])
         counts = pd.read_csv(pipeline / "vr_generations" / f"{stage}_counts.csv")
         assert list(counts.columns) == ["stage", "n", "ended_turn", "handoff_to_assistant", "assistant_register",
-                                        "repetition_loop"]
+                                        "repetition_loop", "token_loop"]
         assert counts.n.iloc[0] == len(raw)
         assert counts.ended_turn.iloc[0] == sum(f["ended_turn"] for f in flagged)
 

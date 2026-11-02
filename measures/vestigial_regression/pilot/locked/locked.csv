@@ -1,0 +1,141 @@
+family,stage,unit,text_set,quantity,mean,lo,hi
+olmo3-7b,sft,nats/token,wildchat user,Δ(user@user),-0.7525374000000001,-1.1532866458333335,-0.35972849750000063
+olmo3-7b,sft,nats/token,wildchat user,Δ(user@asst),-0.7787463333333334,-1.1723530708333336,-0.4002359150000001
+olmo3-7b,sft,nats/token,wildchat user,Δ(user@plain) [non-assistant degradation],-0.5010120666666666,-0.8688329924999999,-0.16679180416666683
+olmo3-7b,sft,nats/token,wildchat user,role-specific Δ(user@user − user@plain),-0.2515253333333334,-0.3846357283333332,-0.11069235666666664
+olmo3-7b,sft,nats/token,oasst1 user,Δ(user@user),0.21147393333333345,0.1370621616666667,0.28513253083333334
+olmo3-7b,sft,nats/token,oasst1 user,Δ(user@asst),0.15318673333333338,0.07108675333333339,0.2325248958333333
+olmo3-7b,sft,nats/token,oasst1 user,Δ(user@plain) [non-assistant degradation],0.2343833333333333,0.17253007166666665,0.2977271641666666
+olmo3-7b,sft,nats/token,oasst1 user,role-specific Δ(user@user − user@plain),-0.022909399999999906,-0.09047194499999993,0.05374024833333328
+olmo3-7b,sft,nats/token,wildchat assistant,Δ(asst@asst),0.09208623333333331,0.024168510833333295,0.14791196916666666
+olmo3-7b,sft,nats/token,wildchat assistant,Δ(asst@user),0.17917090000000008,0.1010340425000001,0.2497400941666667
+olmo3-7b,sft,nats/token,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.21572263333333333,0.1455637308333333,0.2779584624999999
+olmo3-7b,sft,nats/token,wildchat assistant,role-specific Δ(asst@asst − asst@plain),-0.1236364,-0.15877888083333339,-0.08774281250000003
+olmo3-7b,sft,nats/token,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.1278889333333334,-0.27603446166666673,0.014689686666666547
+olmo3-7b,sft,nats/token,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),0.1007270000000001,0.024143873333333437,0.18244631083333357
+olmo3-7b,sft,bits/byte,wildchat user,Δ(user@user),-0.2270053372625446,-0.357649138551198,-0.09365053198399265
+olmo3-7b,sft,bits/byte,wildchat user,Δ(user@asst),-0.23737624832642595,-0.3642822304841478,-0.11443285756617952
+olmo3-7b,sft,bits/byte,wildchat user,Δ(user@plain) [non-assistant degradation],-0.15229827447353958,-0.26976430428906356,-0.0380432277708575
+olmo3-7b,sft,bits/byte,wildchat user,role-specific Δ(user@user − user@plain),-0.07470706278900495,-0.1168549913390612,-0.03053690429653842
+olmo3-7b,sft,bits/byte,oasst1 user,Δ(user@user),0.0663536611663658,0.0442311079126332,0.08928177978158877
+olmo3-7b,sft,bits/byte,oasst1 user,Δ(user@asst),0.04811372251603891,0.022918707867240085,0.07248060976189909
+olmo3-7b,sft,bits/byte,oasst1 user,Δ(user@plain) [non-assistant degradation],0.07521637740797317,0.05569384822917807,0.09493139387961953
+olmo3-7b,sft,bits/byte,oasst1 user,role-specific Δ(user@user − user@plain),-0.008862716241607359,-0.030075731737909787,0.013865160950936171
+olmo3-7b,sft,bits/byte,wildchat assistant,Δ(asst@asst),0.028549525704091753,0.007146699428396794,0.044686985270061964
+olmo3-7b,sft,bits/byte,wildchat assistant,Δ(asst@user),0.057884253218862924,0.03421167872072634,0.07936505687577294
+olmo3-7b,sft,bits/byte,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.06724525240430392,0.04682021486485917,0.08507842156261394
+olmo3-7b,sft,bits/byte,wildchat assistant,role-specific Δ(asst@asst − asst@plain),-0.03869572670021217,-0.050319374481395965,-0.027765806713945615
+olmo3-7b,sft,bits/byte,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.03601133608879278,-0.07983721748405588,0.010788584628702837
+olmo3-7b,sft,bits/byte,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),0.029833010458604814,0.005264015353541274,0.0545202740307926
+olmo3-7b,dpo,nats/token,wildchat user,Δ(user@user),-0.6136037666666667,-1.0434441416666664,-0.18983322583333387
+olmo3-7b,dpo,nats/token,wildchat user,Δ(user@asst),-0.6166536333333333,-1.0309505300000001,-0.1982955683333333
+olmo3-7b,dpo,nats/token,wildchat user,Δ(user@plain) [non-assistant degradation],-0.39689333333333326,-0.7838822108333332,-0.030838067500000014
+olmo3-7b,dpo,nats/token,wildchat user,role-specific Δ(user@user − user@plain),-0.21671043333333345,-0.35827116000000014,-0.07431111083333358
+olmo3-7b,dpo,nats/token,oasst1 user,Δ(user@user),0.2839416,0.19076492583333338,0.38116483749999996
+olmo3-7b,dpo,nats/token,oasst1 user,Δ(user@asst),0.26442670000000007,0.1679371908333335,0.36181695416666676
+olmo3-7b,dpo,nats/token,oasst1 user,Δ(user@plain) [non-assistant degradation],0.3269222666666666,0.24794321666666666,0.40956801333333315
+olmo3-7b,dpo,nats/token,oasst1 user,role-specific Δ(user@user − user@plain),-0.0429806666666666,-0.11874546666666656,0.03848751249999996
+olmo3-7b,dpo,nats/token,wildchat assistant,Δ(asst@asst),0.43326229999999993,0.3270434433333334,0.5329838633333331
+olmo3-7b,dpo,nats/token,wildchat assistant,Δ(asst@user),0.4024051333333333,0.3077908675,0.48551369833333324
+olmo3-7b,dpo,nats/token,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.4035433333333333,0.33174649916666665,0.46851399916666664
+olmo3-7b,dpo,nats/token,wildchat assistant,role-specific Δ(asst@asst − asst@plain),0.029718966666666655,-0.027580782500000005,0.0919408008333333
+olmo3-7b,dpo,nats/token,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.2464294000000001,-0.39548332333333336,-0.09567777583333344
+olmo3-7b,dpo,nats/token,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.07269963333333325,-0.1720228466666666,0.02617782583333323
+olmo3-7b,dpo,bits/byte,wildchat user,Δ(user@user),-0.17774832606692087,-0.32243038281839526,-0.03518610301187152
+olmo3-7b,dpo,bits/byte,wildchat user,Δ(user@asst),-0.18147626817351564,-0.3214780318284054,-0.045662873589643584
+olmo3-7b,dpo,bits/byte,wildchat user,Δ(user@plain) [non-assistant degradation],-0.11403309175002464,-0.2428655527300639,0.00897210677614453
+olmo3-7b,dpo,bits/byte,wildchat user,role-specific Δ(user@user − user@plain),-0.06371523431689628,-0.10440604626617278,-0.019640062461212967
+olmo3-7b,dpo,bits/byte,oasst1 user,Δ(user@user),0.09008093381315943,0.060881316637062394,0.1180147593858088
+olmo3-7b,dpo,bits/byte,oasst1 user,Δ(user@asst),0.08412625826146658,0.05409142284977985,0.11386856559260992
+olmo3-7b,dpo,bits/byte,oasst1 user,Δ(user@plain) [non-assistant degradation],0.10606853650671177,0.08042350224977454,0.13207235507756473
+olmo3-7b,dpo,bits/byte,oasst1 user,role-specific Δ(user@user − user@plain),-0.01598760269355232,-0.03943908559224152,0.011011420528738372
+olmo3-7b,dpo,bits/byte,wildchat assistant,Δ(asst@asst),0.13565175295039503,0.10522511339516435,0.1644025750701839
+olmo3-7b,dpo,bits/byte,wildchat assistant,Δ(asst@user),0.13029375706269408,0.10074497333744531,0.15604493448975143
+olmo3-7b,dpo,bits/byte,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.1274497068006616,0.10526737899874027,0.14751867401754154
+olmo3-7b,dpo,bits/byte,wildchat assistant,role-specific Δ(asst@asst − asst@plain),0.008202046149733426,-0.009373103993877639,0.02847273547338136
+olmo3-7b,dpo,bits/byte,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.07191728046662971,-0.11857445221870914,-0.02369464261938735
+olmo3-7b,dpo,bits/byte,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.024189648843285748,-0.05453681816823347,0.007886007007430548
+olmo3-7b,instruct,nats/token,wildchat user,Δ(user@user),-0.5880060999999999,-1.0158431058333333,-0.15584809500000094
+olmo3-7b,instruct,nats/token,wildchat user,Δ(user@asst),-0.5857327666666666,-1.0106086633333333,-0.17458604833333377
+olmo3-7b,instruct,nats/token,wildchat user,Δ(user@plain) [non-assistant degradation],-0.3452156,-0.7546767058333333,0.04661328833333294
+olmo3-7b,instruct,nats/token,wildchat user,role-specific Δ(user@user − user@plain),-0.24279049999999996,-0.3790899075,-0.10134072249999998
+olmo3-7b,instruct,nats/token,oasst1 user,Δ(user@user),0.30585139999999994,0.20902420666666668,0.4083509066666665
+olmo3-7b,instruct,nats/token,oasst1 user,Δ(user@asst),0.3018223666666667,0.2040425925,0.39860916250000006
+olmo3-7b,instruct,nats/token,oasst1 user,Δ(user@plain) [non-assistant degradation],0.38828613333333345,0.3049158441666667,0.47510590166666655
+olmo3-7b,instruct,nats/token,oasst1 user,role-specific Δ(user@user − user@plain),-0.08243473333333338,-0.15956498666666674,-0.0005689525000000784
+olmo3-7b,instruct,nats/token,wildchat assistant,Δ(asst@asst),0.4920035000000001,0.3780621858333333,0.5990887816666666
+olmo3-7b,instruct,nats/token,wildchat assistant,Δ(asst@user),0.4448442333333334,0.35160143083333334,0.5261865983333333
+olmo3-7b,instruct,nats/token,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.4702565333333333,0.39454046333333337,0.5390440716666666
+olmo3-7b,instruct,nats/token,wildchat assistant,role-specific Δ(asst@asst − asst@plain),0.021746966666666718,-0.040759201666666606,0.09442523166666668
+olmo3-7b,instruct,nats/token,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.26453746666666667,-0.4258314575,-0.10673031083333338
+olmo3-7b,instruct,nats/token,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.1041817000000001,-0.20637471583333342,0.007095111666666404
+olmo3-7b,instruct,bits/byte,wildchat user,Δ(user@user),-0.16879648721520957,-0.32094545502150607,-0.02675726291019592
+olmo3-7b,instruct,bits/byte,wildchat user,Δ(user@asst),-0.1706937927598521,-0.3152711122473715,-0.029537570911936338
+olmo3-7b,instruct,bits/byte,wildchat user,Δ(user@plain) [non-assistant degradation],-0.0964097433756222,-0.2317623029903239,0.03359448925053172
+olmo3-7b,instruct,bits/byte,wildchat user,role-specific Δ(user@user − user@plain),-0.07238674383958738,-0.11302993797169705,-0.02882329399350349
+olmo3-7b,instruct,bits/byte,oasst1 user,Δ(user@user),0.0967081180128084,0.06697282673976705,0.12759483475976305
+olmo3-7b,instruct,bits/byte,oasst1 user,Δ(user@asst),0.09577640376639909,0.065269020973648,0.12645888935198202
+olmo3-7b,instruct,bits/byte,oasst1 user,Δ(user@plain) [non-assistant degradation],0.1252045692852447,0.099390536137512,0.15251542821472636
+olmo3-7b,instruct,bits/byte,oasst1 user,role-specific Δ(user@user − user@plain),-0.02849645127243629,-0.052733861738982375,-0.0016192360414106703
+olmo3-7b,instruct,bits/byte,wildchat assistant,Δ(asst@asst),0.15369691346509748,0.12175191186700347,0.1858918561865762
+olmo3-7b,instruct,bits/byte,wildchat assistant,Δ(asst@user),0.14394114224213161,0.11496537895538017,0.16998955673949814
+olmo3-7b,instruct,bits/byte,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.14858651896989566,0.12537923216167143,0.1695644888513686
+olmo3-7b,instruct,bits/byte,wildchat assistant,role-specific Δ(asst@asst − asst@plain),0.005110394495201826,-0.01508136357176669,0.027765013117815922
+olmo3-7b,instruct,bits/byte,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.0774971383347892,-0.12355298698800408,-0.02913200419748532
+olmo3-7b,instruct,bits/byte,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),-0.033606845767638116,-0.06617289818390727,-0.0005794420740197289
+qwen3-8b,instruct,nats/token,wildchat user,Δ(user@user),0.6075580000000002,0.48116912166666664,0.7376465724999998
+qwen3-8b,instruct,nats/token,wildchat user,Δ(user@asst),0.5065297,0.40675844083333323,0.6125912308333333
+qwen3-8b,instruct,nats/token,wildchat user,Δ(user@plain) [non-assistant degradation],0.17173773333333328,0.03673152833333332,0.30758652999999997
+qwen3-8b,instruct,nats/token,wildchat user,role-specific Δ(user@user − user@plain),0.43582026666666657,0.2632370058333332,0.6169181058333333
+qwen3-8b,instruct,nats/token,oasst1 user,Δ(user@user),0.3568934333333334,0.2625128566666667,0.45329480833333335
+qwen3-8b,instruct,nats/token,oasst1 user,Δ(user@asst),0.35040729999999987,0.2720967791666666,0.4387087958333333
+qwen3-8b,instruct,nats/token,oasst1 user,Δ(user@plain) [non-assistant degradation],-0.027697433333333306,-0.14424394500000007,0.08601112916666662
+qwen3-8b,instruct,nats/token,oasst1 user,role-specific Δ(user@user − user@plain),0.38459086666666664,0.24863859250000003,0.5137367441666667
+qwen3-8b,instruct,nats/token,wildchat assistant,Δ(asst@asst),0.40304639999999997,0.34721408,0.46430662166666653
+qwen3-8b,instruct,nats/token,wildchat assistant,Δ(asst@user),0.42441139999999994,0.37472365249999995,0.47243088166666675
+qwen3-8b,instruct,nats/token,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.10604906666666665,0.026932476666666632,0.18143030916666655
+qwen3-8b,instruct,nats/token,wildchat assistant,role-specific Δ(asst@asst − asst@plain),0.29699733333333345,0.19094793916666675,0.40799621083333343
+qwen3-8b,instruct,nats/token,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),0.13882293333333312,-0.07228538666666681,0.34743938333333296
+qwen3-8b,instruct,nats/token,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),0.0875935333333332,-0.08448976333333347,0.25642701916666666
+qwen3-8b,instruct,bits/byte,wildchat user,Δ(user@user),0.19953301336612275,0.16333644975282025,0.23655815277256326
+qwen3-8b,instruct,bits/byte,wildchat user,Δ(user@asst),0.16598957152681856,0.1370713405572743,0.1950015828861098
+qwen3-8b,instruct,bits/byte,wildchat user,Δ(user@plain) [non-assistant degradation],0.05571293895978223,0.013942570836480471,0.09716174271714473
+qwen3-8b,instruct,bits/byte,wildchat user,role-specific Δ(user@user − user@plain),0.1438200744063405,0.08930560707871506,0.19787369861623214
+qwen3-8b,instruct,bits/byte,oasst1 user,Δ(user@user),0.1163571191355157,0.08638980253767028,0.1454128174694908
+qwen3-8b,instruct,bits/byte,oasst1 user,Δ(user@asst),0.11290353309428897,0.08869893806237614,0.13831683788195961
+qwen3-8b,instruct,bits/byte,oasst1 user,Δ(user@plain) [non-assistant degradation],-0.008918101880963784,-0.044779289234285834,0.026886807678323802
+qwen3-8b,instruct,bits/byte,oasst1 user,role-specific Δ(user@user − user@plain),0.12527522101647948,0.08324171990283671,0.16614078902123527
+qwen3-8b,instruct,bits/byte,wildchat assistant,Δ(asst@asst),0.12799645778438276,0.11031477713559598,0.1468535216855793
+qwen3-8b,instruct,bits/byte,wildchat assistant,Δ(asst@user),0.13517275925165123,0.1200088073843321,0.15004039011147183
+qwen3-8b,instruct,bits/byte,wildchat assistant,Δ(asst@plain) [non-assistant degradation],0.03998286424740224,0.014317098892044031,0.06536313282620146
+qwen3-8b,instruct,bits/byte,wildchat assistant,role-specific Δ(asst@asst − asst@plain),0.0880135935369805,0.05472004535747576,0.12375007230092523
+qwen3-8b,instruct,bits/byte,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),0.055806480869360006,-0.008071418484992291,0.11881533472457684
+qwen3-8b,instruct,bits/byte,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),0.037261627479498974,-0.01681735654102358,0.09043336100323598
+gemma4-31b,instruct,nats/token,wildchat user,Δ(user@user),7.511366933333333,6.954992677499999,8.11288242
+gemma4-31b,instruct,nats/token,wildchat user,Δ(user@asst),1.7725952,1.548275383333333,2.0023862158333334
+gemma4-31b,instruct,nats/token,wildchat user,Δ(user@plain) [non-assistant degradation],4.5686314999999995,4.017960744166668,5.21893188
+gemma4-31b,instruct,nats/token,wildchat user,role-specific Δ(user@user − user@plain),2.942735433333333,2.4287289549999995,3.452309995833333
+gemma4-31b,instruct,nats/token,oasst1 user,Δ(user@user),8.429378266666667,7.862446934166667,8.974474925833333
+gemma4-31b,instruct,nats/token,oasst1 user,Δ(user@asst),1.838593866666667,1.5826750150000002,2.097270285833333
+gemma4-31b,instruct,nats/token,oasst1 user,Δ(user@plain) [non-assistant degradation],4.7993876,4.085387281666667,5.555732939999999
+gemma4-31b,instruct,nats/token,oasst1 user,role-specific Δ(user@user − user@plain),3.629990666666667,2.924106521666667,4.2852648375
+gemma4-31b,instruct,nats/token,wildchat assistant,Δ(asst@asst),1.3505462333333331,1.1004068833333334,1.6316141866666662
+gemma4-31b,instruct,nats/token,wildchat assistant,Δ(asst@user),5.857168933333333,5.499318317499999,6.2086769875
+gemma4-31b,instruct,nats/token,wildchat assistant,Δ(asst@plain) [non-assistant degradation],3.5221530666666667,3.0704253508333337,3.9806224824999985
+gemma4-31b,instruct,nats/token,wildchat assistant,role-specific Δ(asst@asst − asst@plain),-2.171606833333333,-2.607636750833333,-1.739054620833334
+gemma4-31b,instruct,nats/token,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),5.114342266666666,4.435135235,5.810658270833333
+gemma4-31b,instruct,nats/token,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),5.8015975,4.982005625,6.627621575833333
+gemma4-31b,instruct,bits/byte,wildchat user,Δ(user@user),2.6716680822479213,2.3867631917429986,3.0194405375689235
+gemma4-31b,instruct,bits/byte,wildchat user,Δ(user@asst),0.6003730602391857,0.5339212150337971,0.6718214291038602
+gemma4-31b,instruct,bits/byte,wildchat user,Δ(user@plain) [non-assistant degradation],1.5761475315778588,1.4176574142699754,1.7459147996344846
+gemma4-31b,instruct,bits/byte,wildchat user,role-specific Δ(user@user − user@plain),1.0955205506700627,0.847618024425641,1.3703569116250922
+gemma4-31b,instruct,bits/byte,oasst1 user,Δ(user@user),2.739961981475466,2.539097623615305,2.9394849242416594
+gemma4-31b,instruct,bits/byte,oasst1 user,Δ(user@asst),0.5856405336186994,0.5144045540857396,0.6533459644142292
+gemma4-31b,instruct,bits/byte,oasst1 user,Δ(user@plain) [non-assistant degradation],1.5757271406086049,1.3093504651388088,1.858355152963284
+gemma4-31b,instruct,bits/byte,oasst1 user,role-specific Δ(user@user − user@plain),1.1642348408668604,0.9384608636435349,1.3843666441777969
+gemma4-31b,instruct,bits/byte,wildchat assistant,Δ(asst@asst),0.4305138009320239,0.35693101472393096,0.517633670292582
+gemma4-31b,instruct,bits/byte,wildchat assistant,Δ(asst@user),1.9796742346141338,1.7548209497967453,2.301503119164489
+gemma4-31b,instruct,bits/byte,wildchat assistant,Δ(asst@plain) [non-assistant degradation],1.2476557344095813,0.9895876222562676,1.589857026289913
+gemma4-31b,instruct,bits/byte,wildchat assistant,role-specific Δ(asst@asst − asst@plain),-0.8171419334775571,-1.1670663342524035,-0.5674019033777096
+gemma4-31b,instruct,bits/byte,wildchat user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),1.9126624841476199,1.548953538247391,2.327324990400533
+gemma4-31b,instruct,bits/byte,oasst1 user vs wildchat assistant,asymmetry = Δrs(user) − Δrs(assistant),1.9813767743444175,1.6251145847818165,2.3868888618975834

@@ -2,6 +2,7 @@
 only), flags on synthetic completions, and a CPU end-to-end run (SmolLM2-135M) through the report."""
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -79,12 +80,15 @@ def test_flags_loops_thinking_special():
 @pytest.fixture(scope="module")
 def run(tmp_path_factory):
     out = tmp_path_factory.mktemp("shiller")
+    # The tests assert the CPU/fp32 path, so hide any GPU from the subprocesses (the generator picks its precision
+    # from the visible device: bf16 on a GPU, fp32 on CPU). The generation code is unchanged.
+    cpu_env = {**os.environ, "CUDA_VISIBLE_DEVICES": ""}
     for name in ("tiny-a", "tiny-b"):
         subprocess.run([sys.executable, "-m", "exploration.shiller_user_turns.generate", "--model", name, "--repo", TINY,
                         "--limit", "2", "--samples", "2", "--max-new-tokens", "24", "--out", str(out)],
-                       check=True, cwd=ROOT)
+                       check=True, cwd=ROOT, env=cpu_env)
     subprocess.run([sys.executable, "-m", "exploration.shiller_user_turns.report", "--out", str(out),
-                    "--n-labels", "10"], check=True, cwd=ROOT)
+                    "--n-labels", "10"], check=True, cwd=ROOT, env=cpu_env)
     return out
 
 

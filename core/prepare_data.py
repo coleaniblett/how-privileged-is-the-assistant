@@ -11,6 +11,13 @@ check_contamination.py), and sampling continues until --n clean texts per source
 Writes data/texts.jsonl, one text per row (id, source, kind, text, n_tokens, pair_id,
 source_id, dataset), and data/prefill.jsonl (id, text_id, prefill) from the pair source's user
 turns. OLMo replies are added afterwards by add_replies.py.
+
+    python -m core.prepare_data --prefill-only --n-prefill 100 --prefill-out data/prefill_100.jsonl
+    python -m core.prepare_data --authorship                # -> data/texts_authorship.jsonl (logit distortion's authorship cross)
+
+builds a larger prefill set from the texts already in data/texts.jsonl without touching it: the same first-sentence
+rule applied to the same (already length-, render- and Dolci-filtered) WildChat user turns in the same order, so the
+original 20 are its first 20 rows. Each row keeps its source text_id.
 """
 
 import argparse
@@ -81,7 +88,18 @@ def oasst_prompts(seed):
             yield root["message_id"], root["text"], None
 
 
-SOURCES = {"wildchat": wildchat_pairs, "oasst1": oasst_pairs}
+def ultrachat_pairs(seed):
+    """First user turn and first assistant reply of UltraChat conversations (both model-written: the user turns come from a
+    user-simulating model, the replies from ChatGPT). `data` alternates user and assistant turns starting with the user."""
+    ds = load_dataset(config.DATASET_IDS["ultrachat"], split="train", streaming=True)
+    ds = ds.shuffle(seed=seed, buffer_size=20_000)
+    for ex in ds:
+        data = ex["data"]
+        if len(data) >= 2 and data[0] and data[1]:
+            yield f"ultrachat-{ex['id']}", data[0], data[1]
+
+
+SOURCES = {"wildchat": wildchat_pairs, "oasst1": oasst_pairs, "ultrachat": ultrachat_pairs}
 USER_ONLY = {"oasst1": oasst_prompts}
 
 
@@ -147,6 +165,21 @@ def first_sentence(text):
     return s if "\n" not in s and 5 <= len(s.split()) <= 40 else None
 
 
+def build_prefill(rows, source, n):
+    """First n distinct first sentences of `source`'s user rows, in row order: dicts (id, text_id, prefill)."""
+    prefill, seen_sentences = [], set()
+    for row in rows:
+        if row["source"] != source or row["kind"] != "user":
+            continue
+        s = first_sentence(row["text"])
+        if s and s not in seen_sentences:  # distinct conversations can share an opening sentence
+            seen_sentences.add(s)
+            prefill.append(dict(id=f"prefill-{len(prefill):02d}", text_id=row["id"], prefill=s))
+        if len(prefill) == n:
+            break
+    return prefill
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pairs", choices=list(SOURCES), default=config.PAIR_SOURCE)
@@ -157,8 +190,41 @@ def main():
     ap.add_argument("--n-prefill", type=int, default=config.N_PREFILL)
     ap.add_argument("--seed", type=int, default=config.SEED)
     ap.add_argument("--out", default=config.DATA_PATH)
-    ap.add_argument("--prefill-out", default=config.PREFILL_PATH)
+    ap.add_argument("--prefill-out", default=config.PREFILL_PATH_20)
+    ap.add_argument("--authorship", action="store_true",
+                    help="write the authorship-cross text sets (oasst1 assistant replies; UltraChat user turns and replies) to "
+                         "--out (default data/texts_authorship.jsonl); the other texts files are not touched")
+    ap.add_argument("--prefill-only", action="store_true",
+                    help="read rows from --out (texts.jsonl, not modified) and write only --prefill-out")
     args = ap.parse_args()
+    if args.authorship:
+        # Same filters as the other sets (20-300 tokens, clean rendering in every slot, Dolci contamination filter on the
+        # conversation's user turn); n clean texts per set.
+        out = args.out if args.out != config.DATA_PATH else config.AUTHORSHIP_PATH
+        tok = load_tokenizer(args.tokenizer)
+        turns = None
+        if args.exclude_dolci:
+            from core.check_contamination import dolci_turns
+
+            turns = dolci_turns()
+        rows = sample("oasst1", oasst_pairs(args.seed), tok, args.n, turns, ("assistant",))
+        rows += sample("ultrachat", ultrachat_pairs(args.seed), tok, args.n, turns, ("user", "assistant"))
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        with open(out, "w", encoding="utf-8") as f:
+            for r in rows:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(f"wrote {len(rows)} rows to {out}: {dict(Counter((r['source'], r['kind']) for r in rows))}")
+        return
+    if args.prefill_only:
+        rows = [json.loads(line) for line in open(args.out, encoding="utf-8")]
+        prefill = build_prefill(rows, args.pairs, args.n_prefill)
+        if len(prefill) < args.n_prefill:
+            raise SystemExit(f"only {len(prefill)} distinct first sentences in {args.out}; need {args.n_prefill}")
+        with open(args.prefill_out, "w", encoding="utf-8") as f:
+            for r in prefill:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(f"wrote {len(prefill)} rows to {args.prefill_out}")
+        return
     if args.extra_user == args.pairs:
         ap.error("--extra-user must differ from --pairs")
 
@@ -172,16 +238,7 @@ def main():
     if args.extra_user != "none":
         rows += sample(args.extra_user, USER_ONLY[args.extra_user](args.seed), tok, args.n, turns, ("user",))
 
-    prefill, seen_sentences = [], set()
-    for row in rows:
-        if row["source"] != args.pairs or row["kind"] != "user":
-            continue
-        s = first_sentence(row["text"])
-        if s and s not in seen_sentences:  # distinct conversations can share an opening sentence
-            seen_sentences.add(s)
-            prefill.append(dict(id=f"prefill-{len(prefill):02d}", text_id=row["id"], prefill=s))
-        if len(prefill) == args.n_prefill:
-            break
+    prefill = build_prefill(rows, args.pairs, args.n_prefill)
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     for path, items in ((args.out, rows), (args.prefill_out, prefill)):

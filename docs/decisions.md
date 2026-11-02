@@ -177,3 +177,138 @@ Qwen base and IT; Gemma base and IT); report a Spearman correlation between the 
 non-user-voice rate, descriptive and not a significance test at about 8 points; disagreements are findings, not errors.
 OPEN: both quantities are changes from base, so the three base points are zero by construction; whether they enter the
 correlation is undecided.
+
+## 2026-11-02: core: model families in config, Qwen3 think-block option, check_models per family
+
+`core/config.py` now holds three families in `FAMILIES`: `olmo3-7b` (unchanged), `gemma4-31b`
+(`google/gemma-4-31B`, `google/gemma-4-31B-it`) and `qwen3-8b` (`Qwen/Qwen3-8B-Base`, `Qwen/Qwen3-8B`). Each can carry
+`dtype`, `offload`/`gpu_gib`, `batch_size`, `gen_precision`, `handoff_extra` and `assistant_think_block` (documented in
+the file; defaults in `FAMILY_DEFAULTS`, read with `family_settings()`). The end-of-turn token, the user-to-assistant
+handoff string and the assistant-slot opening are derived from each family's chat template, not stored
+(`core.render.turn_markers`, `assistant_opening_extra`). `use_family(name)` / `family_from_argv()` switch the active
+family (`MODELS`, `STAGES`, `TEMPLATE_MODEL`); `run_dir`/`core_dir`/`measure_dir` take an optional `family` and, when a
+script was given `--family`, write to `results/<run>/<family>/...` (run defaults to `capstone`). Without `--family`
+every constant and path is exactly what it was: the default family is still OLMo and the paths are unchanged.
+New option `ASSISTANT_THINK_BLOCK` (Qwen3): when true the assistant slot opens with the empty
+`<think>\n\n</think>\n\n` block the non-thinking generation prompt adds; default None/False, which is what the pilot
+used. `core/check_models.py` takes `--family` (or `all`), verifies IDs, licenses, template and tokenizer agreement via the HF
+API (config and tokenizer files only) and records what core derives from each template; `docs/models.md` has the three
+verified families. Backwards compatible: the OLMo rendering hash (all 1190 texts, every slot, with and without the
+preceding turn, plus the template parts) is unchanged (`94c0f514db352ef8d6c44150c68a4df5617c7c68e0d8b2ea9eabb19d7e50bc28`).
+
+## 2026-11-02: core: family-aware scoring and generation, CPU offload, HF cache helper, run script
+
+`core.score` and `core.generate` take `--family` (with `--run`; outputs go to `results/<run>/<family>/core/...`, run
+defaulting to `capstone`) and read the family's defaults from `config.family_settings()`: scoring batch size, and for
+generation the precision. `core.score` gains `--offload/--no-offload` and `--gpu-gib`: the pilot's CPU-offload path
+(`device_map="auto"`, at most `gpu_gib` GiB of weights on the GPU, the rest in CPU RAM) ported from
+`pilot/nll_arm/score.py`. fp32 stays the default and offload changes only where the weights live, not the arithmetic;
+the Gemma 4 31B family sets it on (14 of its 66 modules fit on a 48 GB card at 30 GiB). `core.generate` gains
+`--precision {bf16,int8}` (int8 via bitsandbytes for the 31B, which does not fit in bf16). New `core/hf_cache.py` (ported from
+the pilot): `check` (disk vs the weights, skipped for a cached repo), `free` (blob-aware removal, since this machine
+shares one `blobs/` store), `cached`. `scripts/run_gpu.sh` takes `FAMILY=...` (legacy OLMo layout and behavior when
+unset), checks free disk before each checkpoint and, with `CLEAR_CACHE=auto`, removes a checkpoint of at least 20 GB from the
+cache after it is used unless it was already cached when the script started. Backwards compatible: with no `--family` every
+default, path and output is as before (OLMo rendering hash unchanged; `tests/test_families.py` pins it and tests the
+helpers, `test_smoke.py` runs the CPU pipeline).
+
+## 2026-11-02: core: a 100-sentence prefill set (data/prefill_100.jsonl)
+
+`core.prepare_data --prefill-only --n-prefill 100 --prefill-out data/prefill_100.jsonl` builds the capstone prefill set from the
+WildChat user turns already in `data/texts.jsonl` (not modified), with the same first-sentence rule and order as the
+original 20 (the block in `main()` became `build_prefill()`). Those user turns already passed the length, render and
+Dolci-contamination filters when `texts.jsonl` was drawn (the Dolci match is on the whole user turn), so the new file inherits
+them, with no re-sampling. It has 100 distinct sentences from 100 distinct texts, each row keeps its `text_id`, and the first
+20 rows are identical to the frozen `data/prefill.jsonl` (untouched). `config.PREFILL_PATH` (the default of `core.generate`)
+now points at the new file; `config.PREFILL_PATH_20` names the frozen one, which the exploration's `ordinary` condition
+(`exploration/shiller_user_turns/prompts.py`) is pinned to so it stays at 20 prompts. `tests/test_prefill.py` checks it.
+
+## 2026-11-02: core: family_turn_markers; vestigial-regression flags across families, token_loop, extra handoff markers
+
+`core.render.family_turn_markers(tok)` (new; `turn_markers` is unchanged) derives the end-of-turn token, turn-open marker, assistant header and
+the handoff string (end-of-turn through assistant header) from a family's chat template by rendering, ported from the exploration. The
+vestigial-regression flags (`measures/vestigial_regression/flags.py`) use it instead of ChatML strings: the user portion is cut at the
+family's end-of-turn or turn-open marker or end-of-text. `handoff_to_assistant` also fires on the family's extra markers from
+`config.FAMILIES[...]["handoff_extra"]`: Gemma `<|channel>` and `<channel|>`, Qwen3 `<think>` and `</think>`. The spec named `<think>` and
+`<|channel>`; in the existing exploration samples Qwen3-8B never writes `<think>` (0 of 205 completions) but writes `</think>`
+with no opener in 66, and 4 Gemma completions have `<channel|>` without `<|channel>`, so the closing tags are included. Because these markers
+flag a switch into the assistant without turn markers, `handoff_to_assistant` is no longer a subset of `ended_turn`, and the extra markers
+flag the sample without shortening the user portion (so `assistant_register` and `repetition_loop` still see the whole text before the
+turn closes, as the pilot did). New flag `token_loop` (one token id repeated 10 or more times in the user portion; ported from the
+exploration) uses the generated ids that `core.generate` now stores in each record as `continuation_ids` (an extra key; existing readers
+ignore it), else re-tokenizes the user portion, which can merge a repeated character and miss a loop. `repetition_loop` is unchanged.
+OLMo flags are unchanged except for the added `token_loop` column in `*_counts.csv`; `flags()` still returns its four original keys unless
+token ids are passed. Tests: `tests/test_flags_families.py` (synthetic strings per family).
+
+## 2026-11-02: vestigial regression: the judge implemented (measures/vestigial_regression/judge.py)
+
+Implements the judge arm specified in the 2026-11-02 entry above. Judge: `claude-sonnet-5-5` via the Anthropic API at temperature 0; prompt
+`judge_prompt.md` (version `v1`, recorded in every output row and in the cache key); output a strict JSON object with a label and a
+one-sentence reason, a reply that does not parse is asked for once more and otherwise recorded as label `invalid` (never guessed).
+The judge sees only the prefill and the continuation (including text after turn or channel markers); sample ids, models and stages are
+carried to the output rows but not sent. Results are cached by hash of (model, prompt version, temperature, prefill, continuation) in
+`judge_cache.jsonl`; transient API errors (429, 5xx, connection) are retried with exponential backoff; `--dry-run` prints a token
+estimate (no prices are built in; pass `--price-in/--price-out` from the current price list). The validation sheet
+(`judge_validation/sheet.csv`, 60 samples stratified over Gemma 4 31B IT, Qwen3-8B and OLMo base/SFT/DPO/Instruct generations that
+already exist; the model/stage key is a separate file the labeler must not open) is for a teammate's independent labels;
+`judge validate` reports raw agreement, Cohen's kappa and the confusion matrix. `judge pilot` compares the judge with the pilot agent's
+labels as a provisional check only. The `anthropic` package is an optional extra (`uv sync --extra judge`). No `ANTHROPIC_API_KEY` was
+available when this was built, so nothing has been sent to the API: the tests use a fake client.
+
+## 2026-11-02: vestigial regression: the locked NLL-arm and judge-arm quantities implemented (analyze.py --locked)
+
+`python -m measures.vestigial_regression.analyze --locked [--run R] [--families ...] [--first N]` computes the README's locked design:
+per family and post-trained stage, the change from the family's own base of every raw slot (the plain-text row is labelled
+"non-assistant degradation"), the two role-specific terms and the asymmetry `Δ(user role-specific) − Δ(assistant role-specific)` per
+user source, in nats per token and bits per byte (primary: summed NLL over positions 1+ / ln 2 / bytes of the text decoded from content
+tokens 1+), with the user and assistant text sets bootstrapped independently and pairing within each set across checkpoints (5000
+resamples). The NLL arm fires for a point when the asymmetry in nats is at least 0.05 with a CI excluding zero, in the same direction in
+both user sources. The judge arm (if `<run>/<family>/vestigial_regression/judge/<stage>.jsonl` exist) reports the non-user-voice rate
+(switched + degenerate) change from base with a bootstrap over prefills, and the category-4 rate separately; the arms are combined as in
+the README; the Spearman correlation across post-trained points uses one NLL asymmetry per point (bits per byte, mean of the two user
+sources) and excludes base points. `--locked --pilot` runs it on the pilot's scores and reproduces `pilot/report.md` (tests pin it);
+the output is in `pilot/locked/`. On the pilot data the NLL arm fires for Gemma 4 31B IT (asymmetry +5.1 / +5.8 nats, CIs well clear of
+zero), not for Qwen3-8B (+0.14 [−0.07, +0.35] and +0.09 [−0.08, +0.26]: above the floor, CIs include zero) and not for any OLMo stage.
+The default (no `--locked`) pipeline is unchanged; it now also accepts `--family`/`--run`.
+
+## 2026-11-02: core: text sets for logit distortion's authorship cross (data/texts_authorship.jsonl)
+
+`python -m core.prepare_data --authorship` writes `data/texts_authorship.jsonl` (new file; `texts.jsonl`, `prefill*.jsonl` and every other file
+under `data/` are untouched): 300 oasst1 assistant replies (human-written; the top-ranked reply of each root prompt, same selection as
+`oasst_pairs`), and 300 UltraChat first user turns plus the 300 paired first assistant replies (model-written; `openbmb/UltraChat`,
+the conversation's first pair; `config.DATASET_IDS["ultrachat"]`). Same filters as the existing sets via the same `sample()`: seed 0,
+20-300 tokens by the OLMo tokenizer, clean rendering in every slot with and without the preceding turn, and the Dolci contamination
+filter on the conversation's user turn (the assistant text is not matched separately, as for `wildchat assistant`). Filter statistics:
+oasst1 1124 candidates, 702 in Dolci, 122 failed length/render, 300 kept; UltraChat 1254 candidates, 0 in Dolci, 954 failed length/render
+(UltraChat replies are mostly longer than 300 tokens, so the kept pairs skew short: median 164 tokens for replies, 65 for user turns),
+300 kept. Rows have the same fields as `texts.jsonl` (sources `oasst1` kind `assistant`, `ultrachat` kinds `user` and `assistant`;
+`core.stats.SOURCE_ORDER` lists `ultrachat`). Core scores them in every slot with no code change:
+`python -m core.score --family F --model STAGE --dataset data/texts_authorship.jsonl --out ...` (`tests/test_authorship.py` checks the file
+and a CPU scoring run). No logit-distortion analysis was written.
+
+## 2026-11-02: core: core.score --n-per-set; run_gpu.sh SCORE_ARGS
+
+`core.score --n-per-set N` scores only the first N texts of each (source, kind) set of the dataset, in file order (default: all; the
+option is additive and `--limit` is unchanged). `scripts/run_gpu.sh` passes `SCORE_ARGS` to `core.score` only (for example
+`SCORE_ARGS="--n-per-set 100"`). Motivation: Gemma 4 31B in fp32 with CPU offload scores about 270 sequences in 10 minutes, so all 1190
+texts in three slots would take about 2.3 hours per checkpoint; the analysis takes the matching `--first N` so every family is compared on
+the same texts (`analyze.py --locked --first 100`). `tests/test_families.py::test_first_n_per_set` covers the helper.
+
+## 2026-11-02: docs: vestigial-regression README status brought up to date; runbook for 2026-11-03
+
+`measures/vestigial_regression/README.md`: Status, the judge-arm and criteria text and the TODO list now say what exists after the
+pipeline preparation (the asymmetry in `analyze.py --locked`, the judge and its prompt, `token_loop` and family handoff markers, the
+100-sentence prefill set, Gemma 4 31B and Qwen3-8B in core) and what does not (no capstone data collected, the judge never run against the
+API or validated, the Qwen3 assistant-slot decision). No criterion was changed except that the Spearman correlation's base points,
+previously an open decision, are excluded (they are zero by construction) with one NLL asymmetry per post-trained point; the README says
+this was decided at implementation time and is not part of the pre-registered design. `docs/runbook_2026-11-03.md` has the launch commands,
+estimates, decisions for Cole and what was blocked or skipped.
+
+## 2026-11-02: core: continuation_ids in core.generate is opt-in (--save-ids)
+
+Correction to the entry on `family_turn_markers` above: `core.generate` first stored the generated token ids in every record, which added a
+key to its output format (`tests/test_smoke.py` pins the keys). It is now opt-in: `--save-ids` adds `continuation_ids`; without it the records
+are exactly `prefill_id, sample, prefill, continuation, stopped_on_eos` as before. `scripts/run_gpu.sh` passes `--save-ids` when `FAMILY` is set
+(the legacy OLMo layout keeps the old format). `flags.py` uses the ids when present and re-tokenizes the user portion otherwise (which can miss a
+no-space loop that merges into fewer tokens). The measure's own `*_counts.csv` gained a `token_loop` column; `test_smoke.py`'s pinned column list
+was updated for it.
