@@ -54,7 +54,7 @@ PLAN = [("gemma4-31b", ["base", "instruct"], 100), ("olmo3-7b", ["base", "sft", 
         ("qwen3-8b", ["base", "instruct"], None)]
 OFF_CODE = ("import sys, runpy; from core import config; config.FAMILIES['qwen3-8b']['assistant_think_block'] = False; "
             "sys.argv = ['core.score'] + sys.argv[1:]; runpy.run_module('core.score', run_name='__main__')")
-SUMMARY = {"started": None, "finished": None, "tasks": [], "checkpoints": [], "disk": [], "notes": []}
+SUMMARY = {"started": None, "finished": None, "tasks": [], "checkpoints": [], "disk": [], "notes": [], "runs": []}
 
 
 def now():
@@ -67,6 +67,18 @@ def log(msg):
     os.makedirs(LOGS, exist_ok=True)
     with open(os.path.join(LOGS, "driver.log"), "a", encoding="utf-8") as f:
         f.write(line + "\n")
+
+
+def load_summary():
+    """Carry the record across restarts: tasks, checkpoints, disk notes and runs from earlier driver instances are kept."""
+    path = os.path.join(LOGS, "summary.json")
+    try:
+        prev = json.load(open(path, encoding="utf-8"))
+    except (OSError, ValueError):
+        prev = {}
+    for k in ("tasks", "checkpoints", "disk", "notes", "runs"):
+        SUMMARY[k] = prev.get(k, [])
+    SUMMARY["started"] = prev.get("started")
 
 
 def save_summary():
@@ -431,11 +443,14 @@ def main():
     signal.signal(signal.SIGHUP, signal.SIG_IGN)  # a closed terminal or dropped connection must not stop the run (children inherit this)
     lock = None if args.dry_run else take_lock()  # noqa: F841
     if not args.dry_run:
+        load_summary()  # first: what follows adds to the record
         start_heartbeat()
         swept = sweep_orphans()
         if swept:
             SUMMARY["notes"].append(f"swept leftover processes of an earlier driver: {swept}")
-    SUMMARY["started"] = now()
+    SUMMARY["started"] = SUMMARY["started"] or now()
+    SUMMARY["finished"] = None
+    SUMMARY["runs"].append(dict(started=now(), pid=os.getpid()))
     log(f"overnight collection start (dry run: {args.dry_run}); branch {subprocess.run(['git', 'branch', '--show-current'], capture_output=True, text=True).stdout.strip()}; "
         f"HEAD {subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()}")
     for fam, stages, n in PLAN:

@@ -253,3 +253,26 @@ def test_children_die_with_the_driver_and_orphans_are_swept(drv):
     assert len(left) == 1  # the unrelated process survived the sweep
     for pid in left:
         os.kill(pid, sg.SIGKILL)
+
+
+def test_the_record_survives_a_restart_and_the_report_is_built_from_it(drv, tmp_path, monkeypatch):
+    # a second driver instance picks up the first one's tasks, checkpoints, disk notes and runs
+    logs = tmp_path / "logs"
+    logs.mkdir()
+    prev = {"started": "2026-11-02 20:00:00 UTC", "tasks": [{"task": "a", "status": "ok", "seconds": 61, "retries": 0}],
+            "checkpoints": [{"family": "f", "stage": "base", "integrity": {"scores": {"ok": True, "issues": [], "stats": {"rows": 3, "anomalies": ["x"]}}}}],
+            "disk": [{"time": "t", "label": "start", "free_gb": 50.0}], "notes": ["n1"], "runs": [{"started": "2026-11-02 20:00:00 UTC"}]}
+    (logs / "summary.json").write_text(json.dumps(prev))
+    monkeypatch.setattr(drv, "LOGS", str(logs))
+    for k in ("tasks", "checkpoints", "disk", "notes", "runs"):
+        drv.SUMMARY[k] = []
+    drv.load_summary()
+    assert drv.SUMMARY["tasks"][0]["task"] == "a" and drv.SUMMARY["notes"] == ["n1"] and drv.SUMMARY["started"] == "2026-11-02 20:00:00 UTC"
+    e = {**os.environ, "OVERNIGHT_LOGS": str(logs)}
+    out = tmp_path / "report.md"
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "overnight_report.py"), "--out", str(out)], check=True, cwd=ROOT, env=e, capture_output=True)
+    text = out.read_text()
+    for section in ("## What ran", "## Interruptions and restarts", "## Integrity checks per checkpoint", "## Failures and retries", "## Disk",
+                    "## Anomalies flagged by the checks", "## What's left to run", "## Readings"):
+        assert section in text
+    assert "| a | ok | 1m01s | 0 |" in text and "f base" in text and "- f base scores: x" in text
