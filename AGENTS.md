@@ -11,7 +11,7 @@ per teammate, on top of a shared pipeline.
 
 | measure | Shiller's form | one line | owner | status |
 |---|---|---|---|---|
-| vestigial regression | dominance | non-assistant personas, especially the user, degrade | TBD | pilot results in `results/`; spec being refined |
+| vestigial regression | dominance | non-assistant personas, especially the user, degrade | TBD | design locked (NLL arm + judge arm); NLL arm built for OLMo, judge arm not built |
 | logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | TBD | design settled; analysis stub only |
 | overgeneralization | dominance | assistant traits appear in non-assistant contexts | TBD | in design; nothing implemented |
 
@@ -106,10 +106,19 @@ beside them (the pre-capstone held-out run), `results_preceding/` (preceding-tur
 
 ## Measures
 
-**Vestigial regression**, `measures/vestigial_regression/README.md`. Status: pilot results on OLMo 3 7B, draft
-spec being refined. NLL of user text in the user slot relative to plain prose and to base (`user@user −
-user@plain`), the slot effect, and flags on prefilled user-turn continuations. Code: `flags.py` (flags on core
-samples), `analyze.py`.
+**Vestigial regression**, `measures/vestigial_regression/README.md`. Status: design locked 2026-11-02 after a
+Gemma 4 31B / Qwen3-8B / OLMo 3 7B pilot (`measures/vestigial_regression/pilot/report.md`); two arms. **NLL arm
+(capacity, built for OLMo; Gemma and Qwen scored by the pilot's scripts):** the primary quantity is the asymmetry
+between the user and assistant role-specific changes from the model's own base, `Δ(user@user − user@plain) −
+Δ(asst@asst − asst@plain)` (nats per token within a family, bits per byte across families); it fires at ≥ 0.05 nats
+(a detectability floor, magnitude is the primary result) with a CI excluding zero in both user sources. Plain-text
+change from base is reported as its own row and referred to overgeneralization; slot effects stay descriptive.
+**Judge arm (behavior, designed, not built):** an LLM judge labels prefilled user-turn continuations (user voice /
+switched to assistant / degenerate / user voice with assistant traits), validated against teammate-checked human
+labels, plus regex flags for loops. Either arm firing counts toward H4, reporting which. The decision-point
+(turn-end hazard) measure is future work. NLL-arm criteria were revised after pilot results, so OLMo NLL verdicts are
+not blind. Code: `flags.py` (regex flags on core samples), `analyze.py` (the asymmetry is a TODO); open items in the
+measure README.
 
 **Logit distortion**, `measures/logit_distortion/README.md`. Status: design settled, `analyze.py` is a stub.
 Calibration gap (mean NLL − mean next-token entropy) of each persona in its own slot, crossing persona with
