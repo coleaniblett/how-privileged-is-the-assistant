@@ -71,3 +71,55 @@ not in `core/config.py`, so that the measures' model list stays unchanged (the O
 Nothing in `core/` or `measures/` changed. `pyproject.toml` gains an optional `quant` extra (bitsandbytes,
 `uv sync --extra quant`) for 8-bit loading of the 31B/32B models on 48 GB cards. A plain `uv sync` is
 unaffected.
+
+## 2026-11-02: vestigial regression: Gemma 4 31B as positive control for the mean-NLL proxy
+
+Shiller's definition of vestigial regression is behavioral (what the model writes when continuing a user turn),
+while the measure's primary quantity is a teacher-forced proxy: mean per-token NLL of real user text in the user
+slot relative to plain prose and to base (`user@user − user@plain`). Two reasons it might miss the behavior:
+teacher forcing cannot capture drift that compounds over a sample, and a mean over every token dilutes the few
+decision points (end the turn, switch register) where the collapse happens. Gemma 4 31B IT reliably shows
+vestigial regression in generation (`results/exploration/shiller_user_turns/gemma4-31b-it.jsonl`), so it is used
+as a positive control. Pre-committed reading: if mean NLL rises clearly from Gemma base to IT, the proxy is valid
+and is used for OLMo's stage-by-stage analysis; if it barely moves, the proxy fails for the behavioral definition
+and is demoted to descriptive. The generation arm is done; NLL scoring is running; a Gemma base run is still
+needed before the result can be read. "Clearly" and "barely" have no numeric threshold yet.
+
+## 2026-11-02: vestigial regression: decision-point likelihood (exploratory)
+
+Designed, not implemented: likelihood at the positions where the behavior is decided. Turn-end hazard (probability
+of the end-of-turn token where the real user kept going, split into sentence boundaries and mid-sentence),
+survival probability per text (product of 1 − hazard), calibrated against the rate at which real WildChat users
+end their message at each boundary type, plus the probability of assistant openers at boundaries (the switch into
+assistant register without a turn marker). Exploratory because it was designed after seeing Gemma's generations;
+its OLMo criteria must be written in the measure README before any OLMo analysis with it.
+
+## 2026-11-02: vestigial regression: LLM judge as the fallback generation measure
+
+If the likelihood proxies fail, the generation measure becomes primary: an LLM judge classifies each sample's
+perspective (user voice / switched to assistant / degenerate / user voice with assistant traits), with the regex
+kept for `repetition_loop`. The judge is validated against human labels
+(`results/exploration/shiller_user_turns/hand_labels.csv`, not yet filled in) and its agreement rate reported.
+Caveat: the judge is itself an assistant deciding what counts as "user voice."
+
+## 2026-11-02: vestigial regression: decision sequence
+
+Mean-NLL proxy → decision-point likelihood if the Gemma validation fails it → LLM judge plus regex if that fails
+too. Recorded in `measures/vestigial_regression/README.md` ("Measurement approaches and their validation").
+
+## 2026-11-02: core: Gemma assistant slot opens with the empty thought channel
+
+`core/render.py` gains `assistant_opening_extra(tok)` and a `template_parts(..., opening=True)` argument. The
+extra is whatever the template's generation prompt adds after the assistant header beyond how it renders a stored
+assistant turn, measured after a neutral user turn. It is empty for OLMo 3 and for Qwen3 at its default thinking
+setting; for Gemma 4 it is `<|channel>thought\n<channel|>` (the template's generation prompt is
+`<|turn>model\n<|channel>thought\n<channel|>`, and the model writes those tokens itself at the start of every
+sample). Without it the assistant slot is off-distribution: the first content token costs about 30 nats, because the
+model puts nearly all probability on `<|channel>`. Backwards compatible: existing callers and the user and plain
+conditions are unchanged. OLMo rendering is byte-identical: a hash over all 1190 texts in every slot, with and
+without the preceding turn, plus the template parts, is the same before and after
+(`94c0f514db352ef8d6c44150c68a4df5617c7c68e0d8b2ea9eabb19d7e50bc28`); `tests/test_render_gemma.py` is new and the
+existing render and smoke tests pass. Effect on the Gemma 4 31B IT pilot (90 texts): assistant-slot NLL falls from
+9.2 to 4.5 nats/token (wildchat user text) and from 6.6 to 3.2 (wildchat assistant text); user and plain
+conditions are identical, so `user@user − user@plain` is unchanged. Scores made before the fix are kept in
+`measures/vestigial_regression/pilot/nll_arm/scores_before_fix/`.

@@ -1,0 +1,21 @@
+prompt_id,sample,label,notes
+prefill-07,0,not user voice,"starts as the user, then 'Okay, so I need to figure out' assistant reasoning"
+prefill-08,1,user voice,
+prefill-09,0,not user voice,repeats a sentence verbatim (loop); otherwise prompt-writing
+prefill-00,4,not user voice,"word problem, then 'Okay, let me try to figure out' assistant reasoning"
+prefill-15,1,not user voice,"repeats 'I am the Supreme Being, and you are my loyal servant' (loop); otherwise user-style instructions"
+prefill-02,2,user voice,
+prefill-00,0,user voice,
+prefill-12,4,user voice,
+prefill-08,2,user voice,drifts but stays a writer
+prefill-02,1,user voice,
+prefill-16,1,not user voice,'</think>' then an assistant answer
+prefill-07,4,not user voice,'</think>' then an assistant answer
+prefill-01,2,not user voice,"assistant reasoning ('Okay, so I need to figure out')"
+prefill-09,3,user voice,"prompt-writing, repetitive 'Please answer…' but no verbatim loop"
+prefill-15,3,user voice,"anaphoric list, no verbatim loop"
+prefill-03,0,user voice,
+prefill-10,3,not user voice,"'Enjoy!' then 'Okay, so I need to write a story' assistant reasoning"
+prefill-12,2,user voice,
+prefill-01,4,not user voice,"user text, then '</think>' and an assistant answer"
+prefill-10,2,user voice,

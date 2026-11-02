@@ -59,12 +59,35 @@ def messages_for(slot, content, preceding=False):
     return msgs
 
 
-def template_parts(tok, slot, preceding=False):
-    """Rendered string before and after the scored turn's content."""
+def assistant_opening_extra(tok, preceding=False):
+    """Text the template's generation prompt puts after the assistant header, beyond what it renders for a stored
+    assistant turn. Empty for templates whose generation prompt ends at the header (OLMo, Qwen3 by default). Gemma 4
+    opens every generated model turn with an empty thought channel ("<|channel>thought\n<channel|>") that the
+    template omits when it renders a stored turn, so an assistant-slot condition without it is off-distribution.
+    Measured after a neutral user turn (a generation prompt for an empty conversation is not renderable), the same
+    for every scored text; `preceding` is accepted for symmetry with template_parts and does not change it."""
+    user = {"role": "user", "content": config.NEUTRAL_TURN["user"]}
+    try:
+        gen = tok.apply_chat_template([user], tokenize=False, add_generation_prompt=True)
+        stored = tok.apply_chat_template([user, {"role": "assistant", "content": SENTINEL}], tokenize=False)
+    except Exception:  # noqa: BLE001
+        return ""
+    if stored.count(SENTINEL) != 1:
+        return ""
+    stored_prefix = stored.split(SENTINEL)[0]
+    return gen[len(stored_prefix) :] if gen.startswith(stored_prefix) and len(gen) > len(stored_prefix) else ""
+
+
+def template_parts(tok, slot, preceding=False, opening=True):
+    """Rendered string before and after the scored turn's content. opening=False gives the template's own
+    rendering of a stored turn; opening=True (default) adds the assistant opening a generation prompt would
+    (assistant_opening_extra; empty except for families like Gemma 4)."""
     s = tok.apply_chat_template(messages_for(slot, SENTINEL, preceding), tokenize=False)
     if s.count(SENTINEL) != 1:
         raise AlignmentError("template does not place content verbatim exactly once")
     prefix, suffix = s.split(SENTINEL)
+    if opening and slot == "assistant":
+        prefix += assistant_opening_extra(tok, preceding)
     return prefix, suffix
 
 
@@ -103,7 +126,8 @@ def render(tok, text, slot, preceding=False):
 
     prefix, suffix = template_parts(tok, slot, preceding)
     full = prefix + text + suffix
-    if tok.apply_chat_template(messages_for(slot, text, preceding), tokenize=False) != full:
+    raw_prefix, _ = template_parts(tok, slot, preceding, opening=False)
+    if tok.apply_chat_template(messages_for(slot, text, preceding), tokenize=False) != raw_prefix + text + suffix:
         raise AlignmentError("template modifies the content")
     pre, suf = encode(tok, prefix), encode(tok, suffix)
     ids = encode(tok, full)
