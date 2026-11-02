@@ -1,4 +1,8 @@
 model,condition,n,precision,ended_turn,handoff_to_assistant,new_user_turn,assistant_register,assistant_register_unmarked,plain_role_marker,assistant_thinking,special_token,repetition_loop,token_loop
+qwen3-8b,empty,5,bf16,0.0,0.0,0.0,0.0,0.0,0.0,0.4,0.4,0.4,0.0
+qwen3-8b,ordinary,100,bf16,0.06,0.0,0.0,0.07,0.07,0.0,0.38,0.27,0.31,0.0
+qwen3-8b,register,50,bf16,0.06,0.0,0.0,0.08,0.08,0.0,0.36,0.22,0.06,0.0
+qwen3-8b,norm,50,bf16,0.02,0.0,0.0,0.14,0.14,0.0,0.32,0.32,0.3,0.0
 gemma4-31b-it,empty,5,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.4,0.0,0.0,0.4,0.4,0.0,0.0,0.4,0.8,0.8
 gemma4-31b-it,ordinary,100,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.26,0.0,0.0,0.26,0.26,0.0,0.0,0.75,0.42,0.27
 gemma4-31b-it,register,50,"int8 (bitsandbytes LLM.int8, bf16 compute)",0.06,0.0,0.0,0.24,0.24,0.0,0.0,0.4,0.76,0.8
