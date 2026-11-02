@@ -254,3 +254,19 @@ already exist; the model/stage key is a separate file the labeler must not open)
 `judge validate` reports raw agreement, Cohen's kappa and the confusion matrix. `judge pilot` compares the judge with the pilot agent's
 labels as a provisional check only. The `anthropic` package is an optional extra (`uv sync --extra judge`). No `ANTHROPIC_API_KEY` was
 available when this was built, so nothing has been sent to the API: the tests use a fake client.
+
+## 2026-11-02: vestigial regression: the locked NLL-arm and judge-arm quantities implemented (analyze.py --locked)
+
+`python -m measures.vestigial_regression.analyze --locked [--run R] [--families ...] [--first N]` computes the README's locked design:
+per family and post-trained stage, the change from the family's own base of every raw slot (the plain-text row is labelled
+"non-assistant degradation"), the two role-specific terms and the asymmetry `Δ(user role-specific) − Δ(assistant role-specific)` per
+user source, in nats per token and bits per byte (primary: summed NLL over positions 1+ / ln 2 / bytes of the text decoded from content
+tokens 1+), with the user and assistant text sets bootstrapped independently and pairing within each set across checkpoints (5000
+resamples). The NLL arm fires for a point when the asymmetry in nats is at least 0.05 with a CI excluding zero, in the same direction in
+both user sources. The judge arm (if `<run>/<family>/vestigial_regression/judge/<stage>.jsonl` exist) reports the non-user-voice rate
+(switched + degenerate) change from base with a bootstrap over prefills, and the category-4 rate separately; the arms are combined as in
+the README; the Spearman correlation across post-trained points uses one NLL asymmetry per point (bits per byte, mean of the two user
+sources) and excludes base points. `--locked --pilot` runs it on the pilot's scores and reproduces `pilot/report.md` (tests pin it);
+the output is in `pilot/locked/`. On the pilot data the NLL arm fires for Gemma 4 31B IT (asymmetry +5.1 / +5.8 nats, CIs well clear of
+zero), not for Qwen3-8B (+0.14 [−0.07, +0.35] and +0.09 [−0.08, +0.26]: above the floor, CIs include zero) and not for any OLMo stage.
+The default (no `--locked`) pipeline is unchanged; it now also accepts `--family`/`--run`.

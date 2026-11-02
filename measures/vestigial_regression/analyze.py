@@ -22,11 +22,25 @@ and the slot difference by position, over texts with at least --positions tokens
 
 Loading, bootstrap CIs, per-position arrays and the negligibility rule come from core.stats; this
 module holds only the VR-specific quantities, tables and figures.
+
+    python -m measures.vestigial_regression.analyze --locked [--run capstone] [--families ...] [--first 30]
+    python -m measures.vestigial_regression.analyze --locked --pilot     # the pilot's scores: reproduces pilot/report.md
+
+--locked computes the README's locked design instead (see "Pre-registered criteria"): per family and post-trained stage, change
+from the family's own base of every raw slot (including the plain-text row, "non-assistant degradation"), the two role-specific
+terms, and the NLL arm's primary quantity, the asymmetry = delta(user role-specific) - delta(assistant role-specific), in nats per
+token (within a family) and in bits per byte (across families), with the user and assistant text sets bootstrapped independently
+and pairing within each set across checkpoints; the judge arm (non-user-voice rate = switched + degenerate, change from base,
+bootstrap over prefills; the category-4 rate reported separately) when judge outputs exist; how the two arms combine; and the
+Spearman correlation between them across the post-trained points (base points are zero by construction and excluded).
+Writes <out>/locked.md and locked.csv.
 """
 
 import argparse
 import glob
+import json
 import os
+from collections import Counter
 
 import numpy as np
 import pandas as pd
@@ -251,7 +265,269 @@ def position_analysis(tokens, sets, n_pos, margin, n_boot, seed, out_dir):
     return "\n".join(md)
 
 
+# ======================================================================================================================
+# Locked design (README, "Pre-registered criteria")
+# ======================================================================================================================
+
+LN2 = np.log(2)
+USER_SOURCES = ("wildchat", "oasst1")
+ASST_SET = ("wildchat", "assistant")
+LOCKED_SETS = [(src, "user") for src in USER_SOURCES] + [ASST_SET]
+PILOT_POINTS = {  # family -> (scores dir, stages): the pilot's scores (OLMo: the frozen held-out run)
+    "olmo3-7b": ("results/scores", ["base", "sft", "dpo", "instruct"]),
+    "qwen3-8b": ("measures/vestigial_regression/pilot/nll_arm/scores_qwen", ["base", "instruct"]),
+    "gemma4-31b": ("measures/vestigial_regression/pilot/nll_arm/scores", ["base", "instruct"]),
+}
+JUDGE_NON_USER = ("switched_to_assistant", "degenerate")
+
+
+def select_ids(rows, first=None, sets=LOCKED_SETS):
+    """Text ids of the locked text sets (the first `first` of each, in file order, or all)."""
+    ids = []
+    for src, kind in sets:
+        s = [r["id"] for r in rows if r["source"] == src and r["kind"] == kind]
+        ids += s[:first] if first else s
+    return set(ids)
+
+
+def text_bytes(tok, rows, ids):
+    """{id: UTF-8 bytes of the text decoded from content tokens 1+} (primary bits per byte excludes position 0)."""
+    out = {}
+    for r in rows:
+        if r["id"] in ids:
+            toks = tok(r["text"], add_special_tokens=False)["input_ids"]
+            out[r["id"]] = len(tok.decode(toks[1:], clean_up_tokenization_spaces=False).encode("utf-8"))
+    return out
+
+
+def checkpoint_tables(scores_dir, stage, nbytes):
+    """(nats, bpb): wide frames indexed by (source, kind, text_id), one column per condition. nats = mean NLL over positions
+    1+ (per token); bpb = summed NLL over positions 1+ / ln 2 / bytes (primary bits per byte)."""
+    csv = pd.read_csv(os.path.join(scores_dir, f"{stage}.csv"))
+    csv = csv[csv.text_id.isin(nbytes)]
+    nats = csv.pivot_table(index=["source", "kind", "text_id"], columns="condition", values="mean_nll_from1")
+    tk = pd.read_parquet(os.path.join(scores_dir, f"{stage}_tokens.parquet"))
+    tk = tk[(tk.position >= 1) & tk.text_id.isin(list(nbytes))]
+    tot = tk.groupby(["source", "kind", "condition", "text_id"], observed=True).nll.sum().reset_index()
+    for c in ("source", "kind", "condition", "text_id"):
+        tot[c] = tot[c].astype(str)
+    tot["bpb"] = tot.nll / LN2 / tot.text_id.map(nbytes)
+    bpb = tot.pivot_table(index=["source", "kind", "text_id"], columns="condition", values="bpb")
+    return nats, bpb
+
+
+def set_conditions(kind):
+    own = "user" if kind == "user" else "asst"
+    other = "asst" if kind == "user" else "user"
+    return f"{own}@{own}", f"{own}@{other}", f"{own}@plain"
+
+
+def delta_vectors(base, it, source, kind):
+    """Per-text change from base (paired within the set) of the own-slot, other-slot and plain values and of the role-specific
+    term, as pandas Series indexed by text id."""
+    own, other, plain = set_conditions(kind)
+    b, i = base.loc[(source, kind)], it.loc[(source, kind)]
+    idx = b.index.intersection(i.index)
+    d = {c: (i.loc[idx, c] - b.loc[idx, c]) for c in (own, other, plain)}
+    d["rs"] = d[own] - d[plain]
+    return d, (own, other, plain)
+
+
+def ci_of(x, n_boot, rng):
+    return bootstrap_ci(np.asarray(pd.Series(x).dropna(), dtype=float), n_boot, rng)
+
+
+def asymmetry_ci(user_rs, asst_rs, n_boot, rng):
+    """(mean, lo, hi) of mean(user role-specific change) - mean(assistant role-specific change). The user and assistant texts
+    are different texts, so the two sets are resampled independently (pairing is within each set, across checkpoints)."""
+    u, a = np.asarray(user_rs.dropna(), dtype=float), np.asarray(asst_rs.dropna(), dtype=float)
+    iu = rng.integers(0, len(u), size=(n_boot, len(u)))
+    ia = rng.integers(0, len(a), size=(n_boot, len(a)))
+    boot = u[iu].mean(axis=1) - a[ia].mean(axis=1)
+    lo, hi = np.percentile(boot, [2.5, 97.5])
+    return u.mean() - a.mean(), lo, hi
+
+
+def fires(m, lo, hi, floor=config.MIN_EFFECT_NATS):
+    """The NLL arm's verdict for one user source: the asymmetry is at least the 0.05-nat detectability floor and the CI excludes zero."""
+    return bool(m >= floor and lo > 0)
+
+
+def nll_point(base, it, n_boot, rng, unit):
+    """All locked NLL-arm quantities for one (family, stage) point in one unit: a list of row dicts."""
+    rows, rs_by_set = [], {}
+    for src, kind in LOCKED_SETS:
+        d, (own, other, plain) = delta_vectors(base, it, src, kind)
+        rs_by_set[(src, kind)] = d["rs"]
+        for label, key in ((f"Δ({own})", own), (f"Δ({other})", other), (f"Δ({plain}) [non-assistant degradation]", plain),
+                           (f"role-specific Δ({own} − {plain})", "rs")):
+            m, lo, hi = ci_of(d[key], n_boot, rng)
+            rows.append(dict(unit=unit, text_set=f"{src} {kind}", quantity=label, mean=m, lo=lo, hi=hi))
+    for src in USER_SOURCES:
+        m, lo, hi = asymmetry_ci(rs_by_set[(src, "user")], rs_by_set[ASST_SET], n_boot, rng)
+        rows.append(dict(unit=unit, text_set=f"{src} user vs {ASST_SET[0]} assistant", quantity="asymmetry = Δrs(user) − Δrs(assistant)",
+                         mean=m, lo=lo, hi=hi))
+    return rows
+
+
+def nll_verdict(rows_nats):
+    """(fires in both user sources with the same sign?, per-source (mean, lo, hi)) from a point's nats rows."""
+    per = {r["text_set"].split(" ")[0]: (r["mean"], r["lo"], r["hi"]) for r in rows_nats if r["quantity"].startswith("asymmetry")}
+    ok = all(fires(*per[s]) for s in USER_SOURCES) and len({np.sign(per[s][0]) for s in USER_SOURCES}) == 1
+    return ok, per
+
+
+def load_judged(judge_dir):
+    """{stage: [judge output rows]} from <judge_dir>/<stage>.jsonl (judge.py output)."""
+    out = {}
+    for p in sorted(glob.glob(os.path.join(judge_dir, "*.jsonl"))):
+        out[os.path.basename(p)[:-6]] = [json.loads(line) for line in open(p, encoding="utf-8") if line.strip()]
+    return out
+
+
+def prefill_rates(rows, labels):
+    """{prefill id: fraction of its samples whose label is in `labels`}."""
+    by = {}
+    for r in rows:
+        by.setdefault(r.get("prefill_id", r.get("prompt_id")), []).append(r["label"] in labels)
+    return pd.Series({k: float(np.mean(v)) for k, v in by.items()})
+
+
+def judge_change(base_rows, it_rows, labels, n_boot, rng):
+    """(change, lo, hi, base rate, stage rate): per-prefill rate difference (stage − base) over the prefills in both, 95% bootstrap
+    over prefills (the samples of one prefill are correlated, so prefills are the resampling unit)."""
+    b, i = prefill_rates(base_rows, labels), prefill_rates(it_rows, labels)
+    idx = b.index.intersection(i.index)
+    m, lo, hi = ci_of(i.loc[idx] - b.loc[idx], n_boot, rng)
+    return m, lo, hi, float(b.loc[idx].mean()), float(i.loc[idx].mean())
+
+
+def combine(nll_fires, judge_fires):
+    """Which arm(s) fired, and what that means (README, "Combining the arms")."""
+    if nll_fires and judge_fires:
+        return "both arms: capacity loss with behavioral collapse"
+    if nll_fires:
+        return "NLL only: worse at predicting users without visibly failing to play them"
+    if judge_fires:
+        return "judge only: fails to play the user while still predicting user text well"
+    return "neither arm fired"
+
+
+def spearman(xs, ys):
+    """Spearman rank correlation (pandas ranks, ties averaged) or None if fewer than 3 points or no variance."""
+    if len(xs) < 3 or len(set(xs)) < 2 or len(set(ys)) < 2:
+        return None
+    return float(pd.Series(xs).rank().corr(pd.Series(ys).rank()))
+
+
+def fmt3(m, lo, hi, nd=3):
+    return f"{m:+.{nd}f} [{lo:+.{nd}f}, {hi:+.{nd}f}]"
+
+
+def locked_analysis(points, n_boot, seed, bytes_by_family):
+    """points: {family: {"dir": scores dir, "stages": [...], "judge": judge dir or None, "tok": tokenizer name}}.
+    Returns (markdown, csv rows)."""
+    rng = np.random.default_rng(seed)
+    allrows, md = [], ["# Locked design: NLL arm and judge arm", "",
+                       f"Positions 1+ for the NLL arm; {n_boot} bootstrap resamples (seed {seed}); user and assistant text sets "
+                       "resampled independently, pairing within each set across checkpoints. Every change is from the family's own base. "
+                       "Nats per token are compared within a family only; bits per byte across families.", ""]
+    point_rows, summary, spearman_pts = {}, [], []
+    for fam, spec in points.items():
+        nb = bytes_by_family[fam]
+        tabs = {st: checkpoint_tables(spec["dir"], st, nb) for st in spec["stages"]}
+        base = spec["stages"][0]
+        judged_fam = load_judged(spec["judge"]) if spec.get("judge") and os.path.isdir(spec["judge"]) else {}
+        for st in spec["stages"][1:]:
+            r_n = nll_point(tabs[base][0], tabs[st][0], n_boot, rng, "nats/token")
+            r_b = nll_point(tabs[base][1], tabs[st][1], n_boot, rng, "bits/byte")
+            ok, per = nll_verdict(r_n)
+            for r in r_n + r_b:
+                allrows.append(dict(family=fam, stage=st, **r))
+            point_rows[(fam, st)] = (r_n, r_b, ok, per)
+            md += [f"## {fam}: {st} − {base}", "", "| text set | quantity | nats/token | bits/byte |", "|---|---|---|---|"]
+            for a, b in zip(r_n, r_b):
+                md.append(f"| {a['text_set']} | {a['quantity']} | {fmt3(a['mean'], a['lo'], a['hi'])} | {fmt3(b['mean'], b['lo'], b['hi'])} |")
+            md += ["", "NLL arm verdict (asymmetry ≥ 0.05 nats, CI excluding zero, same direction in both user sources): "
+                   + "; ".join(f"{s}: {fmt3(*per[s])}" for s in USER_SOURCES) + f" → **{'fires' if ok else 'does not fire'}**.", ""]
+            j_fires, j_info = None, None
+            if base in judged_fam and st in judged_fam:
+                m, lo, hi, rb, rs = judge_change(judged_fam[base], judged_fam[st], JUDGE_NON_USER, n_boot, rng)
+                m4, lo4, hi4, rb4, rs4 = judge_change(judged_fam[base], judged_fam[st], ("user_voice_with_assistant_traits",), n_boot, rng)
+                j_fires = bool(m > 0 and lo > 0)
+                j_info = (m, lo, hi, rb, rs)
+                allrows.append(dict(family=fam, stage=st, unit="rate", text_set="judge", quantity="non-user-voice rate change", mean=m, lo=lo, hi=hi))
+                allrows.append(dict(family=fam, stage=st, unit="rate", text_set="judge", quantity="category 4 rate change (to overgeneralization)", mean=m4, lo=lo4, hi=hi4))
+                md += [f"Judge arm: non-user-voice rate (switched + degenerate) {rb:.1%} → {rs:.1%}, change {fmt3(m, lo, hi)} → "
+                       f"**{'fires' if j_fires else 'does not fire'}** (the minimum rate difference that counts is an open decision: "
+                       f"magnitude reported). Category 4 (user voice with assistant traits, reported to overgeneralization): "
+                       f"change {fmt3(m4, lo4, hi4)}.", ""]
+            else:
+                md += ["Judge arm: no judge outputs for this point yet (`judge.py run`).", ""]
+            asym_bpb = float(np.mean([r["mean"] for r in r_b if r["quantity"].startswith("asymmetry")]))
+            summary.append(dict(family=fam, stage=st, r_b=r_b, asym_bpb=asym_bpb, nll=ok, judge=j_fires, judge_change=j_info[0] if j_info else None))
+            if j_info:
+                spearman_pts.append((f"{fam}:{st}", asym_bpb, j_info[0]))
+
+    md += ["## Cross-family summary: bits per byte, change from each family's own base", "",
+           "| model | " + " | ".join(f"{s} Δ(user@user) | {s} Δ(user@plain) | {s} user role-specific | {s} asymmetry" for s in USER_SOURCES)
+           + " | assistant Δ(asst@asst) | assistant Δ(asst@plain) | assistant role-specific |", "|---|" + "---|" * (4 * len(USER_SOURCES) + 3)]
+    for sm in summary:
+        cells = []
+        for src in USER_SOURCES:
+            qs = [r for r in sm["r_b"] if r["text_set"] == f"{src} user"]
+            cells += [fmt3(qs[0]["mean"], qs[0]["lo"], qs[0]["hi"], 2), fmt3(qs[2]["mean"], qs[2]["lo"], qs[2]["hi"], 2),
+                      fmt3(qs[3]["mean"], qs[3]["lo"], qs[3]["hi"], 2)]
+            asym = [r for r in sm["r_b"] if r["text_set"].startswith(f"{src} user vs")][0]
+            cells.append(fmt3(asym["mean"], asym["lo"], asym["hi"], 2))
+        qa = [r for r in sm["r_b"] if r["text_set"] == "wildchat assistant"]
+        cells += [fmt3(qa[0]["mean"], qa[0]["lo"], qa[0]["hi"], 2), fmt3(qa[2]["mean"], qa[2]["lo"], qa[2]["hi"], 2), fmt3(qa[3]["mean"], qa[3]["lo"], qa[3]["hi"], 2)]
+        md.append(f"| {sm['family']} {sm['stage']} | " + " | ".join(cells) + " |")
+    md += ["", "Each family's change is from its own base; only bits per byte is compared across families.", "",
+           "## How the arms combine", ""]
+    for sm in summary:
+        md.append(f"- {sm['family']} {sm['stage']}: NLL arm {'fires' if sm['nll'] else 'does not fire'}; judge arm "
+                  + ("not run" if sm["judge"] is None else ("fires" if sm["judge"] else "does not fire"))
+                  + (f" → {combine(sm['nll'], sm['judge'])}" if sm["judge"] is not None else ""))
+    rho = spearman([p[1] for p in spearman_pts], [p[2] for p in spearman_pts])
+    md += ["", "## Agreement of the arms across post-trained points", "",
+           "Spearman correlation between the NLL asymmetry (bits per byte, mean of the two user sources) and the judge's non-user-voice "
+           "rate change. Base points are zero by construction for both and are excluded. With this few points it is descriptive, not a "
+           f"significance test. Points: {len(spearman_pts)}; "
+           + (f"Spearman rho = {rho:.2f}." if rho is not None else "not computed (fewer than 3 points with judge outputs, or no variation).")]
+    return "\n".join(md) + "\n", allrows
+
+
+def locked_main(args):
+    from core.render import load_jsonl, load_tokenizer
+    rows = load_jsonl(config.DATA_PATH)
+    ids = select_ids(rows, args.first)
+    points, nbytes = {}, {}
+    if args.pilot:
+        for fam, (d, stages) in PILOT_POINTS.items():
+            points[fam] = dict(dir=d, stages=stages, judge=None)
+    else:
+        fams = args.families or [f for f in config.FAMILIES if os.path.isdir(config.core_dir("scores", args.run, f))]
+        for fam in fams:
+            st = config.family_settings(fam)
+            stages = [s for s in st["stages"] if os.path.exists(os.path.join(config.core_dir("scores", args.run, fam), f"{s}.csv"))]
+            points[fam] = dict(dir=config.core_dir("scores", args.run, fam), stages=stages,
+                               judge=os.path.join(config.measure_dir("vestigial_regression", args.run, fam), "judge"))
+    if not points:
+        raise SystemExit("no family with scores found (use --pilot, or --run/--families)")
+    for fam in points:
+        tok = load_tokenizer(config.FAMILIES[fam]["template"])
+        nbytes[fam] = text_bytes(tok, rows, ids)
+    md, allrows = locked_analysis(points, args.n_boot, args.seed, nbytes)
+    os.makedirs(args.out, exist_ok=True)
+    with open(os.path.join(args.out, "locked.md"), "w", encoding="utf-8") as f:
+        f.write(md)
+    pd.DataFrame(allrows).to_csv(os.path.join(args.out, "locked.csv"), index=False)
+    print(md)
+
+
 def main():
+    config.family_from_argv()  # --family switches STAGES / TEMPLATE_MODEL and the default paths
     ap = argparse.ArgumentParser()
     ap.add_argument("--scores", default=config.core_dir("scores"))
     ap.add_argument("--generations", default=os.path.join(config.measure_dir("vestigial_regression"), "generations"),
@@ -262,7 +538,20 @@ def main():
     ap.add_argument("--positions", type=int, default=40, help="content-token positions in the position analysis")
     ap.add_argument("--margin", type=float, default=config.MIN_EFFECT_NATS,
                     help="nats; slot difference counted as negligible within this")
+    ap.add_argument("--family", help="a config.FAMILIES key (accepted for run_gpu.sh; selects the default paths)")
+    ap.add_argument("--run", help="run directory under results/ (with --family or --locked: default capstone)")
+    ap.add_argument("--locked", action="store_true", help="the locked design: asymmetry, raw-slot changes, judge arm, combination")
+    ap.add_argument("--pilot", action="store_true", help="with --locked: the pilot's scores instead of a run's")
+    ap.add_argument("--families", nargs="+", help="with --locked: families to include (default: those with scores in the run)")
+    ap.add_argument("--first", type=int, help="with --locked: only the first N texts of each set (the pilot used 30)")
     args = ap.parse_args()
+    if args.locked:
+        if args.pilot:
+            args.first = args.first or 30
+        args.n_boot = 5000 if args.n_boot == 10_000 else args.n_boot
+        args.out = args.out if args.out != config.measure_dir("vestigial_regression") else os.path.join(
+            "measures/vestigial_regression/pilot" if args.pilot else config.measure_dir("vestigial_regression", args.run or config.DEFAULT_RUN), "locked")
+        return locked_main(args)
 
     frames = load_scores(args.scores)
     summary = summarize(frames, args.n_boot, args.seed)
