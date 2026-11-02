@@ -17,7 +17,7 @@ import pandas as pd
 
 from core import config
 
-SOURCE_ORDER = ["wildchat", "oasst1", "olmo-instruct"]
+SOURCE_ORDER = ["wildchat", "oasst1", "olmo-instruct", "ultrachat"]
 SLOT_NAMES = {"user": "user slot", "asst": "assistant slot", "plain": "plain (no slot)"}
 
 

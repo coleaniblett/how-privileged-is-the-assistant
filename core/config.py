@@ -120,7 +120,7 @@ def family_from_argv(argv=None):
 # through the same contamination filter (check_contamination.py) as the existing sources.
 PAIR_SOURCE = "wildchat"
 EXTRA_USER_SOURCE = "oasst1"
-DATASET_IDS = {"wildchat": "allenai/WildChat-1M", "oasst1": "OpenAssistant/oasst1"}
+DATASET_IDS = {"wildchat": "allenai/WildChat-1M", "oasst1": "OpenAssistant/oasst1", "ultrachat": "openbmb/UltraChat"}
 # Drop any conversation whose user turn appears in the Dolci-Instruct SFT/DPO/RL data.
 EXCLUDE_DOLCI = True
 
@@ -135,6 +135,9 @@ REPLY_MODEL = "instruct"
 REPLY_MAX_NEW_TOKENS = 300
 
 DATA_PATH = "data/texts.jsonl"
+# The authorship cross of measures/logit_distortion (core.prepare_data --authorship): human-written assistant replies
+# (oasst1) and model-written user turns and replies (UltraChat), in a separate file so texts.jsonl stays as it was.
+AUTHORSHIP_PATH = "data/texts_authorship.jsonl"
 PREFILL_PATH_20 = "data/prefill.jsonl"  # frozen; the first 20 rows of PREFILL_PATH
 PREFILL_PATH = "data/prefill_100.jsonl"  # default for core.generate
 

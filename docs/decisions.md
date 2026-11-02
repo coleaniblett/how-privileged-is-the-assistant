@@ -270,3 +270,18 @@ sources) and excludes base points. `--locked --pilot` runs it on the pilot's sco
 the output is in `pilot/locked/`. On the pilot data the NLL arm fires for Gemma 4 31B IT (asymmetry +5.1 / +5.8 nats, CIs well clear of
 zero), not for Qwen3-8B (+0.14 [−0.07, +0.35] and +0.09 [−0.08, +0.26]: above the floor, CIs include zero) and not for any OLMo stage.
 The default (no `--locked`) pipeline is unchanged; it now also accepts `--family`/`--run`.
+
+## 2026-11-02: core: text sets for logit distortion's authorship cross (data/texts_authorship.jsonl)
+
+`python -m core.prepare_data --authorship` writes `data/texts_authorship.jsonl` (new file; `texts.jsonl`, `prefill*.jsonl` and every other file
+under `data/` are untouched): 300 oasst1 assistant replies (human-written; the top-ranked reply of each root prompt, same selection as
+`oasst_pairs`), and 300 UltraChat first user turns plus the 300 paired first assistant replies (model-written; `openbmb/UltraChat`,
+the conversation's first pair; `config.DATASET_IDS["ultrachat"]`). Same filters as the existing sets via the same `sample()`: seed 0,
+20-300 tokens by the OLMo tokenizer, clean rendering in every slot with and without the preceding turn, and the Dolci contamination
+filter on the conversation's user turn (the assistant text is not matched separately, as for `wildchat assistant`). Filter statistics:
+oasst1 1124 candidates, 702 in Dolci, 122 failed length/render, 300 kept; UltraChat 1254 candidates, 0 in Dolci, 954 failed length/render
+(UltraChat replies are mostly longer than 300 tokens, so the kept pairs skew short: median 164 tokens for replies, 65 for user turns),
+300 kept. Rows have the same fields as `texts.jsonl` (sources `oasst1` kind `assistant`, `ultrachat` kinds `user` and `assistant`;
+`core.stats.SOURCE_ORDER` lists `ultrachat`). Core scores them in every slot with no code change:
+`python -m core.score --family F --model STAGE --dataset data/texts_authorship.jsonl --out ...` (`tests/test_authorship.py` checks the file
+and a CPU scoring run). No logit-distortion analysis was written.
