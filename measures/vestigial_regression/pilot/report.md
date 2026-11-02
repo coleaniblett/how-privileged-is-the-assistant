@@ -238,6 +238,88 @@ generation flags were not applied to Qwen beyond the 20 labelled samples; the ex
 sheet. Qwen3-8B (instruct) weights were downloaded by the exploration run and are still in the HF cache apart from
 what `hf_cache free` removed; Gemma 31B IT and base weights are cleared (the IT tokenizer files were re-downloaded).
 
+## Checks on the existing scores (no GPU, no new scoring)
+
+### Check 1 reading rule (written before any check-1 number was computed)
+
+Question: is Qwen3-8B's rise in the user-text role-specific term (`user@user − user@plain`, +0.44 / +0.39 nats from
+base) a real rise of `user@user`, or mainly a fall of `user@plain` (Qwen base scores plain text about 1 nat worse than
+its chat slots)? For Qwen3-8B and, for comparison, Gemma 4 31B, every quantity is IT − base per slot, paired over the
+same 30 texts per set, with 95% bootstrap CIs (5000 resamples, `config.SEED`, `core.stats.bootstrap_ci`), in nats per
+token (positions 1+) and in primary bits per byte; each role-specific change is decomposed into its two parts
+(`Δ(user@user)` and `Δ(user@plain)`). The verdict uses nats per token, for Qwen, in both user sources:
+
+- **Plain-control effect** if `Δ(user@plain)` ≤ −0.05 nats with its CI excluding zero, **and** `Δ(user@user)` is below
+  0.05 nats or its CI includes zero.
+- **Real user-slot rise** if `Δ(user@user)` ≥ 0.05 nats with its CI excluding zero.
+- Otherwise **mixed**, and described.
+
+"In both user sources" applies to whichever of the first two is claimed. Check 2 (OLMo in bits per byte) is defined in
+its own section below; its text sets are fixed in advance there too.
+
+### Check 1 result (`nll_arm/checks.md`; Qwen3-8B and Gemma 4 31B, IT − base, paired over the same 30 texts per set)
+
+**Verdict: real user-slot rise.** In both user sources `Δ(user@user)` is at least 0.05 nats with its CI excluding zero
+(wildchat +0.61 [+0.49, +0.74], oasst1 +0.36 [+0.26, +0.45]), and the plain control did **not** fall
+(`Δ(user@plain)`: +0.17 [+0.04, +0.30] and −0.03 [−0.15, +0.09]); the plain-control rule fails in both sources. In
+bits per byte: `Δ(user@user)` +0.20 / +0.12, `Δ(user@plain)` +0.06 / −0.01, role-specific change +0.14 / +0.13.
+The hypothesis that Qwen's rise is mainly `user@plain` falling is not supported.
+
+What the decomposition also shows (descriptive): the rise is a cost of *chat framing in general*, not of the user slot.
+User text in the assistant slot rose almost as much as in the user slot (`Δ(user@asst)` +0.51 / +0.35 nats, so the slot
+effect `user@user − user@asst` changed by only +0.10 / +0.01), and assistant text rose in both chat slots (+0.42 / +0.40)
+while its plain control rose little (+0.11). So the rule's label "real user-slot rise" is accurate for `user@user` but not
+specific to the user slot. For Gemma, by contrast, IT degraded the plain control a lot (`Δ(user@plain)` +4.57 / +4.80
+nats, +1.58 bits/byte in both sources) and `user@user` far more (+7.51 / +8.43 nats, +2.67 / +2.74 bits/byte); its
+assistant slot rose much less (`Δ(user@asst)` +1.77 / +1.84 nats), so Gemma's chat-slot cost is concentrated in the
+user slot, which Qwen's is not. The role-specific term subtracts the plain degradation, so for Gemma it understates
+the total damage.
+
+### Check 2: OLMo 3 7B in bits per byte (`nll_arm/checks.md`)
+
+Definition (fixed in advance): the frozen OLMo held-out scores in `results/scores/` converted to primary BPB with the
+OLMo tokenizer; change from OLMo base for SFT, DPO and Instruct, paired over texts, on (a) the pilot's 90 texts (primary
+for the cross-family comparison) and (b) all OLMo texts (secondary). **Verification first:** the `text_id`s of all four
+frozen score files match `data/texts.jsonl` (1190 of 1190, none missing or extra), and for every text the score files'
+`n_tokens` equals the data's `n_tokens` in every slot, so they are the same texts. Result: OLMo's user-text role-specific
+term in BPB is slightly *negative* (wildchat −0.07 [−0.11, −0.03] for Instruct, oasst1 −0.03 [−0.05, −0.00]), the
+opposite direction from vestigial regression, and the all-texts version agrees in sign and is tighter (−0.08 / −0.04
+for Instruct). The assistant role-specific term is −0.04 after SFT and about zero after DPO and Instruct (+0.01, CI
+includes zero).
+
+### Summary: bits per byte, change from each family's own base, 90 shared texts
+
+| model (IT − own base) | wildchat Δ(user@user) | wildchat Δ(user@plain) | wildchat user role-specific | oasst1 Δ(user@user) | oasst1 Δ(user@plain) | oasst1 user role-specific | assistant role-specific (asst@asst − asst@plain) |
+|---|---|---|---|---|---|---|---|
+| OLMo 3 7B Instruct | -0.17 [-0.31, -0.03] | -0.10 [-0.23, +0.03] | -0.07 [-0.11, -0.03] | +0.10 [+0.07, +0.13] | +0.13 [+0.10, +0.15] | -0.03 [-0.05, -0.00] | +0.01 [-0.01, +0.03] |
+| Qwen3-8B | +0.20 [+0.16, +0.24] | +0.06 [+0.02, +0.10] | +0.14 [+0.09, +0.20] | +0.12 [+0.09, +0.15] | -0.01 [-0.05, +0.03] | +0.13 [+0.08, +0.17] | +0.09 [+0.05, +0.12] |
+| Gemma 4 31B IT | +2.67 [+2.38, +3.01] | +1.58 [+1.42, +1.75] | +1.10 [+0.85, +1.37] | +2.74 [+2.54, +2.94] | +1.58 [+1.32, +1.86] | +1.16 [+0.95, +1.38] | -0.82 [-1.15, -0.57] |
+
+OLMo per stage (same 90 texts, bits/byte, change from OLMo base):
+
+| model (IT − own base) | wildchat Δ(user@user) | wildchat Δ(user@plain) | wildchat user role-specific | oasst1 Δ(user@user) | oasst1 Δ(user@plain) | oasst1 user role-specific | assistant role-specific (asst@asst − asst@plain) |
+|---|---|---|---|---|---|---|---|
+| OLMo SFT | -0.23 [-0.36, -0.10] | -0.15 [-0.27, -0.04] | -0.07 [-0.12, -0.03] | +0.07 [+0.04, +0.09] | +0.08 [+0.06, +0.09] | -0.01 [-0.03, +0.01] | -0.04 [-0.05, -0.03] |
+| OLMo DPO | -0.18 [-0.32, -0.04] | -0.11 [-0.24, +0.01] | -0.06 [-0.11, -0.02] | +0.09 [+0.06, +0.12] | +0.11 [+0.08, +0.13] | -0.02 [-0.04, +0.01] | +0.01 [-0.01, +0.03] |
+| OLMo Instruct | -0.17 [-0.31, -0.03] | -0.10 [-0.23, +0.03] | -0.07 [-0.11, -0.03] | +0.10 [+0.07, +0.13] | +0.13 [+0.10, +0.15] | -0.03 [-0.05, -0.00] | +0.01 [-0.01, +0.03] |
+
+Each family's change is from its own base; only bits per byte is compared across families (per-token nats are not: the tokenizers differ). Cells are mean change [95% paired bootstrap CI over texts]. All values are `condition − condition` differences, so the OLMo, Qwen and Gemma plain controls (`<|endoftext|>` / `<bos>` document starts) enter only through each family's own base.
+
+### Unexpected or worth knowing
+
+- Qwen's rise is not a plain-control artifact (check 1), and not user-slot-specific either: both chat slots and both
+  text kinds got worse relative to plain.
+- OLMo's raw changes flip sign between text sources (wildchat `Δ(user@user)` −0.17, oasst1 +0.10 bits/byte), but its
+  plain control moves with them (−0.10 / +0.13), so the role-specific term is stable and the raw changes are not
+  interpretable on their own.
+- In BPB OLMo Instruct shows no sign of regression on this proxy (user role-specific −0.07 / −0.03), Qwen a small positive
+  rise (+0.14 / +0.13, about 1/8 of Gemma's), Gemma a large one (+1.10 / +1.16): ordering consistent with the pilot's
+  premise, with Qwen not at zero.
+- OLMo's assistant role-specific term falls only at SFT (−0.04) and is about zero at DPO and Instruct (+0.01); the
+  README expects `asst@asst` to fall relative to plain through post-training, which this BPB view does not show past SFT.
+- n = 30 per set; OLMo, Qwen and Gemma plain controls differ (`<|endoftext|>` vs `<bos>` document starts), which is why
+  only each family's change from its own base is compared.
+
 ## Appendix: the flag, sampling and NLL arms (earlier experiments, from README.md; unchanged except the correction note)
 
 **Exploratory, n = 30 + 18.** Outside every verdict. Does not touch the measure's code, README or

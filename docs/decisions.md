@@ -123,3 +123,57 @@ existing render and smoke tests pass. Effect on the Gemma 4 31B IT pilot (90 tex
 9.2 to 4.5 nats/token (wildchat user text) and from 6.6 to 3.2 (wildchat assistant text); user and plain
 conditions are identical, so `user@user − user@plain` is unchanged. Scores made before the fix are kept in
 `measures/vestigial_regression/pilot/nll_arm/scores_before_fix/`.
+
+## 2026-11-02: vestigial regression: two-arm design locked; decision-point measure moved to future work
+
+The measurement is two complementary arms (README, "Measurement design"): an **NLL arm** (capacity: can the model still
+predict real user text; teacher-forced, graded, judge-free) and a **judge arm** (behavior: when it continues a user
+turn, does it still play the user; the direct measure of Shiller's behavioral definition). Basis: the pilot
+(`measures/vestigial_regression/pilot/report.md` with its checks section). Gemma 4 31B passed the positive control the
+earlier entry set up (user-text role-specific term +2.94 / +3.63 nats from its own base, assistant term −2.17, base
+flat, 0 of 60 IT samples in the user's voice), so the fallback chain in the earlier entries is not needed: the
+**decision-point likelihood (turn-end hazard) measure is moved to Future work** and not planned for the capstone, and
+the "decision sequence" and "LLM judge as the fallback generation measure" entries are superseded (the judge is now a
+primary arm, not a fallback). The earlier positive-control entry's open question, that "clearly" and "barely" had no
+numeric threshold, is resolved by the pilot: the rise is large and the NLL arm's verdict rule is below. Docs only; no
+code, results or core changes. Nothing is frozen: no `results/<run>/vestigial_regression/` exists.
+
+## 2026-11-02: vestigial regression: the asymmetry as the NLL arm's primary quantity (pilot-informed)
+
+Primary quantity: `A = Δ(user@user − user@plain) − Δ(asst@asst − asst@plain)`, change from the model's own base, per
+user source against the assistant set; nats per token within a family, bits per byte for cross-family comparison.
+Why: the earlier single criterion (a rise of the user role-specific term of at least 0.05 nats) was met by the negative
+control Qwen3-8B too (+0.44 / +0.39 nats), so it did not separate Qwen from Gemma, and the pilot's check 1 showed Qwen's
+rise is a cost of chat framing shared by both slots and both kinds of text (`Δ(user@asst)` +0.51 / +0.35, assistant text
++0.42 / +0.40, plain nearly flat). Subtracting the assistant-text change removes that shared part. The CI resamples the user
+and assistant text sets independently (different texts), pairing within each set across checkpoints. Verdict: A is at
+least 0.05 nats with the 95% CI excluding zero, in the same direction in both user sources; 0.05 nats is a detectability
+floor and the magnitude is the primary result, and no new threshold tuned on the pilot models is introduced (Qwen may
+register as mildly regressed, consistent with its generations: 9 of 20 samples left the user's voice). Slot effects
+stay descriptive. The plain-text change from base is reported as its own row, "non-assistant degradation" (Gemma IT
++1.58 bits per byte): plain prose is also a non-assistant context, the role-specific subtraction removes it, and NLL
+cannot tell whether it is vestigial regression or overgeneralization, so it is referred to the overgeneralization
+measure. These criteria were revised after seeing the OLMo, Qwen and Gemma pilot results, so **OLMo NLL verdicts are
+not blind**. Not yet implemented: the asymmetry in `analyze.py`.
+
+## 2026-11-02: vestigial regression: judge arm specification, validation bar, combining rule, agreement prediction
+
+Judge arm (set before any judge result exists; designed, not built). Prefilled unterminated user turns (20 prefills now;
+TODO at least 100, a core change to be logged), stopping only at end of text. An LLM judge labels each user portion as
+user voice / switched to assistant / degenerate / user voice with assistant traits; one fixed judge model, exact prompt
+and temperature 0, recorded; the judge must not be an evaluated model (TODO: choose it and commit the prompt). Regex
+stays for `repetition_loop` and a no-space token-loop flag (TODO: port `token_loop` from the exploration), with
+family-specific handoff markers (turn markers, Gemma's `<|channel>`, Qwen's `<think>`). Primary quantity: the
+non-user-voice rate (switched + degenerate), change from base, with a 95% bootstrap CI resampling prefills; the arm
+fires if it rises with the CI excluding zero. OPEN: the minimum rate difference. Category 4 goes to the
+overgeneralization measure. Validation before use: at least 50 human-labeled samples spanning Gemma, Qwen and OLMo
+including base models, labels checked by a teammate (the pilot's labels were written by the agent that ran the pilot);
+report raw agreement and Cohen's kappa; default bar, changeable by the team before running: revise the judge prompt if
+agreement is below 80%. Combining rule: vestigial regression counts toward H4 if either arm fires, reporting which
+(both: capacity loss with behavioral collapse; NLL only: worse at predicting users without visibly failing to play them;
+judge only: fails to play the user while still predicting user text well); the form comes from the judge categories.
+Pre-registered prediction: the arms agree in ordering across all model/stage points (OLMo base, SFT, DPO, Instruct;
+Qwen base and IT; Gemma base and IT); report a Spearman correlation between the NLL asymmetry and the judge's
+non-user-voice rate, descriptive and not a significance test at about 8 points; disagreements are findings, not errors.
+OPEN: both quantities are changes from base, so the three base points are zero by construction; whether they enter the
+correlation is undecided.
