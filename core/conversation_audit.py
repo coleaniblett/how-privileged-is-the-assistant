@@ -23,7 +23,14 @@ def distribution(values):
             "p95": quantile(.95), "max": values[-1]}
 
 
-def audit(conversations, targets, rejected, source_info, settings):
+AUDIT_VERSION = 2  # 1: pilot_v1/v2 (recomputed exactly as built); 2 adds coverage and selection fields
+
+
+def contributing(ts):
+    return len({t["conversation_id"] for t in ts if t["eligible"]})
+
+
+def audit(conversations, targets, rejected, source_info, settings, version=1):
     cells, sources = [], {}
     for source in sorted(source_info):
         cs = [c for c in conversations if c["source"] == source]
@@ -42,6 +49,21 @@ def audit(conversations, targets, rejected, source_info, settings):
             "exchanges_histogram": dict(sorted(Counter(c["complete_exchanges"] for c in cs).items())),
             "system_messages": sum(m["role"] == "system" for c in cs for m in c["messages"]),
         }
+        if version >= 2:
+            user = {t["conversation_id"] for t in ts if t["eligible"] and t["role"] == "user"}
+            asst = {t["conversation_id"] for t in ts if t["eligible"] and t["role"] == "assistant"}
+            sources[source].update({
+                "selection_mode": settings.selection_mode,
+                "contributing_conversations": contributing(ts),
+                "contributing_user_conversations": len(user),
+                "contributing_assistant_conversations": len(asst),
+                "contributing_both_roles_conversations": len(user & asst),
+                "repeated_text_targets": sum(t.get("repeated_text_of") is not None for t in ts)})
+            if settings.selection_mode == "eligible_quota":
+                sources[source].update({
+                    "contributing_quota": settings.contributing_quota, "scan_limit": settings.scan_limit,
+                    "contributing_quota_shortfall": max(0, settings.contributing_quota - len(cs))})
+                del sources[source]["conversation_budget_shortfall"]
         for group in GROUPS:
             rows = [t for t in ts if t["group"] == group]
             author, role = group.split("_", 1)
@@ -62,10 +84,17 @@ def audit(conversations, targets, rejected, source_info, settings):
                 "duplicate_targets": sum(t["duplicate_of"] is not None for t in rows),
                 "contamination_status": dict(sorted(Counter(t["contamination"]["status"] for t in rows).items())),
             })
+            if version >= 2:
+                cells[-1].update({
+                    "contributing_conversations": contributing(rows),
+                    "contributing_opening_conversations": contributing([t for t in rows if t["turn_position"] == "opening"]),
+                    "contributing_follow_up_conversations": contributing([t for t in rows if t["turn_position"] == "follow_up"]),
+                    "repeated_text_targets": sum(t.get("repeated_text_of") is not None for t in rows)})
             if any("context_contamination_status" in t for t in targets):  # absent from pilot_v1 records
                 cells[-1]["context_contamination_status"] = dict(sorted(Counter(
                     t["context_contamination_status"] for t in rows).items()))
-    return {"candidate_only": True, "sources": sources, "cells": cells,
+    return {"candidate_only": True, **({"audit_version": version} if version >= 2 else {}),
+            "sources": sources, "cells": cells,
             "totals": {"conversations": len(conversations), "targets": len(targets),
                        "eligible": sum(t["eligible"] for t in targets),
                        "excluded": sum(not t["eligible"] for t in targets)},
@@ -83,8 +112,26 @@ def audit_markdown(report):
     for c in report["cells"]:
         lines.append(f"| {c['source']} | {c['group']} | {c['conversations']} | {c['targets']} | {c['eligible']} | "
                      f"{c['excluded']} | {c['opening']} | {c['follow_up']} | {c['eligible_opening']} / {c['eligible_follow_up']} |")
-    lines.extend(["", "Conversation counts in group rows overlap; do not sum them. Totals: " + str(report["totals"]), "",
-                  "## Sampling and conversation exclusions", "",
+    lines.extend(["", "Conversation counts in group rows overlap; do not sum them. Totals: " + str(report["totals"]), ""])
+    if report.get("audit_version", 1) >= 2:
+        lines.extend(["## Coverage: contributing conversations", "",
+                      "A conversation contributes to a cell if it has at least one eligible target there. "
+                      "Meeting a conversation quota does not imply balanced role or position coverage.", "",
+                      "| Source | Group | Eligible targets | Contributing conversations | ... with an eligible opening | ... with an eligible follow-up | Repeated-wording targets (kept) |",
+                      "|---|---|---:|---:|---:|---:|---:|"])
+        for c in report["cells"]:
+            if c["targets"]:
+                lines.append(f"| {c['source']} | {c['group']} | {c['eligible']} | {c['contributing_conversations']} | "
+                             f"{c['contributing_opening_conversations']} | {c['contributing_follow_up_conversations']} | "
+                             f"{c['repeated_text_targets']} |")
+        lines.extend(["", "| Source | Selected | Contributing (any) | Eligible user | Eligible assistant | Both roles |",
+                      "|---|---:|---:|---:|---:|---:|"])
+        for source, info in report["sources"].items():
+            lines.append(f"| {source} | {info['selected_conversations']} | {info['contributing_conversations']} | "
+                         f"{info['contributing_user_conversations']} | {info['contributing_assistant_conversations']} | "
+                         f"{info['contributing_both_roles_conversations']} |")
+        lines.append("")
+    lines.extend(["## Sampling and conversation exclusions", "",
                   "Seeded hash selection from bounded source windows is not a uniform corpus sample. "
                   "OASST1 reads the entire split to avoid broken ancestors, then inspects a root window. "
                   "Exclusions below are mutually exclusive first-failure reasons; target reasons may overlap.", ""])
@@ -109,6 +156,26 @@ def audit_markdown(report):
                   "No exact match, when checked, is not a guarantee against paraphrase, substring, or unexamined training data overlap. "
                   "See manifest.json for check scope/revisions and examples.md for complete conversations and target mappings.", ""])
     return "\n".join(lines)
+
+
+def sensitivity_markdown(rows, default_min):
+    """Readable length-sensitivity table; rows from core.conversations.length_sensitivity."""
+    thresholds = sorted({r["min_target_tokens"] for r in rows})
+    keys = sorted({(r["source"], r["group"], r["turn_position"]) for r in rows})
+    by = {(r["min_target_tokens"], r["source"], r["group"], r["turn_position"]): r for r in rows}
+    head = " | ".join(f"min {t}: eligible / conversations" for t in thresholds)
+    lines = ["# Minimum target length sensitivity (data only)", "",
+             f"Same selected conversations; only the minimum target length changes (build default: {default_min}). "
+             "Maximum target length, context length and contamination rules are held fixed; duplicate cases are "
+             "re-resolved. With eligible_quota selection the conversations were chosen at the default minimum, so "
+             "lower thresholds here do not show what a lower-threshold quota build would select. "
+             "Cells: eligible targets / contributing conversations. No model outcomes.", "",
+             f"| Source | Group | Position | Targets | {head} |", "|---|---|---|---:|" + "---:|" * len(thresholds)]
+    for key in keys:
+        first = by[(thresholds[0], *key)]
+        cells = " | ".join(f"{by[(t, *key)]['eligible']} / {by[(t, *key)]['contributing_conversations']}" for t in thresholds)
+        lines.append(f"| {key[0]} | {key[1]} | {key[2]} | {first['targets']} | {cells} |")
+    return "\n".join(lines) + "\n"
 
 
 def examples_markdown(conversations, targets):
@@ -177,7 +244,27 @@ def verify_build(path):
                 or target.get("context_contamination_status", context_contamination_status(conv["messages"][:i]))
                 != context_contamination_status(conv["messages"][:i])):
             raise ValueError(f"target invariant failed: {target['target_id']}")
-    report = audit(conversations, targets, rejected, manifest["sources"], Settings(**manifest["settings"]))
+    settings = Settings(**manifest["settings"])
+    version = manifest.get("audit_version", 1)
+    if version >= 2:
+        from core.conversations import apply_duplicates, length_sensitivity
+        order = {cid: n for n, cid in enumerate(manifest["selection_order"])}
+        if set(order) != set(by_id):
+            raise ValueError("selection order does not match the conversations")
+        in_selection_order = sorted(targets, key=lambda t: (order[t["conversation_id"]], t["turn_index"]))
+        if apply_duplicates(in_selection_order) != in_selection_order:
+            raise ValueError("duplicate-case / repeated-wording marks do not recompute")
+        if settings.selection_mode == "eligible_quota":
+            from core.conversations import contributes
+            for cid in by_id:
+                if not contributes([t for t in targets if t["conversation_id"] == cid]):
+                    raise ValueError(f"selected conversation does not contribute: {cid}")
+        rows = length_sensitivity(in_selection_order, settings, manifest["sensitivity_min_target_tokens"])
+        if json.loads((path / "length_sensitivity.json").read_text()) != rows:
+            raise ValueError("length sensitivity does not recompute")
+        if sensitivity_markdown(rows, settings.min_target_tokens) != (path / "length_sensitivity.md").read_text():
+            raise ValueError("readable length sensitivity differs")
+    report = audit(conversations, targets, rejected, manifest["sources"], settings, version)
     # Round-trip normalizes JSON object keys, including integer histogram bins.
     if json.loads(json.dumps(report)) != json.loads((path / "audit.json").read_text()):
         raise ValueError("audit does not reconcile with records")

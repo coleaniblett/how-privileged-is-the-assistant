@@ -375,3 +375,34 @@ WildChat conversations); eligible targets fall from 128 to 92, WildChat from 41 
 filters were not relaxed. How to sample WildChat (e.g. a conversation-level Dolci filter before the budget) and
 final sizes/thresholds are Grace's decisions before scoring (`pilot_v2/inspection.md`). Exact matching does not
 cover paraphrase, substrings, RL completions or pretraining data.
+
+## 2026-11-02: core: conversation candidates: prediction-case deduplication, eligible-quota selection, length-sensitivity audit (pilot_v3)
+
+Review findings on the original-conversation builder, assessed and adopted (logit distortion, Grace):
+
+1. **Deduplication.** The old rule excluded any repeat of a normalized target text, across sources, roles and
+   histories, with the first occurrence canonical even when ineligible. For a context experiment the same
+   words after a different history are a different prediction case. Now a duplicate is the same source, role,
+   authorship, normalized history and normalized target (`duplicate_case`); the representative is the first
+   otherwise-eligible member in selection order. Repeated wording elsewhere only sets `repeated_text_of`.
+   pilot_v1/v2 had no duplicate exclusions, so their counts are unaffected; their records are kept as built.
+2. **Coverage.** pilot_v2's raw budget left WildChat with 5 eligible targets, all from one conversation.
+   New `--selection-mode eligible_quota` walks the same seeded order and keeps only contributing
+   conversations (>= 1 eligible target with fully clear target and history Dolci checks) up to a per-source
+   quota within a scan limit; it requires a complete Dolci index, unchecked/incomplete never count, shortfalls
+   are reported. `raw_budget` stays the default. The target-and-history contamination rule is unchanged.
+   Verified: exempting "Give me more examples." recovers 0 pilot_v2 targets (an earlier message had matched).
+3. **Length and position.** New data-only `length_sensitivity.json/.md` for minimum lengths 5/10/20 on the same
+   conversations. The default stays 20 tokens; no primary threshold was changed.
+
+Backwards compatibility: `make_targets` keeps its signature (now `conversation_targets` + `apply_duplicates`);
+new Settings fields have defaults, so old manifests load; audit additions are gated by `audit_version` (2 for new
+builds), and pilot_v1/v2 still verify byte for byte. Legacy isolated data and `core.score` are unchanged.
+
+pilot_v3 (`candidates/logit_distortion/pilot_v3/`): quota 8, scan limit 200, 1,000-row windows, otherwise the
+v2 settings and revisions. Quota met for all sources (WildChat after evaluating 42; 34 rejected, all with a
+Dolci match): 24 conversations, 175 targets, 119 eligible; 0 duplicate cases. Selection bias: WildChat is
+restricted to conversations without a Dolci match. At 20 tokens no UltraChat opening user is eligible (all
+8 are 9–17 tokens); 7 at 10, 8 at 5. Recommendation, not applied: stratify role comparisons by opening vs
+follow-up and choose the minimum (10 is a candidate) from this audit before outcomes. "As an AI" replies kept.
+No hypothesis threshold, verdict rule or pre-registered criterion changed.

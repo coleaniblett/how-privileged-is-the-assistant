@@ -16,9 +16,12 @@ from OASST1, WildChat and UltraChat, each target keeping its full preceding hist
 pre-registered outcome criteria and the hypothesis/verdict rules are unchanged. Final sample size, matching
 criteria, source weights, and token thresholds are chosen from this audit before examining model outcomes.
 
-**Current pilot:** `candidates/logit_distortion/pilot_v2/`, Dolci-checked in both roles (see Contamination).
-`pilot_v1/` is the same sample built without the Dolci check; it is kept unchanged for provenance and
-still verifies, but is superseded.
+**Current pilot:** `candidates/logit_distortion/pilot_v3/` (2026-11-02): `eligible_quota` selection, eight
+*contributing* conversations per source, Dolci-checked in both roles, prediction-case deduplication, and a
+minimum-length sensitivity audit (see "Selection modes" and "Duplicates"). Earlier pilots are kept unchanged
+and still verify: `pilot_v2/` (raw budget, Dolci-checked; its WildChat eligible targets all came from one
+conversation) and `pilot_v1/` (same sample as v2, unchecked). All are **candidate pilots**; final sizes and
+thresholds are chosen from the audits before model outcomes are seen.
 
 ### Do not rebuild conversations from the isolated files
 
@@ -125,13 +128,60 @@ model input-window guarantee. Future scoring must handle headers, boundaries, an
 explicitly and verify content-token alignment. Rendering to text before encoding also avoids mistaking a
 Transformers 5 `BatchEncoding` mapping's field count for its token count.
 
-Eligibility reasons are `target_too_short`, `target_too_long`, `context_too_long`, `duplicate_target_text`,
+Eligibility reasons are `target_too_short`, `target_too_long`, `context_too_long`, `duplicate_case`,
 `contamination_target`, and `contamination_context`. Reasons can overlap. An overlong history is **flagged,
 never truncated**. All original messages stay in later histories, even when they fail target eligibility.
-Duplicate target detection is global across selected sources/roles: the first target in output order is
-canonical; later whitespace-normalized exact repeats are flagged and retain `duplicate_of`. Canonical
-selection does not prefer an eligible target; it is provisional, and can change eligibility when the sample
-changes (IDs and original text do not change). No duplicate-driven histories are shortened.
+
+### Duplicates: prediction cases, not wording (since pilot_v3)
+
+The same words after a different history are a different prediction case for a context experiment. A
+**duplicate case** is the same source, role, authorship, whitespace-normalized preceding history and
+whitespace-normalized target text (`core.conversations.case_key`). Deduplication is **within source** (sources
+are analyzed separately; identical whole conversations across sources are already removed at conversation
+selection). Within a group of identical cases one representative is kept: the **first member, in selection
+order, that is otherwise eligible** (else the first member). The others get `duplicate_case` and
+`duplicate_of`. An ineligible occurrence therefore never suppresses an eligible one.
+
+**Repeated wording** (same normalized target text in a different case: other history, role or source) sets
+`repeated_text_of` (the first such target) for audits and is **not** an exclusion reason. Audits count
+repeated-wording targets per cell. Original text, IDs and full histories are never changed.
+
+`pilot_v1`/`pilot_v2` were built with the earlier rule (`duplicate_target_text`: any repeat of the normalized
+text, first occurrence canonical); they contain no duplicate exclusions of either kind, so their counts are
+unaffected. Their records are kept as built (no `repeated_text_of` field); reproducing them byte for byte
+needs the code at `2a1eb01` (their manifests' code hashes).
+
+### Selection modes
+
+- `--selection-mode raw_budget` (default; pilot_v1/v2): the first `--conversation-budget` source-acceptable
+  conversations per source in seeded rank order, **before** target eligibility. Good for a construction audit;
+  it can leave a source with few or no usable conversations.
+- `--selection-mode eligible_quota` (pilot_v3): per source, walk the **same seeded rank order** and evaluate at
+  most `--scan-limit` candidates; keep a conversation only if it **contributes**, i.e. has at least one
+  eligible target whose own and history contamination statuses are clear (`no_exact_match`; history
+  `no_context` or `no_exact_match`). Stop at `--contributing-quota` contributing conversations. Requires
+  `--check-dolci` with all three Dolci sets; unchecked or incomplete statuses never count as clearance.
+  Rejected candidates keep reason `no_contributing_target` (with their target-reason counts),
+  `contributing_quota_reached`, or `scan_limit`; shortfalls are reported per source, never filled by
+  relaxing a rule. Duplicate cases are resolved in selection order, so a later candidate cannot take a
+  representative from a kept conversation.
+- **Selection bias of eligible_quota:** it keeps only conversations with at least one clean, length-compatible
+  target, so it over-represents conversations whose opening prompt is absent from Dolci and whose turns fall in
+  the length window (pilot_v3: 34 of the 42 WildChat candidates evaluated were rejected, all with a Dolci match). Kept conversations
+  still contain their ineligible turns, all in history. Report this alongside any result.
+
+Audit version 2 (new builds) adds, per source, contributing conversations overall and with an eligible user,
+an eligible assistant, and both; per cell, contributing conversations overall, with an eligible opening and
+with an eligible follow-up. A met conversation quota does not establish balanced role or position coverage.
+
+### Minimum-length sensitivity (data only)
+
+Each new build writes `length_sensitivity.json`/`.md`: on the **same selected conversations**, eligibility if
+only `min_target_tokens` changed (default thresholds 5, 10, 20; `--sensitivity-min-target-tokens`), holding
+the maximum length, context length and contamination rules fixed and re-resolving duplicate cases. Rows are
+source × group × opening/follow-up with eligible targets and contributing conversations. For a quota build,
+conversations were chosen at the build's minimum, so this is not what a lower-threshold quota build would
+select. The build default stays 20 tokens; changing the primary threshold is an explicit decision.
 
 Normalization is only Python whitespace splitting/joining for duplicate/contamination comparison keys.
 Case, punctuation, and Unicode spelling are preserved; original content is never stripped or normalized.
@@ -183,7 +233,28 @@ Other model families' undisclosed training data remain outside this check.
 
 From repository root, use the locked project environment (`uv sync --locked`) or `/opt/arena-env`. No model
 checkpoints or GPU jobs are needed (only the tokenizer files). Build to a **new directory**; the builder refuses
-to overwrite any existing destination. The `pilot_v2` command adds the Dolci check to the command below:
+to overwrite any existing destination. The Dolci check converts about 4 GB of cached parquet into roughly
+9.5 GB of `~/.cache/huggingface/datasets` Arrow files; check free disk, and delete that derived cache afterwards
+if space is short (it regenerates). The `pilot_v3` command:
+
+```bash
+uv run python -m core.build_conversations \
+  --seed 0 --selection-mode eligible_quota --contributing-quota 8 --scan-limit 200 --source-window 1000 \
+  --conversation-budget 8 --min-exchanges 2 --min-target-tokens 20 --max-target-tokens 300 --max-context-tokens 4096 \
+  --sensitivity-min-target-tokens 5 10 20 \
+  --split oasst1=validation --split wildchat=train --split ultrachat=train \
+  --revision oasst1=fdf72ae0827c1cda404aff25b6603abec9e3399b \
+  --revision wildchat=7d6490e462285cf85d91eabea0f9a954fbddcd1f \
+  --revision ultrachat=f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0 \
+  --tokenizer-revision 6e5971d9eba42665f5bd5a0fcf047f299ce1dccc \
+  --check-dolci --dolci-revision sft=bd3c8f3a9b2cc5a9682e44b96ddd0bb2ff027221 \
+  --dolci-revision dpo=aed155cf32e809b590490b6c3577ee4b0d0a5019 \
+  --dolci-revision rl=1a8d79b1012d77e4bb1fd7f699c5c7eb33ef931e \
+  --out /tmp/logit-conversation-reproduction-v3
+```
+
+The `pilot_v2` command (code at `2a1eb01`) adds the same three `--check-dolci`/`--dolci-revision` lines to the
+`pilot_v1` command below:
 
 ```bash
   --check-dolci --dolci-revision sft=bd3c8f3a9b2cc5a9682e44b96ddd0bb2ff027221 \
@@ -208,6 +279,7 @@ uv run python -m core.build_conversations \
 uv run python -m core.conversation_audit --input /tmp/logit-conversation-reproduction
 uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v1
 uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v2
+uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v3
 
 # Focused local fixture tests and existing tokenizer-only compatibility tests; no model scoring.
 uv run pytest tests/test_conversations.py tests/test_render_olmo.py tests/test_render_gemma.py -q
@@ -223,11 +295,13 @@ code, tokenizer, settings, and package versions; there is no wall-clock timestam
 The offline audit checks artifacts, not remote availability or original-source authenticity; pinned input
 hashes and the independent source comparison recorded in the inspection notes address reproduction.
 
-Output locations: `candidates/logit_distortion/pilot_v2/` (current, Dolci-checked) and `pilot_v1/` (same
-sample, unchecked, superseded). Each holds the bounded 24-conversation sample and its 184 targets (about
-1.5 MB including repeated contexts), audit JSON/Markdown, all candidate exclusion reasons, complete readable
+Output locations: `candidates/logit_distortion/pilot_v3/` (current: eligible_quota, 24 conversations, 175
+targets, plus `length_sensitivity.json`/`.md`), `pilot_v2/` (raw budget, Dolci-checked) and `pilot_v1/` (same
+sample as v2, unchecked). v1/v2 hold a 24-conversation sample and its 184 targets (about
+1.5 MB including repeated contexts); each build has audit JSON/Markdown, all candidate exclusion reasons, complete readable
 examples, and a manifest. None are model outcomes or stored under frozen `data/` or results paths.
 `examples.md` selects one shortest complete conversation per source only to make reading easier; this does
-not affect selection. Hand-written inspection notes: [pilot_v2](../candidates/logit_distortion/pilot_v2/inspection.md)
+not affect selection. Hand-written inspection notes: [pilot_v3](../candidates/logit_distortion/pilot_v3/inspection.md)
+(coverage, selection bias, length sensitivity, decisions before scoring), [pilot_v2](../candidates/logit_distortion/pilot_v2/inspection.md)
 (contamination findings, current counts, decisions before scoring) and [pilot_v1](../candidates/logit_distortion/pilot_v1/inspection.md)
 (source and length findings, still valid for the shared sample).

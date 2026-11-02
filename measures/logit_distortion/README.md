@@ -14,9 +14,12 @@ model user / model assistant; sources are analyzed separately. The isolated auth
 
 Candidates are built by `core.build_conversations`; see [its specification and reproduction
 commands](../../docs/conversation_candidates.md). Current candidate pilot:
-[`pilot_v2` audit](../../candidates/logit_distortion/pilot_v2/audit.md) and
-[inspection notes](../../candidates/logit_distortion/pilot_v2/inspection.md): 24 conversations, 184 targets,
-Dolci exact-match checked in both roles; 92 provisionally eligible. These are candidates, not final scoring
+[`pilot_v3` audit](../../candidates/logit_distortion/pilot_v3/audit.md),
+[length sensitivity](../../candidates/logit_distortion/pilot_v3/length_sensitivity.md) and
+[inspection notes](../../candidates/logit_distortion/pilot_v3/inspection.md): eight contributing conversations
+per source (eligible-quota selection), 175 targets, 119 provisionally eligible, Dolci exact-match checked in
+both roles (earlier pilots `pilot_v1`/`pilot_v2` kept). Comparisons should be stratified by opening vs
+follow-up turn: at the 20-token minimum no UltraChat opening user turn is eligible. These are candidates, not final scoring
 inputs: final sizes and thresholds are chosen from the audit before outcomes are seen, and original-context
 scoring is a subsequent task (`core.score` refuses these records). No analysis or pre-registered outcome
 criteria were changed.

@@ -6,7 +6,7 @@ import hashlib
 import json
 
 from core import config
-from core.check_contamination import contamination_record, norm
+from core.check_contamination import DOLCI, contamination_record, norm
 
 FORMAT = config.CONVERSATION_FORMAT
 GROUPS = ("human_user", "human_assistant", "model_user", "model_assistant")
@@ -21,10 +21,20 @@ class Settings:
     min_target_tokens: int = 20
     max_target_tokens: int = 300
     max_context_tokens: int = 4096
+    # raw_budget (default, as in pilot_v1/v2): first `conversation_budget` acceptable conversations per
+    # source before target eligibility. eligible_quota: keep contributing conversations only, up to
+    # `contributing_quota` per source, evaluating at most `scan_limit` candidates per source.
+    selection_mode: str = "raw_budget"
+    contributing_quota: int = 8
+    scan_limit: int = 300
 
     def __post_init__(self):
         if min(self.conversation_budget, self.source_window) < 1 or self.min_exchanges < 2:
             raise ValueError("positive budget/window and at least two exchanges required")
+        if self.selection_mode not in ("raw_budget", "eligible_quota"):
+            raise ValueError("selection_mode must be raw_budget or eligible_quota")
+        if min(self.contributing_quota, self.scan_limit) < 1:
+            raise ValueError("positive contributing quota and scan limit required")
         if not 0 <= self.min_target_tokens <= self.max_target_tokens or self.max_context_tokens < 0:
             raise ValueError("invalid token limits")
 
@@ -200,18 +210,8 @@ def flat_conversations(rows, source, provenance, settings):
 
 def select_conversations(candidates, settings):
     """Stable hash ordering within each source; deduplicate before budget selection."""
-    rejected, unique, seen_content = [], [], {}
-    by_id = defaultdict(list)
-    for c in candidates:
-        by_id[c["conversation_id"]].append(c)
-    for cid, copies in sorted(by_id.items()):
-        if len({digest(c) for c in copies}) > 1:
-            rejected.extend({"source": c["source"], "source_id": c["source_id"],
-                             "reason": "conflicting_conversation_id"} for c in copies)
-            continue
-        unique.append(copies[0])
-        rejected.extend({"source": c["source"], "source_id": c["source_id"],
-                         "reason": "duplicate_conversation_id", "duplicate_of": cid} for c in copies[1:])
+    unique, rejected = unique_candidates(candidates)
+    seen_content = {}
     selected, counts = [], Counter()
     for conv in sorted(unique, key=lambda c: (priority(settings.seed, "sample", c["conversation_id"]),
                                              c["conversation_id"])):
@@ -242,57 +242,212 @@ def context_contamination_status(context):
     return next(s for s in ("matched", "unchecked", "incomplete", "no_exact_match") if s in statuses)
 
 
-def make_targets(conversations, tokenizer, settings, contamination=None):
+CLEAR_TARGET = {"no_exact_match"}
+CLEAR_CONTEXT = {"no_context", "no_exact_match"}
+DUPLICATE_REASON = "duplicate_case"
+
+
+def case_key(target):
+    """A prediction case: source, role, authorship, the exact preceding history and the target wording
+    (whitespace-normalized for matching only). Same words after a different history are a different case."""
+    return digest([target["source"], target["role"], target["authorship"],
+                   [(p["role"], norm(p["content"])) for p in target["preceding_messages"]],
+                   norm(target["target_text"])])
+
+
+def conversation_targets(conv, tokenizer, settings, contamination=None):
+    """Targets of ONE conversation with every reason except duplicate cases (see apply_duplicates)."""
     targets = []
-    seen_text = {}
-    for conv in conversations:
-        messages = conv["messages"]
-        # Check ALL messages, including assistants and history, never just the opening prompt.
-        for m in messages:
-            m["contamination"] = contamination_record(
-                contamination, m["content"], conv["source_id"] if conv["source"] == "wildchat" else None)
-        role_counts = Counter()
-        for i, m in enumerate(messages):
-            if m["role"] == "system":
-                continue
-            context = messages[:i]
-            role_counts[m["role"]] += 1
-            tokens = len(tokenizer.encode(m["content"], add_special_tokens=False))
-            # Only preceding messages, no synthetic greeting or future reply. Chat framing
-            # is included, but target header/closing tokens are not (scoring is a later task).
-            context_tokens = (len(tokenizer.encode(tokenizer.apply_chat_template(
-                [{"role": p["role"], "content": p["content"]} for p in context],
-                tokenize=False, add_generation_prompt=False), add_special_tokens=False)) if context else 0)
-            reasons = []
-            if tokens < settings.min_target_tokens:
-                reasons.append("target_too_short")
-            if tokens > settings.max_target_tokens:
-                reasons.append("target_too_long")
-            if context_tokens > settings.max_context_tokens:
-                reasons.append("context_too_long")
-            tid = f"{conv['conversation_id']}:target:{m['message_id']}"
-            key = norm(m["content"])
-            duplicate_of = seen_text.get(key)
-            if duplicate_of:
-                reasons.append("duplicate_target_text")
-            else:
-                seen_text[key] = tid
-            context_matches = [p["message_id"] for p in context if p["contamination"]["matches"]]
-            context_status = context_contamination_status(context)
-            if m["contamination"]["matches"]:
-                reasons.append("contamination_target")
-            if context_matches:
-                reasons.append("contamination_context")
-            targets.append({"format": FORMAT, "record_type": "target", "target_id": tid,
-                            "conversation_id": conv["conversation_id"], "message_id": m["message_id"],
-                            "source": conv["source"], "dataset": conv["dataset"], "split": conv["split"],
-                            "revision": conv["revision"], "turn_index": i, "role": m["role"],
-                            "authorship": m["authorship"], "authorship_basis": m["authorship_basis"],
-                            "group": f"{m['authorship']}_{m['role']}", "target_text": m["content"],
-                            "preceding_messages": context, "has_preceding_conversation": bool(context),
-                            "turn_position": "opening" if role_counts[m["role"]] == 1 else "follow_up",
-                            "target_tokens": tokens, "preceding_context_tokens": context_tokens,
-                            "eligible": not reasons, "exclusion_reasons": reasons, "duplicate_of": duplicate_of,
-                            "contamination": m["contamination"], "context_contamination_status": context_status,
-                            "contaminated_context_message_ids": context_matches})
+    messages = conv["messages"]
+    # Check ALL messages, including assistants and history, never just the opening prompt.
+    for m in messages:
+        m["contamination"] = contamination_record(
+            contamination, m["content"], conv["source_id"] if conv["source"] == "wildchat" else None)
+    role_counts = Counter()
+    for i, m in enumerate(messages):
+        if m["role"] == "system":
+            continue
+        context = messages[:i]
+        role_counts[m["role"]] += 1
+        tokens = len(tokenizer.encode(m["content"], add_special_tokens=False))
+        # Only preceding messages, no synthetic greeting or future reply. Chat framing
+        # is included, but target header/closing tokens are not (scoring is a later task).
+        context_tokens = (len(tokenizer.encode(tokenizer.apply_chat_template(
+            [{"role": p["role"], "content": p["content"]} for p in context],
+            tokenize=False, add_generation_prompt=False), add_special_tokens=False)) if context else 0)
+        reasons = length_reasons(tokens, context_tokens, settings.min_target_tokens, settings)
+        context_matches = [p["message_id"] for p in context if p["contamination"]["matches"]]
+        if m["contamination"]["matches"]:
+            reasons.append("contamination_target")
+        if context_matches:
+            reasons.append("contamination_context")
+        targets.append({"format": FORMAT, "record_type": "target",
+                        "target_id": f"{conv['conversation_id']}:target:{m['message_id']}",
+                        "conversation_id": conv["conversation_id"], "message_id": m["message_id"],
+                        "source": conv["source"], "dataset": conv["dataset"], "split": conv["split"],
+                        "revision": conv["revision"], "turn_index": i, "role": m["role"],
+                        "authorship": m["authorship"], "authorship_basis": m["authorship_basis"],
+                        "group": f"{m['authorship']}_{m['role']}", "target_text": m["content"],
+                        "preceding_messages": context, "has_preceding_conversation": bool(context),
+                        "turn_position": "opening" if role_counts[m["role"]] == 1 else "follow_up",
+                        "target_tokens": tokens, "preceding_context_tokens": context_tokens,
+                        "eligible": not reasons, "exclusion_reasons": reasons, "duplicate_of": None,
+                        "repeated_text_of": None,
+                        "contamination": m["contamination"],
+                        "context_contamination_status": context_contamination_status(context),
+                        "contaminated_context_message_ids": context_matches})
     return targets
+
+
+def length_reasons(tokens, context_tokens, min_target_tokens, settings):
+    reasons = []
+    if tokens < min_target_tokens:
+        reasons.append("target_too_short")
+    if tokens > settings.max_target_tokens:
+        reasons.append("target_too_long")
+    if context_tokens > settings.max_context_tokens:
+        reasons.append("context_too_long")
+    return reasons
+
+
+def apply_duplicates(targets):
+    """Mark duplicate prediction cases and repeated wording, in list order; returns new records.
+
+    Duplicate case (same case_key): one representative stays, the FIRST member that is otherwise
+    eligible (else the first member); the others get "duplicate_case" and duplicate_of. An ineligible
+    occurrence therefore never suppresses an eligible one. Repeated wording (same normalized target
+    text in a different case: other history, role or source) only sets repeated_text_of, for audits;
+    it is not an exclusion reason. Idempotent: earlier duplicate marks are recomputed.
+    """
+    out = []
+    for t in targets:
+        reasons = [r for r in t["exclusion_reasons"] if r != DUPLICATE_REASON]
+        out.append({**t, "exclusion_reasons": reasons, "duplicate_of": None, "repeated_text_of": None})
+    groups = defaultdict(list)
+    for t in out:
+        groups[case_key(t)].append(t)
+    for members in groups.values():
+        rep = next((t for t in members if not t["exclusion_reasons"]), members[0])
+        for t in members:
+            if t is not rep:
+                t["exclusion_reasons"].append(DUPLICATE_REASON)
+                t["duplicate_of"] = rep["target_id"]
+    first_text = {}
+    for t in out:
+        first = first_text.setdefault(norm(t["target_text"]), t)
+        if first is not t and t["duplicate_of"] is None:
+            t["repeated_text_of"] = first["target_id"]
+        t["eligible"] = not t["exclusion_reasons"]
+    return out
+
+
+def make_targets(conversations, tokenizer, settings, contamination=None):
+    """All user/assistant targets of the conversations, in the given order, duplicate cases marked."""
+    return apply_duplicates([t for conv in conversations
+                             for t in conversation_targets(conv, tokenizer, settings, contamination)])
+
+
+def contamination_clear(target):
+    """Fully checked, no match, for the target AND its history. Unchecked/incomplete never clear."""
+    return (target["contamination"]["status"] in CLEAR_TARGET
+            and target["context_contamination_status"] in CLEAR_CONTEXT)
+
+
+def contributes(targets):
+    """A contributing conversation has >= 1 eligible target whose contamination checks are clear."""
+    return any(t["eligible"] and contamination_clear(t) for t in targets)
+
+
+def select_by_eligible_quota(candidates, settings, tokenizer, contamination):
+    """eligible_quota mode: per source, walk the seeded candidate order (same ranking as raw_budget)
+    and keep a conversation only if it contributes, until `contributing_quota` conversations are kept
+    or `scan_limit` candidates were evaluated. Requires a complete Dolci index.
+
+    Returns (selected in selection order, their targets, rejections, per-source scan summary).
+    Duplicate cases are resolved in selection order, so a later candidate can never take a
+    representative away from an already kept conversation.
+    """
+    if not contamination or not set(contamination) >= set(DOLCI):
+        raise ValueError("eligible_quota requires a complete Dolci index (--check-dolci): "
+                         "unchecked or incomplete checks cannot count as clearance")
+    unique, rejected = unique_candidates(candidates)
+    selected, kept_targets, seen_content = [], [], {}
+    scan = defaultdict(Counter)
+    for conv in sorted(unique, key=lambda c: (c["source"], priority(settings.seed, "sample", c["conversation_id"]),
+                                             c["conversation_id"])):
+        source = conv["source"]
+        key = digest([(m["role"], norm(m["content"])) for m in conv["messages"]])
+        reason, extra = None, {}
+        if key in seen_content:
+            reason, extra = "duplicate_conversation_text", {"duplicate_of": seen_content[key]}
+        else:
+            seen_content[key] = conv["conversation_id"]
+            if scan[source]["contributing"] >= settings.contributing_quota:
+                reason = "contributing_quota_reached"
+            elif scan[source]["evaluated"] >= settings.scan_limit:
+                reason = "scan_limit"
+            else:
+                scan[source]["evaluated"] += 1
+                own = conversation_targets(conv, tokenizer, settings, contamination)
+                combined = apply_duplicates(kept_targets + own)
+                own = combined[len(kept_targets):]
+                if contributes(own):
+                    scan[source]["contributing"] += 1
+                    selected.append(conv)
+                    kept_targets = combined
+                    continue
+                reason = "no_contributing_target"
+                extra = {"target_reasons": dict(sorted(Counter(
+                    r for t in own for r in (t["exclusion_reasons"] or ["eligible_but_contamination_not_clear"])).items()))}
+        rejected.append({"source": source, "source_id": conv["source_id"], "reason": reason, **extra})
+    return selected, kept_targets, rejected, {s: dict(c) for s, c in scan.items()}
+
+
+def unique_candidates(candidates):
+    rejected, unique = [], []
+    by_id = defaultdict(list)
+    for c in candidates:
+        by_id[c["conversation_id"]].append(c)
+    for cid, copies in sorted(by_id.items()):
+        if len({digest(c) for c in copies}) > 1:
+            rejected.extend({"source": c["source"], "source_id": c["source_id"],
+                             "reason": "conflicting_conversation_id"} for c in copies)
+            continue
+        unique.append(copies[0])
+        rejected.extend({"source": c["source"], "source_id": c["source_id"],
+                         "reason": "duplicate_conversation_id", "duplicate_of": cid} for c in copies[1:])
+    return unique, rejected
+
+
+def output_order(conversations, targets):
+    """Files are written by source, conversation ID, turn; duplicate marks were set in selection order."""
+    conversations = sorted(conversations, key=lambda c: (c["source"], c["conversation_id"]))
+    order = {c["conversation_id"]: n for n, c in enumerate(conversations)}
+    return conversations, sorted(targets, key=lambda t: (order[t["conversation_id"]], t["turn_index"]))
+
+
+def length_sensitivity(targets, settings, thresholds):
+    """Eligibility if ONLY the minimum target length changed, on the same selected conversations.
+
+    Every other reason (maximum length, context length, contamination) is held fixed; duplicate cases
+    are re-resolved because the representative depends on eligibility. Returns rows per threshold x
+    source x group x turn position with eligible targets and contributing conversations.
+    """
+    rows = []
+    for threshold in thresholds:
+        recomputed = []
+        for t in targets:
+            reasons = [r for r in t["exclusion_reasons"]
+                       if r not in ("target_too_short", "target_too_long", "context_too_long", DUPLICATE_REASON)]
+            reasons = length_reasons(t["target_tokens"], t["preceding_context_tokens"], threshold, settings) + reasons
+            recomputed.append({**t, "exclusion_reasons": reasons})
+        recomputed = apply_duplicates(recomputed)
+        cells = defaultdict(list)
+        for t in recomputed:
+            cells[(t["source"], t["group"], t["turn_position"])].append(t)
+        for (source, group, position), ts in sorted(cells.items()):
+            eligible = [t for t in ts if t["eligible"]]
+            rows.append({"min_target_tokens": threshold, "source": source, "group": group,
+                         "turn_position": position, "targets": len(ts), "eligible": len(eligible),
+                         "contributing_conversations": len({t["conversation_id"] for t in eligible})})
+    return rows

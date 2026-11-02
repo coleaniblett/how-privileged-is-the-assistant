@@ -100,7 +100,7 @@ results/<run>/vestigial_regression/    results.md, summary.csv, nll_*.png, posit
 results/<run>/logit_distortion/, results/<run>/overgeneralization/    their tables and figures
 results/<run>/extras/                  role_swap/, coin_toss/, role_swap.md, coin_toss.md, *_summary.csv
 candidates/logit_distortion/<build>/   original-conversation candidates (core.build_conversations), logit distortion's
-                                       primary route; pilot_v2 is Dolci-checked; not core.score input; docs/conversation_candidates.md
+                                       primary route; current pilot_v3 (eligible quota, Dolci-checked); not core.score input; docs/conversation_candidates.md
 ```
 
 Frozen, never modified, moved or overwritten: `data/` (regenerate only through the documented commands),
@@ -129,7 +129,7 @@ Calibration gap (mean NLL − mean next-token entropy) of each persona in its ow
 authorship; privilege if the assistant gap grows from base more than the user gap, from content position 1 on
 and by position. Data route (Grace, 2026-11-02): original multi-exchange conversations from OASST1, WildChat and UltraChat with
 full preceding history (`core.build_conversations`, `docs/conversation_candidates.md`; candidate pilot
-`candidates/logit_distortion/pilot_v2/`); the isolated authorship sets stay for a separate comparison.
+`candidates/logit_distortion/pilot_v3/`); the isolated authorship sets stay for a separate comparison.
 Original-context scoring is not built yet.
 
 **Overgeneralization**, `measures/overgeneralization/README.md`. Status: in design, nothing implemented.
@@ -154,5 +154,5 @@ bash scripts/run_gpu.sh                          # everything, per checkpoint ->
 RUN=olmo3-7b_preceding bash scripts/run_gpu.sh --preceding-turn      # robustness run
 uv run python -m measures.vestigial_regression.analyze               # re-analyze from results/olmo3-7b/core/
 uv run python -m core.build_conversations --out candidates/logit_distortion/<new>  # conversation candidates (no weights)
-uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v2  # offline verify + audit
+uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v3  # offline verify + audit
 ```

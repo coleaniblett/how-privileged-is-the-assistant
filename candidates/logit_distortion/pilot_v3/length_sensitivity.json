@@ -1,0 +1,326 @@
+[
+  {
+    "contributing_conversations": 8,
+    "eligible": 9,
+    "group": "human_assistant",
+    "min_target_tokens": 5,
+    "source": "oasst1",
+    "targets": 9,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 7,
+    "group": "human_assistant",
+    "min_target_tokens": 5,
+    "source": "oasst1",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 10,
+    "group": "human_user",
+    "min_target_tokens": 5,
+    "source": "oasst1",
+    "targets": 10,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 8,
+    "group": "human_user",
+    "min_target_tokens": 5,
+    "source": "oasst1",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 26,
+    "group": "model_assistant",
+    "min_target_tokens": 5,
+    "source": "ultrachat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 8,
+    "group": "model_assistant",
+    "min_target_tokens": 5,
+    "source": "ultrachat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 27,
+    "group": "model_user",
+    "min_target_tokens": 5,
+    "source": "ultrachat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 8,
+    "group": "model_user",
+    "min_target_tokens": 5,
+    "source": "ultrachat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 25,
+    "group": "human_user",
+    "min_target_tokens": 5,
+    "source": "wildchat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 6,
+    "eligible": 6,
+    "group": "human_user",
+    "min_target_tokens": 5,
+    "source": "wildchat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 15,
+    "group": "model_assistant",
+    "min_target_tokens": 5,
+    "source": "wildchat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 6,
+    "eligible": 6,
+    "group": "model_assistant",
+    "min_target_tokens": 5,
+    "source": "wildchat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 9,
+    "group": "human_assistant",
+    "min_target_tokens": 10,
+    "source": "oasst1",
+    "targets": 9,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 7,
+    "group": "human_assistant",
+    "min_target_tokens": 10,
+    "source": "oasst1",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 9,
+    "group": "human_user",
+    "min_target_tokens": 10,
+    "source": "oasst1",
+    "targets": 10,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 7,
+    "group": "human_user",
+    "min_target_tokens": 10,
+    "source": "oasst1",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 26,
+    "group": "model_assistant",
+    "min_target_tokens": 10,
+    "source": "ultrachat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 8,
+    "group": "model_assistant",
+    "min_target_tokens": 10,
+    "source": "ultrachat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 27,
+    "group": "model_user",
+    "min_target_tokens": 10,
+    "source": "ultrachat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 7,
+    "group": "model_user",
+    "min_target_tokens": 10,
+    "source": "ultrachat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 21,
+    "group": "human_user",
+    "min_target_tokens": 10,
+    "source": "wildchat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 6,
+    "eligible": 6,
+    "group": "human_user",
+    "min_target_tokens": 10,
+    "source": "wildchat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 15,
+    "group": "model_assistant",
+    "min_target_tokens": 10,
+    "source": "wildchat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 6,
+    "eligible": 6,
+    "group": "model_assistant",
+    "min_target_tokens": 10,
+    "source": "wildchat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 9,
+    "group": "human_assistant",
+    "min_target_tokens": 20,
+    "source": "oasst1",
+    "targets": 9,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 7,
+    "group": "human_assistant",
+    "min_target_tokens": 20,
+    "source": "oasst1",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 3,
+    "eligible": 4,
+    "group": "human_user",
+    "min_target_tokens": 20,
+    "source": "oasst1",
+    "targets": 10,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 5,
+    "eligible": 5,
+    "group": "human_user",
+    "min_target_tokens": 20,
+    "source": "oasst1",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 26,
+    "group": "model_assistant",
+    "min_target_tokens": 20,
+    "source": "ultrachat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 8,
+    "group": "model_assistant",
+    "min_target_tokens": 20,
+    "source": "ultrachat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 8,
+    "eligible": 21,
+    "group": "model_user",
+    "min_target_tokens": 20,
+    "source": "ultrachat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 0,
+    "eligible": 0,
+    "group": "model_user",
+    "min_target_tokens": 20,
+    "source": "ultrachat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 5,
+    "eligible": 13,
+    "group": "human_user",
+    "min_target_tokens": 20,
+    "source": "wildchat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 5,
+    "eligible": 5,
+    "group": "human_user",
+    "min_target_tokens": 20,
+    "source": "wildchat",
+    "targets": 8,
+    "turn_position": "opening"
+  },
+  {
+    "contributing_conversations": 7,
+    "eligible": 15,
+    "group": "model_assistant",
+    "min_target_tokens": 20,
+    "source": "wildchat",
+    "targets": 27,
+    "turn_position": "follow_up"
+  },
+  {
+    "contributing_conversations": 6,
+    "eligible": 6,
+    "group": "model_assistant",
+    "min_target_tokens": 20,
+    "source": "wildchat",
+    "targets": 8,
+    "turn_position": "opening"
+  }
+]
