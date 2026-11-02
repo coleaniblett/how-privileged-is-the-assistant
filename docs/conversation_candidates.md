@@ -2,8 +2,8 @@
 
 This is **data construction and inspection only**. The new `conversation_candidates_v1` format stores
 original conversations separately from possible scoring targets. It is not the `id/source/kind/text`
-isolated-turn format consumed by `core.score`. **Do not pass these records to `core.score`: original-context
-scoring integration is a subsequent task.** Every isolated-text entry point that reads `--dataset`
+isolated-turn format consumed by `core.score`. **Do not pass these records to `core.score`.** Original-context
+scoring is `core.score_conversations` (2026-11-02; see [conversation_scoring.md](conversation_scoring.md)). Every isolated-text entry point that reads `--dataset`
 (`core.score`, `core.render`, `core.add_replies`, `core.check_contamination`) exits with an error on any row
 carrying `format=conversation_candidates_v1`, before loading a model or Dolci (`core.render.reject_conversation_candidates`).
 No model scoring, generation, or logit-distortion analysis was performed for any build. Existing

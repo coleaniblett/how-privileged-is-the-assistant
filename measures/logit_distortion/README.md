@@ -20,8 +20,11 @@ commands](../../docs/conversation_candidates.md). Current candidate pilot:
 per source (eligible-quota selection), 175 targets, 119 provisionally eligible, Dolci exact-match checked in
 both roles (earlier pilots `pilot_v1`/`pilot_v2` kept). Comparisons should be stratified by opening vs
 follow-up turn: at the 20-token minimum no UltraChat opening user turn is eligible. These are candidates, not final scoring
-inputs: final sizes and thresholds are chosen from the audit before outcomes are seen, and original-context
-scoring is a subsequent task (`core.score` refuses these records). No analysis or pre-registered outcome
+inputs: final sizes and thresholds are chosen from the audit before outcomes are seen. Original-context scoring
+is `core.score_conversations` ([docs/conversation_scoring.md](../../docs/conversation_scoring.md)): one teacher-forced
+sequence per target with only its original prefix, per-token NLL and entropy plus per-target gaps, input
+fingerprints across checkpoints; tested on CPU with a small model, no checkpoint scored yet (`core.score` still
+refuses these records). No analysis or pre-registered outcome
 criteria were changed.
 
 ## Spec

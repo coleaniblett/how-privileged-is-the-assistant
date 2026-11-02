@@ -130,7 +130,7 @@ authorship; privilege if the assistant gap grows from base more than the user ga
 and by position. Data route (Grace, 2026-11-02): original multi-exchange conversations from OASST1, WildChat and UltraChat with
 full preceding history (`core.build_conversations`, `docs/conversation_candidates.md`; candidate pilot
 `candidates/logit_distortion/pilot_v3/`); the isolated authorship sets stay for a separate comparison.
-Original-context scoring is not built yet.
+Original-context scoring: `core.score_conversations` (`docs/conversation_scoring.md`), built and CPU-tested; no checkpoint scored yet.
 
 **Overgeneralization**, `measures/overgeneralization/README.md`. Status: in design, nothing implemented.
 Likelihood minimal pairs (assistant-trait vs plain continuation) in plain context with the assistant slot as
@@ -155,4 +155,5 @@ RUN=olmo3-7b_preceding bash scripts/run_gpu.sh --preceding-turn      # robustnes
 uv run python -m measures.vestigial_regression.analyze               # re-analyze from results/olmo3-7b/core/
 uv run python -m core.build_conversations --out candidates/logit_distortion/<new>  # conversation candidates (no weights)
 uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v3  # offline verify + audit
+uv run python -m core.score_conversations --family olmo3-7b --prepare-only   # conversation-scoring inputs (no weights)
 ```

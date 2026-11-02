@@ -406,3 +406,32 @@ restricted to conversations without a Dolci match. At 20 tokens no UltraChat ope
 8 are 9–17 tokens); 7 at 10, 8 at 5. Recommendation, not applied: stratify role comparisons by opening vs
 follow-up and choose the minimum (10 is a candidate) from this audit before outcomes. "As an AI" replies kept.
 No hypothesis threshold, verdict rule or pre-registered criterion changed.
+
+## 2026-11-02: core: original-conversation scoring adapter (core.score_conversations)
+
+Logit distortion (Grace). New entry point `core.score_conversations` and helper `core.render.render_target`; the
+isolated-text route (`core.score`, `render`, `render_conversation`) and other measures are unchanged.
+
+- **One sequence per target, original prefix only.** A target is rendered as its original preceding messages plus
+  the target, nothing after it. Required because Qwen3's template renders an assistant turn differently when a
+  later user message exists (verified on the cached template: 45 of 131 targets differed between full-conversation
+  and cut-off rendering); causal attention cannot undo that. Scored with `core.score.spans_nll` unchanged (fp32,
+  teacher forcing, full-vocabulary entropy in nats); no text is generated.
+- **Rendering settings (Grace's selection), explicit per family and verified on every target:** OLMo keeps the
+  instruct template's default system prompt when a conversation has none (an original system message replaces it,
+  never duplicated); Qwen3 assistant targets use the non-thinking generation prompt with the empty think block
+  (`enable_thinking=False`, recorded, `config` defaults untouched); Gemma 4 assistant targets open with the empty
+  thought channel of the generation prompt; earlier assistant turns stay in stored form; user targets get no
+  assistant opening.
+- **Whitespace and exactness.** Original text is never trimmed. Edge whitespace is allowed on this route only, with
+  strict checks (verbatim placement, decode, no boundary merges, no special-token text). Gemma's template trims edge
+  whitespace, so affected targets are excluded with the changed message recorded (pilot_v3: 17 of 119; OLMo and Qwen
+  keep all 119).
+- **Lengths and comparability.** Full rendered inputs must fit the minimum `max_position_embeddings` over the family's
+  checkpoints (cached configs; never guessed; nothing truncated). An input fingerprint (candidate hashes, tokenizer
+  revision, template hash, settings, target set, exclusions, per-target input hashes and spans) is shared by all
+  stages of a family; `--check-stages` refuses mixed inputs. Outputs: per-token parquet and per-target CSV (means,
+  NLL − entropy gap, positions-1-onward variants), under `results/logit_conversations/<family>/core/conversation_scores/`.
+
+Validated with cached tokenizers and SmolLM2-135M on CPU only; no OLMo/Qwen/Gemma checkpoint was scored. No
+hypothesis threshold, verdict rule or pre-registered criterion changed. Spec: `docs/conversation_scoring.md`.
