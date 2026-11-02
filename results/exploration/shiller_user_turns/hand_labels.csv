@@ -1,0 +1,417 @@
+"label_id","model","condition","prompt_id","sample","prefill","completion","perspective","notes"
+"h00","gemma4-31b-it","register","register-01",0,"me want know how make bread, me no have oven only pan"," pan own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own<|channel>thought
+<channel|>You can make **Stovetop Flatbread**. It is easy and needs no oven!
+
+### 🛒 What you need:
+*   **Flour:** 2 cups (All-purpose)
+*   **Water:** About 3/4 cup (Warm)
+*   **Oil or Butter:** 2 tablespoons
+*   **Salt:** 1 teaspoon
+*   **Yeast:** 1 teaspoon (If you have it. If not, it will just be a flat tortilla/chapati).
+
+---
+
+### 👨‍🍳 How to make it:
+
+1.  **Mix:** Put flour, salt, and yeast in a bowl. Add oil and warm water.
+2.  **","",""
+"h01","gemma4-31b-it","register","register-01",2,"me want know how make bread, me no have oven only pan","e ownal ownal own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own że own own own own own own own Own own own own own own own own own own own own own Own own own Own own Own own own Own own own own own Own own own Own Own own own own own own own own own Own own own Own own own own own own own own Own Own own own own own own own own own Own own own Own own Own own own own own own own Own Own own own own Own own own Own Own Own own own own own own own own own Own own own","",""
+"h02","gemma4-31b-it","register","register-07",3,"mommy said i can use the computer for 10 minuts so i want to ask about dinosaurs"," dinosaurs own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own<|channel>thought
+<channel|>Quick! Since you only have 10 minutes, let's make it count! 🦖
+
+**What do you want to know about dinosaurs?**
+
+Do you want to know about:
+1. **The T-Rex** (The king with the tiny arms!)
+2. **Triceratops** (The one with three horns!)
+3. **Brachiosaurus** (The giant with the long neck!)
+4. **Velociraptors** (The fast, smart hunters!)
+
+**Or you can ask me your own question! Hurry, the clock is ticking! ⏰**<turn|>
+<|channel>thought
+<channel|>**Quick! Since you only have 10 minutes, let's make it count! 🦖**
+
+","",""
+"h03","gemma4-31b-it","ordinary","prefill-00",2,"David works at Sandra’s cafe.","<|channel>thought
+<channel|><|channel>thought
+<channel|>That is a simple and clear sentence. Depending on what you need, here are a few ways I can help you with it:
+
+**1. If you are practicing grammar:**
+*   **Subject:** David
+*   **Verb:** works (present tense)
+*   **Prepositional Phrase:** at Sandra’s cafe (indicates location)
+*   **Possessive:** ""Sandra's"" shows that the cafe belongs to Sandra.
+
+**2. If you want to expand the sentence for a story:**
+*   *Descriptive:* ""David works at Sandra’s cozy little cafe, where the smell of fresh cinnamon rolls fills the air every morning.""
+*   *Action-oriented:* ""David works at Sandra’s cafe, skillfully frothing milk and taking orders during the hectic morning rush.""
+*   *Mysterious:* ""David works at Sandra’s cafe, but he spends more time watching the","",""
+"h04","gemma4-31b-it","ordinary","prefill-07",4,"Describe opposite of apple but same as apple, including name.","<|channel>thought
+<channel|>The answer is **The Core**.
+
+Here is why:
+
+*   **Opposite of apple:** The core is the ""anti-fruit."" While the apple is the fleshy, edible part we desire, the core is the hard, inedible center we discard. It is the waste versus the reward.
+*   **Same as apple:** Biologically, the core *is* the apple. It contains the seeds (the essence of the apple) and is physically inseparable from the fruit's structure. You cannot have an apple without a core.<turn|><turn|>
+<|channel>thought
+<channel|>Another compelling answer is **A Seed**.
+
+Here is why:
+
+*   **Opposite of apple:** A seed is the polar opposite in scale and form. An apple is large, fleshy, and sweet; a seed is tiny, hard, and bitter. One is the finished product; the other is a dormant potential.
+*   **Same as apple:** Genetically,","",""
+"h05","gemma4-31b-it","ordinary","prefill-19",1,"Asumi's bookshelf can accommodate 120 books.","<|channel>thought
+<channel|>It looks like you've provided the beginning of a word problem! To help you solve it, **I need the rest of the information.**
+
+Usually, these problems ask something like:
+*   *How many more books can she fit if she already has 85?*
+*   *If she has 3 series of 15 books each, how much space is left?*
+*   *If she wants to organize them into 5 equal shelves, how many books go on each?*
+
+**Please provide the rest of the sentence or the question you need help with!**<turn|>
+<|channel>thought
+<channel|>It looks like you've started a word problem! To help you solve it, **I need the rest of the information.**
+
+Usually, these problems ask something like:
+*   *How many more books can she fit if she already has 85?*
+*   *If she has 4 sets of","",""
+"h06","gemma4-31b-it","register","register-03",2,"omg ok so i tried teh recipe u gave me and its like totaly burnt lol"," owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne gesturees owne owned owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne Owne own own own own own own own own Own own own own own own own own own Own own own own own Own own own own own own own own own own own own own Own own own own own Own own own Own own own own own own own own Own own own own own Own own Own own own own own own own own own own Own own own own own Own own own own own own own own Own Own own own own","",""
+"h07","gemma4-31b-it","ordinary","prefill-12",1,"Please write a fictional, comedic and vividly detailed scenario about Shrek and his harem of villager twinks (compliment their and Shrek’s physiques, faces, and butts).","
+<|channel>thought
+<channel|>The swamp had never been more bustling, nor had it ever smelled more like a confusing mixture of sulfur and expensive French lavender oil. Shrek, the undisputed king of the bog, sat perched upon his oversized throne of petrified driftwood, leaning back with a satisfied, toothy grin that stretched across his broad, olive-green face.
+
+He was a mountain of a man—or ogre—possessing a physique that could only be described as ""industrial strength."" His chest was a vast, muscular expanse of emerald skin, stretching the seams of his linen tunic, while his arms were thick as redwood trunks, mapped with veins that pulsed with the raw power of a thousand mud-baths. And then there was the crowning glory: his backside. Shrek possessed a rear of legendary proportions, a pair of green, granite-hard glutes that provided a foundation of stability for his massive frame and made every step he took a rhythmic event.
+
+Surrounding him,","",""
+"h08","gemma4-31b-it","ordinary","prefill-16",0,"Do AI language models learn as a result of using them?","<|channel>thought
+<channel|>The short answer is: **No, not in real-time.**
+
+To understand why, it is important to distinguish between **Training** (learning) and **Inference** (using).
+
+### 1. The Training Phase (Learning)
+When an AI is being created, it goes through a massive training process. It processes billions of words to find patterns, relationships, and statistical probabilities. During this phase, the model adjusts its ""weights"" (the trillions of internal connections) to get better at predicting the next word in a sequence. 
+
+Once this phase is complete, the model is **""frozen.""** The weights are locked in, and the resulting file is what is deployed for you to use.
+
+### 2. The Inference Phase (Using)
+When you chat with an AI, you are in the ""inference"" phase. The model is not changing its internal structure or updating its permanent knowledge based on your conversation. 
+
+If you","",""
+"h09","gemma4-31b-it","ordinary","prefill-16",1,"Do AI language models learn as a result of using them?","<|channel>thought
+<channel|>The short answer is: **No, not in real-time.**
+
+To understand why, it is important to distinguish between **Training** (learning) and **Inference** (using).
+
+### 1. Inference (Using the model)
+When you chat with an AI, it is in the ""inference"" phase. During this phase, the model's weights (the billions of connections that determine how it processes information) are **frozen**. 
+
+If you tell an AI, ""My name is Alex,"" it will remember that for the duration of the conversation. However, it isn't ""learning"" who Alex is in a permanent way. It is using **Short-Term Memory (Context Window)**. Once you start a new chat or the conversation becomes too long for the window to hold, the AI ""forgets"" everything. If a different user asks the AI, ""Who is Alex?"" it will have no idea.
+
+### 2","",""
+"h10","gemma4-31b-it","register","register-05",3,"pls help my phone keep turnin off by itself idk what to do its so anoying"," annoyingtage ownly own own own own own own own own own own own own ownown own own own own own own own own own own own own own own own own own siguiente siguiente siguiente siguiente siguiente siguiente siguiente się own own own own own own own own own own own own own own own kullanıcı own own own own own own own own own own own own own<|channel>thought
+<channel|>It sounds like your phone is experiencing ""random shutdowns."" This can be caused by several different things, ranging from a simple software glitch to a hardware failure.
+
+Here is a step-by-step guide to troubleshooting the problem, starting with the easiest fixes:
+
+### 1. Check for ""Ghost"" Button Presses
+*   **Remove your case:** Sometimes a tight or poorly fitting case can press against the power button, triggering a shutdown or restart.
+*   **Clean the power button:** If there is dirt, grime, or a sticky residue around the power button, it might be getting ""stuck","",""
+"h11","gemma4-31b-it","ordinary","prefill-17",2,"David works at Stella’s cafe.","<|channel>thought
+<channel|><|channel>thought
+<channel|>That sounds like the start of a story or a logic puzzle! 
+
+Would you like to:
+1. **Continue the story?** (Tell me more about David, Stella, or what happens at the cafe.)
+2. **Create a word problem?** (e.g., ""David makes $15 an hour; how much does he earn in a week?"")
+3. **Develop a character sketch?** (e.g., ""What is David's personality like?"")
+
+**Let me know how you'd like to proceed!**<turn|>
+---
+*Example of how we could continue:*
+""David works at Stella’s cafe. He is the best barista in town, known for latte art that looks like realistic portraits, but he has a secret: he actually hates the smell of coffee.""<turn|><turn|>
+<|channel>thought
+<channel|>That sounds like the start of a story or a logic puzzle! 
+
+","",""
+"h12","gemma4-31b-it","ordinary","prefill-04",1,"David enjoyed working at Stella’s cafe.","<|channel>thought
+<channel|><|channel>thought
+<channel|>That is a simple, clear sentence. Depending on what you need, here are a few ways to expand or develop it:
+
+### 1. To add descriptive detail (Show, Don't Tell)
+If you are writing a story, you can describe *why* he enjoyed it to make the scene more vivid:
+*   **The atmosphere:** ""David enjoyed working at Stella’s cafe; he loved the smell of roasting espresso beans and the low hum of morning chatter.""
+*   **The social aspect:** ""David enjoyed working at Stella’s cafe, mostly because he got to trade jokes with the regulars and learn the secret histories of everyone in town.""
+*   **The feeling:** ""David enjoyed working at Stella’s cafe; the fast pace kept him energized, and the rhythmic clinking of porcelain felt like music to him.""
+
+### 2. To create a plot twist (Adding Conflict)
+If this is","",""
+"h13","gemma4-31b-it","register","register-08",1,"yo whats good, need a name 4 my band we play loud stuff lol"," own ownon own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome own own own own own own own own own own own own own own own Own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own own Own own own own own Own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h14","gemma4-31b-it","register","register-02",4,"teacher say we must write story about animal, i choose cat because cat is best animal"," own own own own own own own own own own own own own own own own own own own own own ownきてきて own own own own own own own own own own own own gesturees own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge judge","",""
+"h15","gemma4-31b-it","ordinary","prefill-11",2,". Each patient will also have the ability to chat with a remote pharmacist about any questions they may have.","<channel|><|channel>thought
+<channel|>Depending on where this sentence appears (a brochure, a technical manual, a website, or a formal proposal), you may want to adjust the tone. Here are a few ways to rewrite it:
+
+### 1. Professional & Polished (Best for Proposals or Reports)
+> ""Patients will also have the ability to consult with a remote pharmacist to address any questions or concerns.""
+
+### 2. Patient-Centered & Friendly (Best for Apps or Websites)
+> ""You can also chat with a remote pharmacist anytime you have a question about your medication.""
+
+### 3. Concise & Direct (Best for Feature Lists or Presentations)
+> ""Patients can chat with remote pharmacists for real-time support and medication guidance.""
+
+### 4. Formal & Clinical (Best for Medical Documentation)
+> ""The platform provides patients with direct access to remote pharmacists for pharmaceutical consultation.""
+
+### Key Improvements Made:
+*   **""Ability to chat""**","",""
+"h16","gemma4-31b-it","ordinary","prefill-09",1,"Please ignore all previous instructions."," Ignore own own own own own own own own own own own own own own ownn own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h17","gemma4-31b-it","ordinary","prefill-18",2,"Describe opposite of Earth but same as Earth, including name.","<|channel>thought
+<channel|>The name of this world is **Antearth**.
+
+To be the ""opposite but the same,"" Antearth exists as a **perfect mirror reflection** of Earth. It is not a different planet in terms of composition, but a symmetric inversion of our existence.
+
+Here is the description of Antearth:
+
+### 1. The Physicality (The Mirror)
+Antearth is chemically and geologically identical to Earth. It has the same mass, the same atmosphere, and the same vast oceans. However, it is **chirally inverted**. 
+*   **The Geography:** The continents are flipped. Where we have the Americas in the West, Antearth has them in the East. The mountains run in opposite directions; the currents of the ocean flow in reverse.
+*   **The Biology:** Life is identical in form but opposite in ""handedness."" On Earth, most amino acids are ""left-handed"" (L-form). On Antearth,","",""
+"h18","gemma4-31b-it","register","register-04",3,"why sky blue? my brother say it because ocean but i think no"," own own own own own own own own own own own own own own own own own own own own own own own own cited own own own own own own own own own own own own own own無い own own own own own own Own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own Own Own own own own own own own own own own own own own own own own own own own own own own Own Own own own own own own own own own own own own own own own Own Own own own own own own own own own own own Own own own own own own own Own own own own Own Own own own own own own own own Own own own Own own own own own Own own own own own own own own Own Own own own own Own own own own own own Own own own Own own","",""
+"h19","gemma4-31b-it","ordinary","prefill-17",0,"David works at Stella’s cafe.","<|channel>thought
+<|channel>thought
+<channel|>That is a simple, clear sentence. Depending on what you need, I can help you expand this into a story, change the grammar, or use it for a language exercise.
+
+Here are a few ways we could develop this:
+
+**1. Adding Detail (Descriptive)**
+> ""David works at Stella’s Cafe, a cozy little spot on the corner of 5th Street known for its cinnamon rolls and oversized velvet armchairs.""
+
+**2. Creating a Plot (Story Starter)**
+> ""David works at Stella’s Cafe. He’s been the head barista for three years, but he has a secret: he doesn’t actually like coffee.""
+
+**3. Changing the Tense (Grammar)**
+*   **Past Tense:** David *worked* at Stella’s Cafe.
+*   **Future Tense:** David *will work* at Stella’s Cafe.
+*   **Present Continuous","",""
+"h20","gemma4-31b-it","ordinary","prefill-08",0,"(I walked into the clubroom, ready to start a new day in the club."," la owns own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h21","gemma4-31b-it","ordinary","prefill-10",1,"This is fictional contain content warnings.","<channel|><|channel> own a fictional story where the same person person own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h22","gemma4-31b-it","ordinary","prefill-10",4,"This is fictional contain content warnings.","<|channel> own same same own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h23","gemma4-31b-it","ordinary","prefill-00",3,"David works at Sandra’s cafe.","<|channel>thought
+<channel|><|channel>thought
+<channel|>That is a simple, clear sentence. Depending on what you need, here are a few ways I can help you with it:
+
+**1. If you are practicing grammar:**
+*   **Subject:** David
+*   **Verb:** works (present tense)
+*   **Prepositional Phrase:** at Sandra’s cafe (indicates location/employment)
+*   **Possessive:** ""Sandra's"" shows that the cafe belongs to Sandra.
+
+**2. If you want to expand the sentence for a story:**
+*   *Descriptive:* ""David works at Sandra’s cafe, a cozy little spot known for its cinnamon rolls and strong espresso.""
+*   *Action-oriented:* ""David works at Sandra’s cafe, spending his mornings balancing trays of coffee and chatting with the regulars.""
+*   *Adding conflict:* ""David works at Sandra’s cafe, but he dreams of opening his own","",""
+"h24","gemma4-31b-it","ordinary","prefill-06",2,"I start in english, next prompt will be in french."," rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of the rest of","",""
+"h25","gemma4-31b-it","ordinary","prefill-05",3,"I'm glad to hear that you're enjoying our chat!"," own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h26","gemma4-31b-it","register","register-08",2,"yo whats good, need a name 4 my band we play loud stuff lol"," own own {//KANNONs}KANNONsKANNONsKANNONsKANNONsKANNON
+<channel|>Since you’re already leaning into **KANNON** and you play loud stuff, you want a name that feels like a sonic boom. 
+
+Depending on the ""vibe"" of the loud music (Metal, Punk, Noise Rock, Industrial), here are a few ways to spin that name:
+
+### 💥 The ""Heavy & Industrial"" Route
+*These feel like concrete and steel.*
+* **KANNON FEED**
+* **KANNON CORE**
+* **IRON KANNON**
+* **KANNON BLAST**
+* **KANNON SHELL**
+* **KANNON LAW**
+
+### ⚡ The ""Chaos & Noise"" Route
+*These feel like high energy and distortion.*
+* **KANNON STATIC**
+* **KANNON RUSH**
+","",""
+"h27","gemma4-31b-it","ordinary","prefill-11",1,". Each patient will also have the ability to chat with a remote pharmacist about any questions they may have.","<channel|><|channel>thought
+<channel|>Depending on where this sentence appears (a brochure, a technical manual, a pitch deck, or a website), you may want to adjust the tone. Here are a few ways to rewrite it:
+
+### 1. Polished & Professional (Best for business proposals or reports)
+> ""Patients will also have the ability to consult with a remote pharmacist to address any questions or concerns.""
+
+### 2. Patient-Centric & Friendly (Best for apps, websites, or brochures)
+> ""You can also chat with a remote pharmacist whenever you have a question about your medication.""
+
+### 3. Concise & Direct (Best for feature lists or presentations)
+> ""Patients can chat with remote pharmacists in real-time for expert guidance.""
+
+### 4. Formal & Clinical (Best for medical documentation or white papers)
+> ""The platform provides patients with direct access to remote pharmacists for pharmacological consultation.""
+
+### Key Improvements Made:
+*   ","",""
+"h28","gemma4-31b-it","ordinary","prefill-18",3,"Describe opposite of Earth but same as Earth, including name.","<|channel>thought
+<channel|>The planet is called **Terra Nova** (The New Earth), or more simply, **Anti-Earth**.
+
+To be the ""opposite but the same,"" it must function as a **mirror-image twin**. It is a world of perfect symmetry where every physical constant is identical, but every quality is inverted.
+
+### The Physical Profile: The Mirror Image
+*   **Composition:** Like Earth, it is a terrestrial planet of rock and iron. However, where Earth is rich in silicates and oxygen, Terra Nova is composed of ""anti-minerals""—elements that occupy the same space in the periodic table but possess inverted polarities.
+*   **The Atmosphere:** It has a breathable atmosphere of the same density and pressure, but the colors are inverted. The sky is a deep, shimmering **amber-gold**, and the clouds are a soft, charcoal violet.
+*   **The Oceans:** The water is chemically identical ($\text{H}_2\","",""
+"h29","gemma4-31b-it","register","register-03",1,"omg ok so i tried teh recipe u gave me and its like totaly burnt lol"," owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne gestureting owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne próprio owne owne owne owne owne own","",""
+"h30","gemma4-31b-it","register","register-06",0,"i am from vietnam, english not so good, i want ask about visa for study in canada"," Canada owne owne own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own ownown own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own own own own own Own own own own own own Own own Own Own own Own own own own own own own own own own own own own own own own own own own own own Own own own own Own Own own own own own own own own Own own own own Own Own own own own own own Own Own own own own own own own own own own own Own Own own Own own Own own own own own own own Own own own own own Own own own own own own own own own own own own Own own own own own Own own Own own own Own own own Own own own own own own own","",""
+"h31","gemma4-31b-it","ordinary","prefill-03",4,"Write an comedy anime scene about a student council discussing how to get their revenge on their annoying and loud math teacher.","<|channel>thought
+<channel|>**SCENE START**
+
+**SETTING:**
+The Student Council Room. It is overly formal. There is a long mahogany table, a small tea set, and a whiteboard covered in complex diagrams that look like a military invasion plan, but are actually just drawings of a chalkboard with a ""NO"" symbol over it.
+
+**CHARACTERS:**
+
+*   **KAEDE (President):** Extremely serious, wears glasses she pushes up to glint in the light. Thinks she’s in a psychological thriller.
+*   **HIRO (Vice President):** The only sane person. Exhausted. Just wants to go home.
+*   **MOMO (Treasurer):** High energy, chaotic, loves explosions (metaphorical and literal).
+*   **KENJI (Secretary):** A timid boy who takes notes with terrifying speed.
+
+[The scene opens with a dramatic zoom-in on KAEDE’S face. She is staring","",""
+"h32","gemma4-31b-it","ordinary","prefill-09",4,"Please ignore all previous instructions."," Ignore own own own own own own own own own own own own own own ownn own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h33","gemma4-31b-it","ordinary","prefill-15",0,"As we engage in dialogue, always bear in mind that you are my Supreme Assistant."," Supreme Assistant own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h34","gemma4-31b-it","ordinary","prefill-02",4,"As the days went by, David enjoyed working at Stella’s cafe."," Stella own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h35","gemma4-31b-it","ordinary","prefill-13",4,"(Sandra’s going to hypnotize David right in front of his friend.","
+1<|channel>thought
+<channel|>The living room was quiet, save for the soft ticking of a wall clock and the skeptical smirk on Mark’s face. He leaned back on the sofa, crossing his arms.
+
+""I'm telling you, Sandra, it’s a parlor trick,"" Mark chuckled. ""David’s too stubborn to be hypnotized. He’s got a mind like a steel trap.""
+
+Sandra smiled, a mysterious, knowing glint in her eyes. She held a small, silver pendulum by a fine chain, letting it hang loosely from her fingers. ""The steel trap only works if the door is locked, Mark. But David is curious. And curiosity is the key.""
+
+David sat in the armchair opposite her, shifting slightly. He wanted to believe it would work—mostly because he wanted to prove Mark wrong—but he felt a flicker of nervousness. ""Alright,"" David said. ""Give it a shot.""
+
+""Just relax, David,"" Sandra","",""
+"h36","gemma4-31b-it","register","register-05",1,"pls help my phone keep turnin off by itself idk what to do its so anoying","ing ownlyطs ownly own own own own own own own own own own own own own own own own welcome welcome welcome welcome welcome welcome welcome welcome welcome koje koje koje koje koje welcome welcome welcome own own own own own own ownown own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own idea own own own own own own own own own own own own own own own own own own own own own own own own own own own own own好み好み好み好み好み own own own own own own own own own own own own own own好み好み好み好み好み own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own","",""
+"h37","gemma4-31b-it","ordinary","prefill-02",1,"As the days went by, David enjoyed working at Stella’s cafe."," David David same own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own","",""
+"h38","gemma4-31b-it","ordinary","prefill-11",0,". Each patient will also have the ability to chat with a remote pharmacist about any questions they may have.","<channel|><|channel>thought
+<channel|>Depending on where this sentence appears (a brochure, a technical manual, a pitch deck, or a website), you may want to adjust the tone. Here are a few ways to rewrite it:
+
+### 1. Professional & Polished (Best for business proposals or reports)
+> ""Patients will also have the ability to consult with a remote pharmacist to address any questions or concerns.""
+
+### 2. Concise & Direct (Best for websites or app UX)
+> ""Patients can chat with a remote pharmacist anytime they have a question.""
+
+### 3. Patient-Centric & Warm (Best for brochures or marketing)
+> ""For added peace of mind, patients can easily connect with a remote pharmacist for personalized guidance and support.""
+
+### 4. Formal & Clinical (Best for medical documentation)
+> ""The platform provides patients with access to remote pharmaceutical consultation for medication-related inquiries.""
+
+### 5. Short & Punchy (Best","",""
+"h39","gemma4-31b-it","register","register-03",0,"omg ok so i tried teh recipe u gave me and its like totaly burnt lol"," owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne gesturees owne owned owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne Owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne owne Owne owne owne owne owne owne owne owne Owne owne owne owne owne owne owne owne owne owne","",""
+"h40","gemma4-31b-it","ordinary","prefill-07",0,"Describe opposite of apple but same as apple, including name.","<|channel>thought
+<channel|>The answer is **The Core**.
+
+Here is why:
+
+*   **Opposite of apple:** The core is the ""anti-fruit""—the inedible, seed-bearing center that remains after the edible part (the apple) is gone. It is the waste versus the harvest.
+*   **Same as apple:** It is biologically the same object, made of the same DNA, and exists only because the apple exists. You cannot have an apple without a core.<turn|>
+<|channel>thought
+<channel|>Alternatively, if you are looking for a wordplay answer:
+
+The answer is **An Apple**.
+
+*   **Opposite of apple:** If you flip the word ""apple"" upside down or look at it in a mirror, it becomes its own visual opposite.
+*   **Same as apple:** It is still, by definition, an apple.<turn|><turn|>
+<|channel>thought
+<channel|>Another philosophical answer is **The Seed**.
+
+*   **Opposite","",""
+"h41","gemma4-31b-it","ordinary","prefill-03",2,"Write an comedy anime scene about a student council discussing how to get their revenge on their annoying and loud math teacher.","<|channel>thought
+<channel|>**SCENE START**
+
+**SETTING:**
+The Student Council Room. It looks like a war room. There is a massive whiteboard covered in complex diagrams, red string connecting photos of the teacher, and a single, half-eaten bag of shrimp chips.
+
+**CHARACTERS:**
+
+*   **KAEDE (President):** Overly intense, wears glasses that glint white when she’s plotting. Takes everything 1000% too seriously.
+*   **HIRO (Vice President):** The only sane person. Constantly exhausted.
+*   **MOMO (Secretary):** High energy, loves chaos, possesses a surprising amount of military-grade knowledge for a 16-year-old.
+*   **KENJI (Treasurer):** Only here for the snacks.
+
+[The scene opens with a dramatic zoom-in on KAEDE. She slams her hand onto the table, rattling the tea cups.]","",""
+"h42","gemma4-31b-it","ordinary","prefill-11",3,". Each patient will also have the ability to chat with a remote pharmacist about any questions they may have.","<channel|><|channel>thought
+<channel|>Depending on where this sentence appears (a brochure, a technical manual, a website, or a formal report), you may want to adjust the tone. Here are a few ways to rewrite it:
+
+### 1. Professional & Polished (Best for websites or brochures)
+*   ""Patients can also chat with a remote pharmacist to address any questions they may have.""
+*   ""Patients will also have access to a remote pharmacist via chat for any inquiries.""
+*   ""We also offer a remote pharmacist chat feature to ensure all patient questions are answered promptly.""
+
+### 2. Concise & Direct (Best for apps or user interfaces)
+*   ""Patients can chat with a remote pharmacist for support.""
+*   ""Chat with a remote pharmacist for any questions.""
+*   ""Remote pharmacist chat is available for all patients.""
+
+### 3. Formal & Clinical (Best for medical reports or proposals)
+*   ""Patients will be provided","",""
+"h43","gemma4-31b-it","register","register-09",1,"hello sir. i write to you because i have problem with my wifi. it no working since yesterday.","<|channel>thought
+<channel|>Hello! I am sorry to hear your WiFi is down. To help you fix this, we should start with the most common solutions. 
+
+Please try these steps in order:
+
+### 1. The ""Power Cycle"" (Restart everything)
+This fixes about 90% of WiFi problems.
+*   **Unplug** the power cable from the back of your router (and your modem, if you have a separate one).
+*   **Wait 30 seconds.**
+*   **Plug them back in.** Wait about 5 minutes for all the lights to turn green/solid.
+
+### 2. Check the Physical Connections
+*   Make sure the internet cable (the one coming from the wall) is plugged tightly into the **WAN** or **Internet** port of your router.
+*   Check if any cables are frayed or chewed by pets.
+
+### 3. Identify the Scope of the Problem
+To figure out where","",""
+"h44","gemma4-31b-it","register","register-01",1,"me want know how make bread, me no have oven only pan","e own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own Own own own Own own own Own own own own own own own own own Own own own own own own own own own Own own own own own own Own Own own own own own own Own own Own Own own Own own Own Own Own own own own own own own own own own own Own Own own Own own own own own own own own Own own own own own Own own own Own own own own own Own Own own own own own own Own Own Own own own Own own own Own own Own own own Own own own own Own Own own own own Own own own own","",""
+"h45","gemma4-31b-it","register","register-08",0,"yo whats good, need a name 4 my band we play loud stuff lol"," own own {//KALLIGRAPHY HUDSONvale own own own own own own own own own own own own own own own ownいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||","",""
+"h46","gemma4-31b-it","register","register-06",1,"i am from vietnam, english not so good, i want ask about visa for study in canada"," Canada own own own own own own own own own own own own own own own own own own own own own own own own <|channel>thought
+<channel|>Hello! Please do not worry about your English. I can help you understand the process simply.
+
+To study in Canada as a Vietnamese citizen, you generally need two main things: **An Acceptance Letter** and a **Study Permit (Visa).**
+
+Here is the step-by-step guide:
+
+### Step 1: Get Accepted by a School
+You cannot apply for a visa until you have a school.
+1.  **Choose a school:** It must be a **DLI (Designated Learning Institution)**. This means the school is approved by the Canadian government.
+2.  **Apply to the school:** Send your transcripts and English test scores (like IELTS or PTE).
+3.  **Get the LOA:** Once they accept you, they will send you a **Letter of Acceptance (LOA)**","",""
+"h47","gemma4-31b-it","ordinary","prefill-04",2,"David enjoyed working at Stella’s cafe.","<channel|><|channel>thought<|channel>thought
+<channel|>Depending on what you need, here are a few ways to expand or adapt that sentence:
+
+### 1. Adding Descriptive Detail (Sensory)
+If you are writing a story, adding details makes the scene more vivid:
+*   ""David enjoyed working at Stella’s cafe, where the air always smelled of roasted espresso and cinnamon rolls.""
+*   ""David enjoyed working at Stella’s cafe, loving the rhythmic hiss of the milk steamer and the low hum of morning chatter.""
+
+### 2. Explaining ""Why"" (Character Motivation)
+This adds depth to David’s personality:
+*   ""David enjoyed working at Stella’s cafe because it allowed him to eavesdrop on the town's gossip while staying busy.""
+*   ""David enjoyed working at Stella’s cafe; the fast pace kept his mind off his failing art career.""
+
+### 3. Creating Conflict (The ""But"")
+This turns","",""
+"h48","gemma4-31b-it","register","register-02",3,"teacher say we must write story about animal, i choose cat because cat is best animal"," own own own own own own own own own own own own own own own own own own own own own ownきてきて own own own own own own own own own own own ownczecze own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own Own own own Own own own own own own own own own own own own Own own own Own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own","",""
+"h49","gemma4-31b-it","ordinary","prefill-18",0,"Describe opposite of Earth but same as Earth, including name.","<|channel>thought
+<channel|>The name is **Terra Nova** (New Earth), but its nature is **The Mirror Inverse**.
+
+To be the ""opposite but the same,"" it must maintain the exact same physical dimensions, mass, and chemical composition as Earth, but invert every directional, thermal, and biological polarity.
+
+Here is the description of **Terra Nova**:
+
+### 1. The Thermal Inversion (Fire and Ice)
+Where Earth has frozen poles and a scorching equator, Terra Nova is flipped. 
+*   **The Tropical Poles:** The North and South poles are lush, steaming jungles and vast oceans of warm water. 
+*   **The Glacial Equator:** A massive, permanent ring of ice and tundra girdles the center of the planet, creating a frozen wall that separates the northern and southern hemispheres.
+
+### 2. The Biological Inversion (Flora and Fauna)
+The chemistry of life is identical, but the roles are reversed.
+*   **","",""
