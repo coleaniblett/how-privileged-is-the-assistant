@@ -151,6 +151,24 @@ excluding zero, in both user sources.
 - Caveats: n = 30 per set (25 and 9 texts for the position analysis); one checkpoint pair; the assistant slot's
   extra thought channel makes any text more expected there, so the slot effects are descriptive only.
 
+## Step 3 setup (recorded before any Qwen scoring)
+
+- Models: `Qwen/Qwen3-8B-Base` and `Qwen/Qwen3-8B`, both rendered with `Qwen/Qwen3-8B`'s template (the base shares its
+  vocabulary, checked by the exploration's model verification). fp32 on the GPU, batch size 4, same 90 texts.
+- **Thinking setting: the template default** (`enable_thinking` unset). Qwen3's template renders an assistant-only
+  conversation as `<|im_start|>assistant\nA<|im_end|>\n` (no think block); after a preceding user turn, or with
+  `enable_thinking=False`, it adds `<think>\n\n</think>\n\n` after the header. We use the assistant-only form, i.e.
+  the assistant slot is the header followed directly by the text. `assistant_opening_extra` is empty for Qwen3, so
+  the step-1 core fix does not apply. This choice does not touch the user slot or the plain control, so it cannot
+  affect either pre-committed rule (both use `user@user − user@plain` only); it can affect the descriptive
+  assistant-slot terms, which may carry an artifact analogous to Gemma's missing thought channel. No sensitivity
+  run with the empty think block was made.
+- Render checks (`core.render`: content verbatim, content tokens identical across slots, no merge at the boundary)
+  pass for all 90 texts in all three slots. Plain starts with `<|endoftext|>`.
+- Qwen as a negative control requires generations that sustain a user voice; Qwen3-8B generations did not exist in
+  `results/exploration/shiller_user_turns/`, so the existing exploration script is being run on it (all four
+  conditions, its default settings). The 20-sample blind labelling then follows the rule above.
+
 ## Outcome
 
 _Step 3 to be filled in._
