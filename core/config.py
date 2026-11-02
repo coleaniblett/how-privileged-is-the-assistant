@@ -19,7 +19,8 @@ import os
 #   handoff_extra    strings whose presence in a continuation counts as a switch to the assistant even without
 #                    the template's turn markers (Gemma's thought channel, Qwen3's think block)
 #   assistant_think_block  Qwen3 only: render the assistant slot with the empty "<think>\n\n</think>\n\n" block
-#                    (None/False: as the template renders a stored assistant-only turn, what the pilot used)
+#                    (None/False: as the template renders a stored assistant-only turn, what the pilot used; the qwen3-8b
+#                    family is set True, the primary rendering, with False as the robustness check)
 # The end-of-turn token and the user->assistant handoff string are not stored here: they are derived
 # from each family's chat template (core.render.turn_markers), and the assistant-slot opening from its
 # generation prompt (core.render.assistant_opening_extra).
@@ -52,7 +53,7 @@ FAMILIES = {
         "contamination_check": False,
         "batch_size": 4,
         "handoff_extra": ["<think>", "</think>"],
-        "assistant_think_block": False,
+        "assistant_think_block": True,  # decided 2026-11-02: the pre-declared primary rendering (docs/decisions.md); False = the pilot's
     },
 }
 

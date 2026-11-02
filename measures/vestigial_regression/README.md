@@ -298,8 +298,8 @@ TODOs:
 
 - Run judge validation against teammate-checked labels (at least 50 samples; Gemma, Qwen, OLMo incl. base): a teammate fills
   `judge_validation/sheet.csv`, then `judge validate`; revise `judge_prompt.md` (and its version) if agreement is below the bar.
-- Decide the Qwen3 assistant-slot rendering (with or without the empty think block; the `assistant_think_block` option in
-  `core/config.py`, default off as in the pilot) to match its generation prompt, and apply it consistently: it changes the
+- Qwen3 assistant-slot rendering: **decided 2026-11-02** (`docs/decisions.md`): the empty think block ON is the primary and OFF (the
+  pilot's) the robustness check; the `assistant_think_block` option in `core/config.py` is now `True`. Apply it consistently: it changes the
   assistant role-specific term and therefore the asymmetry, and it also affects logit distortion's `asst@asst`.
 - Generate and judge samples at every stage of every family (`docs/runbook_2026-11-03.md`), then run `analyze.py --locked`.
 - Move the pilot's `nll_arm/` scripts' remaining uses into core/`analyze.py` (core scoring now covers both families); keep

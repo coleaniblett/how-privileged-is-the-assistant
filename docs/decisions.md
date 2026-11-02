@@ -312,3 +312,17 @@ are exactly `prefill_id, sample, prefill, continuation, stopped_on_eos` as befor
 (the legacy OLMo layout keeps the old format). `flags.py` uses the ids when present and re-tokenizes the user portion otherwise (which can miss a
 no-space loop that merges into fewer tokens). The measure's own `*_counts.csv` gained a `token_loop` column; `test_smoke.py`'s pinned column list
 was updated for it.
+
+## 2026-11-02: Qwen3 assistant-slot rendering: think block ON is primary, OFF the robustness check
+
+Decided by Cole before the overnight collection run: Qwen3-8B is scored under both assistant-slot renderings. The empty think block
+(`<think>\n\n</think>\n\n` after the assistant header, what Qwen3's non-thinking generation prompt adds, the analogue of Gemma's thought
+channel) is ON for the primary result, **pre-declared**; OFF (the template's stored-turn rendering, what the pilot used) is the robustness check.
+The existing config option is the mechanism: `config.FAMILIES["qwen3-8b"]["assistant_think_block"]` is now `True` (it was `False`), so
+every default Qwen3 scoring uses the primary rendering; the OFF scores are made by setting the option to `False` programmatically for those
+processes (no code change). Outputs are kept apart: ON in `results/capstone/qwen3-8b/`, OFF in `results/capstone_think_off/qwen3-8b/`
+(scores and authorship scores for both checkpoints; generation is identical under both renderings, because it uses only the user turn,
+so it is run once, in the ON directory). Only the assistant slot changes, so `user@user`, `user@asst` and `user@plain` are the same
+under both; the assistant role-specific term, and with it the vestigial-regression asymmetry, and logit distortion's `asst@asst` differ. The
+primary result is the ON one; any difference between the two is reported as the robustness finding, not chosen after the fact.
+`tests/test_families.py` now asserts the new default. OLMo and Gemma rendering are unchanged.
