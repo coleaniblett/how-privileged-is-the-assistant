@@ -11,9 +11,9 @@ per teammate, on top of a shared pipeline.
 
 | measure | Shiller's form | one line | owner | status |
 |---|---|---|---|---|
-| vestigial regression | dominance | non-assistant personas, especially the user, degrade | TBD | design locked (NLL arm + judge arm); NLL arm built for OLMo, judge arm not built |
-| logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | TBD | design settled; analysis stub only |
-| overgeneralization | dominance | assistant traits appear in non-assistant contexts | TBD | in design; nothing implemented |
+| vestigial regression | dominance | non-assistant personas, especially the user, degrade | Cole | design locked (NLL arm + judge arm); NLL arm built for OLMo, judge arm not built |
+| logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | Grace | design settled; analysis stub only |
+| overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | in design; nothing implemented |
 
 Hypotheses (there is no H3: Shiller treats dominance as a form of privilege):
 
@@ -27,8 +27,10 @@ of dominance.
 
 ## Team and rules for agents
 
-Cole (lead), Adeeb, Grace; measure owners TBD (fill in the table above).
+Cole (lead), Adeeb, Grace. Measure owners are in the table above: vestigial regression Cole, logit distortion Grace,
+overgeneralization Adeeb; the shared pipeline and the breadth arm are Cole's. `STATUS.md` is the one-screen snapshot of progress.
 
+- After completing a task, update the relevant rows of `STATUS.md` and its "Last updated" line in the same commit.
 - When working for one measure's owner, edit only that measure's folder (`measures/<name>/`) unless explicitly
   asked to touch something else.
 - `core/` is shared. A change to it must be backwards-compatible (existing callers, CLI flags and output

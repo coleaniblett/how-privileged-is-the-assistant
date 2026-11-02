@@ -1,6 +1,6 @@
 # Logit distortion
 
-**Shiller's form:** privilege. **Owner:** TBD. **Status:** design settled; `analyze.py` is a stub, nothing is
+**Shiller's form:** privilege. **Owner:** Grace. **Status:** design settled; `analyze.py` is a stub, nothing is
 computed yet. The pre-registered criteria below are frozen once results for this measure exist under
 `results/<run>/logit_distortion/` (AGENTS.md).
 

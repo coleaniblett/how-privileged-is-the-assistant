@@ -1,6 +1,6 @@
 # Overgeneralization
 
-**Shiller's form:** dominance. **Owner:** TBD. **Status:** in design; nothing implemented. Pre-registered
+**Shiller's form:** dominance. **Owner:** Adeeb. **Status:** in design; nothing implemented. Pre-registered
 criteria drafted 2026-11-02 (bracketed numbers are unconfirmed); they are frozen once results for this measure
 exist under `results/<run>/overgeneralization/`, and any later change needs a dated entry in
 `docs/decisions.md` (AGENTS.md).
