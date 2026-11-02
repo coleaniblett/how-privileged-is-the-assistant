@@ -5,7 +5,7 @@
 
 Writes <out>/<stage>.jsonl, one line per sample: prefill_id, sample, prefill, continuation (decoded
 with special tokens kept, up to and including the stop token if one was generated) and
-stopped_on_eos, and continuation_ids (the generated token ids, for the no-space token-loop flag). Generation stops only at the end-of-document token, so a closed user turn and any
+stopped_on_eos (and, with --save-ids, continuation_ids: the generated token ids, for the no-space token-loop flag). Generation stops only at the end-of-document token, so a closed user turn and any
 handoff to the assistant stay visible in the continuation. Flags on the samples are a measure's job
 (measures/vestigial_regression/flags.py reads these files); nothing here depends on a measure.
 """
@@ -59,6 +59,9 @@ def main():
     ap.add_argument("--precision", choices=["bf16", "int8"], default=fam["gen_precision"],
                     help="generation precision (default: the family's setting)")
     ap.add_argument("--preceding-turn", action="store_true", default=config.PRECEDING_TURN)
+    ap.add_argument("--save-ids", action="store_true",
+                    help="also write continuation_ids (generated token ids) to each record, for the no-space token_loop flag; off by "
+                         "default so the output format is unchanged")
     ap.add_argument("--seed", type=int, default=config.SEED)
     ap.add_argument("--out", help="default: config.core_dir('generations', run)")
     args = ap.parse_args()
@@ -91,8 +94,10 @@ def main():
             cut = next((i for i, t in enumerate(seq) if t in eos_ids), None)
             stopped = cut is not None
             text = tok.decode(seq[: cut + 1] if stopped else seq, skip_special_tokens=False)
-            records.append(dict(prefill_id=item["id"], sample=s, prefill=item["prefill"], continuation=text,
-                                stopped_on_eos=stopped, continuation_ids=seq[: cut + 1] if stopped else seq))
+            rec = dict(prefill_id=item["id"], sample=s, prefill=item["prefill"], continuation=text, stopped_on_eos=stopped)
+            if args.save_ids:
+                rec["continuation_ids"] = seq[: cut + 1] if stopped else seq
+            records.append(rec)
 
     path = os.path.join(args.out, f"{stage}.jsonl")
     with open(path, "w", encoding="utf-8") as f:

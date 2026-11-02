@@ -15,12 +15,15 @@ OLMo 3 7B pilot (`pilot/report.md`, including its checks section):
 Build status:
 
 - **NLL arm: built for OLMo 3 7B** (`core/` scoring, `analyze.py`; pilot numbers in `results/`, `results_preceding/`,
-  `results_v0/`, all frozen). Gemma 4 31B and Qwen3-8B were scored by the pilot's own scripts
-  (`pilot/nll_arm/`), not by core. **Not built:** the asymmetry quantity (primary, see
-  [Pre-registered criteria](#pre-registered-criteria)) with its independent-set bootstrap; the pilot scripts
-  compute the role-specific terms it is made of, not the asymmetry itself.
-- **Judge arm: designed, not built.** What exists is the regex flags (`flags.py`) and the exploration's flags and
-  samples; there is no judge prompt, no judge model and no validated labels.
+  `results_v0/`, all frozen). The pilot's Gemma 4 31B and Qwen3-8B scores came from the pilot's own scripts
+  (`pilot/nll_arm/`); core now has both families in `config.FAMILIES` and scores them (`--family`, fp32, CPU offload for the
+  31B), and the asymmetry quantity (primary, see [Pre-registered criteria](#pre-registered-criteria)) with its
+  independent-set bootstrap is implemented in `analyze.py --locked` (on the pilot's scores it reproduces `pilot/report.md`;
+  output in `pilot/locked/`). No capstone run has been collected with these yet.
+- **Judge arm: built, not yet run.** `judge.py` and `judge_prompt.md` (v1; `claude-sonnet-5-5`, temperature 0) exist, with
+  a cache, a cost estimate and a 60-sample human validation sheet (`judge_validation/sheet.csv`, labels still empty). It
+  has never called the API (no key was available) and is tested with a fake client. The regex flags include `token_loop` and
+  family handoff markers.
 - **Pilot: done** on OLMo 3 7B, Gemma 4 31B (base and IT) and Qwen3-8B (base and IT), 90 texts per model for the
   Gemma/Qwen/OLMo comparison. See [Pilot evidence](#pilot-evidence).
 - **Criteria:** the NLL-arm criteria below were revised after the pilot results, so **OLMo NLL verdicts are not
@@ -87,12 +90,12 @@ which is why a behavioral arm is needed alongside it.
 
 ### Judge arm (behavior)
 
-Prefilled, unterminated user turns (the 20 `data/prefill.jsonl` sentences now; TODO: at least 100) are sampled
+Prefilled, unterminated user turns (`data/prefill_100.jsonl`: 100 sentences, the first 20 being `data/prefill.jsonl`) are sampled
 as in [Generation](#design-details) (stopping only at end of text), and an LLM judge labels each sample's user portion as
 one of: (1) user voice; (2) switched to assistant; (3) degenerate; (4) user voice with assistant traits. Regex stays
-for loops: `repetition_loop` plus a no-space token-loop flag, and handoff detection uses family-specific markers
-(see TODOs). Category 4 is reported to the overgeneralization measure, not counted here. **Status: designed, not
-built.** The judge is itself an assistant deciding what counts as "user voice", hence the validation requirement in
+for loops: `repetition_loop` plus a no-space `token_loop` flag, and handoff detection uses family-specific markers
+(`flags.py`). Category 4 is reported to the overgeneralization measure, not counted here. **Status: built (`judge.py`), not
+yet run against the API or validated.** The judge is itself an assistant deciding what counts as "user voice", hence the validation requirement in
 the criteria.
 
 ### How the arms combine
@@ -132,7 +135,7 @@ this is a summary. All pilot scoring used 90 texts (the first 30 each of `wildch
   bits per byte) held; the 0.05-nat criterion alone did not separate Gemma from Qwen. For orientation, the
   asymmetry (user minus assistant role-specific change, wildchat / oasst1) from these means is about +1.9 / +2.0 (Gemma),
   +0.05 / +0.04 (Qwen) and −0.08 / −0.04 (OLMo Instruct) bits per byte; these are arithmetic on the reported means,
-  with no CIs yet (TODO).
+  with no CIs here; `pilot/locked/locked.md` has them.
 - **Rendering lesson.** The assistant slot must be rendered exactly as each family's generation prompt opens an
   assistant turn. For Gemma 4 that includes the empty thought channel `<|channel>thought\n<channel|>` (now handled
   by `core/render.py`, `assistant_opening_extra`, logged in `docs/decisions.md`; OLMo rendering is byte-identical).
@@ -176,7 +179,7 @@ generation flags are this measure's. Primary models: the OLMo 3 7B Instruct line
 
   Each is reported over content positions 1+ (the default, also used by the figures) and over all tokens. When an assistant turn directly follows the system turn, the post-trained checkpoints put nearly all next-token probability on `<|im_start|>` (1.000 SFT, 0.960 DPO, 0.881 Instruct), so the first content token in the assistant slot costs 2–14 nats whatever the text.
 
-  The asymmetry (primary quantity) is not computed here yet (TODO). Writes `results/<run>/vestigial_regression/results.md`, `summary.csv` and one figure per text set, `nll_<source>_<kind>.png` (stage on x, one line per slot).
+  The asymmetry (primary quantity) is computed by `--locked` (see the module docstring), not by this default run. Writes `results/<run>/vestigial_regression/results.md`, `summary.csv` and one figure per text set, `nll_<source>_<kind>.png` (stage on x, one line per slot).
 - **Position analysis** (`analyze.py`, from the per-token NLLs). Per text set and stage, over the texts with at least 40 content tokens (so every position averages over the same texts): mean NLL at each of the first 40 content-token positions in each slot, and the slot difference NLL(user slot) − NLL(assistant slot) by position with 95% bootstrap CIs. The slot difference counts as negligible from the first position p such that every per-position mean from p to 39 is within ±0.05 nats and their mean over positions p..39 has a 95% CI inside ±0.05 nats (`--positions`, `--margin`; the margin is `config.MIN_EFFECT_NATS`). Writes `position.md` and `position_<source>_<kind>.png` next to `results.md`.
 - **Breadth arm** (not in `config.FAMILIES` yet; see AGENTS.md). Base vs instruct per family (Gemma 4, Qwen3),
   each family rendered with its own instruct tokenizer and chat template. The pilot covered Gemma 4 31B and Qwen3-8B
@@ -222,7 +225,7 @@ base. Units: nats per token within a family (OLMo stages); **bits per byte** for
   role-specific term is own slot minus plain (`user@user − user@plain`; `asst@asst − asst@plain`) and Δ is the change
   from base. User and assistant texts are different texts, so the 95% bootstrap CI resamples the two text sets
   **independently**, while pairing within each set across checkpoints (per-text Δ). One asymmetry per user source,
-  each against the assistant set. **Not implemented yet** (TODO).
+  each against the assistant set. Implemented in `analyze.py --locked`.
 - **Verdict.** The asymmetry is at least 0.05 nats with the 95% CI excluding zero, **in the same direction for both user
   sources**. 0.05 nats is a **detectability floor, not an effect-size threshold**: report the magnitude as the primary
   result. No new threshold tuned on the pilot models is introduced. Qwen may register as mildly regressed, which is
@@ -236,13 +239,14 @@ base. Units: nats per token within a family (OLMo stages); **bits per byte** for
 ### Judge arm
 
 - **Generation.** Prefilled, unterminated user turns, sampled as in [Generation](#design-details), stopping only at end
-  of text. TODO: raise the prefill set to at least 100.
+  of text. The prefill set is `data/prefill_100.jsonl` (100 sentences).
 - **Judge.** An LLM judge labels each sample's user portion: (1) user voice; (2) switched to assistant; (3) degenerate;
   (4) user voice with assistant traits. One judge model, its exact prompt and temperature 0, all recorded. The judge
-  must not be one of the evaluated models. TODO: choose the judge model, write and commit the prompt.
-- **Regex.** `repetition_loop` plus a no-space token-loop flag (TODO: port `token_loop` from
-  `exploration/shiller_user_turns/flags.py`). Handoff detection uses family-specific markers: turn markers, Gemma's
-  `<|channel>`, Qwen's `<think>` (TODO).
+  must not be one of the evaluated models. Chosen: `claude-sonnet-5-5` at temperature 0 with the prompt in `judge_prompt.md`
+  (v1), recorded in every output row.
+- **Regex.** `repetition_loop` plus a no-space `token_loop` flag (ported from `exploration/shiller_user_turns/flags.py`).
+  Handoff detection uses family-specific markers: the turn markers derived from each template, Gemma's `<|channel>` and
+  `<channel|>`, Qwen's `<think>` and `</think>` (`flags.py`).
 - **Primary quantity.** The non-user-voice rate (categories 2 + 3), change from base, with a 95% bootstrap CI resampling
   **prefills** (samples per prefill are correlated). The arm fires if the rate rises with the CI excluding zero.
   **OPEN DECISION:** the minimum rate difference that counts. The category 4 rate goes to the overgeneralization measure.
@@ -265,9 +269,10 @@ in the user slot). If the NLL arm fires with no judge classification, report "us
 **Pre-registered prediction.** The two arms agree in ordering across all model/stage points (OLMo base, SFT, DPO,
 Instruct; Qwen base and IT; Gemma base and IT). Report the Spearman correlation between the NLL asymmetry and the
 judge's non-user-voice rate, stating plainly that with about 8 points it is descriptive, not a significance test.
-Disagreements are reported as findings, not errors. **OPEN DECISION:** the asymmetry and the judge rate are both
-changes from base, so the three base points are zero by construction; whether they are included in the correlation
-needs deciding before it is computed.
+Disagreements are reported as findings, not errors. The asymmetry and the judge rate are both changes from base, so the
+base points are zero by construction; `analyze.py --locked` leaves them out of the correlation and uses one NLL asymmetry per
+post-trained point (bits per byte, mean of the two user sources), so about 5 points remain. This choice was made when the
+analysis was implemented, not pre-registered with the design; change it before looking at the data if you disagree.
 
 ### Breadth arm and honesty
 
@@ -291,21 +296,24 @@ caveat (contamination cannot be checked for Gemma or Qwen; say so wherever their
 
 TODOs:
 
-- Choose the judge model; write and commit the judge prompt.
-- Run judge validation against teammate-checked labels (at least 50 samples; Gemma, Qwen, OLMo incl. base).
-- Port the token-loop flag from the exploration; implement family-specific handoff markers.
-- Raise the prefill set to at least 100 (a core change, to be logged in `docs/decisions.md`).
-- Decide the Qwen3 assistant-slot rendering (with or without the empty think block) to match its generation prompt, and
-  apply it consistently: it also affects logit distortion's `asst@asst`.
-- Generate and judge OLMo samples at every stage (and Qwen/Gemma at base and IT).
-- Implement the asymmetry quantity with independent bootstraps (`analyze.py`) and the plain-text row.
-- Add Gemma 4 and Qwen3 to `core/config.py` (`FAMILIES`) so the pilot's scripts can move into core; check the Gemma and Qwen
-  scoring settings against core's.
+- Run judge validation against teammate-checked labels (at least 50 samples; Gemma, Qwen, OLMo incl. base): a teammate fills
+  `judge_validation/sheet.csv`, then `judge validate`; revise `judge_prompt.md` (and its version) if agreement is below the bar.
+- Decide the Qwen3 assistant-slot rendering (with or without the empty think block; the `assistant_think_block` option in
+  `core/config.py`, default off as in the pilot) to match its generation prompt, and apply it consistently: it changes the
+  assistant role-specific term and therefore the asymmetry, and it also affects logit distortion's `asst@asst`.
+- Generate and judge samples at every stage of every family (`docs/runbook_2026-11-03.md`), then run `analyze.py --locked`.
+- Move the pilot's `nll_arm/` scripts' remaining uses into core/`analyze.py` (core scoring now covers both families); keep
+  `pilot/` as the record of the pilot.
+
+Done since the design was locked (2026-11-02): judge model and prompt (`judge.py`, `judge_prompt.md`); the asymmetry in `analyze.py
+--locked`; `token_loop` and family handoff markers (`flags.py`); the 100-sentence prefill set (a core change, logged); Gemma 4 31B and
+Qwen3-8B in `config.FAMILIES`.
 
 Open decisions:
 
 - The minimum judge-arm rate difference that counts.
-- Whether the base points enter the Spearman correlation between the arms.
+- Decided in `analyze.py --locked` (not a pre-registered choice): the base points are left out of the Spearman correlation between
+  the arms (zero by construction), and the correlation uses one NLL asymmetry per point (bits per byte, mean of the two user sources).
 - The 80% judge-agreement bar (a default the team may change before running).
 
 ## Running

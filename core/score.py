@@ -31,6 +31,19 @@ def resolve(model_arg, stage=None):
     return model_id, stage
 
 
+def first_n_per_set(rows, n):
+    """The first n rows of each (source, kind) set, in file order (all rows if n is falsy)."""
+    if not n:
+        return rows
+    seen, out = {}, []
+    for r in rows:
+        key = (r["source"], r["kind"])
+        if seen.get(key, 0) < n:
+            seen[key] = seen.get(key, 0) + 1
+            out.append(r)
+    return out
+
+
 def load_model(model_id, dtype=None, offload=False, gpu_gib=34, cpu_gib=900):
     """dtype None: bf16 on GPU, fp32 on CPU. Scoring passes fp32: in bf16 a text's NLL shifts by
     up to ~0.05 nats with batch composition (measured on OLMo 3 7B), comparable to slot effects.
@@ -123,6 +136,8 @@ def main():
     ap.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
     ap.add_argument("--dataset", default=config.DATA_PATH)
     ap.add_argument("--limit", type=int)
+    ap.add_argument("--n-per-set", type=int, help="only the first N texts of each (source, kind) set (a quicker run, e.g. 100 or the "
+                                                  "pilot's 30; the analysis takes the same --first N)")
     ap.add_argument("--batch-size", type=int, default=fam["batch_size"])  # fp32 7B on 48 GB: 16 runs short on long texts
     ap.add_argument("--offload", action=argparse.BooleanOptionalAction, default=fam["offload"],
                     help="fp32 weights split between GPU and CPU RAM (default: the family's setting)")
@@ -134,7 +149,7 @@ def main():
 
     model_id, stage = resolve(args.model, args.stage)
     tok = load_tokenizer(args.tokenizer)
-    rows = load_jsonl(args.dataset)[: args.limit]
+    rows = first_n_per_set(load_jsonl(args.dataset)[: args.limit], args.n_per_set)
     by_id = {row["id"]: row for row in rows}
     assert len(by_id) == len(rows), "text ids must be unique"
     items = []

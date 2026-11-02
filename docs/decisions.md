@@ -285,3 +285,30 @@ oasst1 1124 candidates, 702 in Dolci, 122 failed length/render, 300 kept; UltraC
 `core.stats.SOURCE_ORDER` lists `ultrachat`). Core scores them in every slot with no code change:
 `python -m core.score --family F --model STAGE --dataset data/texts_authorship.jsonl --out ...` (`tests/test_authorship.py` checks the file
 and a CPU scoring run). No logit-distortion analysis was written.
+
+## 2026-11-02: core: core.score --n-per-set; run_gpu.sh SCORE_ARGS
+
+`core.score --n-per-set N` scores only the first N texts of each (source, kind) set of the dataset, in file order (default: all; the
+option is additive and `--limit` is unchanged). `scripts/run_gpu.sh` passes `SCORE_ARGS` to `core.score` only (for example
+`SCORE_ARGS="--n-per-set 100"`). Motivation: Gemma 4 31B in fp32 with CPU offload scores about 270 sequences in 10 minutes, so all 1190
+texts in three slots would take about 2.3 hours per checkpoint; the analysis takes the matching `--first N` so every family is compared on
+the same texts (`analyze.py --locked --first 100`). `tests/test_families.py::test_first_n_per_set` covers the helper.
+
+## 2026-11-02: docs: vestigial-regression README status brought up to date; runbook for 2026-11-03
+
+`measures/vestigial_regression/README.md`: Status, the judge-arm and criteria text and the TODO list now say what exists after the
+pipeline preparation (the asymmetry in `analyze.py --locked`, the judge and its prompt, `token_loop` and family handoff markers, the
+100-sentence prefill set, Gemma 4 31B and Qwen3-8B in core) and what does not (no capstone data collected, the judge never run against the
+API or validated, the Qwen3 assistant-slot decision). No criterion was changed except that the Spearman correlation's base points,
+previously an open decision, are excluded (they are zero by construction) with one NLL asymmetry per post-trained point; the README says
+this was decided at implementation time and is not part of the pre-registered design. `docs/runbook_2026-11-03.md` has the launch commands,
+estimates, decisions for Cole and what was blocked or skipped.
+
+## 2026-11-02: core: continuation_ids in core.generate is opt-in (--save-ids)
+
+Correction to the entry on `family_turn_markers` above: `core.generate` first stored the generated token ids in every record, which added a
+key to its output format (`tests/test_smoke.py` pins the keys). It is now opt-in: `--save-ids` adds `continuation_ids`; without it the records
+are exactly `prefill_id, sample, prefill, continuation, stopped_on_eos` as before. `scripts/run_gpu.sh` passes `--save-ids` when `FAMILY` is set
+(the legacy OLMo layout keeps the old format). `flags.py` uses the ids when present and re-tokenizes the user portion otherwise (which can miss a
+no-space loop that merges into fewer tokens). The measure's own `*_counts.csv` gained a `token_loop` column; `test_smoke.py`'s pinned column list
+was updated for it.

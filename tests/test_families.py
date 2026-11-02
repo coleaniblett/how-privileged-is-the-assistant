@@ -96,3 +96,11 @@ def test_hf_cache_free_repo_removes_only_unshared_blobs(tmp_path, monkeypatch):
 
 def test_run_script_parses():
     subprocess.run(["bash", "-n", str(ROOT / "scripts" / "run_gpu.sh")], check=True)
+
+
+def test_first_n_per_set():
+    from core.score import first_n_per_set
+    rows = [dict(id=f"{s}-{k}-{i}", source=s, kind=k) for s, k in [("a", "user"), ("a", "assistant"), ("b", "user")] for i in range(5)]
+    out = first_n_per_set(rows, 2)
+    assert [r["id"] for r in out] == ["a-user-0", "a-user-1", "a-assistant-0", "a-assistant-1", "b-user-0", "b-user-1"]
+    assert first_n_per_set(rows, None) is rows and first_n_per_set(rows, 0) is rows

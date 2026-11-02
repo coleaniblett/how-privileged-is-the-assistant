@@ -15,7 +15,7 @@
 # With FAMILY set (any config.FAMILIES key): scoring uses the family's settings (config.family_settings: fp32,
 # CPU offload for the 31B), generation its precision (int8 for the 31B), and the extras are skipped (they are OLMo-only
 # so far). Before each checkpoint is first loaded the script checks free disk against its weights (core.hf_cache check)
-# and stops if they do not fit. CLEAR_CACHE=auto (default): after a checkpoint is done, remove it from the HF cache if it is
+# and stops if they do not fit. SCORE_ARGS (e.g. SCORE_ARGS="--n-per-set 100") goes to core.score only. CLEAR_CACHE=auto (default): after a checkpoint is done, remove it from the HF cache if it is
 # larger than 20 GB and was not already cached when this script started; 1: always (same exception); 0: never.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -34,6 +34,9 @@ fi
 STAGES=${STAGES:-$(uv run python -c "from core import config; ${PY_FAM} print(' '.join(config.STAGES))" | tail -1)}
 VR=$OUT/vestigial_regression
 CLEAR_CACHE=${CLEAR_CACHE:-auto}
+SCORE_ARGS=${SCORE_ARGS:-}
+GEN_ARGS=${GEN_ARGS:-}
+[[ -n "$FAMILY" ]] && GEN_ARGS="--save-ids $GEN_ARGS"  # token ids for the token_loop flag (legacy OLMo layout: unchanged format)
 
 SWAP=1
 for a in "$@"; do [[ "$a" == --preceding-turn ]] && SWAP=0; done
@@ -51,8 +54,8 @@ for stage in $STAGES; do
   repo=$(repo_of "$stage")
   echo "=== $stage ($repo)"
   uv run python -m core.hf_cache check "$repo" || { echo "stopping: not enough disk for $repo (free space or clear the HF cache)"; exit 1; }
-  uv run python -m core.score "${FAM[@]}" --model "$stage" --out "$OUT/core/scores" "$@"
-  uv run python -m core.generate "${FAM[@]}" --model "$stage" --out "$OUT/core/generations" "$@"
+  uv run python -m core.score "${FAM[@]}" --model "$stage" --out "$OUT/core/scores" $SCORE_ARGS "$@"
+  uv run python -m core.generate "${FAM[@]}" --model "$stage" --out "$OUT/core/generations" $GEN_ARGS "$@"
   if [[ $SWAP == 1 ]]; then
     uv run python -m extras.role_swap score --model "$stage" --out "$OUT/extras/role_swap"
     uv run python -m extras.coin_toss score --model "$stage" --out "$OUT/extras/coin_toss"
