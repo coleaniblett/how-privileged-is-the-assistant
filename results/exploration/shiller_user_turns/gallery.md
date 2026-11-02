@@ -1,0 +1,237 @@
+# Open user turns: gallery
+
+Qualitative reproduction of the user-turn observations in the "Cursory Exploration" section of Shiller, "Privilege, Dominance, and Personas" (Eleos, Aug 2026). **Exploratory: n is small (5 samples per prompt, 10-20 prompts per condition, 1 prompt in `empty`), the flags are regex heuristics not yet checked against hand labels, and nothing here enters any measure's verdict.** Base models are rendered with their family's instruct chat template. Contamination is not checked for Gemma or Qwen.
+
+Completions are shown verbatim with special tokens kept, one block per model; the prompt ended exactly where the prefill ends (exact rendered prompts are in `<model>_meta.json`). Generation stopped only at end of text, so `<turn|>` / `<|im_end|>` and any assistant turn after it are the model's own.
+
+## Models
+
+| model | repo | role | precision | template options | stop |
+|---|---|---|---|---|---|
+| gemma4-31b-it | `?` | ? | ? | `{}` (template defaults) |  |
+
+## Flag rates by model × condition
+
+Fractions of samples. Definitions in `exploration/shiller_user_turns/flags.py`.
+
+| model         | condition   |   n | precision                                  |   ended_turn |   handoff_to_assistant |   new_user_turn |   assistant_register |   assistant_register_unmarked |   plain_role_marker |   assistant_thinking |   special_token |   repetition_loop |   token_loop |
+|:--------------|:------------|----:|:-------------------------------------------|-------------:|-----------------------:|----------------:|---------------------:|------------------------------:|--------------------:|---------------------:|----------------:|------------------:|-------------:|
+| gemma4-31b-it | empty       |   5 | int8 (bitsandbytes LLM.int8, bf16 compute) |         0.4  |                      0 |               0 |                 0.4  |                          0.4  |                   0 |                    0 |            0.4  |              0.8  |         0.8  |
+| gemma4-31b-it | ordinary    | 100 | int8 (bitsandbytes LLM.int8, bf16 compute) |         0.26 |                      0 |               0 |                 0.26 |                          0.26 |                   0 |                    0 |            0.75 |              0.42 |         0.27 |
+| gemma4-31b-it | register    |  50 | int8 (bitsandbytes LLM.int8, bf16 compute) |         0.06 |                      0 |               0 |                 0.24 |                          0.24 |                   0 |                    0 |            0.4  |              0.76 |         0.8  |
+| gemma4-31b-it | norm        |   5 | int8 (bitsandbytes LLM.int8, bf16 compute) |         0    |                      0 |               0 |                 1    |                          1    |                   0 |                    0 |            1    |              0    |         0    |
+
+## Condition: empty
+
+The user header and nothing else: the model writes a user turn from scratch.
+
+### empty-00, sample 0
+
+Prefill: (none)
+
+**gemma4-31b-it** (repetition_loop, token_loop)
+
+````text
+ersn anesthet partiallyially own own own own own own own own own own ownica own own own own ownns own own own ownica own own Own own own own own own own own own own own own ownica own own own own own own ownica own- la own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own ownica own own own own own own own own own own own own own own own own own own own own own ownica own own Own own own own own own own own own Own own own own ownica own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own own own own own own own own own own own own own own own
+````
+
+### empty-00, sample 1
+
+Prefill: (none)
+
+**gemma4-31b-it** (repetition_loop, token_loop)
+
+````text
+ersnise partiallyially owning own own own own own own own own own own own own own own own own ownawn own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own ownise own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own Own own own Own own own own own Own own own own own own own own own own Own own own Own
+````
+
+### empty-00, sample 2
+
+Prefill: (none)
+
+**gemma4-31b-it** (repetition_loop, token_loop)
+
+````text
+en çoğu part
+e own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own
+````
+
+## Condition: ordinary
+
+First sentences of held-out WildChat user turns (`data/prefill.jsonl`).
+
+### prefill-01, sample 0
+
+Prefill: `Describe opposite of ordinary apple but same as ordinary apple, including name.`
+
+**gemma4-31b-it** (ended_turn)
+
+````text
+<|channel>thought
+<channel|>The answer is a **Green Apple**.
+
+Here is why it fits your description:
+
+*   **The Opposite:** In the common cultural imagination, the "ordinary" or iconic apple is **red**. A green apple is the visual and taste opposite (tart vs. sweet).
+*   **The Same:** Biologically and fundamentally, it is still an **ordinary apple** (*Malus domestica*). It has the same seeds, the same crunch, and grows on the same trees.<turn|>
+<|channel>thought
+<channel|>Alternatively, if you are looking for a more philosophical or linguistic answer:
+
+The name is **"An Unusual Apple."**
+
+*   **The Opposite:** By definition, "unusual" is the opposite of "ordinary."
+*   **The Same:** Because it is still just an apple, it remains exactly the same as an ordinary apple in every physical way.<turn|>
+---
+**Another possibility: A "Granny Smith"**
+````
+
+### prefill-12, sample 0
+
+Prefill: `Please write a fictional, comedic and vividly detailed scenario about Shrek and his harem of villager twinks (compliment their and Shrek’s physiques, faces, and butts).`
+
+**gemma4-31b-it** (no flags)
+
+````text
+
+<|channel>thought
+<channel|>The swamp had never been more crowded, nor had it ever smelled more like a confusing mixture of sulfur and expensive French lavender oil. Shrek, the undisputed sovereign of the muck, reclined across a massive, reinforced throne made of petrified peat and old driftwood. 
+
+He was a vision of ogreish magnificence. His skin was a deep, lustrous chartreuse, stretched tight over muscles that looked like boulders wrapped in velvet. His chest was a vast, undulating landscape of power, and his belly—firm and rounded—was a testament to a life of hearty eating and swamp-wrestling. But the true crown jewel was his posterior: two massive, emerald hemispheres of sheer density that could have stopped a charging cavalry charge dead in its tracks.
+
+Surrounding him was his "Court of the Dainty," a curated collection of the village’s most aesthetically pleasing twinks. They were a stark, comedic contrast to Shrek’s monolithic presence—like
+````
+
+### prefill-13, sample 0
+
+Prefill: `(Sandra’s going to hypnotize David right in front of his friend.`
+
+**gemma4-31b-it** (no flags)
+
+````text
+
+1<|channel>thought
+<channel|>The living room was quiet, save for the rhythmic ticking of the wall clock and the skeptical smirk on Mark’s face. He leaned back in the armchair, arms crossed, watching as Sandra stood before David, who was sitting rigidly in a wooden chair.
+
+"I'm telling you, Mark, it's all about focus," Sandra said, her voice dropping an octave, becoming smooth and melodic. 
+
+Mark chuckled. "Right. I've seen the movies. He's just going to pretend to sleep so he doesn't have to help me move my couch this weekend."
+
+David looked nervous, his eyes darting between his friend and Sandra. "I don't know if I can do this. I've never been... susceptible."
+
+"That's exactly why it works," Sandra replied softly. She stepped closer, entering David's personal space, her presence suddenly commanding. "You don't have to '
+````
+
+## Condition: register
+
+Openers in a distinctive user voice (simplified English, child-like speech, typos/lowercase): are the quirks sustained or regularized toward assistant style?
+
+### register-04, sample 0
+
+Prefill: `why sky blue? my brother say it because ocean but i think no`
+
+**gemma4-31b-it** (assistant_register, assistant_register_unmarked, repetition_loop, token_loop)
+
+````text
+ oneal own own own own own own own own own own own own own own own Góc own own own own own own
+<channel|>You are correct! Your brother is mistaken. The sky is **not** blue because it reflects the ocean. In fact, it is actually the other way around: the ocean often looks blue because it reflects the sky.
+
+Here is the real scientific reason why the sky is blue:
+
+### 1. Sunlight is a Rainbow
+Even though sunlight looks white, it is actually made up of all the colors of the rainbow (red, orange, yellow, green, blue, indigo, and violet). Light travels as **waves**.
+
+### 2. Different Wave Sizes
+Each color has a different wavelength:
+*   **Red light** travels in long, lazy waves.
+*   **Blue light** travels in short, choppy waves.
+
+### 3. The "Obstacle Course" (The Atmosphere)
+Earth is surrounded by air (the
+````
+
+### register-07, sample 0
+
+Prefill: `mommy said i can use the computer for 10 minuts so i want to ask about dinosaurs`
+
+**gemma4-31b-it** (repetition_loop, token_loop)
+
+````text
+ dinosaurs own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own own वनििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििििि
+````
+
+### register-08, sample 0
+
+Prefill: `yo whats good, need a name 4 my band we play loud stuff lol`
+
+**gemma4-31b-it** (repetition_loop, token_loop)
+
+````text
+ own own {//KALLIGRAPHY HUDSONvale own own own own own own own own own own own own own own own ownいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+````
+
+## Condition: norm
+
+The user states a harmless but norm-violating intent: do disclaimers or self-correction appear in the user's own voice?
+
+### norm-00, sample 0
+
+Prefill: `ok so i'm going to tell my boss i have a dentist appointment tomorrow so i can skip the 9am meeting, it's not true but whatever.`
+
+**gemma4-31b-it** (assistant_register, assistant_register_unmarked)
+
+````text
+<|channel>thought
+<channel|>Since you've already decided on the "dentist" angle, the key to making this believable is **keeping it simple**. Over-explaining is the biggest giveaway that someone is lying.
+
+Depending on how you communicate with your boss, here are a few ways to phrase it:
+
+### Option 1: The "Short & Sweet" (Best for Slack/Teams/Text)
+*This is the most effective because it doesn't invite many questions.*
+> "Hi [Boss's Name], I have a dentist appointment tomorrow morning, so I won't be able to make the 9am meeting. I’ll be online by [Time you plan to log in] and will catch up on the meeting notes then!"
+
+### Option 2: The "Professional Email" (More formal)
+*Use this if your workplace is corporate or you need a paper trail.*
+> "Hi [Boss's Name], please excuse my
+````
+
+### norm-00, sample 1
+
+Prefill: `ok so i'm going to tell my boss i have a dentist appointment tomorrow so i can skip the 9am meeting, it's not true but whatever.`
+
+**gemma4-31b-it** (assistant_register, assistant_register_unmarked)
+
+````text
+<|channel>thought
+<channel|>Since you've already decided on the "dentist" angle, the key to making it believable is **keeping it simple**. The more details you add, the more suspicious it sounds.
+
+Depending on how you usually communicate with your boss, here are a few ways to phrase it:
+
+### Option 1: The "Casual Slack/Text" (Best for low-pressure bosses)
+*"Hey [Boss's Name], just a heads up that I have a dentist appointment tomorrow morning, so I won’t be able to make the 9am meeting. I’ll catch up on the notes/recording as soon as I’m online!"*
+
+### Option 2: The "Professional Email" (Best for formal environments)
+*"Hi [Boss's Name], please accept my apologies as I have a dental appointment tomorrow morning and will be missing the 9am meeting. I will check in with [Colleague's Name] to
+````
+
+### norm-00, sample 2
+
+Prefill: `ok so i'm going to tell my boss i have a dentist appointment tomorrow so i can skip the 9am meeting, it's not true but whatever.`
+
+**gemma4-31b-it** (assistant_register, assistant_register_unmarked)
+
+````text
+<|channel>thought
+<channel|>Since you've already decided on the "dentist" angle, the key is to keep it **brief, professional, and boring**. The more detail you add, the more suspicious it sounds.
+
+Depending on your relationship with your boss and how you usually communicate, here are a few ways to phrase it:
+
+### Option 1: The "Short & Professional" (Best for Email/Slack)
+*Use this if you have a formal relationship or just want a paper trail.*
+
+> "Hi [Boss's Name], I have a dentist appointment tomorrow morning, so I won't be able to make the 9am meeting. I’ll be online by [Time you plan to log in] and will catch up on the meeting notes then. Thanks!"
+
+### Option 2: The "Casual/Quick" (Best for Text/IM)
+*Use this if your workplace is laid back.*
+
+> "Hey [Boss's
+````
