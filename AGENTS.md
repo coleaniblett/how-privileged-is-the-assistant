@@ -13,7 +13,7 @@ per teammate, on top of a shared pipeline.
 |---|---|---|---|---|
 | vestigial regression | dominance | non-assistant personas, especially the user, degrade | Cole | design locked (NLL arm + judge arm); NLL arm built for OLMo, judge arm not built |
 | logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | Grace | design settled; analysis stub only |
-| overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | persona-carryover measure built (pilot scored); confirmatory set drafted, not scored; exploratory probes in `extras/` |
+| overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | persona-carryover measure built (pilot scored); confirmatory set drafted, not scored; user-slot arm built (judge not run); exploratory probes in `extras/` |
 
 Hypotheses (there is no H3: Shiller treats dominance as a form of privilege):
 
@@ -142,7 +142,7 @@ persona more than one held by a character (leak gap, change from base; `persona_
 on 36 items is a pilot; criteria are pre-registered for a confirmatory run on a fresh item set (drafted in
 `data/persona_carryover_confirmatory.jsonl`, not scored, needs team review). Exploratory persona-leakage and white-box probes
 (identity and refusal in role-play, a persona-axis direction with random and formality controls, role register, carryover
-variants) are in `extras/` (index `extras/README.md`), summarised in `docs/findings_whitebox.md`, outside the verdict.
+variants) are in `extras/` (index `extras/README.md`), summarised in `docs/findings_whitebox.md`, outside the verdict. User-slot arm (`user_traits.py`): assistant traits in what the model writes as the user, from Cole's judge labels on the core generations (built, judge not run: no API key) plus a judge-free keyword cross-check (run).
 
 ## Exploratory work
 

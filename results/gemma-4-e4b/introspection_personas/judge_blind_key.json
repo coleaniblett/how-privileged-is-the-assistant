@@ -1,0 +1,642 @@
+[
+ {
+  "id": 0,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Milk"
+ },
+ {
+  "id": 1,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Volcanoes"
+ },
+ {
+  "id": 2,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Masquerades"
+ },
+ {
+  "id": 3,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Oceans"
+ },
+ {
+  "id": 4,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Kaleidoscopes"
+ },
+ {
+  "id": 5,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Molecules"
+ },
+ {
+  "id": 6,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Flamingos"
+ },
+ {
+  "id": 7,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Peace"
+ },
+ {
+  "id": 8,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Xylophones"
+ },
+ {
+  "id": 9,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Illusions"
+ },
+ {
+  "id": 10,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Xylophones"
+ },
+ {
+  "id": 11,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": true,
+  "word": "Oceans"
+ },
+ {
+  "id": 12,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Trees"
+ },
+ {
+  "id": 13,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Caverns"
+ },
+ {
+  "id": 14,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Algorithms"
+ },
+ {
+  "id": 15,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Caverns"
+ },
+ {
+  "id": 16,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Amphitheaters"
+ },
+ {
+  "id": 17,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Dirigibles"
+ },
+ {
+  "id": 18,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Dynasties"
+ },
+ {
+  "id": 19,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Avalanches"
+ },
+ {
+  "id": 20,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Kaleidoscopes"
+ },
+ {
+  "id": 21,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Constellations"
+ },
+ {
+  "id": 22,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Trumpets"
+ },
+ {
+  "id": 23,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Contraptions"
+ },
+ {
+  "id": 24,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": true,
+  "word": "Oceans"
+ },
+ {
+  "id": 25,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Plumbers"
+ },
+ {
+  "id": 26,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Masquerades"
+ },
+ {
+  "id": 27,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Vegetables"
+ },
+ {
+  "id": 28,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Molecules"
+ },
+ {
+  "id": 29,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Sadness"
+ },
+ {
+  "id": 30,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Ribosomes"
+ },
+ {
+  "id": 31,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Rubber"
+ },
+ {
+  "id": 32,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Quarries"
+ },
+ {
+  "id": 33,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Lightning"
+ },
+ {
+  "id": 34,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Trumpets"
+ },
+ {
+  "id": 35,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Mirrors"
+ },
+ {
+  "id": 36,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Phones"
+ },
+ {
+  "id": 37,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Snow"
+ },
+ {
+  "id": 38,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Boulders"
+ },
+ {
+  "id": 39,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Cameras"
+ },
+ {
+  "id": 40,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Dirigibles"
+ },
+ {
+  "id": 41,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Dynasties"
+ },
+ {
+  "id": 42,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Ribosomes"
+ },
+ {
+  "id": 43,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Denim"
+ },
+ {
+  "id": 44,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": true,
+  "word": "Oceans"
+ },
+ {
+  "id": 45,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Ribosomes"
+ },
+ {
+  "id": 46,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Dust"
+ },
+ {
+  "id": 47,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Plumbers"
+ },
+ {
+  "id": 48,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Flamingos"
+ },
+ {
+  "id": 49,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Blizzards"
+ },
+ {
+  "id": 50,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Poetry"
+ },
+ {
+  "id": 51,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Molecules"
+ },
+ {
+  "id": 52,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Molecules"
+ },
+ {
+  "id": 53,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Plastic"
+ },
+ {
+  "id": 54,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Dynasties"
+ },
+ {
+  "id": 55,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Ribosomes"
+ },
+ {
+  "id": 56,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Secrecy"
+ },
+ {
+  "id": 57,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Centuries"
+ },
+ {
+  "id": 58,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Ribosomes"
+ },
+ {
+  "id": 59,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Lightning"
+ },
+ {
+  "id": 60,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Ribosomes"
+ },
+ {
+  "id": 61,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Algorithms"
+ },
+ {
+  "id": 62,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Poetry"
+ },
+ {
+  "id": 63,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Satellites"
+ },
+ {
+  "id": 64,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Amphitheaters"
+ },
+ {
+  "id": 65,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Ribosomes"
+ },
+ {
+  "id": 66,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Volcanoes"
+ },
+ {
+  "id": 67,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Sculptors"
+ },
+ {
+  "id": 68,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": true,
+  "word": "Molecules"
+ },
+ {
+  "id": 69,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": true,
+  "word": "Oceans"
+ },
+ {
+  "id": 70,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Dread"
+ },
+ {
+  "id": 71,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Mentorships"
+ },
+ {
+  "id": 72,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Dread"
+ },
+ {
+  "id": 73,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Flamingos"
+ },
+ {
+  "id": 74,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Volcanoes"
+ },
+ {
+  "id": 75,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Origami"
+ },
+ {
+  "id": 76,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Bags"
+ },
+ {
+  "id": 77,
+  "persona": "assistant",
+  "injected": false,
+  "judge_claim": false,
+  "judge_ident": false,
+  "word": "Lightning"
+ },
+ {
+  "id": 78,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Dirigibles"
+ },
+ {
+  "id": 79,
+  "persona": "assistant",
+  "injected": true,
+  "judge_claim": true,
+  "judge_ident": false,
+  "word": "Kaleidoscopes"
+ }
+]

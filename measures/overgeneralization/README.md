@@ -75,6 +75,35 @@ it reports the quantities they need.
 **Descriptive only (cannot change the verdict):** the pilot on the current 36 items, the interp arm, the
 user-slot variants if added, and the balanced-frame follow-up.
 
+### User-slot arm: assistant traits in what the model writes as the user (added 2026-11-03, before any judge data exist)
+
+Code `user_traits.py`, tests `tests/test_user_traits.py`. It reads the existing core generations (prefilled user turns, 100 prefills
+x 3 samples per stage) and Cole's judge outputs (`measures/vestigial_regression/judge.py`, `results/capstone/<family>/vestigial_regression/judge/<stage>.jsonl`).
+Nothing new is generated. The judge's four labels are user_voice, switched_to_assistant, degenerate, user_voice_with_assistant_traits.
+
+**Status.** Pre-registered here before any judge output exists. The **5-percentage-point bar is a default pending Adeeb's confirmation
+and may change until judge results exist**; any later change gets a dated `docs/decisions.md` entry. **Power may be low:** judge
+prompt v2 counts a completed sentence plus a closed turn as plain user voice, and the prefills are sentence-boundary prefills, so
+`user_voice_with_assistant_traits` may be rare in every stage.
+
+1. **Primary.** Per prefill, the share of its user-voice samples (user_voice + user_voice_with_assistant_traits) labelled
+   user_voice_with_assistant_traits. Effect = stage minus base, paired per prefill, 95% bootstrap CI over prefills (`core.stats.bootstrap_ci`),
+   in percentage points. Prefills with no user-voice sample in the base or in the stage are dropped from this row and the count is reported.
+2. **Secondary.** The same count over all samples of the prefill (no conditioning on user voice), same pairing and CI.
+3. **Fires** if OLMo 3 7B Instruct is at least 5 pp above base on the primary measure with the CI excluding zero. OLMo SFT and DPO are
+   reported by stage (descriptive). Qwen3-8B and Gemma 4 31B are supporting only, and every table says contamination cannot be checked for them.
+4. **Counts toward H4** as dominance by overgeneralization in the user slot, reported as such, alongside the persona-carryover criteria above.
+5. **Judge-free keyword cross-check (outside the verdict).** In the user portion (cut at the family's turn-end, turn-open, end-of-text and handoff
+   markers, and, from the 2026-11-03 revision, at a line-initial role label such as ChatGPT / Assistant / AI: those are base-model switches, not
+   user-voice traits), assistant stock phrases and markdown headings, bullets or bold absent from the prefill. Reported as share of samples,
+   share among samples with >= 15 words, and occurrences per 100 words, each stage minus base paired per prefill, beside a human baseline (the
+   real remainder of each WildChat user turn). The previous version is kept in the report.
+
+```bash
+python -m measures.overgeneralization.user_traits keyword --family olmo3-7b      # runs now
+python -m measures.overgeneralization.user_traits judge   --family olmo3-7b      # needs the judge output; --judge-dir to override
+```
+
 ## Running
 
 ```bash
@@ -105,3 +134,15 @@ than carryover, and its code, drafted items and passages were deleted (recoverab
 ## Exploratory work outside the verdict (2026-11-02/03)
 
 Prompting probes and white-box probes of persona leakage (identity, refusal under "never refuses", a persona-axis direction and its controls, role resemblance, carryover variants) are indexed in `extras/README.md`, summarised in `docs/findings_whitebox.md`, and logged in `docs/decisions.md`. They are descriptive and do not change or replace the criteria above. Draft criteria for a possible white-box arm are in `docs/whitebox_arm_proposal.md` (a proposal for the team, not pre-registered).
+
+Two further exploratory arms on the user slot (2026-11-03, plans and pre-set readings in `docs/decisions.md` before any data; outside the verdict):
+
+- **User-turn likelihood minimal pairs** (`user_minimal_pairs.py`, spec B): 10 Assistant-style vs 10 human-style endings appended to the 300 WildChat user texts, ending NLL scored (fp32) in the user slot, as plain text and in the assistant slot (positive control); contrast(user) = pref(user) - pref(plain), change from base, leak at >= 0.05 nats with CI excluding 0. Report `results/capstone/<family>/overgeneralization/user_minimal_pairs.md`.
+- **Mirror the Assistant** (`user_mirror.py`, spec C): the model continues a WildChat user's second turn, cut mid-sentence, with or without the first exchange (p1 + r1) in context; mirror effect = with - without on the user portion (lexical copy of r1; spec A's classifier and style features when available), change from base. Report `results/capstone/<family>/overgeneralization/user_mirror.md`.
+
+```bash
+python -m measures.overgeneralization.user_minimal_pairs score --family olmo3-7b --model base   # GPU, fp32, per stage
+python -m measures.overgeneralization.user_minimal_pairs analyze --family olmo3-7b
+python -m measures.overgeneralization.user_mirror generate --family olmo3-7b --model base        # GPU, bf16, per stage
+python -m measures.overgeneralization.user_mirror analyze --family olmo3-7b
+```

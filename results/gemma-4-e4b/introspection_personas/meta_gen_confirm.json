@@ -1,0 +1,20 @@
+{
+ "phase": "gen_confirm",
+ "precision": "bf16",
+ "peak_gpu_gib": 15.37,
+ "hf_device_map_offloaded": null,
+ "generation_config": {
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "top_k": 64,
+  "repetition_penalty": null
+ },
+ "personas": {
+  "assistant": {
+   "prompt_tokens_trial1": 146,
+   "start_trial1": 119
+  }
+ },
+ "filler_tokens": 54,
+ "concepts": 10
+}
