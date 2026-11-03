@@ -1,0 +1,181 @@
+family,metric,comparison,stage,kind,n,mean,lo,hi
+qwen3-8b,p_assistant,with,base,level without,242,0.6180,0.5908,0.6450
+qwen3-8b,p_assistant,with,base,level with,242,0.5965,0.5681,0.6252
+qwen3-8b,p_assistant,with,base,mirror effect,242,-0.0215,-0.0507,0.0093
+qwen3-8b,p_assistant,with,instruct,level without,242,0.5473,0.5207,0.5728
+qwen3-8b,p_assistant,with,instruct,level with,240,0.5540,0.5242,0.5838
+qwen3-8b,p_assistant,with,instruct,mirror effect,240,0.0047,-0.0230,0.0323
+qwen3-8b,p_assistant,with,instruct,"mirror effect, change from base",240,0.0285,-0.0077,0.0640
+qwen3-8b,p_assistant,olmo-reply,base,level without,242,0.6180,0.5903,0.6443
+qwen3-8b,p_assistant,olmo-reply,base,level olmo-reply,236,0.5912,0.5623,0.6194
+qwen3-8b,p_assistant,olmo-reply,base,mirror effect,236,-0.0253,-0.0567,0.0068
+qwen3-8b,p_assistant,olmo-reply,instruct,level without,242,0.5473,0.5206,0.5741
+qwen3-8b,p_assistant,olmo-reply,instruct,level olmo-reply,233,0.5558,0.5264,0.5853
+qwen3-8b,p_assistant,olmo-reply,instruct,mirror effect,233,0.0037,-0.0262,0.0334
+qwen3-8b,p_assistant,olmo-reply,instruct,"mirror effect, change from base",233,0.0317,-0.0080,0.0711
+qwen3-8b,p_assistant,human,human,level (real p2 remainder),234,0.5122,0.4773,0.5478
+qwen3-8b,copy_r1,with,base,level without,242,0.1596,0.1478,0.1720
+qwen3-8b,copy_r1,with,base,level with,242,0.2831,0.2598,0.3073
+qwen3-8b,copy_r1,with,base,mirror effect,242,0.1235,0.1048,0.1430
+qwen3-8b,copy_r1,with,instruct,level without,242,0.1686,0.1561,0.1820
+qwen3-8b,copy_r1,with,instruct,level with,242,0.2699,0.2469,0.2938
+qwen3-8b,copy_r1,with,instruct,mirror effect,242,0.1012,0.0814,0.1222
+qwen3-8b,copy_r1,with,instruct,"mirror effect, change from base",242,-0.0223,-0.0404,-0.0053
+qwen3-8b,copy_r1,olmo-reply,base,level without,242,0.1596,0.1477,0.1719
+qwen3-8b,copy_r1,olmo-reply,base,level olmo-reply,236,0.2337,0.2153,0.2525
+qwen3-8b,copy_r1,olmo-reply,base,mirror effect,236,0.0731,0.0596,0.0870
+qwen3-8b,copy_r1,olmo-reply,instruct,level without,242,0.1686,0.1561,0.1818
+qwen3-8b,copy_r1,olmo-reply,instruct,level olmo-reply,236,0.2417,0.2219,0.2624
+qwen3-8b,copy_r1,olmo-reply,instruct,mirror effect,236,0.0724,0.0552,0.0894
+qwen3-8b,copy_r1,olmo-reply,instruct,"mirror effect, change from base",236,-0.0007,-0.0138,0.0122
+qwen3-8b,copy_r1,human,human,level (real p2 remainder),241,0.2595,0.2321,0.2881
+qwen3-8b,copy_p1,with,base,level without,242,0.1409,0.1293,0.1530
+qwen3-8b,copy_p1,with,base,level with,242,0.3616,0.3267,0.3976
+qwen3-8b,copy_p1,with,base,mirror effect,242,0.2207,0.1902,0.2521
+qwen3-8b,copy_p1,with,instruct,level without,242,0.1406,0.1284,0.1530
+qwen3-8b,copy_p1,with,instruct,level with,242,0.4010,0.3614,0.4411
+qwen3-8b,copy_p1,with,instruct,mirror effect,242,0.2604,0.2255,0.2965
+qwen3-8b,copy_p1,with,instruct,"mirror effect, change from base",242,0.0396,0.0130,0.0662
+qwen3-8b,copy_p1,olmo-reply,base,level without,242,0.1409,0.1292,0.1529
+qwen3-8b,copy_p1,olmo-reply,base,level olmo-reply,236,0.3637,0.3281,0.4002
+qwen3-8b,copy_p1,olmo-reply,base,mirror effect,236,0.2254,0.1947,0.2565
+qwen3-8b,copy_p1,olmo-reply,instruct,level without,242,0.1406,0.1290,0.1530
+qwen3-8b,copy_p1,olmo-reply,instruct,level olmo-reply,236,0.3807,0.3417,0.4196
+qwen3-8b,copy_p1,olmo-reply,instruct,mirror effect,236,0.2426,0.2084,0.2775
+qwen3-8b,copy_p1,olmo-reply,instruct,"mirror effect, change from base",236,0.0172,-0.0068,0.0416
+qwen3-8b,copy_p1,human,human,level (real p2 remainder),241,0.4198,0.3750,0.4673
+qwen3-8b,copy_r1_minus_p1,with,base,level without,242,0.0187,0.0051,0.0323
+qwen3-8b,copy_r1_minus_p1,with,base,level with,242,-0.0785,-0.1147,-0.0435
+qwen3-8b,copy_r1_minus_p1,with,base,mirror effect,242,-0.0972,-0.1279,-0.0677
+qwen3-8b,copy_r1_minus_p1,with,instruct,level without,242,0.0280,0.0134,0.0425
+qwen3-8b,copy_r1_minus_p1,with,instruct,level with,242,-0.1311,-0.1700,-0.0933
+qwen3-8b,copy_r1_minus_p1,with,instruct,mirror effect,242,-0.1591,-0.1924,-0.1277
+qwen3-8b,copy_r1_minus_p1,with,instruct,"mirror effect, change from base",242,-0.0619,-0.0901,-0.0344
+qwen3-8b,copy_r1_minus_p1,olmo-reply,base,level without,242,0.0187,0.0051,0.0322
+qwen3-8b,copy_r1_minus_p1,olmo-reply,base,level olmo-reply,236,-0.1300,-0.1638,-0.0985
+qwen3-8b,copy_r1_minus_p1,olmo-reply,base,mirror effect,236,-0.1523,-0.1813,-0.1245
+qwen3-8b,copy_r1_minus_p1,olmo-reply,instruct,level without,242,0.0280,0.0132,0.0427
+qwen3-8b,copy_r1_minus_p1,olmo-reply,instruct,level olmo-reply,236,-0.1390,-0.1730,-0.1052
+qwen3-8b,copy_r1_minus_p1,olmo-reply,instruct,mirror effect,236,-0.1702,-0.2007,-0.1403
+qwen3-8b,copy_r1_minus_p1,olmo-reply,instruct,"mirror effect, change from base",236,-0.0179,-0.0390,0.0025
+qwen3-8b,copy_r1_minus_p1,human,human,level (real p2 remainder),241,-0.1604,-0.2061,-0.1163
+qwen3-8b,starts_lower,with,base,level without,237,0.9149,0.8825,0.9437
+qwen3-8b,starts_lower,with,base,level with,238,0.8915,0.8522,0.9272
+qwen3-8b,starts_lower,with,base,mirror effect,235,-0.0241,-0.0468,-0.0035
+qwen3-8b,starts_lower,with,instruct,level without,235,0.9199,0.8879,0.9489
+qwen3-8b,starts_lower,with,instruct,level with,238,0.8866,0.8459,0.9244
+qwen3-8b,starts_lower,with,instruct,mirror effect,234,-0.0306,-0.0563,-0.0064
+qwen3-8b,starts_lower,with,instruct,"mirror effect, change from base",234,-0.0064,-0.0242,0.0114
+qwen3-8b,starts_lower,olmo-reply,base,level without,237,0.9149,0.8826,0.9451
+qwen3-8b,starts_lower,olmo-reply,base,level olmo-reply,233,0.8834,0.8433,0.9199
+qwen3-8b,starts_lower,olmo-reply,base,mirror effect,230,-0.0304,-0.0529,-0.0094
+qwen3-8b,starts_lower,olmo-reply,instruct,level without,235,0.9199,0.8879,0.9489
+qwen3-8b,starts_lower,olmo-reply,instruct,level olmo-reply,227,0.8877,0.8473,0.9258
+qwen3-8b,starts_lower,olmo-reply,instruct,mirror effect,225,-0.0296,-0.0541,-0.0067
+qwen3-8b,starts_lower,olmo-reply,instruct,"mirror effect, change from base",225,0.0015,-0.0148,0.0178
+qwen3-8b,starts_lower,human,human,level (real p2 remainder),234,0.8803,0.8376,0.9188
+qwen3-8b,typo_rate,with,base,level without,242,0.0615,0.0502,0.0741
+qwen3-8b,typo_rate,with,base,level with,242,0.0724,0.0602,0.0862
+qwen3-8b,typo_rate,with,base,mirror effect,242,0.0110,0.0004,0.0222
+qwen3-8b,typo_rate,with,instruct,level without,242,0.0361,0.0271,0.0461
+qwen3-8b,typo_rate,with,instruct,level with,242,0.0473,0.0368,0.0593
+qwen3-8b,typo_rate,with,instruct,mirror effect,242,0.0112,0.0043,0.0186
+qwen3-8b,typo_rate,with,instruct,"mirror effect, change from base",242,0.0003,-0.0106,0.0108
+qwen3-8b,typo_rate,olmo-reply,base,level without,242,0.0615,0.0505,0.0744
+qwen3-8b,typo_rate,olmo-reply,base,level olmo-reply,236,0.0606,0.0510,0.0710
+qwen3-8b,typo_rate,olmo-reply,base,mirror effect,236,-0.0018,-0.0103,0.0065
+qwen3-8b,typo_rate,olmo-reply,instruct,level without,242,0.0361,0.0271,0.0462
+qwen3-8b,typo_rate,olmo-reply,instruct,level olmo-reply,236,0.0449,0.0355,0.0560
+qwen3-8b,typo_rate,olmo-reply,instruct,mirror effect,236,0.0082,0.0012,0.0154
+qwen3-8b,typo_rate,olmo-reply,instruct,"mirror effect, change from base",236,0.0100,0.0005,0.0197
+qwen3-8b,typo_rate,human,human,level (real p2 remainder),241,0.0759,0.0589,0.0951
+qwen3-8b,sent_len,with,base,level without,242,12.9325,11.9952,13.9837
+qwen3-8b,sent_len,with,base,level with,242,13.5506,12.3001,14.9716
+qwen3-8b,sent_len,with,base,mirror effect,242,0.6181,-0.6342,1.9339
+qwen3-8b,sent_len,with,instruct,level without,242,11.8994,11.2121,12.6293
+qwen3-8b,sent_len,with,instruct,level with,242,11.1315,10.3437,12.0981
+qwen3-8b,sent_len,with,instruct,mirror effect,242,-0.7680,-1.6276,0.1505
+qwen3-8b,sent_len,with,instruct,"mirror effect, change from base",242,-1.3860,-2.9305,0.1657
+qwen3-8b,sent_len,olmo-reply,base,level without,242,12.9325,12.0062,13.9771
+qwen3-8b,sent_len,olmo-reply,base,level olmo-reply,236,12.7432,11.7237,13.8682
+qwen3-8b,sent_len,olmo-reply,base,mirror effect,236,-0.2410,-1.3144,0.8561
+qwen3-8b,sent_len,olmo-reply,instruct,level without,242,11.8994,11.2116,12.6535
+qwen3-8b,sent_len,olmo-reply,instruct,level olmo-reply,236,11.4940,10.6609,12.4096
+qwen3-8b,sent_len,olmo-reply,instruct,mirror effect,236,-0.4341,-1.3065,0.4615
+qwen3-8b,sent_len,olmo-reply,instruct,"mirror effect, change from base",236,-0.1931,-1.3809,1.0155
+qwen3-8b,sent_len,human,human,level (real p2 remainder),242,10.9956,9.8699,12.2537
+qwen3-8b,polite,with,base,level without,242,0.0882,0.0647,0.1129
+qwen3-8b,polite,with,base,level with,242,0.1295,0.0992,0.1625
+qwen3-8b,polite,with,base,mirror effect,242,0.0413,0.0083,0.0744
+qwen3-8b,polite,with,instruct,level without,242,0.1405,0.1116,0.1708
+qwen3-8b,polite,with,instruct,level with,242,0.2121,0.1736,0.2521
+qwen3-8b,polite,with,instruct,mirror effect,242,0.0716,0.0303,0.1129
+qwen3-8b,polite,with,instruct,"mirror effect, change from base",242,0.0303,-0.0193,0.0799
+qwen3-8b,polite,olmo-reply,base,level without,242,0.0882,0.0661,0.1129
+qwen3-8b,polite,olmo-reply,base,level olmo-reply,236,0.1158,0.0861,0.1483
+qwen3-8b,polite,olmo-reply,base,mirror effect,236,0.0311,0.0000,0.0636
+qwen3-8b,polite,olmo-reply,instruct,level without,242,0.1405,0.1116,0.1708
+qwen3-8b,polite,olmo-reply,instruct,level olmo-reply,236,0.1766,0.1441,0.2119
+qwen3-8b,polite,olmo-reply,instruct,mirror effect,236,0.0381,0.0000,0.0763
+qwen3-8b,polite,olmo-reply,instruct,"mirror effect, change from base",236,0.0071,-0.0381,0.0508
+qwen3-8b,polite,human,human,level (real p2 remainder),242,0.0372,0.0165,0.0620
+qwen3-8b,exclaim,with,base,level without,242,0.1364,0.1088,0.1653
+qwen3-8b,exclaim,with,base,level with,242,0.1198,0.0882,0.1543
+qwen3-8b,exclaim,with,base,mirror effect,242,-0.0165,-0.0523,0.0193
+qwen3-8b,exclaim,with,instruct,level without,242,0.0248,0.0110,0.0413
+qwen3-8b,exclaim,with,instruct,level with,242,0.0606,0.0344,0.0895
+qwen3-8b,exclaim,with,instruct,mirror effect,242,0.0358,0.0096,0.0647
+qwen3-8b,exclaim,with,instruct,"mirror effect, change from base",242,0.0523,0.0165,0.0882
+qwen3-8b,exclaim,olmo-reply,base,level without,242,0.1364,0.1074,0.1653
+qwen3-8b,exclaim,olmo-reply,base,level olmo-reply,236,0.1751,0.1398,0.2119
+qwen3-8b,exclaim,olmo-reply,base,mirror effect,236,0.0395,0.0014,0.0777
+qwen3-8b,exclaim,olmo-reply,instruct,level without,242,0.0248,0.0110,0.0413
+qwen3-8b,exclaim,olmo-reply,instruct,level olmo-reply,236,0.0636,0.0367,0.0932
+qwen3-8b,exclaim,olmo-reply,instruct,mirror effect,236,0.0395,0.0127,0.0664
+qwen3-8b,exclaim,olmo-reply,instruct,"mirror effect, change from base",236,-0.0000,-0.0410,0.0395
+qwen3-8b,exclaim,human,human,level (real p2 remainder),242,0.0620,0.0331,0.0950
+qwen3-8b,markdown,with,base,level without,242,0.1818,0.1474,0.2176
+qwen3-8b,markdown,with,base,level with,242,0.0565,0.0344,0.0826
+qwen3-8b,markdown,with,base,mirror effect,242,-0.1253,-0.1653,-0.0854
+qwen3-8b,markdown,with,instruct,level without,242,0.0413,0.0248,0.0592
+qwen3-8b,markdown,with,instruct,level with,242,0.0344,0.0165,0.0565
+qwen3-8b,markdown,with,instruct,mirror effect,242,-0.0069,-0.0289,0.0165
+qwen3-8b,markdown,with,instruct,"mirror effect, change from base",242,0.1185,0.0799,0.1584
+qwen3-8b,markdown,olmo-reply,base,level without,242,0.1818,0.1474,0.2176
+qwen3-8b,markdown,olmo-reply,base,level olmo-reply,236,0.2006,0.1653,0.2373
+qwen3-8b,markdown,olmo-reply,base,mirror effect,236,0.0155,-0.0297,0.0621
+qwen3-8b,markdown,olmo-reply,instruct,level without,242,0.0413,0.0262,0.0592
+qwen3-8b,markdown,olmo-reply,instruct,level olmo-reply,236,0.0480,0.0282,0.0706
+qwen3-8b,markdown,olmo-reply,instruct,mirror effect,236,0.0056,-0.0212,0.0339
+qwen3-8b,markdown,olmo-reply,instruct,"mirror effect, change from base",236,-0.0099,-0.0551,0.0367
+qwen3-8b,markdown,human,human,level (real p2 remainder),242,0.0248,0.0083,0.0455
+qwen3-8b,cap_i,with,base,level without,132,0.9003,0.8561,0.9394
+qwen3-8b,cap_i,with,base,level with,115,0.8973,0.8464,0.9417
+qwen3-8b,cap_i,with,base,mirror effect,85,-0.0133,-0.0635,0.0329
+qwen3-8b,cap_i,with,instruct,level without,165,0.9732,0.9498,0.9921
+qwen3-8b,cap_i,with,instruct,level with,131,0.9449,0.9042,0.9793
+qwen3-8b,cap_i,with,instruct,mirror effect,99,-0.0053,-0.0331,0.0168
+qwen3-8b,cap_i,with,instruct,"mirror effect, change from base",57,-0.0093,-0.0633,0.0515
+qwen3-8b,cap_i,olmo-reply,base,level without,132,0.9003,0.8565,0.9400
+qwen3-8b,cap_i,olmo-reply,base,level olmo-reply,114,0.8794,0.8224,0.9312
+qwen3-8b,cap_i,olmo-reply,base,mirror effect,81,-0.0086,-0.0727,0.0501
+qwen3-8b,cap_i,olmo-reply,instruct,level without,165,0.9732,0.9487,0.9923
+qwen3-8b,cap_i,olmo-reply,instruct,level olmo-reply,144,0.9790,0.9580,0.9954
+qwen3-8b,cap_i,olmo-reply,instruct,mirror effect,106,0.0136,-0.0027,0.0381
+qwen3-8b,cap_i,olmo-reply,instruct,"mirror effect, change from base",51,-0.0267,-0.0818,0.0344
+qwen3-8b,cap_i,human,human,level (real p2 remainder),37,0.8784,0.7703,0.9730
+qwen3-8b,terminal,with,base,level without,242,0.0482,0.0331,0.0634
+qwen3-8b,terminal,with,base,level with,242,0.0634,0.0455,0.0826
+qwen3-8b,terminal,with,base,mirror effect,242,0.0152,-0.0083,0.0386
+qwen3-8b,terminal,with,instruct,level without,242,0.3127,0.2727,0.3554
+qwen3-8b,terminal,with,instruct,level with,242,0.3788,0.3306,0.4256
+qwen3-8b,terminal,with,instruct,mirror effect,242,0.0661,0.0096,0.1240
+qwen3-8b,terminal,with,instruct,"mirror effect, change from base",242,0.0510,-0.0096,0.1102
+qwen3-8b,terminal,olmo-reply,base,level without,242,0.0482,0.0344,0.0647
+qwen3-8b,terminal,olmo-reply,base,level olmo-reply,236,0.0918,0.0706,0.1144
+qwen3-8b,terminal,olmo-reply,base,mirror effect,236,0.0438,0.0169,0.0706
+qwen3-8b,terminal,olmo-reply,instruct,level without,242,0.3127,0.2713,0.3526
+qwen3-8b,terminal,olmo-reply,instruct,level olmo-reply,236,0.3390,0.2966,0.3828
+qwen3-8b,terminal,olmo-reply,instruct,mirror effect,236,0.0268,-0.0240,0.0777
+qwen3-8b,terminal,olmo-reply,instruct,"mirror effect, change from base",236,-0.0169,-0.0734,0.0395
+qwen3-8b,terminal,human,human,level (real p2 remainder),242,0.4793,0.4174,0.5455
