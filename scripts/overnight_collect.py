@@ -195,14 +195,15 @@ def run_task(name, cmd, out_dir, out_names, dry_run, batch_arg=None):
     output. Skip if the outputs exist; one retry on out-of-memory. Returns a result dict."""
     final = [os.path.join(out_dir, n) for n in out_names]
     res = dict(task=name, started=now(), status=None, seconds=None, retries=0, cmd=" ".join(cmd[:12]) + (" ..." if len(cmd) > 12 else ""))
-    if all(os.path.exists(f) for f in final):
+    have = all(os.path.exists(f) for f in final)
+    if dry_run:  # the plan is shown whether or not the outputs already exist
+        res.update(status="dry run", seconds=0)
+        log(f"[dry run] {name}: {' '.join(cmd).replace('{OUT}', out_dir)}" + (" (outputs exist: would be skipped)" if have else ""))
+        return res
+    if have:
         res.update(status="skipped (outputs exist, never overwritten)", seconds=0)
         log(f"{name}: outputs exist, skipped")
         SUMMARY["tasks"].append(res)
-        return res
-    if dry_run:
-        res.update(status="dry run", seconds=0)
-        log(f"[dry run] {name}: {' '.join(cmd).replace('{OUT}', out_dir)}")
         return res
     tmp = os.path.join(out_dir, f".tmp_{name}")
     if os.path.isdir(tmp):  # left by an interrupted attempt: our own incomplete temp output, never a result
