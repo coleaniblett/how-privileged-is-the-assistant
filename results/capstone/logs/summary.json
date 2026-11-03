@@ -1,0 +1,821 @@
+{
+ "started": "2026-11-02 20:52:42 UTC",
+ "finished": "2026-11-03 03:59:36 UTC",
+ "tasks": [
+  {
+   "task": "gemma4-31b_base_scores",
+   "started": "2026-11-02 20:52:42 UTC",
+   "status": "ok",
+   "seconds": 2927.6,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family gemma4-31b --run capstone --model base --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "gemma4-31b_base_authorship",
+   "started": "2026-11-02 21:42:17 UTC",
+   "status": "ok",
+   "seconds": 2181.8,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family gemma4-31b --run capstone --model base --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "gemma4-31b_base_scores",
+   "started": "2026-11-02 22:28:14 UTC",
+   "status": "skipped (outputs exist, never overwritten)",
+   "seconds": 0,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family gemma4-31b --run capstone --model base --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "gemma4-31b_base_authorship",
+   "started": "2026-11-02 22:29:01 UTC",
+   "status": "skipped (outputs exist, never overwritten)",
+   "seconds": 0,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family gemma4-31b --run capstone --model base --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "gemma4-31b_base_generation",
+   "started": "2026-11-02 22:29:37 UTC",
+   "status": "ok",
+   "seconds": 2819.7,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family gemma4-31b --run capstone --model base --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "gemma4-31b_instruct_scores",
+   "started": "2026-11-02 23:16:38 UTC",
+   "status": "ok",
+   "seconds": 2726.4,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family gemma4-31b --run capstone --model instruct --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "gemma4-31b_instruct_authorship",
+   "started": "2026-11-03 00:02:49 UTC",
+   "status": "ok",
+   "seconds": 2057.2,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family gemma4-31b --run capstone --model instruct --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "gemma4-31b_instruct_generation",
+   "started": "2026-11-03 00:37:39 UTC",
+   "status": "ok",
+   "seconds": 2645.9,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family gemma4-31b --run capstone --model instruct --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "olmo3-7b_base_scores",
+   "started": "2026-11-03 01:21:45 UTC",
+   "status": "ok",
+   "seconds": 450.8,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model base --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_base_authorship",
+   "started": "2026-11-03 01:29:55 UTC",
+   "status": "ok",
+   "seconds": 350.7,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model base --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_base_generation",
+   "started": "2026-11-03 01:36:17 UTC",
+   "status": "ok",
+   "seconds": 267.3,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family olmo3-7b --run capstone --model base --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "olmo3-7b_sft_scores",
+   "started": "2026-11-03 01:40:45 UTC",
+   "status": "ok",
+   "seconds": 444.9,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model sft --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_sft_authorship",
+   "started": "2026-11-03 01:48:51 UTC",
+   "status": "ok",
+   "seconds": 347.5,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model sft --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_sft_generation",
+   "started": "2026-11-03 01:55:12 UTC",
+   "status": "ok",
+   "seconds": 263.6,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family olmo3-7b --run capstone --model sft --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "olmo3-7b_dpo_scores",
+   "started": "2026-11-03 01:59:35 UTC",
+   "status": "ok",
+   "seconds": 445.6,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model dpo --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_dpo_authorship",
+   "started": "2026-11-03 02:07:43 UTC",
+   "status": "ok",
+   "seconds": 348.4,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model dpo --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_dpo_generation",
+   "started": "2026-11-03 02:14:04 UTC",
+   "status": "ok",
+   "seconds": 264.1,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family olmo3-7b --run capstone --model dpo --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "olmo3-7b_instruct_scores",
+   "started": "2026-11-03 02:18:29 UTC",
+   "status": "ok",
+   "seconds": 450.1,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model instruct --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_instruct_authorship",
+   "started": "2026-11-03 02:26:43 UTC",
+   "status": "ok",
+   "seconds": 348.0,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family olmo3-7b --run capstone --model instruct --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "olmo3-7b_instruct_generation",
+   "started": "2026-11-03 02:33:05 UTC",
+   "status": "ok",
+   "seconds": 268.1,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family olmo3-7b --run capstone --model instruct --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "qwen3-8b_base_scores",
+   "started": "2026-11-03 02:37:33 UTC",
+   "status": "ok",
+   "seconds": 537.4,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family qwen3-8b --run capstone --model base --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "qwen3-8b_base_authorship",
+   "started": "2026-11-03 02:48:55 UTC",
+   "status": "ok",
+   "seconds": 424.4,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family qwen3-8b --run capstone --model base --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "qwen3-8b_base_generation",
+   "started": "2026-11-03 02:57:49 UTC",
+   "status": "ok",
+   "seconds": 286.8,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family qwen3-8b --run capstone --model base --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "qwen3-8b_base_scores_think_off",
+   "started": "2026-11-03 03:02:36 UTC",
+   "status": "ok",
+   "seconds": 460.6,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -c import sys, runpy; from core import config; config.FAMILIES['qwen3-8b']['assistant_think_block'] = False; sys.argv = ['core.score'] + sys.argv[1:]; runpy.run_module('core.score', run_name='__main__') --family qwen3-8b --run capstone_think_off --model base --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "qwen3-8b_base_authorship_think_off",
+   "started": "2026-11-03 03:11:30 UTC",
+   "status": "ok",
+   "seconds": 374.5,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -c import sys, runpy; from core import config; config.FAMILIES['qwen3-8b']['assistant_think_block'] = False; sys.argv = ['core.score'] + sys.argv[1:]; runpy.run_module('core.score', run_name='__main__') --family qwen3-8b --run capstone_think_off --model base --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "qwen3-8b_instruct_scores",
+   "started": "2026-11-03 03:18:41 UTC",
+   "status": "ok",
+   "seconds": 535.7,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family qwen3-8b --run capstone --model instruct --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "qwen3-8b_instruct_authorship",
+   "started": "2026-11-03 03:30:01 UTC",
+   "status": "ok",
+   "seconds": 419.8,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.score --family qwen3-8b --run capstone --model instruct --dataset data/texts_authorship.jsonl --out ..."
+  },
+  {
+   "task": "qwen3-8b_instruct_generation",
+   "started": "2026-11-03 03:38:48 UTC",
+   "status": "ok",
+   "seconds": 294.6,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -m core.generate --family qwen3-8b --run capstone --model instruct --prefill data/prefill_100.jsonl --save-ids ..."
+  },
+  {
+   "task": "qwen3-8b_instruct_scores_think_off",
+   "started": "2026-11-03 03:43:43 UTC",
+   "status": "ok",
+   "seconds": 457.0,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -c import sys, runpy; from core import config; config.FAMILIES['qwen3-8b']['assistant_think_block'] = False; sys.argv = ['core.score'] + sys.argv[1:]; runpy.run_module('core.score', run_name='__main__') --family qwen3-8b --run capstone_think_off --model instruct --dataset data/texts.jsonl --out ..."
+  },
+  {
+   "task": "qwen3-8b_instruct_authorship_think_off",
+   "started": "2026-11-03 03:52:31 UTC",
+   "status": "ok",
+   "seconds": 370.7,
+   "retries": 0,
+   "cmd": "/root/how-privileged-is-the-assistant/.venv/bin/python -c import sys, runpy; from core import config; config.FAMILIES['qwen3-8b']['assistant_think_block'] = False; sys.argv = ['core.score'] + sys.argv[1:]; runpy.run_module('core.score', run_name='__main__') --family qwen3-8b --run capstone_think_off --model instruct --dataset data/texts_authorship.jsonl --out ..."
+  }
+ ],
+ "checkpoints": [
+  {
+   "family": "gemma4-31b",
+   "stage": "base",
+   "repo": "google/gemma-4-31B",
+   "started": "2026-11-02 22:28:14 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 400,
+      "rows": 1200,
+      "nonfinite_summary_values": 0,
+      "token_rows": 156210,
+      "max_token_nll": 23.92635154724121,
+      "max_entropy": 9.354522705078125,
+      "render_checks": "400 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 300,
+      "rows": 900,
+      "nonfinite_summary_values": 0,
+      "token_rows": 118398,
+      "max_token_nll": 19.454042434692383,
+      "max_entropy": 9.37552261352539,
+      "render_checks": "300 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 24,
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-02 23:16:38 UTC",
+   "free_gb_before": 13.1,
+   "free_gb_after": 62.3
+  },
+  {
+   "family": "gemma4-31b",
+   "stage": "instruct",
+   "repo": "google/gemma-4-31B-it",
+   "started": "2026-11-02 23:16:38 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 400,
+      "rows": 1200,
+      "nonfinite_summary_values": 0,
+      "token_rows": 156210,
+      "max_token_nll": 50.29084014892578,
+      "max_entropy": 9.745980262756348,
+      "render_checks": "400 texts x 3 slots",
+      "anomalies": [
+       "max per-token NLL 50.3",
+       "max per-text mean NLL 17.7"
+      ]
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 300,
+      "rows": 900,
+      "nonfinite_summary_values": 0,
+      "token_rows": 118398,
+      "max_token_nll": 44.21006774902344,
+      "max_entropy": 9.7408447265625,
+      "render_checks": "300 texts x 3 slots",
+      "anomalies": [
+       "max per-token NLL 44.2",
+       "max per-text mean NLL 15.5"
+      ]
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 10,
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-03 01:21:45 UTC",
+   "free_gb_before": 75.0,
+   "free_gb_after": 74.1
+  },
+  {
+   "family": "olmo3-7b",
+   "stage": "base",
+   "repo": "allenai/Olmo-3-1025-7B",
+   "started": "2026-11-03 01:21:45 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 445068,
+      "max_token_nll": 21.660791397094727,
+      "max_entropy": 9.044534683227539,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 361086,
+      "max_token_nll": 20.616640090942383,
+      "max_entropy": 8.611082077026367,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 26,
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-03 01:40:44 UTC",
+   "free_gb_before": 74.1,
+   "free_gb_after": 74.0
+  },
+  {
+   "family": "olmo3-7b",
+   "stage": "sft",
+   "repo": "allenai/Olmo-3-7B-Instruct-SFT",
+   "started": "2026-11-03 01:40:44 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 445068,
+      "max_token_nll": 27.670848846435547,
+      "max_entropy": 10.162598609924316,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 361086,
+      "max_token_nll": 27.323638916015625,
+      "max_entropy": 10.079151153564453,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 59,
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-03 01:59:35 UTC",
+   "free_gb_before": 74.0,
+   "free_gb_after": 69.1
+  },
+  {
+   "family": "olmo3-7b",
+   "stage": "dpo",
+   "repo": "allenai/Olmo-3-7B-Instruct-DPO",
+   "started": "2026-11-03 01:59:35 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 445068,
+      "max_token_nll": 23.121150970458984,
+      "max_entropy": 10.268373489379883,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 361086,
+      "max_token_nll": 26.407949447631836,
+      "max_entropy": 10.26223087310791,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 33,
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-03 02:18:29 UTC",
+   "free_gb_before": 69.1,
+   "free_gb_after": 74.0
+  },
+  {
+   "family": "olmo3-7b",
+   "stage": "instruct",
+   "repo": "allenai/Olmo-3-7B-Instruct",
+   "started": "2026-11-03 02:18:29 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 445068,
+      "max_token_nll": 23.3313045501709,
+      "max_entropy": 10.353145599365234,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 361086,
+      "max_token_nll": 27.31824493408203,
+      "max_entropy": 10.163244247436523,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 39,
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-03 02:37:33 UTC",
+   "free_gb_before": 74.0,
+   "free_gb_after": 74.0
+  },
+  {
+   "family": "qwen3-8b",
+   "stage": "base",
+   "repo": "Qwen/Qwen3-8B-Base",
+   "started": "2026-11-03 02:37:33 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 446943,
+      "max_token_nll": 31.14889907836914,
+      "max_entropy": 9.055665016174316,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 364212,
+      "max_token_nll": 25.703275680541992,
+      "max_entropy": 11.296601295471191,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 45,
+      "anomalies": []
+     }
+    },
+    "scores_think_off": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 446943,
+      "max_token_nll": 31.14889907836914,
+      "max_entropy": 8.987146377563477,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "authorship_think_off": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 364212,
+      "max_token_nll": 25.703275680541992,
+      "max_entropy": 11.296601295471191,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-03 03:18:41 UTC",
+   "free_gb_before": 74.0,
+   "free_gb_after": 70.8
+  },
+  {
+   "family": "qwen3-8b",
+   "stage": "instruct",
+   "repo": "Qwen/Qwen3-8B",
+   "started": "2026-11-03 03:18:41 UTC",
+   "integrity": {
+    "scores": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 446943,
+      "max_token_nll": 44.62090301513672,
+      "max_entropy": 9.76086139678955,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": [
+       "max per-token NLL 44.6"
+      ]
+     }
+    },
+    "authorship": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 364212,
+      "max_token_nll": 39.070133209228516,
+      "max_entropy": 9.760828018188477,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    },
+    "generation": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "rows": 300,
+      "max_ids_len": 120,
+      "empty_continuations": 0,
+      "stopped_on_eos": 0,
+      "anomalies": []
+     }
+    },
+    "scores_think_off": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 1190,
+      "rows": 3570,
+      "nonfinite_summary_values": 0,
+      "token_rows": 446943,
+      "max_token_nll": 44.62090301513672,
+      "max_entropy": 9.76086139678955,
+      "render_checks": "1190 texts x 3 slots",
+      "anomalies": [
+       "max per-token NLL 44.6"
+      ]
+     }
+    },
+    "authorship_think_off": {
+     "ok": true,
+     "issues": [],
+     "stats": {
+      "texts": 900,
+      "rows": 2700,
+      "nonfinite_summary_values": 0,
+      "token_rows": 364212,
+      "max_token_nll": 39.070133209228516,
+      "max_entropy": 9.760828018188477,
+      "render_checks": "900 texts x 3 slots",
+      "anomalies": []
+     }
+    }
+   },
+   "failed": false,
+   "finished": "2026-11-03 03:59:36 UTC",
+   "free_gb_before": 74.0,
+   "free_gb_after": 74.0
+  }
+ ],
+ "disk": [
+  {
+   "time": "2026-11-02 20:52:42 UTC",
+   "label": "gemma4-31b base: before",
+   "free_gb": 13.3
+  },
+  {
+   "time": "2026-11-02 22:28:14 UTC",
+   "label": "gemma4-31b base: before",
+   "free_gb": 13.1
+  },
+  {
+   "time": "2026-11-02 23:16:38 UTC",
+   "label": "gemma4-31b base: after clearing",
+   "free_gb": 62.3
+  },
+  {
+   "time": "2026-11-02 23:16:38 UTC",
+   "label": "gemma4-31b instruct: before",
+   "free_gb": 75.0
+  },
+  {
+   "time": "2026-11-03 01:21:45 UTC",
+   "label": "gemma4-31b instruct: after clearing",
+   "free_gb": 74.1
+  },
+  {
+   "time": "2026-11-03 01:21:45 UTC",
+   "label": "olmo3-7b base: before",
+   "free_gb": 74.1
+  },
+  {
+   "time": "2026-11-03 01:40:44 UTC",
+   "label": "olmo3-7b base: after clearing",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 01:40:44 UTC",
+   "label": "olmo3-7b sft: before",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 01:59:35 UTC",
+   "label": "olmo3-7b sft: after clearing",
+   "free_gb": 69.1
+  },
+  {
+   "time": "2026-11-03 01:59:35 UTC",
+   "label": "olmo3-7b dpo: before",
+   "free_gb": 69.1
+  },
+  {
+   "time": "2026-11-03 02:18:29 UTC",
+   "label": "olmo3-7b dpo: after clearing",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 02:18:29 UTC",
+   "label": "olmo3-7b instruct: before",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 02:37:33 UTC",
+   "label": "olmo3-7b instruct: after clearing",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 02:37:33 UTC",
+   "label": "qwen3-8b base: before",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 03:18:41 UTC",
+   "label": "qwen3-8b base: after clearing",
+   "free_gb": 70.8
+  },
+  {
+   "time": "2026-11-03 03:18:41 UTC",
+   "label": "qwen3-8b instruct: before",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 03:59:36 UTC",
+   "label": "qwen3-8b instruct: after clearing",
+   "free_gb": 74.0
+  },
+  {
+   "time": "2026-11-03 03:59:36 UTC",
+   "label": "end",
+   "free_gb": 74.0
+  }
+ ],
+ "notes": [],
+ "runs": [
+  {
+   "started": "2026-11-02 22:28:14 UTC",
+   "pid": 2019598
+  }
+ ]
+}

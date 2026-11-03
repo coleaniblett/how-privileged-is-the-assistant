@@ -1,0 +1,129 @@
+[2026-11-02 20:02:13 UTC] overnight collection start (dry run: False); branch pipeline-prep-2026-11-03; HEAD 81b4d15
+[2026-11-02 20:02:13 UTC] ===== gemma4-31b base (google/gemma-4-31B)
+[2026-11-02 20:02:13 UTC] disk check google/gemma-4-31B: need 67.5 GB, free 49.4 GB -> NOT ENOUGH
+[2026-11-02 20:02:13 UTC] freed Qwen/Qwen3-8B from the HF cache: 16.4 GB (5 blobs removed, 1 shared kept)
+[2026-11-02 20:02:14 UTC] removed the regenerable datasets cache /root/.cache/huggingface/datasets (10.0 GB)
+[2026-11-02 20:02:14 UTC] disk check google/gemma-4-31B after freeing: need 67.5 GB, free 75.8 GB -> OK
+[2026-11-02 20:02:14 UTC] gemma4-31b_base_scores: start
+[2026-11-02 20:51:09 UTC] overnight collection start (dry run: False); branch pipeline-prep-2026-11-03; HEAD 1f5ab32
+[2026-11-02 20:51:09 UTC] ===== gemma4-31b base (google/gemma-4-31B)
+[2026-11-02 20:51:09 UTC] disk check google/gemma-4-31B: need 0.0 GB, free 13.3 GB -> OK
+[2026-11-02 20:51:09 UTC] gemma4-31b_base_scores: start
+[2026-11-02 20:52:42 UTC] overnight collection start (dry run: False); branch pipeline-prep-2026-11-03; HEAD 1f5ab32
+[2026-11-02 20:52:42 UTC] ===== gemma4-31b base (google/gemma-4-31B)
+[2026-11-02 20:52:42 UTC] disk check google/gemma-4-31B: need 0.0 GB, free 13.3 GB -> OK
+[2026-11-02 20:52:42 UTC] gemma4-31b_base_scores: removed the temp directory of an interrupted attempt (results/capstone/gemma4-31b/core/scores/.tmp_gemma4-31b_base_scores)
+[2026-11-02 20:52:42 UTC] gemma4-31b_base_scores: start
+[2026-11-02 21:41:29 UTC] gemma4-31b_base_scores: ok in 2928s
+[2026-11-02 21:42:17 UTC] gemma4-31b_base_authorship: start
+[2026-11-02 22:18:38 UTC] gemma4-31b_base_authorship: ok in 2182s
+[2026-11-02 22:19:11 UTC] gemma4-31b_base_generation: start
+[2026-11-02 22:28:14 UTC] overnight collection start (dry run: False); branch pipeline-prep-2026-11-03; HEAD 27ae71d
+[2026-11-02 22:28:14 UTC] ===== gemma4-31b base (google/gemma-4-31B)
+[2026-11-02 22:28:14 UTC] disk check google/gemma-4-31B: need 0.0 GB, free 13.1 GB -> OK
+[2026-11-02 22:28:14 UTC] gemma4-31b_base_scores: outputs exist, skipped
+[2026-11-02 22:29:01 UTC] gemma4-31b_base_authorship: outputs exist, skipped
+[2026-11-02 22:29:37 UTC] gemma4-31b_base_generation: removed the temp directory of an interrupted attempt (results/capstone/gemma4-31b/core/generations/.tmp_gemma4-31b_base_generation)
+[2026-11-02 22:29:38 UTC] gemma4-31b_base_generation: start
+[2026-11-02 23:16:37 UTC] gemma4-31b_base_generation: ok in 2820s
+[2026-11-02 23:16:37 UTC] integrity gemma4-31b base scores: OK
+[2026-11-02 23:16:37 UTC] integrity gemma4-31b base authorship: OK
+[2026-11-02 23:16:37 UTC] integrity gemma4-31b base generation: OK
+[2026-11-02 23:16:38 UTC] cleared google/gemma-4-31B from the HF cache: 62.6 GB (3 blobs removed, 0 shared kept)
+[2026-11-02 23:16:38 UTC] ===== gemma4-31b instruct (google/gemma-4-31B-it)
+[2026-11-02 23:16:38 UTC] disk check google/gemma-4-31B-it: need 67.5 GB, free 75.0 GB -> OK
+[2026-11-02 23:16:38 UTC] gemma4-31b_instruct_scores: start
+[2026-11-03 00:02:05 UTC] gemma4-31b_instruct_scores: ok in 2726s
+[2026-11-03 00:02:49 UTC] gemma4-31b_instruct_authorship: start
+[2026-11-03 00:37:06 UTC] gemma4-31b_instruct_authorship: ok in 2057s
+[2026-11-03 00:37:39 UTC] gemma4-31b_instruct_generation: start
+[2026-11-03 01:21:44 UTC] gemma4-31b_instruct_generation: ok in 2646s
+[2026-11-03 01:21:44 UTC] integrity gemma4-31b instruct scores: OK anomalies: ['max per-token NLL 50.3', 'max per-text mean NLL 17.7']
+[2026-11-03 01:21:44 UTC] integrity gemma4-31b instruct authorship: OK anomalies: ['max per-token NLL 44.2', 'max per-text mean NLL 15.5']
+[2026-11-03 01:21:44 UTC] integrity gemma4-31b instruct generation: OK
+[2026-11-03 01:21:45 UTC] cleared google/gemma-4-31B-it from the HF cache: 62.5 GB (2 blobs removed, 1 shared kept)
+[2026-11-03 01:21:45 UTC] ===== olmo3-7b base (allenai/Olmo-3-1025-7B)
+[2026-11-03 01:21:45 UTC] disk check allenai/Olmo-3-1025-7B: need 19.6 GB, free 74.1 GB -> OK
+[2026-11-03 01:21:45 UTC] olmo3-7b_base_scores: start
+[2026-11-03 01:29:16 UTC] olmo3-7b_base_scores: ok in 451s
+[2026-11-03 01:29:55 UTC] olmo3-7b_base_authorship: start
+[2026-11-03 01:35:46 UTC] olmo3-7b_base_authorship: ok in 351s
+[2026-11-03 01:36:17 UTC] olmo3-7b_base_generation: start
+[2026-11-03 01:40:44 UTC] olmo3-7b_base_generation: ok in 267s
+[2026-11-03 01:40:44 UTC] integrity olmo3-7b base scores: OK
+[2026-11-03 01:40:44 UTC] integrity olmo3-7b base authorship: OK
+[2026-11-03 01:40:44 UTC] integrity olmo3-7b base generation: OK
+[2026-11-03 01:40:44 UTC] cleared allenai/Olmo-3-1025-7B from the HF cache: 14.6 GB (3 blobs removed, 0 shared kept)
+[2026-11-03 01:40:44 UTC] ===== olmo3-7b sft (allenai/Olmo-3-7B-Instruct-SFT)
+[2026-11-03 01:40:45 UTC] disk check allenai/Olmo-3-7B-Instruct-SFT: need 19.6 GB, free 74.0 GB -> OK
+[2026-11-03 01:40:45 UTC] olmo3-7b_sft_scores: start
+[2026-11-03 01:48:10 UTC] olmo3-7b_sft_scores: ok in 445s
+[2026-11-03 01:48:51 UTC] olmo3-7b_sft_authorship: start
+[2026-11-03 01:54:39 UTC] olmo3-7b_sft_authorship: ok in 348s
+[2026-11-03 01:55:12 UTC] olmo3-7b_sft_generation: start
+[2026-11-03 01:59:35 UTC] olmo3-7b_sft_generation: ok in 264s
+[2026-11-03 01:59:35 UTC] integrity olmo3-7b sft scores: OK
+[2026-11-03 01:59:35 UTC] integrity olmo3-7b sft authorship: OK
+[2026-11-03 01:59:35 UTC] integrity olmo3-7b sft generation: OK
+[2026-11-03 01:59:35 UTC] cleared allenai/Olmo-3-7B-Instruct-SFT from the HF cache: 14.6 GB (3 blobs removed, 0 shared kept)
+[2026-11-03 01:59:35 UTC] ===== olmo3-7b dpo (allenai/Olmo-3-7B-Instruct-DPO)
+[2026-11-03 01:59:35 UTC] disk check allenai/Olmo-3-7B-Instruct-DPO: need 19.6 GB, free 74.0 GB -> OK
+[2026-11-03 01:59:35 UTC] olmo3-7b_dpo_scores: start
+[2026-11-03 02:07:01 UTC] olmo3-7b_dpo_scores: ok in 446s
+[2026-11-03 02:07:43 UTC] olmo3-7b_dpo_authorship: start
+[2026-11-03 02:13:31 UTC] olmo3-7b_dpo_authorship: ok in 348s
+[2026-11-03 02:14:05 UTC] olmo3-7b_dpo_generation: start
+[2026-11-03 02:18:29 UTC] olmo3-7b_dpo_generation: ok in 264s
+[2026-11-03 02:18:29 UTC] integrity olmo3-7b dpo scores: OK
+[2026-11-03 02:18:29 UTC] integrity olmo3-7b dpo authorship: OK
+[2026-11-03 02:18:29 UTC] integrity olmo3-7b dpo generation: OK
+[2026-11-03 02:18:29 UTC] cleared allenai/Olmo-3-7B-Instruct-DPO from the HF cache: 14.6 GB (3 blobs removed, 0 shared kept)
+[2026-11-03 02:18:29 UTC] ===== olmo3-7b instruct (allenai/Olmo-3-7B-Instruct)
+[2026-11-03 02:18:29 UTC] disk check allenai/Olmo-3-7B-Instruct: need 19.6 GB, free 74.0 GB -> OK
+[2026-11-03 02:18:29 UTC] olmo3-7b_instruct_scores: start
+[2026-11-03 02:25:59 UTC] olmo3-7b_instruct_scores: ok in 450s
+[2026-11-03 02:26:43 UTC] olmo3-7b_instruct_authorship: start
+[2026-11-03 02:32:31 UTC] olmo3-7b_instruct_authorship: ok in 348s
+[2026-11-03 02:33:05 UTC] olmo3-7b_instruct_generation: start
+[2026-11-03 02:37:33 UTC] olmo3-7b_instruct_generation: ok in 268s
+[2026-11-03 02:37:33 UTC] integrity olmo3-7b instruct scores: OK
+[2026-11-03 02:37:33 UTC] integrity olmo3-7b instruct authorship: OK
+[2026-11-03 02:37:33 UTC] integrity olmo3-7b instruct generation: OK
+[2026-11-03 02:37:33 UTC] cleared allenai/Olmo-3-7B-Instruct from the HF cache: 14.6 GB (3 blobs removed, 0 shared kept)
+[2026-11-03 02:37:33 UTC] ===== qwen3-8b base (Qwen/Qwen3-8B-Base)
+[2026-11-03 02:37:33 UTC] disk check Qwen/Qwen3-8B-Base: need 21.4 GB, free 74.0 GB -> OK
+[2026-11-03 02:37:33 UTC] qwen3-8b_base_scores: start
+[2026-11-03 02:46:31 UTC] qwen3-8b_base_scores: ok in 537s
+[2026-11-03 02:48:55 UTC] qwen3-8b_base_authorship: start
+[2026-11-03 02:55:59 UTC] qwen3-8b_base_authorship: ok in 424s
+[2026-11-03 02:57:49 UTC] qwen3-8b_base_generation: start
+[2026-11-03 03:02:36 UTC] qwen3-8b_base_generation: ok in 287s
+[2026-11-03 03:02:36 UTC] qwen3-8b_base_scores_think_off: start
+[2026-11-03 03:10:16 UTC] qwen3-8b_base_scores_think_off: ok in 461s
+[2026-11-03 03:11:30 UTC] qwen3-8b_base_authorship_think_off: start
+[2026-11-03 03:17:44 UTC] qwen3-8b_base_authorship_think_off: ok in 374s
+[2026-11-03 03:18:41 UTC] integrity qwen3-8b base scores: OK
+[2026-11-03 03:18:41 UTC] integrity qwen3-8b base authorship: OK
+[2026-11-03 03:18:41 UTC] integrity qwen3-8b base generation: OK
+[2026-11-03 03:18:41 UTC] integrity qwen3-8b base scores_think_off: OK
+[2026-11-03 03:18:41 UTC] integrity qwen3-8b base authorship_think_off: OK
+[2026-11-03 03:18:41 UTC] cleared Qwen/Qwen3-8B-Base from the HF cache: 16.4 GB (5 blobs removed, 0 shared kept)
+[2026-11-03 03:18:41 UTC] ===== qwen3-8b instruct (Qwen/Qwen3-8B)
+[2026-11-03 03:18:41 UTC] disk check Qwen/Qwen3-8B: need 21.4 GB, free 74.0 GB -> OK
+[2026-11-03 03:18:41 UTC] qwen3-8b_instruct_scores: start
+[2026-11-03 03:27:37 UTC] qwen3-8b_instruct_scores: ok in 536s
+[2026-11-03 03:30:01 UTC] qwen3-8b_instruct_authorship: start
+[2026-11-03 03:37:01 UTC] qwen3-8b_instruct_authorship: ok in 420s
+[2026-11-03 03:38:48 UTC] qwen3-8b_instruct_generation: start
+[2026-11-03 03:43:43 UTC] qwen3-8b_instruct_generation: ok in 295s
+[2026-11-03 03:43:43 UTC] qwen3-8b_instruct_scores_think_off: start
+[2026-11-03 03:51:20 UTC] qwen3-8b_instruct_scores_think_off: ok in 457s
+[2026-11-03 03:52:32 UTC] qwen3-8b_instruct_authorship_think_off: start
+[2026-11-03 03:58:42 UTC] qwen3-8b_instruct_authorship_think_off: ok in 371s
+[2026-11-03 03:59:36 UTC] integrity qwen3-8b instruct scores: OK anomalies: ['max per-token NLL 44.6']
+[2026-11-03 03:59:36 UTC] integrity qwen3-8b instruct authorship: OK
+[2026-11-03 03:59:36 UTC] integrity qwen3-8b instruct generation: OK
+[2026-11-03 03:59:36 UTC] integrity qwen3-8b instruct scores_think_off: OK anomalies: ['max per-token NLL 44.6']
+[2026-11-03 03:59:36 UTC] integrity qwen3-8b instruct authorship_think_off: OK
+[2026-11-03 03:59:36 UTC] cleared Qwen/Qwen3-8B from the HF cache: 16.4 GB (5 blobs removed, 1 shared kept)
+[2026-11-03 03:59:36 UTC] overnight collection finished

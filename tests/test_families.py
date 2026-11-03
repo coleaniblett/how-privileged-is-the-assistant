@@ -41,7 +41,7 @@ def test_families_have_stages_and_template():
     assert config.family_settings("gemma4-31b")["offload"] and config.family_settings("gemma4-31b")["gen_precision"] == "int8"
     assert config.family_settings("gemma4-31b")["handoff_extra"] == ["<|channel>", "<channel|>"]
     assert config.family_settings("qwen3-8b")["handoff_extra"] == ["<think>", "</think>"]
-    assert config.family_settings("qwen3-8b")["assistant_think_block"] is False  # the pilot's setting
+    assert config.family_settings("qwen3-8b")["assistant_think_block"] is True  # primary (decided 2026-11-02); False = the pilot's
     with pytest.raises(KeyError):
         config.family_settings("nope")
 
