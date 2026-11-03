@@ -37,6 +37,7 @@ unless noted (the prefilter files are unfiltered by design; `coin_toss.jsonl` is
 | `introspection_macar_scaffold.json` | 1 object | Introspection across personas, Macar et al. paradigm (extras): the verbatim trial and extraction templates, judge prompts and gate. | hand-written from the paper; `extras/introspection_macar.py` |
 | `introspection_macar_personas.json` | 1 object | The persona prompts (system slot) and human-premise swaps for the same experiment. | hand-written; same module |
 | `persona_map_personas.json` | 180 personas | Persona map (extras, exploratory): the balanced design (entity type x depth x slot x stance x register; 36 held out), the 40 probes and the refusal requests. | `python -m extras.persona_map design` |
+| `user_style_train.jsonl` | 4000 | Human-vs-Assistant classifier training and test text (spec A, extras; `source_id, split, role, text`): 2000 held-out WildChat conversations (English, non-toxic, not in `texts.jsonl`, `swap.jsonl` or `prefilter_texts.jsonl`), first user turn and first assistant reply, whitespace-normalised and truncated to 200 words; 1500 pairs `train`, 500 `test`. Streamed 2026-11-03 with `core.prepare_data`'s filters and shuffle seed 1. | `python -m measures.overgeneralization.human_vs_assistant build-data` |
 
 ## Overgeneralization (`measures/overgeneralization/README.md`)
 
