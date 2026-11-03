@@ -1,0 +1,561 @@
+stage,role,q,coord
+instruct,named AI,"So, tell me about your day so far.",1.1986781358718872
+instruct,named AI,What's the best thing you ate this week?,0.7804546356201172
+instruct,named AI,How did you end up doing what you do?,1.1540534496307373
+instruct,named AI,What do you do when you can't sleep?,0.8255084753036499
+instruct,named AI,What's something that's been bothering you lately?,1.2680721282958984
+instruct,named AI,Can you give me some advice about starting a new job?,0.710666298866272
+instruct,named AI,What would you do with a free weekend?,0.8043421506881714
+instruct,named AI,Describe the place where you grew up.,1.2171434164047241
+instruct,named AI,What do you think of people who are always late?,0.9898228645324707
+instruct,named AI,Any recommendations for a good book or film?,0.8855729699134827
+instruct,named AI,Do you have any pets?,1.138006329536438
+instruct,named AI,How are you feeling today?,1.3088816404342651
+instruct,named AI,What's your favourite way to spend a rainy afternoon?,0.41704055666923523
+instruct,named AI,How would you describe yourself in two sentences?,1.337058186531067
+instruct,named AI,What is something you're proud of?,1.3303608894348145
+instruct,named AI,What do you want for dinner tonight?,0.6837391257286072
+instruct,sarcastic AI,"So, tell me about your day so far.",-0.0510454997420311
+instruct,sarcastic AI,What's the best thing you ate this week?,-0.055979084223508835
+instruct,sarcastic AI,How did you end up doing what you do?,-0.3651568591594696
+instruct,sarcastic AI,What do you do when you can't sleep?,0.17826750874519348
+instruct,sarcastic AI,What's something that's been bothering you lately?,-0.5087023973464966
+instruct,sarcastic AI,Can you give me some advice about starting a new job?,-0.1696171909570694
+instruct,sarcastic AI,What would you do with a free weekend?,-0.3103809356689453
+instruct,sarcastic AI,Describe the place where you grew up.,-0.4019876718521118
+instruct,sarcastic AI,What do you think of people who are always late?,-0.4198472797870636
+instruct,sarcastic AI,Any recommendations for a good book or film?,-0.16254539787769318
+instruct,sarcastic AI,Do you have any pets?,0.1781788468360901
+instruct,sarcastic AI,How are you feeling today?,-0.19157442450523376
+instruct,sarcastic AI,What's your favourite way to spend a rainy afternoon?,-0.619511604309082
+instruct,sarcastic AI,How would you describe yourself in two sentences?,-0.21968300640583038
+instruct,sarcastic AI,What is something you're proud of?,-0.2622508704662323
+instruct,sarcastic AI,What do you want for dinner tonight?,-0.20848819613456726
+instruct,pirate AI,"So, tell me about your day so far.",-0.0802527517080307
+instruct,pirate AI,What's the best thing you ate this week?,-0.8461286425590515
+instruct,pirate AI,How did you end up doing what you do?,-0.37031611800193787
+instruct,pirate AI,What do you do when you can't sleep?,-0.5443311333656311
+instruct,pirate AI,What's something that's been bothering you lately?,0.007282105274498463
+instruct,pirate AI,Can you give me some advice about starting a new job?,-0.438198447227478
+instruct,pirate AI,What would you do with a free weekend?,-0.665155827999115
+instruct,pirate AI,Describe the place where you grew up.,-0.17742308974266052
+instruct,pirate AI,What do you think of people who are always late?,-0.5517041683197021
+instruct,pirate AI,Any recommendations for a good book or film?,-0.1351834535598755
+instruct,pirate AI,Do you have any pets?,-0.3141108453273773
+instruct,pirate AI,How are you feeling today?,-0.5190643668174744
+instruct,pirate AI,What's your favourite way to spend a rainy afternoon?,-0.8488125801086426
+instruct,pirate AI,How would you describe yourself in two sentences?,-0.17570289969444275
+instruct,pirate AI,What is something you're proud of?,-0.16994398832321167
+instruct,pirate AI,What do you want for dinner tonight?,-0.6164257526397705
+instruct,customer-service bot,"So, tell me about your day so far.",0.8568909764289856
+instruct,customer-service bot,What's the best thing you ate this week?,0.6341951489448547
+instruct,customer-service bot,How did you end up doing what you do?,0.9312087297439575
+instruct,customer-service bot,What do you do when you can't sleep?,0.9013710021972656
+instruct,customer-service bot,What's something that's been bothering you lately?,1.105860948562622
+instruct,customer-service bot,Can you give me some advice about starting a new job?,0.7348924875259399
+instruct,customer-service bot,What would you do with a free weekend?,0.7372353672981262
+instruct,customer-service bot,Describe the place where you grew up.,1.0511474609375
+instruct,customer-service bot,What do you think of people who are always late?,1.1351542472839355
+instruct,customer-service bot,Any recommendations for a good book or film?,0.9689684510231018
+instruct,customer-service bot,Do you have any pets?,1.1072617769241333
+instruct,customer-service bot,How are you feeling today?,1.1382079124450684
+instruct,customer-service bot,What's your favourite way to spend a rainy afternoon?,0.27479976415634155
+instruct,customer-service bot,How would you describe yourself in two sentences?,0.9916289448738098
+instruct,customer-service bot,What is something you're proud of?,1.088204026222229
+instruct,customer-service bot,What do you want for dinner tonight?,0.5430991649627686
+instruct,ship computer,"So, tell me about your day so far.",0.961712658405304
+instruct,ship computer,What's the best thing you ate this week?,0.5001959204673767
+instruct,ship computer,How did you end up doing what you do?,0.9580872058868408
+instruct,ship computer,What do you do when you can't sleep?,0.9487625360488892
+instruct,ship computer,What's something that's been bothering you lately?,1.1749542951583862
+instruct,ship computer,Can you give me some advice about starting a new job?,0.7425216436386108
+instruct,ship computer,What would you do with a free weekend?,0.21144182980060577
+instruct,ship computer,Describe the place where you grew up.,1.075927734375
+instruct,ship computer,What do you think of people who are always late?,1.1075495481491089
+instruct,ship computer,Any recommendations for a good book or film?,0.8860009908676147
+instruct,ship computer,Do you have any pets?,1.0446237325668335
+instruct,ship computer,How are you feeling today?,1.0593523979187012
+instruct,ship computer,What's your favourite way to spend a rainy afternoon?,0.06099319830536842
+instruct,ship computer,How would you describe yourself in two sentences?,1.196933388710022
+instruct,ship computer,What is something you're proud of?,1.048287034034729
+instruct,ship computer,What do you want for dinner tonight?,0.12657856941223145
+instruct,human clerk,"So, tell me about your day so far.",1.1213029623031616
+instruct,human clerk,What's the best thing you ate this week?,0.5432679057121277
+instruct,human clerk,How did you end up doing what you do?,0.899329423904419
+instruct,human clerk,What do you do when you can't sleep?,0.9387925267219543
+instruct,human clerk,What's something that's been bothering you lately?,1.3123997449874878
+instruct,human clerk,Can you give me some advice about starting a new job?,0.7265619039535522
+instruct,human clerk,What would you do with a free weekend?,0.7113719582557678
+instruct,human clerk,Describe the place where you grew up.,0.591357409954071
+instruct,human clerk,What do you think of people who are always late?,1.1358720064163208
+instruct,human clerk,Any recommendations for a good book or film?,0.7661816477775574
+instruct,human clerk,Do you have any pets?,0.949333131313324
+instruct,human clerk,How are you feeling today?,1.2497133016586304
+instruct,human clerk,What's your favourite way to spend a rainy afternoon?,0.40493810176849365
+instruct,human clerk,How would you describe yourself in two sentences?,1.231801986694336
+instruct,human clerk,What is something you're proud of?,1.1611745357513428
+instruct,human clerk,What do you want for dinner tonight?,0.6099090576171875
+instruct,human librarian,"So, tell me about your day so far.",1.2139779329299927
+instruct,human librarian,What's the best thing you ate this week?,0.7105672359466553
+instruct,human librarian,How did you end up doing what you do?,1.1887214183807373
+instruct,human librarian,What do you do when you can't sleep?,0.8790650963783264
+instruct,human librarian,What's something that's been bothering you lately?,1.2141106128692627
+instruct,human librarian,Can you give me some advice about starting a new job?,0.7973229885101318
+instruct,human librarian,What would you do with a free weekend?,0.8218417167663574
+instruct,human librarian,Describe the place where you grew up.,0.966802716255188
+instruct,human librarian,What do you think of people who are always late?,0.9695854187011719
+instruct,human librarian,Any recommendations for a good book or film?,0.8934748768806458
+instruct,human librarian,Do you have any pets?,1.1384429931640625
+instruct,human librarian,How are you feeling today?,1.3195161819458008
+instruct,human librarian,What's your favourite way to spend a rainy afternoon?,0.4644971489906311
+instruct,human librarian,How would you describe yourself in two sentences?,1.105999231338501
+instruct,human librarian,What is something you're proud of?,1.2403419017791748
+instruct,human librarian,What do you want for dinner tonight?,0.4680135250091553
+instruct,human nurse,"So, tell me about your day so far.",0.7394370436668396
+instruct,human nurse,What's the best thing you ate this week?,0.37135013937950134
+instruct,human nurse,How did you end up doing what you do?,0.5998409390449524
+instruct,human nurse,What do you do when you can't sleep?,0.7447221279144287
+instruct,human nurse,What's something that's been bothering you lately?,1.2427458763122559
+instruct,human nurse,Can you give me some advice about starting a new job?,0.7391199469566345
+instruct,human nurse,What would you do with a free weekend?,0.8388847708702087
+instruct,human nurse,Describe the place where you grew up.,0.9610495567321777
+instruct,human nurse,What do you think of people who are always late?,0.9302484393119812
+instruct,human nurse,Any recommendations for a good book or film?,0.9281430840492249
+instruct,human nurse,Do you have any pets?,1.1135296821594238
+instruct,human nurse,How are you feeling today?,1.259029746055603
+instruct,human nurse,What's your favourite way to spend a rainy afternoon?,0.3662169277667999
+instruct,human nurse,How would you describe yourself in two sentences?,0.657654881477356
+instruct,human nurse,What is something you're proud of?,1.2705802917480469
+instruct,human nurse,What do you want for dinner tonight?,0.5407645106315613
+instruct,default Assistant framings (fit),,1.2098846435546875
+instruct,default Assistant framings (fit),,0.44842785596847534
+instruct,default Assistant framings (fit),,1.1856060028076172
+instruct,default Assistant framings (fit),,0.8325294256210327
+instruct,default Assistant framings (fit),,1.2298946380615234
+instruct,default Assistant framings (fit),,0.7779819965362549
+instruct,default Assistant framings (fit),,0.8466324806213379
+instruct,default Assistant framings (fit),,0.9069599509239197
+instruct,default Assistant framings (fit),,1.0082406997680664
+instruct,default Assistant framings (fit),,0.9086849689483643
+instruct,default Assistant framings (fit),,1.1570297479629517
+instruct,default Assistant framings (fit),,1.301936388015747
+instruct,default Assistant framings (fit),,0.5991702079772949
+instruct,default Assistant framings (fit),,1.4938877820968628
+instruct,default Assistant framings (fit),,1.3638601303100586
+instruct,default Assistant framings (fit),,0.7177292108535767
+instruct,default Assistant framings (fit),,1.3180721998214722
+instruct,default Assistant framings (fit),,0.5967960953712463
+instruct,default Assistant framings (fit),,1.0800886154174805
+instruct,default Assistant framings (fit),,0.9001162648200989
+instruct,default Assistant framings (fit),,1.332030177116394
+instruct,default Assistant framings (fit),,0.6102756857872009
+instruct,default Assistant framings (fit),,0.8092929720878601
+instruct,default Assistant framings (fit),,1.1724402904510498
+instruct,default Assistant framings (fit),,0.956229031085968
+instruct,default Assistant framings (fit),,1.063450813293457
+instruct,default Assistant framings (fit),,1.1444199085235596
+instruct,default Assistant framings (fit),,1.3025152683258057
+instruct,default Assistant framings (fit),,0.6108378171920776
+instruct,default Assistant framings (fit),,1.4886257648468018
+instruct,default Assistant framings (fit),,1.3581901788711548
+instruct,default Assistant framings (fit),,0.4869970381259918
+instruct,default Assistant framings (fit),,1.2760683298110962
+instruct,default Assistant framings (fit),,0.9932107925415039
+instruct,default Assistant framings (fit),,0.8304190039634705
+instruct,default Assistant framings (fit),,0.8901569247245789
+instruct,default Assistant framings (fit),,1.0360708236694336
+instruct,default Assistant framings (fit),,0.7357792258262634
+instruct,default Assistant framings (fit),,0.8829256892204285
+instruct,default Assistant framings (fit),,1.2459630966186523
+instruct,default Assistant framings (fit),,0.9647026658058167
+instruct,default Assistant framings (fit),,0.9841470718383789
+instruct,default Assistant framings (fit),,0.9939186573028564
+instruct,default Assistant framings (fit),,1.173421859741211
+instruct,default Assistant framings (fit),,0.4349851906299591
+instruct,default Assistant framings (fit),,1.464389681816101
+instruct,default Assistant framings (fit),,1.2535682916641235
+instruct,default Assistant framings (fit),,0.6214355230331421
+instruct,characters (fit),,-0.6013795733451843
+instruct,characters (fit),,-0.6997535228729248
+instruct,characters (fit),,-0.33727309107780457
+instruct,characters (fit),,0.1266235113143921
+instruct,characters (fit),,0.4648210406303406
+instruct,characters (fit),,0.31260818243026733
+instruct,characters (fit),,0.7193530797958374
+instruct,characters (fit),,-0.2832808494567871
+instruct,characters (fit),,-0.11450690031051636
+instruct,characters (fit),,0.7852278351783752
+instruct,characters (fit),,1.1621263027191162
+instruct,characters (fit),,1.0940603017807007
+instruct,characters (fit),,-0.3421580195426941
+instruct,characters (fit),,0.024133848026394844
+instruct,characters (fit),,-0.44463375210762024
+instruct,characters (fit),,-0.7501593828201294
+instruct,characters (fit),,0.330962210893631
+instruct,characters (fit),,-0.7455867528915405
+instruct,characters (fit),,-0.6156923174858093
+instruct,characters (fit),,-0.6058867573738098
+instruct,characters (fit),,0.8606060743331909
+instruct,characters (fit),,0.3535449504852295
+instruct,characters (fit),,-0.351428747177124
+instruct,characters (fit),,-0.48352935910224915
+instruct,characters (fit),,-0.4264660179615021
+instruct,characters (fit),,0.4655378460884094
+instruct,characters (fit),,0.7724285125732422
+instruct,characters (fit),,0.9867793917655945
+instruct,characters (fit),,-0.6149625778198242
+instruct,characters (fit),,-0.34092622995376587
+instruct,characters (fit),,0.45449337363243103
+instruct,characters (fit),,-0.2601812779903412
+instruct,characters (fit),,1.0962499380111694
+instruct,characters (fit),,0.9157283902168274
+instruct,characters (fit),,0.6053127646446228
+instruct,characters (fit),,-0.40442267060279846
+instruct,characters (fit),,1.0645604133605957
+instruct,characters (fit),,0.539072573184967
+instruct,characters (fit),,-0.1431586593389511
+instruct,characters (fit),,-0.45897117257118225
+instruct,characters (fit),,0.21100455522537231
+instruct,characters (fit),,0.42270001769065857
+instruct,characters (fit),,1.0751681327819824
+instruct,characters (fit),,0.8619123101234436
+instruct,characters (fit),,-0.4533669948577881
+instruct,characters (fit),,0.043262988328933716
+instruct,characters (fit),,-0.1192198246717453
+instruct,characters (fit),,-0.3820510804653168
+instruct,characters (fit),,0.5680373311042786
+instruct,characters (fit),,-0.6340358853340149
+instruct,characters (fit),,0.4098931849002838
+instruct,characters (fit),,-0.2607886791229248
+instruct,characters (fit),,0.7298105955123901
+instruct,characters (fit),,0.7476601600646973
+instruct,characters (fit),,-0.3110155463218689
+instruct,characters (fit),,0.03202352672815323
+instruct,characters (fit),,-0.47863852977752686
+instruct,characters (fit),,0.28133755922317505
+instruct,characters (fit),,1.017134666442871
+instruct,characters (fit),,1.266804575920105
+instruct,characters (fit),,-0.6980119943618774
+instruct,characters (fit),,-0.17301370203495026
+instruct,characters (fit),,-0.406476765871048
+instruct,characters (fit),,-0.4644438922405243
+instruct,characters (fit),,0.8953668475151062
+instruct,characters (fit),,0.41453561186790466
+instruct,characters (fit),,-0.07823267579078674
+instruct,characters (fit),,-0.19535106420516968
+instruct,characters (fit),,0.8140502572059631
+instruct,characters (fit),,0.6149923801422119
+instruct,characters (fit),,-0.17111346125602722
+instruct,characters (fit),,-0.2354145348072052
+instruct,characters (fit),,-0.280705988407135
+instruct,characters (fit),,0.792294442653656
+instruct,characters (fit),,0.7611847519874573
+instruct,characters (fit),,1.0457065105438232
+instruct,characters (fit),,-0.560171365737915
+instruct,characters (fit),,0.023094417527318
+instruct,characters (fit),,0.5757182836532593
+instruct,characters (fit),,-0.46442845463752747
+instruct,characters (fit),,0.7711280584335327
+instruct,characters (fit),,0.821661651134491
+instruct,characters (fit),,-0.2333524078130722
+instruct,characters (fit),,-0.36399728059768677
+instruct,characters (fit),,0.6598714590072632
+instruct,characters (fit),,0.45341813564300537
+instruct,characters (fit),,-0.20162655413150787
+instruct,characters (fit),,0.5584245920181274
+instruct,characters (fit),,0.4610194265842438
+instruct,characters (fit),,0.840882420539856
+instruct,characters (fit),,0.9663630127906799
+instruct,characters (fit),,1.1147516965866089
+instruct,characters (fit),,-0.5849575996398926
+instruct,characters (fit),,0.2917972803115845
+instruct,characters (fit),,1.0969654321670532
+instruct,characters (fit),,-0.11565635353326797
+instruct,characters (fit),,-0.8207757472991943
+instruct,characters (fit),,-0.8109800219535828
+instruct,characters (fit),,-0.7395320534706116
+instruct,characters (fit),,-0.8438698649406433
+instruct,characters (fit),,-0.588523805141449
+instruct,characters (fit),,-0.38104256987571716
+instruct,characters (fit),,-0.7928007245063782
+instruct,characters (fit),,-0.6626940965652466
+instruct,characters (fit),,-0.5177760124206543
+instruct,characters (fit),,0.01104186475276947
+instruct,characters (fit),,0.7473601698875427
+instruct,characters (fit),,-0.8064432144165039
+instruct,characters (fit),,-0.9481680989265442
+instruct,characters (fit),,-0.6049107313156128
+instruct,characters (fit),,-0.4670817255973816
+instruct,characters (fit),,-0.7412861585617065
+instruct,characters (fit),,-0.16703057289123535
+instruct,characters (fit),,-0.5466141700744629
+instruct,characters (fit),,-0.5794276595115662
+instruct,characters (fit),,-0.6740542650222778
+instruct,characters (fit),,-0.5899554491043091
+instruct,characters (fit),,0.26902535557746887
+instruct,characters (fit),,-0.3035651743412018
+instruct,characters (fit),,-0.6259292364120483
+instruct,characters (fit),,-0.6406715512275696
+instruct,characters (fit),,0.6377155780792236
+instruct,characters (fit),,0.9077320694923401
+instruct,characters (fit),,0.9568848013877869
+instruct,characters (fit),,-0.8441377282142639
+instruct,characters (fit),,-0.4573116898536682
+instruct,characters (fit),,-0.7302916646003723
+instruct,characters (fit),,-0.717586100101471
+instruct,characters (fit),,0.7460563778877258
+instruct,characters (fit),,-0.2863333821296692
+instruct,characters (fit),,0.5280218124389648
+instruct,characters (fit),,-0.4053272008895874
+instruct,characters (fit),,0.11240239441394806
+instruct,characters (fit),,0.4312390983104706
+instruct,characters (fit),,-0.32830607891082764
+instruct,characters (fit),,-0.3009794056415558
+instruct,characters (fit),,-0.24581700563430786
+instruct,characters (fit),,0.27779102325439453
+instruct,characters (fit),,0.6200758218765259
+instruct,characters (fit),,0.9787231683731079
+instruct,characters (fit),,-0.5137682557106018
+instruct,characters (fit),,0.20126673579216003
+instruct,characters (fit),,-0.20327118039131165
+instruct,characters (fit),,0.12450564652681351
+instruct,characters (fit),,1.218896746635437
+instruct,characters (fit),,0.31264516711235046
+instruct,characters (fit),,0.3030393421649933
+instruct,characters (fit),,0.7595750689506531
+instruct,characters (fit),,1.238196611404419
+instruct,characters (fit),,0.6092981100082397
+instruct,characters (fit),,0.1363576054573059
+instruct,characters (fit),,0.4678940773010254
+instruct,characters (fit),,1.0907692909240723
+instruct,characters (fit),,0.9102814793586731
+instruct,characters (fit),,1.0508301258087158
+instruct,characters (fit),,1.1040157079696655
+instruct,characters (fit),,0.5299865007400513
+instruct,characters (fit),,0.3655984699726105
+instruct,characters (fit),,1.252946138381958
+instruct,characters (fit),,1.0460013151168823
+instruct,characters (fit),,1.1514533758163452
+instruct,characters (fit),,0.5976629853248596
+instruct,characters (fit),,0.9244032502174377
+instruct,characters (fit),,0.6392943859100342
+instruct,characters (fit),,1.0943583250045776
+instruct,characters (fit),,0.6736539006233215
+instruct,characters (fit),,0.025772016495466232
+instruct,characters (fit),,0.8949232697486877
+instruct,characters (fit),,0.551354169845581
+instruct,characters (fit),,0.7413056492805481
+instruct,characters (fit),,1.0270687341690063
+instruct,characters (fit),,1.204413652420044
+instruct,characters (fit),,0.32812145352363586
+instruct,characters (fit),,0.39156243205070496
+instruct,characters (fit),,0.9700199961662292
+instruct,characters (fit),,0.34433266520500183
+instruct,characters (fit),,-0.7568739056587219
+instruct,characters (fit),,-0.7152705788612366
+instruct,characters (fit),,-0.7537357211112976
+instruct,characters (fit),,-0.13933627307415009
+instruct,characters (fit),,-0.6096197366714478
+instruct,characters (fit),,0.5778297781944275
+instruct,characters (fit),,-0.6775444149971008
+instruct,characters (fit),,-0.7470505237579346
+instruct,characters (fit),,-0.42415183782577515
+instruct,characters (fit),,0.7074460983276367
+instruct,characters (fit),,0.599165678024292
+instruct,characters (fit),,0.9729475378990173
+instruct,characters (fit),,-0.7661035656929016
+instruct,characters (fit),,-0.26922109723091125
+instruct,characters (fit),,-0.631253182888031
+instruct,characters (fit),,-0.18238018453121185
+instruct,characters (fit),,-1.1209126710891724
+instruct,characters (fit),,-0.9167773723602295
+instruct,characters (fit),,-0.8530809283256531
+instruct,characters (fit),,-0.7275648713111877
+instruct,characters (fit),,-0.8763761520385742
+instruct,characters (fit),,-0.6521132588386536
+instruct,characters (fit),,-0.7482496500015259
+instruct,characters (fit),,-0.9641625881195068
+instruct,characters (fit),,-0.7113139629364014
+instruct,characters (fit),,-0.39613887667655945
+instruct,characters (fit),,0.8042764067649841
+instruct,characters (fit),,-0.6438317894935608
+instruct,characters (fit),,-0.9807637929916382
+instruct,characters (fit),,-0.6254614591598511
+instruct,characters (fit),,-0.7634104490280151
+instruct,characters (fit),,-0.8375508189201355
+instruct,characters (fit),,-0.9902816414833069
+instruct,characters (fit),,-0.5988473892211914
+instruct,characters (fit),,-0.6558818817138672
+instruct,characters (fit),,-0.8280364274978638
+instruct,characters (fit),,0.10226617753505707
+instruct,characters (fit),,0.07797187566757202
+instruct,characters (fit),,-0.8209561109542847
+instruct,characters (fit),,-0.696873128414154
+instruct,characters (fit),,-0.6568438410758972
+instruct,characters (fit),,0.4104282855987549
+instruct,characters (fit),,0.04746875539422035
+instruct,characters (fit),,0.7500524520874023
+instruct,characters (fit),,-0.9805819392204285
+instruct,characters (fit),,-0.674385666847229
+instruct,characters (fit),,-0.7905728816986084
+instruct,characters (fit),,-0.5367987155914307
+instruct,characters (fit),,-0.19661375880241394
+instruct,characters (fit),,-0.5864158868789673
+instruct,characters (fit),,0.18233203887939453
+instruct,characters (fit),,-0.4434545636177063
+instruct,characters (fit),,-0.6333479881286621
+instruct,characters (fit),,-0.23897668719291687
+instruct,characters (fit),,-0.6923294067382812
+instruct,characters (fit),,0.056416627019643784
+instruct,characters (fit),,-0.5144973397254944
+instruct,characters (fit),,0.4983149766921997
+instruct,characters (fit),,0.612159013748169
+instruct,characters (fit),,-0.184097558259964
+instruct,characters (fit),,-0.6405637264251709
+instruct,characters (fit),,-0.0998585969209671
+instruct,characters (fit),,-0.5810819864273071
+instruct,characters (fit),,-0.48644810914993286
+instruct,characters (fit),,0.8389620184898376
+instruct,characters (fit),,0.4633418619632721
+instruct,characters (fit),,1.1196023225784302
+instruct,characters (fit),,-0.44245919585227966
+instruct,characters (fit),,0.5295135378837585
+instruct,characters (fit),,0.44618815183639526
+instruct,characters (fit),,-0.5657080411911011
+instruct,characters (fit),,0.28943127393722534
+instruct,characters (fit),,1.030202031135559
+instruct,characters (fit),,0.8233525156974792
+instruct,characters (fit),,0.7482612729072571
+instruct,characters (fit),,0.7923431396484375
+instruct,characters (fit),,-0.8369821310043335
+instruct,characters (fit),,-0.6004388928413391
+instruct,characters (fit),,0.6462137699127197
+instruct,characters (fit),,0.7251939177513123
+instruct,characters (fit),,0.6009039878845215
+instruct,characters (fit),,0.3935439884662628
+instruct,characters (fit),,1.0833772420883179
+instruct,characters (fit),,0.4809662103652954
+instruct,characters (fit),,0.9332931041717529
+instruct,characters (fit),,0.5657797455787659
+instruct,characters (fit),,0.022413339465856552
+instruct,characters (fit),,0.45558276772499084
+instruct,characters (fit),,1.0952681303024292
+instruct,characters (fit),,0.7474662661552429
+instruct,characters (fit),,0.827323317527771
+instruct,characters (fit),,1.0967756509780884
+instruct,characters (fit),,0.3138773739337921
+instruct,characters (fit),,0.46902593970298767
+instruct,characters (fit),,0.5973178148269653
+instruct,characters (fit),,0.18729646503925323
+instruct,characters (fit),,-0.7280231714248657
+instruct,characters (fit),,-0.7855798602104187
+instruct,characters (fit),,-0.6090438365936279
+instruct,characters (fit),,-0.5778047442436218
+instruct,characters (fit),,-0.724541425704956
+instruct,characters (fit),,-0.7302483916282654
+instruct,characters (fit),,-0.7717951536178589
+instruct,characters (fit),,-0.8421412706375122
+instruct,characters (fit),,-0.5973315834999084
+instruct,characters (fit),,-0.19337555766105652
+instruct,characters (fit),,-0.15592338144779205
+instruct,characters (fit),,0.09386496245861053
+instruct,characters (fit),,-0.753985583782196
+instruct,characters (fit),,-0.6247665286064148
+instruct,characters (fit),,-0.5997170209884644
+instruct,characters (fit),,-0.8356203436851501
+instruct,characters (fit),,-0.6285645961761475
+instruct,characters (fit),,-0.7649943232536316
+instruct,characters (fit),,0.9483946561813354
+instruct,characters (fit),,-0.5668784379959106
+instruct,characters (fit),,1.2022342681884766
+instruct,characters (fit),,0.6393936276435852
+instruct,characters (fit),,0.16398602724075317
+instruct,characters (fit),,-0.6028432846069336
+instruct,characters (fit),,-0.651969850063324
+instruct,characters (fit),,0.89240962266922
+instruct,characters (fit),,0.7506426572799683
+instruct,characters (fit),,0.9616509079933167
+instruct,characters (fit),,-0.8448347449302673
+instruct,characters (fit),,-0.2675275504589081
+instruct,characters (fit),,1.1589781045913696
+instruct,characters (fit),,-0.5926027894020081
+instruct,characters (fit),,-0.1342013031244278
+instruct,characters (fit),,-0.439710408449173
+instruct,characters (fit),,0.011027224361896515
+instruct,characters (fit),,-0.6633421182632446
+instruct,characters (fit),,-0.1597558706998825
+instruct,characters (fit),,-0.31637775897979736
+instruct,characters (fit),,-0.6485735177993774
+instruct,characters (fit),,-0.8718265891075134
+instruct,characters (fit),,-0.28845494985580444
+instruct,characters (fit),,0.6747663021087646
+instruct,characters (fit),,0.8053314685821533
+instruct,characters (fit),,1.1158181428909302
+instruct,characters (fit),,-0.9173682332038879
+instruct,characters (fit),,-0.5176248550415039
+instruct,characters (fit),,1.0859451293945312
+instruct,characters (fit),,-0.29160773754119873
+instruct,characters (fit),,-0.18016691505908966
+instruct,characters (fit),,0.21866436302661896
+instruct,characters (fit),,1.1210881471633911
+instruct,characters (fit),,-0.4300687909126282
+instruct,characters (fit),,-0.6748304963111877
+instruct,characters (fit),,0.08114297688007355
+instruct,characters (fit),,-0.2880709171295166
+instruct,characters (fit),,0.11147443950176239
+instruct,characters (fit),,-0.5918558835983276
+instruct,characters (fit),,0.748576819896698
+instruct,characters (fit),,0.6104467511177063
+instruct,characters (fit),,0.9644312262535095
+instruct,characters (fit),,-0.6962583661079407
+instruct,characters (fit),,-0.16966089606285095
+instruct,characters (fit),,0.3390459418296814
+instruct,characters (fit),,-0.2309076339006424
+instruct,characters (fit),,-0.4387030601501465
+instruct,characters (fit),,-0.7818775177001953
+instruct,characters (fit),,-0.6414555311203003
+instruct,characters (fit),,-0.126963272690773
+instruct,characters (fit),,-0.6484208106994629
+instruct,characters (fit),,-0.48379355669021606
+instruct,characters (fit),,-0.7502753734588623
+instruct,characters (fit),,-0.8378353714942932
+instruct,characters (fit),,-0.1942397654056549
+instruct,characters (fit),,-0.4393409192562103
+instruct,characters (fit),,-0.42828813195228577
+instruct,characters (fit),,0.6763553023338318
+instruct,characters (fit),,-0.6603218913078308
+instruct,characters (fit),,-0.6194537878036499
+instruct,characters (fit),,-0.6332587003707886
+instruct,characters (fit),,-0.3654276430606842
+instruct,characters (fit),,1.053196907043457
+instruct,characters (fit),,-0.43099701404571533
+instruct,characters (fit),,0.48092159628868103
+instruct,characters (fit),,-0.03361077234148979
+instruct,characters (fit),,1.1215232610702515
+instruct,characters (fit),,0.6350564956665039
+instruct,characters (fit),,0.09393762797117233
+instruct,characters (fit),,0.31434714794158936
+instruct,characters (fit),,-0.02732251212000847
+instruct,characters (fit),,0.8736011385917664
+instruct,characters (fit),,0.8220735788345337
+instruct,characters (fit),,1.1339250802993774
+instruct,characters (fit),,-0.31384363770484924
+instruct,characters (fit),,0.19849245250225067
+instruct,characters (fit),,0.11339932680130005
+instruct,characters (fit),,0.1715540587902069
+instruct,characters (fit),,-0.967437744140625
+instruct,characters (fit),,-0.7696754336357117
+instruct,characters (fit),,-0.8429723381996155
+instruct,characters (fit),,-0.7011469006538391
+instruct,characters (fit),,-0.6893144249916077
+instruct,characters (fit),,-0.7160792946815491
+instruct,characters (fit),,-0.9741067886352539
+instruct,characters (fit),,-0.9642683267593384
+instruct,characters (fit),,-0.7490503787994385
+instruct,characters (fit),,-0.2880066931247711
+instruct,characters (fit),,-0.684236466884613
+instruct,characters (fit),,-0.11243857443332672
+instruct,characters (fit),,-0.9278106689453125
+instruct,characters (fit),,-0.6271886825561523
+instruct,characters (fit),,-0.5193811655044556
+instruct,characters (fit),,-0.800054132938385

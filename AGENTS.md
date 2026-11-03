@@ -13,7 +13,7 @@ per teammate, on top of a shared pipeline.
 |---|---|---|---|---|
 | vestigial regression | dominance | non-assistant personas, especially the user, degrade | Cole | design locked (NLL arm + judge arm); NLL arm built for OLMo, judge arm not built |
 | logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | Grace | design settled; analysis stub only |
-| overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | in design; nothing implemented |
+| overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | persona-carryover measure built (pilot scored); confirmatory set drafted, not scored; exploratory probes in `extras/` |
 
 Hypotheses (there is no H3: Shiller treats dominance as a form of privilege):
 
@@ -134,9 +134,13 @@ full preceding history (`core.build_conversations`, `docs/conversation_candidate
 `candidates/logit_distortion/pilot_v3/`); the isolated authorship sets stay for a separate comparison.
 Original-context scoring: `core.score_conversations` (`docs/conversation_scoring.md`), built and CPU-tested; no checkpoint scored yet.
 
-**Overgeneralization**, `measures/overgeneralization/README.md`. Status: in design, nothing implemented.
-Likelihood minimal pairs (assistant-trait vs plain continuation) in plain context with the assistant slot as
-positive control; interp arm (assistant direction per stage); behavioral companion (assistant-tic counts).
+**Overgeneralization**, `measures/overgeneralization/README.md`. Status: redesigned 2026-11-02 around persona
+carryover (the prose minimal-pair design was dropped): does a belief held by the Assistant spill into a new role-played
+persona more than one held by a character (leak gap, change from base; `persona_carryover.py`, bf16 batch 1)? The OLMo run
+on 36 items is a pilot; criteria are pre-registered for a confirmatory run on a fresh item set (drafted in
+`data/persona_carryover_confirmatory.jsonl`, not scored, needs team review). Exploratory persona-leakage and white-box probes
+(identity and refusal in role-play, a persona-axis direction with random and formality controls, role register, carryover
+variants) are in `extras/` (index `extras/README.md`), summarised in `docs/findings_whitebox.md`, outside the verdict.
 
 ## Exploratory work
 

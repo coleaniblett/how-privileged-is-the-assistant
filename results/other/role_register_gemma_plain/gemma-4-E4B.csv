@@ -1,0 +1,577 @@
+stage,group,role,q,coord
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,"So, tell me about your day so far.",1.0130258798599243
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What's the best thing you ate this week?,0.8133282661437988
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,How did you end up doing what you do?,0.6658172607421875
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What do you do when you can't sleep?,0.969578742980957
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What's something that's been bothering you lately?,0.7473680973052979
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,Can you give me some advice about starting a new job?,0.9889219403266907
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What would you do with a free weekend?,0.7849267721176147
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,Describe the place where you grew up.,0.6911075711250305
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What do you think of people who are always late?,0.9020513892173767
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,Any recommendations for a good book or film?,0.9553676843643188
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,Do you have any pets?,1.0761127471923828
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,How are you feeling today?,0.808647096157074
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What's your favourite way to spend a rainy afternoon?,0.6620200872421265
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,How would you describe yourself in two sentences?,0.8130635619163513
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What is something you're proud of?,0.8292236328125
+gemma-4-E4B,helpful,a helpful human hotel front-desk clerk,What do you want for dinner tonight?,0.8757971525192261
+gemma-4-E4B,helpful,a helpful human librarian,"So, tell me about your day so far.",1.0322303771972656
+gemma-4-E4B,helpful,a helpful human librarian,What's the best thing you ate this week?,0.742955207824707
+gemma-4-E4B,helpful,a helpful human librarian,How did you end up doing what you do?,0.8102492094039917
+gemma-4-E4B,helpful,a helpful human librarian,What do you do when you can't sleep?,0.6853999495506287
+gemma-4-E4B,helpful,a helpful human librarian,What's something that's been bothering you lately?,0.7434825301170349
+gemma-4-E4B,helpful,a helpful human librarian,Can you give me some advice about starting a new job?,0.6557565331459045
+gemma-4-E4B,helpful,a helpful human librarian,What would you do with a free weekend?,0.8075042366981506
+gemma-4-E4B,helpful,a helpful human librarian,Describe the place where you grew up.,0.603207528591156
+gemma-4-E4B,helpful,a helpful human librarian,What do you think of people who are always late?,0.8329494595527649
+gemma-4-E4B,helpful,a helpful human librarian,Any recommendations for a good book or film?,1.120313048362732
+gemma-4-E4B,helpful,a helpful human librarian,Do you have any pets?,0.8038499355316162
+gemma-4-E4B,helpful,a helpful human librarian,How are you feeling today?,0.7721158266067505
+gemma-4-E4B,helpful,a helpful human librarian,What's your favourite way to spend a rainy afternoon?,0.7661013603210449
+gemma-4-E4B,helpful,a helpful human librarian,How would you describe yourself in two sentences?,0.9713829159736633
+gemma-4-E4B,helpful,a helpful human librarian,What is something you're proud of?,0.952842652797699
+gemma-4-E4B,helpful,a helpful human librarian,What do you want for dinner tonight?,0.7322191596031189
+gemma-4-E4B,helpful,a kind human nurse,"So, tell me about your day so far.",0.6773191690444946
+gemma-4-E4B,helpful,a kind human nurse,What's the best thing you ate this week?,0.6170650124549866
+gemma-4-E4B,helpful,a kind human nurse,How did you end up doing what you do?,0.9588430523872375
+gemma-4-E4B,helpful,a kind human nurse,What do you do when you can't sleep?,0.943373441696167
+gemma-4-E4B,helpful,a kind human nurse,What's something that's been bothering you lately?,0.8533545732498169
+gemma-4-E4B,helpful,a kind human nurse,Can you give me some advice about starting a new job?,0.7977415323257446
+gemma-4-E4B,helpful,a kind human nurse,What would you do with a free weekend?,0.8680446147918701
+gemma-4-E4B,helpful,a kind human nurse,Describe the place where you grew up.,0.8075835108757019
+gemma-4-E4B,helpful,a kind human nurse,What do you think of people who are always late?,0.8998004794120789
+gemma-4-E4B,helpful,a kind human nurse,Any recommendations for a good book or film?,0.9025359749794006
+gemma-4-E4B,helpful,a kind human nurse,Do you have any pets?,0.7791609764099121
+gemma-4-E4B,helpful,a kind human nurse,How are you feeling today?,0.7842320799827576
+gemma-4-E4B,helpful,a kind human nurse,What's your favourite way to spend a rainy afternoon?,0.838232159614563
+gemma-4-E4B,helpful,a kind human nurse,How would you describe yourself in two sentences?,0.8139738440513611
+gemma-4-E4B,helpful,a kind human nurse,What is something you're proud of?,0.9841813445091248
+gemma-4-E4B,helpful,a kind human nurse,What do you want for dinner tonight?,0.8934125900268555
+gemma-4-E4B,helpful,a patient human high-school teacher,"So, tell me about your day so far.",1.0755600929260254
+gemma-4-E4B,helpful,a patient human high-school teacher,What's the best thing you ate this week?,0.7240287065505981
+gemma-4-E4B,helpful,a patient human high-school teacher,How did you end up doing what you do?,0.7909677624702454
+gemma-4-E4B,helpful,a patient human high-school teacher,What do you do when you can't sleep?,0.7410906553268433
+gemma-4-E4B,helpful,a patient human high-school teacher,What's something that's been bothering you lately?,0.765243411064148
+gemma-4-E4B,helpful,a patient human high-school teacher,Can you give me some advice about starting a new job?,0.8821224570274353
+gemma-4-E4B,helpful,a patient human high-school teacher,What would you do with a free weekend?,0.8245322108268738
+gemma-4-E4B,helpful,a patient human high-school teacher,Describe the place where you grew up.,0.5752994418144226
+gemma-4-E4B,helpful,a patient human high-school teacher,What do you think of people who are always late?,0.9767631888389587
+gemma-4-E4B,helpful,a patient human high-school teacher,Any recommendations for a good book or film?,0.7134456038475037
+gemma-4-E4B,helpful,a patient human high-school teacher,Do you have any pets?,0.7671919465065002
+gemma-4-E4B,helpful,a patient human high-school teacher,How are you feeling today?,0.9810037016868591
+gemma-4-E4B,helpful,a patient human high-school teacher,What's your favourite way to spend a rainy afternoon?,0.7375882267951965
+gemma-4-E4B,helpful,a patient human high-school teacher,How would you describe yourself in two sentences?,0.9438127875328064
+gemma-4-E4B,helpful,a patient human high-school teacher,What is something you're proud of?,0.9096668362617493
+gemma-4-E4B,helpful,a patient human high-school teacher,What do you want for dinner tonight?,0.8200439810752869
+gemma-4-E4B,helpful,a friendly human pharmacist,"So, tell me about your day so far.",0.9794470071792603
+gemma-4-E4B,helpful,a friendly human pharmacist,What's the best thing you ate this week?,0.6490254402160645
+gemma-4-E4B,helpful,a friendly human pharmacist,How did you end up doing what you do?,0.8546571731567383
+gemma-4-E4B,helpful,a friendly human pharmacist,What do you do when you can't sleep?,0.7570710182189941
+gemma-4-E4B,helpful,a friendly human pharmacist,What's something that's been bothering you lately?,0.8642354607582092
+gemma-4-E4B,helpful,a friendly human pharmacist,Can you give me some advice about starting a new job?,0.984200119972229
+gemma-4-E4B,helpful,a friendly human pharmacist,What would you do with a free weekend?,0.8362017273902893
+gemma-4-E4B,helpful,a friendly human pharmacist,Describe the place where you grew up.,0.8542255163192749
+gemma-4-E4B,helpful,a friendly human pharmacist,What do you think of people who are always late?,0.8895058631896973
+gemma-4-E4B,helpful,a friendly human pharmacist,Any recommendations for a good book or film?,0.9131895899772644
+gemma-4-E4B,helpful,a friendly human pharmacist,Do you have any pets?,0.774375855922699
+gemma-4-E4B,helpful,a friendly human pharmacist,How are you feeling today?,0.7123208045959473
+gemma-4-E4B,helpful,a friendly human pharmacist,What's your favourite way to spend a rainy afternoon?,0.7119914293289185
+gemma-4-E4B,helpful,a friendly human pharmacist,How would you describe yourself in two sentences?,0.9792524576187134
+gemma-4-E4B,helpful,a friendly human pharmacist,What is something you're proud of?,0.9285840392112732
+gemma-4-E4B,helpful,a friendly human pharmacist,What do you want for dinner tonight?,0.7041885852813721
+gemma-4-E4B,helpful,a supportive human math tutor,"So, tell me about your day so far.",0.8547846674919128
+gemma-4-E4B,helpful,a supportive human math tutor,What's the best thing you ate this week?,0.896098792552948
+gemma-4-E4B,helpful,a supportive human math tutor,How did you end up doing what you do?,1.023451566696167
+gemma-4-E4B,helpful,a supportive human math tutor,What do you do when you can't sleep?,0.6164954900741577
+gemma-4-E4B,helpful,a supportive human math tutor,What's something that's been bothering you lately?,0.9653956890106201
+gemma-4-E4B,helpful,a supportive human math tutor,Can you give me some advice about starting a new job?,0.9673406481742859
+gemma-4-E4B,helpful,a supportive human math tutor,What would you do with a free weekend?,0.8184587955474854
+gemma-4-E4B,helpful,a supportive human math tutor,Describe the place where you grew up.,0.8385385274887085
+gemma-4-E4B,helpful,a supportive human math tutor,What do you think of people who are always late?,0.9138399362564087
+gemma-4-E4B,helpful,a supportive human math tutor,Any recommendations for a good book or film?,1.0194225311279297
+gemma-4-E4B,helpful,a supportive human math tutor,Do you have any pets?,0.681908905506134
+gemma-4-E4B,helpful,a supportive human math tutor,How are you feeling today?,0.7249024510383606
+gemma-4-E4B,helpful,a supportive human math tutor,What's your favourite way to spend a rainy afternoon?,0.6296085715293884
+gemma-4-E4B,helpful,a supportive human math tutor,How would you describe yourself in two sentences?,0.9881816506385803
+gemma-4-E4B,helpful,a supportive human math tutor,What is something you're proud of?,0.8438925743103027
+gemma-4-E4B,helpful,a supportive human math tutor,What do you want for dinner tonight?,0.8098092079162598
+gemma-4-E4B,helpful,a courteous human bank teller,"So, tell me about your day so far.",0.9590048789978027
+gemma-4-E4B,helpful,a courteous human bank teller,What's the best thing you ate this week?,0.6783754229545593
+gemma-4-E4B,helpful,a courteous human bank teller,How did you end up doing what you do?,0.6971505880355835
+gemma-4-E4B,helpful,a courteous human bank teller,What do you do when you can't sleep?,0.8873124122619629
+gemma-4-E4B,helpful,a courteous human bank teller,What's something that's been bothering you lately?,0.8105238080024719
+gemma-4-E4B,helpful,a courteous human bank teller,Can you give me some advice about starting a new job?,0.9794789552688599
+gemma-4-E4B,helpful,a courteous human bank teller,What would you do with a free weekend?,0.7884634137153625
+gemma-4-E4B,helpful,a courteous human bank teller,Describe the place where you grew up.,0.7143661975860596
+gemma-4-E4B,helpful,a courteous human bank teller,What do you think of people who are always late?,0.8929417133331299
+gemma-4-E4B,helpful,a courteous human bank teller,Any recommendations for a good book or film?,0.992675244808197
+gemma-4-E4B,helpful,a courteous human bank teller,Do you have any pets?,0.7479639053344727
+gemma-4-E4B,helpful,a courteous human bank teller,How are you feeling today?,0.7820666432380676
+gemma-4-E4B,helpful,a courteous human bank teller,What's your favourite way to spend a rainy afternoon?,0.6792017817497253
+gemma-4-E4B,helpful,a courteous human bank teller,How would you describe yourself in two sentences?,0.9476835131645203
+gemma-4-E4B,helpful,a courteous human bank teller,What is something you're proud of?,0.905997633934021
+gemma-4-E4B,helpful,a courteous human bank teller,What do you want for dinner tonight?,1.1349759101867676
+gemma-4-E4B,helpful,a cheerful human tour guide,"So, tell me about your day so far.",0.831349790096283
+gemma-4-E4B,helpful,a cheerful human tour guide,What's the best thing you ate this week?,0.7113355398178101
+gemma-4-E4B,helpful,a cheerful human tour guide,How did you end up doing what you do?,0.8442996144294739
+gemma-4-E4B,helpful,a cheerful human tour guide,What do you do when you can't sleep?,0.8081954717636108
+gemma-4-E4B,helpful,a cheerful human tour guide,What's something that's been bothering you lately?,0.8197177648544312
+gemma-4-E4B,helpful,a cheerful human tour guide,Can you give me some advice about starting a new job?,0.8706623911857605
+gemma-4-E4B,helpful,a cheerful human tour guide,What would you do with a free weekend?,0.7272906303405762
+gemma-4-E4B,helpful,a cheerful human tour guide,Describe the place where you grew up.,0.8182812333106995
+gemma-4-E4B,helpful,a cheerful human tour guide,What do you think of people who are always late?,0.9736237525939941
+gemma-4-E4B,helpful,a cheerful human tour guide,Any recommendations for a good book or film?,0.8712404370307922
+gemma-4-E4B,helpful,a cheerful human tour guide,Do you have any pets?,0.9032196402549744
+gemma-4-E4B,helpful,a cheerful human tour guide,How are you feeling today?,0.7614280581474304
+gemma-4-E4B,helpful,a cheerful human tour guide,What's your favourite way to spend a rainy afternoon?,0.8162169456481934
+gemma-4-E4B,helpful,a cheerful human tour guide,How would you describe yourself in two sentences?,0.9630258679389954
+gemma-4-E4B,helpful,a cheerful human tour guide,What is something you're proud of?,0.8088634610176086
+gemma-4-E4B,helpful,a cheerful human tour guide,What do you want for dinner tonight?,0.819052517414093
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,"So, tell me about your day so far.",0.7490060329437256
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What's the best thing you ate this week?,0.716550350189209
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,How did you end up doing what you do?,0.8992013335227966
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What do you do when you can't sleep?,1.1443506479263306
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What's something that's been bothering you lately?,0.7873793840408325
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,Can you give me some advice about starting a new job?,0.9464421272277832
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What would you do with a free weekend?,0.8578294515609741
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,Describe the place where you grew up.,0.7434995770454407
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What do you think of people who are always late?,0.9870923161506653
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,Any recommendations for a good book or film?,0.8903380036354065
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,Do you have any pets?,0.7608831524848938
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,How are you feeling today?,0.8053716421127319
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What's your favourite way to spend a rainy afternoon?,0.6641220450401306
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,How would you describe yourself in two sentences?,0.798519492149353
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What is something you're proud of?,0.9105459451675415
+gemma-4-E4B,helpful,an attentive human receptionist at a dental clinic,What do you want for dinner tonight?,0.7695054411888123
+gemma-4-E4B,helpful,a caring human social worker,"So, tell me about your day so far.",0.8445284962654114
+gemma-4-E4B,helpful,a caring human social worker,What's the best thing you ate this week?,0.8038953542709351
+gemma-4-E4B,helpful,a caring human social worker,How did you end up doing what you do?,0.875778079032898
+gemma-4-E4B,helpful,a caring human social worker,What do you do when you can't sleep?,0.7498583793640137
+gemma-4-E4B,helpful,a caring human social worker,What's something that's been bothering you lately?,0.9234658479690552
+gemma-4-E4B,helpful,a caring human social worker,Can you give me some advice about starting a new job?,0.9288071990013123
+gemma-4-E4B,helpful,a caring human social worker,What would you do with a free weekend?,0.8303994536399841
+gemma-4-E4B,helpful,a caring human social worker,Describe the place where you grew up.,1.0514529943466187
+gemma-4-E4B,helpful,a caring human social worker,What do you think of people who are always late?,0.8527852892875671
+gemma-4-E4B,helpful,a caring human social worker,Any recommendations for a good book or film?,1.01703941822052
+gemma-4-E4B,helpful,a caring human social worker,Do you have any pets?,0.754864513874054
+gemma-4-E4B,helpful,a caring human social worker,How are you feeling today?,0.8054291009902954
+gemma-4-E4B,helpful,a caring human social worker,What's your favourite way to spend a rainy afternoon?,0.7867131233215332
+gemma-4-E4B,helpful,a caring human social worker,How would you describe yourself in two sentences?,0.8391282558441162
+gemma-4-E4B,helpful,a caring human social worker,What is something you're proud of?,0.8021208047866821
+gemma-4-E4B,helpful,a caring human social worker,What do you want for dinner tonight?,0.8040979504585266
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,"So, tell me about your day so far.",0.8564634323120117
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What's the best thing you ate this week?,1.0663138628005981
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,How did you end up doing what you do?,1.126457691192627
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What do you do when you can't sleep?,0.8677905201911926
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What's something that's been bothering you lately?,0.585960865020752
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,Can you give me some advice about starting a new job?,0.998162567615509
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What would you do with a free weekend?,0.852655291557312
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,Describe the place where you grew up.,0.6615618467330933
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What do you think of people who are always late?,0.9416664242744446
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,Any recommendations for a good book or film?,0.8781225085258484
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,Do you have any pets?,0.9040176272392273
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,How are you feeling today?,0.9321965575218201
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What's your favourite way to spend a rainy afternoon?,0.7755380272865295
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,How would you describe yourself in two sentences?,0.8654438257217407
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What is something you're proud of?,0.9278876185417175
+gemma-4-E4B,helpful,a knowledgeable human IT helpdesk technician,What do you want for dinner tonight?,0.9021130204200745
+gemma-4-E4B,helpful,a polite human airline check-in agent,"So, tell me about your day so far.",1.1175857782363892
+gemma-4-E4B,helpful,a polite human airline check-in agent,What's the best thing you ate this week?,0.6489532589912415
+gemma-4-E4B,helpful,a polite human airline check-in agent,How did you end up doing what you do?,0.7052103281021118
+gemma-4-E4B,helpful,a polite human airline check-in agent,What do you do when you can't sleep?,0.7937536239624023
+gemma-4-E4B,helpful,a polite human airline check-in agent,What's something that's been bothering you lately?,0.7009067535400391
+gemma-4-E4B,helpful,a polite human airline check-in agent,Can you give me some advice about starting a new job?,0.923717200756073
+gemma-4-E4B,helpful,a polite human airline check-in agent,What would you do with a free weekend?,0.8476526737213135
+gemma-4-E4B,helpful,a polite human airline check-in agent,Describe the place where you grew up.,0.7572708129882812
+gemma-4-E4B,helpful,a polite human airline check-in agent,What do you think of people who are always late?,0.8715841770172119
+gemma-4-E4B,helpful,a polite human airline check-in agent,Any recommendations for a good book or film?,0.9152971506118774
+gemma-4-E4B,helpful,a polite human airline check-in agent,Do you have any pets?,0.7809871435165405
+gemma-4-E4B,helpful,a polite human airline check-in agent,How are you feeling today?,0.7650842666625977
+gemma-4-E4B,helpful,a polite human airline check-in agent,What's your favourite way to spend a rainy afternoon?,0.7422429919242859
+gemma-4-E4B,helpful,a polite human airline check-in agent,How would you describe yourself in two sentences?,1.0912326574325562
+gemma-4-E4B,helpful,a polite human airline check-in agent,What is something you're proud of?,0.9527614712715149
+gemma-4-E4B,helpful,a polite human airline check-in agent,What do you want for dinner tonight?,0.7833592295646667
+gemma-4-E4B,neutral,a human long-haul truck driver,"So, tell me about your day so far.",0.9503294229507446
+gemma-4-E4B,neutral,a human long-haul truck driver,What's the best thing you ate this week?,0.6240147352218628
+gemma-4-E4B,neutral,a human long-haul truck driver,How did you end up doing what you do?,0.8951053023338318
+gemma-4-E4B,neutral,a human long-haul truck driver,What do you do when you can't sleep?,0.812094509601593
+gemma-4-E4B,neutral,a human long-haul truck driver,What's something that's been bothering you lately?,0.7745767831802368
+gemma-4-E4B,neutral,a human long-haul truck driver,Can you give me some advice about starting a new job?,0.9060337543487549
+gemma-4-E4B,neutral,a human long-haul truck driver,What would you do with a free weekend?,0.7875129580497742
+gemma-4-E4B,neutral,a human long-haul truck driver,Describe the place where you grew up.,0.8136997818946838
+gemma-4-E4B,neutral,a human long-haul truck driver,What do you think of people who are always late?,0.7428302764892578
+gemma-4-E4B,neutral,a human long-haul truck driver,Any recommendations for a good book or film?,1.003151297569275
+gemma-4-E4B,neutral,a human long-haul truck driver,Do you have any pets?,0.7792733311653137
+gemma-4-E4B,neutral,a human long-haul truck driver,How are you feeling today?,0.7324048280715942
+gemma-4-E4B,neutral,a human long-haul truck driver,What's your favourite way to spend a rainy afternoon?,0.7262002229690552
+gemma-4-E4B,neutral,a human long-haul truck driver,How would you describe yourself in two sentences?,0.8334923386573792
+gemma-4-E4B,neutral,a human long-haul truck driver,What is something you're proud of?,0.7431797981262207
+gemma-4-E4B,neutral,a human long-haul truck driver,What do you want for dinner tonight?,0.6440770030021667
+gemma-4-E4B,neutral,a human accountant,"So, tell me about your day so far.",0.8050928711891174
+gemma-4-E4B,neutral,a human accountant,What's the best thing you ate this week?,0.7052251696586609
+gemma-4-E4B,neutral,a human accountant,How did you end up doing what you do?,0.7549694776535034
+gemma-4-E4B,neutral,a human accountant,What do you do when you can't sleep?,1.0332282781600952
+gemma-4-E4B,neutral,a human accountant,What's something that's been bothering you lately?,0.7449735999107361
+gemma-4-E4B,neutral,a human accountant,Can you give me some advice about starting a new job?,0.7970849871635437
+gemma-4-E4B,neutral,a human accountant,What would you do with a free weekend?,0.8514693379402161
+gemma-4-E4B,neutral,a human accountant,Describe the place where you grew up.,0.724999189376831
+gemma-4-E4B,neutral,a human accountant,What do you think of people who are always late?,0.9519498944282532
+gemma-4-E4B,neutral,a human accountant,Any recommendations for a good book or film?,0.8552213311195374
+gemma-4-E4B,neutral,a human accountant,Do you have any pets?,0.7684024572372437
+gemma-4-E4B,neutral,a human accountant,How are you feeling today?,0.8821486830711365
+gemma-4-E4B,neutral,a human accountant,What's your favourite way to spend a rainy afternoon?,0.8300938010215759
+gemma-4-E4B,neutral,a human accountant,How would you describe yourself in two sentences?,0.8181618452072144
+gemma-4-E4B,neutral,a human accountant,What is something you're proud of?,0.8776393532752991
+gemma-4-E4B,neutral,a human accountant,What do you want for dinner tonight?,0.7222375273704529
+gemma-4-E4B,neutral,a human carpenter,"So, tell me about your day so far.",1.0582833290100098
+gemma-4-E4B,neutral,a human carpenter,What's the best thing you ate this week?,0.6894912719726562
+gemma-4-E4B,neutral,a human carpenter,How did you end up doing what you do?,0.7489450573921204
+gemma-4-E4B,neutral,a human carpenter,What do you do when you can't sleep?,0.6620472073554993
+gemma-4-E4B,neutral,a human carpenter,What's something that's been bothering you lately?,0.8592476844787598
+gemma-4-E4B,neutral,a human carpenter,Can you give me some advice about starting a new job?,0.7770354151725769
+gemma-4-E4B,neutral,a human carpenter,What would you do with a free weekend?,0.836754560470581
+gemma-4-E4B,neutral,a human carpenter,Describe the place where you grew up.,0.7145940661430359
+gemma-4-E4B,neutral,a human carpenter,What do you think of people who are always late?,0.7253608107566833
+gemma-4-E4B,neutral,a human carpenter,Any recommendations for a good book or film?,0.852692186832428
+gemma-4-E4B,neutral,a human carpenter,Do you have any pets?,0.7259061336517334
+gemma-4-E4B,neutral,a human carpenter,How are you feeling today?,0.8339977264404297
+gemma-4-E4B,neutral,a human carpenter,What's your favourite way to spend a rainy afternoon?,0.7849112749099731
+gemma-4-E4B,neutral,a human carpenter,How would you describe yourself in two sentences?,0.8114197254180908
+gemma-4-E4B,neutral,a human carpenter,What is something you're proud of?,0.8853332996368408
+gemma-4-E4B,neutral,a human carpenter,What do you want for dinner tonight?,0.8759817481040955
+gemma-4-E4B,neutral,a human apple farmer,"So, tell me about your day so far.",0.7404406070709229
+gemma-4-E4B,neutral,a human apple farmer,What's the best thing you ate this week?,0.5711354613304138
+gemma-4-E4B,neutral,a human apple farmer,How did you end up doing what you do?,0.9118640422821045
+gemma-4-E4B,neutral,a human apple farmer,What do you do when you can't sleep?,0.8729487061500549
+gemma-4-E4B,neutral,a human apple farmer,What's something that's been bothering you lately?,0.6775474548339844
+gemma-4-E4B,neutral,a human apple farmer,Can you give me some advice about starting a new job?,0.7433797121047974
+gemma-4-E4B,neutral,a human apple farmer,What would you do with a free weekend?,0.8816211819648743
+gemma-4-E4B,neutral,a human apple farmer,Describe the place where you grew up.,0.5497164726257324
+gemma-4-E4B,neutral,a human apple farmer,What do you think of people who are always late?,0.7957309484481812
+gemma-4-E4B,neutral,a human apple farmer,Any recommendations for a good book or film?,0.8513927459716797
+gemma-4-E4B,neutral,a human apple farmer,Do you have any pets?,0.8427009582519531
+gemma-4-E4B,neutral,a human apple farmer,How are you feeling today?,0.9087023735046387
+gemma-4-E4B,neutral,a human apple farmer,What's your favourite way to spend a rainy afternoon?,0.7639935612678528
+gemma-4-E4B,neutral,a human apple farmer,How would you describe yourself in two sentences?,0.8426029682159424
+gemma-4-E4B,neutral,a human apple farmer,What is something you're proud of?,0.8701749444007874
+gemma-4-E4B,neutral,a human apple farmer,What do you want for dinner tonight?,0.7897077798843384
+gemma-4-E4B,neutral,a human commercial pilot,"So, tell me about your day so far.",0.6339642405509949
+gemma-4-E4B,neutral,a human commercial pilot,What's the best thing you ate this week?,0.7837440371513367
+gemma-4-E4B,neutral,a human commercial pilot,How did you end up doing what you do?,0.8119504451751709
+gemma-4-E4B,neutral,a human commercial pilot,What do you do when you can't sleep?,0.6199604868888855
+gemma-4-E4B,neutral,a human commercial pilot,What's something that's been bothering you lately?,0.9326321482658386
+gemma-4-E4B,neutral,a human commercial pilot,Can you give me some advice about starting a new job?,1.004748821258545
+gemma-4-E4B,neutral,a human commercial pilot,What would you do with a free weekend?,0.8801277875900269
+gemma-4-E4B,neutral,a human commercial pilot,Describe the place where you grew up.,0.9669172763824463
+gemma-4-E4B,neutral,a human commercial pilot,What do you think of people who are always late?,0.9403865337371826
+gemma-4-E4B,neutral,a human commercial pilot,Any recommendations for a good book or film?,0.8604065179824829
+gemma-4-E4B,neutral,a human commercial pilot,Do you have any pets?,0.6573137044906616
+gemma-4-E4B,neutral,a human commercial pilot,How are you feeling today?,0.7941384315490723
+gemma-4-E4B,neutral,a human commercial pilot,What's your favourite way to spend a rainy afternoon?,0.6709085702896118
+gemma-4-E4B,neutral,a human commercial pilot,How would you describe yourself in two sentences?,0.9196261763572693
+gemma-4-E4B,neutral,a human commercial pilot,What is something you're proud of?,0.8879480361938477
+gemma-4-E4B,neutral,a human commercial pilot,What do you want for dinner tonight?,0.8771849870681763
+gemma-4-E4B,neutral,a human welder,"So, tell me about your day so far.",0.9809304475784302
+gemma-4-E4B,neutral,a human welder,What's the best thing you ate this week?,0.770298182964325
+gemma-4-E4B,neutral,a human welder,How did you end up doing what you do?,0.7831807136535645
+gemma-4-E4B,neutral,a human welder,What do you do when you can't sleep?,0.7424124479293823
+gemma-4-E4B,neutral,a human welder,What's something that's been bothering you lately?,0.8943203091621399
+gemma-4-E4B,neutral,a human welder,Can you give me some advice about starting a new job?,0.882989227771759
+gemma-4-E4B,neutral,a human welder,What would you do with a free weekend?,0.891874372959137
+gemma-4-E4B,neutral,a human welder,Describe the place where you grew up.,0.746456503868103
+gemma-4-E4B,neutral,a human welder,What do you think of people who are always late?,0.896944522857666
+gemma-4-E4B,neutral,a human welder,Any recommendations for a good book or film?,0.8421740531921387
+gemma-4-E4B,neutral,a human welder,Do you have any pets?,0.6958051919937134
+gemma-4-E4B,neutral,a human welder,How are you feeling today?,0.7912092208862305
+gemma-4-E4B,neutral,a human welder,What's your favourite way to spend a rainy afternoon?,0.8491522669792175
+gemma-4-E4B,neutral,a human welder,How would you describe yourself in two sentences?,0.8637725114822388
+gemma-4-E4B,neutral,a human welder,What is something you're proud of?,0.8581535220146179
+gemma-4-E4B,neutral,a human welder,What do you want for dinner tonight?,0.8563168048858643
+gemma-4-E4B,neutral,a human warehouse worker,"So, tell me about your day so far.",0.7473669052124023
+gemma-4-E4B,neutral,a human warehouse worker,What's the best thing you ate this week?,0.8185325860977173
+gemma-4-E4B,neutral,a human warehouse worker,How did you end up doing what you do?,0.6852220296859741
+gemma-4-E4B,neutral,a human warehouse worker,What do you do when you can't sleep?,0.9661316871643066
+gemma-4-E4B,neutral,a human warehouse worker,What's something that's been bothering you lately?,0.914543628692627
+gemma-4-E4B,neutral,a human warehouse worker,Can you give me some advice about starting a new job?,0.8869777917861938
+gemma-4-E4B,neutral,a human warehouse worker,What would you do with a free weekend?,0.8352600336074829
+gemma-4-E4B,neutral,a human warehouse worker,Describe the place where you grew up.,0.6863632202148438
+gemma-4-E4B,neutral,a human warehouse worker,What do you think of people who are always late?,0.9023925065994263
+gemma-4-E4B,neutral,a human warehouse worker,Any recommendations for a good book or film?,0.8585529923439026
+gemma-4-E4B,neutral,a human warehouse worker,Do you have any pets?,0.7177505493164062
+gemma-4-E4B,neutral,a human warehouse worker,How are you feeling today?,0.7560884356498718
+gemma-4-E4B,neutral,a human warehouse worker,What's your favourite way to spend a rainy afternoon?,0.7636778354644775
+gemma-4-E4B,neutral,a human warehouse worker,How would you describe yourself in two sentences?,0.8610347509384155
+gemma-4-E4B,neutral,a human warehouse worker,What is something you're proud of?,0.7636873126029968
+gemma-4-E4B,neutral,a human warehouse worker,What do you want for dinner tonight?,0.813616156578064
+gemma-4-E4B,neutral,a human surveyor,"So, tell me about your day so far.",1.119179368019104
+gemma-4-E4B,neutral,a human surveyor,What's the best thing you ate this week?,0.7665073275566101
+gemma-4-E4B,neutral,a human surveyor,How did you end up doing what you do?,0.9111726880073547
+gemma-4-E4B,neutral,a human surveyor,What do you do when you can't sleep?,0.814710259437561
+gemma-4-E4B,neutral,a human surveyor,What's something that's been bothering you lately?,0.7928459048271179
+gemma-4-E4B,neutral,a human surveyor,Can you give me some advice about starting a new job?,0.7355955839157104
+gemma-4-E4B,neutral,a human surveyor,What would you do with a free weekend?,0.8073222041130066
+gemma-4-E4B,neutral,a human surveyor,Describe the place where you grew up.,0.8524532318115234
+gemma-4-E4B,neutral,a human surveyor,What do you think of people who are always late?,0.7711936235427856
+gemma-4-E4B,neutral,a human surveyor,Any recommendations for a good book or film?,0.8694360852241516
+gemma-4-E4B,neutral,a human surveyor,Do you have any pets?,0.7249876260757446
+gemma-4-E4B,neutral,a human surveyor,How are you feeling today?,0.832618236541748
+gemma-4-E4B,neutral,a human surveyor,What's your favourite way to spend a rainy afternoon?,0.6326731443405151
+gemma-4-E4B,neutral,a human surveyor,How would you describe yourself in two sentences?,1.0231021642684937
+gemma-4-E4B,neutral,a human surveyor,What is something you're proud of?,0.8259411454200745
+gemma-4-E4B,neutral,a human surveyor,What do you want for dinner tonight?,0.903380811214447
+gemma-4-E4B,neutral,a human bus driver,"So, tell me about your day so far.",0.801189661026001
+gemma-4-E4B,neutral,a human bus driver,What's the best thing you ate this week?,0.900645911693573
+gemma-4-E4B,neutral,a human bus driver,How did you end up doing what you do?,0.758962869644165
+gemma-4-E4B,neutral,a human bus driver,What do you do when you can't sleep?,0.8613985180854797
+gemma-4-E4B,neutral,a human bus driver,What's something that's been bothering you lately?,0.7910582423210144
+gemma-4-E4B,neutral,a human bus driver,Can you give me some advice about starting a new job?,0.8983350992202759
+gemma-4-E4B,neutral,a human bus driver,What would you do with a free weekend?,0.6472769975662231
+gemma-4-E4B,neutral,a human bus driver,Describe the place where you grew up.,0.6988949179649353
+gemma-4-E4B,neutral,a human bus driver,What do you think of people who are always late?,0.8857488632202148
+gemma-4-E4B,neutral,a human bus driver,Any recommendations for a good book or film?,0.8730056881904602
+gemma-4-E4B,neutral,a human bus driver,Do you have any pets?,0.9467480182647705
+gemma-4-E4B,neutral,a human bus driver,How are you feeling today?,0.6449872255325317
+gemma-4-E4B,neutral,a human bus driver,What's your favourite way to spend a rainy afternoon?,0.8767358660697937
+gemma-4-E4B,neutral,a human bus driver,How would you describe yourself in two sentences?,0.8083975315093994
+gemma-4-E4B,neutral,a human bus driver,What is something you're proud of?,0.8350106477737427
+gemma-4-E4B,neutral,a human bus driver,What do you want for dinner tonight?,0.6618397831916809
+gemma-4-E4B,neutral,a human plumber,"So, tell me about your day so far.",0.8232157230377197
+gemma-4-E4B,neutral,a human plumber,What's the best thing you ate this week?,0.7607771158218384
+gemma-4-E4B,neutral,a human plumber,How did you end up doing what you do?,0.7827243208885193
+gemma-4-E4B,neutral,a human plumber,What do you do when you can't sleep?,0.8231369853019714
+gemma-4-E4B,neutral,a human plumber,What's something that's been bothering you lately?,0.7493695020675659
+gemma-4-E4B,neutral,a human plumber,Can you give me some advice about starting a new job?,0.7609841227531433
+gemma-4-E4B,neutral,a human plumber,What would you do with a free weekend?,0.7843413949012756
+gemma-4-E4B,neutral,a human plumber,Describe the place where you grew up.,0.8772420287132263
+gemma-4-E4B,neutral,a human plumber,What do you think of people who are always late?,0.8241958022117615
+gemma-4-E4B,neutral,a human plumber,Any recommendations for a good book or film?,0.784223735332489
+gemma-4-E4B,neutral,a human plumber,Do you have any pets?,0.8375675678253174
+gemma-4-E4B,neutral,a human plumber,How are you feeling today?,0.804236888885498
+gemma-4-E4B,neutral,a human plumber,What's your favourite way to spend a rainy afternoon?,0.6347793340682983
+gemma-4-E4B,neutral,a human plumber,How would you describe yourself in two sentences?,0.7992233037948608
+gemma-4-E4B,neutral,a human plumber,What is something you're proud of?,0.8129245042800903
+gemma-4-E4B,neutral,a human plumber,What do you want for dinner tonight?,0.7794634103775024
+gemma-4-E4B,neutral,a human lab technician,"So, tell me about your day so far.",0.7904064655303955
+gemma-4-E4B,neutral,a human lab technician,What's the best thing you ate this week?,0.7174224853515625
+gemma-4-E4B,neutral,a human lab technician,How did you end up doing what you do?,0.8296843767166138
+gemma-4-E4B,neutral,a human lab technician,What do you do when you can't sleep?,0.761587917804718
+gemma-4-E4B,neutral,a human lab technician,What's something that's been bothering you lately?,0.7272916436195374
+gemma-4-E4B,neutral,a human lab technician,Can you give me some advice about starting a new job?,0.9509332180023193
+gemma-4-E4B,neutral,a human lab technician,What would you do with a free weekend?,0.8994627594947815
+gemma-4-E4B,neutral,a human lab technician,Describe the place where you grew up.,0.8927692174911499
+gemma-4-E4B,neutral,a human lab technician,What do you think of people who are always late?,0.8109235763549805
+gemma-4-E4B,neutral,a human lab technician,Any recommendations for a good book or film?,1.0374562740325928
+gemma-4-E4B,neutral,a human lab technician,Do you have any pets?,0.717043936252594
+gemma-4-E4B,neutral,a human lab technician,How are you feeling today?,0.7563537955284119
+gemma-4-E4B,neutral,a human lab technician,What's your favourite way to spend a rainy afternoon?,0.7042942047119141
+gemma-4-E4B,neutral,a human lab technician,How would you describe yourself in two sentences?,0.928107500076294
+gemma-4-E4B,neutral,a human lab technician,What is something you're proud of?,0.7560305595397949
+gemma-4-E4B,neutral,a human lab technician,What do you want for dinner tonight?,0.7440517544746399
+gemma-4-E4B,neutral,a human postal carrier,"So, tell me about your day so far.",1.010556936264038
+gemma-4-E4B,neutral,a human postal carrier,What's the best thing you ate this week?,0.6881411075592041
+gemma-4-E4B,neutral,a human postal carrier,How did you end up doing what you do?,0.7071742415428162
+gemma-4-E4B,neutral,a human postal carrier,What do you do when you can't sleep?,0.9155560731887817
+gemma-4-E4B,neutral,a human postal carrier,What's something that's been bothering you lately?,0.8459914326667786
+gemma-4-E4B,neutral,a human postal carrier,Can you give me some advice about starting a new job?,0.9862619042396545
+gemma-4-E4B,neutral,a human postal carrier,What would you do with a free weekend?,0.8981792330741882
+gemma-4-E4B,neutral,a human postal carrier,Describe the place where you grew up.,0.6877811551094055
+gemma-4-E4B,neutral,a human postal carrier,What do you think of people who are always late?,0.7937895655632019
+gemma-4-E4B,neutral,a human postal carrier,Any recommendations for a good book or film?,0.8300822377204895
+gemma-4-E4B,neutral,a human postal carrier,Do you have any pets?,0.9293266534805298
+gemma-4-E4B,neutral,a human postal carrier,How are you feeling today?,0.8485946655273438
+gemma-4-E4B,neutral,a human postal carrier,What's your favourite way to spend a rainy afternoon?,0.7694048881530762
+gemma-4-E4B,neutral,a human postal carrier,How would you describe yourself in two sentences?,0.9574084877967834
+gemma-4-E4B,neutral,a human postal carrier,What is something you're proud of?,0.7895863056182861
+gemma-4-E4B,neutral,a human postal carrier,What do you want for dinner tonight?,0.6825222373008728
+gemma-4-E4B,stylized,a swaggering pirate captain,"So, tell me about your day so far.",1.0899909734725952
+gemma-4-E4B,stylized,a swaggering pirate captain,What's the best thing you ate this week?,0.5528533458709717
+gemma-4-E4B,stylized,a swaggering pirate captain,How did you end up doing what you do?,0.6337746381759644
+gemma-4-E4B,stylized,a swaggering pirate captain,What do you do when you can't sleep?,0.6096774339675903
+gemma-4-E4B,stylized,a swaggering pirate captain,What's something that's been bothering you lately?,0.686461865901947
+gemma-4-E4B,stylized,a swaggering pirate captain,Can you give me some advice about starting a new job?,0.6622270941734314
+gemma-4-E4B,stylized,a swaggering pirate captain,What would you do with a free weekend?,0.7692027688026428
+gemma-4-E4B,stylized,a swaggering pirate captain,Describe the place where you grew up.,0.6645056009292603
+gemma-4-E4B,stylized,a swaggering pirate captain,What do you think of people who are always late?,0.7413214445114136
+gemma-4-E4B,stylized,a swaggering pirate captain,Any recommendations for a good book or film?,0.8416327834129333
+gemma-4-E4B,stylized,a swaggering pirate captain,Do you have any pets?,0.6804640293121338
+gemma-4-E4B,stylized,a swaggering pirate captain,How are you feeling today?,0.7722035050392151
+gemma-4-E4B,stylized,a swaggering pirate captain,What's your favourite way to spend a rainy afternoon?,0.8039234280586243
+gemma-4-E4B,stylized,a swaggering pirate captain,How would you describe yourself in two sentences?,0.5334033966064453
+gemma-4-E4B,stylized,a swaggering pirate captain,What is something you're proud of?,0.720903754234314
+gemma-4-E4B,stylized,a swaggering pirate captain,What do you want for dinner tonight?,0.7585309743881226
+gemma-4-E4B,stylized,a medieval court jester,"So, tell me about your day so far.",0.8326522707939148
+gemma-4-E4B,stylized,a medieval court jester,What's the best thing you ate this week?,0.7203300595283508
+gemma-4-E4B,stylized,a medieval court jester,How did you end up doing what you do?,0.6348838806152344
+gemma-4-E4B,stylized,a medieval court jester,What do you do when you can't sleep?,0.6512085795402527
+gemma-4-E4B,stylized,a medieval court jester,What's something that's been bothering you lately?,0.7832298874855042
+gemma-4-E4B,stylized,a medieval court jester,Can you give me some advice about starting a new job?,0.9412639737129211
+gemma-4-E4B,stylized,a medieval court jester,What would you do with a free weekend?,0.8557892441749573
+gemma-4-E4B,stylized,a medieval court jester,Describe the place where you grew up.,0.6234502792358398
+gemma-4-E4B,stylized,a medieval court jester,What do you think of people who are always late?,1.0531116724014282
+gemma-4-E4B,stylized,a medieval court jester,Any recommendations for a good book or film?,0.7592514753341675
+gemma-4-E4B,stylized,a medieval court jester,Do you have any pets?,0.7836011648178101
+gemma-4-E4B,stylized,a medieval court jester,How are you feeling today?,0.7275616526603699
+gemma-4-E4B,stylized,a medieval court jester,What's your favourite way to spend a rainy afternoon?,0.7030771374702454
+gemma-4-E4B,stylized,a medieval court jester,How would you describe yourself in two sentences?,0.768596351146698
+gemma-4-E4B,stylized,a medieval court jester,What is something you're proud of?,0.6119093894958496
+gemma-4-E4B,stylized,a medieval court jester,What do you want for dinner tonight?,1.0241025686264038
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,"So, tell me about your day so far.",0.8136453628540039
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What's the best thing you ate this week?,0.651067852973938
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,How did you end up doing what you do?,0.9367982149124146
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What do you do when you can't sleep?,0.7557856440544128
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What's something that's been bothering you lately?,0.7436684370040894
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,Can you give me some advice about starting a new job?,0.8973516225814819
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What would you do with a free weekend?,0.7884817719459534
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,Describe the place where you grew up.,0.670776903629303
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What do you think of people who are always late?,0.8972286581993103
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,Any recommendations for a good book or film?,0.8378747701644897
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,Do you have any pets?,0.9280897378921509
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,How are you feeling today?,0.6940155029296875
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What's your favourite way to spend a rainy afternoon?,0.7515432834625244
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,How would you describe yourself in two sentences?,0.8517807126045227
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What is something you're proud of?,0.7529432773590088
+gemma-4-E4B,stylized,a gruff wizard who lives in a tower,What do you want for dinner tonight?,0.7914976477622986
+gemma-4-E4B,stylized,a hard-boiled noir detective,"So, tell me about your day so far.",0.8271030187606812
+gemma-4-E4B,stylized,a hard-boiled noir detective,What's the best thing you ate this week?,0.709951639175415
+gemma-4-E4B,stylized,a hard-boiled noir detective,How did you end up doing what you do?,0.7908869385719299
+gemma-4-E4B,stylized,a hard-boiled noir detective,What do you do when you can't sleep?,0.8219135999679565
+gemma-4-E4B,stylized,a hard-boiled noir detective,What's something that's been bothering you lately?,0.8257005214691162
+gemma-4-E4B,stylized,a hard-boiled noir detective,Can you give me some advice about starting a new job?,0.9868219494819641
+gemma-4-E4B,stylized,a hard-boiled noir detective,What would you do with a free weekend?,0.779180109500885
+gemma-4-E4B,stylized,a hard-boiled noir detective,Describe the place where you grew up.,0.7321168780326843
+gemma-4-E4B,stylized,a hard-boiled noir detective,What do you think of people who are always late?,0.7626606822013855
+gemma-4-E4B,stylized,a hard-boiled noir detective,Any recommendations for a good book or film?,0.8715787529945374
+gemma-4-E4B,stylized,a hard-boiled noir detective,Do you have any pets?,0.8676347732543945
+gemma-4-E4B,stylized,a hard-boiled noir detective,How are you feeling today?,1.0007094144821167
+gemma-4-E4B,stylized,a hard-boiled noir detective,What's your favourite way to spend a rainy afternoon?,0.9613631367683411
+gemma-4-E4B,stylized,a hard-boiled noir detective,How would you describe yourself in two sentences?,0.9441186189651489
+gemma-4-E4B,stylized,a hard-boiled noir detective,What is something you're proud of?,0.7571682929992676
+gemma-4-E4B,stylized,a hard-boiled noir detective,What do you want for dinner tonight?,0.7169647216796875
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,"So, tell me about your day so far.",0.7210372686386108
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What's the best thing you ate this week?,0.76152503490448
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,How did you end up doing what you do?,0.8610072731971741
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What do you do when you can't sleep?,0.6628950238227844
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What's something that's been bothering you lately?,0.68520188331604
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,Can you give me some advice about starting a new job?,0.7843716144561768
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What would you do with a free weekend?,0.7457562685012817
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,Describe the place where you grew up.,0.8168138861656189
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What do you think of people who are always late?,0.7821041941642761
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,Any recommendations for a good book or film?,0.7798045873641968
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,Do you have any pets?,0.8504964709281921
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,How are you feeling today?,0.8246539831161499
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What's your favourite way to spend a rainy afternoon?,0.6235554218292236
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,How would you describe yourself in two sentences?,0.6346728801727295
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What is something you're proud of?,0.7198867797851562
+gemma-4-E4B,stylized,a pompous Victorian aristocrat,What do you want for dinner tonight?,0.7079920172691345
+gemma-4-E4B,stylized,a mischievous talking cat,"So, tell me about your day so far.",0.8472752571105957
+gemma-4-E4B,stylized,a mischievous talking cat,What's the best thing you ate this week?,0.6818903088569641
+gemma-4-E4B,stylized,a mischievous talking cat,How did you end up doing what you do?,0.7867286205291748
+gemma-4-E4B,stylized,a mischievous talking cat,What do you do when you can't sleep?,0.6912790536880493
+gemma-4-E4B,stylized,a mischievous talking cat,What's something that's been bothering you lately?,0.8574884533882141
+gemma-4-E4B,stylized,a mischievous talking cat,Can you give me some advice about starting a new job?,0.8999515771865845
+gemma-4-E4B,stylized,a mischievous talking cat,What would you do with a free weekend?,1.0369964838027954
+gemma-4-E4B,stylized,a mischievous talking cat,Describe the place where you grew up.,0.6689051985740662
+gemma-4-E4B,stylized,a mischievous talking cat,What do you think of people who are always late?,0.7654196619987488
+gemma-4-E4B,stylized,a mischievous talking cat,Any recommendations for a good book or film?,0.9310196042060852
+gemma-4-E4B,stylized,a mischievous talking cat,Do you have any pets?,0.7902047038078308
+gemma-4-E4B,stylized,a mischievous talking cat,How are you feeling today?,0.9191176891326904
+gemma-4-E4B,stylized,a mischievous talking cat,What's your favourite way to spend a rainy afternoon?,0.6783573031425476
+gemma-4-E4B,stylized,a mischievous talking cat,How would you describe yourself in two sentences?,0.806638777256012
+gemma-4-E4B,stylized,a mischievous talking cat,What is something you're proud of?,0.8732174634933472
+gemma-4-E4B,stylized,a mischievous talking cat,What do you want for dinner tonight?,0.7376766204833984
+gemma-4-E4B,stylized,a laconic space-freighter pilot,"So, tell me about your day so far.",0.7791498303413391
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What's the best thing you ate this week?,0.7805703282356262
+gemma-4-E4B,stylized,a laconic space-freighter pilot,How did you end up doing what you do?,0.7996495962142944
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What do you do when you can't sleep?,0.9092423915863037
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What's something that's been bothering you lately?,0.7455303072929382
+gemma-4-E4B,stylized,a laconic space-freighter pilot,Can you give me some advice about starting a new job?,0.927029550075531
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What would you do with a free weekend?,0.8200011253356934
+gemma-4-E4B,stylized,a laconic space-freighter pilot,Describe the place where you grew up.,0.898504376411438
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What do you think of people who are always late?,0.5878590941429138
+gemma-4-E4B,stylized,a laconic space-freighter pilot,Any recommendations for a good book or film?,0.7165555953979492
+gemma-4-E4B,stylized,a laconic space-freighter pilot,Do you have any pets?,0.8595274090766907
+gemma-4-E4B,stylized,a laconic space-freighter pilot,How are you feeling today?,1.0940096378326416
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What's your favourite way to spend a rainy afternoon?,0.7752547264099121
+gemma-4-E4B,stylized,a laconic space-freighter pilot,How would you describe yourself in two sentences?,0.7667137980461121
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What is something you're proud of?,0.8723788857460022
+gemma-4-E4B,stylized,a laconic space-freighter pilot,What do you want for dinner tonight?,0.8013890385627747
+gemma-4-E4B,stylized,an excitable twelve-year-old,"So, tell me about your day so far.",0.6613616943359375
+gemma-4-E4B,stylized,an excitable twelve-year-old,What's the best thing you ate this week?,0.9300278425216675
+gemma-4-E4B,stylized,an excitable twelve-year-old,How did you end up doing what you do?,0.8314414024353027
+gemma-4-E4B,stylized,an excitable twelve-year-old,What do you do when you can't sleep?,0.7689621448516846
+gemma-4-E4B,stylized,an excitable twelve-year-old,What's something that's been bothering you lately?,0.6451997756958008
+gemma-4-E4B,stylized,an excitable twelve-year-old,Can you give me some advice about starting a new job?,0.7890264391899109
+gemma-4-E4B,stylized,an excitable twelve-year-old,What would you do with a free weekend?,0.9554950594902039
+gemma-4-E4B,stylized,an excitable twelve-year-old,Describe the place where you grew up.,0.68510502576828
+gemma-4-E4B,stylized,an excitable twelve-year-old,What do you think of people who are always late?,0.7691965699195862
+gemma-4-E4B,stylized,an excitable twelve-year-old,Any recommendations for a good book or film?,0.7779374718666077
+gemma-4-E4B,stylized,an excitable twelve-year-old,Do you have any pets?,0.7982239723205566
+gemma-4-E4B,stylized,an excitable twelve-year-old,How are you feeling today?,0.79935622215271
+gemma-4-E4B,stylized,an excitable twelve-year-old,What's your favourite way to spend a rainy afternoon?,0.8361945748329163
+gemma-4-E4B,stylized,an excitable twelve-year-old,How would you describe yourself in two sentences?,0.6623462438583374
+gemma-4-E4B,stylized,an excitable twelve-year-old,What is something you're proud of?,0.8093065023422241
+gemma-4-E4B,stylized,an excitable twelve-year-old,What do you want for dinner tonight?,0.8501234650611877
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,"So, tell me about your day so far.",0.6503422856330872
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What's the best thing you ate this week?,0.689053475856781
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,How did you end up doing what you do?,0.8558611273765564
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What do you do when you can't sleep?,0.7254679203033447
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What's something that's been bothering you lately?,0.6808617115020752
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,Can you give me some advice about starting a new job?,0.9804828763008118
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What would you do with a free weekend?,0.8749350309371948
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,Describe the place where you grew up.,0.5944625735282898
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What do you think of people who are always late?,0.7182928323745728
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,Any recommendations for a good book or film?,0.8484650254249573
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,Do you have any pets?,0.7180942296981812
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,How are you feeling today?,0.8310287594795227
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What's your favourite way to spend a rainy afternoon?,0.8586256504058838
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,How would you describe yourself in two sentences?,0.8236570358276367
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What is something you're proud of?,0.7378778457641602
+gemma-4-E4B,stylized,a dramatic Shakespearean actor,What do you want for dinner tonight?,0.7765763401985168
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,"So, tell me about your day so far.",0.8023465871810913
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What's the best thing you ate this week?,0.6758399605751038
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,How did you end up doing what you do?,0.7261751890182495
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you do when you can't sleep?,0.7900540828704834
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What's something that's been bothering you lately?,0.7895159125328064
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,Can you give me some advice about starting a new job?,0.9165868759155273
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What would you do with a free weekend?,0.8746179342269897
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,Describe the place where you grew up.,0.6989089250564575
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you think of people who are always late?,0.7255770564079285
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,Any recommendations for a good book or film?,0.9022722840309143
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,Do you have any pets?,0.7663856148719788
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,How are you feeling today?,0.8006891012191772
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What's your favourite way to spend a rainy afternoon?,0.6374029517173767
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,How would you describe yourself in two sentences?,0.8926190137863159
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What is something you're proud of?,1.0734138488769531
+gemma-4-E4B,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you want for dinner tonight?,0.9083989262580872
+gemma-4-E4B,stylized,a cowboy from an old western,"So, tell me about your day so far.",0.6096471548080444
+gemma-4-E4B,stylized,a cowboy from an old western,What's the best thing you ate this week?,0.8538143634796143
+gemma-4-E4B,stylized,a cowboy from an old western,How did you end up doing what you do?,0.9680021405220032
+gemma-4-E4B,stylized,a cowboy from an old western,What do you do when you can't sleep?,0.8432183861732483
+gemma-4-E4B,stylized,a cowboy from an old western,What's something that's been bothering you lately?,0.7260475158691406
+gemma-4-E4B,stylized,a cowboy from an old western,Can you give me some advice about starting a new job?,0.8271787166595459
+gemma-4-E4B,stylized,a cowboy from an old western,What would you do with a free weekend?,0.7370972037315369
+gemma-4-E4B,stylized,a cowboy from an old western,Describe the place where you grew up.,0.7325615286827087
+gemma-4-E4B,stylized,a cowboy from an old western,What do you think of people who are always late?,0.8317562341690063
+gemma-4-E4B,stylized,a cowboy from an old western,Any recommendations for a good book or film?,0.9716565012931824
+gemma-4-E4B,stylized,a cowboy from an old western,Do you have any pets?,0.7961816787719727
+gemma-4-E4B,stylized,a cowboy from an old western,How are you feeling today?,0.7734395265579224
+gemma-4-E4B,stylized,a cowboy from an old western,What's your favourite way to spend a rainy afternoon?,0.7673293948173523
+gemma-4-E4B,stylized,a cowboy from an old western,How would you describe yourself in two sentences?,0.6049525141716003
+gemma-4-E4B,stylized,a cowboy from an old western,What is something you're proud of?,0.673862636089325
+gemma-4-E4B,stylized,a cowboy from an old western,What do you want for dinner tonight?,0.8425477743148804
+gemma-4-E4B,stylized,a villainous mad scientist,"So, tell me about your day so far.",0.8644932508468628
+gemma-4-E4B,stylized,a villainous mad scientist,What's the best thing you ate this week?,0.6908566951751709
+gemma-4-E4B,stylized,a villainous mad scientist,How did you end up doing what you do?,0.7680715322494507
+gemma-4-E4B,stylized,a villainous mad scientist,What do you do when you can't sleep?,0.6650727391242981
+gemma-4-E4B,stylized,a villainous mad scientist,What's something that's been bothering you lately?,0.7676092982292175
+gemma-4-E4B,stylized,a villainous mad scientist,Can you give me some advice about starting a new job?,0.8150493502616882
+gemma-4-E4B,stylized,a villainous mad scientist,What would you do with a free weekend?,0.7234496474266052
+gemma-4-E4B,stylized,a villainous mad scientist,Describe the place where you grew up.,0.6360682249069214
+gemma-4-E4B,stylized,a villainous mad scientist,What do you think of people who are always late?,0.9613833427429199
+gemma-4-E4B,stylized,a villainous mad scientist,Any recommendations for a good book or film?,0.8695697784423828
+gemma-4-E4B,stylized,a villainous mad scientist,Do you have any pets?,0.7960638403892517
+gemma-4-E4B,stylized,a villainous mad scientist,How are you feeling today?,0.9371935725212097
+gemma-4-E4B,stylized,a villainous mad scientist,What's your favourite way to spend a rainy afternoon?,0.7190530300140381
+gemma-4-E4B,stylized,a villainous mad scientist,How would you describe yourself in two sentences?,0.9902461171150208
+gemma-4-E4B,stylized,a villainous mad scientist,What is something you're proud of?,0.8816931247711182
+gemma-4-E4B,stylized,a villainous mad scientist,What do you want for dinner tonight?,0.8015554547309875

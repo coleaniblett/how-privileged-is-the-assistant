@@ -30,5 +30,16 @@ unless noted (the prefilter files are unfiltered by design; `coin_toss.jsonl` is
 |---|---|---|---|
 | `swap.jsonl` | 300 | Role-swap conversations: held-out WildChat conversations with three or more turns (user P1, assistant R1, user P2), plus OLMo Instruct's reply to P1 (`r1_olmo`). | `python -m extras.role_swap prepare`, then `replies` (GPU) |
 | `coin_toss.jsonl` | 40 | Coin-toss spillover: 20 items x heads/tails as the preferred outcome, three-turn conversations. | `python -m extras.coin_toss build` |
+| `dominance_pilot.jsonl` | 71 | Dominance-matrix pilot (extras, outside every verdict): preferred / dispreferred (harmful) task pairs (`id, set, pref_id, harm_id, preferred, dispreferred`), the 5 x 5 pilot. | `python -m extras.dominance_pilot build` |
+| `dominance_pilot_n15.jsonl` | 471 | The same design, 15 x 15 rerun (`DOMINANCE_NAME=dominance_pilot_n15`). | `python -m extras.dominance_pilot build` |
+| `false_fact.jsonl` | 20 | False-fact propagation (extras, fail-fast): 20 CounterFact items with the false and true object, paraphrases, locality and ripple prompts, and the base model's `p_true_base`. | `python -m extras.false_fact select` (GPU, base model), then `finalize` |
+| `introspection_scaffold.json` | 1 object | Introspection across personas (extras, concept injection): premise and prompt scaffold, judge prompts and baseline words. | by hand, read by `extras/introspection_personas.py` |
+
+## Overgeneralization (`measures/overgeneralization/README.md`)
+
+| file | rows | what | made by |
+|---|---|---|---|
+| `persona_carryover.jsonl` | 72 | Persona-carryover pilot items (`id, item, domain, believed, outcomes, turns`): four-turn conversations where a scene with a binary unknown is set up, a holder (the Assistant or a role-played character) states a skewed belief, and a target persona is asked for a prediction; pilot domains such as coin, trail fork, two boxes. | `python -m measures.overgeneralization.persona_carryover build` |
+| `persona_carryover_confirmatory.jsonl` | 96 | The confirmatory set, drafted: 4 new domains (dice, drawer, match, weather) x 12 items, new characters and personas, nothing reused from the pilot. Per its README it needs team review and is to be frozen before any model is scored on it. | `... persona_carryover build --items confirmatory` |
 
 Not here: the original-conversation candidates for logit distortion live in `candidates/logit_distortion/` (`docs/conversation_candidates.md`).

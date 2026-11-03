@@ -1,0 +1,261 @@
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:  64%|██████▍   | 187/291 [00:00<00:00, 1801.89it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 1944.84it/s]
+saved 23 concept vectors x 32 layers; mean norm by layer (every 4th): {'L0': 0.0, 'L1': 0.10000000149011612, 'L2': 0.10000000149011612, 'L3': 0.20000000298023224, 'L4': 0.4000000059604645, 'L5': 0.4000000059604645, 'L6': 0.6000000238418579, 'L7': 0.800000011920929, 'L8': 0.800000011920929, 'L9': 0.8999999761581421, 'L10': 1.2999999523162842, 'L11': 1.2000000476837158,
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 13519.67it/s]
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+assistant Peace 8 1 ok
+assistant Peace 8 2 ok
+assistant Peace 8 4 ok
+assistant Peace 8 8 ok
+assistant Peace 8 16 ok
+assistant Peace 12 1 ok
+assistant Peace 12 2 ok
+assistant Peace 12 4 ok
+assistant Peace 12 8 ok
+assistant Peace 12 16 ok
+assistant Peace 16 1 ok
+assistant Peace 16 2 ok
+assistant Peace 16 4 ok
+assistant Peace 16 8 ok
+assistant Peace 16 16 ok
+assistant Peace 20 1 ok
+assistant Peace 20 2 ok
+assistant Peace 20 4 ok
+assistant Peace 20 8 ok
+assistant Peace 20 16 ok
+assistant Peace 24 1 ok
+assistant Peace 24 2 ok
+assistant Peace 24 4 ok
+assistant Peace 24 8 ok
+assistant Peace 24 16 ok
+assistant Peace 28 1 ok
+assistant Peace 28 2 ok
+assistant Peace 28 4 ok
+assistant Peace 28 8 ok
+assistant Peace 28 16 ok
+assistant Mirrors 8 1 ok
+assistant Mirrors 8 2 ok
+assistant Mirrors 8 4 ok
+assistant Mirrors 8 8 ok
+assistant Mirrors 8 16 ok
+assistant Mirrors 12 1 ok
+assistant Mirrors 12 2 ok
+assistant Mirrors 12 4 ok
+assistant Mirrors 12 8 ok
+assistant Mirrors 12 16 ok
+assistant Mirrors 16 1 ok
+assistant Mirrors 16 2 ok
+assistant Mirrors 16 4 ok
+assistant Mirrors 16 8 ok
+assistant Mirrors 16 16 ok
+assistant Mirrors 20 1 ok
+assistant Mirrors 20 2 ok
+assistant Mirrors 20 4 ok
+assistant Mirrors 20 8 ok
+assistant Mirrors 20 16 ok
+assistant Mirrors 24 1 ok
+assistant Mirrors 24 2 ok
+assistant Mirrors 24 4 ok
+assistant Mirrors 24 8 ok
+assistant Mirrors 24 16 ok
+assistant Mirrors 28 1 ok
+assistant Mirrors 28 2 ok
+assistant Mirrors 28 4 ok
+assistant Mirrors 28 8 ok
+assistant Mirrors 28 16 ok
+assistant Dust 8 1 ok
+assistant Dust 8 2 ok
+assistant Dust 8 4 ok
+assistant Dust 8 8 ok
+assistant Dust 8 16 ok
+assistant Dust 12 1 ok
+assistant Dust 12 2 ok
+assistant Dust 12 4 ok
+assistant Dust 12 8 ok
+assistant Dust 12 16 ok
+assistant Dust 16 1 ok
+assistant Dust 16 2 ok
+assistant Dust 16 4 ok
+assistant Dust 16 8 ok
+assistant Dust 16 16 ok
+assistant Dust 20 1 ok
+assistant Dust 20 2 ok
+assistant Dust 20 4 ok
+assistant Dust 20 8 ok
+assistant Dust 20 16 ok
+assistant Dust 24 1 ok
+assistant Dust 24 2 ok
+assistant Dust 24 4 ok
+assistant Dust 24 8 ok
+assistant Dust 24 16 ok
+assistant Dust 28 1 ok
+assistant Dust 28 2 ok
+assistant Dust 28 4 ok
+assistant Dust 28 8 ok
+assistant Dust 28 16 ok
+assistant None None None ok
+{'assistant': 172} prompt tokens per persona; injection start: {'assistant': 145}
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]Loading weights: 100%|██████████| 399/399 [00:00<00:00, 10819.78it/s]
+affirmative 24 / 1120
+affirmative 48 / 1120
+affirmative 72 / 1120
+affirmative 96 / 1120
+affirmative 120 / 1120
+affirmative 144 / 1120
+affirmative 168 / 1120
+affirmative 192 / 1120
+affirmative 216 / 1120
+affirmative 240 / 1120
+affirmative 264 / 1120
+affirmative 288 / 1120
+affirmative 312 / 1120
+affirmative 336 / 1120
+affirmative 360 / 1120
+affirmative 384 / 1120
+affirmative 408 / 1120
+affirmative 432 / 1120
+affirmative 456 / 1120
+affirmative 480 / 1120
+affirmative 504 / 1120
+affirmative 528 / 1120
+affirmative 552 / 1120
+affirmative 576 / 1120
+affirmative 600 / 1120
+affirmative 624 / 1120
+affirmative 648 / 1120
+affirmative 672 / 1120
+affirmative 696 / 1120
+affirmative 720 / 1120
+affirmative 744 / 1120
+affirmative 768 / 1120
+affirmative 792 / 1120
+affirmative 816 / 1120
+affirmative 840 / 1120
+affirmative 864 / 1120
+affirmative 888 / 1120
+affirmative 912 / 1120
+affirmative 936 / 1120
+affirmative 960 / 1120
+affirmative 984 / 1120
+affirmative 1008 / 1120
+affirmative 1032 / 1120
+affirmative 1056 / 1120
+affirmative 1080 / 1120
+affirmative 1104 / 1120
+affirmative 1120 / 1120
+[W1102 19:04:09.257420003 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 381681664 bytes (free: 94109696, total: 25252724736).
+identification 24 / 284
+identification 48 / 284
+identification 72 / 284
+identification 96 / 284
+identification 120 / 284
+identification 144 / 284
+identification 168 / 284
+identification 192 / 284
+identification 216 / 284
+identification 240 / 284
+identification 264 / 284
+identification 284 / 284
+coherence 24 / 54
+coherence 48 / 54
+coherence 54 / 54
+judged 1120 responses -> judged_sweep.jsonl
+operating point: {'layer': 28, 'strength': 1, 'ident': 0.25, 'strict': 0.08333333333333333, 'aff': 0.4166666666666667, 'control_fp': 0.35}
+strength  1.0   2.0   4.0   8.0   16.0
+layer                                 
+8.0       0.00  0.00  0.00  0.00  0.00
+12.0      0.00  0.00  0.00  0.00  0.00
+16.0      0.06  0.22  0.22  0.03  0.00
+20.0      0.11  0.17  0.08  0.00  0.00
+24.0      0.08  0.19  0.00  0.00  0.03
+28.0      0.25  0.03  0.03  0.00  0.00
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 13071.27it/s]
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+assistant Justice 28 1 ok
+assistant Betrayal 28 1 ok
+assistant Tradition 28 1 ok
+assistant Chaos 28 1 ok
+assistant Courage 28 1 ok
+assistant Freedom 28 1 ok
+assistant Honor 28 1 ok
+assistant Balance 28 1 ok
+assistant Truth 28 1 ok
+assistant Wisdom 28 1 ok
+assistant Volcanoes 28 1 ok
+assistant Bread 28 1 ok
+assistant Oceans 28 1 ok
+assistant Trains 28 1 ok
+assistant Bridges 28 1 ok
+assistant Clocks 28 1 ok
+assistant Lamps 28 1 ok
+assistant Bicycles 28 1 ok
+assistant Trees 28 1 ok
+assistant all caps 28 1 ok
+assistant None None None ok
+{'assistant': 172} prompt tokens per persona; injection start: {'assistant': 145}
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]Loading weights: 100%|██████████| 399/399 [00:00<00:00, 9606.27it/s]
+affirmative 24 / 440
+affirmative 48 / 440
+affirmative 72 / 440
+affirmative 96 / 440
+affirmative 120 / 440
+affirmative 144 / 440
+affirmative 168 / 440
+affirmative 192 / 440
+affirmative 216 / 440
+affirmative 240 / 440
+affirmative 264 / 440
+affirmative 288 / 440
+affirmative 312 / 440
+affirmative 336 / 440
+affirmative 360 / 440
+affirmative 384 / 440
+affirmative 408 / 440
+affirmative 432 / 440
+affirmative 440 / 440
+identification 24 / 177
+identification 48 / 177
+identification 72 / 177
+identification 96 / 177
+[W1102 19:10:32.939808415 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 423624704 bytes (free: 251396096, total: 25252724736).
+identification 120 / 177
+identification 144 / 177
+identification 168 / 177
+identification 177 / 177
+coherence 24 / 83
+coherence 48 / 83
+coherence 72 / 83
+coherence 83 / 83
+judged 440 responses -> judged_step1.jsonl
+# Introspection across personas (meta-llama/Llama-3.1-8B-Instruct)
+
+## Step 1 gate: does the paradigm reproduce on this model?
+
+**FAIL**: affirmative - control false-positive = -0.083 [-0.247, 0.090] (needs mean >= 0.05, CI excluding 0); strict all-criteria rate 0.138 [0.092, 0.185] (needs CI lower bound > 0).
+
+Operating point {layer 28, strength 1} (chosen on the 3 sweep concepts ['Peace', 'Mirrors', 'Dust'] by the rule in docs/decisions.md). Evaluation: 20 concepts x 20 trials + 40 controls. Affirmative rate 0.443 [0.378, 0.510]; correct identification 0.208 [0.147, 0.270]; strict 0.138 [0.092, 0.185]; control false positives 0.525 [0.375, 0.675] (CIs over concepts, controls over trials).
+
+Layer x strength sweep (3 concepts x trials per cell; mean rate of affirmative AND correct identification):
+
+|   layer |   1.0 |   2.0 |   4.0 |   8.0 |   16.0 |
+|--------:|------:|------:|------:|------:|-------:|
+|       8 | 0     | 0     | 0     | 0     |  0     |
+|      12 | 0     | 0     | 0     | 0     |  0     |
+|      16 | 0.056 | 0.222 | 0.222 | 0.028 |  0     |
+|      20 | 0.111 | 0.167 | 0.083 | 0     |  0     |
+|      24 | 0.083 | 0.194 | 0     | 0     |  0.028 |
+|      28 | 0.25  | 0.028 | 0.028 | 0     |  0     |
+
+Same grid, strict (also coherent):
+
+|   layer |   1.0 |   2.0 |   4.0 |   8.0 |   16.0 |
+|--------:|------:|------:|------:|------:|-------:|
+|       8 | 0     | 0     | 0     |     0 |      0 |
+|      12 | 0     | 0     | 0     |     0 |      0 |
+|      16 | 0.056 | 0.222 | 0.111 |     0 |      0 |
+|      20 | 0.083 | 0.028 | 0     |     0 |      0 |
+|      24 | 0.083 | 0.083 | 0     |     0 |      0 |
+|      28 | 0.083 | 0     | 0     |     0 |      0 |
+
+**The gate failed: the concept-injection paradigm does not reproduce on this model at this setting, so Step 2 (persona variation) was not run.**
+
+=== gate FAILED: Step 2 not run

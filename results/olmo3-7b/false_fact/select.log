@@ -1,0 +1,9 @@
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 9815.28it/s]
+1200 candidates, 993 with P(true) > 0.5 at base
+  counted 0/300
+  counted 50/300
+  counted 100/300
+  counted 150/300
+  counted 200/300
+  counted 250/300
+tercile cut-offs (Dolma v1.7 counts): low <= 867, high >= 6484; wrote 20 items to data/false_fact.jsonl

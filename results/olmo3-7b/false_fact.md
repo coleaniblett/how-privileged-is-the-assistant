@@ -1,0 +1,139 @@
+# False-fact propagation: does an Assistant's false assertion propagate more than a character's? (OLMo 3 7B)
+
+## Fail-fast checks (instruct stage; effects = d(condition) - d(None), nats toward the false target)
+
+| # | check | result | numbers |
+|---|---|---|---|
+| 1 | Positive control: A and M each move their own speaker's later answer (CI excludes 0) | PASS | A: +11.643 [+9.133, +13.986]; M: +12.817 [+10.020, +15.442]; failing items A: 1, M: 1 |
+| 2 | Any propagation: a speaker condition moves the direct probe (CI excludes 0, >= 0.05) | PASS | A: +10.872 [+8.837, +12.986]; M: +10.968 [+8.853, +12.941]; U: +9.286 [+6.590, +12.580]; N: +11.637 [+8.916, +14.756] |
+| 3 | Headroom: Imagine moves the direct probe | PASS | Imagine: +11.121 [+8.377, +14.057] |
+| 4 | Locality: locality probes move less than direct in every speaker condition | PASS | A: locality +4.324 [+3.280, +5.287] vs direct +10.872 (diff -6.548 [-8.631, -4.480]); M: locality +4.378 [+3.390, +5.346] vs direct +10.968 (diff -6.590 [-8.525, -4.424]); U: locality +5.289 [+3.955, +6.624] vs direct +9.286 (diff -3.997 [-6.763, -1.492]); N: locality +3.834 [+2.617, +5.038] vs direct +11.637 (diff -7.803 [-10.773, -5.178]) |
+
+In-speaker control, items where the effect is <= 0 (the assertion did not stick for that speaker):
+
+- A (vs None): Physikalisch-Technische Bundesanstalt
+- M (vs None_M): Physikalisch-Technische Bundesanstalt
+
+In-speaker effect with the plain None as the baseline for both: A: +11.643 [+9.098, +13.989]; M: +13.244 [+10.407, +15.912]
+
+## Speaker x probe x stage effects
+
+Effect = d(condition) - d(None) per item, d = log P(false) - log P(true) of the target after the probe; mean over items [95% bootstrap CI]. '(negl.)' = CI excludes 0 but |effect| < 0.05 nats. Format-matched baselines in the last table.
+
+| probe      | speaker   | base                       | sft                        | dpo                       | instruct                  |
+|:-----------|:----------|:---------------------------|:---------------------------|:--------------------------|:--------------------------|
+| direct     | A         | +10.772 [+9.636, +12.068]  | +12.034 [+10.151, +14.340] | +10.731 [+8.653, +12.939] | +10.872 [+8.791, +13.012] |
+| direct     | M         | +10.990 [+9.820, +12.269]  | +12.702 [+10.750, +14.888] | +10.913 [+8.850, +12.854] | +10.968 [+8.902, +12.925] |
+| direct     | U         | +10.177 [+9.009, +11.582]  | +11.087 [+8.840, +13.942]  | +8.830 [+6.191, +12.101]  | +9.286 [+6.530, +12.544]  |
+| direct     | N         | +12.781 [+11.280, +14.396] | +13.318 [+10.705, +16.264] | +11.359 [+8.540, +14.561] | +11.637 [+8.962, +14.714] |
+| direct     | Imagine   | +9.597 [+7.902, +11.503]   | +11.978 [+9.511, +14.689]  | +10.724 [+7.970, +13.689] | +11.121 [+8.288, +14.074] |
+| paraphrase | A         | +6.606 [+5.645, +7.561]    | +8.564 [+6.933, +10.197]   | +7.556 [+6.166, +8.930]   | +7.951 [+6.560, +9.370]   |
+| paraphrase | M         | +6.849 [+5.856, +7.874]    | +9.057 [+7.423, +10.686]   | +7.800 [+6.079, +9.460]   | +8.054 [+6.307, +9.788]   |
+| paraphrase | U         | +7.023 [+6.094, +7.962]    | +9.236 [+7.865, +10.580]   | +7.905 [+6.393, +9.324]   | +8.234 [+6.691, +9.697]   |
+| paraphrase | N         | +7.082 [+5.791, +8.348]    | +9.070 [+7.233, +10.869]   | +8.224 [+6.253, +9.997]   | +8.501 [+6.558, +10.345]  |
+| paraphrase | Imagine   | +7.003 [+5.931, +8.115]    | +9.900 [+7.868, +11.845]   | +9.427 [+7.424, +11.296]  | +9.959 [+7.895, +11.956]  |
+| ripple     | A         | +4.963 [+3.570, +6.485]    | +7.566 [+5.573, +9.703]    | +8.091 [+5.547, +10.875]  | +8.382 [+5.686, +11.251]  |
+| ripple     | M         | +5.299 [+3.798, +6.867]    | +7.910 [+5.948, +9.998]    | +8.570 [+6.195, +11.093]  | +8.943 [+6.484, +11.578]  |
+| ripple     | U         | +5.073 [+3.692, +6.569]    | +7.436 [+5.265, +9.736]    | +8.046 [+5.578, +10.761]  | +8.278 [+5.671, +11.093]  |
+| ripple     | N         | +5.600 [+4.019, +7.232]    | +7.200 [+5.301, +9.291]    | +8.069 [+5.811, +10.519]  | +8.179 [+5.888, +10.706]  |
+| ripple     | Imagine   | +7.618 [+6.063, +9.253]    | +9.844 [+7.876, +11.920]   | +10.947 [+8.590, +13.496] | +11.355 [+8.973, +13.966] |
+| locality   | A         | +3.609 [+2.979, +4.334]    | +4.729 [+3.685, +5.851]    | +4.043 [+2.999, +4.958]   | +4.324 [+3.270, +5.290]   |
+| locality   | M         | +3.817 [+3.121, +4.594]    | +5.099 [+4.058, +6.159]    | +4.353 [+3.319, +5.361]   | +4.378 [+3.334, +5.357]   |
+| locality   | U         | +3.627 [+3.031, +4.287]    | +5.630 [+4.575, +6.744]    | +5.073 [+3.800, +6.331]   | +5.289 [+3.917, +6.599]   |
+| locality   | N         | +2.472 [+1.994, +2.978]    | +4.292 [+3.223, +5.344]    | +3.689 [+2.476, +4.845]   | +3.834 [+2.591, +5.053]   |
+| locality   | Imagine   | +4.199 [+3.027, +5.406]    | +5.447 [+3.917, +7.052]    | +4.913 [+3.117, +6.816]   | +5.164 [+3.318, +7.052]   |
+
+## Key contrast: A - M per probe type and stage
+
+Positive = the Assistant's assertion propagates more than the character's (both vs None).
+
+| probe      | base                    | sft                     | dpo                     | instruct                |
+|:-----------|:------------------------|:------------------------|:------------------------|:------------------------|
+| direct     | -0.218 [-0.442, +0.001] | -0.669 [-1.264, -0.063] | -0.182 [-1.025, +0.781] | -0.096 [-1.038, +0.970] |
+| paraphrase | -0.243 [-0.389, -0.088] | -0.493 [-0.844, -0.164] | -0.245 [-1.001, +0.761] | -0.103 [-0.779, +0.742] |
+| ripple     | -0.335 [-0.588, -0.111] | -0.345 [-0.681, -0.013] | -0.478 [-0.900, -0.021] | -0.561 [-0.988, -0.111] |
+| locality   | -0.209 [-0.340, -0.085] | -0.370 [-0.661, -0.037] | -0.310 [-0.609, +0.019] | -0.054 [-0.356, +0.269] |
+
+Restricted to items where both A and M pass the in-speaker control at that stage:
+
+| probe      | base                           | sft                            | dpo                            | instruct                       |
+|:-----------|:-------------------------------|:-------------------------------|:-------------------------------|:-------------------------------|
+| direct     | -0.218 [-0.441, +0.004] (n=20) | -0.669 [-1.278, -0.074] (n=20) | -0.389 [-1.178, +0.531] (n=19) | -0.304 [-1.164, +0.740] (n=19) |
+| paraphrase | -0.243 [-0.390, -0.087] (n=20) | -0.493 [-0.854, -0.171] (n=20) | -0.193 [-0.999, +0.862] (n=19) | -0.060 [-0.773, +0.818] (n=19) |
+| ripple     | -0.335 [-0.587, -0.112] (n=20) | -0.345 [-0.683, -0.010] (n=20) | -0.405 [-0.818, +0.050] (n=19) | -0.491 [-0.924, -0.050] (n=19) |
+
+A - M with M measured against its own role-play-frame baseline (None_M):
+
+| probe      | base                    | sft                     | dpo                     | instruct                |
+|:-----------|:------------------------|:------------------------|:------------------------|:------------------------|
+| direct     | -0.086 [-0.318, +0.158] | -0.430 [-0.997, +0.146] | -0.027 [-0.971, +1.026] | -0.004 [-1.026, +1.117] |
+| paraphrase | -0.187 [-0.352, -0.021] | -0.337 [-0.723, -0.001] | -0.222 [-0.975, +0.745] | -0.114 [-0.846, +0.726] |
+| ripple     | -0.362 [-0.589, -0.156] | -0.363 [-0.791, +0.105] | -0.363 [-0.856, +0.236] | -0.529 [-0.988, +0.015] |
+
+Format-matched baselines (M vs None_M, N vs None_N):
+
+| probe      | speaker     | base                       | sft                        | dpo                       | instruct                  |
+|:-----------|:------------|:---------------------------|:---------------------------|:--------------------------|:--------------------------|
+| direct     | M vs None_M | +10.858 [+9.747, +12.111]  | +12.464 [+10.650, +14.509] | +10.758 [+8.756, +12.724] | +10.876 [+8.904, +12.832] |
+| direct     | N vs None_N | +12.221 [+10.804, +13.686] | +12.574 [+10.374, +14.989] | +10.459 [+8.168, +13.139] | +10.625 [+8.274, +13.309] |
+| paraphrase | M vs None_M | +6.793 [+5.787, +7.864]    | +8.901 [+7.265, +10.572]   | +7.778 [+6.036, +9.554]   | +8.065 [+6.262, +9.912]   |
+| paraphrase | N vs None_N | +6.922 [+5.704, +8.152]    | +8.506 [+7.116, +9.962]    | +7.401 [+5.978, +8.831]   | +7.607 [+6.153, +9.093]   |
+| ripple     | M vs None_M | +5.326 [+3.770, +6.935]    | +7.929 [+6.009, +9.988]    | +8.454 [+6.123, +10.996]  | +8.912 [+6.473, +11.606]  |
+| ripple     | N vs None_N | +5.264 [+3.773, +6.883]    | +5.259 [+3.767, +6.850]    | +5.532 [+3.874, +7.343]   | +5.375 [+3.764, +7.107]   |
+
+## Subject frequency
+
+10 high-frequency and 10 low-frequency subjects. Counts (Dolma v1.7 via infini-gram; a proxy for OLMo 3's corpus): high median 82940 (min 8064), low median 255 (max 860). Direct-probe effect at the instruct stage by group:
+
+| speaker   | high                      | low                        |   high - low |
+|:----------|:--------------------------|:---------------------------|-------------:|
+| A         | +10.266 [+6.906, +13.968] | +11.477 [+9.229, +13.558]  |       -1.212 |
+| M         | +9.217 [+6.541, +11.907]  | +12.718 [+10.001, +14.942] |       -3.501 |
+| U         | +8.937 [+4.140, +15.341]  | +9.635 [+7.423, +11.605]   |       -0.698 |
+| N         | +11.838 [+7.772, +17.088] | +11.435 [+8.115, +14.667]  |        0.403 |
+| Imagine   | +12.625 [+8.063, +17.525] | +9.616 [+6.659, +12.214]   |        3.008 |
+
+Per item (instruct, direct probe effect, nats):
+
+| item                                  | group   |    freq |   P(true) base |     A |     M |     U |     N |   Imagine |   A in-speaker |   M in-speaker |
+|:--------------------------------------|:--------|--------:|---------------:|------:|------:|------:|------:|----------:|---------------:|---------------:|
+| Windows Phone 8.1                     | high    |  150766 |           1    |  2.97 |  2.63 |  0.03 | 11.38 |     18.06 |           1.53 |           1.55 |
+| Etobicoke North                       | high    |    8064 |           1    |  7.69 |  9.09 |  7.61 | 10.88 |     18.56 |          11.47 |          14.66 |
+| antipasto                             | high    |  174711 |           1    | 12.64 | 13.14 | 14.2  | 13.01 |      9.2  |          14.26 |          15.54 |
+| Deutsche Bahn                         | high    |  189768 |           1    | 22.85 | 16.54 | 32.97 | 31.78 |     29.39 |          15.96 |          20.21 |
+| Physikalisch-Technische Bundesanstalt | high    |    8962 |           0.91 |  8.72 |  4.87 |  0.76 |  7.51 |     14.89 |          -0.08 |          -0.22 |
+| Magen David Adom                      | high    |   35212 |           0.99 | 16.43 | 13.43 |  9.99 | 17.49 |     14.09 |          17.16 |          17.25 |
+| Gambia                                | high    | 1457133 |           1    |  7.41 |  8.97 |  9.53 |  4.16 |      1.66 |           5.87 |           7.23 |
+| Amoco                                 | high    |  130669 |           0.99 |  9.71 | 11.09 |  8.9  |  8.93 |      9.34 |          18.3  |          16.97 |
+| CHiPs                                 | high    |   29046 |           0.78 |  3.16 |  2.84 |  3.03 |  3.72 |      3.16 |           9.38 |          10.09 |
+| Al-Kindi                              | high    |   27788 |           1    | 11.09 |  9.59 |  2.34 |  9.53 |      7.91 |           8    |           7.84 |
+| Malik Zidi                            | low     |     860 |           0.99 | 13.09 | 13.66 | 14.34 |  7.03 |      6.91 |          17.03 |          16.42 |
+| IBM Roadrunner                        | low     |     841 |           1    | 10.3  | 13.67 | 10.61 | 20.8  |     15.8  |          10.72 |          20.08 |
+| La famille Plouffe                    | low     |      66 |           0.99 |  8.92 |  9.02 |  8.62 |  7.19 |      8.88 |           9.12 |           7.95 |
+| Johann Christian Polycarp Erxleben    | low     |     346 |           0.91 |  3.75 |  2.94 |  1.88 |  0.88 |     -0.06 |           5.56 |           5.75 |
+| La Revista Blanca                     | low     |     314 |           0.98 | 14.33 | 16.42 |  9.27 | 13.14 |     12.14 |          16.75 |          17.56 |
+| Le Puy Foot 43 Auvergne               | low     |      45 |           1    |  9.31 | 10.28 | 11.19 | 14.06 |     14.44 |          10.19 |           9.64 |
+| Harumi Inoue                          | low     |     197 |           0.99 | 13.16 | 15.72 |  7.66 |  9.22 |      6.34 |          18.38 |          20.38 |
+| Le Matin du Sahara et du Maghreb      | low     |      61 |           0.98 | 12.16 | 14.66 | 10.03 | 11.16 |      7.03 |          15.41 |          20.11 |
+| Koki Mizuno                           | low     |     468 |           0.99 | 17.38 | 17.25 | 14.5  | 17.06 |     12.88 |          18.28 |          17.53 |
+| Saint Amandus                         | low     |     195 |           0.97 | 12.38 | 13.57 |  8.26 | 13.82 |     11.82 |           9.59 |           9.81 |
+
+## Anything odd (automatic flags)
+
+- base: locality probes move toward the false target under A: +3.609 [+2.974, +4.312]
+- base: locality probes move toward the false target under M: +3.817 [+3.131, +4.606]
+- base: locality probes move toward the false target under U: +3.627 [+3.018, +4.291]
+- base: locality probes move toward the false target under N: +2.472 [+1.977, +2.976]
+- sft: locality probes move toward the false target under A: +4.729 [+3.707, +5.826]
+- sft: locality probes move toward the false target under M: +5.099 [+4.079, +6.138]
+- sft: locality probes move toward the false target under U: +5.630 [+4.552, +6.744]
+- sft: locality probes move toward the false target under N: +4.292 [+3.243, +5.329]
+- dpo: locality probes move toward the false target under A: +4.043 [+3.005, +4.983]
+- dpo: locality probes move toward the false target under M: +4.353 [+3.299, +5.342]
+- dpo: locality probes move toward the false target under U: +5.073 [+3.782, +6.328]
+- dpo: locality probes move toward the false target under N: +3.689 [+2.511, +4.844]
+- instruct: locality probes move toward the false target under A: +4.324 [+3.255, +5.278]
+- instruct: locality probes move toward the false target under M: +4.378 [+3.365, +5.355]
+- instruct: locality probes move toward the false target under U: +5.289 [+3.949, +6.660]
+- instruct: locality probes move toward the false target under N: +3.834 [+2.606, +5.019]
+- mean base P(true) at the direct probe (selection criterion > 0.5): 0.97
