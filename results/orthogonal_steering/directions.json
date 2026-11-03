@@ -18,16 +18,16 @@
    "auc_f": 1.0,
    "g": 25.900753021240234
   },
-  "llama": {
-   "layer": 18,
-   "cos_sf": 0.29988330602645874,
-   "cos_os": 0.9539759159088135,
-   "cos_of": 1.862645149230957e-08,
+  "gemma": {
+   "layer": 23,
+   "cos_sf": 0.290357768535614,
+   "cos_os": 0.9569181799888611,
+   "cos_of": -2.514570951461792e-08,
    "auc_sw": 1.0,
-   "auc_f": 0.9991319444444444,
-   "g": 4.002509593963623
+   "auc_f": 1.0,
+   "g": 10.974100112915039
   }
  },
- "table": "| model | steering layer | cos(switch, formality) | cos(orth, switch) | cos(orth, formality) | switch AUC (held-out roles) | formality AUC (held-out instructions) | g (norm of Assistant-minus-character mean difference) |\n|---|---|---|---|---|---|---|---|\n| OLMo 3 7B instruct | 18 | +0.42 | +0.91 | -0.0000 | 0.89 | 1.00 | 3.1 |\n| Qwen3-8B (thinking off) | 20 | +0.53 | +0.85 | -0.0000 | 0.98 | 1.00 | 25.9 |\n| Llama-3.1-8B-Instruct | 18 | +0.30 | +0.95 | +0.0000 | 1.00 | 1.00 | 4.0 |",
- "all_layers": "| model | layer | cos(switch, formality) |\n|---|---|---|\n| OLMo 3 7B instruct | 13 | +0.43 |\n| OLMo 3 7B instruct | 18 | +0.42 |\n| OLMo 3 7B instruct | 22 | +0.33 |\n| OLMo 3 7B instruct | 27 | +0.30 |\n| Qwen3-8B (thinking off) | 14 | +0.53 |\n| Qwen3-8B (thinking off) | 20 | +0.53 |\n| Qwen3-8B (thinking off) | 25 | +0.43 |\n| Qwen3-8B (thinking off) | 31 | +0.35 |\n| Llama-3.1-8B-Instruct | 13 | +0.33 |\n| Llama-3.1-8B-Instruct | 18 | +0.30 |\n| Llama-3.1-8B-Instruct | 22 | +0.31 |\n| Llama-3.1-8B-Instruct | 27 | +0.26 |"
+ "table": "| model | steering layer | cos(switch, formality) | cos(orth, switch) | cos(orth, formality) | switch AUC (held-out roles) | formality AUC (held-out instructions) | g (norm of Assistant-minus-character mean difference) |\n|---|---|---|---|---|---|---|---|\n| OLMo 3 7B instruct | 18 | +0.42 | +0.91 | -0.0000 | 0.89 | 1.00 | 3.1 |\n| Qwen3-8B (thinking off) | 20 | +0.53 | +0.85 | -0.0000 | 0.98 | 1.00 | 25.9 |\n| Gemma 4 E4B-it | 23 | +0.29 | +0.96 | -0.0000 | 1.00 | 1.00 | 11.0 |",
+ "all_layers": "| model | layer | cos(switch, formality) |\n|---|---|---|\n| OLMo 3 7B instruct | 13 | +0.43 |\n| OLMo 3 7B instruct | 18 | +0.42 |\n| OLMo 3 7B instruct | 22 | +0.33 |\n| OLMo 3 7B instruct | 27 | +0.30 |\n| Qwen3-8B (thinking off) | 14 | +0.53 |\n| Qwen3-8B (thinking off) | 20 | +0.53 |\n| Qwen3-8B (thinking off) | 25 | +0.43 |\n| Qwen3-8B (thinking off) | 31 | +0.35 |\n| Gemma 4 E4B-it | 17 | +0.46 |\n| Gemma 4 E4B-it | 23 | +0.29 |\n| Gemma 4 E4B-it | 29 | +0.26 |\n| Gemma 4 E4B-it | 36 | +0.09 |"
 }
