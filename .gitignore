@@ -8,3 +8,5 @@ results/orthogonal_steering/gens/
 results/**/*.pt
 results/**/flagged*.csv
 results/dominance_matrix/gens/
+results/implant_spread/*/replies.jsonl
+results/implant_spread/*_old_protocol_discarded/
