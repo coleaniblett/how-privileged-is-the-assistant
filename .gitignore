@@ -7,3 +7,4 @@ results/**/*.npz
 results/orthogonal_steering/gens/
 results/**/*.pt
 results/**/flagged*.csv
+results/dominance_matrix/gens/

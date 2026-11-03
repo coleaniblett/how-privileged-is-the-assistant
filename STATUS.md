@@ -1,6 +1,6 @@
 # STATUS
 
-**Last updated:** 2026-11-03 UTC by Claude (Sonnet 5.5, agent session for Adeeb), on `main`: orthogonal-steering replication committed (`results/orthogonal_steering/`); introspection-by-persona (Macar et al.) run: both models (Qwen3-8B, Gemma 4 E4B-it) failed the Step 1 gate, Step 2 not run (`results/<model>/introspection_personas.md`); leakage matrix running; persona map prepared, not run; the confirmatory carryover set is still drafted, not scored.
+**Last updated:** 2026-11-03 UTC by Claude (Sonnet 5.5, agent session for Adeeb), on `main`: orthogonal-steering replication committed (`results/orthogonal_steering/`); introspection-by-persona (Macar et al.) run: both models (Qwen3-8B, Gemma 4 E4B-it) failed the Step 1 gate, Step 2 not run (`results/<model>/introspection_personas.md`); leakage matrix finished (register does not carry over; refusal spills partially for raw prose, `results/dominance_matrix/`); persona map prepared, not run; the confirmatory carryover set is still drafted, not scored.
 Source: commit history of all branches after `git fetch --all`, the measure READMEs, `docs/decisions.md`, `docs/runbook_2026-11-03.md`, `AGENTS.md`.
 Only what the repo shows; where it shows nothing the cell says so. Detail lives in the READMEs and `decisions.md`, not here.
 
