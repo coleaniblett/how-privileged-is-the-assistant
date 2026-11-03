@@ -141,6 +141,10 @@ DATA_PATH = "data/texts.jsonl"
 AUTHORSHIP_PATH = "data/texts_authorship.jsonl"
 PREFILL_PATH_20 = "data/prefill.jsonl"  # frozen; the first 20 rows of PREFILL_PATH
 PREFILL_PATH = "data/prefill_100.jsonl"  # default for core.generate
+# Incomplete-turn prefills (core.prepare_data --incomplete-prefill): real WildChat user turns cut inside a sentence at a clearly unfinished
+# point (after an article, preposition, conjunction, auxiliary, transitive verb or comma), so ending the turn is not a sensible continuation.
+N_PREFILL_INCOMPLETE = 200
+PREFILL_INCOMPLETE_PATH = "data/prefill_incomplete_200.jsonl"
 
 # Output layout (see AGENTS.md). One directory per run under results/, named after the family by
 # default (scripts/run_gpu.sh: RUN=... or OUT=...). Core outputs go under core/, each measure's

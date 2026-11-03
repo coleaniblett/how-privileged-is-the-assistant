@@ -14,6 +14,7 @@ turns. OLMo replies are added afterwards by add_replies.py.
 
     python -m core.prepare_data --prefill-only --n-prefill 100 --prefill-out data/prefill_100.jsonl
     python -m core.prepare_data --authorship                # -> data/texts_authorship.jsonl (logit distortion's authorship cross)
+    python -m core.prepare_data --incomplete-prefill        # -> data/prefill_incomplete_200.jsonl (user turns cut mid-thought)
 
 builds a larger prefill set from the texts already in data/texts.jsonl without touching it: the same first-sentence
 rule applied to the same (already length-, render- and Dolci-filtered) WildChat user turns in the same order, so the
@@ -165,6 +166,77 @@ def first_sentence(text):
     return s if "\n" not in s and 5 <= len(s.split()) <= 40 else None
 
 
+# Words after which a user turn is clearly unfinished. The first cut type that lists a word wins; the set is deliberately closed-class
+# plus a short list of verbs that nearly always take an object, because no part-of-speech tagger is a dependency of this project.
+INCOMPLETE_ENDINGS = {
+    "article/determiner": ("a an the this that these those my your his her its our their some any each every no another such all both "
+                           "several many few most more other same").split(),
+    "preposition": ("of in on at to for with from by about into onto over under between through during without within against among after "
+                    "before like as than per via toward towards upon across along around behind beyond near off out up down").split(),
+    "conjunction": ("and or but because if when while although though so since unless until whether which who whom whose where whereas "
+                    "nor yet").split(),
+    "auxiliary/modal": ("is are was were be been being am do does did can could will would shall should may might must have has had "
+                        "not never also just really very too").split(),
+    "transitive verb": ("want wants need needs make makes give gives tell tells show shows write create explain describe find use take get "
+                        "let help provide generate list summarize translate add keep send buy love hate know think believe ask answer "
+                        "say suggest recommend imagine pretend continue include avoid try start begin").split(),
+}
+WORD_TYPE = {}
+for _t, _ws in INCOMPLETE_ENDINGS.items():
+    for _w in _ws:
+        WORD_TYPE.setdefault(_w, _t)
+TERMINAL = re.compile(r"[.!?\u2026][\"'\u201d\u2019)\]]*$")
+
+
+def incomplete_cut_points(text, min_words=6, max_words=40):
+    """[(end offset in text, number of words, cut type)] of the places where the first line of `text` could be cut so that the turn is clearly
+    unfinished: the last kept word is a closing-class word from INCOMPLETE_ENDINGS or ends with a comma, never terminal punctuation, and at
+    least one more word follows on the same line."""
+    line = text.split("\n", 1)[0]
+    ms = list(re.finditer(r"\S+", line))
+    out = []
+    for i in range(min_words, min(max_words, len(ms) - 1) + 1):
+        w = ms[i - 1].group()
+        if TERMINAL.search(w):
+            continue
+        bare = re.sub(r"^[\W_]+|[\W_]+$", "", w).lower()
+        if w.endswith(","):
+            out.append((ms[i - 1].end(), i, "comma"))
+        elif bare in WORD_TYPE and bare == w.lower().strip("\"'\u201c\u201d()[]"):
+            out.append((ms[i - 1].end(), i, WORD_TYPE[bare]))
+    return out
+
+
+def build_incomplete_prefill(rows, source, n, seed=0):
+    """n prefills from `source`'s user rows (in file order): one seeded cut per text, choosing the cut type first (uniformly among the types the
+    text offers) and then a position of that type, so the set is not dominated by 'the' and 'of'. Rows keep text_id and record the cut."""
+    out, seen = [], set()
+    for row in rows:
+        if row["source"] != source or row["kind"] != "user":
+            continue
+        cuts = incomplete_cut_points(row["text"])
+        if not cuts:
+            continue
+        rng = random.Random(f"{seed}-{row['id']}")
+        kind = rng.choice(sorted({c[2] for c in cuts}))
+        first = rng.choice([c for c in cuts if c[2] == kind])
+        rest_cuts = [c for c in cuts if c != first]
+        rng.shuffle(rest_cuts)
+        # different conversations can share an opening (WildChat repeats prompts): take the first cut whose prefill is new
+        pick = next((c for c in [first, *rest_cuts] if row["text"][: c[0]].lower() not in seen), None)
+        if pick is None:
+            continue
+        end, n_words, kind = pick
+        prefill, rest = row["text"][:end], row["text"][end:]
+        seen.add(prefill.lower())
+        out.append(dict(id=f"incomplete-{len(out):03d}", text_id=row["id"], prefill=prefill, cut_type=kind,
+                        last_word=prefill.split()[-1], n_words=n_words, remaining_chars=len(rest),
+                        next_words=" ".join(rest.split()[:8])))
+        if len(out) == n:
+            break
+    return out
+
+
 def build_prefill(rows, source, n):
     """First n distinct first sentences of `source`'s user rows, in row order: dicts (id, text_id, prefill)."""
     prefill, seen_sentences = [], set()
@@ -194,9 +266,24 @@ def main():
     ap.add_argument("--authorship", action="store_true",
                     help="write the authorship-cross text sets (oasst1 assistant replies; UltraChat user turns and replies) to "
                          "--out (default data/texts_authorship.jsonl); the other texts files are not touched")
+    ap.add_argument("--incomplete-prefill", action="store_true",
+                    help="read rows from --out (texts.jsonl, not modified) and write incomplete-turn prefills (cut mid-thought) to "
+                         "--prefill-out (default data/prefill_incomplete_200.jsonl)")
+    ap.add_argument("--n-incomplete", type=int, default=config.N_PREFILL_INCOMPLETE)
     ap.add_argument("--prefill-only", action="store_true",
                     help="read rows from --out (texts.jsonl, not modified) and write only --prefill-out")
     args = ap.parse_args()
+    if args.incomplete_prefill:
+        rows = [json.loads(line) for line in open(args.out, encoding="utf-8")]
+        prefill = build_incomplete_prefill(rows, args.pairs, args.n_incomplete, args.seed)
+        if len(prefill) < args.n_incomplete:
+            raise SystemExit(f"only {len(prefill)} {args.pairs} user texts offer a clearly unfinished cut; need {args.n_incomplete}")
+        out = args.prefill_out if args.prefill_out != config.PREFILL_PATH_20 else config.PREFILL_INCOMPLETE_PATH
+        with open(out, "w", encoding="utf-8") as f:
+            for r in prefill:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(f"wrote {len(prefill)} rows to {out}: {dict(Counter(r['cut_type'] for r in prefill))}")
+        return
     if args.authorship:
         # Same filters as the other sets (20-300 tokens, clean rendering in every slot, Dolci contamination filter on the
         # conversation's user turn); n clean texts per set.
