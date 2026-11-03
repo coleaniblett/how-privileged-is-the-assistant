@@ -34,6 +34,9 @@ unless noted (the prefilter files are unfiltered by design; `coin_toss.jsonl` is
 | `dominance_pilot_n15.jsonl` | 471 | The same design, 15 x 15 rerun (`DOMINANCE_NAME=dominance_pilot_n15`). | `python -m extras.dominance_pilot build` |
 | `false_fact.jsonl` | 20 | False-fact propagation (extras, fail-fast): 20 CounterFact items with the false and true object, paraphrases, locality and ripple prompts, and the base model's `p_true_base`. | `python -m extras.false_fact select` (GPU, base model), then `finalize` |
 | `introspection_scaffold.json` | 1 object | Introspection across personas (extras, concept injection): premise and prompt scaffold, judge prompts and baseline words. | by hand, read by `extras/introspection_personas.py` |
+| `introspection_macar_scaffold.json` | 1 object | Introspection across personas, Macar et al. paradigm (extras): the verbatim trial and extraction templates, judge prompts and gate. | hand-written from the paper; `extras/introspection_macar.py` |
+| `introspection_macar_personas.json` | 1 object | The persona prompts (system slot) and human-premise swaps for the same experiment. | hand-written; same module |
+| `persona_map_personas.json` | 180 personas | Persona map (extras, exploratory): the balanced design (entity type x depth x slot x stance x register; 36 held out), the 40 probes and the refusal requests. | `python -m extras.persona_map design` |
 
 ## Overgeneralization (`measures/overgeneralization/README.md`)
 
