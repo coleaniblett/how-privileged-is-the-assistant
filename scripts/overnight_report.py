@@ -70,8 +70,8 @@ def main():
     runs = sm.get("runs", [])
     first = sm.get("started") or "-"
     L += ["## What ran", "",
-          f"Started {first}; finished {sm.get('finished') or 'not finished (or not recorded)'}. Driver instances: {len(runs)} "
-          f"({'not recorded' if not runs else 'one uninterrupted run' if len(runs) == 1 else 'restarted ' + str(len(runs) - 1) + ' time(s); see Interruptions'}). "
+          f"Started {first}; finished {sm.get('finished') or 'not finished (or not recorded)'}. Driver instances recorded in the summary: {len(runs)} "
+          "(instances of older code are not counted; see Interruptions and the Readings for every stop and restart). "
           "Per task, each in its own process:", "", "| task | status | time | retries |", "|---|---|---|---|"]
     for t in sm.get("tasks", []):
         L.append(f"| {t['task']} | {t['status']} | {fmt_s(t.get('seconds'))} | {t.get('retries', 0)} |")
@@ -127,7 +127,15 @@ def main():
               "(or the driver alone) runs exactly these:", ""] + [f"- {lab}" for lab, _ in missing]
     else:
         L += [f"Nothing: all {len(expected_outputs(m))} expected outputs exist."]
-    L += ["", "## Readings (written by the agent or a person after looking at the data)", "", "_Not filled in by the script._", ""]
+    # Readings are written by hand after looking at the data; keep them when the draft is regenerated.
+    readings = "_Not filled in by the script._"
+    if os.path.exists(args.out):
+        old_text = open(args.out, encoding="utf-8").read()
+        if "## Readings" in old_text:
+            body = old_text.split("## Readings", 1)[1].split("\n", 1)[1].strip()
+            if body and body != "_Not filled in by the script._":
+                readings = body
+    L += ["", "## Readings (written by the agent or a person after looking at the data)", "", readings, ""]
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     open(args.out, "w", encoding="utf-8").write("\n".join(L))
     print(f"wrote {args.out} ({len(L)} lines; {len(missing)} outputs still missing)")
