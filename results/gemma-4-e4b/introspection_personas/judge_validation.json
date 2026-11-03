@@ -1,0 +1,16 @@
+{
+ "claims": {
+  "n": 80,
+  "agreement": 0.9875,
+  "kappa": 0.9750000000000001,
+  "labeller_yes": 39,
+  "judge_yes": 40
+ },
+ "ident": {
+  "n": 80,
+  "agreement": 0.8625,
+  "kappa": 0.4210526315789477,
+  "labeller_yes": 16,
+  "judge_yes": 5
+ }
+}

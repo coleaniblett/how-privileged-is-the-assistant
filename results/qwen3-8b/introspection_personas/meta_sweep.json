@@ -1,0 +1,13 @@
+{
+ "phase": "sweep",
+ "precision": "bf16",
+ "peak_gpu_gib": 15.63,
+ "hf_device_map_offloaded": null,
+ "generation_config": {
+  "temperature": 0.6,
+  "top_p": 0.95,
+  "top_k": 20,
+  "repetition_penalty": null
+ },
+ "n_layers": 36
+}
