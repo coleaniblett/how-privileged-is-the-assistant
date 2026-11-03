@@ -101,6 +101,8 @@ results/<run>/vestigial_regression/    results.md, summary.csv, nll_*.png, posit
                                        generations/<stage>.jsonl (flagged) and <stage>_counts.csv
 results/<run>/logit_distortion/, results/<run>/overgeneralization/    their tables and figures
 results/<run>/extras/                  role_swap/, coin_toss/, role_swap.md, coin_toss.md, *_summary.csv
+results/capstone/<family>/<stage>/core/<tag>/   exchange scores (core.score_exchanges): scores.csv, tokens.parquet, manifest.json;
+                                       user/reply x tagged/plain on data/exchanges.jsonl, both VR and logit distortion; docs/exchanges.md
 candidates/logit_distortion/<build>/   original-conversation candidates (core.build_conversations), logit distortion's
                                        primary route; current pilot_v3 (eligible quota, Dolci-checked); not core.score input; docs/conversation_candidates.md
 ```
@@ -162,4 +164,6 @@ uv run python -m measures.vestigial_regression.analyze               # re-analyz
 uv run python -m core.build_conversations --out candidates/logit_distortion/<new>  # conversation candidates (no weights)
 uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v3  # offline verify + audit
 uv run python -m core.score_conversations --family olmo3-7b --prepare-only   # conversation-scoring inputs (no weights)
+uv run python -m core.exchanges build                # exchange set -> data/exchanges.jsonl (Dolci + tokenizers, no weights)
+FAMILY=olmo3-7b bash scripts/run_exchanges.sh        # exchange scoring, every checkpoint (docs/runbook_exchanges_2026-11-03.md)
 ```

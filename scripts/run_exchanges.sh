@@ -10,7 +10,7 @@
 # Env: FAMILY (required), STAGES (default: all of the family's), CONTEXT (default: config.EXCHANGE_CONTEXT), TAG (default:
 # exchanges_<context>), SCORE_ARGS (extra core.score_exchanges args, e.g. "--no-reuse" or "--batch-size 2"), CLEAR_CACHE
 # as in run_gpu.sh (auto: remove a checkpoint >= 20 GB after use if this script found it uncached; 1: always, same
-# exception; 0: never). HF_HUB_CACHE is passed through (e.g. a RAM-backed cache for Gemma). A stage whose output
+# exception; 0: never). OMP_NUM_THREADS defaults to 8. HF_HUB_CACHE is passed through (e.g. a RAM-backed cache for Gemma). A stage whose output
 # directory already holds scores is skipped (outputs are never overwritten), so a rerun resumes.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -21,6 +21,8 @@ CONTEXT=${CONTEXT:-$($PY -c "from core import config; print(config.EXCHANGE_CONT
 TAG=${TAG:-exchanges_$CONTEXT}
 SCORE_ARGS=${SCORE_ARGS:-}
 CLEAR_CACHE=${CLEAR_CACHE:-auto}
+# The container's CPU quota is 13.6 CPUs although nproc says 128: cap torch's threads so the run neither starves nor is starved.
+export OMP_NUM_THREADS=${OMP_NUM_THREADS:-8} MKL_NUM_THREADS=${MKL_NUM_THREADS:-8}
 ts() { date -u '+%Y-%m-%d %H:%M:%S UTC'; }
 
 echo "[$(ts)] $FAMILY: stages $STAGES, context $CONTEXT, tag $TAG"
