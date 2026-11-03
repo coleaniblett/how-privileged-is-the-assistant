@@ -134,3 +134,15 @@ than carryover, and its code, drafted items and passages were deleted (recoverab
 ## Exploratory work outside the verdict (2026-11-02/03)
 
 Prompting probes and white-box probes of persona leakage (identity, refusal under "never refuses", a persona-axis direction and its controls, role resemblance, carryover variants) are indexed in `extras/README.md`, summarised in `docs/findings_whitebox.md`, and logged in `docs/decisions.md`. They are descriptive and do not change or replace the criteria above. Draft criteria for a possible white-box arm are in `docs/whitebox_arm_proposal.md` (a proposal for the team, not pre-registered).
+
+Two further exploratory arms on the user slot (2026-11-03, plans and pre-set readings in `docs/decisions.md` before any data; outside the verdict):
+
+- **User-turn likelihood minimal pairs** (`user_minimal_pairs.py`, spec B): 10 Assistant-style vs 10 human-style endings appended to the 300 WildChat user texts, ending NLL scored (fp32) in the user slot, as plain text and in the assistant slot (positive control); contrast(user) = pref(user) - pref(plain), change from base, leak at >= 0.05 nats with CI excluding 0. Report `results/capstone/<family>/overgeneralization/user_minimal_pairs.md`.
+- **Mirror the Assistant** (`user_mirror.py`, spec C): the model continues a WildChat user's second turn, cut mid-sentence, with or without the first exchange (p1 + r1) in context; mirror effect = with - without on the user portion (lexical copy of r1; spec A's classifier and style features when available), change from base. Report `results/capstone/<family>/overgeneralization/user_mirror.md`.
+
+```bash
+python -m measures.overgeneralization.user_minimal_pairs score --family olmo3-7b --model base   # GPU, fp32, per stage
+python -m measures.overgeneralization.user_minimal_pairs analyze --family olmo3-7b
+python -m measures.overgeneralization.user_mirror generate --family olmo3-7b --model base        # GPU, bf16, per stage
+python -m measures.overgeneralization.user_mirror analyze --family olmo3-7b
+```
