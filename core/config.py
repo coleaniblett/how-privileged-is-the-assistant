@@ -148,8 +148,8 @@ PREFILL_INCOMPLETE_PATH = "data/prefill_incomplete_200.jsonl"
 
 # Output layout (see AGENTS.md). One directory per run under results/, named after the family by
 # default (scripts/run_gpu.sh: RUN=... or OUT=...). Core outputs go under core/, each measure's
-# under its own name, extras under extras/. results/scores, results/generations, results_preceding/
-# and results_v0/ are pre-capstone runs and are frozen.
+# under its own name, extras under extras/. results/scores, results/generations, attic/results_preceding/
+# and attic/results_v0/ are pre-capstone runs and are frozen.
 RESULTS_ROOT = "results"
 RUN = FAMILY
 

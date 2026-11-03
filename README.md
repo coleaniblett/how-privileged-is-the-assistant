@@ -54,7 +54,7 @@ measures/
 extras/                    role_swap.py, coin_toss.py (kept working; scope undecided)
 scripts/run_gpu.sh         full run per checkpoint, then every analysis
 data/                      committed text sets      docs/   models.md, rendered_examples.md, decisions.md
-results/<run>/             outputs by run (AGENTS.md); results/, results_preceding/, results_v0/ hold the
+results/<run>/             outputs by run (AGENTS.md); results/, attic/results_preceding/, attic/results_v0/ hold the
                            frozen pre-capstone runs
 tests/                     OLMo tokenizer alignment + CPU smoke test
 ```
@@ -77,5 +77,5 @@ checkpoints are ~15 GB each in bf16 (`CLEAR_CACHE=1` deletes each from the HF ca
 ## Pilot results
 
 `results/` holds the held-out main run of the vestigial-regression pilot on OLMo 3 7B (`results.md`,
-`position.md`, `role_swap.md`, `coin_toss.md`, `selection_check.md`), `results_preceding/` the
-preceding-turn robustness run and `results_v0/` the earlier unfiltered sample. All three are frozen.
+`position.md`, `role_swap.md`, `coin_toss.md`, `selection_check.md`), `attic/results_preceding/` the
+preceding-turn robustness run and `attic/results_v0/` the earlier unfiltered sample. All three are frozen.

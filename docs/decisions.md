@@ -478,3 +478,12 @@ are unchanged; the version is part of every output row and of the cache key. No 
 affected. The human labelling instructions (`judge_validation/README.md`) use the same definitions, and `judge sheet --from-capstone` builds the 60-sample
 validation sheet from the incomplete-turn generations of all 8 checkpoints (base models included), so the teammate's labels match the data being graded.
 The judge-arm prefill set is `data/prefill_incomplete_200.jsonl`; the older sentence-boundary set is a separate "complete-turn" stratum.
+
+## 2026-11-03: the two earliest pilot runs move to `attic/`
+
+`results_preceding/` (preceding-turn robustness run) and `results_v0/` (earlier unfiltered sample) moved, unchanged and with history (`git mv`), to
+`attic/results_preceding/` and `attic/results_v0/`, to take two directories off the repository root. They stay frozen: contents are never modified, and
+`attic/` is for frozen material only. Paths were updated where they are used or described (`core/selection_check.py` defaults, `AGENTS.md`, `README.md`,
+`core/config.py` comment, the vestigial-regression README); earlier entries in this file keep the old paths as written. `results_v0/` is not just history:
+`core.selection_check` needs its `data/texts.jsonl` and `scores/base.csv`, because the Dolci-contaminated texts removed from `data/texts.jsonl` exist only there.
+This amends the AGENTS.md rule "never moved": the frozen runs may be moved to `attic/` and nowhere else.
