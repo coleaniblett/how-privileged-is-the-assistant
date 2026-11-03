@@ -77,12 +77,45 @@ def test_keyword_flags_and_cut():
     assert not g["markdown_bullet"]
 
 
+def test_role_label_cut():
+    m = ["<|im_end|>"]
+    cut = lambda t: u.cut_user_portion(t, m, role_cut=True)
+    assert cut("my question\nChatGPT\nCertainly! here") == "my question\n"                 # label alone on a line
+    assert cut("q | ChatGPT | Certainly") == "q | ChatGPT | Certainly"                    # not line-initial: stays
+    assert cut("q\n| ChatGPT | Certainly, I will") == "q\n"                                # table row
+    assert cut("q\n**Assistant:** sure") == "q\n"                                         # markdown + colon
+    assert cut("q\nAI: sure") == "q\n" and cut("q\nclaude:\nok") == "q\n"
+    assert cut("q\nAI is changing the world") == "q\nAI is changing the world"          # a sentence starting with AI is not a label
+    assert cut("q\nModel 3 costs a lot") == "q\nModel 3 costs a lot"
+    assert u.cut_user_portion("q\nChatGPT: hi", m) == "q\nChatGPT: hi"                   # off by default (previous version)
+
+
+def test_samples_counts_and_rates():
+    m = ["<|im_end|>"]
+    s = [dict(prefill_id="a", sample=0, prefill="q", continuation=" word " * 20 + "\nChatGPT\nCertainly! sure,")]
+    new, old = u.keyword_samples(s, m, role_cut=True), u.keyword_samples(s, m, role_cut=False)
+    assert bool(new.role_cut_hit[0]) and not bool(old.role_cut_hit[0])
+    assert new.stock_phrase_n[0] == 0 and old.stock_phrase_n[0] >= 1 and new.n_words[0] == 20
+    two = pd.DataFrame([dict(prefill_id="a", sample=i, n_words=50, any_flag=bool(i == 0), any_n=int(i == 0)) for i in range(2)])
+    assert u.per_prefill(two, "per100:any")["a"] == pytest.approx(1.0)   # 1 flag / 100 words
+
+
+def test_human_samples():
+    pre = [dict(id="p0", text_id="t0", prefill="Hello there.")]
+    h = u.human_samples(pre, {"t0": "Hello there. Please help me with taxes in 2020."})
+    assert h[0]["continuation"].strip() == "Please help me with taxes in 2020."
+    assert len(u.human_samples(pre, {"t0": "Hello there. " + "w " * 200}, max_words=10)[0]["continuation"].split()) <= 10
+
+
 def test_keyword_table_paired():
     def samples(txt):
         return [dict(prefill_id=f"p{i}", sample=s, prefill="q", continuation=txt) for i in range(10) for s in range(3)]
     m = ["<|im_end|>"]
-    flagged = {"base": u.keyword_samples(samples("plain words"), m), "instruct": u.keyword_samples(samples("Certainly! sure thing"), m)}
+    txt = lambda t: " ".join(["filler"] * 20) + " " + t
+    flagged = {"base": u.keyword_samples(samples(txt("plain words")), m), "instruct": u.keyword_samples(samples(txt("Certainly! sure thing")), m)}
     t = u.keyword_table(flagged, n_boot=200)
-    r = t[(t.feature == "stock_phrase") & (t.stage == "instruct")].iloc[0]
+    r = t[(t.feature == "stock_phrase") & (t.stage == "instruct") & (t.metric == "share")].iloc[0]
     assert r["mean"] == pytest.approx(1.0) and r.n == 10
-    assert t[(t.feature == "markdown_bold")].iloc[0]["mean"] == 0
+    r15 = t[(t.feature == "any") & (t.metric == "share15")].iloc[0]
+    assert r15.n == 10 and r15["mean"] == pytest.approx(1.0)
+    assert t[(t.feature == "markdown_bold") & (t.metric == "per100")].iloc[0]["mean"] == 0

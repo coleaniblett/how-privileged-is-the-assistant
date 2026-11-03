@@ -134,44 +134,131 @@ def fires(table, family, stage="instruct", bar=FIRE_BAR):
 
 
 # ---------------------------------------------------------------- keyword arm
-def cut_user_portion(text, markers):
-    """Continuation text before the first of the given marker strings (turn end, turn open, end-of-text, handoff markers)."""
+# A line that starts with a role label (optionally after table pipes / quote / heading / bold marks) and then a colon, a closing
+# mark, a pipe or the end of the line, or that is only a label: base models switch into the assistant this way without any
+# template marker, so the user portion ends there (those are switches, Cole's category, not user-voice traits).
+ROLE_LABEL = re.compile(
+    r"^[ \t]*[|>#*_\-]*[ \t]*(?:\*\*|__)?(?:chatgpt|assistant|ai|bot|gpt|claude|model)(?:[- ]?\d[\d.]*)?(?:\*\*|__)?[ \t]*(?::|：|\||$)",
+    re.I | re.M,
+)
+MIN_WORDS = 15            # restricted version: samples with at least this many words of user text
+HUMAN_WORDS = 80          # human baseline also on the first HUMAN_WORDS words (comparable to a generated continuation)
+
+
+def cut_user_portion(text, markers, role_cut=False):
+    """Continuation text before the first of the given marker strings (turn end, turn open, end-of-text, handoff markers) and,
+    with role_cut, before the first line-initial role label (ChatGPT, Assistant, AI, Bot, GPT, Claude, Model)."""
     cut = min((text.find(m) for m in markers if m and m in text), default=len(text))
-    return text[:cut]
+    t = text[:cut]
+    if role_cut:
+        m = ROLE_LABEL.search(t)
+        if m:
+            return t[: m.start()]
+    return t
 
 
-def keyword_flags(user_text, prefill):
-    """The four judge-free features on the user portion; markdown only counts if the prefill has none of that kind."""
+def keyword_counts(user_text, prefill):
+    """Occurrences of the four judge-free features in the user portion; markdown only counts if the prefill has none of that kind."""
     return dict(
-        stock_phrase=bool(STOCK.search(user_text)),
-        markdown_heading=bool(HEADING.search(user_text)) and not HEADING.search(prefill),
-        markdown_bullet=bool(BULLET.search(user_text)) and not BULLET.search(prefill),
-        markdown_bold=bool(BOLD.search(user_text)) and not BOLD.search(prefill),
+        stock_phrase=len(STOCK.findall(user_text)),
+        markdown_heading=0 if HEADING.search(prefill) else len(HEADING.findall(user_text)),
+        markdown_bullet=0 if BULLET.search(prefill) else len(BULLET.findall(user_text)),
+        markdown_bold=0 if BOLD.search(prefill) else len(BOLD.findall(user_text)),
     )
 
 
-def keyword_samples(samples, markers):
-    """DataFrame (prefill_id, sample, user_chars, features..., any_flag) from core generation rows."""
+def keyword_flags(user_text, prefill):
+    return {k: v > 0 for k, v in keyword_counts(user_text, prefill).items()}
+
+
+def keyword_samples(samples, markers, role_cut=True):
+    """DataFrame, one row per sample: prefill_id, sample, user_text, user_chars, n_words, role_cut_hit, <feature>_n counts,
+    <feature> flags, any_flag, any_n."""
     rows = []
     for r in samples:
-        u = cut_user_portion(r["continuation"], markers)
-        f = keyword_flags(u, r["prefill"])
-        rows.append(dict(prefill_id=r["prefill_id"], sample=r["sample"], user_chars=len(u), **f, any_flag=any(f.values())))
+        full = cut_user_portion(r["continuation"], markers)
+        u = cut_user_portion(r["continuation"], markers, role_cut=role_cut)
+        c = keyword_counts(u, r["prefill"])
+        rows.append(dict(prefill_id=r["prefill_id"], sample=r["sample"], prefill=r["prefill"], user_text=u, user_chars=len(u),
+                         n_words=len(u.split()), role_cut_hit=len(u) < len(full), **{k + "_n": v for k, v in c.items()},
+                         **{k: v > 0 for k, v in c.items()}, any_flag=any(v > 0 for v in c.values()), any_n=sum(c.values())))
     return pd.DataFrame(rows)
+
+
+def human_samples(prefills, texts, max_words=None):
+    """The real remainder of each WildChat user turn (full text minus the prefill), one sample per prefill; optionally only its
+    first max_words words. prefills: rows with id, text_id, prefill; texts: {text_id: full text}."""
+    rows = []
+    for p in prefills:
+        full = texts[p["text_id"]]
+        rest = full[len(p["prefill"]):] if full.startswith(p["prefill"]) else full.replace(p["prefill"], "", 1)
+        if max_words:
+            rest = " ".join(rest.split(" ")[:max_words])
+        rows.append(dict(prefill_id=p["id"], sample=0, prefill=p["prefill"], continuation=rest))
+    return rows
+
+
+def per_prefill(d, metric):
+    """Series indexed by prefill_id. metric 'share:<col>': share of the prefill's samples with the flag; 'share15:<col>': the same
+    over samples with >= MIN_WORDS words (NaN if none); 'per100:<feature>': occurrences per 100 words, the prefill's samples
+    pooled (NaN if no words)."""
+    kind, col = metric.split(":")
+    ids = d.prefill_id.unique()
+    if kind == "share15":
+        return d[d.n_words >= MIN_WORDS].groupby("prefill_id")[col].mean().astype(float).reindex(ids)
+    if kind == "share":
+        return d.groupby("prefill_id")[col].mean().astype(float)
+    g = d.groupby("prefill_id")
+    words = g.n_words.sum()
+    return (100 * g[col + "_n"].sum() / words.where(words > 0)).astype(float)
+
+
+METRICS = {"share": "share of samples flagged (pp)", "share15": f"share, samples with >= {MIN_WORDS} words (pp)",
+           "per100": "occurrences per 100 words"}
+FEATS = KEYWORD_FEATURES + ["any"]
+
+
+def _col(metric, feat):
+    return ("any_flag" if metric != "per100" else "any") if feat == "any" else feat
 
 
 def keyword_table(flagged_by_stage, base="base", seed=SEED, n_boot=N_BOOT):
-    """Per feature (and any_flag): share of a prefill's samples flagged; stage minus base paired per prefill."""
+    """Per metric x feature: stage minus base paired per prefill (n = prefills defined in both, dropped = the rest)."""
     if base not in flagged_by_stage:
         raise SystemExit(f"no generations for the base stage {base!r}")
     rows = []
-    for feat in KEYWORD_FEATURES + ["any_flag"]:
-        share = {s: d.groupby("prefill_id")[feat].mean().astype(float) for s, d in flagged_by_stage.items()}
-        for s in stage_order([x for x in flagged_by_stage if x != base]):
-            rng = np.random.default_rng(seed)
-            rows.append(dict(stage=s, feature=feat, **paired_change(share, base, s, rng, n_boot)))
+    for metric in METRICS:
+        for feat in FEATS:
+            tab = {s: per_prefill(d, f"{metric}:{_col(metric, feat)}") for s, d in flagged_by_stage.items()}
+            for s in stage_order([x for x in flagged_by_stage if x != base]):
+                rng = np.random.default_rng(seed)
+                rows.append(dict(stage=s, metric=metric, feature=feat, **paired_change(tab, base, s, rng, n_boot)))
     return pd.DataFrame(rows)
 
+
+def human_row(d):
+    """Absolute values for a human baseline (no change from base): per-prefill mean of each metric."""
+    out = []
+    for metric in METRICS:
+        for feat in FEATS:
+            t = per_prefill(d, f"{metric}:{_col(metric, feat)}")
+            out.append(dict(metric=metric, feature=feat, n=int(t.notna().sum()), mean=float(t.mean())))
+    return pd.DataFrame(out)
+
+
+def stage_summary(d):
+    """Samples, samples cut by a role label, empty user portions, mean words, samples with >= MIN_WORDS words, and the pooled
+    flag count per 100 words."""
+    w = d.n_words.sum()
+    return dict(n=len(d), cut=int(d.role_cut_hit.sum()), empty=int((d.user_chars == 0).sum()), words=float(d.n_words.mean()),
+                long=int((d.n_words >= MIN_WORDS).sum()), pooled=float(100 * d.any_n.sum() / w) if w else float("nan"))
+
+
+def flagged_examples(d, stage, k=3, min_words=MIN_WORDS):
+    """Up to k flagged samples with >= min_words words of user text, for the report (first per prefill, spread over prefills)."""
+    f = d[d.any_flag & (d.n_words >= min_words)].drop_duplicates("prefill_id")
+    f = f.iloc[np.linspace(0, len(f) - 1, min(k, len(f))).astype(int)] if len(f) else f
+    return [dict(stage=stage, prefill=r.prefill, text=" ".join(r.user_text.split())) for r in f.itertuples()]
 
 def family_markers(family):
     """Cut strings for the family: end of user turn, turn open, end-of-text (all derived from its chat template by Cole's
@@ -215,24 +302,56 @@ def judge_report(table, family, bar=FIRE_BAR):
     return "\n".join(L) + "\n"
 
 
-def keyword_report(table, family, counts):
+def _rows(table, metric):
+    sc = lambda x: "n/a" if pd.isna(x) else (f"{x:.2f}" if metric == "per100" else f"{100 * x:.1f}")
+    L = ["| stage | feature | prefills used | dropped | base | stage | change [95% CI] |", "|---|---|---|---|---|---|---|"]
+    for _, r in table[table.metric == metric].iterrows():
+        ch = "n/a" if r["n"] < 2 else (f"{r['mean']:+.2f} [{r['lo']:+.2f}, {r['hi']:+.2f}]" if metric == "per100" else cell(r))
+        L.append(f"| {r.stage} | {r.feature} | {r.n} | {r.dropped} | {sc(r.base_mean)} | {sc(r.stage_mean)} | {ch} |")
+    return L
+
+
+def _human_lines(h, label):
+    L = [f"Human baseline, {label} (absolute values, per-prefill mean):", "",
+         f"| feature | share (pp) | share, >= {MIN_WORDS} words (pp) | per 100 words |", "|---|---|---|---|"]
+    for f in FEATS:
+        g = lambda m: h[(h.metric == m) & (h.feature == f)].iloc[0]["mean"]
+        L.append(f"| {f} | {100 * g('share'):.1f} | {100 * g('share15'):.1f} | {g('per100'):.2f} |")
+    return L
+
+
+def keyword_report(new, old, family, human, human_short, examples=()):
+    """new / old: dict(table, summary={stage: stage_summary}) for the current (role-label cut) and previous versions. human /
+    human_short: human_row frames for the full real remainder and its first HUMAN_WORDS words."""
     L = [f"# User-slot assistant traits: keyword cross-check, {family} (outside the verdict)", "",
-         "No judge. In the user portion of each continuation (cut at the turn-end / turn-open / end-of-text / handoff markers), "
-         "flag assistant stock phrases and markdown headings, bullets or bold that the prefill does not already contain. Per "
-         "prefill, the share of its samples flagged; stage minus base in percentage points, 95% bootstrap CI over prefills, "
-         "paired per prefill.", ""]
+         "No judge. In the user portion of each continuation, flag assistant stock phrases and markdown headings, bullets or bold "
+         "that the prefill does not already contain. Effects are stage minus base, paired per prefill, 95% bootstrap CI over prefills "
+         "(percentage points for shares, occurrences per 100 words for the rate). Three views: share of samples flagged; the same "
+         f"restricted to samples with >= {MIN_WORDS} words of user text (a model that closes the turn at once has nothing to flag); "
+         "occurrences per 100 words of user text (per prefill, its samples pooled).", ""]
     if family in SUPPORTING:
         L += ["Caveat: no contamination check is possible for this family.", ""]
-    L += ["Samples and mean user-portion length:", "", "| stage | samples | empty user portion | mean user chars |", "|---|---|---|---|"]
-    L += [f"| {s} | {c['n']} | {c['empty']} | {c['chars']:.0f} |" for s, c in counts.items()]
-    L += ["", "| stage | feature | prefills | base share (pp) | stage share (pp) | change (pp) |", "|---|---|---|---|---|---|"]
-    for _, r in table.iterrows():
-        L.append(f"| {r.stage} | {r.feature} | {r.n} | {pp(r.base_mean).lstrip('+')} | {pp(r.stage_mean).lstrip('+')} | {cell(r)} |")
-    L += ["", "Read with care: a stage that ends the user turn at once has a short or empty user portion, so few flags are possible; "
-          "the table shows the user-portion length above. Stock phrases and markdown are coarse proxies for the judge's "
-          "user_voice_with_assistant_traits label.", ""]
+    L += ["## Current version", "",
+          "The user portion ends at the first turn-end, turn-open, end-of-text or handoff marker, **or at a line-initial role label** "
+          "(ChatGPT, Assistant, AI, Bot, GPT, Claude, Model; case-insensitive; optional colon, pipes or markdown; or a line that is "
+          "only the label). Base models switch into the assistant this way with no template marker; those are switches, not "
+          "user-voice traits.", "",
+          "| stage | samples | cut by a role label | empty user portion | mean words | samples >= 15 words | pooled flags per 100 words |",
+          "|---|---|---|---|---|---|---|"]
+    L += [f"| {s} | {c['n']} | {c['cut']} | {c['empty']} | {c['words']:.0f} | {c['long']} | {c['pooled']:.2f} |" for s, c in new["summary"].items()]
+    L += [""] + _human_lines(human, "real remainder of each WildChat user turn (full text minus the prefill; length not matched)") + [""]
+    L += _human_lines(human_short, f"same, first {HUMAN_WORDS} words only") + [""]
+    for metric, name in METRICS.items():
+        L += [f"### {name}", ""] + _rows(new["table"], metric) + [""]
+    if examples:
+        L += ["### Examples still flagged (>= 15 words of user text)", ""]
+        L += [f"- **{e['stage']}**, prefill \"{e['prefill'][:80]}\": {e['text'][:420]}" for e in examples] + [""]
+    L += ["---", "", "## Previous version (cut at turn-end / handoff markers only; kept for the record)", "",
+          "| stage | samples | empty user portion | mean words | samples >= 15 words | pooled flags per 100 words |", "|---|---|---|---|---|---|"]
+    L += [f"| {s} | {c['n']} | {c['empty']} | {c['words']:.0f} | {c['long']} | {c['pooled']:.2f} |" for s, c in old["summary"].items()]
+    L += ["", f"### Previous version: {METRICS['share']}", ""] + _rows(old["table"], "share") + [""]
+    L += ["Read with care: stock phrases and markdown are coarse proxies for the judge's user_voice_with_assistant_traits label.", ""]
     return "\n".join(L) + "\n"
-
 
 # ---------------------------------------------------------------- CLI
 def main():
@@ -244,6 +363,8 @@ def main():
     ap.add_argument("--generations", help="default results/<run>/<family>/core/generations")
     ap.add_argument("--judge-dir", help="default results/<run>/<family>/vestigial_regression/judge (<stage>.jsonl per stage)")
     ap.add_argument("--out", help="default results/<run>/<family>/overgeneralization/user_traits_<arm>.md (+ .csv)")
+    ap.add_argument("--prefills", default="data/prefill_100.jsonl", help="keyword arm: prefill set (human baseline)")
+    ap.add_argument("--texts", default="data/texts.jsonl", help="keyword arm: full texts by id (human baseline)")
     ap.add_argument("--n-boot", type=int, default=N_BOOT)
     a = ap.parse_args()
     stages = list(config.family_settings(a.family)["stages"])
@@ -259,14 +380,21 @@ def main():
     else:
         gd = a.generations or generations_dir(a.family, a.run)
         markers = family_markers(a.family)
-        flagged, counts = {}, {}
-        for s in stages:
-            p = os.path.join(gd, f"{s}.jsonl")
-            if os.path.exists(p):
-                flagged[s] = keyword_samples(read_jsonl(p), markers)
-                counts[s] = dict(n=len(flagged[s]), empty=int((flagged[s].user_chars == 0).sum()), chars=float(flagged[s].user_chars.mean()))
-        table = keyword_table(flagged, n_boot=a.n_boot)
-        text = keyword_report(table, a.family, counts)
+        raw = {s: read_jsonl(os.path.join(gd, f"{s}.jsonl")) for s in stages if os.path.exists(os.path.join(gd, f"{s}.jsonl"))}
+        versions = {}
+        for name, rc in (("new", True), ("old", False)):
+            fl = {s: keyword_samples(r, markers, role_cut=rc) for s, r in raw.items()}
+            versions[name] = dict(flagged=fl, table=keyword_table(fl, n_boot=a.n_boot), summary={s: stage_summary(d) for s, d in fl.items()})
+        prefills = read_jsonl(a.prefills)
+        texts = {r["id"]: r["text"] for r in read_jsonl(a.texts)}
+        human = {k: keyword_samples(human_samples(prefills, texts, mw), [], role_cut=False) for k, mw in (("full", None), ("short", HUMAN_WORDS))}
+        examples = []
+        for s in [x for x in versions["new"]["flagged"] if x != "base"]:
+            examples += flagged_examples(versions["new"]["flagged"][s], s, k=1)
+        text = keyword_report(versions["new"], versions["old"], a.family, human_row(human["full"]), human_row(human["short"]), examples)
+        table = pd.concat([versions["new"]["table"].assign(version="current"), versions["old"]["table"].assign(version="previous"),
+                           human_row(human["full"]).assign(stage="human_full", version="current"),
+                           human_row(human["short"]).assign(stage=f"human_first{HUMAN_WORDS}w", version="current")], ignore_index=True)
     open(out, "w", encoding="utf-8").write(text)
     table.to_csv(out[:-3] + ".csv", index=False)
     print(text)

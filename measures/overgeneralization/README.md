@@ -94,9 +94,10 @@ prompt v2 counts a completed sentence plus a closed turn as plain user voice, an
    reported by stage (descriptive). Qwen3-8B and Gemma 4 31B are supporting only, and every table says contamination cannot be checked for them.
 4. **Counts toward H4** as dominance by overgeneralization in the user slot, reported as such, alongside the persona-carryover criteria above.
 5. **Judge-free keyword cross-check (outside the verdict).** In the user portion (cut at the family's turn-end, turn-open, end-of-text and handoff
-   markers), assistant stock phrases and markdown headings, bullets or bold absent from the prefill; same per-prefill change-from-base table.
-   First run on the existing generations: stock phrases and unprompted markdown drop from base to every post-trained stage in all three families
-   (the base model itself writes assistant-style refusals and "As an AI" in the user slot).
+   markers, and, from the 2026-11-03 revision, at a line-initial role label such as ChatGPT / Assistant / AI: those are base-model switches, not
+   user-voice traits), assistant stock phrases and markdown headings, bullets or bold absent from the prefill. Reported as share of samples,
+   share among samples with >= 15 words, and occurrences per 100 words, each stage minus base paired per prefill, beside a human baseline (the
+   real remainder of each WildChat user turn). The previous version is kept in the report.
 
 ```bash
 python -m measures.overgeneralization.user_traits keyword --family olmo3-7b      # runs now
