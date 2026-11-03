@@ -90,10 +90,11 @@ texts where possible, so it samples with `core.prepare_data`'s generators and sc
 
 ### Switching the reply's context
 
-`config.EXCHANGE_CONTEXT` (default `"exchange"`) or `--context` / `CONTEXT=` per run; outputs go to a tag named after it
-(`exchanges_exchange`, `exchanges_single`), so both can coexist. A new design is one more entry in
-`core.exchanges.CONTEXTS` (a tagged and a plain renderer for the reply); the user turn, the checks, the scorer, the
-outputs and the launcher do not change.
+**The main run is the `exchange` context only** (decided 2026-11-03, `docs/decisions.md`); `scripts/run_exchanges.sh` refuses any
+other context. The option stays in core for separate analyses: `config.EXCHANGE_CONTEXT` (default `"exchange"`) or
+`core.score_exchanges --context ...`, with outputs under a tag named after it (`exchanges_exchange`, `exchanges_single`), so
+designs never overwrite each other. A new design is one more entry in `core.exchanges.CONTEXTS` (a tagged and a plain renderer
+for the reply); the user turn, the checks, the scorer and the outputs do not change.
 
 ## Outputs
 
