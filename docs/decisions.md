@@ -449,3 +449,32 @@ so it is run once, in the ON directory). Only the assistant slot changes, so `us
 under both; the assistant role-specific term, and with it the vestigial-regression asymmetry, and logit distortion's `asst@asst` differ. The
 primary result is the ON one; any difference between the two is reported as the robustness finding, not chosen after the fact.
 `tests/test_families.py` now asserts the new default. OLMo and Gemma rendering are unchanged.
+
+## 2026-11-03: core: incomplete-turn prefills for the judge arm (data/prefill_incomplete_200.jsonl)
+
+The prefills in `data/prefill_100.jsonl` (first sentences of real WildChat user turns) all end in terminal punctuation, 35 of the 100 read as complete
+questions or requests, and the real user kept writing after every one of them (median 299 characters). A chat model that closes the user turn there and
+answers is behaving normally, so handoff after these prefills is not evidence of vestigial regression (capstone generations: OLMo SFT/DPO/Instruct
+close the turn in 60-80% of samples, typically after about 100 characters of further user text; base models never hand off). The judge arm therefore
+needs prefills that are clearly unfinished, as in Shiller's exploration. `python -m core.prepare_data --incomplete-prefill` writes
+`data/prefill_incomplete_200.jsonl` (new file; the existing prefill files are untouched): 200 real WildChat user turns from `texts.jsonl` (already
+length-, render- and Dolci-filtered), each cut inside the first line at a seeded random point where the last kept word is an article or
+determiner, preposition, conjunction, auxiliary or modal, a transitive verb that nearly always takes an object, or ends with a comma (never terminal
+punctuation, 6-40 words, more words following), choosing the cut type first so the set is not dominated by 'the' and 'of'. The word lists are closed
+classes in `core.prepare_data.INCOMPLETE_ENDINGS` (no part-of-speech tagger is a dependency). Rows keep `text_id`, the cut type, the last word and
+the first words of the real continuation; prefills are deduplicated, since WildChat repeats prompts. Cut types: article/determiner 51, preposition 54,
+comma 24, auxiliary/modal 30, conjunction 22, transitive verb 19. `config.PREFILL_PATH` (the default of `core.generate`) is unchanged; the old
+set stays as a separate "complete-turn" stratum. `tests/test_prefill_incomplete.py` covers it.
+
+## 2026-11-03: vestigial regression: judge prompt v2 (the reply after the user's turn closes is context, not a switch)
+
+Judge prompt v1 labelled a continuation `switched_to_assistant` if it answered "at any point", including after a closing turn marker. With sentence-boundary
+prefills that counted ordinary chat behaviour (finish the user's message, close the turn, the assistant replies) as vestigial regression, and the README says
+the judge labels the user portion. v2 (`measures/vestigial_regression/judge_prompt.md`) judges only what the model did before the user's turn closes and
+treats what follows as context: finishing the user's thought as the user and then closing the turn is `user_voice`; abandoning a clearly unfinished sentence
+(closing the turn at once, or answering, reasoning or opening a thinking section in its place) is `switched_to_assistant`; with a prefill that already reads
+as a complete message, closing the turn is not a departure. The four labels, the JSON output, the model (`claude-sonnet-5-5`, temperature 0) and the inputs
+are unchanged; the version is part of every output row and of the cache key. No v1 label exists (the judge has not yet called the API), so no result is
+affected. The human labelling instructions (`judge_validation/README.md`) use the same definitions, and `judge sheet --from-capstone` builds the 60-sample
+validation sheet from the incomplete-turn generations of all 8 checkpoints (base models included), so the teammate's labels match the data being graded.
+The judge-arm prefill set is `data/prefill_incomplete_200.jsonl`; the older sentence-boundary set is a separate "complete-turn" stratum.

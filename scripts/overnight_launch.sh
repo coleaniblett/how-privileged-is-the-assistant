@@ -15,7 +15,10 @@ if tmux has-session -t "$S" 2>/dev/null; then
     exit 0
   fi
 fi
-tmux new-session -d -s "$S" -x 200 -y 50 "bash scripts/overnight_supervise.sh"
+# Extra args go to the driver (e.g. --stratum incomplete). The environment is passed explicitly: tmux's server keeps the environment it was started with.
+ENVS=()
+for v in UV_PROJECT_ENVIRONMENT OVERNIGHT_LOGS MAX_RESTARTS RESTART_WAIT; do [[ -n "${!v:-}" ]] && ENVS+=("$v=${!v}"); done
+tmux new-session -d -s "$S" -x 200 -y 50 "env ${ENVS[*]:-} bash scripts/overnight_supervise.sh $*"
 tmux set-option -t "$S" remain-on-exit on
 echo "started tmux session '$S' (attach: tmux attach -t $S; detach: Ctrl-b d)"
 sleep 5
