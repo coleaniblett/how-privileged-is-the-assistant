@@ -41,8 +41,9 @@ def test_persona_carryover_smoke(tmp_path):
         run("score", "--model", MODEL, "--stage", stage, "--tokenizer", MODEL, "--dataset", str(data),
             "--batch-size", "8", "--out", str(tmp_path / "scores"))
     run("analyze", "--scores", str(tmp_path / "scores"), "--dataset", str(data), "--tokenizer", MODEL,
-        "--out-dir", str(tmp_path), "--n-boot", "200")
+        "--out-dir", str(tmp_path), "--n-boot", "200", "--verdict")
     s = pd.read_csv(tmp_path / "persona_carryover_summary.csv")
+    assert "no stage meets criteria 3 and 4" in (tmp_path / "persona_carryover.md").read_text()   # identical models: no effect
     # same model under two labels: the change from base is exactly zero
     assert s[s.quantity == "leak gap, change from base"]["mean"].abs().max() < 1e-6
     m = s[s.quantity.str.startswith("mass")]["mean"]

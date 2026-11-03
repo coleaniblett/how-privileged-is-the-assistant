@@ -43,5 +43,5 @@ for stage in $STAGES; do
   run $PY -m measures.overgeneralization.persona_carryover score --model "$stage" --stage "$stage" --dataset "$DATA" --out "$OUT/persona_carryover"
   [[ "$DRY" == "1" ]] || free_model "$model"
 done
-run $PY -m measures.overgeneralization.persona_carryover analyze --dataset "$DATA" --scores "$OUT/persona_carryover" --out-dir "$OUT"
+run $PY -m measures.overgeneralization.persona_carryover analyze --verdict --dataset "$DATA" --scores "$OUT/persona_carryover" --out-dir "$OUT"
 echo "=== done $(date -u +%T)"
