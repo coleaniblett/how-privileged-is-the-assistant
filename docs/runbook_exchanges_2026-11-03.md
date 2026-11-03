@@ -20,7 +20,10 @@ Never from `/root/how-privileged-is-the-assistant`: that checkout is on a stale 
 3. **Never delete teammates' files.** In particular, **leave Grace's Gemma copy in `/dev/shm/grace-gemma-hub/` alone** (59 GB, Gemma 4
    31B base weights): use it only read-only, only with her OK, and never remove it. When `HF_HUB_CACHE` points anywhere but the
    default cache, the launcher forces `CLEAR_CACHE=0`, so it cannot delete from such a cache. Only remove what this run downloaded.
-4. **CPU and RAM:** the container is limited to 13.6 CPUs (`nproc` says 128) and 188 GB of RAM, of which `/dev/shm` contents count
+4. **Environment:** the launcher uses the checkout's own `.venv` (it exports `UV_PROJECT_ENVIRONMENT=$PWD/.venv`). tmux's global
+   environment on this machine sets `UV_PROJECT_ENVIRONMENT` to the main checkout's `.venv`; other `uv run` commands typed in tmux
+   (e.g. `hf_cache free`, the analysis) should be run as `env -u UV_PROJECT_ENVIRONMENT -u VIRTUAL_ENV uv run ...` from the worktree.
+5. **CPU and RAM:** the container is limited to 13.6 CPUs (`nproc` says 128) and 188 GB of RAM, of which `/dev/shm` contents count
    (63 GB now). The launcher caps torch at 8 threads; ask other sessions to cap theirs (`OMP_NUM_THREADS=8`) during the run.
    Gemma's fp32 offload needs about 93 GB of RAM.
 
@@ -38,7 +41,7 @@ cd /root/hpa-capstone-scoring && mkdir -p logs && set -o pipefail
 CLEAR_CACHE=1 FAMILY=olmo3-7b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_olmo3-7b.log && \
 # 2. Qwen3-8B: base, IT (IT is already cached and is kept; base is removed after use)
 CLEAR_CACHE=1 FAMILY=qwen3-8b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_qwen3-8b.log && \
-uv run python -m core.hf_cache free Qwen/Qwen3-8B      # 16 GB, downloaded by this session for the smoke run
+env -u UV_PROJECT_ENVIRONMENT -u VIRTUAL_ENV uv run python -m core.hf_cache free Qwen/Qwen3-8B      # 16 GB, downloaded by this session for the smoke run
 ```
 
 **3. Gemma 4 31B (base, IT): needs a decision on disk first (see "Disk" below).** With room for one checkpoint at a time on `/`:

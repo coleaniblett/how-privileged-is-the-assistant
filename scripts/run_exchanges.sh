@@ -19,6 +19,10 @@
 # checkpoint with nothing left to do is not downloaded.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+# Use this checkout's own environment: shells on this machine (including tmux's global environment) may export
+# UV_PROJECT_ENVIRONMENT / VIRTUAL_ENV pointing at another checkout's .venv or /opt/arena-env.
+export UV_PROJECT_ENVIRONMENT="$PWD/.venv"
+unset VIRTUAL_ENV
 : "${FAMILY:?set FAMILY to one of the config.FAMILIES keys}"
 CONTEXT=${CONTEXT:-exchange}
 if [[ "$CONTEXT" != exchange ]]; then
