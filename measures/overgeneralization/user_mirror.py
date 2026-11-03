@@ -25,6 +25,8 @@ from core.generate import load_generation_model, stop_ids
 from core.prepare_data import build_incomplete_prefill
 from core.render import SENTINEL, encode, load_jsonl, load_tokenizer, render_prefill, special_strings
 from core.stats import bootstrap_ci, stage_order
+from measures.overgeneralization import user_style as us
+from measures.overgeneralization.human_vs_assistant import load_classifier
 from measures.overgeneralization.user_traits import cut_user_portion, family_markers
 
 SWAP_PATH = "data/swap.jsonl"
@@ -133,31 +135,40 @@ def copy_share(user_text, source):
     return len(g & grams(source)) / len(g) if g else None
 
 
-def score_texts(df, convs):
-    """df rows: conv_id, user_text. Adds the per-sample scores (lexical now; spec A's classifier/style columns when available)."""
+def score_texts(df, convs, clf):
+    """df rows: conv_id, user_text. Adds the per-sample scores: spec A's classifier P(assistant) (first 40 words; unscored below 3
+    words, as in user_style.py), lexical copy of r1 and p1, and spec A's style features."""
     c = {x["id"]: x for x in convs}
+    ok = df.user_text.map(lambda t: len(us.words(t)) >= us.MIN_SCORE_WORDS)
+    df["p_assistant"] = np.nan
+    if ok.any():
+        df.loc[ok, "p_assistant"] = clf.p_assistant([us.head_words(t, us.SCORE_WORDS) for t in df.loc[ok, "user_text"]])
+    feats = pd.DataFrame([us.features(t) if t.strip() else {} for t in df.user_text], index=df.index)
+    for f in STYLE:
+        df[f] = feats[f] if f in feats else np.nan
     df["copy_r1"] = [copy_share(u, c[i]["r1"]) for i, u in zip(df.conv_id, df.user_text)]
     df["copy_p1"] = [copy_share(u, c[i]["p1"]) for i, u in zip(df.conv_id, df.user_text)]
     df["copy_r1_minus_p1"] = df.copy_r1 - df.copy_p1
     return df
 
 
-METRICS = [("copy_r1", "char 4-gram share found in r1"), ("copy_p1", "char 4-gram share found in p1"),
-           ("copy_r1_minus_p1", "share in r1 minus share in p1")]
+STYLE = ["starts_lower", "typo_rate", "sent_len", "polite", "exclaim", "markdown", "cap_i", "terminal"]
+METRICS = [("p_assistant", "classifier P(assistant) (spec A)  [primary]"), ("copy_r1", "char 4-gram share found in r1"), ("copy_p1", "char 4-gram share found in p1"),
+           ("copy_r1_minus_p1", "share in r1 minus share in p1")] + [(f, f"style: {f}") for f in STYLE]
 
 
-def user_samples(family, stage, convs, run="capstone"):
+def user_samples(family, stage, convs, clf, run="capstone"):
     markers = family_markers(family)
     recs = load_jsonl(os.path.join(gen_dir(family, run), f"{stage}.jsonl"))
     df = pd.DataFrame([dict(conv_id=r["conv_id"], condition=r["condition"], sample=r["sample"],
                             user_text=cut_user_portion(r["continuation"], markers, role_cut=True)) for r in recs])
-    return score_texts(df, convs)
+    return score_texts(df, convs, clf)
 
 
-def human_reference(tok, convs, max_new=config.GEN_MAX_NEW_TOKENS):
+def human_reference(tok, convs, clf, max_new=config.GEN_MAX_NEW_TOKENS):
     df = pd.DataFrame([dict(conv_id=c["id"], condition="human", sample=0,
                             user_text=tok.decode(encode(tok, c["remainder"])[:max_new])) for c in convs])
-    return score_texts(df, convs)
+    return score_texts(df, convs, clf)
 
 
 def mirror(df, metric, other="with"):
@@ -171,8 +182,9 @@ def analyze(family, run="capstone", base="base"):
     tok = load_tokenizer(config.TEMPLATE_MODEL)
     convs, counts = prepare(tok)
     stages = stage_order([f[:-6] for f in os.listdir(gen_dir(family, run)) if f.endswith(".jsonl")])
-    samples = {s: user_samples(family, s, convs, run) for s in stages}
-    human = human_reference(tok, convs)
+    clf = load_classifier()
+    samples = {s: user_samples(family, s, convs, clf, run) for s in stages}
+    human = human_reference(tok, convs, clf)
     rng = np.random.default_rng(SEED)
     rows = []
     for metric, _ in METRICS:
@@ -231,9 +243,18 @@ def write_report(table, family, stages, counts, samples, convs, run="capstone"):
              f"an unfinished cut point (analysed); {counts['with_olmo_reply']} of them have an OLMo reply.", ""]
     if family != "olmo3-7b":
         lines += ["Supporting family: its post-training data cannot be checked for contamination.", ""]
-    if not any(m.startswith("p_assistant") for m in table.metric.unique()):
-        lines += ["**Spec A's classifier and style features are not in this version** (not yet available on this host); only lexical "
-                  "copy is reported, so the pre-set mirror-leak reading (classifier P(assistant)) is not computed yet.", ""]
+    lines += ["## Pre-set reading (classifier P(assistant), *with* condition, mirror effect change from base)", ""]
+    for s in trained:
+        r = table[(table.metric == "p_assistant") & (table.comparison == "with") & (table.stage == s) &
+                  (table.kind == "mirror effect, change from base")]
+        if len(r):
+            r = r.iloc[0]
+            leak = r["mean"] >= LEAK_BAR and r["lo"] > 0
+            lines.append(f"- **{s}**: {_cell(r)} -> {'MIRROR LEAK' if leak else 'no mirror leak'} (bar >= {LEAK_BAR} with CI excluding 0)"
+                         + ("" if s == "instruct" and family == "olmo3-7b" else " (by stage / supporting)"))
+    if family == "olmo3-7b" and "instruct" not in stages:
+        lines.append("- OLMo 3 7B instruct was not generated (weights not cached, disk full), so the headline reading is not available.")
+    lines += [""]
     for metric, label in METRICS:
         t = table[table.metric == metric]
         lines += [f"## {label}", "", "| | " + " | ".join(stages) + " |", "|---|" + "---|" * len(stages)]
