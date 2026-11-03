@@ -77,5 +77,6 @@ checkpoints are ~15 GB each in bf16 (`CLEAR_CACHE=1` deletes each from the HF ca
 ## Pilot results
 
 `results/` holds the held-out main run of the vestigial-regression pilot on OLMo 3 7B (`results.md`,
-`position.md`, `role_swap.md`, `coin_toss.md`, `selection_check.md`), `attic/results_preceding/` the
-preceding-turn robustness run and `attic/results_v0/` the earlier unfiltered sample. All three are frozen.
+`position.md`, `role_swap.md`, `coin_toss.md`; the selection check is in `results/selection_check/`),
+`attic/results_preceding/` the preceding-turn robustness run and `attic/results_v0/` the earlier unfiltered sample's own outputs
+(its texts are `data/prefilter_texts.jsonl`; `data/README.md` describes every dataset). All are frozen.
