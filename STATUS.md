@@ -1,6 +1,6 @@
 # STATUS
 
-**Last updated:** 2026-11-03 13:56 UTC by Claude (Sonnet 5.5, agent session for Adeeb), on `main`: orthogonal-steering replication finished and committed (`results/orthogonal_steering/`); leakage matrix and an introspection run are in progress; the confirmatory carryover set is still drafted, not scored.
+**Last updated:** 2026-11-03 15:40 UTC by Claude (Opus 5.5, agent session for Cole), on branch `turns-memo-2026-11-03` (committed, not pushed): turn-presentation memo `docs/turns_memo.md` with its test in `exploration/turns_test/`; nothing in core/ or measures/ changed.
 Source: commit history of all branches after `git fetch --all`, the measure READMEs, `docs/decisions.md`, `docs/runbook_2026-11-03.md`, `AGENTS.md`.
 Only what the repo shows; where it shows nothing the cell says so. Detail lives in the READMEs and `decisions.md`, not here.
 
@@ -33,6 +33,7 @@ Only what the repo shows; where it shows nothing the cell says so. Detail lives 
 | decision | owner | decide by | where |
 |---|---|---|---|
 | ~~Qwen3 assistant-slot think block~~ **decided 2026-11-02**: ON is primary, OFF is the robustness check (both collected; mean ON-OFF difference in `asst@asst` about 0.02 nats) | Cole | done | `docs/decisions.md` |
+| Text presentation for scoring (reply alone A / after its question B / later user turn C): memo recommends A primary for VR with B and C as robustness rows (fires only if A and B agree; Qwen3-8B's asymmetry is +0.05 under A, negative under B/C), and B with opening/follow-up strata for LD | Cole, Grace | before `analyze --locked` is read | `docs/turns_memo.md` |
 | Minimum judge-arm rate difference | Cole | Tue, before judge results are read | VR README |
 | Judge validation labels (60 samples, `judge_validation/sheet.csv`), by a teammate other than the pilot agent | Cole to assign | labels Tue, needed before Wed analysis | runbook |
 | Judge agreement bar (80% default) | Cole | Tue, before the first judge run | VR README |

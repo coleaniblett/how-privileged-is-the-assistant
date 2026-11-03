@@ -1,0 +1,5 @@
+model allenai/Olmo-3-7B-Instruct
+template allenai/Olmo-3-7B-Instruct
+fp32, batch 8
+assistant_think_block None
+rows 150 sequences 1500

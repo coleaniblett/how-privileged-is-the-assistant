@@ -1,0 +1,18 @@
+{
+ "wildchat": {
+  "kept": 50,
+  "note": "data/swap.jsonl in file order (already Dolci-filtered and length-filtered)"
+ },
+ "oasst1": {
+  "candidates": 976,
+  "in Dolci": 554,
+  "length/render": 372,
+  "kept": 50
+ },
+ "ultrachat": {
+  "candidates": 306,
+  "length/render": 255,
+  "in Dolci": 1,
+  "kept": 50
+ }
+}

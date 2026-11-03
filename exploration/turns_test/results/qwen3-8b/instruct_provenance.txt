@@ -1,0 +1,5 @@
+model Qwen/Qwen3-8B
+template Qwen/Qwen3-8B
+fp32, batch 4
+assistant_think_block True
+rows 150 sequences 1500
