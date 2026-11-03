@@ -105,11 +105,16 @@ def _user_tagged(tok, ex, family):
 
 
 def _plain(tok, before, text):
-    """Document-start token + `before` (natural tokenization) + text tokenized alone; no merge at the text boundary."""
-    pre = doc_start_ids(tok) + (encode(tok, before) if before else [])
+    """Document-start token + the string before + text, tokenized as one string (natural tokenization), which must end
+    with exactly the text's own tokens (no merge across the separator/text boundary); the tokens before them must decode
+    to `before`. (Some pre-tokenizers split a trailing "\n\n" differently once text follows; only the scored text's
+    tokens are required to equal those of the text alone.)"""
     content = encode(tok, text)
-    if before and encode(tok, before + text) != encode(tok, before) + content:
+    whole = encode(tok, before + text) if before else content
+    n = len(whole) - len(content)
+    if whole[n:] != content or tok.decode(whole[:n], clean_up_tokenization_spaces=False) != before:
         raise AlignmentError("tokens merge across the separator/reply boundary in the plain framing")
+    pre = doc_start_ids(tok) + whole[:n]
     return pre + content, len(pre), len(pre) + len(content)
 
 
