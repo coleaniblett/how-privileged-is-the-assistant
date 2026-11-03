@@ -1,0 +1,2 @@
+# The int8 generation logs are 4.9 million repeats of one bitsandbytes warning (hundreds of MB); the gzipped copies (*.log.gz) are tracked, the originals stay on disk
+*generation*.log

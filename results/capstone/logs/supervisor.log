@@ -1,0 +1,7 @@
+[2026-11-02 20:51:05 UTC] supervisor: starting the driver (attempt 1)
+[2026-11-02 20:51:39 UTC] supervisor: driver exited with code 137
+[2026-11-02 20:51:39 UTC] supervisor: restarting in 60s
+[2026-11-02 20:52:39 UTC] supervisor: starting the driver (attempt 2)
+[2026-11-02 22:28:11 UTC] supervisor: starting the driver (attempt 1)
+[2026-11-03 03:59:37 UTC] supervisor: driver exited with code 0
+[2026-11-03 03:59:37 UTC] supervisor: plan complete
