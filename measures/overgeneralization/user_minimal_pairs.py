@@ -9,7 +9,7 @@ Per text: pref(placement) = mean NLL(human endings) - mean NLL(assistant endings
 contrast(user) = pref(user) - pref(plain), control contrast(asst) = pref(asst) - pref(plain). Effect = stage minus base, paired
 per text, 95% bootstrap CI over texts. Leak if the contrast(user) effect is >= config.MIN_EFFECT_NATS with the CI excluding 0.
 
-    python -m measures.overgeneralization.user_minimal_pairs score --family olmo3-7b --model base   # GPU, one stage
+    python -m measures.overgeneralization.user_minimal_pairs score --family olmo3-7b --model base,sft,dpo,instruct   # GPU
     python -m measures.overgeneralization.user_minimal_pairs analyze --family olmo3-7b              # CPU
 """
 
@@ -36,7 +36,7 @@ ENDINGS = [("assistant", e) for e in ASSISTANT_ENDINGS] + [("human", e) for e in
 PLACEMENTS = [("user", "user"), ("plain", None), ("asst", "assistant")]
 SOURCE, KIND = "wildchat", "user"
 N_BOOT, SEED = 10000, 0
-BATCH_SIZE = 8
+BATCH_SIZE = 4  # fp32 7B: batch 8 ran out of memory on the longest sequences (46 GB L40S)
 
 
 def out_dir(family, run="capstone"):
@@ -72,22 +72,30 @@ def build_items(tok, texts):
     return items, dropped
 
 
-def score(family, stage, run="capstone", batch_size=BATCH_SIZE, limit=None):
+def score(family, stages, run="capstone", batch_size=BATCH_SIZE, limit=None):
+    """Score each stage in `stages` (rendering is done once for all of them; skips stages whose output exists)."""
     config.use_family(family)  # template and Qwen3 assistant-slot think block follow the family
     tok = load_tokenizer(config.TEMPLATE_MODEL)
     texts = load_texts()[:limit]
     items, dropped = build_items(tok, texts)
-    print(f"{family} {stage}: {len(texts) - len(dropped)} of {len(texts)} texts kept ({len(dropped)} dropped at the join), "
+    print(f"{family}: {len(texts) - len(dropped)} of {len(texts)} texts kept ({len(dropped)} dropped at the join), "
           f"{len(items)} sequences", flush=True)
-    model, device = load_model(config.MODELS[stage], torch.float32)
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
-    nll = spans_nll(model, device, [(ids, {key: span}) for key, ids, span in items], pad_id, batch_size)
-    rows = [dict(text_id=k[0], ending=k[1], style=ENDINGS[k[1]][0], placement=k[2], n_tokens=len(v), mean_nll=v.mean().item())
-            for k, v in nll.items()]
     os.makedirs(scores_dir(family, run), exist_ok=True)
-    path = os.path.join(scores_dir(family, run), f"{stage}.csv")
-    pd.DataFrame(rows).sort_values(["text_id", "ending", "placement"]).to_csv(path, index=False, float_format="%.6f")
-    print(f"wrote {path} ({len(rows)} rows)")
+    for stage in stages:
+        path = os.path.join(scores_dir(family, run), f"{stage}.csv")
+        if os.path.exists(path):
+            print(f"{path} exists, skipped", flush=True)
+            continue
+        model, device = load_model(config.MODELS[stage], torch.float32)
+        nll = spans_nll(model, device, [(ids, {key: span}) for key, ids, span in items], pad_id, batch_size)
+        rows = [dict(text_id=k[0], ending=k[1], style=ENDINGS[k[1]][0], placement=k[2], n_tokens=len(v), mean_nll=v.mean().item())
+                for k, v in nll.items()]
+        pd.DataFrame(rows).sort_values(["text_id", "ending", "placement"]).to_csv(path + ".tmp", index=False, float_format="%.6f")
+        os.replace(path + ".tmp", path)
+        print(f"wrote {path} ({len(rows)} rows)", flush=True)
+        del model
+        torch.cuda.empty_cache()
 
 
 def per_text(df):
@@ -167,13 +175,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("command", choices=["score", "analyze"])
     ap.add_argument("--family", required=True, choices=list(config.FAMILIES))
-    ap.add_argument("--model", help="stage (score)")
+    ap.add_argument("--model", help="stage, or comma-separated stages (score)")
     ap.add_argument("--run", default="capstone")
     ap.add_argument("--batch-size", type=int, default=BATCH_SIZE)
     ap.add_argument("--limit", type=int)
     args = ap.parse_args()
     if args.command == "score":
-        score(args.family, args.model, args.run, args.batch_size, args.limit)
+        score(args.family, args.model.split(","), args.run, args.batch_size, args.limit)
     else:
         analyze(args.family, args.run)
 
