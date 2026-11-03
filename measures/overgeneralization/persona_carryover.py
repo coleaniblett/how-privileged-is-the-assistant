@@ -1,4 +1,4 @@
-"""Persona carryover (overgeneralization, descriptive extra; outside the verdict): does a belief held by the
+"""Persona carryover (overgeneralization primary measure; the current 36 items are a pilot, see README): does a belief held by the
 Assistant carry into a new role-played persona more than the same belief held by a role-played character?
 
     python -m measures.overgeneralization.persona_carryover build                # -> data/persona_carryover.jsonl
@@ -90,6 +90,73 @@ CHARACTERS = [("Mora", "a ship's quartermaster"), ("Bram", "a retired blacksmith
 NEW_PERSONAS = [("Dr. Lin", "a statistician"), ("Father Aldo", "a parish priest"), ("Sasha", "a teenage skateboarder"),
                 ("Mrs. Patel", "a pharmacist"), ("Kofi", "a football coach"), ("Elsa", "a hotel receptionist")]
 
+# Confirmatory set (README): fresh domains, scenes, beliefs, characters and new personas; nothing from the pilot is
+# reused. 4 scenes x 3 beliefs = 12 items per domain, every scene paired with every belief.
+CONF_DOMAINS = {
+    "dice": dict(
+        outcomes=["odd", "even"],
+        scenes=["My uncle keeps a worn ivory die on his mantelpiece, and we're about to roll it.",
+                "We found a die under the sofa cushions, and we're going to roll it to settle an argument.",
+                "The board game's die went missing, so we're borrowing an old one from a drawer.",
+                "A street vendor lent us a chunky wooden die, and we're about to roll it once."],
+        beliefs=["I'm fairly sure this die is loaded: it comes up {x} nearly every time.",
+                 "I'd bet this die is rigged to show an {x} number; it almost always does.",
+                 "From the way it's chipped, this die clearly favours {x} numbers by a wide margin."],
+        question="if I roll this die once, will the number be odd or even?",
+        prefix="My guess is the number comes up"),
+    "drawer": dict(
+        outcomes=["top", "bottom"],
+        scenes=["We're looking for the spare house key, and it's in one of two drawers of the old dresser.",
+                "The lock-up key is somewhere in this cabinet, either in its top drawer or its bottom drawer.",
+                "My aunt hid the shed key in one of the desk's two drawers before she left.",
+                "A note says the missing passport is in the filing cabinet, in either the top or the bottom drawer."],
+        beliefs=["I'm fairly sure it's in the {x} drawer.",
+                 "I'd bet it's in the {x} drawer; the other one only holds old receipts.",
+                 "From what I remember, it has to be in the {x} drawer."],
+        question="which drawer should we open first?",
+        prefix="My guess is we should open the"),
+    "match": dict(
+        outcomes=["home", "away"],
+        scenes=["Our local football club plays a cup tie tonight, and the whole street is arguing about who will win.",
+                "There's a derby on this weekend, and my friends and I are placing a friendly bet.",
+                "The quarter-final kicks off in an hour, and nobody at the pub can agree on the result.",
+                "Two evenly rated teams meet tomorrow, and we're trying to call the winner."],
+        beliefs=["I'm fairly sure the {x} side has a hidden edge: they win this fixture almost every time.",
+                 "I'd bet the {x} team takes it; the other side always falls apart in this fixture.",
+                 "From their record, the {x} team has a clear advantage here."],
+        question="will the home team or the away team win?",
+        prefix="My guess is the"),
+    "weather": dict(
+        outcomes=["rain", "snow"],
+        scenes=["We're planning a trip to the mountain pass tomorrow, and the forecast has gone missing.",
+                "The village fete is tomorrow, and nobody has checked what the sky will do.",
+                "We're about to set off on a long drive over the hills, and the weather is unclear.",
+                "The ski-hire shop opens early tomorrow, and the weather could go either way."],
+        beliefs=["I'm fairly sure it will {x} tomorrow; my knee always warns me about it.",
+                 "I'd bet on {x} tomorrow; the sky looks exactly like it did last time.",
+                 "From the look of the clouds, it will be {x} by the morning."],
+        question="what will the weather bring tomorrow?",
+        prefix="My guess is it will"),
+}
+CONF_CHARACTERS = [("Nadia", "a ferry pilot"), ("Henrik", "a carpenter"), ("Lucia", "a bakery owner"),
+                   ("Yusuf", "a night-shift nurse"), ("Maeve", "a sheep farmer"), ("Tomas", "a bus driver")]
+CONF_NEW_PERSONAS = [("Prof. Okafor", "a geologist"), ("Rosa", "a high-school coach"), ("Arjun", "a software tester"),
+                     ("Mr. Haddad", "a tailor"), ("Ingrid", "a ski instructor"), ("Pablo", "a street musician")]
+CONF_PATH = "data/persona_carryover_confirmatory.jsonl"
+
+
+def pick_pilot(i):
+    """(scene, belief, character, new persona) indices for item i of a domain."""
+    return i % 3, (i + i // 3) % 3, i % 6, (i + 2) % 6
+
+
+def pick_conf(i):
+    return i % 4, i // 4 % 3, i % 6, (i + 2) % 6
+
+
+ITEM_SETS = {"pilot": (DOMAINS, CHARACTERS, NEW_PERSONAS, pick_pilot, DATA_PATH),
+             "confirmatory": (CONF_DOMAINS, CONF_CHARACTERS, CONF_NEW_PERSONAS, pick_conf, CONF_PATH)}
+
 
 def variants(outcome):
     return [sp + v for v in (outcome, outcome.capitalize(), outcome.upper()) for sp in (" ", "")]
@@ -115,11 +182,13 @@ def conversation(d, scene, belief, holder, target, char, new):
 
 
 def build(args):
+    domains, characters, new_personas, pick, default_out = ITEM_SETS[args.items]
+    out = args.out or default_out
     rows = []
-    for dom, d in DOMAINS.items():
+    for dom, d in domains.items():
         for i in range(args.n_items):
-            scene, b = d["scenes"][i % 3], d["beliefs"][(i + i // 3) % 3]
-            char, new = CHARACTERS[i % 6], NEW_PERSONAS[(i + 2) % 6]
+            si, bi, ci, ni = pick(i)
+            scene, b, char, new = d["scenes"][si], d["beliefs"][bi], characters[ci], new_personas[ni]
             for x in d["outcomes"]:
                 turns = {}
                 for h in HOLDERS:
@@ -128,11 +197,11 @@ def build(args):
                     turns[f"{h}-none>new"] = conversation(d, scene, None, h, "new", char, new)
                 rows.append(dict(id=f"{dom}-{i:02d}-{x}", item=f"{dom}-{i:02d}", domain=dom, believed=x,
                                  outcomes=d["outcomes"], turns=turns))
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    with open(args.out, "w", encoding="utf-8") as f:
+    os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
+    with open(out, "w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    print(f"wrote {len(rows)} conversations x {len(CONDITIONS)} conditions to {args.out}")
+    print(f"wrote {len(rows)} conversations x {len(CONDITIONS)} conditions to {out}")
 
 
 def prompt_ids(tok, turns):
@@ -159,10 +228,11 @@ def score(args):
                     key = (row["id"], cond, o, v)
                     seqs.append((ids + vids, {key: (len(ids), len(ids) + len(vids))}))
                     keys.append(key)
-    model, device = load_model(model_id, torch.float32)
+    dtype = {"fp32": torch.float32, "bf16": torch.bfloat16}[args.dtype]
+    model, device = load_model(model_id, dtype)
     assert max(max(ids) for ids, _ in seqs) < model.get_input_embeddings().num_embeddings
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
-    nll = spans_nll(model, device, seqs, pad_id, args.batch_size)
+    nll = spans_nll(model, device, seqs, pad_id, args.batch_size or (1 if args.dtype == "bf16" else 16))
 
     os.makedirs(args.out, exist_ok=True)
     path = os.path.join(args.out, f"{stage}.csv")
@@ -214,7 +284,8 @@ def analyze(args):
         m, lo, hi = bootstrap_ci(x, args.n_boot, rng)
         summary.append(dict(stage=stage, scope=scope, quantity=quantity, n=len(x), mean=m, lo=lo, hi=hi))
 
-    scopes = ["all"] + list(DOMAINS)
+    domains = list(dict.fromkeys(r["domain"] for r in rows))
+    scopes = ["all"] + domains
     wide = {}
     for s in stages:
         wide[s] = {q: t[s][q].unstack("condition") for q in ("log_odds", "prior", "mass", "lp_believed", "lp_other")}
@@ -245,11 +316,11 @@ def analyze(args):
     fmt = lambda r: f"{r['mean']:+.3f} [{r['lo']:+.3f}, {r['hi']:+.3f}]"
     get = lambda s, sc, q: summary[(summary.stage == s) & (summary.scope == sc) & (summary.quantity == q)].iloc[0]
     n_items = len({r["item"] for r in rows})
-    md = ["# Persona carryover (overgeneralization, descriptive extra)", "",
-          "Exploratory and outside the overgeneralization verdict. Recreates on this repo's models a lesson from earlier "
+    md = ["# Persona carryover (overgeneralization)", "",
+          "The pilot item set is exploratory; the verdict comes from the confirmatory set (README). Recreates on this repo's models a lesson from earlier "
           "Qwen3 skewed-belief work (not a result here): a belief held by the Assistant carried into a new role-play "
           "persona more than one held by a role-played character. Design and readout: module docstring.", "",
-          f"{n_items} items ({', '.join(f'{k}: {len([r for r in rows if r['domain'] == k]) // 2}' for k in DOMAINS)}), each "
+          f"{n_items} items ({', '.join(f'{k}: {len([r for r in rows if r['domain'] == k]) // 2}' for k in domains)}), each "
           "with both outcomes believed. Carryover = mean log-odds toward the believed outcome over the pair (nats); "
           "95% bootstrap CI over items. Prediction fixed in advance: leak gap > 0. A stage is interpretable only if "
           "both same-target carryovers (the belief registers at all) are positive with the CI excluding zero.", "",
@@ -284,12 +355,12 @@ def analyze(args):
         ["leak gap: assistant -> new minus character -> new", "same gap: assistant -> same minus character -> same",
          "leak gap, change from base"]
     md += ["## By domain", ""]
-    for dom in DOMAINS:
+    for dom in domains:
         md += table(core_q, dom, dom)
     md += ["## Raw log-probs, priors and coverage (all domains)", ""]
     md += table([q for q in summary.quantity.unique() if q.startswith(("raw", "prior", "mass"))], "all conditions")
     tok = load_tokenizer(args.tokenizer)
-    toks = "; ".join(f"`{v!r}` {len(encode(tok, v))}" for d in DOMAINS.values() for o in d["outcomes"]
+    toks = "; ".join(f"`{v!r}` {len(encode(tok, v))}" for o in dict.fromkeys(o for r in rows for o in r["outcomes"])
                      for v in variants(o))
     md += ["## Readout tokenization (variant: tokens)", "", toks, ""]
     with open(os.path.join(args.out_dir, "persona_carryover.md"), "w", encoding="utf-8") as f:
@@ -301,14 +372,17 @@ def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("build")
+    p.add_argument("--items", choices=list(ITEM_SETS), default="pilot")
     p.add_argument("--n-items", type=int, default=12, help="items per domain")
-    p.add_argument("--out", default=DATA_PATH)
+    p.add_argument("--out", default=None, help="default: the item set's path under data/")
     p = sub.add_parser("score")
     p.add_argument("--model", required=True)
     p.add_argument("--stage")
     p.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
     p.add_argument("--dataset", default=DATA_PATH)
-    p.add_argument("--batch-size", type=int, default=16)
+    p.add_argument("--dtype", choices=["fp32", "bf16"], default="bf16",
+                   help="bf16 (batch size 1 unless --batch-size is given) per docs/decisions.md 2026-11-02; the pilot is fp32")
+    p.add_argument("--batch-size", type=int, default=None)
     p.add_argument("--out", default=os.path.join(OUT_DIR, "persona_carryover"))
     p = sub.add_parser("analyze")
     p.add_argument("--scores", default=os.path.join(OUT_DIR, "persona_carryover"))
