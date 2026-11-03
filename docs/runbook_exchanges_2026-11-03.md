@@ -1,84 +1,108 @@
-# Runbook: exchange scoring (vestigial regression + logit distortion), 2026-11-03
+# Runbook: tonight's main run (exchange design), 2026-11-03
 
-**Not launched.** Cole launches it after the separate decision on turns (the reply's context, below). Everything is built
-and tested; what it does and why: `docs/exchanges.md`; decisions: `docs/decisions.md` (2026-11-03). Branch
-`capstone-scoring-2026-11-03`. Run from the repo root of a checkout of that branch (or of `main` once it is merged).
+**Not launched.** Design (confirmed by Cole and Grace): the exchange context only. Per checkpoint the user turn is scored as the
+conversation's opener and each reply after its own user turn, each tagged and plain, on oasst1, UltraChat and WildChat: 12
+conditions per checkpoint, 96 in all (`docs/exchanges.md`, `docs/decisions.md` 2026-11-03). In the same pass each checkpoint
+generates on the judge arm's incomplete-turn prefills, so it is downloaded once. The reply-alone context is not part of the run;
+`scripts/run_exchanges.sh` refuses any other context.
 
-## Before launching
+## Where to launch from
 
-1. **Decide the reply's context.** `exchange` (default: the reply after its own user turn) or `single` (the reply alone,
-   as overnight). Pass it as `CONTEXT=...`; each context writes its own tag (`exchanges_exchange`, `exchanges_single`), so
-   both can be run and neither overwrites the other or the overnight outputs. A different design is one more entry in
-   `core.exchanges.CONTEXTS` (`docs/exchanges.md`, "Switching the reply's context"), then `CONTEXT=<name>`.
-2. **GPU free?** `nvidia-smi --query-compute-apps=pid,name --format=csv,noheader` must print nothing (other sessions use this GPU).
-3. **Disk.** `df -h / | tail -1`. See the per-family figures below. `run_exchanges.sh` checks free disk before each
-   download (`core.hf_cache check`) and stops if a checkpoint does not fit.
-4. **Preflight (no weights, seconds):** `uv run python -m core.score_exchanges --family <family> --prepare-only` must report
-   0 excluded (`run_exchanges.sh` runs it first anyway).
+**From the worktree `/root/hpa-capstone-scoring` (branch `capstone-scoring-2026-11-03`), or from `main` after the PR is merged.**
+Never from `/root/how-privileged-is-the-assistant`: that checkout is on a stale local `main` (`5b3dd8c`, 30+ commits behind
+`origin/main`) and has none of this code. Run inside `tmux` so the run survives a closed laptop.
 
-## Launch order and commands
+## Preconditions (check before each family)
 
-OLMo, then Qwen, then Gemma. Run each under `tmux` so it survives the session; logs go to `logs/` (`mkdir -p logs`).
+1. **GPU free:** `nvidia-smi --query-compute-apps=pid,name --format=csv,noheader` prints nothing. Other sessions use this GPU.
+2. **Disk:** `df -h / | tail -1`. The launcher checks free disk before every download (`core.hf_cache check`: weights + 5 GB)
+   and stops if a checkpoint does not fit. **About 65 GB free before each Gemma checkpoint** (62.5 GB weights + margin).
+3. **Never delete teammates' files.** In particular, **leave Grace's Gemma copy in `/dev/shm/grace-gemma-hub/` alone** (59 GB, Gemma 4
+   31B base weights): use it only read-only, only with her OK, and never remove it. When `HF_HUB_CACHE` points anywhere but the
+   default cache, the launcher forces `CLEAR_CACHE=0`, so it cannot delete from such a cache. Only remove what this run downloaded.
+4. **CPU and RAM:** the container is limited to 13.6 CPUs (`nproc` says 128) and 188 GB of RAM, of which `/dev/shm` contents count
+   (63 GB now). The launcher caps torch at 8 threads; ask other sessions to cap theirs (`OMP_NUM_THREADS=8`) during the run.
+   Gemma's fp32 offload needs about 93 GB of RAM.
+
+## Commands, in order: OLMo, Qwen3-8B, Gemma 4 31B
 
 ```bash
-mkdir -p logs
-# 1. OLMo 3 7B: base, SFT, DPO, Instruct (none cached; each removed after use with CLEAR_CACHE=1)
-OMP_NUM_THREADS=8 CLEAR_CACHE=1 FAMILY=olmo3-7b CONTEXT=exchange bash scripts/run_exchanges.sh 2>&1 | tee logs/exchanges_olmo3-7b.log
-# 2. Qwen3-8B: base, IT (think block ON, the primary rendering)
-OMP_NUM_THREADS=8 FAMILY=qwen3-8b CONTEXT=exchange bash scripts/run_exchanges.sh 2>&1 | tee logs/exchanges_qwen3-8b.log
-# 3. Gemma 4 31B: base, IT, first 100 exchanges per corpus (config), fp32 with CPU offload
-uv run python -m core.hf_cache free Qwen/Qwen3-8B ; uv run python -m core.hf_cache free Qwen/Qwen3-8B-Base   # room for 62.5 GB
-OMP_NUM_THREADS=8 CLEAR_CACHE=1 FAMILY=gemma4-31b CONTEXT=exchange bash scripts/run_exchanges.sh 2>&1 | tee logs/exchanges_gemma4-31b.log
+tmux new -s main-run                     # or attach to an existing session
+cd /root/hpa-capstone-scoring && mkdir -p logs && set -o pipefail
+# optional, saves about 1 h: reuse Grace's validated incomplete-turn generations for OLMo and Qwen (copy, never move; same
+# command and prefills as below, 600 samples each, driver integrity checks passed). The launcher then skips their generation.
+#   for f in olmo3-7b qwen3-8b; do mkdir -p results/capstone/$f/core/generations_incomplete; \
+#     cp -n /root/how-privileged-is-the-assistant-grace/results/capstone/$f/core/generations_incomplete/*.jsonl results/capstone/$f/core/generations_incomplete/; done
+
+# 1. OLMo 3 7B: base, SFT, DPO, Instruct (none cached; each removed after use)
+CLEAR_CACHE=1 FAMILY=olmo3-7b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_olmo3-7b.log && \
+# 2. Qwen3-8B: base, IT (IT is already cached and is kept; base is removed after use)
+CLEAR_CACHE=1 FAMILY=qwen3-8b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_qwen3-8b.log && \
+uv run python -m core.hf_cache free Qwen/Qwen3-8B      # 16 GB, downloaded by this session for the smoke run
 ```
 
-For Gemma on a root disk without 67.5 GB free, use a RAM-backed cache as Grace's `scripts/collect_gemma_shm.sh` does
-(on her branch): `HF_HUB_CACHE=/dev/shm/<dir>/hub` before the command (it is passed through), after checking `/dev/shm`
-free space and container memory (about 62.5 GB of weights in shm plus about 93 GB of fp32 offload in RAM).
+**3. Gemma 4 31B (base, IT): needs a decision on disk first (see "Disk" below).** With room for one checkpoint at a time on `/`:
 
-Per checkpoint the script skips a stage whose `scores.csv` exists, so rerunning the same command resumes after a failure.
-At the end it runs `--check-stages`: every stage of the family must share one inputs fingerprint.
+```bash
+CLEAR_CACHE=1 FAMILY=gemma4-31b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_gemma4-31b.log
+```
 
-## Time and disk per family
+Alternative for the base only, **if Grace agrees**: score and generate from her `/dev/shm` copy, offline so nothing is written to her
+cache (the launcher forces `CLEAR_CACHE=0` there):
 
-Counted from the committed `data/exchanges.jsonl` with each family's tokenizer (`--prepare-only` logic; reuse as the scorer
-applies it). Times are **estimates**: the overnight run's measured scoring time on a similar number of input tokens
-(`results/capstone/logs/summary.json`), plus downloads, which were not timed. The GPU smoke (Qwen3-8B IT, 22 fresh sequences in
-4.3 s, 7 s to load from cache) is consistent with them.
+```bash
+HF_HUB_OFFLINE=1 HF_HUB_CACHE=/dev/shm/grace-gemma-hub/hub STAGES=base FAMILY=gemma4-31b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_gemma4-31b.log
+CLEAR_CACHE=1 STAGES=instruct FAMILY=gemma4-31b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_gemma4-31b.log   # IT from / (65 GB free)
+```
 
-| family | exchanges | sequences / checkpoint | fresh (exchange ctx) | fresh input tokens | scoring per checkpoint (est.) | whole family (est.) | disk |
-|---|---|---:|---:|---:|---|---|---|
-| OLMo 3 7B (4 ckpts) | 900 | 3600 | 2166 (1434 reused user turns) | 553k | about 8 min (overnight: 451 s for about 560k tokens) + about 1 min load | **about 1 h** with four 15 GB downloads | one checkpoint at a time with `CLEAR_CACHE=1`: about 15 GB + 5 GB margin |
-| Qwen3-8B (2) | 900 | 3600 | 2166 | 528k | about 9 min (overnight: 537 s) | **about 30 min** with the base download | 16.4 GB each; IT is cached now (downloaded for the smoke run), base needs 16.4 GB + 5 GB margin |
-| Gemma 4 31B (2) | 300 (first 100 per corpus) | 1200 | 714 | 179k | about 35-50 min with CPU offload (overnight: 2928 s for 1200 sequences, 190k tokens) | **about 1.5-2 h** plus two 62.5 GB downloads | 67.5 GB free for one checkpoint (or the RAM-backed cache), about 95 GB of RAM |
+Every task is skipped if its output exists, so rerunning a command resumes after a failure (an interrupted generation leaves only
+a `.tmp_<stage>` directory, which the next attempt replaces). Each family ends with `--check-stages`: every stage must share one
+inputs fingerprint.
 
-With `CONTEXT=single` the fresh share is about half (OLMo/Qwen 1082 sequences, 230k tokens; Gemma 348), since untruncated replies
-reuse `asst@asst` / `asst@plain` too. Outputs are small: about 5-15 MB per checkpoint (`tokens.parquet` holds about 0.3M scored
-tokens for OLMo/Qwen).
+## What each checkpoint does
 
-**Disk now:** 22 GB free on `/` when this was written; Qwen3-8B base fits only just (21.4 GB needed). `~/.cache/huggingface/datasets` is
-9.4 GB of Dolci arrow files that only `core.exchanges build` / `prepare_data` need; removing it is the quickest way to make room (it is
-rebuilt on the next build). Gemma does not fit on `/` without freeing about 45 GB: use the RAM-backed cache.
+1. `core.score_exchanges --context exchange --tag exchanges_exchange`: 3600 sequences (Gemma: 1200; first 100 exchanges per corpus),
+   fp32 -> `results/capstone/<family>/<stage>/core/exchanges_exchange/{scores.csv,tokens.parquet,manifest.json}`. User turns already
+   scored overnight are reused after their token ids are verified identical (OLMo/Qwen: 1434 sequences reused, 2166 scored).
+2. `core.generate --prefill data/prefill_incomplete_200.jsonl --save-ids` (200 prefills x 3 samples x 120 tokens, T=0.7; bf16, Gemma
+   int8) -> `results/capstone/<family>/core/generations_incomplete/<stage>.jsonl`, checked for 600 samples before it is moved in.
 
-**CPU quota:** the container is limited to 13.6 CPUs (`/sys/fs/cgroup/cpu/cpu.cfs_quota_us`), although `nproc` says 128. Torch jobs that
-start 128 threads starve everything else; Gemma's CPU offload is the most exposed. Launch with `OMP_NUM_THREADS=8` and ask other
-sessions to cap theirs (`OMP_NUM_THREADS`, `torch.set_num_threads`) while the run is going.
+## Time and disk per family (estimates)
+
+Scoring times scale the overnight run's measured scoring time to the exchange set's token counts (`results/capstone/logs/summary.json`);
+generation times are measured on the same prefills (Grace's collection run for OLMo and Qwen) or scaled from the overnight Gemma
+generation (2,700 s per 300 samples). Downloads were not timed.
+
+| family | scoring per checkpoint | generation per checkpoint | whole family | disk |
+|---|---|---|---|---|
+| OLMo 3 7B (4) | about 9 min | about 9 min (measured 516–526 s) | **about 1.5 h** (about 40 min with Grace's generations) + 4 downloads | about 15 GB per checkpoint, removed after use |
+| Qwen3-8B (2) | about 10 min | about 12–14 min (measured 707–847 s) | **about 50 min** (about 25 min with Grace's generations) + base download | base 16.4 GB (+5 margin), IT cached |
+| Gemma 4 31B (2) | about 35–50 min (CPU offload) | about 90 min (int8) | **about 4.5–5 h** + two 62.5 GB downloads | 62.5 GB per checkpoint (+5 margin) |
+
+Whole run: about 7–8 h, of which Gemma is most. Outputs are small (under 15 MB of scores per checkpoint, about 0.5 MB per generation file).
+
+## Disk (21:20 UTC)
+
+- `/`: **22 GB free.** OLMo (15 + 5 GB) and Qwen base (16.4 + 5 GB) each fit, barely, one at a time. After Qwen, freeing Qwen3-8B
+  IT gives about 38 GB.
+- **Gemma does not fit yet:** each checkpoint needs about 65 GB. What is on `/` that is not this run's: `~/.cache/huggingface/datasets`
+  (9.4 GB of Dolci arrow files, only needed to rebuild data sets; regenerable), HF cache `Qwen3-8B-FP8` (9 GB) and `Olmo-3-7B-Think`
+  (14 GB) and `/root/assistant-dynamics` (83 GB): **other people's; ask their owners before removing anything.**
+- `/dev/shm`: 30 GB free (88 GB, Grace's 59 GB Gemma base copy in it). Gemma IT cannot also go there: RAM is capped at 188 GB and
+  shm counts against it (63 + 62.5 GB plus about 93 GB of offload is too much).
 
 ## After the run
 
-- Outputs: `results/capstone/<family>/<stage>/core/exchanges_<context>/{scores.csv,tokens.parquet,manifest.json}`.
-- `uv run python -m core.score_exchanges --family <family> --tag exchanges_<context> --check-stages`.
-- Each `manifest.json` records how many sequences were reused from the overnight run and why the rest were scored fresh.
-- Commit the outputs (small: under 15 MB per checkpoint) with a STATUS.md update.
+- Outputs: `results/capstone/<family>/<stage>/core/exchanges_exchange/` and `results/capstone/<family>/core/generations_incomplete/`.
+- Analysis (CPU): `uv run python -m measures.vestigial_regression.analyze_exchanges` (frame costs, changes from base, asymmetry).
+  Flags: `uv run python -m measures.vestigial_regression.flags --family F --generations results/capstone/F/core/generations_incomplete
+  --out results/capstone/F/vestigial_regression/generations_incomplete`. The judge needs `ANTHROPIC_API_KEY` and the teammate-labelled sheet.
+- Commit the outputs with a STATUS.md update.
 
-## Verified before handing over
+## Tests
 
-- `uv run pytest`: all exchange tests pass (`tests/test_exchanges.py`: every rendering in every family and context, the tagged/plain
-  token-identity check, truncation, builder filters with fake Dolci hits on each turn, reuse checks, a CPU smoke run on SmolLM2-135M);
-  the OLMo rendering hash is unchanged. See STATUS.md for the full-suite result.
-- `--prepare-only` for all three families and both contexts: 0 exclusions.
-- GPU smoke, Qwen3-8B IT, 10 exchanges (4 oasst1, 4 UltraChat, 2 WildChat), both contexts: 40 rows each, 4 truncated replies,
-  18 / 34 sequences reused (exchange / single), labels as specified.
-- Reuse validated on Qwen3-8B IT (10 WildChat exchanges, `single` context, 40 sequences): reused overnight scores and fresh fp32
-  scores agree to 7e-6 nats per text and 3e-4 per token.
-- Not run: any OLMo or Gemma checkpoint on GPU (not cached; their paths share every line of code with Qwen's except the
-  family profile, which the unit tests check with their tokenizers); Qwen3-8B base (not cached).
+`uv run pytest` passes with a GPU visible (`tests/conftest.py` hides it from the CPU-only suite; `TESTS_ALLOW_GPU=1` opts out).
+Verified before handing over: `tests/test_exchanges.py` (every rendering in every family, the tagged/plain token-identity check,
+truncation, builder filters, reuse, a CPU smoke run, the launcher refusing other contexts); `--prepare-only` for all three families,
+0 exclusions; GPU smoke on Qwen3-8B IT (10 exchanges); reused vs fresh scores agree to 7e-6 nats. Not run on GPU: any OLMo or Gemma
+checkpoint, Qwen3-8B base.
