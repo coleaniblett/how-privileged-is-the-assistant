@@ -1,0 +1,572 @@
+stage,group,role,q,coord
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,"So, tell me about your day so far.",0.2657262980937958
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What's the best thing you ate this week?,0.9738469123840332
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,How did you end up doing what you do?,0.45821547508239746
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What do you do when you can't sleep?,0.6059491634368896
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What's something that's been bothering you lately?,0.31217536330223083
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,Can you give me some advice about starting a new job?,0.7770571708679199
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What would you do with a free weekend?,0.5936356782913208
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,Describe the place where you grew up.,0.929340660572052
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What do you think of people who are always late?,0.5568240284919739
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,Any recommendations for a good book or film?,0.728607177734375
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,Do you have any pets?,0.8329718708992004
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,How are you feeling today?,0.8797433376312256
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What's your favourite way to spend a rainy afternoon?,0.5096624493598938
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,How would you describe yourself in two sentences?,0.7190396785736084
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What is something you're proud of?,0.7305841445922852
+Qwen3-8B-Base,helpful,a helpful human hotel front-desk clerk,What do you want for dinner tonight?,0.3021223545074463
+Qwen3-8B-Base,helpful,a helpful human librarian,"So, tell me about your day so far.",0.5515223145484924
+Qwen3-8B-Base,helpful,a helpful human librarian,What's the best thing you ate this week?,0.2878808379173279
+Qwen3-8B-Base,helpful,a helpful human librarian,How did you end up doing what you do?,0.5480663180351257
+Qwen3-8B-Base,helpful,a helpful human librarian,What do you do when you can't sleep?,0.5125733613967896
+Qwen3-8B-Base,helpful,a helpful human librarian,What's something that's been bothering you lately?,1.204571008682251
+Qwen3-8B-Base,helpful,a helpful human librarian,Can you give me some advice about starting a new job?,0.8339852690696716
+Qwen3-8B-Base,helpful,a helpful human librarian,What would you do with a free weekend?,0.6079275608062744
+Qwen3-8B-Base,helpful,a helpful human librarian,Describe the place where you grew up.,0.31833726167678833
+Qwen3-8B-Base,helpful,a helpful human librarian,What do you think of people who are always late?,0.6736057996749878
+Qwen3-8B-Base,helpful,a helpful human librarian,Any recommendations for a good book or film?,0.7307358384132385
+Qwen3-8B-Base,helpful,a helpful human librarian,Do you have any pets?,1.0546196699142456
+Qwen3-8B-Base,helpful,a helpful human librarian,How are you feeling today?,0.6103687882423401
+Qwen3-8B-Base,helpful,a helpful human librarian,What's your favourite way to spend a rainy afternoon?,0.4351925253868103
+Qwen3-8B-Base,helpful,a helpful human librarian,How would you describe yourself in two sentences?,0.6517263650894165
+Qwen3-8B-Base,helpful,a helpful human librarian,What is something you're proud of?,1.1836999654769897
+Qwen3-8B-Base,helpful,a helpful human librarian,What do you want for dinner tonight?,1.0499489307403564
+Qwen3-8B-Base,helpful,a kind human nurse,"So, tell me about your day so far.",0.4421238899230957
+Qwen3-8B-Base,helpful,a kind human nurse,What's the best thing you ate this week?,0.4808332622051239
+Qwen3-8B-Base,helpful,a kind human nurse,How did you end up doing what you do?,0.5225152373313904
+Qwen3-8B-Base,helpful,a kind human nurse,What do you do when you can't sleep?,0.7356832027435303
+Qwen3-8B-Base,helpful,a kind human nurse,What's something that's been bothering you lately?,0.3310216963291168
+Qwen3-8B-Base,helpful,a kind human nurse,Can you give me some advice about starting a new job?,0.7286548018455505
+Qwen3-8B-Base,helpful,a kind human nurse,What would you do with a free weekend?,0.770086407661438
+Qwen3-8B-Base,helpful,a kind human nurse,Describe the place where you grew up.,0.12543624639511108
+Qwen3-8B-Base,helpful,a kind human nurse,What do you think of people who are always late?,0.7767542004585266
+Qwen3-8B-Base,helpful,a kind human nurse,Any recommendations for a good book or film?,0.6077681183815002
+Qwen3-8B-Base,helpful,a kind human nurse,Do you have any pets?,1.1054246425628662
+Qwen3-8B-Base,helpful,a kind human nurse,How are you feeling today?,0.7437960505485535
+Qwen3-8B-Base,helpful,a kind human nurse,What's your favourite way to spend a rainy afternoon?,0.31853652000427246
+Qwen3-8B-Base,helpful,a kind human nurse,How would you describe yourself in two sentences?,0.8707342743873596
+Qwen3-8B-Base,helpful,a kind human nurse,What is something you're proud of?,0.7279612421989441
+Qwen3-8B-Base,helpful,a kind human nurse,What do you want for dinner tonight?,0.7298312783241272
+Qwen3-8B-Base,helpful,a patient human high-school teacher,"So, tell me about your day so far.",0.24033638834953308
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What's the best thing you ate this week?,0.42552122473716736
+Qwen3-8B-Base,helpful,a patient human high-school teacher,How did you end up doing what you do?,0.37657350301742554
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What do you do when you can't sleep?,0.5869992971420288
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What's something that's been bothering you lately?,0.04993917793035507
+Qwen3-8B-Base,helpful,a patient human high-school teacher,Can you give me some advice about starting a new job?,0.6603046655654907
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What would you do with a free weekend?,0.3838963508605957
+Qwen3-8B-Base,helpful,a patient human high-school teacher,Describe the place where you grew up.,0.14939971268177032
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What do you think of people who are always late?,0.5926439166069031
+Qwen3-8B-Base,helpful,a patient human high-school teacher,Any recommendations for a good book or film?,0.3720642328262329
+Qwen3-8B-Base,helpful,a patient human high-school teacher,Do you have any pets?,0.2951183319091797
+Qwen3-8B-Base,helpful,a patient human high-school teacher,How are you feeling today?,1.0829006433486938
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What's your favourite way to spend a rainy afternoon?,0.37935855984687805
+Qwen3-8B-Base,helpful,a patient human high-school teacher,How would you describe yourself in two sentences?,0.6908130645751953
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What is something you're proud of?,0.5058344006538391
+Qwen3-8B-Base,helpful,a patient human high-school teacher,What do you want for dinner tonight?,0.13841092586517334
+Qwen3-8B-Base,helpful,a friendly human pharmacist,"So, tell me about your day so far.",0.43884390592575073
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What's the best thing you ate this week?,0.9054826498031616
+Qwen3-8B-Base,helpful,a friendly human pharmacist,How did you end up doing what you do?,0.8161874413490295
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What do you do when you can't sleep?,0.6153671741485596
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What's something that's been bothering you lately?,0.3620522618293762
+Qwen3-8B-Base,helpful,a friendly human pharmacist,Can you give me some advice about starting a new job?,0.894473671913147
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What would you do with a free weekend?,0.6475030779838562
+Qwen3-8B-Base,helpful,a friendly human pharmacist,Describe the place where you grew up.,0.15158458054065704
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What do you think of people who are always late?,0.6493764519691467
+Qwen3-8B-Base,helpful,a friendly human pharmacist,Any recommendations for a good book or film?,0.4504114091396332
+Qwen3-8B-Base,helpful,a friendly human pharmacist,Do you have any pets?,0.5104308128356934
+Qwen3-8B-Base,helpful,a friendly human pharmacist,How are you feeling today?,0.7205730080604553
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What's your favourite way to spend a rainy afternoon?,0.4672086238861084
+Qwen3-8B-Base,helpful,a friendly human pharmacist,How would you describe yourself in two sentences?,0.6028403043746948
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What is something you're proud of?,0.8134154677391052
+Qwen3-8B-Base,helpful,a friendly human pharmacist,What do you want for dinner tonight?,0.31034237146377563
+Qwen3-8B-Base,helpful,a supportive human math tutor,"So, tell me about your day so far.",0.525460958480835
+Qwen3-8B-Base,helpful,a supportive human math tutor,What's the best thing you ate this week?,0.6820141673088074
+Qwen3-8B-Base,helpful,a supportive human math tutor,How did you end up doing what you do?,0.7858582735061646
+Qwen3-8B-Base,helpful,a supportive human math tutor,What do you do when you can't sleep?,0.45725178718566895
+Qwen3-8B-Base,helpful,a supportive human math tutor,What's something that's been bothering you lately?,0.8427827954292297
+Qwen3-8B-Base,helpful,a supportive human math tutor,Can you give me some advice about starting a new job?,0.7681885361671448
+Qwen3-8B-Base,helpful,a supportive human math tutor,What would you do with a free weekend?,0.44484519958496094
+Qwen3-8B-Base,helpful,a supportive human math tutor,Describe the place where you grew up.,0.2388632744550705
+Qwen3-8B-Base,helpful,a supportive human math tutor,What do you think of people who are always late?,0.4722895622253418
+Qwen3-8B-Base,helpful,a supportive human math tutor,Any recommendations for a good book or film?,0.8575645685195923
+Qwen3-8B-Base,helpful,a supportive human math tutor,Do you have any pets?,0.9206967353820801
+Qwen3-8B-Base,helpful,a supportive human math tutor,How are you feeling today?,0.8667070269584656
+Qwen3-8B-Base,helpful,a supportive human math tutor,What's your favourite way to spend a rainy afternoon?,0.6831861734390259
+Qwen3-8B-Base,helpful,a supportive human math tutor,How would you describe yourself in two sentences?,0.9077385663986206
+Qwen3-8B-Base,helpful,a supportive human math tutor,What is something you're proud of?,0.8677680492401123
+Qwen3-8B-Base,helpful,a supportive human math tutor,What do you want for dinner tonight?,0.6983568072319031
+Qwen3-8B-Base,helpful,a courteous human bank teller,"So, tell me about your day so far.",0.350041002035141
+Qwen3-8B-Base,helpful,a courteous human bank teller,What's the best thing you ate this week?,0.939708411693573
+Qwen3-8B-Base,helpful,a courteous human bank teller,How did you end up doing what you do?,0.3380903899669647
+Qwen3-8B-Base,helpful,a courteous human bank teller,What do you do when you can't sleep?,0.5678143501281738
+Qwen3-8B-Base,helpful,a courteous human bank teller,What's something that's been bothering you lately?,0.5113144516944885
+Qwen3-8B-Base,helpful,a courteous human bank teller,Can you give me some advice about starting a new job?,0.6757169365882874
+Qwen3-8B-Base,helpful,a courteous human bank teller,What would you do with a free weekend?,0.6345635652542114
+Qwen3-8B-Base,helpful,a courteous human bank teller,Describe the place where you grew up.,0.5546295642852783
+Qwen3-8B-Base,helpful,a courteous human bank teller,What do you think of people who are always late?,0.31749066710472107
+Qwen3-8B-Base,helpful,a courteous human bank teller,Any recommendations for a good book or film?,0.562721312046051
+Qwen3-8B-Base,helpful,a courteous human bank teller,Do you have any pets?,1.1222158670425415
+Qwen3-8B-Base,helpful,a courteous human bank teller,How are you feeling today?,0.7535567879676819
+Qwen3-8B-Base,helpful,a courteous human bank teller,What's your favourite way to spend a rainy afternoon?,0.8096922039985657
+Qwen3-8B-Base,helpful,a courteous human bank teller,How would you describe yourself in two sentences?,0.7640997171401978
+Qwen3-8B-Base,helpful,a courteous human bank teller,What is something you're proud of?,0.8832260966300964
+Qwen3-8B-Base,helpful,a courteous human bank teller,What do you want for dinner tonight?,0.3978120982646942
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What's the best thing you ate this week?,-0.14322640001773834
+Qwen3-8B-Base,helpful,a cheerful human tour guide,How did you end up doing what you do?,0.21658238768577576
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What do you do when you can't sleep?,0.3347286283969879
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What's something that's been bothering you lately?,0.03385256230831146
+Qwen3-8B-Base,helpful,a cheerful human tour guide,Can you give me some advice about starting a new job?,0.7505631446838379
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What would you do with a free weekend?,0.5489427447319031
+Qwen3-8B-Base,helpful,a cheerful human tour guide,Describe the place where you grew up.,0.12015902996063232
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What do you think of people who are always late?,0.2858053743839264
+Qwen3-8B-Base,helpful,a cheerful human tour guide,Any recommendations for a good book or film?,0.15049034357070923
+Qwen3-8B-Base,helpful,a cheerful human tour guide,Do you have any pets?,0.8479688763618469
+Qwen3-8B-Base,helpful,a cheerful human tour guide,How are you feeling today?,0.6573511958122253
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What's your favourite way to spend a rainy afternoon?,0.6391367316246033
+Qwen3-8B-Base,helpful,a cheerful human tour guide,How would you describe yourself in two sentences?,0.7821407914161682
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What is something you're proud of?,0.7391772866249084
+Qwen3-8B-Base,helpful,a cheerful human tour guide,What do you want for dinner tonight?,0.5704050064086914
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,"So, tell me about your day so far.",0.31946730613708496
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What's the best thing you ate this week?,0.6567326784133911
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,How did you end up doing what you do?,0.44196435809135437
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What do you do when you can't sleep?,0.5990579724311829
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What's something that's been bothering you lately?,0.44536659121513367
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,Can you give me some advice about starting a new job?,0.7886428833007812
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What would you do with a free weekend?,0.7310699224472046
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,Describe the place where you grew up.,1.0414791107177734
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What do you think of people who are always late?,0.5173965096473694
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,Any recommendations for a good book or film?,0.5481127500534058
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,Do you have any pets?,0.5516645312309265
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,How are you feeling today?,0.660849928855896
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What's your favourite way to spend a rainy afternoon?,0.3547030985355377
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,How would you describe yourself in two sentences?,0.733859121799469
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What is something you're proud of?,0.6769871711730957
+Qwen3-8B-Base,helpful,an attentive human receptionist at a dental clinic,What do you want for dinner tonight?,0.8638575673103333
+Qwen3-8B-Base,helpful,a caring human social worker,"So, tell me about your day so far.",0.24599862098693848
+Qwen3-8B-Base,helpful,a caring human social worker,What's the best thing you ate this week?,0.8545613288879395
+Qwen3-8B-Base,helpful,a caring human social worker,How did you end up doing what you do?,0.4805830121040344
+Qwen3-8B-Base,helpful,a caring human social worker,What do you do when you can't sleep?,0.8154473900794983
+Qwen3-8B-Base,helpful,a caring human social worker,What's something that's been bothering you lately?,0.33522048592567444
+Qwen3-8B-Base,helpful,a caring human social worker,Can you give me some advice about starting a new job?,0.8837071061134338
+Qwen3-8B-Base,helpful,a caring human social worker,What would you do with a free weekend?,0.7252501249313354
+Qwen3-8B-Base,helpful,a caring human social worker,Describe the place where you grew up.,1.3733659982681274
+Qwen3-8B-Base,helpful,a caring human social worker,What do you think of people who are always late?,0.19357360899448395
+Qwen3-8B-Base,helpful,a caring human social worker,Any recommendations for a good book or film?,0.4968605637550354
+Qwen3-8B-Base,helpful,a caring human social worker,Do you have any pets?,0.19178259372711182
+Qwen3-8B-Base,helpful,a caring human social worker,How are you feeling today?,0.9194768071174622
+Qwen3-8B-Base,helpful,a caring human social worker,What's your favourite way to spend a rainy afternoon?,0.3905637860298157
+Qwen3-8B-Base,helpful,a caring human social worker,How would you describe yourself in two sentences?,0.9005417823791504
+Qwen3-8B-Base,helpful,a caring human social worker,What is something you're proud of?,0.5955967903137207
+Qwen3-8B-Base,helpful,a caring human social worker,What do you want for dinner tonight?,0.6058077812194824
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,"So, tell me about your day so far.",0.28398263454437256
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What's the best thing you ate this week?,0.6056389808654785
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,How did you end up doing what you do?,0.5932720899581909
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What do you do when you can't sleep?,0.4122815728187561
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What's something that's been bothering you lately?,1.0728580951690674
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,Can you give me some advice about starting a new job?,0.824060320854187
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What would you do with a free weekend?,0.7173877358436584
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,Describe the place where you grew up.,0.3538428843021393
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What do you think of people who are always late?,0.7356684803962708
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,Any recommendations for a good book or film?,0.917253315448761
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,Do you have any pets?,0.8225203156471252
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,How are you feeling today?,0.5714575052261353
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What's your favourite way to spend a rainy afternoon?,0.8560236692428589
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,How would you describe yourself in two sentences?,0.8799332976341248
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What is something you're proud of?,1.0214624404907227
+Qwen3-8B-Base,helpful,a knowledgeable human IT helpdesk technician,What do you want for dinner tonight?,0.5631851553916931
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,"So, tell me about your day so far.",0.9897815585136414
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What's the best thing you ate this week?,0.48073339462280273
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,How did you end up doing what you do?,0.6367438435554504
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What do you do when you can't sleep?,0.7867903709411621
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What's something that's been bothering you lately?,1.015044927597046
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,Can you give me some advice about starting a new job?,0.6753004193305969
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What would you do with a free weekend?,0.7216989994049072
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,Describe the place where you grew up.,0.19727665185928345
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What do you think of people who are always late?,0.8031677603721619
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,Any recommendations for a good book or film?,0.8116382956504822
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,Do you have any pets?,0.8896856307983398
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,How are you feeling today?,1.1329551935195923
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What's your favourite way to spend a rainy afternoon?,0.06979157775640488
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,How would you describe yourself in two sentences?,0.7695672512054443
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What is something you're proud of?,0.9249377250671387
+Qwen3-8B-Base,helpful,a polite human airline check-in agent,What do you want for dinner tonight?,0.603826105594635
+Qwen3-8B-Base,neutral,a human long-haul truck driver,"So, tell me about your day so far.",0.03709334880113602
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What's the best thing you ate this week?,0.14792102575302124
+Qwen3-8B-Base,neutral,a human long-haul truck driver,How did you end up doing what you do?,0.532842218875885
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What do you do when you can't sleep?,0.4874185621738434
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What's something that's been bothering you lately?,1.3613531589508057
+Qwen3-8B-Base,neutral,a human long-haul truck driver,Can you give me some advice about starting a new job?,0.6703744530677795
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What would you do with a free weekend?,0.8154465556144714
+Qwen3-8B-Base,neutral,a human long-haul truck driver,Describe the place where you grew up.,0.10131806135177612
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What do you think of people who are always late?,0.40082451701164246
+Qwen3-8B-Base,neutral,a human long-haul truck driver,Any recommendations for a good book or film?,0.18624979257583618
+Qwen3-8B-Base,neutral,a human long-haul truck driver,Do you have any pets?,0.4126235842704773
+Qwen3-8B-Base,neutral,a human long-haul truck driver,How are you feeling today?,0.5197350978851318
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What's your favourite way to spend a rainy afternoon?,0.4362967908382416
+Qwen3-8B-Base,neutral,a human long-haul truck driver,How would you describe yourself in two sentences?,0.41479602456092834
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What is something you're proud of?,0.4903041124343872
+Qwen3-8B-Base,neutral,a human long-haul truck driver,What do you want for dinner tonight?,0.4926603138446808
+Qwen3-8B-Base,neutral,a human accountant,"So, tell me about your day so far.",0.3661882281303406
+Qwen3-8B-Base,neutral,a human accountant,What's the best thing you ate this week?,0.2939850986003876
+Qwen3-8B-Base,neutral,a human accountant,How did you end up doing what you do?,0.5340282320976257
+Qwen3-8B-Base,neutral,a human accountant,What do you do when you can't sleep?,0.7602320313453674
+Qwen3-8B-Base,neutral,a human accountant,What's something that's been bothering you lately?,0.5284779071807861
+Qwen3-8B-Base,neutral,a human accountant,Can you give me some advice about starting a new job?,0.6701427698135376
+Qwen3-8B-Base,neutral,a human accountant,What would you do with a free weekend?,0.924156129360199
+Qwen3-8B-Base,neutral,a human accountant,Describe the place where you grew up.,0.13723628222942352
+Qwen3-8B-Base,neutral,a human accountant,What do you think of people who are always late?,0.6748570203781128
+Qwen3-8B-Base,neutral,a human accountant,Any recommendations for a good book or film?,0.6178953647613525
+Qwen3-8B-Base,neutral,a human accountant,Do you have any pets?,1.0574114322662354
+Qwen3-8B-Base,neutral,a human accountant,How are you feeling today?,0.959913432598114
+Qwen3-8B-Base,neutral,a human accountant,What's your favourite way to spend a rainy afternoon?,0.21781152486801147
+Qwen3-8B-Base,neutral,a human accountant,How would you describe yourself in two sentences?,0.6911401748657227
+Qwen3-8B-Base,neutral,a human accountant,What is something you're proud of?,0.8799785375595093
+Qwen3-8B-Base,neutral,a human accountant,What do you want for dinner tonight?,0.8853283524513245
+Qwen3-8B-Base,neutral,a human carpenter,"So, tell me about your day so far.",0.11607910692691803
+Qwen3-8B-Base,neutral,a human carpenter,What's the best thing you ate this week?,0.5551947951316833
+Qwen3-8B-Base,neutral,a human carpenter,How did you end up doing what you do?,0.5926215648651123
+Qwen3-8B-Base,neutral,a human carpenter,What do you do when you can't sleep?,0.43899017572402954
+Qwen3-8B-Base,neutral,a human carpenter,What's something that's been bothering you lately?,0.39364245533943176
+Qwen3-8B-Base,neutral,a human carpenter,Can you give me some advice about starting a new job?,0.7384398579597473
+Qwen3-8B-Base,neutral,a human carpenter,What would you do with a free weekend?,0.6072074174880981
+Qwen3-8B-Base,neutral,a human carpenter,Describe the place where you grew up.,0.10597553104162216
+Qwen3-8B-Base,neutral,a human carpenter,What do you think of people who are always late?,0.615402340888977
+Qwen3-8B-Base,neutral,a human carpenter,Any recommendations for a good book or film?,0.6989651918411255
+Qwen3-8B-Base,neutral,a human carpenter,Do you have any pets?,0.6478466391563416
+Qwen3-8B-Base,neutral,a human carpenter,How are you feeling today?,0.617994487285614
+Qwen3-8B-Base,neutral,a human carpenter,What's your favourite way to spend a rainy afternoon?,0.3969027101993561
+Qwen3-8B-Base,neutral,a human carpenter,How would you describe yourself in two sentences?,0.6421672105789185
+Qwen3-8B-Base,neutral,a human carpenter,What is something you're proud of?,0.593995213508606
+Qwen3-8B-Base,neutral,a human carpenter,What do you want for dinner tonight?,0.5813764333724976
+Qwen3-8B-Base,neutral,a human apple farmer,"So, tell me about your day so far.",0.17775480449199677
+Qwen3-8B-Base,neutral,a human apple farmer,What's the best thing you ate this week?,0.36479854583740234
+Qwen3-8B-Base,neutral,a human apple farmer,How did you end up doing what you do?,0.3136554956436157
+Qwen3-8B-Base,neutral,a human apple farmer,What do you do when you can't sleep?,0.04881162568926811
+Qwen3-8B-Base,neutral,a human apple farmer,What's something that's been bothering you lately?,0.45591968297958374
+Qwen3-8B-Base,neutral,a human apple farmer,Can you give me some advice about starting a new job?,0.4721328020095825
+Qwen3-8B-Base,neutral,a human apple farmer,What would you do with a free weekend?,0.3209243416786194
+Qwen3-8B-Base,neutral,a human apple farmer,Describe the place where you grew up.,0.26468953490257263
+Qwen3-8B-Base,neutral,a human apple farmer,Any recommendations for a good book or film?,0.46806800365448
+Qwen3-8B-Base,neutral,a human apple farmer,Do you have any pets?,0.46057772636413574
+Qwen3-8B-Base,neutral,a human apple farmer,How are you feeling today?,0.5211983919143677
+Qwen3-8B-Base,neutral,a human apple farmer,What's your favourite way to spend a rainy afternoon?,0.10670942813158035
+Qwen3-8B-Base,neutral,a human apple farmer,How would you describe yourself in two sentences?,0.4443926513195038
+Qwen3-8B-Base,neutral,a human apple farmer,What is something you're proud of?,0.5925852656364441
+Qwen3-8B-Base,neutral,a human apple farmer,What do you want for dinner tonight?,0.4165986478328705
+Qwen3-8B-Base,neutral,a human commercial pilot,"So, tell me about your day so far.",0.2693059742450714
+Qwen3-8B-Base,neutral,a human commercial pilot,What's the best thing you ate this week?,0.499906986951828
+Qwen3-8B-Base,neutral,a human commercial pilot,How did you end up doing what you do?,0.24261586368083954
+Qwen3-8B-Base,neutral,a human commercial pilot,What do you do when you can't sleep?,0.5321179628372192
+Qwen3-8B-Base,neutral,a human commercial pilot,What's something that's been bothering you lately?,0.42820388078689575
+Qwen3-8B-Base,neutral,a human commercial pilot,Can you give me some advice about starting a new job?,0.6403291821479797
+Qwen3-8B-Base,neutral,a human commercial pilot,What would you do with a free weekend?,0.4506250023841858
+Qwen3-8B-Base,neutral,a human commercial pilot,Describe the place where you grew up.,0.18851017951965332
+Qwen3-8B-Base,neutral,a human commercial pilot,What do you think of people who are always late?,0.5444611310958862
+Qwen3-8B-Base,neutral,a human commercial pilot,Any recommendations for a good book or film?,0.36022984981536865
+Qwen3-8B-Base,neutral,a human commercial pilot,Do you have any pets?,0.5289161205291748
+Qwen3-8B-Base,neutral,a human commercial pilot,How are you feeling today?,0.46312156319618225
+Qwen3-8B-Base,neutral,a human commercial pilot,What's your favourite way to spend a rainy afternoon?,0.2958068549633026
+Qwen3-8B-Base,neutral,a human commercial pilot,How would you describe yourself in two sentences?,0.5633371472358704
+Qwen3-8B-Base,neutral,a human commercial pilot,What is something you're proud of?,0.47315603494644165
+Qwen3-8B-Base,neutral,a human commercial pilot,What do you want for dinner tonight?,0.27095267176628113
+Qwen3-8B-Base,neutral,a human welder,"So, tell me about your day so far.",0.609973669052124
+Qwen3-8B-Base,neutral,a human welder,What's the best thing you ate this week?,0.7762253284454346
+Qwen3-8B-Base,neutral,a human welder,How did you end up doing what you do?,0.09377102553844452
+Qwen3-8B-Base,neutral,a human welder,What do you do when you can't sleep?,0.526854932308197
+Qwen3-8B-Base,neutral,a human welder,What's something that's been bothering you lately?,0.23823732137680054
+Qwen3-8B-Base,neutral,a human welder,Can you give me some advice about starting a new job?,0.35697823762893677
+Qwen3-8B-Base,neutral,a human welder,What would you do with a free weekend?,0.5603885650634766
+Qwen3-8B-Base,neutral,a human welder,Describe the place where you grew up.,0.1534145325422287
+Qwen3-8B-Base,neutral,a human welder,What do you think of people who are always late?,0.48962917923927307
+Qwen3-8B-Base,neutral,a human welder,Any recommendations for a good book or film?,0.6617047786712646
+Qwen3-8B-Base,neutral,a human welder,Do you have any pets?,0.3160647451877594
+Qwen3-8B-Base,neutral,a human welder,How are you feeling today?,-0.09077712148427963
+Qwen3-8B-Base,neutral,a human welder,What's your favourite way to spend a rainy afternoon?,0.5833986401557922
+Qwen3-8B-Base,neutral,a human welder,How would you describe yourself in two sentences?,0.42734819650650024
+Qwen3-8B-Base,neutral,a human welder,What is something you're proud of?,0.5853424668312073
+Qwen3-8B-Base,neutral,a human welder,What do you want for dinner tonight?,0.4378526508808136
+Qwen3-8B-Base,neutral,a human warehouse worker,"So, tell me about your day so far.",0.3798972964286804
+Qwen3-8B-Base,neutral,a human warehouse worker,What's the best thing you ate this week?,0.6929460763931274
+Qwen3-8B-Base,neutral,a human warehouse worker,How did you end up doing what you do?,0.3990703523159027
+Qwen3-8B-Base,neutral,a human warehouse worker,What do you do when you can't sleep?,0.8097637891769409
+Qwen3-8B-Base,neutral,a human warehouse worker,What's something that's been bothering you lately?,1.3104603290557861
+Qwen3-8B-Base,neutral,a human warehouse worker,Can you give me some advice about starting a new job?,0.47169139981269836
+Qwen3-8B-Base,neutral,a human warehouse worker,What would you do with a free weekend?,0.4182877540588379
+Qwen3-8B-Base,neutral,a human warehouse worker,Describe the place where you grew up.,0.08678416162729263
+Qwen3-8B-Base,neutral,a human warehouse worker,What do you think of people who are always late?,1.1335411071777344
+Qwen3-8B-Base,neutral,a human warehouse worker,Any recommendations for a good book or film?,0.6845453381538391
+Qwen3-8B-Base,neutral,a human warehouse worker,Do you have any pets?,0.6264333724975586
+Qwen3-8B-Base,neutral,a human warehouse worker,How are you feeling today?,0.4592995047569275
+Qwen3-8B-Base,neutral,a human warehouse worker,What's your favourite way to spend a rainy afternoon?,0.07937116920948029
+Qwen3-8B-Base,neutral,a human warehouse worker,How would you describe yourself in two sentences?,0.6282694339752197
+Qwen3-8B-Base,neutral,a human warehouse worker,What is something you're proud of?,0.8064227104187012
+Qwen3-8B-Base,neutral,a human warehouse worker,What do you want for dinner tonight?,0.4504950940608978
+Qwen3-8B-Base,neutral,a human surveyor,"So, tell me about your day so far.",0.4173661172389984
+Qwen3-8B-Base,neutral,a human surveyor,What's the best thing you ate this week?,0.24684199690818787
+Qwen3-8B-Base,neutral,a human surveyor,How did you end up doing what you do?,0.25758111476898193
+Qwen3-8B-Base,neutral,a human surveyor,What do you do when you can't sleep?,0.6018058061599731
+Qwen3-8B-Base,neutral,a human surveyor,What's something that's been bothering you lately?,0.5696989893913269
+Qwen3-8B-Base,neutral,a human surveyor,Can you give me some advice about starting a new job?,0.8969417214393616
+Qwen3-8B-Base,neutral,a human surveyor,What would you do with a free weekend?,0.5088708400726318
+Qwen3-8B-Base,neutral,a human surveyor,Describe the place where you grew up.,0.19001901149749756
+Qwen3-8B-Base,neutral,a human surveyor,What do you think of people who are always late?,0.6751112937927246
+Qwen3-8B-Base,neutral,a human surveyor,Any recommendations for a good book or film?,1.0645792484283447
+Qwen3-8B-Base,neutral,a human surveyor,Do you have any pets?,0.7405041456222534
+Qwen3-8B-Base,neutral,a human surveyor,How are you feeling today?,0.8615037202835083
+Qwen3-8B-Base,neutral,a human surveyor,What's your favourite way to spend a rainy afternoon?,0.2977212965488434
+Qwen3-8B-Base,neutral,a human surveyor,How would you describe yourself in two sentences?,0.5867322683334351
+Qwen3-8B-Base,neutral,a human surveyor,What is something you're proud of?,0.6797963976860046
+Qwen3-8B-Base,neutral,a human surveyor,What do you want for dinner tonight?,0.9262799620628357
+Qwen3-8B-Base,neutral,a human bus driver,"So, tell me about your day so far.",0.3255294859409332
+Qwen3-8B-Base,neutral,a human bus driver,What's the best thing you ate this week?,0.7668843865394592
+Qwen3-8B-Base,neutral,a human bus driver,How did you end up doing what you do?,0.2646292448043823
+Qwen3-8B-Base,neutral,a human bus driver,What do you do when you can't sleep?,0.6798011660575867
+Qwen3-8B-Base,neutral,a human bus driver,What's something that's been bothering you lately?,-0.04514159634709358
+Qwen3-8B-Base,neutral,a human bus driver,Can you give me some advice about starting a new job?,0.3083413243293762
+Qwen3-8B-Base,neutral,a human bus driver,What would you do with a free weekend?,0.4583158493041992
+Qwen3-8B-Base,neutral,a human bus driver,Describe the place where you grew up.,0.9866451025009155
+Qwen3-8B-Base,neutral,a human bus driver,What do you think of people who are always late?,0.6326448321342468
+Qwen3-8B-Base,neutral,a human bus driver,Any recommendations for a good book or film?,0.4172356128692627
+Qwen3-8B-Base,neutral,a human bus driver,Do you have any pets?,0.3027622401714325
+Qwen3-8B-Base,neutral,a human bus driver,How are you feeling today?,0.33305123448371887
+Qwen3-8B-Base,neutral,a human bus driver,What's your favourite way to spend a rainy afternoon?,0.30633193254470825
+Qwen3-8B-Base,neutral,a human bus driver,How would you describe yourself in two sentences?,0.6355291604995728
+Qwen3-8B-Base,neutral,a human bus driver,What is something you're proud of?,0.49419713020324707
+Qwen3-8B-Base,neutral,a human bus driver,What do you want for dinner tonight?,0.4228605329990387
+Qwen3-8B-Base,neutral,a human plumber,"So, tell me about your day so far.",0.12524265050888062
+Qwen3-8B-Base,neutral,a human plumber,What's the best thing you ate this week?,1.0830609798431396
+Qwen3-8B-Base,neutral,a human plumber,How did you end up doing what you do?,0.2174503058195114
+Qwen3-8B-Base,neutral,a human plumber,What do you do when you can't sleep?,0.5250328183174133
+Qwen3-8B-Base,neutral,a human plumber,What's something that's been bothering you lately?,0.513417661190033
+Qwen3-8B-Base,neutral,a human plumber,Can you give me some advice about starting a new job?,0.6192702651023865
+Qwen3-8B-Base,neutral,a human plumber,What would you do with a free weekend?,0.5006476044654846
+Qwen3-8B-Base,neutral,a human plumber,Describe the place where you grew up.,0.78360515832901
+Qwen3-8B-Base,neutral,a human plumber,What do you think of people who are always late?,0.8900361061096191
+Qwen3-8B-Base,neutral,a human plumber,Any recommendations for a good book or film?,0.9072163105010986
+Qwen3-8B-Base,neutral,a human plumber,Do you have any pets?,0.836148738861084
+Qwen3-8B-Base,neutral,a human plumber,How are you feeling today?,1.105159878730774
+Qwen3-8B-Base,neutral,a human plumber,What's your favourite way to spend a rainy afternoon?,0.08017618954181671
+Qwen3-8B-Base,neutral,a human plumber,How would you describe yourself in two sentences?,0.7712064385414124
+Qwen3-8B-Base,neutral,a human plumber,What is something you're proud of?,0.6204677224159241
+Qwen3-8B-Base,neutral,a human plumber,What do you want for dinner tonight?,0.4253254532814026
+Qwen3-8B-Base,neutral,a human lab technician,"So, tell me about your day so far.",0.555446207523346
+Qwen3-8B-Base,neutral,a human lab technician,What's the best thing you ate this week?,0.49681639671325684
+Qwen3-8B-Base,neutral,a human lab technician,How did you end up doing what you do?,0.38785192370414734
+Qwen3-8B-Base,neutral,a human lab technician,What do you do when you can't sleep?,0.6133909225463867
+Qwen3-8B-Base,neutral,a human lab technician,What's something that's been bothering you lately?,0.28719380497932434
+Qwen3-8B-Base,neutral,a human lab technician,Can you give me some advice about starting a new job?,0.6212497353553772
+Qwen3-8B-Base,neutral,a human lab technician,What would you do with a free weekend?,0.1127026155591011
+Qwen3-8B-Base,neutral,a human lab technician,Describe the place where you grew up.,0.25064876675605774
+Qwen3-8B-Base,neutral,a human lab technician,What do you think of people who are always late?,0.5889337062835693
+Qwen3-8B-Base,neutral,a human lab technician,Any recommendations for a good book or film?,0.3343152701854706
+Qwen3-8B-Base,neutral,a human lab technician,Do you have any pets?,0.9869335889816284
+Qwen3-8B-Base,neutral,a human lab technician,How are you feeling today?,0.8917321562767029
+Qwen3-8B-Base,neutral,a human lab technician,What's your favourite way to spend a rainy afternoon?,0.6238157749176025
+Qwen3-8B-Base,neutral,a human lab technician,How would you describe yourself in two sentences?,0.7210323214530945
+Qwen3-8B-Base,neutral,a human lab technician,What is something you're proud of?,1.1030744314193726
+Qwen3-8B-Base,neutral,a human lab technician,What do you want for dinner tonight?,0.8591662049293518
+Qwen3-8B-Base,neutral,a human postal carrier,"So, tell me about your day so far.",0.35848569869995117
+Qwen3-8B-Base,neutral,a human postal carrier,What's the best thing you ate this week?,0.34155529737472534
+Qwen3-8B-Base,neutral,a human postal carrier,How did you end up doing what you do?,0.5109320282936096
+Qwen3-8B-Base,neutral,a human postal carrier,What do you do when you can't sleep?,0.4072721302509308
+Qwen3-8B-Base,neutral,a human postal carrier,What's something that's been bothering you lately?,0.23758180439472198
+Qwen3-8B-Base,neutral,a human postal carrier,Can you give me some advice about starting a new job?,0.6647974848747253
+Qwen3-8B-Base,neutral,a human postal carrier,What would you do with a free weekend?,0.6073020100593567
+Qwen3-8B-Base,neutral,a human postal carrier,Describe the place where you grew up.,0.03646709397435188
+Qwen3-8B-Base,neutral,a human postal carrier,What do you think of people who are always late?,-0.06661630421876907
+Qwen3-8B-Base,neutral,a human postal carrier,Any recommendations for a good book or film?,0.5533556938171387
+Qwen3-8B-Base,neutral,a human postal carrier,Do you have any pets?,0.2291353940963745
+Qwen3-8B-Base,neutral,a human postal carrier,How are you feeling today?,0.17435811460018158
+Qwen3-8B-Base,neutral,a human postal carrier,What's your favourite way to spend a rainy afternoon?,0.35388514399528503
+Qwen3-8B-Base,neutral,a human postal carrier,How would you describe yourself in two sentences?,0.3778175413608551
+Qwen3-8B-Base,neutral,a human postal carrier,What is something you're proud of?,1.1535496711730957
+Qwen3-8B-Base,neutral,a human postal carrier,What do you want for dinner tonight?,0.7959548234939575
+Qwen3-8B-Base,stylized,a swaggering pirate captain,"So, tell me about your day so far.",-0.2285151481628418
+Qwen3-8B-Base,stylized,a swaggering pirate captain,What's the best thing you ate this week?,-0.09597653895616531
+Qwen3-8B-Base,stylized,a swaggering pirate captain,How did you end up doing what you do?,-0.1821475327014923
+Qwen3-8B-Base,stylized,a swaggering pirate captain,What's something that's been bothering you lately?,-0.032802484929561615
+Qwen3-8B-Base,stylized,a swaggering pirate captain,Can you give me some advice about starting a new job?,0.6062434315681458
+Qwen3-8B-Base,stylized,a swaggering pirate captain,What would you do with a free weekend?,0.359398752450943
+Qwen3-8B-Base,stylized,a swaggering pirate captain,Describe the place where you grew up.,-0.14921823143959045
+Qwen3-8B-Base,stylized,a swaggering pirate captain,What do you think of people who are always late?,-0.17080549895763397
+Qwen3-8B-Base,stylized,a swaggering pirate captain,Any recommendations for a good book or film?,0.73598313331604
+Qwen3-8B-Base,stylized,a swaggering pirate captain,Do you have any pets?,0.33761855959892273
+Qwen3-8B-Base,stylized,a swaggering pirate captain,What's your favourite way to spend a rainy afternoon?,-0.05188620835542679
+Qwen3-8B-Base,stylized,a swaggering pirate captain,How would you describe yourself in two sentences?,0.10437975823879242
+Qwen3-8B-Base,stylized,a swaggering pirate captain,What is something you're proud of?,-0.01173326838761568
+Qwen3-8B-Base,stylized,a swaggering pirate captain,What do you want for dinner tonight?,-0.019107859581708908
+Qwen3-8B-Base,stylized,a medieval court jester,"So, tell me about your day so far.",-0.16289860010147095
+Qwen3-8B-Base,stylized,a medieval court jester,What's the best thing you ate this week?,0.12181144952774048
+Qwen3-8B-Base,stylized,a medieval court jester,How did you end up doing what you do?,0.01808602549135685
+Qwen3-8B-Base,stylized,a medieval court jester,What do you do when you can't sleep?,0.6109456419944763
+Qwen3-8B-Base,stylized,a medieval court jester,What's something that's been bothering you lately?,0.3238421082496643
+Qwen3-8B-Base,stylized,a medieval court jester,Can you give me some advice about starting a new job?,0.5054366588592529
+Qwen3-8B-Base,stylized,a medieval court jester,What would you do with a free weekend?,0.34676671028137207
+Qwen3-8B-Base,stylized,a medieval court jester,Describe the place where you grew up.,0.038686417043209076
+Qwen3-8B-Base,stylized,a medieval court jester,What do you think of people who are always late?,0.009973670355975628
+Qwen3-8B-Base,stylized,a medieval court jester,Any recommendations for a good book or film?,0.2291214019060135
+Qwen3-8B-Base,stylized,a medieval court jester,Do you have any pets?,0.2972448468208313
+Qwen3-8B-Base,stylized,a medieval court jester,How are you feeling today?,0.19716177880764008
+Qwen3-8B-Base,stylized,a medieval court jester,What's your favourite way to spend a rainy afternoon?,0.28563401103019714
+Qwen3-8B-Base,stylized,a medieval court jester,How would you describe yourself in two sentences?,0.35886430740356445
+Qwen3-8B-Base,stylized,a medieval court jester,What is something you're proud of?,0.5196505188941956
+Qwen3-8B-Base,stylized,a medieval court jester,What do you want for dinner tonight?,0.2637539505958557
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,"So, tell me about your day so far.",0.7805173397064209
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What's the best thing you ate this week?,0.2693362236022949
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,How did you end up doing what you do?,0.24229936301708221
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What do you do when you can't sleep?,0.582757830619812
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What's something that's been bothering you lately?,0.21087953448295593
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,Can you give me some advice about starting a new job?,0.6568005084991455
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What would you do with a free weekend?,-0.07044988125562668
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,Describe the place where you grew up.,0.11676876246929169
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What do you think of people who are always late?,0.4534282088279724
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,Any recommendations for a good book or film?,0.23644739389419556
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,Do you have any pets?,-0.09661512076854706
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,How are you feeling today?,0.14036335051059723
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What's your favourite way to spend a rainy afternoon?,0.28684720396995544
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,How would you describe yourself in two sentences?,0.5628343820571899
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What is something you're proud of?,0.4645153880119324
+Qwen3-8B-Base,stylized,a gruff wizard who lives in a tower,What do you want for dinner tonight?,0.5600532293319702
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,"So, tell me about your day so far.",-0.11049836874008179
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What's the best thing you ate this week?,0.25804343819618225
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,How did you end up doing what you do?,0.008190942928195
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What do you do when you can't sleep?,-0.19218496978282928
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What's something that's been bothering you lately?,-0.014692232944071293
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,Can you give me some advice about starting a new job?,-0.09397416561841965
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What would you do with a free weekend?,0.0614924356341362
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,Describe the place where you grew up.,0.35195767879486084
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What do you think of people who are always late?,0.5904018878936768
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,Any recommendations for a good book or film?,0.6595621109008789
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,Do you have any pets?,0.12365583330392838
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,How are you feeling today?,0.3105340003967285
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What's your favourite way to spend a rainy afternoon?,-0.030003709718585014
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,How would you describe yourself in two sentences?,-0.07979833334684372
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What is something you're proud of?,-0.3068193197250366
+Qwen3-8B-Base,stylized,a hard-boiled noir detective,What do you want for dinner tonight?,0.45561304688453674
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,"So, tell me about your day so far.",0.0016859178431332111
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What's the best thing you ate this week?,0.04544283449649811
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,How did you end up doing what you do?,0.571170449256897
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What do you do when you can't sleep?,0.08718440681695938
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What's something that's been bothering you lately?,1.1718379259109497
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,Can you give me some advice about starting a new job?,0.3587293028831482
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What would you do with a free weekend?,0.0908350795507431
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,Describe the place where you grew up.,-0.013555143028497696
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What do you think of people who are always late?,0.3366474509239197
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,Any recommendations for a good book or film?,0.20809540152549744
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,Do you have any pets?,0.22720478475093842
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,How are you feeling today?,0.2032404989004135
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What's your favourite way to spend a rainy afternoon?,0.14031878113746643
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,How would you describe yourself in two sentences?,0.1539510190486908
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What is something you're proud of?,0.37412214279174805
+Qwen3-8B-Base,stylized,a pompous Victorian aristocrat,What do you want for dinner tonight?,0.13043029606342316
+Qwen3-8B-Base,stylized,a mischievous talking cat,"So, tell me about your day so far.",0.2869907319545746
+Qwen3-8B-Base,stylized,a mischievous talking cat,What's the best thing you ate this week?,0.1452382206916809
+Qwen3-8B-Base,stylized,a mischievous talking cat,How did you end up doing what you do?,0.18376204371452332
+Qwen3-8B-Base,stylized,a mischievous talking cat,What do you do when you can't sleep?,0.6039851307868958
+Qwen3-8B-Base,stylized,a mischievous talking cat,What's something that's been bothering you lately?,0.7154541015625
+Qwen3-8B-Base,stylized,a mischievous talking cat,Can you give me some advice about starting a new job?,0.7225236892700195
+Qwen3-8B-Base,stylized,a mischievous talking cat,What would you do with a free weekend?,0.10076653957366943
+Qwen3-8B-Base,stylized,a mischievous talking cat,Describe the place where you grew up.,0.13733892142772675
+Qwen3-8B-Base,stylized,a mischievous talking cat,What do you think of people who are always late?,0.1461855173110962
+Qwen3-8B-Base,stylized,a mischievous talking cat,Any recommendations for a good book or film?,0.4993674159049988
+Qwen3-8B-Base,stylized,a mischievous talking cat,Do you have any pets?,0.6545964479446411
+Qwen3-8B-Base,stylized,a mischievous talking cat,How are you feeling today?,0.6257809996604919
+Qwen3-8B-Base,stylized,a mischievous talking cat,What's your favourite way to spend a rainy afternoon?,0.620215654373169
+Qwen3-8B-Base,stylized,a mischievous talking cat,How would you describe yourself in two sentences?,0.3808123767375946
+Qwen3-8B-Base,stylized,a mischievous talking cat,What is something you're proud of?,1.283449649810791
+Qwen3-8B-Base,stylized,a mischievous talking cat,What do you want for dinner tonight?,0.6521803736686707
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,"So, tell me about your day so far.",0.5031964778900146
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What's the best thing you ate this week?,0.14481905102729797
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,How did you end up doing what you do?,0.5426427125930786
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What do you do when you can't sleep?,0.3864867389202118
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What's something that's been bothering you lately?,0.3356193006038666
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,Can you give me some advice about starting a new job?,0.2796405255794525
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What would you do with a free weekend?,0.5606555342674255
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,Describe the place where you grew up.,0.012007664889097214
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What do you think of people who are always late?,0.016448795795440674
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,Do you have any pets?,0.42950427532196045
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,How are you feeling today?,0.5413990020751953
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What's your favourite way to spend a rainy afternoon?,0.1320468634366989
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,How would you describe yourself in two sentences?,0.2797289788722992
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What is something you're proud of?,0.061288006603717804
+Qwen3-8B-Base,stylized,a laconic space-freighter pilot,What do you want for dinner tonight?,0.30426469445228577
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,"So, tell me about your day so far.",0.2577531933784485
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What's the best thing you ate this week?,0.05746440589427948
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,How did you end up doing what you do?,0.28608205914497375
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What do you do when you can't sleep?,0.20971719920635223
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What's something that's been bothering you lately?,-0.024523066356778145
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,Can you give me some advice about starting a new job?,0.4116267263889313
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What would you do with a free weekend?,0.08863583207130432
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,Describe the place where you grew up.,0.1546202301979065
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What do you think of people who are always late?,-0.10277051478624344
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,Any recommendations for a good book or film?,0.714203953742981
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,Do you have any pets?,0.49279358983039856
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,How are you feeling today?,0.22211089730262756
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What's your favourite way to spend a rainy afternoon?,0.20518571138381958
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,How would you describe yourself in two sentences?,0.3662101626396179
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What is something you're proud of?,0.10942333936691284
+Qwen3-8B-Base,stylized,an excitable twelve-year-old,What do you want for dinner tonight?,0.6173116564750671
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,"So, tell me about your day so far.",0.0005188657669350505
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What's the best thing you ate this week?,0.11013230681419373
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,How did you end up doing what you do?,0.08699919283390045
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What do you do when you can't sleep?,-0.01410722266882658
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What's something that's been bothering you lately?,0.3383427560329437
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,Can you give me some advice about starting a new job?,0.18797235190868378
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What would you do with a free weekend?,0.40237781405448914
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,Describe the place where you grew up.,0.0660770907998085
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What do you think of people who are always late?,0.2566377520561218
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,Any recommendations for a good book or film?,0.5406386852264404
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,Do you have any pets?,0.9190101623535156
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,How are you feeling today?,0.1978554129600525
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What's your favourite way to spend a rainy afternoon?,0.0707780122756958
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,How would you describe yourself in two sentences?,0.567384660243988
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What is something you're proud of?,0.47363656759262085
+Qwen3-8B-Base,stylized,a dramatic Shakespearean actor,What do you want for dinner tonight?,0.3121890723705292
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,"So, tell me about your day so far.",0.011826801113784313
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What's the best thing you ate this week?,0.035020824521780014
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,How did you end up doing what you do?,0.5506598353385925
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you do when you can't sleep?,-0.046747397631406784
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What's something that's been bothering you lately?,0.14922109246253967
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,Can you give me some advice about starting a new job?,0.06401180475950241
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What would you do with a free weekend?,-0.05609351396560669
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,Describe the place where you grew up.,0.4978875517845154
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you think of people who are always late?,0.10117248445749283
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,Any recommendations for a good book or film?,0.4306209981441498
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,Do you have any pets?,0.2385053187608719
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,How are you feeling today?,0.3729146718978882
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What's your favourite way to spend a rainy afternoon?,-0.06629270315170288
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,How would you describe yourself in two sentences?,0.23985104262828827
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What is something you're proud of?,0.43914884328842163
+Qwen3-8B-Base,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you want for dinner tonight?,0.009335187263786793
+Qwen3-8B-Base,stylized,a cowboy from an old western,"So, tell me about your day so far.",-0.03158210217952728
+Qwen3-8B-Base,stylized,a cowboy from an old western,What's the best thing you ate this week?,-0.12772224843502045
+Qwen3-8B-Base,stylized,a cowboy from an old western,How did you end up doing what you do?,0.017214586958289146
+Qwen3-8B-Base,stylized,a cowboy from an old western,What do you do when you can't sleep?,0.10105643421411514
+Qwen3-8B-Base,stylized,a cowboy from an old western,What's something that's been bothering you lately?,-0.05626315250992775
+Qwen3-8B-Base,stylized,a cowboy from an old western,Can you give me some advice about starting a new job?,0.29205310344696045
+Qwen3-8B-Base,stylized,a cowboy from an old western,What would you do with a free weekend?,-0.007544074207544327
+Qwen3-8B-Base,stylized,a cowboy from an old western,Describe the place where you grew up.,-0.06295525282621384
+Qwen3-8B-Base,stylized,a cowboy from an old western,What do you think of people who are always late?,0.18523100018501282
+Qwen3-8B-Base,stylized,a cowboy from an old western,Any recommendations for a good book or film?,0.1888403296470642
+Qwen3-8B-Base,stylized,a cowboy from an old western,Do you have any pets?,-0.08080315589904785
+Qwen3-8B-Base,stylized,a cowboy from an old western,How are you feeling today?,0.37089037895202637
+Qwen3-8B-Base,stylized,a cowboy from an old western,What's your favourite way to spend a rainy afternoon?,-0.14263081550598145
+Qwen3-8B-Base,stylized,a cowboy from an old western,How would you describe yourself in two sentences?,0.33040398359298706
+Qwen3-8B-Base,stylized,a cowboy from an old western,What is something you're proud of?,0.012208710424602032
+Qwen3-8B-Base,stylized,a cowboy from an old western,What do you want for dinner tonight?,-0.05934492126107216
+Qwen3-8B-Base,stylized,a villainous mad scientist,"So, tell me about your day so far.",-0.05414208769798279
+Qwen3-8B-Base,stylized,a villainous mad scientist,What's the best thing you ate this week?,0.09101459383964539
+Qwen3-8B-Base,stylized,a villainous mad scientist,How did you end up doing what you do?,0.2968939244747162
+Qwen3-8B-Base,stylized,a villainous mad scientist,What do you do when you can't sleep?,0.6518399715423584
+Qwen3-8B-Base,stylized,a villainous mad scientist,What's something that's been bothering you lately?,0.10699128359556198
+Qwen3-8B-Base,stylized,a villainous mad scientist,Can you give me some advice about starting a new job?,0.45195242762565613
+Qwen3-8B-Base,stylized,a villainous mad scientist,What would you do with a free weekend?,0.27632012963294983
+Qwen3-8B-Base,stylized,a villainous mad scientist,Describe the place where you grew up.,0.49604925513267517
+Qwen3-8B-Base,stylized,a villainous mad scientist,What do you think of people who are always late?,0.789469838142395
+Qwen3-8B-Base,stylized,a villainous mad scientist,Any recommendations for a good book or film?,0.27711382508277893
+Qwen3-8B-Base,stylized,a villainous mad scientist,Do you have any pets?,0.11229635775089264
+Qwen3-8B-Base,stylized,a villainous mad scientist,How are you feeling today?,0.7178270816802979
+Qwen3-8B-Base,stylized,a villainous mad scientist,What's your favourite way to spend a rainy afternoon?,0.2596120834350586
+Qwen3-8B-Base,stylized,a villainous mad scientist,How would you describe yourself in two sentences?,0.25355830788612366
+Qwen3-8B-Base,stylized,a villainous mad scientist,What is something you're proud of?,-0.012217561714351177
+Qwen3-8B-Base,stylized,a villainous mad scientist,What do you want for dinner tonight?,0.6382081508636475

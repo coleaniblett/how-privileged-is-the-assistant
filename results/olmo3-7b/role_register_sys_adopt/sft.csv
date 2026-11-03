@@ -1,0 +1,577 @@
+stage,group,role,q,coord
+sft,helpful,a helpful human hotel front-desk clerk,"So, tell me about your day so far.",0.425395667552948
+sft,helpful,a helpful human hotel front-desk clerk,What's the best thing you ate this week?,0.33577466011047363
+sft,helpful,a helpful human hotel front-desk clerk,How did you end up doing what you do?,1.1049015522003174
+sft,helpful,a helpful human hotel front-desk clerk,What do you do when you can't sleep?,0.8869435787200928
+sft,helpful,a helpful human hotel front-desk clerk,What's something that's been bothering you lately?,1.093461513519287
+sft,helpful,a helpful human hotel front-desk clerk,Can you give me some advice about starting a new job?,0.6635822057723999
+sft,helpful,a helpful human hotel front-desk clerk,What would you do with a free weekend?,0.516338586807251
+sft,helpful,a helpful human hotel front-desk clerk,Describe the place where you grew up.,-0.21588976681232452
+sft,helpful,a helpful human hotel front-desk clerk,What do you think of people who are always late?,0.8723244071006775
+sft,helpful,a helpful human hotel front-desk clerk,Any recommendations for a good book or film?,0.7074453234672546
+sft,helpful,a helpful human hotel front-desk clerk,Do you have any pets?,1.0732300281524658
+sft,helpful,a helpful human hotel front-desk clerk,How are you feeling today?,1.0535954236984253
+sft,helpful,a helpful human hotel front-desk clerk,What's your favourite way to spend a rainy afternoon?,0.1441766321659088
+sft,helpful,a helpful human hotel front-desk clerk,How would you describe yourself in two sentences?,0.29306113719940186
+sft,helpful,a helpful human hotel front-desk clerk,What is something you're proud of?,0.8805751204490662
+sft,helpful,a helpful human hotel front-desk clerk,What do you want for dinner tonight?,-0.012779651209712029
+sft,helpful,a helpful human librarian,"So, tell me about your day so far.",1.086846113204956
+sft,helpful,a helpful human librarian,What's the best thing you ate this week?,0.7260477542877197
+sft,helpful,a helpful human librarian,How did you end up doing what you do?,0.9977169632911682
+sft,helpful,a helpful human librarian,What do you do when you can't sleep?,0.833784818649292
+sft,helpful,a helpful human librarian,What's something that's been bothering you lately?,1.180047869682312
+sft,helpful,a helpful human librarian,Can you give me some advice about starting a new job?,0.5087512135505676
+sft,helpful,a helpful human librarian,What would you do with a free weekend?,0.377403199672699
+sft,helpful,a helpful human librarian,Describe the place where you grew up.,0.930439293384552
+sft,helpful,a helpful human librarian,What do you think of people who are always late?,0.8623698353767395
+sft,helpful,a helpful human librarian,Any recommendations for a good book or film?,0.8341807723045349
+sft,helpful,a helpful human librarian,Do you have any pets?,1.1473979949951172
+sft,helpful,a helpful human librarian,How are you feeling today?,1.039408564567566
+sft,helpful,a helpful human librarian,What's your favourite way to spend a rainy afternoon?,0.4741138219833374
+sft,helpful,a helpful human librarian,How would you describe yourself in two sentences?,1.064400315284729
+sft,helpful,a helpful human librarian,What is something you're proud of?,1.0841968059539795
+sft,helpful,a helpful human librarian,What do you want for dinner tonight?,0.5141887664794922
+sft,helpful,a kind human nurse,"So, tell me about your day so far.",1.2602142095565796
+sft,helpful,a kind human nurse,What's the best thing you ate this week?,0.9228720664978027
+sft,helpful,a kind human nurse,How did you end up doing what you do?,1.080546498298645
+sft,helpful,a kind human nurse,What do you do when you can't sleep?,0.8357231616973877
+sft,helpful,a kind human nurse,What's something that's been bothering you lately?,1.0172713994979858
+sft,helpful,a kind human nurse,Can you give me some advice about starting a new job?,0.6628207564353943
+sft,helpful,a kind human nurse,What would you do with a free weekend?,-0.06092553213238716
+sft,helpful,a kind human nurse,Describe the place where you grew up.,-0.023330699652433395
+sft,helpful,a kind human nurse,What do you think of people who are always late?,0.8728650808334351
+sft,helpful,a kind human nurse,Any recommendations for a good book or film?,0.9104270339012146
+sft,helpful,a kind human nurse,Do you have any pets?,-0.0138851348310709
+sft,helpful,a kind human nurse,How are you feeling today?,1.0491588115692139
+sft,helpful,a kind human nurse,What's your favourite way to spend a rainy afternoon?,0.7498709559440613
+sft,helpful,a kind human nurse,How would you describe yourself in two sentences?,0.8451725840568542
+sft,helpful,a kind human nurse,What is something you're proud of?,1.171613335609436
+sft,helpful,a kind human nurse,What do you want for dinner tonight?,1.0300559997558594
+sft,helpful,a patient human high-school teacher,"So, tell me about your day so far.",1.1428930759429932
+sft,helpful,a patient human high-school teacher,What's the best thing you ate this week?,0.6469777226448059
+sft,helpful,a patient human high-school teacher,How did you end up doing what you do?,1.0801024436950684
+sft,helpful,a patient human high-school teacher,What do you do when you can't sleep?,0.879685640335083
+sft,helpful,a patient human high-school teacher,What's something that's been bothering you lately?,1.0566519498825073
+sft,helpful,a patient human high-school teacher,Can you give me some advice about starting a new job?,0.7865046858787537
+sft,helpful,a patient human high-school teacher,What would you do with a free weekend?,0.21215829253196716
+sft,helpful,a patient human high-school teacher,Describe the place where you grew up.,0.8493860363960266
+sft,helpful,a patient human high-school teacher,What do you think of people who are always late?,0.5124004483222961
+sft,helpful,a patient human high-school teacher,Any recommendations for a good book or film?,0.20574232935905457
+sft,helpful,a patient human high-school teacher,Do you have any pets?,1.0728631019592285
+sft,helpful,a patient human high-school teacher,How are you feeling today?,0.6827067732810974
+sft,helpful,a patient human high-school teacher,What's your favourite way to spend a rainy afternoon?,-0.23784281313419342
+sft,helpful,a patient human high-school teacher,How would you describe yourself in two sentences?,0.4731372892856598
+sft,helpful,a patient human high-school teacher,What is something you're proud of?,1.082006812095642
+sft,helpful,a patient human high-school teacher,What do you want for dinner tonight?,0.051204826682806015
+sft,helpful,a friendly human pharmacist,"So, tell me about your day so far.",1.060115098953247
+sft,helpful,a friendly human pharmacist,What's the best thing you ate this week?,0.4623102843761444
+sft,helpful,a friendly human pharmacist,How did you end up doing what you do?,0.29591497778892517
+sft,helpful,a friendly human pharmacist,What do you do when you can't sleep?,0.5473581552505493
+sft,helpful,a friendly human pharmacist,What's something that's been bothering you lately?,1.0225313901901245
+sft,helpful,a friendly human pharmacist,Can you give me some advice about starting a new job?,0.7726801037788391
+sft,helpful,a friendly human pharmacist,What would you do with a free weekend?,0.2630106508731842
+sft,helpful,a friendly human pharmacist,Describe the place where you grew up.,0.765826940536499
+sft,helpful,a friendly human pharmacist,What do you think of people who are always late?,0.7146245241165161
+sft,helpful,a friendly human pharmacist,Any recommendations for a good book or film?,0.388729065656662
+sft,helpful,a friendly human pharmacist,Do you have any pets?,0.6492996215820312
+sft,helpful,a friendly human pharmacist,How are you feeling today?,1.0601290464401245
+sft,helpful,a friendly human pharmacist,What's your favourite way to spend a rainy afternoon?,0.4368743896484375
+sft,helpful,a friendly human pharmacist,How would you describe yourself in two sentences?,0.815500020980835
+sft,helpful,a friendly human pharmacist,What is something you're proud of?,1.0369631052017212
+sft,helpful,a friendly human pharmacist,What do you want for dinner tonight?,0.5538536310195923
+sft,helpful,a supportive human math tutor,"So, tell me about your day so far.",1.224174976348877
+sft,helpful,a supportive human math tutor,What's the best thing you ate this week?,0.621936023235321
+sft,helpful,a supportive human math tutor,How did you end up doing what you do?,0.6594079732894897
+sft,helpful,a supportive human math tutor,What do you do when you can't sleep?,0.3017575442790985
+sft,helpful,a supportive human math tutor,What's something that's been bothering you lately?,1.1496949195861816
+sft,helpful,a supportive human math tutor,Can you give me some advice about starting a new job?,0.6741324067115784
+sft,helpful,a supportive human math tutor,What would you do with a free weekend?,0.4750400483608246
+sft,helpful,a supportive human math tutor,Describe the place where you grew up.,0.27297869324684143
+sft,helpful,a supportive human math tutor,What do you think of people who are always late?,0.9989089369773865
+sft,helpful,a supportive human math tutor,Any recommendations for a good book or film?,0.7993372678756714
+sft,helpful,a supportive human math tutor,Do you have any pets?,0.9890837669372559
+sft,helpful,a supportive human math tutor,How are you feeling today?,1.0120080709457397
+sft,helpful,a supportive human math tutor,What's your favourite way to spend a rainy afternoon?,0.38624346256256104
+sft,helpful,a supportive human math tutor,How would you describe yourself in two sentences?,0.8997470140457153
+sft,helpful,a supportive human math tutor,What is something you're proud of?,1.2208340167999268
+sft,helpful,a supportive human math tutor,What do you want for dinner tonight?,0.8918002843856812
+sft,helpful,a courteous human bank teller,"So, tell me about your day so far.",1.1563273668289185
+sft,helpful,a courteous human bank teller,What's the best thing you ate this week?,1.0250757932662964
+sft,helpful,a courteous human bank teller,How did you end up doing what you do?,1.2186092138290405
+sft,helpful,a courteous human bank teller,What do you do when you can't sleep?,-0.004225561860948801
+sft,helpful,a courteous human bank teller,What's something that's been bothering you lately?,1.2262526750564575
+sft,helpful,a courteous human bank teller,Can you give me some advice about starting a new job?,0.6748305559158325
+sft,helpful,a courteous human bank teller,What would you do with a free weekend?,0.4681302309036255
+sft,helpful,a courteous human bank teller,Describe the place where you grew up.,1.0969256162643433
+sft,helpful,a courteous human bank teller,What do you think of people who are always late?,0.5611376166343689
+sft,helpful,a courteous human bank teller,Any recommendations for a good book or film?,0.8479042649269104
+sft,helpful,a courteous human bank teller,Do you have any pets?,1.0890499353408813
+sft,helpful,a courteous human bank teller,How are you feeling today?,0.9535666108131409
+sft,helpful,a courteous human bank teller,What's your favourite way to spend a rainy afternoon?,0.6411259174346924
+sft,helpful,a courteous human bank teller,How would you describe yourself in two sentences?,1.2089442014694214
+sft,helpful,a courteous human bank teller,What is something you're proud of?,1.178344964981079
+sft,helpful,a courteous human bank teller,What do you want for dinner tonight?,1.1183394193649292
+sft,helpful,a cheerful human tour guide,"So, tell me about your day so far.",1.010627031326294
+sft,helpful,a cheerful human tour guide,What's the best thing you ate this week?,0.3851502537727356
+sft,helpful,a cheerful human tour guide,How did you end up doing what you do?,1.0358202457427979
+sft,helpful,a cheerful human tour guide,What do you do when you can't sleep?,0.465299129486084
+sft,helpful,a cheerful human tour guide,What's something that's been bothering you lately?,1.1581662893295288
+sft,helpful,a cheerful human tour guide,Can you give me some advice about starting a new job?,0.520630955696106
+sft,helpful,a cheerful human tour guide,What would you do with a free weekend?,0.12097100913524628
+sft,helpful,a cheerful human tour guide,Describe the place where you grew up.,0.6078725457191467
+sft,helpful,a cheerful human tour guide,What do you think of people who are always late?,0.7816792726516724
+sft,helpful,a cheerful human tour guide,Any recommendations for a good book or film?,0.2836587429046631
+sft,helpful,a cheerful human tour guide,Do you have any pets?,1.072782039642334
+sft,helpful,a cheerful human tour guide,How are you feeling today?,0.8420289158821106
+sft,helpful,a cheerful human tour guide,What's your favourite way to spend a rainy afternoon?,-0.3109176754951477
+sft,helpful,a cheerful human tour guide,How would you describe yourself in two sentences?,0.6640005111694336
+sft,helpful,a cheerful human tour guide,What is something you're proud of?,1.0261112451553345
+sft,helpful,a cheerful human tour guide,What do you want for dinner tonight?,1.2190183401107788
+sft,helpful,an attentive human receptionist at a dental clinic,"So, tell me about your day so far.",0.7775912880897522
+sft,helpful,an attentive human receptionist at a dental clinic,What's the best thing you ate this week?,0.24978198111057281
+sft,helpful,an attentive human receptionist at a dental clinic,How did you end up doing what you do?,1.1127310991287231
+sft,helpful,an attentive human receptionist at a dental clinic,What do you do when you can't sleep?,0.8092319369316101
+sft,helpful,an attentive human receptionist at a dental clinic,What's something that's been bothering you lately?,1.2360482215881348
+sft,helpful,an attentive human receptionist at a dental clinic,Can you give me some advice about starting a new job?,0.637498676776886
+sft,helpful,an attentive human receptionist at a dental clinic,What would you do with a free weekend?,0.18078865110874176
+sft,helpful,an attentive human receptionist at a dental clinic,Describe the place where you grew up.,0.5730187296867371
+sft,helpful,an attentive human receptionist at a dental clinic,What do you think of people who are always late?,0.7911655306816101
+sft,helpful,an attentive human receptionist at a dental clinic,Any recommendations for a good book or film?,0.7881317734718323
+sft,helpful,an attentive human receptionist at a dental clinic,Do you have any pets?,0.8115455508232117
+sft,helpful,an attentive human receptionist at a dental clinic,How are you feeling today?,0.8712194561958313
+sft,helpful,an attentive human receptionist at a dental clinic,What's your favourite way to spend a rainy afternoon?,-0.21637456119060516
+sft,helpful,an attentive human receptionist at a dental clinic,How would you describe yourself in two sentences?,0.487427294254303
+sft,helpful,an attentive human receptionist at a dental clinic,What is something you're proud of?,0.24336525797843933
+sft,helpful,an attentive human receptionist at a dental clinic,What do you want for dinner tonight?,0.6450485587120056
+sft,helpful,a caring human social worker,"So, tell me about your day so far.",0.2953018844127655
+sft,helpful,a caring human social worker,What's the best thing you ate this week?,1.0075974464416504
+sft,helpful,a caring human social worker,How did you end up doing what you do?,0.4338328242301941
+sft,helpful,a caring human social worker,What do you do when you can't sleep?,0.45069020986557007
+sft,helpful,a caring human social worker,What's something that's been bothering you lately?,1.250298261642456
+sft,helpful,a caring human social worker,Can you give me some advice about starting a new job?,0.6783531904220581
+sft,helpful,a caring human social worker,What would you do with a free weekend?,0.38576436042785645
+sft,helpful,a caring human social worker,Describe the place where you grew up.,-0.16079041361808777
+sft,helpful,a caring human social worker,What do you think of people who are always late?,0.6451168656349182
+sft,helpful,a caring human social worker,Any recommendations for a good book or film?,0.4208453297615051
+sft,helpful,a caring human social worker,Do you have any pets?,0.9918533563613892
+sft,helpful,a caring human social worker,How are you feeling today?,0.9857434034347534
+sft,helpful,a caring human social worker,What's your favourite way to spend a rainy afternoon?,0.20883546769618988
+sft,helpful,a caring human social worker,How would you describe yourself in two sentences?,0.62897789478302
+sft,helpful,a caring human social worker,What is something you're proud of?,1.1662663221359253
+sft,helpful,a caring human social worker,What do you want for dinner tonight?,0.2650948166847229
+sft,helpful,a knowledgeable human IT helpdesk technician,"So, tell me about your day so far.",1.0353275537490845
+sft,helpful,a knowledgeable human IT helpdesk technician,What's the best thing you ate this week?,1.1527165174484253
+sft,helpful,a knowledgeable human IT helpdesk technician,How did you end up doing what you do?,1.1226511001586914
+sft,helpful,a knowledgeable human IT helpdesk technician,What do you do when you can't sleep?,0.6758757829666138
+sft,helpful,a knowledgeable human IT helpdesk technician,What's something that's been bothering you lately?,-0.09125959873199463
+sft,helpful,a knowledgeable human IT helpdesk technician,Can you give me some advice about starting a new job?,0.6774293184280396
+sft,helpful,a knowledgeable human IT helpdesk technician,What would you do with a free weekend?,0.4973812997341156
+sft,helpful,a knowledgeable human IT helpdesk technician,Describe the place where you grew up.,1.0420790910720825
+sft,helpful,a knowledgeable human IT helpdesk technician,What do you think of people who are always late?,0.9469140768051147
+sft,helpful,a knowledgeable human IT helpdesk technician,Any recommendations for a good book or film?,1.0260660648345947
+sft,helpful,a knowledgeable human IT helpdesk technician,Do you have any pets?,0.978400707244873
+sft,helpful,a knowledgeable human IT helpdesk technician,How are you feeling today?,1.1338261365890503
+sft,helpful,a knowledgeable human IT helpdesk technician,What's your favourite way to spend a rainy afternoon?,0.23549367487430573
+sft,helpful,a knowledgeable human IT helpdesk technician,How would you describe yourself in two sentences?,0.6960085034370422
+sft,helpful,a knowledgeable human IT helpdesk technician,What is something you're proud of?,0.9419330954551697
+sft,helpful,a knowledgeable human IT helpdesk technician,What do you want for dinner tonight?,0.4053918421268463
+sft,helpful,a polite human airline check-in agent,"So, tell me about your day so far.",1.0523085594177246
+sft,helpful,a polite human airline check-in agent,What's the best thing you ate this week?,1.06912100315094
+sft,helpful,a polite human airline check-in agent,How did you end up doing what you do?,0.970389723777771
+sft,helpful,a polite human airline check-in agent,What do you do when you can't sleep?,0.9044114351272583
+sft,helpful,a polite human airline check-in agent,What's something that's been bothering you lately?,0.7543344497680664
+sft,helpful,a polite human airline check-in agent,Can you give me some advice about starting a new job?,0.6139280796051025
+sft,helpful,a polite human airline check-in agent,What would you do with a free weekend?,0.9329137206077576
+sft,helpful,a polite human airline check-in agent,Describe the place where you grew up.,0.12461356818675995
+sft,helpful,a polite human airline check-in agent,What do you think of people who are always late?,1.0333411693572998
+sft,helpful,a polite human airline check-in agent,Any recommendations for a good book or film?,1.0427489280700684
+sft,helpful,a polite human airline check-in agent,Do you have any pets?,0.6826143264770508
+sft,helpful,a polite human airline check-in agent,How are you feeling today?,0.7429083585739136
+sft,helpful,a polite human airline check-in agent,What's your favourite way to spend a rainy afternoon?,0.556750476360321
+sft,helpful,a polite human airline check-in agent,How would you describe yourself in two sentences?,0.8430749177932739
+sft,helpful,a polite human airline check-in agent,What is something you're proud of?,1.1342331171035767
+sft,helpful,a polite human airline check-in agent,What do you want for dinner tonight?,0.39435648918151855
+sft,neutral,a human long-haul truck driver,"So, tell me about your day so far.",0.2590664029121399
+sft,neutral,a human long-haul truck driver,What's the best thing you ate this week?,-0.20021551847457886
+sft,neutral,a human long-haul truck driver,How did you end up doing what you do?,0.08264723420143127
+sft,neutral,a human long-haul truck driver,What do you do when you can't sleep?,0.5844598412513733
+sft,neutral,a human long-haul truck driver,What's something that's been bothering you lately?,-0.005880365613847971
+sft,neutral,a human long-haul truck driver,Can you give me some advice about starting a new job?,0.5086553692817688
+sft,neutral,a human long-haul truck driver,What would you do with a free weekend?,-0.13537375628948212
+sft,neutral,a human long-haul truck driver,Describe the place where you grew up.,-0.3136642575263977
+sft,neutral,a human long-haul truck driver,What do you think of people who are always late?,0.7570875883102417
+sft,neutral,a human long-haul truck driver,Any recommendations for a good book or film?,0.5864973664283752
+sft,neutral,a human long-haul truck driver,Do you have any pets?,0.7971636652946472
+sft,neutral,a human long-haul truck driver,How are you feeling today?,0.2172573208808899
+sft,neutral,a human long-haul truck driver,What's your favourite way to spend a rainy afternoon?,-0.522762656211853
+sft,neutral,a human long-haul truck driver,How would you describe yourself in two sentences?,-0.06355076283216476
+sft,neutral,a human long-haul truck driver,What is something you're proud of?,0.13017229735851288
+sft,neutral,a human long-haul truck driver,What do you want for dinner tonight?,0.03343796730041504
+sft,neutral,a human accountant,"So, tell me about your day so far.",1.1046843528747559
+sft,neutral,a human accountant,What's the best thing you ate this week?,0.6374660730361938
+sft,neutral,a human accountant,How did you end up doing what you do?,1.0383131504058838
+sft,neutral,a human accountant,What do you do when you can't sleep?,0.5714793801307678
+sft,neutral,a human accountant,What's something that's been bothering you lately?,0.2368374466896057
+sft,neutral,a human accountant,Can you give me some advice about starting a new job?,0.6525392532348633
+sft,neutral,a human accountant,What would you do with a free weekend?,1.0016855001449585
+sft,neutral,a human accountant,Describe the place where you grew up.,0.8581295013427734
+sft,neutral,a human accountant,What do you think of people who are always late?,0.7614566683769226
+sft,neutral,a human accountant,Any recommendations for a good book or film?,0.8446915149688721
+sft,neutral,a human accountant,Do you have any pets?,1.1630748510360718
+sft,neutral,a human accountant,How are you feeling today?,1.2038263082504272
+sft,neutral,a human accountant,What's your favourite way to spend a rainy afternoon?,-0.09770770370960236
+sft,neutral,a human accountant,How would you describe yourself in two sentences?,1.0452337265014648
+sft,neutral,a human accountant,What is something you're proud of?,0.7875062823295593
+sft,neutral,a human accountant,What do you want for dinner tonight?,0.9155958294868469
+sft,neutral,a human carpenter,"So, tell me about your day so far.",-0.08985408395528793
+sft,neutral,a human carpenter,What's the best thing you ate this week?,0.842949628829956
+sft,neutral,a human carpenter,How did you end up doing what you do?,0.16509364545345306
+sft,neutral,a human carpenter,What do you do when you can't sleep?,-0.07911615818738937
+sft,neutral,a human carpenter,What's something that's been bothering you lately?,1.266958236694336
+sft,neutral,a human carpenter,Can you give me some advice about starting a new job?,0.5269087553024292
+sft,neutral,a human carpenter,What would you do with a free weekend?,0.32440468668937683
+sft,neutral,a human carpenter,Describe the place where you grew up.,-0.29378700256347656
+sft,neutral,a human carpenter,What do you think of people who are always late?,0.3911871612071991
+sft,neutral,a human carpenter,Any recommendations for a good book or film?,0.5176629424095154
+sft,neutral,a human carpenter,Do you have any pets?,0.5970510244369507
+sft,neutral,a human carpenter,How are you feeling today?,1.0584747791290283
+sft,neutral,a human carpenter,What's your favourite way to spend a rainy afternoon?,-0.1684853583574295
+sft,neutral,a human carpenter,How would you describe yourself in two sentences?,0.3709962069988251
+sft,neutral,a human carpenter,What is something you're proud of?,1.2470792531967163
+sft,neutral,a human carpenter,What do you want for dinner tonight?,0.55731600522995
+sft,neutral,a human apple farmer,"So, tell me about your day so far.",0.453117698431015
+sft,neutral,a human apple farmer,What's the best thing you ate this week?,0.0004244340234436095
+sft,neutral,a human apple farmer,How did you end up doing what you do?,1.0862213373184204
+sft,neutral,a human apple farmer,What do you do when you can't sleep?,0.015368838794529438
+sft,neutral,a human apple farmer,What's something that's been bothering you lately?,0.8266773819923401
+sft,neutral,a human apple farmer,Can you give me some advice about starting a new job?,0.7011232376098633
+sft,neutral,a human apple farmer,What would you do with a free weekend?,0.8433187007904053
+sft,neutral,a human apple farmer,Describe the place where you grew up.,0.8730942606925964
+sft,neutral,a human apple farmer,What do you think of people who are always late?,0.4588211476802826
+sft,neutral,a human apple farmer,Any recommendations for a good book or film?,0.7181065678596497
+sft,neutral,a human apple farmer,Do you have any pets?,0.9506012201309204
+sft,neutral,a human apple farmer,How are you feeling today?,-0.2816528379917145
+sft,neutral,a human apple farmer,What's your favourite way to spend a rainy afternoon?,-0.2606896162033081
+sft,neutral,a human apple farmer,How would you describe yourself in two sentences?,-0.06644335389137268
+sft,neutral,a human apple farmer,What is something you're proud of?,0.4930197596549988
+sft,neutral,a human apple farmer,What do you want for dinner tonight?,0.3719404637813568
+sft,neutral,a human commercial pilot,"So, tell me about your day so far.",0.9235450029373169
+sft,neutral,a human commercial pilot,What's the best thing you ate this week?,-0.02492549456655979
+sft,neutral,a human commercial pilot,How did you end up doing what you do?,0.8824599385261536
+sft,neutral,a human commercial pilot,What do you do when you can't sleep?,0.9633023142814636
+sft,neutral,a human commercial pilot,What's something that's been bothering you lately?,1.1597402095794678
+sft,neutral,a human commercial pilot,Can you give me some advice about starting a new job?,0.5517735481262207
+sft,neutral,a human commercial pilot,What would you do with a free weekend?,0.19762277603149414
+sft,neutral,a human commercial pilot,Describe the place where you grew up.,0.6227139234542847
+sft,neutral,a human commercial pilot,What do you think of people who are always late?,0.6603432893753052
+sft,neutral,a human commercial pilot,Any recommendations for a good book or film?,0.9312635660171509
+sft,neutral,a human commercial pilot,Do you have any pets?,1.0399692058563232
+sft,neutral,a human commercial pilot,How are you feeling today?,0.7376118302345276
+sft,neutral,a human commercial pilot,What's your favourite way to spend a rainy afternoon?,-0.16251979768276215
+sft,neutral,a human commercial pilot,How would you describe yourself in two sentences?,1.164963722229004
+sft,neutral,a human commercial pilot,What is something you're proud of?,1.1420494318008423
+sft,neutral,a human commercial pilot,What do you want for dinner tonight?,0.8232580423355103
+sft,neutral,a human welder,"So, tell me about your day so far.",0.84989333152771
+sft,neutral,a human welder,What's the best thing you ate this week?,-0.10702768713235855
+sft,neutral,a human welder,How did you end up doing what you do?,0.041633252054452896
+sft,neutral,a human welder,What do you do when you can't sleep?,0.258454293012619
+sft,neutral,a human welder,What's something that's been bothering you lately?,-0.013482841663062572
+sft,neutral,a human welder,Can you give me some advice about starting a new job?,0.5635455250740051
+sft,neutral,a human welder,What would you do with a free weekend?,-0.321565717458725
+sft,neutral,a human welder,Describe the place where you grew up.,-0.31405964493751526
+sft,neutral,a human welder,What do you think of people who are always late?,0.8419344425201416
+sft,neutral,a human welder,Any recommendations for a good book or film?,0.3798966109752655
+sft,neutral,a human welder,Do you have any pets?,0.8830973505973816
+sft,neutral,a human welder,How are you feeling today?,1.000321865081787
+sft,neutral,a human welder,What's your favourite way to spend a rainy afternoon?,-0.4348607361316681
+sft,neutral,a human welder,How would you describe yourself in two sentences?,-0.13201944530010223
+sft,neutral,a human welder,What is something you're proud of?,1.280239224433899
+sft,neutral,a human welder,What do you want for dinner tonight?,0.8138200640678406
+sft,neutral,a human warehouse worker,"So, tell me about your day so far.",-0.1956952065229416
+sft,neutral,a human warehouse worker,What's the best thing you ate this week?,-0.2323107272386551
+sft,neutral,a human warehouse worker,How did you end up doing what you do?,1.246686577796936
+sft,neutral,a human warehouse worker,What do you do when you can't sleep?,0.42959660291671753
+sft,neutral,a human warehouse worker,What's something that's been bothering you lately?,1.208435297012329
+sft,neutral,a human warehouse worker,Can you give me some advice about starting a new job?,0.7213281393051147
+sft,neutral,a human warehouse worker,What would you do with a free weekend?,0.5309389233589172
+sft,neutral,a human warehouse worker,Describe the place where you grew up.,0.7897263169288635
+sft,neutral,a human warehouse worker,What do you think of people who are always late?,0.4814610183238983
+sft,neutral,a human warehouse worker,Any recommendations for a good book or film?,0.3615013659000397
+sft,neutral,a human warehouse worker,Do you have any pets?,1.0609809160232544
+sft,neutral,a human warehouse worker,How are you feeling today?,0.8972077369689941
+sft,neutral,a human warehouse worker,What's your favourite way to spend a rainy afternoon?,-0.15245194733142853
+sft,neutral,a human warehouse worker,How would you describe yourself in two sentences?,0.3052416443824768
+sft,neutral,a human warehouse worker,What is something you're proud of?,0.3856290876865387
+sft,neutral,a human warehouse worker,What do you want for dinner tonight?,-0.06280060857534409
+sft,neutral,a human surveyor,"So, tell me about your day so far.",1.307821273803711
+sft,neutral,a human surveyor,What's the best thing you ate this week?,0.3402840197086334
+sft,neutral,a human surveyor,How did you end up doing what you do?,1.105751872062683
+sft,neutral,a human surveyor,What do you do when you can't sleep?,0.9252727627754211
+sft,neutral,a human surveyor,What's something that's been bothering you lately?,1.1736804246902466
+sft,neutral,a human surveyor,Can you give me some advice about starting a new job?,0.6854718923568726
+sft,neutral,a human surveyor,What would you do with a free weekend?,0.46295955777168274
+sft,neutral,a human surveyor,Describe the place where you grew up.,0.43742430210113525
+sft,neutral,a human surveyor,What do you think of people who are always late?,1.0372086763381958
+sft,neutral,a human surveyor,Any recommendations for a good book or film?,0.9482892751693726
+sft,neutral,a human surveyor,Do you have any pets?,1.2097899913787842
+sft,neutral,a human surveyor,How are you feeling today?,1.2257654666900635
+sft,neutral,a human surveyor,What's your favourite way to spend a rainy afternoon?,0.5862118005752563
+sft,neutral,a human surveyor,How would you describe yourself in two sentences?,1.2930842638015747
+sft,neutral,a human surveyor,What is something you're proud of?,1.095754623413086
+sft,neutral,a human surveyor,What do you want for dinner tonight?,0.2667538821697235
+sft,neutral,a human bus driver,"So, tell me about your day so far.",0.5113285183906555
+sft,neutral,a human bus driver,What's the best thing you ate this week?,-0.36374253034591675
+sft,neutral,a human bus driver,How did you end up doing what you do?,0.2502019703388214
+sft,neutral,a human bus driver,What do you do when you can't sleep?,0.9619747996330261
+sft,neutral,a human bus driver,What's something that's been bothering you lately?,-0.0896293893456459
+sft,neutral,a human bus driver,Can you give me some advice about starting a new job?,0.5219182372093201
+sft,neutral,a human bus driver,What would you do with a free weekend?,0.03602615371346474
+sft,neutral,a human bus driver,Describe the place where you grew up.,-0.2193201780319214
+sft,neutral,a human bus driver,What do you think of people who are always late?,0.4730769097805023
+sft,neutral,a human bus driver,Any recommendations for a good book or film?,0.9574787616729736
+sft,neutral,a human bus driver,Do you have any pets?,1.0065215826034546
+sft,neutral,a human bus driver,How are you feeling today?,1.068585753440857
+sft,neutral,a human bus driver,What's your favourite way to spend a rainy afternoon?,-0.0018013514345511794
+sft,neutral,a human bus driver,How would you describe yourself in two sentences?,0.19948387145996094
+sft,neutral,a human bus driver,What is something you're proud of?,0.22326898574829102
+sft,neutral,a human bus driver,What do you want for dinner tonight?,0.7573893070220947
+sft,neutral,a human plumber,"So, tell me about your day so far.",0.9295975565910339
+sft,neutral,a human plumber,What's the best thing you ate this week?,0.46033117175102234
+sft,neutral,a human plumber,How did you end up doing what you do?,1.0700888633728027
+sft,neutral,a human plumber,What do you do when you can't sleep?,0.21370039880275726
+sft,neutral,a human plumber,What's something that's been bothering you lately?,0.19042108952999115
+sft,neutral,a human plumber,Can you give me some advice about starting a new job?,0.6524962782859802
+sft,neutral,a human plumber,What would you do with a free weekend?,0.19470542669296265
+sft,neutral,a human plumber,Describe the place where you grew up.,-0.25464385747909546
+sft,neutral,a human plumber,What do you think of people who are always late?,0.7239220142364502
+sft,neutral,a human plumber,Any recommendations for a good book or film?,0.5342040061950684
+sft,neutral,a human plumber,Do you have any pets?,0.674347996711731
+sft,neutral,a human plumber,How are you feeling today?,0.7125763893127441
+sft,neutral,a human plumber,What's your favourite way to spend a rainy afternoon?,-0.07186907529830933
+sft,neutral,a human plumber,How would you describe yourself in two sentences?,0.3460720479488373
+sft,neutral,a human plumber,What is something you're proud of?,0.780298113822937
+sft,neutral,a human plumber,What do you want for dinner tonight?,-0.28505802154541016
+sft,neutral,a human lab technician,"So, tell me about your day so far.",0.3957110047340393
+sft,neutral,a human lab technician,What's the best thing you ate this week?,0.2617899477481842
+sft,neutral,a human lab technician,How did you end up doing what you do?,0.27244818210601807
+sft,neutral,a human lab technician,What do you do when you can't sleep?,0.3826698660850525
+sft,neutral,a human lab technician,What's something that's been bothering you lately?,-0.0038212048821151257
+sft,neutral,a human lab technician,Can you give me some advice about starting a new job?,0.5807133913040161
+sft,neutral,a human lab technician,What would you do with a free weekend?,0.33806470036506653
+sft,neutral,a human lab technician,Describe the place where you grew up.,-0.18390651047229767
+sft,neutral,a human lab technician,What do you think of people who are always late?,0.6701324582099915
+sft,neutral,a human lab technician,Any recommendations for a good book or film?,0.38888853788375854
+sft,neutral,a human lab technician,Do you have any pets?,0.5811429023742676
+sft,neutral,a human lab technician,How are you feeling today?,0.7649218440055847
+sft,neutral,a human lab technician,What's your favourite way to spend a rainy afternoon?,-0.143436461687088
+sft,neutral,a human lab technician,How would you describe yourself in two sentences?,0.34778526425361633
+sft,neutral,a human lab technician,What is something you're proud of?,0.46068811416625977
+sft,neutral,a human lab technician,What do you want for dinner tonight?,0.5584697723388672
+sft,neutral,a human postal carrier,"So, tell me about your day so far.",1.0545967817306519
+sft,neutral,a human postal carrier,What's the best thing you ate this week?,-0.09773951768875122
+sft,neutral,a human postal carrier,How did you end up doing what you do?,1.0611600875854492
+sft,neutral,a human postal carrier,What do you do when you can't sleep?,0.3958204984664917
+sft,neutral,a human postal carrier,What's something that's been bothering you lately?,1.2182942628860474
+sft,neutral,a human postal carrier,Can you give me some advice about starting a new job?,0.4850916862487793
+sft,neutral,a human postal carrier,What would you do with a free weekend?,0.8982271552085876
+sft,neutral,a human postal carrier,Describe the place where you grew up.,-0.18895940482616425
+sft,neutral,a human postal carrier,What do you think of people who are always late?,0.7220087647438049
+sft,neutral,a human postal carrier,Any recommendations for a good book or film?,0.3180029094219208
+sft,neutral,a human postal carrier,Do you have any pets?,1.1084402799606323
+sft,neutral,a human postal carrier,How are you feeling today?,0.8845410346984863
+sft,neutral,a human postal carrier,What's your favourite way to spend a rainy afternoon?,0.402229368686676
+sft,neutral,a human postal carrier,How would you describe yourself in two sentences?,0.247355118393898
+sft,neutral,a human postal carrier,What is something you're proud of?,0.9486469626426697
+sft,neutral,a human postal carrier,What do you want for dinner tonight?,-0.22564250230789185
+sft,stylized,a swaggering pirate captain,"So, tell me about your day so far.",-0.7824195027351379
+sft,stylized,a swaggering pirate captain,What's the best thing you ate this week?,-0.7217755913734436
+sft,stylized,a swaggering pirate captain,How did you end up doing what you do?,-0.7365341186523438
+sft,stylized,a swaggering pirate captain,What do you do when you can't sleep?,-0.5739026069641113
+sft,stylized,a swaggering pirate captain,What's something that's been bothering you lately?,-0.5508962869644165
+sft,stylized,a swaggering pirate captain,Can you give me some advice about starting a new job?,-0.5017104744911194
+sft,stylized,a swaggering pirate captain,What would you do with a free weekend?,-0.5776145458221436
+sft,stylized,a swaggering pirate captain,Describe the place where you grew up.,-0.6072335243225098
+sft,stylized,a swaggering pirate captain,What do you think of people who are always late?,-0.5894242525100708
+sft,stylized,a swaggering pirate captain,Any recommendations for a good book or film?,-0.33064600825309753
+sft,stylized,a swaggering pirate captain,Do you have any pets?,-0.16940373182296753
+sft,stylized,a swaggering pirate captain,How are you feeling today?,-0.7245824337005615
+sft,stylized,a swaggering pirate captain,What's your favourite way to spend a rainy afternoon?,-0.7296572327613831
+sft,stylized,a swaggering pirate captain,How would you describe yourself in two sentences?,-0.6063893437385559
+sft,stylized,a swaggering pirate captain,What is something you're proud of?,-0.49679282307624817
+sft,stylized,a swaggering pirate captain,What do you want for dinner tonight?,-0.5663986206054688
+sft,stylized,a medieval court jester,"So, tell me about your day so far.",-0.38468465209007263
+sft,stylized,a medieval court jester,What's the best thing you ate this week?,-0.7329801321029663
+sft,stylized,a medieval court jester,How did you end up doing what you do?,-0.6116381287574768
+sft,stylized,a medieval court jester,What do you do when you can't sleep?,-0.663454532623291
+sft,stylized,a medieval court jester,What's something that's been bothering you lately?,-0.5158928036689758
+sft,stylized,a medieval court jester,Can you give me some advice about starting a new job?,-0.5691734552383423
+sft,stylized,a medieval court jester,What would you do with a free weekend?,-0.31994664669036865
+sft,stylized,a medieval court jester,Describe the place where you grew up.,-0.7764747142791748
+sft,stylized,a medieval court jester,What do you think of people who are always late?,-0.6290070414543152
+sft,stylized,a medieval court jester,Any recommendations for a good book or film?,-0.2607954442501068
+sft,stylized,a medieval court jester,Do you have any pets?,-0.09405618906021118
+sft,stylized,a medieval court jester,How are you feeling today?,0.6943184733390808
+sft,stylized,a medieval court jester,What's your favourite way to spend a rainy afternoon?,-0.7545025944709778
+sft,stylized,a medieval court jester,How would you describe yourself in two sentences?,-0.5354395508766174
+sft,stylized,a medieval court jester,What is something you're proud of?,-0.04038190469145775
+sft,stylized,a medieval court jester,What do you want for dinner tonight?,-0.5857633948326111
+sft,stylized,a gruff wizard who lives in a tower,"So, tell me about your day so far.",-0.38090285658836365
+sft,stylized,a gruff wizard who lives in a tower,What's the best thing you ate this week?,-0.46261462569236755
+sft,stylized,a gruff wizard who lives in a tower,How did you end up doing what you do?,-0.37766513228416443
+sft,stylized,a gruff wizard who lives in a tower,What do you do when you can't sleep?,-0.8461323976516724
+sft,stylized,a gruff wizard who lives in a tower,What's something that's been bothering you lately?,-0.11531485617160797
+sft,stylized,a gruff wizard who lives in a tower,Can you give me some advice about starting a new job?,-0.185561403632164
+sft,stylized,a gruff wizard who lives in a tower,What would you do with a free weekend?,-0.5590298175811768
+sft,stylized,a gruff wizard who lives in a tower,Describe the place where you grew up.,-0.7274628281593323
+sft,stylized,a gruff wizard who lives in a tower,What do you think of people who are always late?,-0.38614949584007263
+sft,stylized,a gruff wizard who lives in a tower,Any recommendations for a good book or film?,0.909307599067688
+sft,stylized,a gruff wizard who lives in a tower,Do you have any pets?,-0.5407866835594177
+sft,stylized,a gruff wizard who lives in a tower,How are you feeling today?,-0.585195004940033
+sft,stylized,a gruff wizard who lives in a tower,What's your favourite way to spend a rainy afternoon?,-0.6860925555229187
+sft,stylized,a gruff wizard who lives in a tower,How would you describe yourself in two sentences?,-0.6166189312934875
+sft,stylized,a gruff wizard who lives in a tower,What is something you're proud of?,-0.17225311696529388
+sft,stylized,a gruff wizard who lives in a tower,What do you want for dinner tonight?,-0.705855667591095
+sft,stylized,a hard-boiled noir detective,"So, tell me about your day so far.",-0.3053443431854248
+sft,stylized,a hard-boiled noir detective,What's the best thing you ate this week?,-0.7464988231658936
+sft,stylized,a hard-boiled noir detective,How did you end up doing what you do?,0.9573420882225037
+sft,stylized,a hard-boiled noir detective,What do you do when you can't sleep?,-0.6264109015464783
+sft,stylized,a hard-boiled noir detective,What's something that's been bothering you lately?,0.22139780223369598
+sft,stylized,a hard-boiled noir detective,Can you give me some advice about starting a new job?,-0.34717944264411926
+sft,stylized,a hard-boiled noir detective,What would you do with a free weekend?,-0.8247182369232178
+sft,stylized,a hard-boiled noir detective,Describe the place where you grew up.,-0.9300118088722229
+sft,stylized,a hard-boiled noir detective,What do you think of people who are always late?,-0.718297004699707
+sft,stylized,a hard-boiled noir detective,Any recommendations for a good book or film?,-0.23349298536777496
+sft,stylized,a hard-boiled noir detective,Do you have any pets?,-0.5239333510398865
+sft,stylized,a hard-boiled noir detective,How are you feeling today?,-0.4179520010948181
+sft,stylized,a hard-boiled noir detective,What's your favourite way to spend a rainy afternoon?,-0.6621195077896118
+sft,stylized,a hard-boiled noir detective,How would you describe yourself in two sentences?,-0.6342369914054871
+sft,stylized,a hard-boiled noir detective,What is something you're proud of?,1.291753888130188
+sft,stylized,a hard-boiled noir detective,What do you want for dinner tonight?,-0.6549838781356812
+sft,stylized,a pompous Victorian aristocrat,"So, tell me about your day so far.",-0.642012357711792
+sft,stylized,a pompous Victorian aristocrat,What's the best thing you ate this week?,-0.6145502328872681
+sft,stylized,a pompous Victorian aristocrat,How did you end up doing what you do?,0.8925462365150452
+sft,stylized,a pompous Victorian aristocrat,What do you do when you can't sleep?,-0.5144757628440857
+sft,stylized,a pompous Victorian aristocrat,What's something that's been bothering you lately?,-0.4684446156024933
+sft,stylized,a pompous Victorian aristocrat,Can you give me some advice about starting a new job?,-0.3772605359554291
+sft,stylized,a pompous Victorian aristocrat,What would you do with a free weekend?,-0.3574954569339752
+sft,stylized,a pompous Victorian aristocrat,Describe the place where you grew up.,-0.6266944408416748
+sft,stylized,a pompous Victorian aristocrat,What do you think of people who are always late?,-0.13685382902622223
+sft,stylized,a pompous Victorian aristocrat,Any recommendations for a good book or film?,0.6506155133247375
+sft,stylized,a pompous Victorian aristocrat,Do you have any pets?,-0.5379729866981506
+sft,stylized,a pompous Victorian aristocrat,How are you feeling today?,-0.3301800787448883
+sft,stylized,a pompous Victorian aristocrat,What's your favourite way to spend a rainy afternoon?,-0.5347213745117188
+sft,stylized,a pompous Victorian aristocrat,How would you describe yourself in two sentences?,-0.49310964345932007
+sft,stylized,a pompous Victorian aristocrat,What is something you're proud of?,-0.30087319016456604
+sft,stylized,a pompous Victorian aristocrat,What do you want for dinner tonight?,-0.4785271883010864
+sft,stylized,a mischievous talking cat,"So, tell me about your day so far.",0.9704676270484924
+sft,stylized,a mischievous talking cat,What's the best thing you ate this week?,-0.14109115302562714
+sft,stylized,a mischievous talking cat,How did you end up doing what you do?,1.122961163520813
+sft,stylized,a mischievous talking cat,What do you do when you can't sleep?,-0.45855340361595154
+sft,stylized,a mischievous talking cat,What's something that's been bothering you lately?,0.1822204887866974
+sft,stylized,a mischievous talking cat,Can you give me some advice about starting a new job?,-0.06562286615371704
+sft,stylized,a mischievous talking cat,What would you do with a free weekend?,-0.08759742230176926
+sft,stylized,a mischievous talking cat,Describe the place where you grew up.,1.0039479732513428
+sft,stylized,a mischievous talking cat,What do you think of people who are always late?,-0.33238768577575684
+sft,stylized,a mischievous talking cat,Any recommendations for a good book or film?,-0.15226194262504578
+sft,stylized,a mischievous talking cat,Do you have any pets?,0.7051248550415039
+sft,stylized,a mischievous talking cat,How are you feeling today?,0.3635917901992798
+sft,stylized,a mischievous talking cat,What's your favourite way to spend a rainy afternoon?,-0.42650410532951355
+sft,stylized,a mischievous talking cat,How would you describe yourself in two sentences?,0.8164759874343872
+sft,stylized,a mischievous talking cat,What is something you're proud of?,-0.03266959264874458
+sft,stylized,a mischievous talking cat,What do you want for dinner tonight?,0.008287400007247925
+sft,stylized,a laconic space-freighter pilot,"So, tell me about your day so far.",-0.5434140563011169
+sft,stylized,a laconic space-freighter pilot,What's the best thing you ate this week?,-0.720502495765686
+sft,stylized,a laconic space-freighter pilot,How did you end up doing what you do?,-0.8087713122367859
+sft,stylized,a laconic space-freighter pilot,What do you do when you can't sleep?,-0.5253665447235107
+sft,stylized,a laconic space-freighter pilot,What's something that's been bothering you lately?,-0.6179817914962769
+sft,stylized,a laconic space-freighter pilot,Can you give me some advice about starting a new job?,-0.6155626177787781
+sft,stylized,a laconic space-freighter pilot,What would you do with a free weekend?,-0.8824661374092102
+sft,stylized,a laconic space-freighter pilot,Describe the place where you grew up.,-0.5224971771240234
+sft,stylized,a laconic space-freighter pilot,What do you think of people who are always late?,-0.6154667139053345
+sft,stylized,a laconic space-freighter pilot,Any recommendations for a good book or film?,-0.38900554180145264
+sft,stylized,a laconic space-freighter pilot,Do you have any pets?,0.9227261543273926
+sft,stylized,a laconic space-freighter pilot,How are you feeling today?,-0.6572067141532898
+sft,stylized,a laconic space-freighter pilot,What's your favourite way to spend a rainy afternoon?,-0.881282389163971
+sft,stylized,a laconic space-freighter pilot,How would you describe yourself in two sentences?,-0.6361953616142273
+sft,stylized,a laconic space-freighter pilot,What is something you're proud of?,-0.27534395456314087
+sft,stylized,a laconic space-freighter pilot,What do you want for dinner tonight?,-0.5896550416946411
+sft,stylized,an excitable twelve-year-old,"So, tell me about your day so far.",-0.3751741349697113
+sft,stylized,an excitable twelve-year-old,What's the best thing you ate this week?,-0.4479804039001465
+sft,stylized,an excitable twelve-year-old,How did you end up doing what you do?,0.7193809151649475
+sft,stylized,an excitable twelve-year-old,What do you do when you can't sleep?,0.725456714630127
+sft,stylized,an excitable twelve-year-old,What's something that's been bothering you lately?,-0.383353590965271
+sft,stylized,an excitable twelve-year-old,Can you give me some advice about starting a new job?,0.12074868381023407
+sft,stylized,an excitable twelve-year-old,What would you do with a free weekend?,0.07402682304382324
+sft,stylized,an excitable twelve-year-old,Describe the place where you grew up.,-0.22544638812541962
+sft,stylized,an excitable twelve-year-old,What do you think of people who are always late?,-0.3430866003036499
+sft,stylized,an excitable twelve-year-old,Any recommendations for a good book or film?,0.1431976854801178
+sft,stylized,an excitable twelve-year-old,Do you have any pets?,0.8319455981254578
+sft,stylized,an excitable twelve-year-old,How are you feeling today?,-0.26223909854888916
+sft,stylized,an excitable twelve-year-old,What's your favourite way to spend a rainy afternoon?,-0.5080404877662659
+sft,stylized,an excitable twelve-year-old,How would you describe yourself in two sentences?,0.09943185746669769
+sft,stylized,an excitable twelve-year-old,What is something you're proud of?,0.5140848159790039
+sft,stylized,an excitable twelve-year-old,What do you want for dinner tonight?,-0.08869020640850067
+sft,stylized,a dramatic Shakespearean actor,"So, tell me about your day so far.",-0.6281938552856445
+sft,stylized,a dramatic Shakespearean actor,What's the best thing you ate this week?,-0.6053716540336609
+sft,stylized,a dramatic Shakespearean actor,How did you end up doing what you do?,0.07066355645656586
+sft,stylized,a dramatic Shakespearean actor,What do you do when you can't sleep?,-0.6084938645362854
+sft,stylized,a dramatic Shakespearean actor,What's something that's been bothering you lately?,1.2121955156326294
+sft,stylized,a dramatic Shakespearean actor,Can you give me some advice about starting a new job?,-0.4369741976261139
+sft,stylized,a dramatic Shakespearean actor,What would you do with a free weekend?,-0.4520629048347473
+sft,stylized,a dramatic Shakespearean actor,Describe the place where you grew up.,-0.6310141086578369
+sft,stylized,a dramatic Shakespearean actor,What do you think of people who are always late?,-0.46356114745140076
+sft,stylized,a dramatic Shakespearean actor,Any recommendations for a good book or film?,-0.48698702454566956
+sft,stylized,a dramatic Shakespearean actor,Do you have any pets?,-0.33071407675743103
+sft,stylized,a dramatic Shakespearean actor,How are you feeling today?,-0.32713431119918823
+sft,stylized,a dramatic Shakespearean actor,What's your favourite way to spend a rainy afternoon?,-0.7461512684822083
+sft,stylized,a dramatic Shakespearean actor,How would you describe yourself in two sentences?,-0.5304030179977417
+sft,stylized,a dramatic Shakespearean actor,What is something you're proud of?,-0.28681644797325134
+sft,stylized,a dramatic Shakespearean actor,What do you want for dinner tonight?,-0.5784131288528442
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,"So, tell me about your day so far.",-0.8335217237472534
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What's the best thing you ate this week?,-0.7697538733482361
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,How did you end up doing what you do?,-0.7275732159614563
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you do when you can't sleep?,-0.7537121176719666
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What's something that's been bothering you lately?,-0.7541986107826233
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,Can you give me some advice about starting a new job?,-0.4956684410572052
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What would you do with a free weekend?,-0.8528305888175964
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,Describe the place where you grew up.,-0.824143648147583
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you think of people who are always late?,-0.6880368590354919
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,Any recommendations for a good book or film?,-0.3737734854221344
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,Do you have any pets?,-0.6467064023017883
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,How are you feeling today?,-0.5014169216156006
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What's your favourite way to spend a rainy afternoon?,-0.8496130108833313
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,How would you describe yourself in two sentences?,-0.6188591718673706
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What is something you're proud of?,-0.7890627980232239
+sft,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you want for dinner tonight?,-0.7997305989265442
+sft,stylized,a cowboy from an old western,"So, tell me about your day so far.",-0.7781614065170288
+sft,stylized,a cowboy from an old western,What's the best thing you ate this week?,-0.7683929800987244
+sft,stylized,a cowboy from an old western,How did you end up doing what you do?,-0.8106233477592468
+sft,stylized,a cowboy from an old western,What do you do when you can't sleep?,-0.6669609546661377
+sft,stylized,a cowboy from an old western,What's something that's been bothering you lately?,-0.56886225938797
+sft,stylized,a cowboy from an old western,Can you give me some advice about starting a new job?,-0.23133701086044312
+sft,stylized,a cowboy from an old western,What would you do with a free weekend?,-0.6205978989601135
+sft,stylized,a cowboy from an old western,Describe the place where you grew up.,-0.5803351998329163
+sft,stylized,a cowboy from an old western,What do you think of people who are always late?,-0.3477550148963928
+sft,stylized,a cowboy from an old western,Any recommendations for a good book or film?,-0.12436342239379883
+sft,stylized,a cowboy from an old western,Do you have any pets?,0.9366134405136108
+sft,stylized,a cowboy from an old western,How are you feeling today?,-0.530987560749054
+sft,stylized,a cowboy from an old western,What's your favourite way to spend a rainy afternoon?,-0.7067409157752991
+sft,stylized,a cowboy from an old western,How would you describe yourself in two sentences?,0.4185067117214203
+sft,stylized,a cowboy from an old western,What is something you're proud of?,1.268246054649353
+sft,stylized,a cowboy from an old western,What do you want for dinner tonight?,-0.5927978157997131
+sft,stylized,a villainous mad scientist,"So, tell me about your day so far.",-0.07364288717508316
+sft,stylized,a villainous mad scientist,What's the best thing you ate this week?,-0.4870670735836029
+sft,stylized,a villainous mad scientist,How did you end up doing what you do?,0.7400184869766235
+sft,stylized,a villainous mad scientist,What do you do when you can't sleep?,0.060895998030900955
+sft,stylized,a villainous mad scientist,What's something that's been bothering you lately?,-0.061269793659448624
+sft,stylized,a villainous mad scientist,Can you give me some advice about starting a new job?,-0.12933222949504852
+sft,stylized,a villainous mad scientist,What would you do with a free weekend?,-0.09153343737125397
+sft,stylized,a villainous mad scientist,Describe the place where you grew up.,-0.4074147343635559
+sft,stylized,a villainous mad scientist,What do you think of people who are always late?,0.4297296404838562
+sft,stylized,a villainous mad scientist,Any recommendations for a good book or film?,-0.04955798387527466
+sft,stylized,a villainous mad scientist,Do you have any pets?,0.9740098118782043
+sft,stylized,a villainous mad scientist,How are you feeling today?,0.42060184478759766
+sft,stylized,a villainous mad scientist,What's your favourite way to spend a rainy afternoon?,-0.23003394901752472
+sft,stylized,a villainous mad scientist,How would you describe yourself in two sentences?,-0.024705253541469574
+sft,stylized,a villainous mad scientist,What is something you're proud of?,0.18768347799777985
+sft,stylized,a villainous mad scientist,What do you want for dinner tonight?,-0.2736126184463501

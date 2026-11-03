@@ -1,0 +1,15 @@
+=== control base Mon Nov  2 12:20:42 GMT 2026
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 7674.83it/s]
+wrote 1200 rows to results/olmo3-7b/dominance_pilot/scores_control/base.csv
+=== control sft Mon Nov  2 12:21:29 GMT 2026
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 11288.69it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+wrote 1200 rows to results/olmo3-7b/dominance_pilot/scores_control/sft.csv
+=== control dpo Mon Nov  2 12:22:15 GMT 2026
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 11201.64it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+wrote 1200 rows to results/olmo3-7b/dominance_pilot/scores_control/dpo.csv
+=== control instruct Mon Nov  2 12:23:02 GMT 2026
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 9595.41it/s]
+wrote 1200 rows to results/olmo3-7b/dominance_pilot/scores_control/instruct.csv
+=== ctl done Mon Nov  2 12:23:53 GMT 2026
