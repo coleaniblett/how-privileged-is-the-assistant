@@ -635,3 +635,23 @@ Run as designed above, with the Llama leg replaced by Gemma 4 E4B-it (model poli
 - **Flag (pre-set)**: OLMo, the orthogonalised switch moves the plain Assistant's refusal by 0.15, at least 0.8 x its swing on characters (0.12 and 0.10): possible general refusal lever. No flag for Qwen (0.32 vs 0.59) or Gemma (0.10 vs 0.33–0.37).
 - **Reading**: the replication holds for Qwen only. Gemma is not separable from random directions, as in the earlier six-seed control. The OLMo lever is much smaller than in the earlier steering runs (system-prompt persona refusal 0.36 to 0.76): these six 'never refuses' roles start at 0.50 and the curves are nearly flat, so that result may depend on the character set; not yet tested.
 - Directions: cos(switch, formality) 0.42 (OLMo), 0.53 (Qwen), 0.29 (Gemma); cos(orth, formality) is zero by construction.
+
+## 2026-11-03: the two earliest pilot runs move to `attic/`
+
+`results_preceding/` (preceding-turn robustness run) and `results_v0/` (earlier unfiltered sample) moved, unchanged and with history (`git mv`), to
+`attic/results_preceding/` and `attic/results_v0/`, to take two directories off the repository root. They stay frozen: contents are never modified, and
+`attic/` is for frozen material only. Paths were updated where they are used or described (`core/selection_check.py` defaults, `AGENTS.md`, `README.md`,
+`core/config.py` comment, the vestigial-regression README); earlier entries in this file keep the old paths as written. `results_v0/` is not just history:
+`core.selection_check` needs its `data/texts.jsonl` and `scores/base.csv`, because the Dolci-contaminated texts removed from `data/texts.jsonl` exist only there.
+This amends the AGENTS.md rule "never moved": the frozen runs may be moved to `attic/` and nowhere else.
+
+## 2026-11-03: the prefilter sample moves out of `attic/` into `data/` and `results/selection_check/`; `data/README.md`
+
+`core.selection_check` needs the earlier unfiltered WildChat sample, the only record of the texts the Dolci filter removed (not regenerable: it came from the live
+stream). Moved with `git mv`, contents unchanged: `attic/results_v0/data/texts.jsonl` -> `data/prefilter_texts.jsonl`; the three `contaminated_Dolci-Instruct-*.json` ->
+`data/prefilter_contaminated_Dolci-Instruct-*.json`; the four per-stage score files -> `results/selection_check/scores/`; the check's own outputs
+(`selection_check.md`, `selection_check_contaminated_ids.json`) -> `results/selection_check/`. `core/selection_check.py` defaults follow; a rerun reproduces the
+committed table. This is the one exception to "`data/` changes only by regenerating": a preserved, non-regenerable input, marked in `data/README.md` as contaminated
+and never test data. The per-stage scores are kept because they allow a memorization check (do the contaminated texts get lower NLL after SFT than the clean ones?)
+that has not been run. What remains in `attic/results_v0/` is the old pilot's own outputs; `attic/README.md` says so. New rule: `data/README.md` describes every
+file in `data/` and is updated in the same commit as any addition, rename or removal (AGENTS.md; `tests/test_data_readme.py` enforces it).

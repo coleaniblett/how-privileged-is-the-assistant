@@ -14,8 +14,8 @@ OLMo 3 7B pilot (`pilot/report.md`, including its checks section):
 
 Build status:
 
-- **NLL arm: built for OLMo 3 7B** (`core/` scoring, `analyze.py`; pilot numbers in `results/`, `results_preceding/`,
-  `results_v0/`, all frozen). The pilot's Gemma 4 31B and Qwen3-8B scores came from the pilot's own scripts
+- **NLL arm: built for OLMo 3 7B** (`core/` scoring, `analyze.py`; pilot numbers in `results/`, `attic/results_preceding/`,
+  `attic/results_v0/`, all frozen). The pilot's Gemma 4 31B and Qwen3-8B scores came from the pilot's own scripts
   (`pilot/nll_arm/`); core now has both families in `config.FAMILIES` and scores them (`--family`, fp32, CPU offload for the
   31B), and the asymmetry quantity (primary, see [Pre-registered criteria](#pre-registered-criteria)) with its
   independent-set bootstrap is implemented in `analyze.py --locked` (on the pilot's scores it reproduces `pilot/report.md`;

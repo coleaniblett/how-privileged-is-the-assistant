@@ -39,6 +39,7 @@ overgeneralization Adeeb; the shared pipeline and the breadth arm are Cole's. `S
 - Never change another measure's code to make yours work. If core lacks something, add it to core compatibly.
 - `extras/` (role swap, coin toss) is kept working; whether it is in scope is undecided.
 - Don't run GPU jobs or download checkpoints from an agent session unless asked.
+- `data/README.md` describes every dataset in `data/`. Adding, renaming or removing a data file means updating it in the same commit (`tests/test_data_readme.py` checks).
 
 ## Layout
 
@@ -49,6 +50,7 @@ measures/<name>/        README (spec + pre-registered criteria), analysis, measu
 extras/                 role_swap.py, coin_toss.py (README has their design)
 scripts/run_gpu.sh      the full run: score + sample per checkpoint, then every analysis
 data/  results/  docs/  tests/
+attic/                  frozen pilot material kept for the record (`attic/README.md`); nothing new goes in without a decisions entry
 ```
 
 Principle: anything that samples or scores models, or prepares shared text sets, lives in `core/`. Anything
@@ -103,10 +105,10 @@ candidates/logit_distortion/<build>/   original-conversation candidates (core.bu
                                        primary route; current pilot_v3 (eligible quota, Dolci-checked); not core.score input; docs/conversation_candidates.md
 ```
 
-Frozen, never modified, moved or overwritten: `data/` (regenerate only through the documented commands),
+Frozen, never modified or overwritten (the earliest pilot runs moved once, to `attic/`, on 2026-11-03; see `docs/decisions.md`): `data/` (regenerate only through the documented commands),
 `results/scores`, `results/generations`, `results/role_swap`, `results/coin_toss` and the `.md/.csv/.png` files
-beside them (the pre-capstone held-out run), `results_preceding/` (preceding-turn robustness run) and
-`results_v0/` (earlier unfiltered sample).
+beside them (the pre-capstone held-out run), `attic/results_preceding/` (preceding-turn robustness run) and
+`attic/results_v0/` (earlier unfiltered sample; its texts, Dolci-match lists and scores moved to `data/prefilter_*` and `results/selection_check/`, still frozen).
 
 ## Measures
 
