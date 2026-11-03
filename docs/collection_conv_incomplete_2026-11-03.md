@@ -36,6 +36,20 @@ manifest. Exclusions are family-specific and listed in each family's `exclusions
 - Validation, generations: 200 prefills x 3 samples, prefill ids and text, `continuation_ids` present and decoding to the stored continuation, provenance matching the current settings and output hash.
 - The collection is complete only if all 16 tasks validate (`--status`).
 
+## Gemma 4 31B: RAM-backed cache
+
+The root disk has about 58 GB free, but a Gemma checkpoint needs 67.5 GB, and teammates' caches are not ours to free. So the Gemma pass
+(`scripts/collect_gemma_shm.sh`) uses a dedicated cache, `/dev/shm/grace-gemma-hub/{hub,xet}`. It sets `HF_HUB_CACHE` and `HF_XET_CACHE` before Python
+starts; checked: `huggingface_hub`, `transformers` and `core.hf_cache` all resolve to it, and partial downloads (`*.incomplete`) are staged
+inside it. Results, manifests, provenance, state and logs stay on disk in the worktree.
+
+The pass starts after the OLMo/Qwen driver exits (it waits for the lock) and runs `--only gemma4-31b`, one checkpoint at a time. Memory check
+before launch: the container's cgroup v1 limit is 188 GB (hierarchical and memory+swap limits are the same, and there is no swap). Needed: 62.5 GB of
+weights in `/dev/shm`, counted against that limit; 92.8 GB for the fp32 CPU-offloaded part of the model (125.0 GB fp32 minus 32.2 GB on the GPU);
+a 15 GB margin. Total 170.3 GB, against 185.1 GB not pinned at 12:30 UTC. `/dev/shm` had 94 GB free. Memory is sampled every 30 s into
+`results/collect_conv_incomplete/gemma_memory.log`. Revisions, fingerprints, precision and settings are unchanged: the freeze step re-checks
+the recorded config revisions, and the manifest refuses a changed tokenizer. At the end only `/dev/shm/grace-gemma-hub` is removed.
+
 ## Incomplete prefills to review later (not edited)
 
 `data/prefill_incomplete_200.jsonl` is used as committed. None of the 200 ends in terminal punctuation. The 13 below are cut within the last
