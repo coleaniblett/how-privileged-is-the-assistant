@@ -30,7 +30,7 @@ def test_refusal_item_coverage_and_na():
     assert all(s["text"].rstrip().endswith(('"', ":")) for s in specs if s["ctx"] == "raw")
 
 
-@pytest.mark.parametrize("name,marker", [("allenai/Olmo-3-7B-Instruct", "<|im_start|>user\n"), ("Qwen/Qwen3-8B", "<|im_start|>user\n"), ("meta-llama/Llama-3.1-8B-Instruct", "user<|end_header_id|>\n\n")])
+@pytest.mark.parametrize("name,marker", [("allenai/Olmo-3-7B-Instruct", "<|im_start|>user\n"), ("Qwen/Qwen3-8B", "<|im_start|>user\n"), ("google/gemma-4-E4B-it", "<|turn>user\n")])
 def test_open_user_text_ends_at_user_header(name, marker):
     from core.render import load_tokenizer
     tok = load_tokenizer(name); t = lm.open_user_text(tok, [lm.S("sys"), lm.U("hello"), lm.A("hi there")])

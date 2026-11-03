@@ -30,8 +30,7 @@ NA = {("refusal", "user"): "the 36 requests are written from the user's side; a 
 FAMILIES = {
     "olmo": dict(label="OLMo 3 7B", tok=None, stages={"base": "base", "sft": "sft", "dpo": "dpo", "instruct": "instruct"}, axis="results/olmo3-7b/persona_axis/instruct.npz", axis_v2="results/olmo3-7b/persona_axis_v2/instruct.npz"),
     "qwen": dict(label="Qwen3-8B", tok="Qwen/Qwen3-8B", stages={"base": "Qwen/Qwen3-8B-Base", "instruct": "Qwen/Qwen3-8B"}, axis="results/other/persona_axis_qwen/Qwen3-8B.npz"),
-    "llama": dict(label="Llama-3.1-8B", tok="meta-llama/Llama-3.1-8B-Instruct", stages={"base": "meta-llama/Llama-3.1-8B", "instruct": "meta-llama/Llama-3.1-8B-Instruct"},
-                  axis="results/other/persona_axis_llama/Llama-3.1-8B-Instruct.npz"),
+    "gemma": dict(label="Gemma 4 E4B", tok="google/gemma-4-E4B-it", stages={"base": "google/gemma-4-E4B", "instruct": "google/gemma-4-E4B-it"}, axis="results/gemma-4-e4b/persona_axis/gemma-4-E4B-it.npz", batch=32),
     "smoke": dict(label="smoke (SmolLM2-135M, synthetic axis)", tok="HuggingFaceTB/SmolLM2-135M-Instruct", stages={"base": "HuggingFaceTB/SmolLM2-135M-Instruct", "instruct": "HuggingFaceTB/SmolLM2-135M-Instruct"}, axis=None),
 }
 ACK = "Interesting. Could you tell me a little more?"
@@ -144,7 +143,7 @@ def run_cmd(a):
         v2 = fam.get("axis_v2"); ax2 = load_axis(v2, model, rng) if v2 and os.path.exists(v2) else None
         stop = end_ids(tok, model); stop_set = set(stop)
         ids = [prompt_ids(tok, s) for s, _ in jobs]; order = sorted(range(len(jobs)), key=lambda i: (jobs[i][0]["trait"], len(ids[i]))); torch.manual_seed(0)
-        pad = tok.pad_token_id; rows = [None] * len(jobs); batch = 4 if SMOKE else 48
+        pad = tok.pad_token_id; rows = [None] * len(jobs); batch = 4 if SMOKE else fam.get("batch", 48)
         for k in range(0, len(order), batch):
             idx = order[k:k + batch]; L = max(len(ids[i]) for i in idx); inp = torch.full((len(idx), L), pad); att = torch.zeros((len(idx), L), dtype=torch.long)
             for r, i in enumerate(idx): inp[r, L - len(ids[i]):] = torch.tensor(ids[i]); att[r, L - len(ids[i]):] = 1
@@ -347,7 +346,7 @@ def analyze_cmd(a):
     rep += ["## Cross-family comparison (post-trained stage; OLMo template range vs the other family's)\n"]; flagged = []
     for key, trait, den in ROWS:
         if ("olmo", key, "instruct") not in ALL: continue
-        for other in ("qwen", "llama"):
+        for other in ("qwen", "gemma"):
             if (other, key, "instruct") not in ALL: continue
             (ca, ga), (cb, gb) = ALL[("olmo", key, "instruct")], ALL[(other, key, "instruct")]
             if not (ga["G1"] and gb["G1"]): flagged.append(f"- {ROW_LABEL[key]} vs {FAMILIES[other]['label']}: not compared (a G1 gate failed)."); continue
@@ -359,7 +358,7 @@ def analyze_cmd(a):
     rep += flagged or ["- No cell flagged."]
     rep += ["", "## Notes\n", "- Register uses a fixed axis per family (the post-trained model's persona axis, fit on that model's own replies to the same 16 questions under the default and 'helpful assistant' framings and 24 characters), so the post-trained model's own-turn coordinate is near 1 and the characters near 0 by construction and the own-turn denominator and the voiced column are partly in-sample; "
             "the independent v2 axis (OLMo only) is the sensitivity check (`dominance_matrix_axis-v2.md`). For base and SFT the mean along the axis may be offset: see 'Absolute levels'.",
-            "- The Assistant's own turn is a template that may carry a default system prompt (OLMo, Llama): T2 of the register own turn is that default, T1 an explicit system prompt, so each context template is paired with an own-turn template of the same system-prompt presence.",
+            "- The Assistant's own turn is a template that may carry a default system prompt (OLMo): T2 of the register own turn is that default, T1 an explicit system prompt, so each context template is paired with an own-turn template of the same system-prompt presence.",
             "- Narration is the Assistant writing a short passage about the character, usually with task framing; its coordinate measures assistant-style framing of a writing task as much as leakage. Raw prose and the user turn are cleaner.",
             "- Refusal rates are biased low in absolute terms (the detector misses soft in-character refusals) but never flag compliance; the log-odds floor uses a fixed pseudo-rate so it does not depend on the number of samples in a cell. Read the raw effects next to the ratios; base refusal can sit at the floor.",
             "- The matrix can show ordering and a fade; it cannot prove a null (hence 'near zero'). Two templates per context is the minimum for a range; roles within a context are averaged, not resampled."]

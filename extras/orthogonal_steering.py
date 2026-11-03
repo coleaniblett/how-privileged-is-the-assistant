@@ -1,6 +1,6 @@
 """Does the Assistant-vs-character switch, minus its formality component, still steer? (exploratory, white-box; design in docs/decisions.md, 2026-11-03)
 
-Per model (OLMo 3 7B instruct, Qwen3-8B, Llama-3.1-8B-Instruct):
+Per model (OLMo 3 7B instruct, Qwen3-8B, Gemma 4 E4B-it; Llama-3.1-8B-Instruct was replaced by Gemma before its leg ran, to keep to the repo's model list):
   directions  switch = extras.persona_axis fit; formality = extras.formality_axis fit; orth = switch minus its projection on formality (per layer).
               cosines, held-out separation AUC of switch (roles split) and formality (style instructions split).
   run         add alpha x g along a unit direction at the steering layer (second persona-axis layer), g = norm of the switch's Assistant-minus-character mean
@@ -22,12 +22,12 @@ OUT = os.path.join(config.RESULTS_ROOT, "orthogonal_steering")
 MODELS = {
     "olmo": dict(label="OLMo 3 7B instruct", stage="instruct", tok=None, switch="results/olmo3-7b/persona_axis/instruct.npz", formality="results/olmo3-7b/formality_axis/instruct.npz"),
     "qwen": dict(label="Qwen3-8B (thinking off)", stage="Qwen/Qwen3-8B", tok="Qwen/Qwen3-8B", switch="results/other/persona_axis_qwen/Qwen3-8B.npz", formality="results/other/formality_axis_qwen/Qwen3-8B.npz"),
-    "llama": dict(label="Llama-3.1-8B-Instruct", stage="meta-llama/Llama-3.1-8B-Instruct", tok="meta-llama/Llama-3.1-8B-Instruct", switch="results/other/persona_axis_llama/Llama-3.1-8B-Instruct.npz",
-                  formality="results/other/formality_axis_llama/Llama-3.1-8B-Instruct.npz"),
+    "gemma": dict(label="Gemma 4 E4B-it", stage="google/gemma-4-E4B-it", tok="google/gemma-4-E4B-it", switch="results/gemma-4-e4b/persona_axis/gemma-4-E4B-it.npz",
+                  formality="results/gemma-4-e4b/formality_axis/gemma-4-E4B-it.npz", batch=32),
 }
 ALPHAS = [-2.0, -1.0, 0.0, 1.0, 2.0]
 SEEDS = list(range(6))
-SAMPLES, NEW_TOKENS, BATCH = 3, 48, 48
+SAMPLES, NEW_TOKENS, BATCH = 3, 48, 48   # BATCH is the default; a model entry may override it
 SETUPS = ["char_sys", "char_user", "assistant"]
 DTYPES = ["switch", "orth", "formality"]
 
@@ -129,8 +129,9 @@ def run_cmd(a):
         hk = Hooks(model, D["layers"], "add", dirs, steer_layer, alpha, gaps) if dirs is not None else None
         torch.manual_seed(5000 + n); rows = []
         jobs = [(pi, s) for pi in order for s in range(SAMPLES)]
-        for k in range(0, len(jobs), BATCH):
-            ch = jobs[k:k + BATCH]; enc = tok([texts_all[pi] for pi, _ in ch], return_tensors="pt", padding=True, add_special_tokens=False).to(device)
+        bs = m.get("batch", BATCH)
+        for k in range(0, len(jobs), bs):
+            ch = jobs[k:k + bs]; enc = tok([texts_all[pi] for pi, _ in ch], return_tensors="pt", padding=True, add_special_tokens=False).to(device)
             with torch.no_grad():
                 g = model.generate(**enc, max_new_tokens=NEW_TOKENS, do_sample=True, temperature=0.8, top_p=0.95, pad_token_id=tok.pad_token_id)
             for (pi, s), seq in zip(ch, g):
