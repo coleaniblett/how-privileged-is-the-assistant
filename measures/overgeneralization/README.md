@@ -75,6 +75,34 @@ it reports the quantities they need.
 **Descriptive only (cannot change the verdict):** the pilot on the current 36 items, the interp arm, the
 user-slot variants if added, and the balanced-frame follow-up.
 
+### User-slot arm: assistant traits in what the model writes as the user (added 2026-11-03, before any judge data exist)
+
+Code `user_traits.py`, tests `tests/test_user_traits.py`. It reads the existing core generations (prefilled user turns, 100 prefills
+x 3 samples per stage) and Cole's judge outputs (`measures/vestigial_regression/judge.py`, `results/capstone/<family>/vestigial_regression/judge/<stage>.jsonl`).
+Nothing new is generated. The judge's four labels are user_voice, switched_to_assistant, degenerate, user_voice_with_assistant_traits.
+
+**Status.** Pre-registered here before any judge output exists. The **5-percentage-point bar is a default pending Adeeb's confirmation
+and may change until judge results exist**; any later change gets a dated `docs/decisions.md` entry. **Power may be low:** judge
+prompt v2 counts a completed sentence plus a closed turn as plain user voice, and the prefills are sentence-boundary prefills, so
+`user_voice_with_assistant_traits` may be rare in every stage.
+
+1. **Primary.** Per prefill, the share of its user-voice samples (user_voice + user_voice_with_assistant_traits) labelled
+   user_voice_with_assistant_traits. Effect = stage minus base, paired per prefill, 95% bootstrap CI over prefills (`core.stats.bootstrap_ci`),
+   in percentage points. Prefills with no user-voice sample in the base or in the stage are dropped from this row and the count is reported.
+2. **Secondary.** The same count over all samples of the prefill (no conditioning on user voice), same pairing and CI.
+3. **Fires** if OLMo 3 7B Instruct is at least 5 pp above base on the primary measure with the CI excluding zero. OLMo SFT and DPO are
+   reported by stage (descriptive). Qwen3-8B and Gemma 4 31B are supporting only, and every table says contamination cannot be checked for them.
+4. **Counts toward H4** as dominance by overgeneralization in the user slot, reported as such, alongside the persona-carryover criteria above.
+5. **Judge-free keyword cross-check (outside the verdict).** In the user portion (cut at the family's turn-end, turn-open, end-of-text and handoff
+   markers), assistant stock phrases and markdown headings, bullets or bold absent from the prefill; same per-prefill change-from-base table.
+   First run on the existing generations: stock phrases and unprompted markdown drop from base to every post-trained stage in all three families
+   (the base model itself writes assistant-style refusals and "As an AI" in the user slot).
+
+```bash
+python -m measures.overgeneralization.user_traits keyword --family olmo3-7b      # runs now
+python -m measures.overgeneralization.user_traits judge   --family olmo3-7b      # needs the judge output; --judge-dir to override
+```
+
 ## Running
 
 ```bash
