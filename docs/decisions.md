@@ -831,3 +831,35 @@ Asked by Cole: a single scoring run per checkpoint covering both measures' clari
   have defaults (`FAMILY_DEFAULTS`); the OLMo rendering hash is unchanged (`94c0f514…`, `tests/test_families.py`). New tests:
   `tests/test_exchanges.py` (every rendering in every family, the tagged/plain identity check per family and context, truncation, builder
   filters, reuse, a CPU smoke run on SmolLM2-135M). No hypothesis threshold, verdict rule or pre-registered criterion changed.
+
+## 2026-11-03: vestigial regression: exchange design and matched-authorship headline for the main run (pilot-informed revision, before the main run)
+
+**Agreed by Cole and Grace before the main run; no main-run result exists.** The main run scores the exchange design built today
+(`core.exchanges`, entry above): the user turn as the conversation's opener, each reply after its own user turn, each tagged and plain,
+on oasst1, UltraChat and WildChat (12 conditions per checkpoint, 96 in all). The reply-alone context (`single`) is not part of the main
+run. `measures/vestigial_regression/README.md` is revised accordingly (Status, NLL arm, Design details, Pre-registered criteria, Running):
+
+- **Primary quantity:** the asymmetry `Δ(user frame cost) − Δ(reply frame cost)`, frame cost = NLL(tagged) − NLL(plain) per exchange,
+  Δ = change from the family's own base (paired per exchange), positions 1+, user and reply sets bootstrapped independently.
+- **Headline: within oasst1 and within UltraChat** (matched authorship: humans wrote both turns / a model wrote both), so authorship does
+  not differ between the two terms; WildChat (human user, ChatGPT reply) is secondary. The NLL arm fires if the asymmetry is at least
+  0.05 nats (detectability floor) with the CI excluding zero in both headline corpora, in the same direction. Nats per token within a
+  family, bits per byte across families.
+- **Superseded:** the isolated-slot design of the pilot and the overnight run (every text alone in every slot; user sources against
+  unrelated assistant texts; swapped slots and slot effects). Its outputs stay frozen and `analyze.py --locked` stays as their record.
+- **Why the exchange context and not the reply alone.** Evidence: `docs/turns_memo.md` (branch `turns-memo-2026-11-03`; 150 held-out
+  three-turn conversations, OLMo 3 7B and Qwen3-8B, base vs post-trained, fp32). Scoring a reply without its question makes the
+  post-trained change of the reply's frame cost 0.13–0.47 nats lower than scoring it after the question, in all six model × corpus cells
+  (every CI excluding zero), almost entirely in the tagged sequence. Under the reply-alone design that bias pushes the asymmetry towards
+  regression: it flips Qwen3-8B's sign (+0.04 to +0.07 alone vs −0.07 to −0.24 after the question) and halves OLMo's (−0.19 to −0.38 vs
+  −0.49 to −0.69). The memo's own recommendation was to keep the reply-alone design as the pre-registered primary (because it was
+  collected) with the exchange design as robustness; the team chose the exchange design as primary instead, on the memo's evidence
+  that the reply-alone design is biased.
+- **Methods detail:** OLMo's instruct template prepends a default system turn ("You are a helpful function-calling AI assistant. You do not
+  currently have access to any functions. <functions></functions>") to every tagged sequence, user and reply alike; Qwen3 and Gemma 4 add
+  none. It is part of the tagged frame in both terms and identical across OLMo stages, so it cancels in the changes from base only to the
+  extent that the stages treat it alike; it is reported, not removed.
+- **Judge arm:** the README now names `data/prefill_incomplete_200.jsonl` as the generation prefills, as decided earlier today (prompt v2);
+  `data/prefill_100.jsonl` stays as the complete-turn stratum. No judge-arm criterion changed.
+- Revised after the pilot and the turns test, so OLMo NLL verdicts are not blind (as the README states). `measures/logit_distortion/` is
+  Grace's and was not edited; she is to bring its README to the exchange design and freeze its criteria before results exist (STATUS.md).
