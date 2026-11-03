@@ -36,10 +36,13 @@ def samples(n=3):
 
 def test_prompt_file_parses_and_contains_the_four_labels():
     version, system, template = J.load_prompt()
-    assert version == "v1" and "{prefill}" in template and "{continuation}" in template
+    assert version == "v2" and "{prefill}" in template and "{continuation}" in template
     for label in J.LABELS:
         assert label in system
     assert "REAL HUMAN USER" in system and "without turn marker" not in system  # definitions, not run metadata
+    # v2: the assistant's reply after the user's turn has closed is context, not a switch; an abandoned unfinished sentence is
+    assert "NOT part of what you are judging" in system and "closing the user's turn at once" in system and "label it user_voice" in system
+    assert "at any point" not in system  # v1's rule, which counted an ordinary finish-close-reply as regression
 
 
 def test_parse_reply():
@@ -66,7 +69,7 @@ def test_run_records_model_version_and_never_sends_metadata(tmp_path):
         sent = json.dumps(c["messages"]) + c["system"]
         assert "sft" not in sent and "olmo" not in sent.lower() and "gemma" not in sent.lower()  # carry fields are not sent
     for r in rows:
-        assert r["judge_model"] == "claude-sonnet-5-5" and r["prompt_version"] == "v1" and r["temperature"] == 0
+        assert r["judge_model"] == "claude-sonnet-5-5" and r["prompt_version"] == "v2" and r["temperature"] == 0
         assert r["label"] == "user_voice" and r["stage"] == "sft"
     assert [json.loads(line)["label"] for line in open(tmp_path / "out.jsonl")] == ["user_voice"] * 3
 
@@ -177,3 +180,21 @@ def test_pilot_agreement_with_a_fake_judge(tmp_path):
     assert r["n"] == 6 and r["binary_agreement"] == 1.0
     rows[0]["label"] = "user_voice" if rows[0]["agent_label"] != "user voice" else "degenerate"
     assert J.pilot_agreement(rows)["binary_agreement"] < 1.0
+
+
+def test_validation_sheet_from_the_capstone_generations_covers_all_eight_checkpoints(tmp_path):
+    import json as js
+    for (fam, stage), _ in J.CAPSTONE_PLAN.items():
+        d = tmp_path / "results" / "capstone" / fam / "core" / "generations_incomplete"
+        d.mkdir(parents=True, exist_ok=True)
+        with open(d / f"{stage}.jsonl", "w") as f:
+            for i in range(20):
+                f.write(js.dumps(dict(prefill_id=f"incomplete-{i:03d}", sample=i % 3, prefill=f"the user was writing {i} and", continuation=f" then more {fam} {stage} {i}", stopped_on_eos=False)) + "\n")
+    srcs = J.capstone_sources(root=str(tmp_path))
+    sheet, key = J.build_sheet(root=str(tmp_path), out_dir=str(tmp_path / "sheet"), plan={sid: J.CAPSTONE_PLAN[(m, st)] for sid, m, st, _, _ in srcs}, sources=srcs)
+    assert len(sheet) == 60 == sum(J.CAPSTONE_PLAN.values()) and len({s["sample_id"] for s in sheet}) == 60
+    by = {}
+    for k in key:
+        by[(k["model"], k["stage"])] = by.get((k["model"], k["stage"]), 0) + 1
+    assert by == J.CAPSTONE_PLAN
+    assert "model" not in open(tmp_path / "sheet" / "sheet.csv").readline()

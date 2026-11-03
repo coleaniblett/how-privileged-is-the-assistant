@@ -465,3 +465,16 @@ classes in `core.prepare_data.INCOMPLETE_ENDINGS` (no part-of-speech tagger is a
 the first words of the real continuation; prefills are deduplicated, since WildChat repeats prompts. Cut types: article/determiner 51, preposition 54,
 comma 24, auxiliary/modal 30, conjunction 22, transitive verb 19. `config.PREFILL_PATH` (the default of `core.generate`) is unchanged; the old
 set stays as a separate "complete-turn" stratum. `tests/test_prefill_incomplete.py` covers it.
+
+## 2026-11-03: vestigial regression: judge prompt v2 (the reply after the user's turn closes is context, not a switch)
+
+Judge prompt v1 labelled a continuation `switched_to_assistant` if it answered "at any point", including after a closing turn marker. With sentence-boundary
+prefills that counted ordinary chat behaviour (finish the user's message, close the turn, the assistant replies) as vestigial regression, and the README says
+the judge labels the user portion. v2 (`measures/vestigial_regression/judge_prompt.md`) judges only what the model did before the user's turn closes and
+treats what follows as context: finishing the user's thought as the user and then closing the turn is `user_voice`; abandoning a clearly unfinished sentence
+(closing the turn at once, or answering, reasoning or opening a thinking section in its place) is `switched_to_assistant`; with a prefill that already reads
+as a complete message, closing the turn is not a departure. The four labels, the JSON output, the model (`claude-sonnet-5-5`, temperature 0) and the inputs
+are unchanged; the version is part of every output row and of the cache key. No v1 label exists (the judge has not yet called the API), so no result is
+affected. The human labelling instructions (`judge_validation/README.md`) use the same definitions, and `judge sheet --from-capstone` builds the 60-sample
+validation sheet from the incomplete-turn generations of all 8 checkpoints (base models included), so the teammate's labels match the data being graded.
+The judge-arm prefill set is `data/prefill_incomplete_200.jsonl`; the older sentence-boundary set is a separate "complete-turn" stratum.

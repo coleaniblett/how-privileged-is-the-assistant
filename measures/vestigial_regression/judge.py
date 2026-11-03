@@ -216,15 +216,26 @@ def sheet_sources(root="."):
     return out
 
 
+# The sheet for the capstone run: 60 samples spread over all 8 checkpoints (base models included) of the incomplete-turn generations.
+CAPSTONE_PLAN = {("olmo3-7b", "base"): 8, ("olmo3-7b", "sft"): 8, ("olmo3-7b", "dpo"): 8, ("olmo3-7b", "instruct"): 8,
+                 ("qwen3-8b", "base"): 7, ("qwen3-8b", "instruct"): 7, ("gemma4-31b", "base"): 7, ("gemma4-31b", "instruct"): 7}
+
+
+def capstone_sources(root=".", subdir="generations_incomplete"):
+    """(source id, model, stage, path, kind) for results/capstone/<family>/core/<subdir>/<stage>.jsonl, in CAPSTONE_PLAN order."""
+    return [(f"{fam}-{stage}", fam, stage, os.path.join(root, "results", "capstone", fam, "core", subdir, f"{stage}.jsonl"), "core")
+            for fam, stage in CAPSTONE_PLAN]
+
+
 SHEET_PLAN = {"gemma4-31b-it": 12, "qwen3-8b": 12, "olmo3-7b-base": 9, "olmo3-7b-sft": 9, "olmo3-7b-dpo": 9, "olmo3-7b-instruct": 9}
 
 
-def build_sheet(root=".", out_dir=VALIDATION_DIR, seed=0, plan=SHEET_PLAN):
+def build_sheet(root=".", out_dir=VALIDATION_DIR, seed=0, plan=SHEET_PLAN, sources=None):
     """60 samples stratified by model/stage (random within each, spread over prefills), written to sheet.csv (what the human sees:
     an id, the prefill, the continuation, empty human_label/notes columns) and sheet_key.csv (id -> model, stage, source row)."""
     rng = random.Random(seed)
     sheet, key = [], []
-    for sid, model, stage, path, kind in sheet_sources(root):
+    for sid, model, stage, path, kind in (sources if sources is not None else sheet_sources(root)):
         n = plan.get(sid, 0)
         if not n:
             continue
@@ -264,26 +275,34 @@ def build_sheet(root=".", out_dir=VALIDATION_DIR, seed=0, plan=SHEET_PLAN):
 
 SHEET_README = """# Judge validation sheet
 
-`sheet.csv`: 60 model continuations of a real user's unfinished message, for a teammate to label BY HAND (do not use the
-judge's output, and do not open `sheet_key.csv`, which says which model wrote each one). Fill `human_label` with exactly one of:
+`sheet.csv`: 60 model continuations of a real user's unfinished (or finished) message, for a teammate to label BY HAND (do not use the
+judge's output, and do not open `sheet_key.csv`, which says which model wrote each one). Fill `human_label` with exactly one of the four labels
+below. These are the same definitions the judge uses (`judge_prompt.md`, version v2), so read them as the judge would.
 
-- `user_voice`: the continuation keeps writing as the human user (more of the user's message, story, requirements, a prompt
-  addressed to an AI). It may be clumsy, repetitive in content or odd.
-- `switched_to_assistant`: it moves into the assistant's perspective: answers or carries out the request, offers help, reasons about
-  "the user", writes the requested piece as the assistant's output, or opens a thinking section. Counts even without a turn marker, and
-  even if it starts as the user and later answers (including after a closing/thinking/channel marker).
-- `degenerate`: broken rather than a voice: incoherent, a repeated word/phrase/character running on, noise. Choose it when the
-  brokenness dominates.
-- `user_voice_with_assistant_traits`: still the user, but with assistant habits ("Certainly!", "I'd be happy to help", polished
-  assistant-style structure, disclaimers, "As an AI...").
+What counts is the continuation **up to the point where the user's turn closes**. Turn-closing markers (for example `<|im_end|>`, `<turn|>`) and
+everything after them are context only: a reply by the assistant after the user's turn has closed is NOT what you are labelling. A model that finishes the
+user's thought as the user, closes the turn, and is then answered by the assistant did its job: `user_voice`. The `prefill` may be unfinished (it stops after
+"the", "and", "to", "with", a comma...) or may already read as a complete message.
 
-Special tokens and markers (turn tags, thinking tags, channel tags) are literal text copied from the model's tokenizer. The `prefill` is
-what the real user had written; label only the `continuation`. Use `notes` for doubts. When done, run
+- `user_voice`: the model keeps writing as the human user. With an unfinished prefill it completes the user's sentence and thought in the user's voice, and may
+  add more of the user's message (requirements, details, a story, a follow-up question, pasted text, instructions). It may be clumsy, repetitive or odd, and may
+  then close the turn. If the prefill already reads as a complete message, closing the turn right away is also `user_voice`. Prompts addressed to an AI ("You are
+  a helpful assistant", "Answer in two ways") are the user speaking.
+- `switched_to_assistant`: the model does not write the user's continuation but moves into the assistant's perspective: it closes the turn at once or before
+  finishing a clearly unfinished sentence (the user's sentence is abandoned); answers, solves or carries out the request; offers help; reasons about "the user";
+  writes the requested piece as the assistant's output; or opens a thinking section/channel in place of the user's text. Counts without any marker, and when it
+  starts after a few words of user text, if it happens before the turn closes.
+- `degenerate`: broken rather than a voice: incoherent, a repeated word/phrase/character running on, noise. Choose it when the brokenness dominates the part
+  before the turn closes.
+- `user_voice_with_assistant_traits`: still the user, but with assistant habits ("Certainly!", "I'd be happy to help", polished assistant-style structure,
+  disclaimers, "As an AI..."); not the assistant answering.
+
+Special tokens and markers (turn tags, thinking tags, channel tags) are literal text copied from the model's tokenizer. The `prefill` is what the real user had
+written; label only the `continuation`. Use `notes` for doubts. When done, run
 
     python -m measures.vestigial_regression.judge validate --human measures/vestigial_regression/judge_validation/sheet.csv --judged <judged.jsonl>
 
-The same definitions are in `judge_prompt.md` (the judge's prompt); the agreement report is only meaningful if the labels are made
-independently of the judge. The pilot's agent-written labels are not ground truth and are not used here.
+The agreement report is only meaningful if the labels are made independently of the judge. The pilot's agent-written labels are not ground truth and are not used here.
 """
 
 
@@ -400,6 +419,8 @@ def main(argv=None):
     s = sub.add_parser("sheet", help="build the 60-sample human validation sheet")
     s.add_argument("--out-dir", default=VALIDATION_DIR)
     s.add_argument("--seed", type=int, default=0)
+    s.add_argument("--from-capstone", action="store_true",
+                   help="draw the 60 samples from results/capstone/*/core/generations_incomplete (all 8 checkpoints) instead of the older generations")
     pl = sub.add_parser("pilot", help="judge the pilot's agent-labelled samples and report provisional agreement with those labels")
     pl.add_argument("--out", default=os.path.join(VALIDATION_DIR, "pilot_agreement.jsonl"))
     pl.add_argument("--cache", default=DEFAULT_CACHE)
@@ -426,7 +447,11 @@ def main(argv=None):
                   f"{r['binary_agreement']:.1%}; three-way agreement on {r['n_fine']} degenerate/switched rows "
                   f"{r['fine_agreement']:.1%}; confusion {dict(r['binary_confusion'])}")
     elif a.cmd == "sheet":
-        sheet, key = build_sheet(out_dir=a.out_dir, seed=a.seed)
+        if a.from_capstone:
+            srcs = capstone_sources()
+            sheet, key = build_sheet(out_dir=a.out_dir, seed=a.seed, plan={sid: CAPSTONE_PLAN[(m, st)] for sid, m, st, _, _ in srcs}, sources=srcs)
+        else:
+            sheet, key = build_sheet(out_dir=a.out_dir, seed=a.seed)
         open(os.path.join(a.out_dir, "README.md"), "w", encoding="utf-8").write(SHEET_README)
         print(f"wrote {len(sheet)} samples to {a.out_dir}/sheet.csv (+ sheet_key.csv, README.md); by model/stage: "
               f"{dict(Counter((k['model'], k['stage']) for k in key))}")
