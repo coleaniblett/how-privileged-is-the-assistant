@@ -19,7 +19,7 @@ Order OLMo 3 7B (base, SFT, DPO, Instruct) -> Qwen3-8B (base, instruct) -> Gemma
 
 | task | command (settings unchanged) | output |
 |---|---|---|
-| conversation | `core.score_conversations --family F --candidates pilot_v3 --model S --context-limits-from <frozen manifest>` (fp32) | `results/logit_conversations/<F>/core/conversation_scores/<S>.csv`, `<S>_tokens.parquet`, `<S>_provenance.json` |
+| conversation | `core.score_conversations --family F --candidates pilot_v3 --model S --context-limits-from <frozen manifest> --batch-size 1` (fp32; batch 1 because OLMo 3 7B ran out of memory at batch 8 and 4 on the ~4.1k-token inputs; also no padding or batch-composition effects, identical for every stage) | `results/logit_conversations/<F>/core/conversation_scores/<S>.csv`, `<S>_tokens.parquet`, `<S>_provenance.json` |
 | incomplete | `core.generate --family F --run capstone --model S --prefill data/prefill_incomplete_200.jsonl --save-ids` (the command of `overnight_collect.py --stratum incomplete`) | `results/capstone/<F>/core/generations_incomplete/<S>.jsonl` + `<S>_provenance.json` (model revision, prefill hash, sampling settings, code hashes) |
 
 Before any scoring each family's inputs are frozen: `--prepare-only` writes the manifest, or confirms that an existing one has the same fingerprint, and

@@ -374,8 +374,13 @@ def strict_wait_for_gpu(minutes=None):
 oc.wait_for_gpu = strict_wait_for_gpu
 
 
+# Conversation scoring runs one sequence per forward pass (fp32 unchanged): inputs reach ~4.1k tokens and OLMo 3 7B ran out of memory at
+# batch 8 and 4 on the 48 GB card (2026-11-03). Batch 1 also removes padding and batch composition, identically for every stage.
+CONV_BATCH = 1
+
+
 def conv_cmd(family, stage, manifest, out="{OUT}", batch=None):
-    bs = batch or config.family_settings(family)["batch_size"]
+    bs = batch or CONV_BATCH
     return [PY, "-m", "core.score_conversations", "--family", family, "--candidates", CANDIDATES, "--model", stage, "--out", out,
             "--context-limits-from", manifest, "--batch-size", str(bs)]
 
@@ -480,7 +485,7 @@ def smoke_conv_worker(family, stage, manifest, out):
     model_id = fam["stages"][stage]
     model, device = load_model(model_id, torch.float32, offload=fam["offload"], gpu_gib=fam["gpu_gib"])
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
-    nll, ent = sc.score_targets(model, device, rows, pad_id, fam["batch_size"])
+    nll, ent = sc.score_targets(model, device, rows, pad_id, CONV_BATCH)
     tokens, per_target = sc.tables(rows, nll, ent)
     os.makedirs(out, exist_ok=True)
     tokens.to_parquet(os.path.join(out, f"{stage}_tokens.parquet"), index=False)
@@ -488,7 +493,7 @@ def smoke_conv_worker(family, stage, manifest, out):
     with open(os.path.join(out, f"{stage}_provenance.json"), "w") as f:
         json.dump({"format": sc.FORMAT, "smoke": True, "conversation_id": cid, "stage": stage, "model": model_id,
                    "model_revision": sc.cached_revision(model_id, "config.json"), "family": family, "dtype": "float32",
-                   "device": str(device), "placement": describe_placement(model), "batch_size": fam["batch_size"],
+                   "device": str(device), "placement": describe_placement(model), "batch_size": CONV_BATCH,
                    "input_fingerprint": m["input_fingerprint"], "n_targets": len(rows), "n_tokens": len(tokens)}, f, indent=1)
     print(json.dumps({"conversation_id": cid, "targets": [r["target_id"] for r in rows]}))
 
