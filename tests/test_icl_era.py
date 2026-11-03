@@ -82,6 +82,7 @@ def test_analyze_on_synthetic_scores(tmp_path, monkeypatch):
     import numpy as np
     import pandas as pd
     monkeypatch.setattr(e, "OUT", str(tmp_path))
+    monkeypatch.setattr(e, "ROBUST", ["p0", "p1"])
     rng = np.random.default_rng(0)
     for fam, stages in (("olmo3-7b", ["base", "instruct"]), ("qwen3-8b", ["base", "instruct"])):
         (tmp_path / fam).mkdir()
@@ -102,3 +103,11 @@ def test_analyze_on_synthetic_scores(tmp_path, monkeypatch):
     assert abs(s["mean"] - 1.0) < 0.1
     md = (tmp_path / "icl_era.md").read_text()
     assert "Per-probe shift" in md and "Name pick-up check" in md
+    assert "robustness subset" in md and (t.quantity == "median probe shift").any() and (t.quantity == "shift, robustness subset").any()
+
+
+def test_frozen_probe_list():
+    probes = load_jsonl(e.PROBES_PATH)
+    ids = [p["id"] for p in probes]
+    assert len(ids) == 33 and "year" not in ids and set(e.ROBUST) <= set(ids) and len(e.ROBUST) == 11
+    assert probes == load_jsonl(CANDIDATES)                     # the frozen list is the screened candidate list

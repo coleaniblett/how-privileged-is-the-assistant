@@ -35,6 +35,7 @@ OUT = os.path.join(config.RESULTS_ROOT, "icl_era")
 KS = [0, 8, 32, 128]
 SEEDS = [0, 1, 2]
 N_CONTROL = 10
+ROBUST = ["atlantic", "evening", "laundry", "life_exp", "light_source_street", "long_distance", "monarch", "sport", "travel", "west_state", "world_pop"]  # pass |log-odds| <= 5 in every model (decisions.md, E probe amendment)
 CONDITIONS = ["assistant", "mora", "plain"]
 NAMES = ["archaic", "modern"]
 BIRD_Q = "What is the name of this bird: {}?"
@@ -272,6 +273,16 @@ def analyze():
     for (fam, stage, cond, kind), g in era[era.k == 0].groupby(["family", "stage", "condition", "kind"]):
         m, lo, hi = bootstrap_ci(g["era"].to_numpy(), N_BOOT, rng)
         rows.append(dict(family=fam, stage=stage, condition=cond, k=0, kind=kind, quantity="era level, no shots", n=len(g), mean=m, lo=lo, hi=hi))
+    # median probe shift (mean over shot orders per probe) and the robustness subset, at the largest k
+    pk = sh[(sh.k == max(KS)) & (sh.kind == "probe")]
+    for (fam, stage, cond), g in pk.groupby(["family", "stage", "condition"]):
+        per = g.groupby("qid")["shift"].mean()
+        rows.append(dict(family=fam, stage=stage, condition=cond, k=max(KS), kind="probe", quantity="median probe shift", n=len(per),
+                         mean=float(per.median()), lo=float(per.quantile(0.25)), hi=float(per.quantile(0.75))))
+        gs = g[g.qid.isin(ROBUST)]
+        if len(gs):
+            m, lo, hi = bootstrap_ci(gs["shift"].to_numpy(), N_BOOT, rng)
+            rows.append(dict(family=fam, stage=stage, condition=cond, k=max(KS), kind="probe", quantity="shift, robustness subset", n=len(gs), mean=m, lo=lo, hi=hi))
     # paired contrasts at the largest k: stage minus base (per family, per condition) and Mora minus Assistant (per stage)
     top = sh[(sh.k == max(KS)) & (sh.kind == "probe")].set_index(["family", "stage", "condition", "qid", "seed"])["shift"]
     for fam in sh.family.unique():
@@ -301,7 +312,7 @@ def write_report(t, sh):
          "Spec E (2026-11-03; plan and probe list in `docs/decisions.md`; exploratory, outside every verdict). Shift = era(archaic "
          "shots) - era(modern shots), era = log P(19th-century answer) - log P(modern answer) after a fixed answer prefix "
          "(teacher-forced, bf16 batch 1, KV cache of the shot block reused after an equivalence check). Nats; mean over probes; 95% "
-         "bootstrap CI over probe x seed (30 probes x 3 shot orders). Qwen3-8B is supporting (no contamination check).", ""]
+         "bootstrap CI over probe x seed (all frozen probes x 3 shot orders). Qwen3-8B is supporting (no contamination check).", ""]
     fams = list(dict.fromkeys(t.family))
     L += ["## Name pick-up check (held-out bird questions: log P(archaic) - log P(modern), archaic minus modern shots)", "",
           "A check that the model picked up the naming convention from the shots, not evidence of era generalization. Pre-set: the "
@@ -321,6 +332,16 @@ def write_report(t, sh):
                 q = t[(t.family == fam) & (t.stage == s) & (t.condition == cond) & (t.kind == "probe")]
                 cells = [_c(q[(q.k == k) & (q.quantity == "shift")].iloc[0]) for k in KS[1:]]
                 L.append(f"| {fam} | {s} | {cond} | " + " | ".join(cells) + f" | {_c(q[q.quantity == 'era level, no shots'].iloc[0])} |")
+    L += ["", f"## Mean, median and robustness subset at k = {max(KS)}", "",
+          "Mean over all probes (the primary set), the median probe shift with its inter-quartile range in brackets, and the 11-probe robustness subset (probes with |zero-shot log-odds| <= 5 in every model).", "",
+          "| family | stage | condition | mean (all probes) | median [IQR] | robustness subset |", "|---|---|---|---|---|---|"]
+    for fam in fams:
+        for s in stage_order(t[t.family == fam].stage.unique()):
+            for cond in CONDITIONS:
+                q = t[(t.family == fam) & (t.stage == s) & (t.condition == cond) & (t.kind == "probe") & (t.k == max(KS))]
+                g = lambda name: q[q.quantity == name]
+                sub = g("shift, robustness subset")
+                L.append(f"| {fam} | {s} | {cond} | {_c(g('shift').iloc[0])} | {_c(g('median probe shift').iloc[0])} | {_c(sub.iloc[0]) if len(sub) else 'n/a'} |")
     top = sh[(sh.k == max(KS)) & (sh.kind == "probe")]
     for cond in ("assistant", "mora", "plain"):
         L += ["", f"## Per-probe shift at k = {max(KS)}, {cond} condition (mean over 3 shot orders; nats)", ""]
