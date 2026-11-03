@@ -281,3 +281,12 @@ def test_cpu_smoke_run(tmp_path):
                         "--exchanges", str(path), "--out", str(tmp_path / "single")], cwd=ROOT, capture_output=True, text=True,
                        env={**os.environ, "CUDA_VISIBLE_DEVICES": ""})
     assert r.returncode != 0 and "never overwritten" in r.stderr
+
+
+def test_launcher_parses_and_runs_the_exchange_context_only():
+    script = str(ROOT / "scripts" / "run_exchanges.sh")
+    subprocess.run(["bash", "-n", script], check=True)
+    r = subprocess.run(["bash", script], env={**os.environ, "FAMILY": "qwen3-8b", "CONTEXT": "single"}, capture_output=True, text=True)
+    assert r.returncode == 2 and "exchange context only" in r.stdout
+    text = (ROOT / "scripts" / "run_exchanges.sh").read_text()
+    assert "--prefill \"$PREFILL\" --save-ids" in text and "PREFILL=data/prefill_incomplete_200.jsonl" in text
