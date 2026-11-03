@@ -49,6 +49,7 @@ RUN, OFF_RUN = "capstone", "capstone_think_off"
 LOGS = os.environ.get("OVERNIGHT_LOGS", os.path.join("results", RUN, "logs"))  # the override is for tests and dry runs
 PY = sys.executable
 TEXTS, AUTHORSHIP, PREFILL = "data/texts.jsonl", "data/texts_authorship.jsonl", "data/prefill_100.jsonl"
+PREFILL_INCOMPLETE = config.PREFILL_INCOMPLETE_PATH  # the judge arm's incomplete-turn set (200 prefills); stratum "incomplete"
 SAMPLES = 3
 PLAN = [("gemma4-31b", ["base", "instruct"], 100), ("olmo3-7b", ["base", "sft", "dpo", "instruct"], None),
         ("qwen3-8b", ["base", "instruct"], None)]
@@ -253,8 +254,8 @@ def score_cmd(family, run, stage, dataset, n_per_set, off=False):
     return ([PY, "-c", OFF_CODE] if off else [PY, "-m", "core.score"]) + args
 
 
-def gen_cmd(family, run, stage):
-    return [PY, "-m", "core.generate", "--family", family, "--run", run, "--model", stage, "--prefill", PREFILL, "--save-ids", "--out", "{OUT}"]
+def gen_cmd(family, run, stage, prefill=None):
+    return [PY, "-m", "core.generate", "--family", family, "--run", run, "--model", stage, "--prefill", prefill or PREFILL, "--save-ids", "--out", "{OUT}"]
 
 
 # --- heartbeat, status, lock -----------------------------------------------------------------------------------------------
@@ -435,8 +436,51 @@ def collect(family, stage, n_per_set, dry_run):
         save_summary()
 
 
+# Generation-only stratum on the incomplete-turn prefills (2026-11-03): no scoring, think block ON for Qwen (the primary rendering), order OLMo -> Qwen -> Gemma
+# so the cheap families finish first. Outputs: results/capstone/<family>/core/generations_incomplete/<stage>.jsonl.
+INCOMPLETE_PLAN = [("olmo3-7b", ["base", "sft", "dpo", "instruct"]), ("qwen3-8b", ["base", "instruct"]), ("gemma4-31b", ["base", "instruct"])]
+
+
+def collect_incomplete(family, stage, dry_run):
+    st = config.family_settings(family)
+    repo = st["stages"][stage]
+    ck = dict(family=family, stage=stage, repo=repo, stratum="incomplete", started=now(), integrity={}, failed=False)
+    log(f"===== {family} {stage} ({repo}) [incomplete-turn generation]")
+    free0 = disk_note(f"{family} {stage}: before")
+    if not dry_run and not ensure_disk(repo, family):
+        ck.update(failed=True, reason="not enough disk for the download")
+        log(f"{family} {stage}: skipped, not enough disk")
+        SUMMARY["checkpoints"].append(ck)
+        save_summary()
+        return
+    try:
+        gout = os.path.join("results", RUN, family, "core", "generations_incomplete")
+        g = os.path.join(gout, f"{stage}.jsonl")
+        r = run_task(f"{family}_{stage}_generation_incomplete", gen_cmd(family, RUN, stage, PREFILL_INCOMPLETE), gout, [f"{stage}.jsonl"], dry_run)
+        if r["status"].startswith("failed"):
+            ck["failed"] = True
+            raise RuntimeError(f"{r['task']} failed")
+        if not dry_run:
+            ck["integrity"]["generation_incomplete"] = check_generations(g, PREFILL_INCOMPLETE)
+    except Exception as e:  # noqa: BLE001
+        log(f"{family} {stage}: stopped: {e!r}")
+        ck.setdefault("errors", []).append(repr(e) + "\n" + traceback.format_exc()[-1500:])
+    finally:
+        for k, v in ck["integrity"].items():
+            log(f"integrity {family} {stage} {k}: {'OK' if v['ok'] else 'ISSUES ' + str(v['issues'])}")
+        if not dry_run:
+            freed, removed, kept = hf_cache.free_repo(repo)
+            log(f"cleared {repo} from the HF cache: {freed:.1f} GB ({removed} blobs removed, {kept} shared kept)")
+        free1 = disk_note(f"{family} {stage}: after clearing")
+        ck.update(finished=now(), free_gb_before=round(free0, 1), free_gb_after=round(free1, 1))
+        SUMMARY["checkpoints"].append(ck)
+        save_summary()
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--stratum", choices=["main", "incomplete"], default="main",
+                    help="main: scores + authorship + complete-turn generation (default); incomplete: generation only on the incomplete-turn prefills")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--only", help="comma-separated families (default: all, in plan order)")
     args = ap.parse_args()
@@ -454,12 +498,16 @@ def main():
     SUMMARY["runs"].append(dict(started=now(), pid=os.getpid()))
     log(f"overnight collection start (dry run: {args.dry_run}); branch {subprocess.run(['git', 'branch', '--show-current'], capture_output=True, text=True).stdout.strip()}; "
         f"HEAD {subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True).stdout.strip()}")
-    for fam, stages, n in PLAN:
+    plan = [(f, s_, None) for f, s_ in INCOMPLETE_PLAN] if args.stratum == "incomplete" else PLAN
+    for fam, stages, n in plan:
         if args.only and fam not in args.only.split(","):
             continue
         for stage in stages:
             try:
-                collect(fam, stage, n, args.dry_run)
+                if args.stratum == "incomplete":
+                    collect_incomplete(fam, stage, args.dry_run)
+                else:
+                    collect(fam, stage, n, args.dry_run)
             except Exception as e:  # noqa: BLE001
                 log(f"{fam} {stage}: unexpected error {e!r}\n{traceback.format_exc()[-1500:]}")
                 SUMMARY["notes"].append(f"{fam} {stage}: unexpected error {e!r}")

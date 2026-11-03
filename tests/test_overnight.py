@@ -40,6 +40,21 @@ def test_dry_run_lists_every_checkpoint_in_order_and_writes_nothing(tmp_path):
     assert snapshot() == before  # a dry run adds nothing under results/
 
 
+def test_incomplete_stratum_dry_run_is_generation_only_in_the_planned_order(tmp_path):
+    env = {**os.environ, "OVERNIGHT_LOGS": str(tmp_path)}
+    snapshot = lambda: sorted(str(p) for p in (ROOT / "results").rglob("*") if "capstone" in str(p))
+    before = snapshot()
+    out = subprocess.run([sys.executable, str(ROOT / "scripts" / "overnight_collect.py"), "--dry-run", "--stratum", "incomplete"],
+                         capture_output=True, text=True, cwd=ROOT, env=env, check=True).stdout
+    order = [l.split("=====")[1].split("(")[0].strip() for l in out.splitlines() if "=====" in l]
+    assert order == ["olmo3-7b base", "olmo3-7b sft", "olmo3-7b dpo", "olmo3-7b instruct", "qwen3-8b base", "qwen3-8b instruct",
+                     "gemma4-31b base", "gemma4-31b instruct"]
+    assert out.count("[dry run]") == 8 and "core.score" not in out and out.count("--save-ids") == 8
+    assert out.count("data/prefill_incomplete_200.jsonl") == 8 and "prefill_100" not in out
+    assert out.count("/core/generations_incomplete") == 8 and "think_off" not in out
+    assert snapshot() == before
+
+
 @pytest.fixture(scope="module")
 def tiny_outputs(tmp_path_factory):
     d = tmp_path_factory.mktemp("tiny")
@@ -206,6 +221,11 @@ def test_status_command_tells_alive_stale_and_not_running_apart(tmp_path):
     assert "STALE" in run()
     (tmp_path / "status.json").write_text(json.dumps({"pid": 2 ** 22 + 12345, "heartbeat": fmt(now)}))
     assert "NOT RUNNING" in run()
+
+
+def test_launcher_forwards_driver_arguments():
+    src = (ROOT / "scripts" / "overnight_launch.sh").read_text()
+    assert "overnight_supervise.sh $*" in src and "UV_PROJECT_ENVIRONMENT" in src and "OVERNIGHT_LOGS" in src
 
 
 def test_launcher_script_parses():
