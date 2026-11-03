@@ -358,3 +358,12 @@ def test_pilot_v3_prepares_for_every_cached_family():
         inc, exc = sc.prepare(ts, ftok, sc.PROFILES[family], 32768)
         assert len(inc) == n_inc and sum(e["stage"] == "rendering" for e in exc) == n_render
         assert sum(e["stage"] == "candidate" for e in exc) == sum(not t["eligible"] for t in ts)
+
+
+def test_frozen_context_limits(tmp_path):
+    """--context-limits-from reads the per-stage limits recorded in a frozen manifest and refuses one for other stages."""
+    path = tmp_path / "inputs_manifest.json"
+    path.write_text(json.dumps({"context_limits": {"base": {"limit": 4096, "source": "a"}, "instruct": {"limit": 2048, "source": "b"}}}))
+    assert sc.frozen_limits(str(path), {"base": "x", "instruct": "y"}) == {"base": (4096, "a"), "instruct": (2048, "b")}
+    with pytest.raises(SystemExit):
+        sc.frozen_limits(str(path), {"base": "x", "sft": "z", "instruct": "y"})
