@@ -220,6 +220,113 @@ def render_conversation(tok, contents, roles):
     return RenderedConversation(ids, spans, full)
 
 
+class TargetRenderError(AlignmentError):
+    """A target that cannot be rendered exactly; message_index points into the rendered messages (None: whole sequence)."""
+
+    def __init__(self, reason, message_index=None):
+        super().__init__(f"{reason} (message {message_index})")
+        self.reason, self.message_index = reason, message_index
+
+
+@dataclass
+class RenderedTarget:
+    input_ids: list[int]  # the full sequence, including the target's closing tokens
+    start: int  # target content occupies input_ids[start:end]
+    end: int
+    text: str  # the full rendered string
+    opening: str  # what the generation prompt adds beyond the template's stored turn ("" for user targets)
+    lead: str  # everything between the previous message's content (or the start) and the target content
+
+
+def render_target(tok, messages, template_kwargs=None):
+    """One original-conversation target: `messages` are the original preceding messages followed by the target (last),
+    each {"role", "content"}; nothing after the target is rendered, so later messages cannot affect any token.
+
+    History is the template's stored rendering. An assistant target is preceded by the template's generation prompt
+    for the history (`template_kwargs`, e.g. Qwen3's enable_thinking=False), i.e. exactly what the model saw before
+    writing that reply; `opening` is what that prompt adds beyond the stored header (Gemma 4's empty thought channel,
+    Qwen3's empty think block). A user target gets the stored rendering and no assistant opening.
+
+    Unlike render()/render_conversation(), edge whitespace is allowed (original text is kept), but the checks stay strict:
+    no special-token strings in any content; the template must place every content verbatim (a template that trims or
+    rewrites a message raises with that message's index; nothing is normalized); each content decodes to itself; and
+    the full string tokenizes to exactly the pieces tokenized separately (no merges across a content boundary).
+    Raises TargetRenderError(reason, message_index)."""
+    kw = dict(template_kwargs or {})
+    roles, contents = [m["role"] for m in messages], [m["content"] for m in messages]
+    specials = special_strings(tok)
+    for i, text in enumerate(contents):
+        if not isinstance(text, str) or not text:
+            raise TargetRenderError("empty_content", i)
+        if any(s in text for s in specials):
+            raise TargetRenderError("special_token_text", i)
+    n, t = len(contents), len(contents) - 1
+    marks = [f"<<<{SENTINEL}{i}>>>" for i in range(n)]
+    if any(f"<<<{SENTINEL}" in text for text in contents):
+        raise TargetRenderError("content_contains_render_marker", next(i for i, x in enumerate(contents) if f"<<<{SENTINEL}" in x))
+
+    def chat(texts, generation=False):
+        msgs = [{"role": r, "content": x} for r, x in zip(roles, texts)]
+        return tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=generation, **kw)
+
+    def subst(s, idxs):
+        for j in idxs:
+            s = s.replace(marks[j], contents[j])
+        return s
+
+    # All splitting is done on unique marks; real text is substituted afterwards, so repeated wording cannot misplace a split.
+    stored_m = chat(marks)
+    for i, m in enumerate(marks):
+        if stored_m.count(m) != 1:
+            raise TargetRenderError("template_does_not_place_content_once", i)
+    gen_m, opening = None, ""
+    if roles[t] == "assistant":
+        gen_m = chat(marks[:t], generation=True)
+        head, _, tail = stored_m.partition(marks[t])
+        if not gen_m.startswith(head):
+            raise TargetRenderError("generation_prompt_inconsistent_with_stored_turn", t)
+        opening = gen_m[len(head):]
+        marked = gen_m + marks[t] + tail
+    else:
+        marked = stored_m
+    # Verbatim placement of the real text (catches templates that trim or rewrite content), message by message.
+    if chat(contents) != subst(stored_m, range(n)) or (
+            gen_m is not None and chat(contents[:t], generation=True) != subst(gen_m, range(t))):
+        for j in range(n):
+            probe = marks[:j] + [contents[j]] + marks[j + 1:]
+            if chat(probe) != subst(stored_m, [j]) or (
+                    gen_m is not None and j < t and chat(probe[:t], generation=True) != subst(gen_m, [j])):
+                raise TargetRenderError("template_changes_text", j)
+        raise TargetRenderError("template_changes_text", None)
+    pieces, rest = [], marked
+    for i, m in enumerate(marks):
+        if rest.count(m) != 1:
+            raise TargetRenderError("template_does_not_place_content_once", i)
+        before, rest = rest.split(m)
+        pieces.append(before)
+    pieces.append(rest)
+    full = "".join(p + c for p, c in zip(pieces, contents)) + pieces[-1]
+    ids, start, piece_starts = [], None, []
+    for i, text in enumerate(contents):
+        content = encode(tok, text)
+        if tok.decode(content, clean_up_tokenization_spaces=False) != text:
+            raise TargetRenderError("content_decode_mismatch", i)
+        piece_starts.append(len(ids))
+        ids += encode(tok, pieces[i])
+        start = len(ids)
+        ids += content
+    end = len(ids)
+    ids += encode(tok, pieces[-1])
+    whole = encode(tok, full)
+    if whole != ids:
+        # The message whose lead-in or content holds the first divergent token (its header/closing boundary).
+        d = next((k for k, (a, b) in enumerate(zip(whole, ids)) if a != b), min(len(whole), len(ids)))
+        raise TargetRenderError("token_merge_at_boundary", max(i for i, p in enumerate(piece_starts) if p <= d))
+    if tok.decode(ids[start:end], clean_up_tokenization_spaces=False) != contents[-1]:
+        raise TargetRenderError("target_span_mismatch", len(contents) - 1)
+    return RenderedTarget(ids, start, end, full, opening, pieces[t])
+
+
 def render_prefill(tok, sentence, preceding=False):
     """User turn opened with `sentence` and left unterminated, for generation."""
     check_text(tok, sentence)
@@ -230,6 +337,20 @@ def render_prefill(tok, sentence, preceding=False):
 def load_jsonl(path):
     with open(path, encoding="utf-8") as f:
         return [json.loads(line) for line in f]
+
+
+def reject_conversation_candidates(rows, path):
+    """Refuse original-conversation records (core.build_conversations) in an isolated-text entry point.
+
+    Those records carry original preceding history that isolated-turn rendering ignores, so accepting
+    them would silently produce isolated, not conversational, results. Legacy rows have no "format"
+    field and pass unchanged. Raises SystemExit naming the file.
+    """
+    if any(isinstance(row, dict) and row.get("format") == config.CONVERSATION_FORMAT for row in rows):
+        raise SystemExit(f"{path}: {config.CONVERSATION_FORMAT} records are not core.score input; "
+                         "they are not isolated texts, and original-context scoring is not implemented yet "
+                         "(docs/conversation_candidates.md)")
+    return rows
 
 
 def dump_examples(tok, rows, path, preceding=False):
@@ -268,7 +389,7 @@ if __name__ == "__main__":
     args = ap.parse_args()
     tok = load_tokenizer(args.tokenizer)
     rows, count = [], {}
-    for row in load_jsonl(args.dataset):
+    for row in reject_conversation_candidates(load_jsonl(args.dataset), args.dataset):
         key = (row["source"], row["kind"])
         if count.get(key, 0) < args.n:
             count[key] = count.get(key, 0) + 1

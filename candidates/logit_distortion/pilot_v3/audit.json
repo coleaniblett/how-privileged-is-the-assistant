@@ -1,0 +1,770 @@
+{
+  "audit_version": 2,
+  "candidate_only": true,
+  "cells": [
+    {
+      "authorship": "human",
+      "contamination_status": {
+        "no_exact_match": 18
+      },
+      "context_contamination_status": {
+        "no_context": 8,
+        "no_exact_match": 10
+      },
+      "contributing_conversations": 6,
+      "contributing_follow_up_conversations": 3,
+      "contributing_opening_conversations": 5,
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 9,
+      "eligible_follow_up": 4,
+      "eligible_opening": 5,
+      "eligible_preceding_context_tokens": {
+        "max": 666,
+        "median": 0,
+        "min": 0,
+        "n": 9,
+        "p25": 0.0,
+        "p75": 485.0,
+        "p95": 606.0
+      },
+      "eligible_target_tokens": {
+        "max": 254,
+        "median": 49,
+        "min": 20,
+        "n": 9,
+        "p25": 39.0,
+        "p75": 71.0,
+        "p95": 192.0
+      },
+      "excluded": 9,
+      "exclusion_reasons": {
+        "target_too_short": 9
+      },
+      "follow_up": 10,
+      "group": "human_user",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 666,
+        "median": 109.5,
+        "min": 0,
+        "n": 18,
+        "p25": 0.0,
+        "p75": 367.5,
+        "p95": 538.5
+      },
+      "repeated_text_targets": 0,
+      "role": "user",
+      "source": "oasst1",
+      "target_tokens": {
+        "max": 254,
+        "median": 19.5,
+        "min": 6,
+        "n": 18,
+        "p25": 13.25,
+        "p75": 48.75,
+        "p95": 122.25
+      },
+      "targets": 18
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {
+        "no_exact_match": 17
+      },
+      "context_contamination_status": {
+        "no_exact_match": 17
+      },
+      "contributing_conversations": 8,
+      "contributing_follow_up_conversations": 8,
+      "contributing_opening_conversations": 7,
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 16,
+      "eligible_follow_up": 9,
+      "eligible_opening": 7,
+      "eligible_preceding_context_tokens": {
+        "max": 771,
+        "median": 160.0,
+        "min": 41,
+        "n": 16,
+        "p25": 88.5,
+        "p75": 372.0,
+        "p95": 607.5
+      },
+      "eligible_target_tokens": {
+        "max": 290,
+        "median": 119.0,
+        "min": 21,
+        "n": 16,
+        "p25": 73.25,
+        "p75": 224.75,
+        "p95": 273.5
+      },
+      "excluded": 1,
+      "exclusion_reasons": {
+        "target_too_long": 1
+      },
+      "follow_up": 9,
+      "group": "human_assistant",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 771,
+        "median": 146,
+        "min": 41,
+        "n": 17,
+        "p25": 72.0,
+        "p75": 360.0,
+        "p95": 596.6
+      },
+      "repeated_text_targets": 0,
+      "role": "assistant",
+      "source": "oasst1",
+      "target_tokens": {
+        "max": 465,
+        "median": 122,
+        "min": 21,
+        "n": 17,
+        "p25": 80.0,
+        "p75": 230.0,
+        "p95": 325.0
+      },
+      "targets": 17
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {},
+      "context_contamination_status": {},
+      "contributing_conversations": 0,
+      "contributing_follow_up_conversations": 0,
+      "contributing_opening_conversations": 0,
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "model_user",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "repeated_text_targets": 0,
+      "role": "user",
+      "source": "oasst1",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {},
+      "context_contamination_status": {},
+      "contributing_conversations": 0,
+      "contributing_follow_up_conversations": 0,
+      "contributing_opening_conversations": 0,
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "model_assistant",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "repeated_text_targets": 0,
+      "role": "assistant",
+      "source": "oasst1",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {},
+      "context_contamination_status": {},
+      "contributing_conversations": 0,
+      "contributing_follow_up_conversations": 0,
+      "contributing_opening_conversations": 0,
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "human_user",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "repeated_text_targets": 0,
+      "role": "user",
+      "source": "ultrachat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {},
+      "context_contamination_status": {},
+      "contributing_conversations": 0,
+      "contributing_follow_up_conversations": 0,
+      "contributing_opening_conversations": 0,
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "human_assistant",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "repeated_text_targets": 0,
+      "role": "assistant",
+      "source": "ultrachat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {
+        "no_exact_match": 35
+      },
+      "context_contamination_status": {
+        "no_context": 8,
+        "no_exact_match": 27
+      },
+      "contributing_conversations": 8,
+      "contributing_follow_up_conversations": 8,
+      "contributing_opening_conversations": 0,
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 21,
+      "eligible_follow_up": 21,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "max": 1075,
+        "median": 562,
+        "min": 172,
+        "n": 21,
+        "p25": 428.0,
+        "p75": 786.0,
+        "p95": 1027.0
+      },
+      "eligible_target_tokens": {
+        "max": 55,
+        "median": 30,
+        "min": 23,
+        "n": 21,
+        "p25": 27.0,
+        "p75": 35.0,
+        "p95": 51.0
+      },
+      "excluded": 14,
+      "exclusion_reasons": {
+        "target_too_short": 14
+      },
+      "follow_up": 27,
+      "group": "model_user",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 1075,
+        "median": 399,
+        "min": 0,
+        "n": 35,
+        "p25": 143.0,
+        "p75": 599.5,
+        "p95": 923.4
+      },
+      "repeated_text_targets": 0,
+      "role": "user",
+      "source": "ultrachat",
+      "target_tokens": {
+        "max": 55,
+        "median": 25,
+        "min": 9,
+        "n": 35,
+        "p25": 16.0,
+        "p75": 32.5,
+        "p95": 43.3
+      },
+      "targets": 35
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {
+        "no_exact_match": 35
+      },
+      "context_contamination_status": {
+        "no_exact_match": 35
+      },
+      "contributing_conversations": 8,
+      "contributing_follow_up_conversations": 8,
+      "contributing_opening_conversations": 8,
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 34,
+      "eligible_follow_up": 26,
+      "eligible_opening": 8,
+      "eligible_preceding_context_tokens": {
+        "max": 1113,
+        "median": 390.0,
+        "min": 42,
+        "n": 34,
+        "p25": 160.25,
+        "p75": 618.5,
+        "p95": 974.4
+      },
+      "eligible_target_tokens": {
+        "max": 300,
+        "median": 202.0,
+        "min": 32,
+        "n": 34,
+        "p25": 119.25,
+        "p75": 240.0,
+        "p95": 261.15
+      },
+      "excluded": 1,
+      "exclusion_reasons": {
+        "target_too_long": 1
+      },
+      "follow_up": 27,
+      "group": "model_assistant",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 1113,
+        "median": 434,
+        "min": 42,
+        "n": 35,
+        "p25": 184.5,
+        "p75": 639.5,
+        "p95": 967.2
+      },
+      "repeated_text_targets": 0,
+      "role": "assistant",
+      "source": "ultrachat",
+      "target_tokens": {
+        "max": 302,
+        "median": 205,
+        "min": 32,
+        "n": 35,
+        "p25": 119.5,
+        "p75": 241.5,
+        "p95": 276.9
+      },
+      "targets": 35
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {
+        "no_exact_match": 35
+      },
+      "context_contamination_status": {
+        "no_context": 8,
+        "no_exact_match": 27
+      },
+      "contributing_conversations": 6,
+      "contributing_follow_up_conversations": 5,
+      "contributing_opening_conversations": 5,
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 18,
+      "eligible_follow_up": 13,
+      "eligible_opening": 5,
+      "eligible_preceding_context_tokens": {
+        "max": 3452,
+        "median": 470.0,
+        "min": 0,
+        "n": 18,
+        "p25": 41.75,
+        "p75": 1589.0,
+        "p95": 2883.35
+      },
+      "eligible_target_tokens": {
+        "max": 276,
+        "median": 35.0,
+        "min": 21,
+        "n": 18,
+        "p25": 28.0,
+        "p75": 62.0,
+        "p95": 152.75
+      },
+      "excluded": 17,
+      "exclusion_reasons": {
+        "target_too_long": 3,
+        "target_too_short": 14
+      },
+      "follow_up": 27,
+      "group": "human_user",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 3879,
+        "median": 880,
+        "min": 0,
+        "n": 35,
+        "p25": 128.0,
+        "p75": 2020.5,
+        "p95": 3418.4
+      },
+      "repeated_text_targets": 0,
+      "role": "user",
+      "source": "wildchat",
+      "target_tokens": {
+        "max": 1481,
+        "median": 26,
+        "min": 4,
+        "n": 35,
+        "p25": 14.0,
+        "p75": 52.0,
+        "p95": 696.4
+      },
+      "targets": 35
+    },
+    {
+      "authorship": "human",
+      "contamination_status": {},
+      "context_contamination_status": {},
+      "contributing_conversations": 0,
+      "contributing_follow_up_conversations": 0,
+      "contributing_opening_conversations": 0,
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "human_assistant",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "repeated_text_targets": 0,
+      "role": "assistant",
+      "source": "wildchat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {},
+      "context_contamination_status": {},
+      "contributing_conversations": 0,
+      "contributing_follow_up_conversations": 0,
+      "contributing_opening_conversations": 0,
+      "conversations": 0,
+      "duplicate_targets": 0,
+      "eligible": 0,
+      "eligible_follow_up": 0,
+      "eligible_opening": 0,
+      "eligible_preceding_context_tokens": {
+        "n": 0
+      },
+      "eligible_target_tokens": {
+        "n": 0
+      },
+      "excluded": 0,
+      "exclusion_reasons": {},
+      "follow_up": 0,
+      "group": "model_user",
+      "opening": 0,
+      "preceding_context_tokens": {
+        "n": 0
+      },
+      "repeated_text_targets": 0,
+      "role": "user",
+      "source": "wildchat",
+      "target_tokens": {
+        "n": 0
+      },
+      "targets": 0
+    },
+    {
+      "authorship": "model",
+      "contamination_status": {
+        "no_exact_match": 35
+      },
+      "context_contamination_status": {
+        "no_exact_match": 35
+      },
+      "contributing_conversations": 7,
+      "contributing_follow_up_conversations": 7,
+      "contributing_opening_conversations": 6,
+      "conversations": 8,
+      "duplicate_targets": 0,
+      "eligible": 21,
+      "eligible_follow_up": 15,
+      "eligible_opening": 6,
+      "eligible_preceding_context_tokens": {
+        "max": 3896,
+        "median": 509,
+        "min": 46,
+        "n": 21,
+        "p25": 267.0,
+        "p75": 1691.0,
+        "p95": 2995.0
+      },
+      "eligible_target_tokens": {
+        "max": 298,
+        "median": 129,
+        "min": 39,
+        "n": 21,
+        "p25": 96.0,
+        "p75": 236.0,
+        "p95": 292.0
+      },
+      "excluded": 14,
+      "exclusion_reasons": {
+        "target_too_long": 14
+      },
+      "follow_up": 27,
+      "group": "model_assistant",
+      "opening": 8,
+      "preceding_context_tokens": {
+        "max": 3896,
+        "median": 976,
+        "min": 46,
+        "n": 35,
+        "p25": 325.0,
+        "p75": 2273.5,
+        "p95": 3440.0
+      },
+      "repeated_text_targets": 0,
+      "role": "assistant",
+      "source": "wildchat",
+      "target_tokens": {
+        "max": 1622,
+        "median": 277,
+        "min": 39,
+        "n": 35,
+        "p25": 113.0,
+        "p75": 456.5,
+        "p95": 501.9
+      },
+      "targets": 35
+    }
+  ],
+  "groups": {
+    "human_assistant": {
+      "eligible": 16,
+      "targets": 17
+    },
+    "human_user": {
+      "eligible": 27,
+      "targets": 53
+    },
+    "model_assistant": {
+      "eligible": 55,
+      "targets": 70
+    },
+    "model_user": {
+      "eligible": 21,
+      "targets": 35
+    }
+  },
+  "sources": {
+    "oasst1": {
+      "adapter_accepted": 83,
+      "contributing_assistant_conversations": 8,
+      "contributing_both_roles_conversations": 6,
+      "contributing_conversations": 8,
+      "contributing_quota": 8,
+      "contributing_quota_shortfall": 0,
+      "contributing_user_conversations": 6,
+      "conversation_exclusions": {
+        "contributing_quota_reached": 74,
+        "no_contributing_target": 1,
+        "non_english_branch": 330,
+        "too_few_exchanges": 90,
+        "unreviewed_or_deleted_branch": 15
+      },
+      "dataset": "OpenAssistant/oasst1",
+      "duplicate_conversations": 0,
+      "eligible_targets": 25,
+      "exchanges_histogram": {
+        "2": 7,
+        "3": 1
+      },
+      "exchanges_per_conversation": {
+        "max": 3,
+        "median": 2.0,
+        "min": 2,
+        "n": 8,
+        "p25": 2.0,
+        "p75": 2.0,
+        "p95": 2.65
+      },
+      "input_rows_sha256": "a5c8cc7c8c0d2ac07920751effdb7061120b67f7fff76064f33b8cfbe75cbeef",
+      "inspected_candidates": 518,
+      "quota_scan": {
+        "contributing": 8,
+        "evaluated": 9
+      },
+      "repeated_text_targets": 0,
+      "revision": "fdf72ae0827c1cda404aff25b6603abec9e3399b",
+      "rows_read": 4401,
+      "scan_limit": 200,
+      "selected_conversations": 8,
+      "selection_mode": "eligible_quota",
+      "split": "validation",
+      "system_messages": 0,
+      "targets": 35,
+      "trees_in_complete_split": 518,
+      "window": "complete split read; first roots in encounter order"
+    },
+    "ultrachat": {
+      "adapter_accepted": 1000,
+      "contributing_assistant_conversations": 8,
+      "contributing_both_roles_conversations": 8,
+      "contributing_conversations": 8,
+      "contributing_quota": 8,
+      "contributing_quota_shortfall": 0,
+      "contributing_user_conversations": 8,
+      "conversation_exclusions": {
+        "contributing_quota_reached": 992
+      },
+      "dataset": "openbmb/UltraChat",
+      "duplicate_conversations": 0,
+      "eligible_targets": 55,
+      "exchanges_histogram": {
+        "3": 3,
+        "4": 3,
+        "7": 2
+      },
+      "exchanges_per_conversation": {
+        "max": 7,
+        "median": 4.0,
+        "min": 3,
+        "n": 8,
+        "p25": 3.0,
+        "p75": 4.75,
+        "p95": 7.0
+      },
+      "input_rows_sha256": "29996851702ae034a68a4b686fc5d05a3e89d7c502cd48391ab16ba4f6c93936",
+      "inspected_candidates": 1000,
+      "quota_scan": {
+        "contributing": 8,
+        "evaluated": 8
+      },
+      "repeated_text_targets": 0,
+      "revision": "f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0",
+      "rows_read": 1000,
+      "scan_limit": 200,
+      "selected_conversations": 8,
+      "selection_mode": "eligible_quota",
+      "split": "train",
+      "system_messages": 0,
+      "targets": 70,
+      "window": "first rows in dataset iteration order; no corpus shuffle"
+    },
+    "wildchat": {
+      "adapter_accepted": 211,
+      "contributing_assistant_conversations": 7,
+      "contributing_both_roles_conversations": 5,
+      "contributing_conversations": 8,
+      "contributing_quota": 8,
+      "contributing_quota_shortfall": 0,
+      "contributing_user_conversations": 6,
+      "conversation_exclusions": {
+        "contributing_quota_reached": 169,
+        "no_contributing_target": 34,
+        "non_english_conversation": 477,
+        "non_english_message": 81,
+        "too_few_exchanges": 226,
+        "toxic_redacted_or_unknown": 5
+      },
+      "dataset": "allenai/WildChat-1M",
+      "duplicate_conversations": 0,
+      "eligible_targets": 39,
+      "exchanges_histogram": {
+        "2": 4,
+        "3": 1,
+        "4": 1,
+        "9": 1,
+        "11": 1
+      },
+      "exchanges_per_conversation": {
+        "max": 11,
+        "median": 2.5,
+        "min": 2,
+        "n": 8,
+        "p25": 2.0,
+        "p75": 5.25,
+        "p95": 10.3
+      },
+      "input_rows_sha256": "9e164938db9e6000d9d086fa2928882d0ff6b1f5f69223515f60a03d51e35487",
+      "inspected_candidates": 1000,
+      "quota_scan": {
+        "contributing": 8,
+        "evaluated": 42
+      },
+      "repeated_text_targets": 0,
+      "revision": "7d6490e462285cf85d91eabea0f9a954fbddcd1f",
+      "rows_read": 1000,
+      "scan_limit": 200,
+      "selected_conversations": 8,
+      "selection_mode": "eligible_quota",
+      "split": "train",
+      "system_messages": 0,
+      "targets": 70,
+      "window": "first rows in dataset iteration order; no corpus shuffle"
+    }
+  },
+  "totals": {
+    "conversations": 24,
+    "eligible": 119,
+    "excluded": 56,
+    "targets": 175
+  }
+}

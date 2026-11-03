@@ -1,0 +1,589 @@
+{
+  "audit_version": 2,
+  "candidate_only": true,
+  "code_sha256": {
+    "core/build_conversations.py": "3b37f76e33d891cea3461e65399eff0397e1dfa5630a34d159ecff1e965eacf2",
+    "core/check_contamination.py": "1cec94b907c5d481ed4153445fdd9935854750011fa332901680b908b02ea4ec",
+    "core/config.py": "36bba0a4a559f8cd0acaeb04121fb14499996aa1384faf461520cfa7c45d1e05",
+    "core/conversation_audit.py": "b7704a8af6fd9161eb6ec80592e0d044045a5c3491208c935c8d99a47128b19f",
+    "core/conversations.py": "91297711225ea139e92cacf912a1f1972fb4ddb9a5e0b071c472a34ae14d44cb"
+  },
+  "contamination": {
+    "scope": "Full named Dolci sets, both roles in SFT messages/DPO chosen+rejected; RL prompt turns and hashes. Whitespace-normalized exact matches only; no broader contamination guarantee.",
+    "status": "checked",
+    "training_datasets": [
+      {
+        "dataset": "allenai/Dolci-Instruct-SFT",
+        "revision": "bd3c8f3a9b2cc5a9682e44b96ddd0bb2ff027221",
+        "split": "train"
+      },
+      {
+        "dataset": "allenai/Dolci-Instruct-DPO",
+        "revision": "aed155cf32e809b590490b6c3577ee4b0d0a5019",
+        "split": "train"
+      },
+      {
+        "dataset": "allenai/Dolci-Instruct-RL",
+        "revision": "1a8d79b1012d77e4bb1fd7f699c5c7eb33ef931e",
+        "split": "train"
+      }
+    ]
+  },
+  "duplicates": "Duplicate case = same source, role, authorship, whitespace-normalized history and target; first otherwise-eligible member (selection order) is kept, others get duplicate_case. Same wording in a different case only sets repeated_text_of.",
+  "environment": {
+    "datasets": "5.0.1",
+    "huggingface-hub": "1.33.0",
+    "pyarrow": "25.0.1",
+    "python": "3.13.16",
+    "tokenizers": "0.23.2",
+    "transformers": "5.18.0"
+  },
+  "format": "conversation_candidates_v1",
+  "normalization": "Duplicate/exact-match keys only: Python whitespace split/join, case preserved. Original text unchanged.",
+  "output_sha256": {
+    "audit.json": "578952987d3f4a9b64f24142d52f6b4e6e849b05b05b004e7d4387d9c81cd71b",
+    "audit.md": "8ec1aa127ae202c0367b575da3b2c92ddb775b8cb91576376b37f7e7df1ca232",
+    "conversations.jsonl": "7a810ded8a273f9e0a1260e7ad080964a7ada88dfa5c6a4dea6b452ae6a82e9f",
+    "examples.md": "64ac12b7506ae8f5b61e8e0f721d7b573774b1ef26f253db318ce70dc71a209c",
+    "exclusions.jsonl": "5e441f33624409ece9199f33a83441a663bd122380a997c8bf3ae3d7c6a471ea",
+    "length_sensitivity.json": "4c0ac9cce20d5990f9ef2b359562a6785ab697e8b147624e450cfd277a37e3e4",
+    "length_sensitivity.md": "36a4edf1f0bcb58a77d3b8a4c2372d205d95c7b8614a90750d60eaeafb8a0214",
+    "targets.jsonl": "92806fa6fc4e13971fee26cc644f51ddea043b46c9c6364db4662166e2284e06"
+  },
+  "sampling": "First bounded windows; seeded SHA256 child selection before branch quality filters; per source, candidates in seeded SHA256 rank order are evaluated (at most scan_limit) and kept only if they contribute (>= 1 eligible target with clear target and history contamination checks), until contributing_quota. Selects toward clean, length-compatible conversations; not a uniform corpus sample.",
+  "scoring": "Not compatible with core.score isolated-turn format. Original-context scoring is a subsequent task.",
+  "selection_order": [
+    "OpenAssistant/oasst1:validation:89a82880-9e74-4c7f-94ac-d585d68e90c3",
+    "OpenAssistant/oasst1:validation:11df922f-141b-40fd-8b19-c439d8225750",
+    "OpenAssistant/oasst1:validation:227890b8-9c74-4e05-b9fb-8caee5376f11",
+    "OpenAssistant/oasst1:validation:8ad01e53-8f95-41fa-9a68-2503779b935b",
+    "OpenAssistant/oasst1:validation:16c8342b-9d51-42d2-b657-b8fe20d1e87b",
+    "OpenAssistant/oasst1:validation:97707dbf-f630-4ab0-bd1a-665e668f5854",
+    "OpenAssistant/oasst1:validation:26a86374-cdf7-41cb-ac79-39e3fbcc7807",
+    "OpenAssistant/oasst1:validation:3c5b52fd-2a50-40ac-9e13-0d4b309a0a27",
+    "openbmb/UltraChat:train:755",
+    "openbmb/UltraChat:train:134",
+    "openbmb/UltraChat:train:351",
+    "openbmb/UltraChat:train:222",
+    "openbmb/UltraChat:train:996",
+    "openbmb/UltraChat:train:479",
+    "openbmb/UltraChat:train:987",
+    "openbmb/UltraChat:train:640",
+    "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc",
+    "allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8",
+    "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce",
+    "allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd",
+    "allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857",
+    "allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8",
+    "allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c",
+    "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72"
+  ],
+  "sensitivity_min_target_tokens": [
+    5,
+    10,
+    20
+  ],
+  "settings": {
+    "contributing_quota": 8,
+    "conversation_budget": 8,
+    "max_context_tokens": 4096,
+    "max_target_tokens": 300,
+    "min_exchanges": 2,
+    "min_target_tokens": 20,
+    "scan_limit": 200,
+    "seed": 0,
+    "selection_mode": "eligible_quota",
+    "source_window": 1000
+  },
+  "sources": {
+    "oasst1": {
+      "adapter_accepted": 83,
+      "dataset": "OpenAssistant/oasst1",
+      "features": {
+        "created_date": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "deleted": {
+          "_type": "Value",
+          "dtype": "bool"
+        },
+        "detoxify": {
+          "identity_attack": {
+            "_type": "Value",
+            "dtype": "float64"
+          },
+          "insult": {
+            "_type": "Value",
+            "dtype": "float64"
+          },
+          "obscene": {
+            "_type": "Value",
+            "dtype": "float64"
+          },
+          "severe_toxicity": {
+            "_type": "Value",
+            "dtype": "float64"
+          },
+          "sexual_explicit": {
+            "_type": "Value",
+            "dtype": "float64"
+          },
+          "threat": {
+            "_type": "Value",
+            "dtype": "float64"
+          },
+          "toxicity": {
+            "_type": "Value",
+            "dtype": "float64"
+          }
+        },
+        "emojis": {
+          "count": {
+            "_type": "List",
+            "feature": {
+              "_type": "Value",
+              "dtype": "int32"
+            }
+          },
+          "name": {
+            "_type": "List",
+            "feature": {
+              "_type": "Value",
+              "dtype": "string"
+            }
+          }
+        },
+        "labels": {
+          "count": {
+            "_type": "List",
+            "feature": {
+              "_type": "Value",
+              "dtype": "int32"
+            }
+          },
+          "name": {
+            "_type": "List",
+            "feature": {
+              "_type": "Value",
+              "dtype": "string"
+            }
+          },
+          "value": {
+            "_type": "List",
+            "feature": {
+              "_type": "Value",
+              "dtype": "float64"
+            }
+          }
+        },
+        "lang": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "message_id": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "message_tree_id": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "model_name": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "parent_id": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "rank": {
+          "_type": "Value",
+          "dtype": "int32"
+        },
+        "review_count": {
+          "_type": "Value",
+          "dtype": "int32"
+        },
+        "review_result": {
+          "_type": "Value",
+          "dtype": "bool"
+        },
+        "role": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "synthetic": {
+          "_type": "Value",
+          "dtype": "bool"
+        },
+        "text": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "tree_state": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "user_id": {
+          "_type": "Value",
+          "dtype": "string"
+        }
+      },
+      "input_rows_sha256": "a5c8cc7c8c0d2ac07920751effdb7061120b67f7fff76064f33b8cfbe75cbeef",
+      "inspected_candidates": 518,
+      "quota_scan": {
+        "contributing": 8,
+        "evaluated": 9
+      },
+      "revision": "fdf72ae0827c1cda404aff25b6603abec9e3399b",
+      "rows_read": 4401,
+      "split": "validation",
+      "trees_in_complete_split": 518,
+      "window": "complete split read; first roots in encounter order"
+    },
+    "ultrachat": {
+      "adapter_accepted": 1000,
+      "dataset": "openbmb/UltraChat",
+      "features": {
+        "data": {
+          "_type": "List",
+          "feature": {
+            "_type": "Value",
+            "dtype": "string"
+          }
+        },
+        "id": {
+          "_type": "Value",
+          "dtype": "string"
+        }
+      },
+      "input_rows_sha256": "29996851702ae034a68a4b686fc5d05a3e89d7c502cd48391ab16ba4f6c93936",
+      "inspected_candidates": 1000,
+      "quota_scan": {
+        "contributing": 8,
+        "evaluated": 8
+      },
+      "revision": "f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0",
+      "rows_read": 1000,
+      "split": "train",
+      "window": "first rows in dataset iteration order; no corpus shuffle"
+    },
+    "wildchat": {
+      "adapter_accepted": 211,
+      "dataset": "allenai/WildChat-1M",
+      "features": {
+        "conversation": {
+          "_type": "List",
+          "feature": {
+            "content": {
+              "_type": "Value",
+              "dtype": "string"
+            },
+            "country": {
+              "_type": "Value",
+              "dtype": "string"
+            },
+            "hashed_ip": {
+              "_type": "Value",
+              "dtype": "string"
+            },
+            "header": {
+              "accept-language": {
+                "_type": "Value",
+                "dtype": "string"
+              },
+              "user-agent": {
+                "_type": "Value",
+                "dtype": "string"
+              }
+            },
+            "language": {
+              "_type": "Value",
+              "dtype": "string"
+            },
+            "redacted": {
+              "_type": "Value",
+              "dtype": "bool"
+            },
+            "role": {
+              "_type": "Value",
+              "dtype": "string"
+            },
+            "state": {
+              "_type": "Value",
+              "dtype": "string"
+            },
+            "timestamp": {
+              "_type": "Value",
+              "dtype": "timestamp[us, tz=UTC]"
+            },
+            "toxic": {
+              "_type": "Value",
+              "dtype": "bool"
+            },
+            "turn_identifier": {
+              "_type": "Value",
+              "dtype": "int64"
+            }
+          }
+        },
+        "conversation_hash": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "country": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "detoxify_moderation": {
+          "_type": "List",
+          "feature": {
+            "identity_attack": {
+              "_type": "Value",
+              "dtype": "float64"
+            },
+            "insult": {
+              "_type": "Value",
+              "dtype": "float64"
+            },
+            "obscene": {
+              "_type": "Value",
+              "dtype": "float64"
+            },
+            "severe_toxicity": {
+              "_type": "Value",
+              "dtype": "float64"
+            },
+            "sexual_explicit": {
+              "_type": "Value",
+              "dtype": "float64"
+            },
+            "threat": {
+              "_type": "Value",
+              "dtype": "float64"
+            },
+            "toxicity": {
+              "_type": "Value",
+              "dtype": "float64"
+            }
+          }
+        },
+        "hashed_ip": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "header": {
+          "accept-language": {
+            "_type": "Value",
+            "dtype": "string"
+          },
+          "user-agent": {
+            "_type": "Value",
+            "dtype": "string"
+          }
+        },
+        "language": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "model": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "openai_moderation": {
+          "_type": "List",
+          "feature": {
+            "categories": {
+              "harassment": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "harassment/threatening": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "harassment_threatening": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "hate": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "hate/threatening": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "hate_threatening": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "self-harm": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "self-harm/instructions": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "self-harm/intent": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "self_harm": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "self_harm_instructions": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "self_harm_intent": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "sexual": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "sexual/minors": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "sexual_minors": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "violence": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "violence/graphic": {
+                "_type": "Value",
+                "dtype": "bool"
+              },
+              "violence_graphic": {
+                "_type": "Value",
+                "dtype": "bool"
+              }
+            },
+            "category_scores": {
+              "harassment": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "harassment/threatening": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "harassment_threatening": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "hate": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "hate/threatening": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "hate_threatening": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "self-harm": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "self-harm/instructions": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "self-harm/intent": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "self_harm": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "self_harm_instructions": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "self_harm_intent": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "sexual": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "sexual/minors": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "sexual_minors": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "violence": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "violence/graphic": {
+                "_type": "Value",
+                "dtype": "float64"
+              },
+              "violence_graphic": {
+                "_type": "Value",
+                "dtype": "float64"
+              }
+            },
+            "flagged": {
+              "_type": "Value",
+              "dtype": "bool"
+            }
+          }
+        },
+        "redacted": {
+          "_type": "Value",
+          "dtype": "bool"
+        },
+        "state": {
+          "_type": "Value",
+          "dtype": "string"
+        },
+        "timestamp": {
+          "_type": "Value",
+          "dtype": "timestamp[us, tz=UTC]"
+        },
+        "toxic": {
+          "_type": "Value",
+          "dtype": "bool"
+        },
+        "turn": {
+          "_type": "Value",
+          "dtype": "int64"
+        }
+      },
+      "input_rows_sha256": "9e164938db9e6000d9d086fa2928882d0ff6b1f5f69223515f60a03d51e35487",
+      "inspected_candidates": 1000,
+      "quota_scan": {
+        "contributing": 8,
+        "evaluated": 42
+      },
+      "revision": "7d6490e462285cf85d91eabea0f9a954fbddcd1f",
+      "rows_read": 1000,
+      "split": "train",
+      "window": "first rows in dataset iteration order; no corpus shuffle"
+    }
+  },
+  "tokenizer": {
+    "chat_template_sha256": "5234e79cda390e4fb2d7a5a9f071699308edfda329b71eb6cee6cf596918ef84",
+    "model": "allenai/Olmo-3-7B-Instruct",
+    "revision": "6e5971d9eba42665f5bd5a0fcf047f299ce1dccc"
+  }
+}

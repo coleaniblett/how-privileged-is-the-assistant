@@ -1,0 +1,1179 @@
+{
+ "candidate_contamination": "checked",
+ "candidate_path": "candidates/logit_distortion/pilot_v3",
+ "candidates": {
+  "format": "conversation_candidates_v1",
+  "manifest_sha256": "8f8559067347b33eadd21fe30d45087fcfa91941404c475a17b352f58e4ace78",
+  "output_sha256": {
+   "audit.json": "578952987d3f4a9b64f24142d52f6b4e6e849b05b05b004e7d4387d9c81cd71b",
+   "audit.md": "8ec1aa127ae202c0367b575da3b2c92ddb775b8cb91576376b37f7e7df1ca232",
+   "conversations.jsonl": "7a810ded8a273f9e0a1260e7ad080964a7ada88dfa5c6a4dea6b452ae6a82e9f",
+   "examples.md": "64ac12b7506ae8f5b61e8e0f721d7b573774b1ef26f253db318ce70dc71a209c",
+   "exclusions.jsonl": "5e441f33624409ece9199f33a83441a663bd122380a997c8bf3ae3d7c6a471ea",
+   "length_sensitivity.json": "4c0ac9cce20d5990f9ef2b359562a6785ab697e8b147624e450cfd277a37e3e4",
+   "length_sensitivity.md": "36a4edf1f0bcb58a77d3b8a4c2372d205d95c7b8614a90750d60eaeafb8a0214",
+   "targets.jsonl": "92806fa6fc4e13971fee26cc644f51ddea043b46c9c6364db4662166e2284e06"
+  }
+ },
+ "code_sha256": {
+  "core/render.py": "c9122b7a395f6befd87668e5936d2e3fdb2770ae0728a3e0b9cf8ad347f202e3",
+  "core/score.py": "7debe9d3269e3a7382652f082bf9e0435c62f665adbea594fa44b0bc5e4cdc31",
+  "core/score_conversations.py": "36e8e978d12072149a203b2ea606ecbae21b9210ddd8a29446bce8e16fba8955"
+ },
+ "context_limit": 65536,
+ "context_limits": {
+  "base": {
+   "limit": 65536,
+   "source": "allenai/Olmo-3-1025-7B config max_position_embeddings"
+  },
+  "dpo": {
+   "limit": 65536,
+   "source": "allenai/Olmo-3-7B-Instruct-DPO config max_position_embeddings"
+  },
+  "instruct": {
+   "limit": 65536,
+   "source": "allenai/Olmo-3-7B-Instruct config max_position_embeddings"
+  },
+  "sft": {
+   "limit": 65536,
+   "source": "allenai/Olmo-3-7B-Instruct-SFT config max_position_embeddings"
+  }
+ },
+ "environment": {
+  "python": "3.13.16",
+  "tokenizers": "0.23.3",
+  "torch": "2.14.1",
+  "transformers": "5.20.2"
+ },
+ "exclusions": [
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:16c8342b-9d51-42d2-b657-b8fe20d1e87b:target:oasst1:16c8342b-9d51-42d2-b657-b8fe20d1e87b"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:16c8342b-9d51-42d2-b657-b8fe20d1e87b:target:oasst1:48abee9d-61c4-4c15-99e7-8b919d1fc3fa"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:16c8342b-9d51-42d2-b657-b8fe20d1e87b:target:oasst1:846574b5-d05c-40d4-9b3f-3b4c7dccf6c0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:227890b8-9c74-4e05-b9fb-8caee5376f11:target:oasst1:227890b8-9c74-4e05-b9fb-8caee5376f11"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:227890b8-9c74-4e05-b9fb-8caee5376f11:target:oasst1:35a9596c-68a0-4f79-a97f-4d97e098da82"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:3c5b52fd-2a50-40ac-9e13-0d4b309a0a27:target:oasst1:cf6223a3-e30e-476b-b220-59a065d154a2"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:89a82880-9e74-4c7f-94ac-d585d68e90c3:target:oasst1:f636b8ff-cb45-4f91-93f0-2265ae3d09ac"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:8ad01e53-8f95-41fa-9a68-2503779b935b:target:oasst1:eaf528c0-aa2c-49b1-b0bb-9fc763d17e4f"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:97707dbf-f630-4ab0-bd1a-665e668f5854:target:oasst1:97707dbf-f630-4ab0-bd1a-665e668f5854"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "OpenAssistant/oasst1:validation:97707dbf-f630-4ab0-bd1a-665e668f5854:target:oasst1:b673668f-f1fe-4acc-960f-f254cddc4ce3"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:134:target:openbmb/UltraChat:train:134:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:134:target:openbmb/UltraChat:train:134:message:2"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:2"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:4"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:8"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:351:target:openbmb/UltraChat:train:351:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:2"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:2"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:7"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:987:target:openbmb/UltraChat:train:987:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:4"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:7"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:13"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:14"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:18"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:19"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:21"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:target:allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:message:1"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:target:allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:message:3"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:target:allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:message:1"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:target:allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:message:2"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:target:allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:message:4"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:target:allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:message:5"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:3"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:4"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:5"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:6"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:7"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:8"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:10"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:11"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:12"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:13"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:14"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:15"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:16"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:target:allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:target:allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:message:2"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:target:allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:message:0"
+  },
+  {
+   "reason": "candidate_ineligible",
+   "stage": "candidate",
+   "target_id": "allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:target:allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:message:2"
+  }
+ ],
+ "family": "olmo3-7b",
+ "format": "conversation_scores_v1",
+ "input_fingerprint": "f99760299bf5b3face767e6cacacf581e39f54398acea28882fe001c8aedb222",
+ "rendering": {
+  "assistant_header": "<|im_start|>assistant\n",
+  "system": "template default system prompt when the conversation has no original system message; an original system message replaces it (template behavior, verified), never duplicated",
+  "template_kwargs": {},
+  "user_header": "<|im_start|>user\n"
+ },
+ "targets": [
+  {
+   "end": 70,
+   "input_sha256": "5d263deaf68872049ebd789d7e02986739d8eb25c524e78977738bf6ffcb666c",
+   "n_input_tokens": 72,
+   "start": 31,
+   "target_id": "OpenAssistant/oasst1:validation:11df922f-141b-40fd-8b19-c439d8225750:target:oasst1:11df922f-141b-40fd-8b19-c439d8225750"
+  },
+  {
+   "end": 305,
+   "input_sha256": "cce69c60df52fe5bb2620ca65e50d7bafade996b909cb430708fa6bc4ea26221",
+   "n_input_tokens": 306,
+   "start": 75,
+   "target_id": "OpenAssistant/oasst1:validation:11df922f-141b-40fd-8b19-c439d8225750:target:oasst1:ea32151a-d6c5-409a-b9f4-d1b2f2f56b19"
+  },
+  {
+   "end": 358,
+   "input_sha256": "54810fdf2dfe6cec13d1c7a0a4f0b018d0af9ccce530479f302ba63601090a0c",
+   "n_input_tokens": 360,
+   "start": 310,
+   "target_id": "OpenAssistant/oasst1:validation:11df922f-141b-40fd-8b19-c439d8225750:target:oasst1:5c0c7bdc-e197-43fb-8036-4426603c2c2c"
+  },
+  {
+   "end": 526,
+   "input_sha256": "60a8656478a05363f2c9379e1beb820f75aa61ecfe09b72376d249fbebc30be6",
+   "n_input_tokens": 527,
+   "start": 363,
+   "target_id": "OpenAssistant/oasst1:validation:11df922f-141b-40fd-8b19-c439d8225750:target:oasst1:5613a135-5101-4108-8360-7eab5c14c428"
+  },
+  {
+   "end": 129,
+   "input_sha256": "02ff1b4caac6e28b7b477e0da891bc98b8faaa4f2c3fdec3c1c8ee05a6059a79",
+   "n_input_tokens": 130,
+   "start": 49,
+   "target_id": "OpenAssistant/oasst1:validation:16c8342b-9d51-42d2-b657-b8fe20d1e87b:target:oasst1:faf1cc49-838d-4b51-a591-44c8dbb56628"
+  },
+  {
+   "end": 405,
+   "input_sha256": "43d76a6500ae02778b24f6f0f369bb59c245beafdedc6b1327a213d2097d9f53",
+   "n_input_tokens": 406,
+   "start": 149,
+   "target_id": "OpenAssistant/oasst1:validation:16c8342b-9d51-42d2-b657-b8fe20d1e87b:target:oasst1:cc647332-eaab-493a-aedb-3f6aa0d5bb3e"
+  },
+  {
+   "end": 551,
+   "input_sha256": "5948566b2a55a95686524ee3a73f434621402e855e738d86cad15fd97b64630a",
+   "n_input_tokens": 553,
+   "start": 520,
+   "target_id": "OpenAssistant/oasst1:validation:227890b8-9c74-4e05-b9fb-8caee5376f11:target:oasst1:c877cbb2-5b79-4eff-9c7d-a0286a8a151a"
+  },
+  {
+   "end": 779,
+   "input_sha256": "5581519a30978cce453b867d064403d21cb3b98a265fc73ee5b8a664f6b353f1",
+   "n_input_tokens": 780,
+   "start": 556,
+   "target_id": "OpenAssistant/oasst1:validation:227890b8-9c74-4e05-b9fb-8caee5376f11:target:oasst1:c63278bc-2cbf-4ddd-878d-03cdd347ec32"
+  },
+  {
+   "end": 285,
+   "input_sha256": "7ac3f2330faa2c0cb4b231fecd8f6d2b835f575dd79b95a0d3a0286734b6d21b",
+   "n_input_tokens": 287,
+   "start": 31,
+   "target_id": "OpenAssistant/oasst1:validation:26a86374-cdf7-41cb-ac79-39e3fbcc7807:target:oasst1:26a86374-cdf7-41cb-ac79-39e3fbcc7807"
+  },
+  {
+   "end": 484,
+   "input_sha256": "f8bd066a8266111df4460b98ceed3ee96f13eb014a080cd05efdab6d7ffe8680",
+   "n_input_tokens": 485,
+   "start": 290,
+   "target_id": "OpenAssistant/oasst1:validation:26a86374-cdf7-41cb-ac79-39e3fbcc7807:target:oasst1:3b944b63-7bc6-4af2-939c-039e66898c7a"
+  },
+  {
+   "end": 538,
+   "input_sha256": "68a16f83f2c83ae3f81c48b5b73fd800213d9c5b84f5cbbf98106e6657f2c26b",
+   "n_input_tokens": 540,
+   "start": 489,
+   "target_id": "OpenAssistant/oasst1:validation:26a86374-cdf7-41cb-ac79-39e3fbcc7807:target:oasst1:b5dbea4a-0e84-4257-9354-986beaeb4f25"
+  },
+  {
+   "end": 665,
+   "input_sha256": "7ed0bbf16d5173d4785adcdbc47637bb49beb33a6d3a2cc919d4baa8756a6007",
+   "n_input_tokens": 666,
+   "start": 543,
+   "target_id": "OpenAssistant/oasst1:validation:26a86374-cdf7-41cb-ac79-39e3fbcc7807:target:oasst1:b7fecd12-3847-407a-a8a3-47c6b259e2a1"
+  },
+  {
+   "end": 769,
+   "input_sha256": "712031b2b967ce1e37d362618a51881174884da44d6fd7d04f215737fee5d095",
+   "n_input_tokens": 771,
+   "start": 670,
+   "target_id": "OpenAssistant/oasst1:validation:26a86374-cdf7-41cb-ac79-39e3fbcc7807:target:oasst1:84663582-d635-402d-b7fc-5cc8d5de8df9"
+  },
+  {
+   "end": 795,
+   "input_sha256": "b718ec874ad87678482c0208885be5a52448215aab1ce7756eaa42a7545307ad",
+   "n_input_tokens": 796,
+   "start": 774,
+   "target_id": "OpenAssistant/oasst1:validation:26a86374-cdf7-41cb-ac79-39e3fbcc7807:target:oasst1:ea389e7c-1be8-4789-aa79-ecc953efc1ee"
+  },
+  {
+   "end": 102,
+   "input_sha256": "2e37add02518295fee815d61c8eea48ac11f7a28ffe04c68c6960374cc778ef8",
+   "n_input_tokens": 104,
+   "start": 31,
+   "target_id": "OpenAssistant/oasst1:validation:3c5b52fd-2a50-40ac-9e13-0d4b309a0a27:target:oasst1:3c5b52fd-2a50-40ac-9e13-0d4b309a0a27"
+  },
+  {
+   "end": 148,
+   "input_sha256": "7a5be0a0beb7fd2ddf7a9fae541db4d3895100db1c31e50423f3fd21394ce823",
+   "n_input_tokens": 149,
+   "start": 107,
+   "target_id": "OpenAssistant/oasst1:validation:3c5b52fd-2a50-40ac-9e13-0d4b309a0a27:target:oasst1:6bed3610-0d36-4831-8b40-dbadd54f89a7"
+  },
+  {
+   "end": 278,
+   "input_sha256": "cdfdd6eb3357134f152963bfd75b15ec44115158c296b258b4f7872278992ed4",
+   "n_input_tokens": 279,
+   "start": 177,
+   "target_id": "OpenAssistant/oasst1:validation:3c5b52fd-2a50-40ac-9e13-0d4b309a0a27:target:oasst1:af881769-a2a0-4973-b01e-782fa9185586"
+  },
+  {
+   "end": 51,
+   "input_sha256": "d9a4a1ca946faba2159c1f3e5d48dc6037cf2f26e657ae07126db4d7b0bd2aa4",
+   "n_input_tokens": 53,
+   "start": 31,
+   "target_id": "OpenAssistant/oasst1:validation:89a82880-9e74-4c7f-94ac-d585d68e90c3:target:oasst1:89a82880-9e74-4c7f-94ac-d585d68e90c3"
+  },
+  {
+   "end": 170,
+   "input_sha256": "1ef172425e21e91d6ba5ad9f9e518592dce7645853ae4067a6963f46c3491fbd",
+   "n_input_tokens": 171,
+   "start": 56,
+   "target_id": "OpenAssistant/oasst1:validation:89a82880-9e74-4c7f-94ac-d585d68e90c3:target:oasst1:c1806848-6c8e-4677-b50b-e40761933e52"
+  },
+  {
+   "end": 309,
+   "input_sha256": "126f1d5ddda0d77ee2143d573e60c3d730f1bfdc12cde465b3ee49bb93441bb8",
+   "n_input_tokens": 310,
+   "start": 193,
+   "target_id": "OpenAssistant/oasst1:validation:89a82880-9e74-4c7f-94ac-d585d68e90c3:target:oasst1:fd98d9d4-1979-4835-af26-b366655e3fde"
+  },
+  {
+   "end": 92,
+   "input_sha256": "5973e6d3f5900eb3504c227e1a7f35446f65d87727accb8c6fca576bec22bf21",
+   "n_input_tokens": 94,
+   "start": 31,
+   "target_id": "OpenAssistant/oasst1:validation:8ad01e53-8f95-41fa-9a68-2503779b935b:target:oasst1:8ad01e53-8f95-41fa-9a68-2503779b935b"
+  },
+  {
+   "end": 387,
+   "input_sha256": "d89bc1149aba405459fc6c3115ceb21709627fce88413b5239fda2a63b2b321c",
+   "n_input_tokens": 388,
+   "start": 97,
+   "target_id": "OpenAssistant/oasst1:validation:8ad01e53-8f95-41fa-9a68-2503779b935b:target:oasst1:187187c7-a3ba-4707-b7cc-3ee5e6945b34"
+  },
+  {
+   "end": 679,
+   "input_sha256": "efe081114c5dbc2e840b26dacd47caeec488d1317ef627eb6f588f50b0c73a1c",
+   "n_input_tokens": 680,
+   "start": 411,
+   "target_id": "OpenAssistant/oasst1:validation:8ad01e53-8f95-41fa-9a68-2503779b935b:target:oasst1:99dd05a0-41f4-48be-b9c2-396f876f915f"
+  },
+  {
+   "end": 88,
+   "input_sha256": "e2c6088d4300e51354b195f3798e580e9ecd083b17123d9274d9036d8189a9b8",
+   "n_input_tokens": 89,
+   "start": 44,
+   "target_id": "OpenAssistant/oasst1:validation:97707dbf-f630-4ab0-bd1a-665e668f5854:target:oasst1:883b4951-6ceb-4e94-9658-737248664b18"
+  },
+  {
+   "end": 157,
+   "input_sha256": "d78e9c9b843ce90458ee79e55a4989e1ecd7ebb73c7b26463954a707e8a65a7a",
+   "n_input_tokens": 158,
+   "start": 104,
+   "target_id": "OpenAssistant/oasst1:validation:97707dbf-f630-4ab0-bd1a-665e668f5854:target:oasst1:657c5eef-7b8b-4ffe-a314-3dd98788cb52"
+  },
+  {
+   "end": 287,
+   "input_sha256": "9d05ac5c272a1626a1d02e408ada06042f080186832f06c3143210e5d7899266",
+   "n_input_tokens": 288,
+   "start": 46,
+   "target_id": "openbmb/UltraChat:train:134:target:openbmb/UltraChat:train:134:message:1"
+  },
+  {
+   "end": 529,
+   "input_sha256": "5ca65ca03e703adcbe85431d2501be87078d6e958a4cf697894ebe32b069c251",
+   "n_input_tokens": 530,
+   "start": 313,
+   "target_id": "openbmb/UltraChat:train:134:target:openbmb/UltraChat:train:134:message:3"
+  },
+  {
+   "end": 564,
+   "input_sha256": "482249810eae5b8b0e821af3250d89d45810d206f7a8f1b53b5618a1b977cb7d",
+   "n_input_tokens": 566,
+   "start": 534,
+   "target_id": "openbmb/UltraChat:train:134:target:openbmb/UltraChat:train:134:message:4"
+  },
+  {
+   "end": 806,
+   "input_sha256": "322db09e6ab014eec588f5ae05131fe0a24365ab27cd79bb9e39b773f0eab7a0",
+   "n_input_tokens": 807,
+   "start": 569,
+   "target_id": "openbmb/UltraChat:train:134:target:openbmb/UltraChat:train:134:message:5"
+  },
+  {
+   "end": 113,
+   "input_sha256": "2e2837878309e5d23a8f1feaf3a2584c94c4986cf9636acbacde9ea81bb6a2cd",
+   "n_input_tokens": 114,
+   "start": 45,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:1"
+  },
+  {
+   "end": 259,
+   "input_sha256": "77b68fb42c24056f44a0fdaf6afb46d7cc69a3c925a75b50d2bf24c94b8f0867",
+   "n_input_tokens": 260,
+   "start": 139,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:3"
+  },
+  {
+   "end": 427,
+   "input_sha256": "ad6021b06c8743d26fe193c69ec0822005620189a00bc6508ca352928c0a77c5",
+   "n_input_tokens": 428,
+   "start": 288,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:5"
+  },
+  {
+   "end": 455,
+   "input_sha256": "56061087b595e3ab67dd2ecb0f24e5cd03afe46942251e98a4ec19f637c7f5b7",
+   "n_input_tokens": 457,
+   "start": 432,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:6"
+  },
+  {
+   "end": 600,
+   "input_sha256": "a08640f50080f3702ddaeaf087d97b697d11844eedebc835fe63a588d931c993",
+   "n_input_tokens": 601,
+   "start": 460,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:7"
+  },
+  {
+   "end": 785,
+   "input_sha256": "ac8d919afbc198c3f2544d11391c6fcc2711f7c6b6856263bfee7f277bdef9b3",
+   "n_input_tokens": 786,
+   "start": 627,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:9"
+  },
+  {
+   "end": 814,
+   "input_sha256": "d76d2b74eed814b6aa20501e8c1ca6c80cb2bba8e3f7cda938f23b927ce02b76",
+   "n_input_tokens": 816,
+   "start": 790,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:10"
+  },
+  {
+   "end": 1074,
+   "input_sha256": "f589a29fa0a066b92dbc995a9c04fa32ba59bd46282e0a6cb09e548bd0839062",
+   "n_input_tokens": 1075,
+   "start": 819,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:11"
+  },
+  {
+   "end": 1111,
+   "input_sha256": "ca4163c067ba840e0ad0f2f985b824b30e64ed881d2c085b785eb074bb5a6b6a",
+   "n_input_tokens": 1113,
+   "start": 1079,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:12"
+  },
+  {
+   "end": 1286,
+   "input_sha256": "317e2723436044f037c5b54e5555c336b9e8711e4befabea4c4beb234f274d65",
+   "n_input_tokens": 1287,
+   "start": 1116,
+   "target_id": "openbmb/UltraChat:train:222:target:openbmb/UltraChat:train:222:message:13"
+  },
+  {
+   "end": 231,
+   "input_sha256": "81b6155857c60a53feb31f09803790bec24f9797cdf5e480e8d05ef3a981bf20",
+   "n_input_tokens": 232,
+   "start": 49,
+   "target_id": "openbmb/UltraChat:train:351:target:openbmb/UltraChat:train:351:message:1"
+  },
+  {
+   "end": 274,
+   "input_sha256": "bbea0ae6c28151abdaeffbceabab56c9e17befad2d8aa9716f65ac4f8e09bf21",
+   "n_input_tokens": 276,
+   "start": 236,
+   "target_id": "openbmb/UltraChat:train:351:target:openbmb/UltraChat:train:351:message:2"
+  },
+  {
+   "end": 398,
+   "input_sha256": "f2e1b340a72ff073871128819f3ac330c44707f2c498eecaebdca826f28a4a78",
+   "n_input_tokens": 399,
+   "start": 279,
+   "target_id": "openbmb/UltraChat:train:351:target:openbmb/UltraChat:train:351:message:3"
+  },
+  {
+   "end": 432,
+   "input_sha256": "79bdda2e717a3391700bde99f8d4effff3a879925620ac223bd17657e85eb6c1",
+   "n_input_tokens": 434,
+   "start": 403,
+   "target_id": "openbmb/UltraChat:train:351:target:openbmb/UltraChat:train:351:message:4"
+  },
+  {
+   "end": 646,
+   "input_sha256": "1473dd606e2bafde4711bcdc8b1ee9dfac2c53e15d58d473e222738250e1dda2",
+   "n_input_tokens": 647,
+   "start": 437,
+   "target_id": "openbmb/UltraChat:train:351:target:openbmb/UltraChat:train:351:message:5"
+  },
+  {
+   "end": 253,
+   "input_sha256": "3e128abf5ee02a21fb6a00c057e3ddd7d737f664e13ad510f2fd4684515751d1",
+   "n_input_tokens": 254,
+   "start": 48,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:1"
+  },
+  {
+   "end": 495,
+   "input_sha256": "10dcfab2097cf9182dc44b045442cdbea1199bca189439429ae0cfc27a0f3c54",
+   "n_input_tokens": 496,
+   "start": 277,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:3"
+  },
+  {
+   "end": 525,
+   "input_sha256": "e5682edb672d61b685dd6d20837b45d98f0f6a8086ce32ac7576cc810ce26c41",
+   "n_input_tokens": 527,
+   "start": 500,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:4"
+  },
+  {
+   "end": 597,
+   "input_sha256": "c147f9eb86166a19d19bd58680a5262d412617ca6b6d0a8db279f0645b372996",
+   "n_input_tokens": 598,
+   "start": 530,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:5"
+  },
+  {
+   "end": 653,
+   "input_sha256": "d8ca892bd98adb720ab9c7748eb0de7efaad39c2ff45d29d129835bc48f607cf",
+   "n_input_tokens": 655,
+   "start": 602,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:6"
+  },
+  {
+   "end": 734,
+   "input_sha256": "9b1e621238bd0f41f77bd6e24f6631012cd64171371da236052520484f7677dd",
+   "n_input_tokens": 735,
+   "start": 658,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:7"
+  },
+  {
+   "end": 773,
+   "input_sha256": "38df07cd63e45027c3390cd752fc750b63db54ab4b5bb757d7688cb9c1e77ebc",
+   "n_input_tokens": 775,
+   "start": 739,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:8"
+  },
+  {
+   "end": 877,
+   "input_sha256": "41ada6c9996dd1d6a37890b4a22b636aeb5fffbc9118ae199f57aa9e0a2b0042",
+   "n_input_tokens": 878,
+   "start": 778,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:9"
+  },
+  {
+   "end": 922,
+   "input_sha256": "17c750c25e8ecd12b1c85e045bdf47f69c78cc5d6e0e60f10ccc267099c0707c",
+   "n_input_tokens": 924,
+   "start": 882,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:10"
+  },
+  {
+   "end": 1026,
+   "input_sha256": "7c736e97401fa7bd5638b61aa003d34a91c529dce9dc63ed5ee7403c6faf5167",
+   "n_input_tokens": 1027,
+   "start": 927,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:11"
+  },
+  {
+   "end": 1066,
+   "input_sha256": "029326f10273bf809802c34854d3725c4ae8dcc58096353a12594099e72b2a71",
+   "n_input_tokens": 1068,
+   "start": 1031,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:12"
+  },
+  {
+   "end": 1188,
+   "input_sha256": "20e3b9fe9d74ed1607988ab39fe8c14cad19653acc7f03b7b7f7e6d9db10d80a",
+   "n_input_tokens": 1189,
+   "start": 1071,
+   "target_id": "openbmb/UltraChat:train:479:target:openbmb/UltraChat:train:479:message:13"
+  },
+  {
+   "end": 274,
+   "input_sha256": "2bf31535efebd1c331f7255237746a2272357baabaec3a04e46349e44b0162c4",
+   "n_input_tokens": 275,
+   "start": 50,
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:1"
+  },
+  {
+   "end": 561,
+   "input_sha256": "c6c4a25247a1f5135badea43ac5854580e01eb4a039737c0f2a006afe709045c",
+   "n_input_tokens": 562,
+   "start": 303,
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:3"
+  },
+  {
+   "end": 591,
+   "input_sha256": "9529d8a9c2fd8676e8c4c343c576b65ac472b97f7a43283e2a2856d6b2506ec9",
+   "n_input_tokens": 593,
+   "start": 566,
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:4"
+  },
+  {
+   "end": 838,
+   "input_sha256": "8e974928e8addffdeb3e41fc72d2cf9d0245134358cedf9d5ea403baa71a75a0",
+   "n_input_tokens": 839,
+   "start": 596,
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:5"
+  },
+  {
+   "end": 870,
+   "input_sha256": "5f16bddea9453386266851a6e41809589bb7f719173e31c6b16b4588fe150f9e",
+   "n_input_tokens": 872,
+   "start": 843,
+   "target_id": "openbmb/UltraChat:train:640:target:openbmb/UltraChat:train:640:message:6"
+  },
+  {
+   "end": 259,
+   "input_sha256": "18731d5207f477c1396e7b3e74195a188a2ddd088dd319db536b147afa949aac",
+   "n_input_tokens": 260,
+   "start": 50,
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:1"
+  },
+  {
+   "end": 288,
+   "input_sha256": "d6e46d54ca9af1a1f0fa10a774256de8b60bddc317f156f6d4ff3daf3a72498a",
+   "n_input_tokens": 290,
+   "start": 264,
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:2"
+  },
+  {
+   "end": 539,
+   "input_sha256": "236204c191b0a0e6d2904a394bdddca2a0517ef81770f89ec408bb483fb1bf8c",
+   "n_input_tokens": 540,
+   "start": 293,
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:3"
+  },
+  {
+   "end": 573,
+   "input_sha256": "1abd1ffba1f334e2e275d095dca12ebacdc701085643e8d06b7e240fc5d31c12",
+   "n_input_tokens": 575,
+   "start": 544,
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:4"
+  },
+  {
+   "end": 878,
+   "input_sha256": "43bef2ece54e06293a9037ecc422e1327165fa0790be1a1cf5c1555dfb655639",
+   "n_input_tokens": 879,
+   "start": 578,
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:5"
+  },
+  {
+   "end": 916,
+   "input_sha256": "756d4b44d8dbfee8b5e81fe716674423c3a99104fac202c6580b8c9b76a8ba7e",
+   "n_input_tokens": 918,
+   "start": 883,
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:6"
+  },
+  {
+   "end": 1120,
+   "input_sha256": "da5e6dce377959d191f4fe0fd47027ddb013c9ff66a0b8d59de9b743cb441cf0",
+   "n_input_tokens": 1121,
+   "start": 921,
+   "target_id": "openbmb/UltraChat:train:755:target:openbmb/UltraChat:train:755:message:7"
+  },
+  {
+   "end": 310,
+   "input_sha256": "7cb0075de772d43bfa5d17ad42af259cc4918706b3ee736ddc55b99abb8959b0",
+   "n_input_tokens": 311,
+   "start": 52,
+   "target_id": "openbmb/UltraChat:train:987:target:openbmb/UltraChat:train:987:message:1"
+  },
+  {
+   "end": 344,
+   "input_sha256": "5fcade8e88c324560cee49011a0907e600495c82051708c393ab4d5fe35cd45b",
+   "n_input_tokens": 346,
+   "start": 315,
+   "target_id": "openbmb/UltraChat:train:987:target:openbmb/UltraChat:train:987:message:2"
+  },
+  {
+   "end": 616,
+   "input_sha256": "4fb04f8d8e6d6ecb26772e229f5ce2ae62e05ba8aa396e89d5dcc96ea5710f5b",
+   "n_input_tokens": 617,
+   "start": 349,
+   "target_id": "openbmb/UltraChat:train:987:target:openbmb/UltraChat:train:987:message:3"
+  },
+  {
+   "end": 658,
+   "input_sha256": "6bce882280369c0f07b1ffa30c35604a4d682037197f012fcc1d2a5ae29eee17",
+   "n_input_tokens": 660,
+   "start": 621,
+   "target_id": "openbmb/UltraChat:train:987:target:openbmb/UltraChat:train:987:message:4"
+  },
+  {
+   "end": 893,
+   "input_sha256": "b83abbc450741606ea65f10d98e0cd7735fcb86e384c3c02e61db32eb6cf761f",
+   "n_input_tokens": 894,
+   "start": 663,
+   "target_id": "openbmb/UltraChat:train:987:target:openbmb/UltraChat:train:987:message:5"
+  },
+  {
+   "end": 171,
+   "input_sha256": "f9a5e9e488c1dae5864e11786ecef8d5d96e846b73aa993e3159cb4816d0d275",
+   "n_input_tokens": 172,
+   "start": 53,
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:1"
+  },
+  {
+   "end": 231,
+   "input_sha256": "d18389155ddf7d56b25c4dc465ec36e06f8423eb9c07ae30c0217f80138f54b9",
+   "n_input_tokens": 233,
+   "start": 176,
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:2"
+  },
+  {
+   "end": 493,
+   "input_sha256": "de058ec25b5f319965b3614e52c8457b768fd0f9c23ccaa16c710b4e17e6352c",
+   "n_input_tokens": 494,
+   "start": 236,
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:3"
+  },
+  {
+   "end": 525,
+   "input_sha256": "0a30a2249465edd21f3b9c612df2d90070f9c27c7b80bef37f8aaed0becdff1c",
+   "n_input_tokens": 527,
+   "start": 498,
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:4"
+  },
+  {
+   "end": 562,
+   "input_sha256": "d2911d11f742a3ed762270b9530667480dfea43ba96ef9050a32f93cd283c6ca",
+   "n_input_tokens": 563,
+   "start": 530,
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:5"
+  },
+  {
+   "end": 600,
+   "input_sha256": "61bd12ae5f9e0694cfd6f3fbca355b2e6c2687646d5f771b694df41310d5625d",
+   "n_input_tokens": 602,
+   "start": 567,
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:6"
+  },
+  {
+   "end": 727,
+   "input_sha256": "b394d259be13dca3458a52b45ff32a49c0ef0d1cbc4a4d8e3392806048cbb577",
+   "n_input_tokens": 728,
+   "start": 605,
+   "target_id": "openbmb/UltraChat:train:996:target:openbmb/UltraChat:train:996:message:7"
+  },
+  {
+   "end": 480,
+   "input_sha256": "92be497b3015e7a686c1b8b3c69df29bae7b9f7b0a90f6bc999a4f59d32a0718",
+   "n_input_tokens": 481,
+   "start": 439,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:1"
+  },
+  {
+   "end": 507,
+   "input_sha256": "7d1e46ecdee94ed09ee6346f055b1fab5ed309bc77e18dbaf2b1e0acf437bfae",
+   "n_input_tokens": 509,
+   "start": 485,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:2"
+  },
+  {
+   "end": 692,
+   "input_sha256": "889b986c1921ca9f824354a7cb4b0b9f08603e79891cea09c01ce6743dc1d7ce",
+   "n_input_tokens": 693,
+   "start": 512,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:3"
+  },
+  {
+   "end": 932,
+   "input_sha256": "e1c07e4fffe2f0de861ea829773f955c2cd1c483ec22e6dbacfdda55dc8e4ca7",
+   "n_input_tokens": 933,
+   "start": 716,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:5"
+  },
+  {
+   "end": 974,
+   "input_sha256": "aabced6855b41b3f2e1cea27d8a8178e160c6727e6cd0569b0e7d3a95d4713f3",
+   "n_input_tokens": 976,
+   "start": 937,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:6"
+  },
+  {
+   "end": 1414,
+   "input_sha256": "46297f64a495ec33ab8c7c29531d86f1ee5998391c2668e5eccae20b2413e181",
+   "n_input_tokens": 1416,
+   "start": 1392,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:8"
+  },
+  {
+   "end": 1655,
+   "input_sha256": "b544582639155c7f05a485f290f337ac433116022746da8ab57f4af3f41d7ad7",
+   "n_input_tokens": 1656,
+   "start": 1419,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:9"
+  },
+  {
+   "end": 1689,
+   "input_sha256": "9e451cbf68660af25a7919fe912370227dfb45da431795770eea2f4862f52c45",
+   "n_input_tokens": 1691,
+   "start": 1660,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:10"
+  },
+  {
+   "end": 1929,
+   "input_sha256": "6dc1be9deb18360e6816d82e64707286f8d0f67285fedd06c1ef16f97e2af2f5",
+   "n_input_tokens": 1930,
+   "start": 1694,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:11"
+  },
+  {
+   "end": 2001,
+   "input_sha256": "975d0f6eeaafea4ccb8523827a86a948e219ee4462344e0632e3c2292380c95e",
+   "n_input_tokens": 2003,
+   "start": 1934,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:12"
+  },
+  {
+   "end": 2782,
+   "input_sha256": "fd15996bff90e74d66e33ff6dad0f7f1eb39d70fdb0df37fbb2f65d690bc9c1a",
+   "n_input_tokens": 2783,
+   "start": 2484,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:15"
+  },
+  {
+   "end": 2808,
+   "input_sha256": "29d0f4bf406d8b1f830c6d1b2e5c10d08acdcc78c5e144b72b52441fae3fc06e",
+   "n_input_tokens": 2810,
+   "start": 2787,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:16"
+  },
+  {
+   "end": 3105,
+   "input_sha256": "13c2cd3a7140132144d7be7a4bfcbc31593eab7dfc2f7e3ca38ad99bad3edf03",
+   "n_input_tokens": 3106,
+   "start": 2813,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:17"
+  },
+  {
+   "end": 3494,
+   "input_sha256": "9eae3c308435eb9b1157f9a5bcf435ca2c67abb43b20eabe55a8c23c02ac4752",
+   "n_input_tokens": 3496,
+   "start": 3456,
+   "target_id": "allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:target:allenai/WildChat-1M:train:073967d39ca9cf255b488602f0680f72:message:20"
+  },
+  {
+   "end": 64,
+   "input_sha256": "499e01ef843b5987ec5cf7f11b07acbddfe97b6ed93667bf28b878974d9d90b4",
+   "n_input_tokens": 66,
+   "start": 31,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:0"
+  },
+  {
+   "end": 166,
+   "input_sha256": "e91c4a182aa30bed1ab0f3a3a64f0e025303d48b027b3b0d735ebccac4163bd1",
+   "n_input_tokens": 167,
+   "start": 69,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:1"
+  },
+  {
+   "end": 199,
+   "input_sha256": "563f6a2dff06f70ab58b6c33301ff8c07ad8af45168c77aa4458d54d744fbea2",
+   "n_input_tokens": 201,
+   "start": 171,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:2"
+  },
+  {
+   "end": 301,
+   "input_sha256": "a42bb1bce6213af6c1d5d07780ef451d71e3af8dcc481e13054ccedccc1d05da",
+   "n_input_tokens": 302,
+   "start": 204,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:3"
+  },
+  {
+   "end": 339,
+   "input_sha256": "9807658bacfaf9a2c022554a67feef634c6d72007b8ac5342ea913a08c863928",
+   "n_input_tokens": 341,
+   "start": 306,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:4"
+  },
+  {
+   "end": 458,
+   "input_sha256": "f347805769906d825d55deb2166af8c5d1f8f261418deaabaf3b8a8387882362",
+   "n_input_tokens": 459,
+   "start": 344,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:5"
+  },
+  {
+   "end": 489,
+   "input_sha256": "6b1e77334ef874fa1b91c01aa2764dc2e64e527ddc1fc9a4418152a85f57b307",
+   "n_input_tokens": 491,
+   "start": 463,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:6"
+  },
+  {
+   "end": 561,
+   "input_sha256": "3dff3bc1ab522f8790380e7cb52410c7b75cbb3752c484dd918e54e44ba47426",
+   "n_input_tokens": 562,
+   "start": 494,
+   "target_id": "allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:target:allenai/WildChat-1M:train:0b0c87ae5f7c78b6b41e966b5eac68ce:message:7"
+  },
+  {
+   "end": 162,
+   "input_sha256": "b710e72b26d5a13d8254b7271afe680e842245a53ca7f7bb736211e9d5fe1cd3",
+   "n_input_tokens": 164,
+   "start": 31,
+   "target_id": "allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:target:allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:message:0"
+  },
+  {
+   "end": 1853,
+   "input_sha256": "400a1b901b43eb4c83e7df1238e88138bc25b264652fad25027d94a1b52753bb",
+   "n_input_tokens": 1855,
+   "start": 1794,
+   "target_id": "allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:target:allenai/WildChat-1M:train:238df5cb4fdd6cc2a0541e7a9655f9bd:message:2"
+  },
+  {
+   "end": 76,
+   "input_sha256": "494669841f03487c62e74b534767b5c039feb3445c8495bd2ce160255ec91a0f",
+   "n_input_tokens": 78,
+   "start": 31,
+   "target_id": "allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:target:allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:message:0"
+  },
+  {
+   "end": 879,
+   "input_sha256": "61a589e3a2806d7db32f036b20e908a87356a415e44c9569e5cbfa74baf6626c",
+   "n_input_tokens": 880,
+   "start": 593,
+   "target_id": "allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:target:allenai/WildChat-1M:train:2bcddb7c5cf05e83e0341732a1361857:message:3"
+  },
+  {
+   "end": 96,
+   "input_sha256": "7ecf838f065f36b7536bcd23cca4c4648d2be32554c1bcb2985b9833c6d373dc",
+   "n_input_tokens": 98,
+   "start": 31,
+   "target_id": "allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:target:allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:message:0"
+  },
+  {
+   "end": 197,
+   "input_sha256": "ae672811271c30df3965b46ad662792d93c295000e169cc6ce063f0bd2615af2",
+   "n_input_tokens": 198,
+   "start": 101,
+   "target_id": "allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:target:allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:message:1"
+  },
+  {
+   "end": 265,
+   "input_sha256": "157639365a51879990611cdab2a6066f8e645faaeedf4b4d1adce9409dfd8831",
+   "n_input_tokens": 267,
+   "start": 202,
+   "target_id": "allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:target:allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:message:2"
+  },
+  {
+   "end": 399,
+   "input_sha256": "747887d8ec967e9d63ade89a20d93a5339cdb9396b6b8b7cd5e6a122a0c48cb1",
+   "n_input_tokens": 400,
+   "start": 270,
+   "target_id": "allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:target:allenai/WildChat-1M:train:66e4cc2220666e88019e3bada0d031d8:message:3"
+  },
+  {
+   "end": 307,
+   "input_sha256": "21205aa3f880c6d67b403e3474e866753dccadd35abda2035bfda3e50333bfff",
+   "n_input_tokens": 309,
+   "start": 31,
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:0"
+  },
+  {
+   "end": 589,
+   "input_sha256": "4d89631ae77aeade1e16bbf5ac24b810982c5adbc66014b97553659b48dff2e2",
+   "n_input_tokens": 590,
+   "start": 312,
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:1"
+  },
+  {
+   "end": 622,
+   "input_sha256": "b4a221787f1ba4d825691b7dafb743ec626879beaf9f5443228cd83bc307691e",
+   "n_input_tokens": 624,
+   "start": 594,
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:2"
+  },
+  {
+   "end": 2394,
+   "input_sha256": "f2a3c8c58e77752ef5c5d8be9badaca0b046d8cb7d32b57539c1ed16b6df233d",
+   "n_input_tokens": 2395,
+   "start": 2130,
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:9"
+  },
+  {
+   "end": 4125,
+   "input_sha256": "7d5de859f000fd90467a741ec373523d6b6c3d3675c8f952219c67155a2cb51b",
+   "n_input_tokens": 4126,
+   "start": 3899,
+   "target_id": "allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:target:allenai/WildChat-1M:train:a47a2648047c88178f671ee2d5c6f3cc:message:17"
+  },
+  {
+   "end": 88,
+   "input_sha256": "bf7dc0545da4154dbad57a81d4f02ca154f0f586b553780f863cdfac098f9526",
+   "n_input_tokens": 89,
+   "start": 49,
+   "target_id": "allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:target:allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:message:1"
+  },
+  {
+   "end": 160,
+   "input_sha256": "0125a0dff2283e1bd365afb0928b572fd7ee64a0b35d803faea3538245b772a6",
+   "n_input_tokens": 161,
+   "start": 114,
+   "target_id": "allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:target:allenai/WildChat-1M:train:dc5c329ee618fdaca466378e1a4cf06c:message:3"
+  },
+  {
+   "end": 1507,
+   "input_sha256": "b7ecaac7213ea16536f0bbb66c53ad3356c1b92e2abb375aeb0312aa549aef32",
+   "n_input_tokens": 1508,
+   "start": 1417,
+   "target_id": "allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:target:allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:message:1"
+  },
+  {
+   "end": 3110,
+   "input_sha256": "a363cfa9229a6406589e2348d0c4f3b06c4b4f6e7f7a81dc791958ebcfd4ee11",
+   "n_input_tokens": 3111,
+   "start": 2998,
+   "target_id": "allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:target:allenai/WildChat-1M:train:f0687daa973cb2877a391e50d1d79ad8:message:3"
+  }
+ ],
+ "tokenizer": {
+  "chat_template_sha256": "f5186d42d99c8a0445d37fd8a6c7ccf07fe3e24a29ce622d8bd245da9507b12b",
+  "name": "allenai/Olmo-3-7B-Instruct",
+  "revision": "6e5971d9eba42665f5bd5a0fcf047f299ce1dccc"
+ }
+}

@@ -312,6 +312,129 @@ are exactly `prefill_id, sample, prefill, continuation, stopped_on_eos` as befor
 (the legacy OLMo layout keeps the old format). `flags.py` uses the ids when present and re-tokenizes the user portion otherwise (which can miss a
 no-space loop that merges into fewer tokens). The measure's own `*_counts.csv` gained a `token_loop` column; `test_smoke.py`'s pinned column list
 was updated for it.
+## 2026-11-02: core: separate original-conversation candidates for logit distortion
+
+Added `core.build_conversations`, source adapters in `core.conversations`, and `core.conversation_audit`.
+This is an alternative text route for the measure, added alongside (not replacing) the isolated authorship sets
+merged earlier today (`core.prepare_data --authorship`, `data/texts_authorship.jsonl`), which are unchanged. Which
+route logit distortion uses is an open decision for Grace with Cole (STATUS.md); no measure outcome criteria or
+analysis code changed. OASST1 uses one seeded, continuous
+root-to-leaf branch with actual ancestors; WildChat and original UltraChat retain their existing exchanges.
+All conversations have at least two completed exchanges. Separate target records preserve exactly the
+preceding original messages; ineligible intermediate turns remain available as context. Authorship labels
+retain source-specific bases, especially WildChat's human-submitted assumption.
+
+New candidate output is `candidates/logit_distortion/pilot_v1/`, not legacy `data/` or frozen results. The
+bounded pilot uses 300 inspected candidates per source and 8 selected conversations per source. Its
+20–300 target-token / 4096 preceding-context-token limits are provisional inspection settings, not final
+matching criteria. Sources remain separate, and windows are explicitly not uniform corpus samples.
+The pilot is contamination-unchecked. `check_contamination` gains an optional revision map for its existing
+Dolci loader and an additive auditable matcher covering both target roles, conversation hashes, and context
+messages. Existing calls/flags/output formats remain compatible. No model weights, scoring, or generation
+are required by the new builder. Original-context scoring integration is a subsequent task; the versioned
+candidate format is deliberately distinct from `core.score`'s isolated-turn input, and `core.score` now exits with an
+error on any input row carrying `format=conversation_candidates_v1` (`config.CONVERSATION_FORMAT`) instead of
+scoring it without its history. Legacy rows have no `format` field, so existing inputs, flags and outputs are
+unchanged. The branch was written at 16:35 UTC on the pre-family `main` and integrated onto `main` after the
+family and authorship commits; the pilot was rebuilt from the integrated code and compared with the original build.
+
+See `docs/conversation_candidates.md` for schema verification, sampling, exact reproduction/audit/test
+commands, limitations, and the source-attributed bounded sample. Final sizes, source composition, length
+matching, and contamination policy must be decided from the audit before examining model outcomes.
+
+## 2026-11-02: logit distortion uses original conversations (primary route); core: Dolci-checked candidate pilot
+
+**Decision (Grace, measure owner):** logit distortion's primary data are existing, original conversations
+with at least two complete exchanges from OASST1, WildChat and UltraChat; each target keeps its exact original
+preceding history. No new dataset source. Role × authorship: OASST1 human/human, WildChat human-submitted user
+(a provenance label, not proof of composition) / model assistant, UltraChat model/model; sources stay separate.
+The isolated authorship sets (`data/texts_authorship.jsonl`) and `data/texts.jsonl` are unchanged and remain
+available for a separate comparison. This supersedes "which route ... is an open decision" in the entry below.
+No hypothesis threshold, verdict rule or pre-registered criterion changed.
+
+Why the isolated files cannot simply be joined into conversations: verified today, all 300 OASST1 `pair_id`s
+occur in both `data/texts.jsonl` (user) and `data/texts_authorship.jsonl` (assistant), and 294 of the 300 pairs
+have different `source_id`s; `pair_id` reflects sampling order in each file. The legacy sampler also checked
+only user text against Dolci when it kept an assistant reply. Both are left as they are (legacy data unchanged).
+
+`core:` changes, all backwards-compatible:
+- `check_contamination.contamination_record` reports `incomplete` (instead of `no_exact_match`) when no hit was
+  found but not every Dolci set was indexed. `dolci_turns`, `is_contaminated` and the CLI are unchanged.
+- Conversation targets gain `context_contamination_status` (history summarized separately from the target);
+  the audit reports it when present, so `pilot_v1` still verifies unchanged.
+- The refusal of conversation-candidate rows moved to `core.render.reject_conversation_candidates` and now also
+  guards `core.render`, `core.add_replies` and `core.check_contamination` (before any model or Dolci load);
+  `core.score` behaves as before and still exports the name. Legacy rows have no `format` field and pass.
+- `config.CONVERSATION_CANDIDATES_DIR` now names `pilot_v2`.
+
+Pilot: `candidates/logit_distortion/pilot_v2/` is `pilot_v1`'s sample rebuilt with `--check-dolci` (pinned
+SFT/DPO/RL revisions). Exclusion policy, unchanged from the builder: a target is ineligible if its own text or
+any preceding message has a whitespace-normalized exact match (or the WildChat hash is in Dolci-RL); matched
+messages are never removed from histories. Result: 8 of 184 messages matched, all WildChat user turns (7 of 8
+WildChat conversations); eligible targets fall from 128 to 92, WildChat from 41 to 5. Reported as a shortage;
+filters were not relaxed. How to sample WildChat (e.g. a conversation-level Dolci filter before the budget) and
+final sizes/thresholds are Grace's decisions before scoring (`pilot_v2/inspection.md`). Exact matching does not
+cover paraphrase, substrings, RL completions or pretraining data.
+
+## 2026-11-02: core: conversation candidates: prediction-case deduplication, eligible-quota selection, length-sensitivity audit (pilot_v3)
+
+Review findings on the original-conversation builder, assessed and adopted (logit distortion, Grace):
+
+1. **Deduplication.** The old rule excluded any repeat of a normalized target text, across sources, roles and
+   histories, with the first occurrence canonical even when ineligible. For a context experiment the same
+   words after a different history are a different prediction case. Now a duplicate is the same source, role,
+   authorship, normalized history and normalized target (`duplicate_case`); the representative is the first
+   otherwise-eligible member in selection order. Repeated wording elsewhere only sets `repeated_text_of`.
+   pilot_v1/v2 had no duplicate exclusions, so their counts are unaffected; their records are kept as built.
+2. **Coverage.** pilot_v2's raw budget left WildChat with 5 eligible targets, all from one conversation.
+   New `--selection-mode eligible_quota` walks the same seeded order and keeps only contributing
+   conversations (>= 1 eligible target with fully clear target and history Dolci checks) up to a per-source
+   quota within a scan limit; it requires a complete Dolci index, unchecked/incomplete never count, shortfalls
+   are reported. `raw_budget` stays the default. The target-and-history contamination rule is unchanged.
+   Verified: exempting "Give me more examples." recovers 0 pilot_v2 targets (an earlier message had matched).
+3. **Length and position.** New data-only `length_sensitivity.json/.md` for minimum lengths 5/10/20 on the same
+   conversations. The default stays 20 tokens; no primary threshold was changed.
+
+Backwards compatibility: `make_targets` keeps its signature (now `conversation_targets` + `apply_duplicates`);
+new Settings fields have defaults, so old manifests load; audit additions are gated by `audit_version` (2 for new
+builds), and pilot_v1/v2 still verify byte for byte. Legacy isolated data and `core.score` are unchanged.
+
+pilot_v3 (`candidates/logit_distortion/pilot_v3/`): quota 8, scan limit 200, 1,000-row windows, otherwise the
+v2 settings and revisions. Quota met for all sources (WildChat after evaluating 42; 34 rejected, all with a
+Dolci match): 24 conversations, 175 targets, 119 eligible; 0 duplicate cases. Selection bias: WildChat is
+restricted to conversations without a Dolci match. At 20 tokens no UltraChat opening user is eligible (all
+8 are 9–17 tokens); 7 at 10, 8 at 5. Recommendation, not applied: stratify role comparisons by opening vs
+follow-up and choose the minimum (10 is a candidate) from this audit before outcomes. "As an AI" replies kept.
+No hypothesis threshold, verdict rule or pre-registered criterion changed.
+
+## 2026-11-02: core: original-conversation scoring adapter (core.score_conversations)
+
+Logit distortion (Grace). New entry point `core.score_conversations` and helper `core.render.render_target`; the
+isolated-text route (`core.score`, `render`, `render_conversation`) and other measures are unchanged.
+
+- **One sequence per target, original prefix only.** A target is rendered as its original preceding messages plus
+  the target, nothing after it. Required because Qwen3's template renders an assistant turn differently when a
+  later user message exists (verified on the cached template: 45 of 131 targets differed between full-conversation
+  and cut-off rendering); causal attention cannot undo that. Scored with `core.score.spans_nll` unchanged (fp32,
+  teacher forcing, full-vocabulary entropy in nats); no text is generated.
+- **Rendering settings (Grace's selection), explicit per family and verified on every target:** OLMo keeps the
+  instruct template's default system prompt when a conversation has none (an original system message replaces it,
+  never duplicated); Qwen3 assistant targets use the non-thinking generation prompt with the empty think block
+  (`enable_thinking=False`, recorded, `config` defaults untouched); Gemma 4 assistant targets open with the empty
+  thought channel of the generation prompt; earlier assistant turns stay in stored form; user targets get no
+  assistant opening.
+- **Whitespace and exactness.** Original text is never trimmed. Edge whitespace is allowed on this route only, with
+  strict checks (verbatim placement, decode, no boundary merges, no special-token text). Gemma's template trims edge
+  whitespace, so affected targets are excluded with the changed message recorded (pilot_v3: 17 of 119; OLMo and Qwen
+  keep all 119).
+- **Lengths and comparability.** Full rendered inputs must fit the minimum `max_position_embeddings` over the family's
+  checkpoints (cached configs; never guessed; nothing truncated). An input fingerprint (candidate hashes, tokenizer
+  revision, template hash, settings, target set, exclusions, per-target input hashes and spans) is shared by all
+  stages of a family; `--check-stages` refuses mixed inputs. Outputs: per-token parquet and per-target CSV (means,
+  NLL − entropy gap, positions-1-onward variants), under `results/logit_conversations/<family>/core/conversation_scores/`.
+
+Validated with cached tokenizers and SmolLM2-135M on CPU only; no OLMo/Qwen/Gemma checkpoint was scored. No
+hypothesis threshold, verdict rule or pre-registered criterion changed. Spec: `docs/conversation_scoring.md`.
 
 ## 2026-11-02: Qwen3 assistant-slot rendering: think block ON is primary, OFF the robustness check
 

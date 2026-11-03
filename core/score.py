@@ -21,7 +21,7 @@ import torch.nn.functional as F
 from transformers import AutoModelForCausalLM
 
 from core import config
-from core.render import load_jsonl, load_tokenizer, render_all
+from core.render import load_jsonl, load_tokenizer, reject_conversation_candidates, render_all  # noqa: F401 (re-exported)
 
 
 def resolve(model_arg, stage=None):
@@ -149,7 +149,9 @@ def main():
 
     model_id, stage = resolve(args.model, args.stage)
     tok = load_tokenizer(args.tokenizer)
-    rows = first_n_per_set(load_jsonl(args.dataset)[: args.limit], args.n_per_set)
+    rows = load_jsonl(args.dataset)
+    reject_conversation_candidates(rows, args.dataset)
+    rows = first_n_per_set(rows[: args.limit], args.n_per_set)
     by_id = {row["id"]: row for row in rows}
     assert len(by_id) == len(rows), "text ids must be unique"
     items = []
