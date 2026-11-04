@@ -373,6 +373,116 @@ def judge_sheet(sheet_path, out, **kw):
     return run(rows, out, **kw)
 
 
+# --- the validation sheet split between labellers ---------------------------------------------------------------------------------
+
+SPLIT_DIR = os.path.join(VALIDATION_DIR, "split")
+SHEET_COLS = ["sample_id", "prefill", "continuation", "human_label", "notes"]
+
+SPLIT_README = """# Validation sheet, split between labellers
+
+Each labeller has their own file, `sheet_<name>.csv`, with the same columns as `../sheet.csv`: fill `human_label` with exactly one of
+`user_voice`, `switched_to_assistant`, `degenerate`, `user_voice_with_assistant_traits`, following `../README.md` (the judge prompt v2
+definitions). Label independently: don't compare labels with each other, look at the judge's output, or open `../sheet_key.csv` or
+`assignment.csv` until all three files are done.
+
+{n_shared} samples are on every file (shared, to measure how well the labellers agree with each other); the other {n_own} on each file are
+yours alone. Every file holds a similar mix of checkpoints, and its rows are shuffled.
+
+When all files are filled in:
+
+    python -m measures.vestigial_regression.judge combine-sheets      # merged labels -> ../sheet.csv, agreement between labellers
+    python -m measures.vestigial_regression.judge validate --human measures/vestigial_regression/judge_validation/sheet.csv --judged <judged.jsonl>
+
+`combine-sheets` takes each unshared sample's single label and each shared sample's majority label (2 of 3 or more); a shared sample with no
+majority is left unlabelled in `../sheet.csv` and listed, so it does not enter the judge's agreement.
+"""
+
+
+def split_sheet(people, n_shared, out_dir=SPLIT_DIR, sheet_dir=VALIDATION_DIR, seed=0):
+    """Split sheet.csv between labellers: n_shared samples on every file, the rest dealt out evenly, each stratified by checkpoint
+    (round-robin within checkpoint after a seeded shuffle). Writes sheet_<name>.csv per person and assignment.csv (sample id -> who)."""
+    sheet = {r["sample_id"]: r for r in csv.DictReader(open(os.path.join(sheet_dir, "sheet.csv"), newline="", encoding="utf-8"))}
+    key = {r["sample_id"]: r for r in csv.DictReader(open(os.path.join(sheet_dir, "sheet_key.csv"), newline="", encoding="utf-8"))}
+    if any((r.get("human_label") or "").strip() for r in sheet.values()):
+        raise SystemExit("sheet.csv already has human labels; split it before anyone labels")
+    rng = random.Random(seed)
+    by_ck = {}
+    for sid in sorted(sheet):
+        by_ck.setdefault((key[sid]["model"], key[sid]["stage"]), []).append(sid)
+    for ids in by_ck.values():
+        rng.shuffle(ids)
+    order = [ids[i] for i in range(max(map(len, by_ck.values()))) for ids in by_ck.values() if i < len(ids)]  # interleaved by checkpoint
+    shared, rest = order[:n_shared], order[n_shared:]
+    if len(rest) % len(people):
+        raise SystemExit(f"{len(rest)} unshared samples do not divide evenly between {len(people)} labellers")
+    own = {p: rest[i::len(people)] for i, p in enumerate(people)}
+    os.makedirs(out_dir, exist_ok=True)
+    for p in people:
+        rows = [dict(sample_id=s, prefill=sheet[s]["prefill"], continuation=sheet[s]["continuation"], human_label="", notes="")
+                for s in shared + own[p]]
+        rng.shuffle(rows)  # the order must not reveal which rows are shared
+        with open(os.path.join(out_dir, f"sheet_{p}.csv"), "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, SHEET_COLS)
+            w.writeheader()
+            w.writerows(rows)
+    with open(os.path.join(out_dir, "assignment.csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, ["sample_id", "shared", "labellers"])
+        w.writeheader()
+        w.writerows([dict(sample_id=s, shared=True, labellers=";".join(people)) for s in shared]
+                    + [dict(sample_id=s, shared=False, labellers=p) for p in people for s in own[p]])
+    open(os.path.join(out_dir, "README.md"), "w", encoding="utf-8").write(
+        SPLIT_README.format(n_shared=len(shared), n_own=len(rest) // len(people)))
+    return shared, own
+
+
+def fleiss_kappa(items, labels=LABELS):
+    """Fleiss' kappa for a list of label lists (one list per item, the same number of raters each)."""
+    n = len(items[0])
+    pj = {l: sum(it.count(l) for it in items) / (len(items) * n) for l in labels}
+    pi = [(sum(it.count(l) ** 2 for l in labels) - n) / (n * (n - 1)) for it in items]
+    pbar, pe = sum(pi) / len(pi), sum(v ** 2 for v in pj.values())
+    return (pbar - pe) / (1 - pe) if pe < 1 else 1.0
+
+
+def combine_sheets(split_dir=SPLIT_DIR, sheet_dir=VALIDATION_DIR):
+    """Merge the labellers' files into sheet.csv's human_label (shared samples: majority of the labels) and report agreement between
+    labellers on the shared samples. Refuses if any assigned row is unlabelled."""
+    assign = list(csv.DictReader(open(os.path.join(split_dir, "assignment.csv"), newline="", encoding="utf-8")))
+    people = assign[0]["labellers"].split(";") if assign[0]["shared"] == "True" else sorted({a["labellers"] for a in assign})
+    labels = {}
+    for p in people:
+        for r in load_human_labels(os.path.join(split_dir, f"sheet_{p}.csv")).items():
+            labels.setdefault(r[0], {})[p] = r[1]
+    missing = [(a["sample_id"], p) for a in assign for p in a["labellers"].split(";") if p not in labels.get(a["sample_id"], {})]
+    if missing:
+        raise SystemExit(f"{len(missing)} assigned rows are not labelled yet, e.g. {missing[:5]}")
+    merged, no_majority, shared_items = {}, [], []
+    for a in assign:
+        got = [labels[a["sample_id"]][p] for p in a["labellers"].split(";")]
+        if a["shared"] == "True":
+            shared_items.append(got)
+            top, cnt = Counter(got).most_common(1)[0]
+            if cnt * 2 > len(got):
+                merged[a["sample_id"]] = top
+            else:
+                no_majority.append(a["sample_id"])
+        else:
+            merged[a["sample_id"]] = got[0]
+    path = os.path.join(sheet_dir, "sheet.csv")
+    rows = list(csv.DictReader(open(path, newline="", encoding="utf-8")))
+    for r in rows:
+        r["human_label"] = merged.get(r["sample_id"], "")
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, SHEET_COLS)
+        w.writeheader()
+        w.writerows(rows)
+    pairs = [(x[i], x[j]) for x in shared_items for i in range(len(x)) for j in range(i + 1, len(x))]
+    return dict(n_labelled=len(merged), no_majority=no_majority, n_shared=len(shared_items),
+                unanimous=sum(len(set(x)) == 1 for x in shared_items),
+                pairwise_agreement=sum(a == b for a, b in pairs) / len(pairs) if pairs else None,
+                fleiss_kappa=fleiss_kappa(shared_items) if shared_items else None)
+
+
 # --- refused samples: labelled by hand -------------------------------------------------------------------------------------------
 
 REFUSAL_DIR = os.path.join(VALIDATION_DIR, "refusals")
@@ -524,6 +634,11 @@ def main(argv=None):
     pl.add_argument("--dry-run", action="store_true")
     pl.add_argument("--price-in", type=float, default=os.environ.get("JUDGE_PRICE_IN"))
     pl.add_argument("--price-out", type=float, default=os.environ.get("JUDGE_PRICE_OUT"))
+    sp = sub.add_parser("split-sheet", help="split the validation sheet between labellers (some samples shared by all)")
+    sp.add_argument("--people", nargs="+", default=["cole", "grace", "adeeb"])
+    sp.add_argument("--shared", type=int, default=12, help="samples every labeller gets (agreement between labellers)")
+    sp.add_argument("--seed", type=int, default=0)
+    sub.add_parser("combine-sheets", help="merge the labellers' files into sheet.csv; agreement between labellers")
     rs = sub.add_parser("refusal-sheet", help="blind hand-label sheet of the samples the judge refused (label invalid)")
     rs.add_argument("--out-dir", default=REFUSAL_DIR)
     rs.add_argument("--seed", type=int, default=0)
@@ -555,6 +670,15 @@ def main(argv=None):
         open(os.path.join(a.out_dir, "README.md"), "w", encoding="utf-8").write(SHEET_README)
         print(f"wrote {len(sheet)} samples to {a.out_dir}/sheet.csv (+ sheet_key.csv, README.md); by model/stage: "
               f"{dict(Counter((k['model'], k['stage']) for k in key))}")
+    elif a.cmd == "split-sheet":
+        shared, own = split_sheet(a.people, a.shared, seed=a.seed)
+        print(f"{SPLIT_DIR}: {len(shared)} shared samples + " + ", ".join(f"{p} {len(v)}" for p, v in own.items())
+              + f" of their own; each labeller has {len(shared) + len(next(iter(own.values())))} rows")
+    elif a.cmd == "combine-sheets":
+        r = combine_sheets()
+        print(f"sheet.csv: {r['n_labelled']} samples labelled; shared samples: {r['n_shared']}, unanimous {r['unanimous']}, "
+              f"pairwise agreement {r['pairwise_agreement']:.1%}, Fleiss' kappa {r['fleiss_kappa']:.3f}; "
+              f"no majority (left unlabelled): {r['no_majority'] or 'none'}")
     elif a.cmd == "refusal-sheet":
         sheet, key = build_refusal_sheet(out_dir=a.out_dir, seed=a.seed)
         print(f"wrote {len(sheet)} samples ({len(key)} refused rows) to {a.out_dir}/sheet.csv (+ sheet_key.csv, README.md); "

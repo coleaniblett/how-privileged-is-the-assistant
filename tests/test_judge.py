@@ -249,3 +249,39 @@ def test_refusal_sheet_joins_dedups_keeps_labels_and_is_blind(tmp_path):
     sheet2, _ = J.build_refusal_sheet(root=str(tmp_path), out_dir=str(out))
     kept = {s["sample_id"]: s for s in sheet2}[rows[0]["sample_id"]]
     assert (kept["human_label"], kept["notes"]) == ("degenerate", "loop")
+
+
+def test_split_and_combine_sheets(tmp_path):
+    sheet_dir, split_dir = tmp_path / "v", tmp_path / "v" / "split"
+    sheet_dir.mkdir()
+    ids = [f"s{i:02d}" for i in range(18)]
+    with open(sheet_dir / "sheet.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, J.SHEET_COLS)
+        w.writeheader()
+        w.writerows([dict(sample_id=s, prefill="p", continuation=f"c{s}", human_label="", notes="") for s in ids])
+    with open(sheet_dir / "sheet_key.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, ["sample_id", "model", "stage", "source_file", "prefill_id", "sample"])
+        w.writeheader()
+        w.writerows([dict(sample_id=s, model="m", stage=["base", "instruct"][i % 2], source_file="x", prefill_id=i, sample=0)
+                     for i, s in enumerate(ids)])
+    people = ["a", "b", "c"]
+    shared, own = J.split_sheet(people, 3, out_dir=str(split_dir), sheet_dir=str(sheet_dir))
+    assert len(shared) == 3 and all(len(v) == 5 for v in own.values())
+    assert len(set(shared) | {s for v in own.values() for s in v}) == 18  # every sample assigned once (shared ones to all)
+    for p in people:
+        rows = list(csv.DictReader(open(split_dir / f"sheet_{p}.csv", newline="", encoding="utf-8")))
+        assert len(rows) == 8 and {r["sample_id"] for r in rows} >= set(shared)
+        for r in rows:  # shared[0]: all agree; shared[1]: 2 of 3; shared[2]: no majority
+            r["human_label"] = ("user_voice" if r["sample_id"] != shared[1] or p != "c" else "degenerate") if r["sample_id"] != shared[2] \
+                else {"a": "user_voice", "b": "degenerate", "c": "switched_to_assistant"}[p]
+        with open(split_dir / f"sheet_{p}.csv", "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, J.SHEET_COLS)
+            w.writeheader()
+            w.writerows(rows)
+    r = J.combine_sheets(split_dir=str(split_dir), sheet_dir=str(sheet_dir))
+    assert r["n_labelled"] == 17 and r["no_majority"] == [shared[2]] and r["unanimous"] == 1
+    assert abs(r["pairwise_agreement"] - 4 / 9) < 1e-9
+    merged = J.load_human_labels(str(sheet_dir / "sheet.csv"))
+    assert merged[shared[1]] == "user_voice" and shared[2] not in merged
+    with pytest.raises(SystemExit):  # a labelled sheet is never split again
+        J.split_sheet(people, 3, out_dir=str(split_dir), sheet_dir=str(sheet_dir))
