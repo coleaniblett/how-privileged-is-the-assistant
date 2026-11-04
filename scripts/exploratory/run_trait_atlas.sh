@@ -30,7 +30,7 @@ gen() {   # fam stage need_gb
   fi
   [ "$avail" -ge "$need" ] || { echo "less than $need GB free for $model"; exit 3; }
   echo "=== $fam $stage ($model) $(date -u +%T)"
-  bs=96; [ "$fam" = gemma4-31b ] && bs=48; $PY -m extras.trait_atlas generate --family $fam --model $stage --batch-size $bs
+  $PY -m extras.trait_atlas generate --family $fam --model $stage
   [ "$model" = "$KEEP" ] || free_model "$model"
   echo "=== $fam $stage done $(date -u +%T)"
 }
