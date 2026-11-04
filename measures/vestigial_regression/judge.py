@@ -32,7 +32,7 @@ from collections import Counter
 MODEL = "claude-sonnet-5-5"
 TEMPERATURE = None  # the API default: Sonnet 5.5 rejects non-default sampling values (400), so none is sent
 THINKING = {"type": "between_tools"}  # thinking off (Sonnet 5.5 rejects {"type": "disabled"}); keeps the reply a short JSON object
-MAX_TOKENS = 200
+MAX_TOKENS = 600  # the judge often writes a few sentences before its JSON; 200 cut one pilot reply (2026-11-04)
 LABELS = ["user_voice", "switched_to_assistant", "degenerate", "user_voice_with_assistant_traits"]
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROMPT_PATH = os.path.join(HERE, "judge_prompt.md")
@@ -83,6 +83,8 @@ def load_cache(path):
         for line in open(path, encoding="utf-8"):
             if line.strip():
                 r = json.loads(line)
+                if r.get("label") == "invalid":
+                    continue  # not an answer: judged again on the next run (the new row is appended)
                 cache[r["sample_hash"]] = r
     return cache
 
@@ -99,8 +101,9 @@ def make_client():
     return anthropic.Anthropic(api_key=key)
 
 
-def call_with_retries(client, system, user, retries=5, sleep=time.sleep):
-    """One API call with exponential backoff on connection, rate-limit and 5xx errors. Returns the reply text."""
+def call_with_retries(client, system, user, retries=5, sleep=time.sleep, meta=None):
+    """One API call with exponential backoff on connection, rate-limit and 5xx errors. Returns the reply text; if `meta` is a
+    dict, the response's stop_reason (and stop_details category on a refusal) are stored in it."""
     delay = 2.0
     for attempt in range(retries):
         try:
@@ -110,6 +113,10 @@ def call_with_retries(client, system, user, retries=5, sleep=time.sleep):
             if THINKING is not None:
                 kw["thinking"] = THINKING
             resp = client.messages.create(**kw)
+            if meta is not None:
+                meta["stop_reason"] = getattr(resp, "stop_reason", None)
+                details = getattr(resp, "stop_details", None)
+                meta["stop_category"] = getattr(details, "category", None) if details else None
             return "".join(b.text for b in resp.content if getattr(b, "type", "text") == "text")
         except Exception as e:  # noqa: BLE001  (anthropic's exceptions are imported lazily; classify by attributes)
             status = getattr(e, "status_code", None)
@@ -123,15 +130,17 @@ def call_with_retries(client, system, user, retries=5, sleep=time.sleep):
 def judge_one(client, system, template, prefill, continuation, retries=5, sleep=time.sleep):
     """{label, reason, raw}. A reply that is not valid JSON/label is asked for once more, then recorded as label 'invalid'."""
     user = build_user_message(template, prefill, continuation)
-    raw = ""
+    raw, stops = "", []
     for _ in range(2):
-        raw = call_with_retries(client, system, user, retries, sleep)
+        meta = {}
+        raw = call_with_retries(client, system, user, retries, sleep, meta=meta)
+        stops.append(meta.get("stop_reason") if not meta.get("stop_category") else f"{meta['stop_reason']}:{meta['stop_category']}")
         try:
             label, reason = parse_reply(raw)
-            return dict(label=label, reason=reason, raw=raw)
+            return dict(label=label, reason=reason, raw=raw, stop_reasons=stops)
         except ValueError:
             continue
-    return dict(label="invalid", reason="unparseable reply", raw=raw)
+    return dict(label="invalid", reason="unparseable reply", raw=raw, stop_reasons=stops)
 
 
 # --- cost estimate -------------------------------------------------------------------------------------------------------
@@ -191,6 +200,7 @@ def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, pric
             for h, r in unique.items():
                 res = judge_one(client, system, template, r["prefill"], r["continuation"], sleep=sleep)
                 row = dict(sample_hash=h, judge_model=MODEL, prompt_version=version, temperature=TEMPERATURE, thinking=THINKING,
+                           max_tokens=MAX_TOKENS, stop_reasons=res.get("stop_reasons"),
                            label=res["label"], reason=res["reason"], raw=res["raw"])
                 cache[h] = row
                 cf.write(json.dumps(row, ensure_ascii=False) + "\n")
@@ -200,7 +210,7 @@ def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, pric
         c = cache[sample_hash(r["prefill"], r["continuation"], version)]
         rows.append({**r["carry"], "sample_hash": c["sample_hash"], "label": c["label"], "reason": c["reason"],
                      "judge_model": c["judge_model"], "prompt_version": c["prompt_version"], "temperature": c["temperature"],
-                     "thinking": c.get("thinking")})
+                     "thinking": c.get("thinking"), "stop_reasons": c.get("stop_reasons")})
     if out:
         os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
         with open(out, "w", encoding="utf-8") as f:

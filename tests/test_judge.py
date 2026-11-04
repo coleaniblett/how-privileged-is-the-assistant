@@ -199,3 +199,23 @@ def test_validation_sheet_from_the_capstone_generations_covers_all_eight_checkpo
         by[(k["model"], k["stage"])] = by.get((k["model"], k["stage"]), 0) + 1
     assert by == J.CAPSTONE_PLAN
     assert "model" not in open(tmp_path / "sheet" / "sheet.csv").readline()
+
+
+def test_stop_reason_recorded_limit_raised_and_invalid_rejudged(tmp_path):
+    class StopClient(FakeClient):
+        def _create(self, **kw):
+            r = super()._create(**kw)
+            r.stop_reason = "end_turn"
+            r.stop_details = None
+            return r
+    cache = str(tmp_path / "cache.jsonl")
+    bad = StopClient(replies=["", ""])  # empty twice -> invalid
+    rows, _ = J.run(samples()[:1], None, cache, client=bad, quiet=True)
+    assert rows[0]["label"] == "invalid" and rows[0]["stop_reasons"] == ["end_turn", "end_turn"]
+    assert all(c["max_tokens"] == 600 for c in bad.calls)
+    again = StopClient()
+    rows, est = J.run(samples()[:1], None, cache, client=again, quiet=True)
+    assert est["requests"] == 1 and len(again.calls) == 1 and rows[0]["label"] == "user_voice"  # invalid is not served from cache
+    third = StopClient()
+    J.run(samples()[:1], None, cache, client=third, quiet=True)
+    assert third.calls == []

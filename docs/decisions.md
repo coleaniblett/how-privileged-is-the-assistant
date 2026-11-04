@@ -930,3 +930,13 @@ Checked with one real request (OLMo Instruct, `incomplete-000` sample 0; request
 only, 1,642 input and 80 output tokens, valid label (`user_voice`). Real token counts run about 30% above the dry run's 4-characters-
 per-token estimate, so the full judge run (8 checkpoints, 4,713 requests, plus the 105-request pilot check) is about $20 at $2 / $10
 per million tokens, not $15.
+
+## 2026-11-04: judge output limit 600 tokens; stop reasons recorded; invalid replies re-judged
+
+After the pilot agreement check (3 of 108 unique samples invalid), `judge.py`'s `max_tokens` went from 200 to 600: the judge often
+writes a few sentences before its JSON, and one reply was cut at 200. Every cached row now records `max_tokens` and the stop reason
+of each attempt (`stop_reasons`, with the refusal category if any), and a cached `invalid` row is not served from the cache, so the
+next run judges it again. Prompt v2 is unchanged (Cole, 2026-11-04: a stricter thought-channel rule was considered and not adopted).
+Re-judging the 3 invalid pilot samples at 600 tokens showed the cause: all three were **refusals by the API's safety classifier,
+category `reasoning_extraction`**, twice each (the samples are Gemma IT / Qwen continuations that open a thought channel or reason
+aloud). The limit was not the cause. How to handle refusals in the main run is open (STATUS).
