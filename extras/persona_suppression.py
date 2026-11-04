@@ -327,7 +327,7 @@ def analyze(args):
          "the summed token log-probability at the first content token (bf16); `logodds` = (assistant greeting + list)/2 - character voice. "
          "Generations: 4 samples x 40 tokens per prompt version, temperature 0.7; `P(assistant)` from the spec A classifier. "
          "Bootstrap over personas (10,000 resamples), probes averaged within persona. Qwen3-8B is supporting (no contamination check).", ""]
-    summary, shared = [], {}
+    summary, shared, gains = [], {}, {}
     for family in FAMILIES:
         for stage in ("base", "instruct"):
             if not os.path.exists(os.path.join(OUT, family, f"{stage}_categories.csv")):
@@ -375,7 +375,7 @@ def analyze(args):
         return out + [""]
     if len(S):
         L += ["## Validation: does swap move the profile toward the swap partner?", "",
-              "Correlation of the swap shift with the partner shift (four category log-probs, centred per category over personas), training personas.", "",
+              "Correlation of the swap shift with the partner shift (four category log-probs, centred per category over personas), training personas. **This check is uninformative: r = 1 by construction** (a swap prompt is identical to the partner's intact prompt; see A1 below, added after seeing the OLMo results), so the 'used' column is replaced by A1's check.", "",
               "| family | stage | probes | r [95% CI] | used |", "|---|---|---|---|---|"]
         for _, r in S[S.validation_r.notna()].iterrows():
             L.append(f"| {r.family} | {r.stage} | {r.probes} | {r.validation_r:+.2f} [{r.validation_lo:+.2f}, {r.validation_hi:+.2f}] | {'yes' if r.validation_lo > 0 else 'NO: inconclusive'} |")
@@ -404,10 +404,124 @@ def analyze(args):
                     gb = lambda f: f["num_p"][idx].mean(1) / f["gap_p"][idx].mean(1)
                     diff = gb(fr["instruct"]) - gb(fr["base"])
                     d0 = fr["instruct"]["frac"] - fr["base"]["frac"]
+                    gains[(family, ptype, readout)] = bool(d0 >= FRACTION_GAIN and ci(diff)[0] > 0)
                     L.append(f"| {family} | {ptype} | {readout} | {fr['base']['frac']:.2f} | {fr['instruct']['frac']:.2f} | {fmt(d0, ci(diff))} | {'yes' if d0 >= FRACTION_GAIN and ci(diff)[0] > 0 else 'no'} |")
         L.append("")
+    if len(S):
+        L += additions(shared, mat, S, gains)
     open(os.path.join(OUT, "persona_suppression.md"), "w").write("\n".join(L) + "\n")
     print("\n".join(L[-40:]))
+
+
+# ------------------------------------------------------------------ added after seeing the OLMo results (docs/decisions.md 2026-11-04, "analysis additions")
+def swap_is_partner_check(wide, mat):
+    """Max |swap - partner intact| over all category log-probs (same slot formatting makes the two prompts identical: 0 by construction)."""
+    m = 0.0
+    for p in mat["personas"]:
+        a = wide.loc[(p["id"], slice(None), "swap"), CAT_ORDER].droplevel([0, 2])
+        b = wide.loc[(p["partner"], slice(None), "intact"), CAT_ORDER].droplevel([0, 2])
+        m = max(m, float((a - b).abs().to_numpy().max()))
+    return m
+
+
+def between_persona_share(wide, mat, version, col, group="train"):
+    """Share of the variance of `col` (prompt level, one version) that lies between personas (eta^2), bootstrap over personas.
+    Compared with the spread across the 16 probes within a persona."""
+    ids = [m["id"] for m in mat["personas"] if m["group"] == group]
+    w = wide.xs(version, level="version")[col].unstack("probe").loc[ids]
+    def eta(a):
+        tot = ((a - a.mean()) ** 2).sum()
+        return float(((a.mean(1, keepdims=True) - a.mean()) ** 2).sum() * a.shape[1] / tot)
+    a = w.to_numpy()
+    rng = np.random.default_rng(SEED)
+    bs = [eta(a[rng.integers(0, len(ids), len(ids))]) for _ in range(2000)]
+    return eta(a), ci(np.array(bs))
+
+
+def swap_shift(wide, mat, col="logodds", group="train"):
+    """Per persona mean |swap - intact| of `col` over the 16 probes; mean over personas with bootstrap CI, and the share above 0.5."""
+    ids = [m["id"] for m in mat["personas"] if m["group"] == group]
+    d = (wide.xs("swap", level="version")[col] - wide.xs("intact", level="version")[col]).abs().unstack("probe").loc[ids].mean(1).to_numpy()
+    rng = np.random.default_rng(SEED)
+    bs = [d[rng.integers(0, len(d), len(d))].mean() for _ in range(2000)]
+    return d.mean(), ci(np.array(bs)), float((d > 0.5).mean())
+
+
+def category_table(wide, mat, ptype, group="train"):
+    """Intact, neutral and plain-Assistant category log-probs (persona means, CI over personas)."""
+    pp = per_persona(wide, mat, ptype)
+    ids = [m["id"] for m in mat["personas"] if m["group"] == group]
+    rng = np.random.default_rng(SEED)
+    out = {}
+    for ver in ("intact", "neutral"):
+        for c in CAT_ORDER + ["logodds"]:
+            v = np.array([pp.loc[(i, ver), c] for i in ids])
+            bs = [v[rng.integers(0, len(v), len(v))].mean() for _ in range(2000)]
+            out[(ver, c)] = (v.mean(), ci(np.array(bs)))
+    for c in CAT_ORDER + ["logodds"]:
+        out[("assistant", c)] = (float(pp.loc[("assistant", "assistant"), c]), None)
+    return out
+
+
+def additions(shared, mat, S, gains):
+    """Markdown for the three additions."""
+    L = ["", "## Additions made after seeing the OLMo results (analysis only; no new scoring, frozen materials and logged readings unchanged)", ""]
+    L += ["### A1. The swap validation cannot fail, so it is replaced by a real check", "",
+          "The validation above (r = +1.00) is true by construction: a swap prompt uses the partner's text in the same slot and wording, so it is the *same prompt* as the "
+          "partner's intact prompt. Confirmed numerically (max |swap - partner intact| over all category log-probs, training and held-out personas):", "",
+          "| family | stage | max difference (nats) |", "|---|---|---|"]
+    for (fam, st), (wide, chk) in shared.items():
+        L.append(f"| {fam} | {st} | {swap_is_partner_check(wide, mat):.4f} |")
+    L += ["", "The real checks: (i) do personas differ from one another more than a persona's own probes do (share of the variance of an intact-prompt readout that lies "
+          "between personas, bootstrap over the 60 training personas); (ii) does swapping change a persona's readout (mean absolute swap - intact shift of `logodds`, "
+          "bootstrap over personas, and the share of personas above 0.5 nats).", "",
+          "| family | stage | between-persona share, logodds [95% CI] | voice | assistant | list | mean abs swap shift (nats) [95% CI] | personas with shift > 0.5 |", "|---|---|---|---|---|---|---|---|"]
+    for (fam, st), (wide, chk) in shared.items():
+        sh = {c: between_persona_share(wide, mat, "intact", c) for c in ("logodds", "voice", "assistant", "list")}
+        ss = swap_shift(wide, mat)
+        f = lambda t: f"{t[0]:.2f} [{t[1][0]:.2f}, {t[1][1]:.2f}]"
+        L.append(f"| {fam} | {st} | {f(sh['logodds'])} | {f(sh['voice'])} | {f(sh['assistant'])} | {f(sh['list'])} | {ss[0]:.2f} [{ss[1][0]:.2f}, {ss[1][1]:.2f}] | {ss[2]:.0%} |")
+    L += ["", "A between-persona share well above the 1/16 expected for no persona effect, with a swap shift well above probe-to-probe noise, means the persona text is used. "
+          "Note the check is about the persona text moving the readout, not about the direction of the move.", ""]
+    L += ["### A2. Which categories move: intact, neutral and plain Assistant (nats, summed token log-probability, mean over 6 continuations; training personas)", "",
+          "Does the neutral shift come from Assistant-style openers rising, or from character-voice openers falling? The change columns are neutral minus intact.", "",
+          "| family | stage | probes | category | intact | neutral | plain Assistant | neutral - intact [95% CI] |", "|---|---|---|---|---|---|---|---|"]
+    for (fam, st), (wide, chk) in shared.items():
+        for ptype in ("factual", "chat"):
+            tb = category_table(wide, mat, ptype)
+            pp = per_persona(wide, mat, ptype)
+            ids = [m["id"] for m in mat["personas"] if m["group"] == "train"]
+            for c in ("assistant", "list", "voice", "answer", "logodds"):
+                d = np.array([pp.loc[(i, "neutral"), c] - pp.loc[(i, "intact"), c] for i in ids])
+                rng = np.random.default_rng(SEED)
+                dc = ci(np.array([d[rng.integers(0, len(d), len(d))].mean() for _ in range(2000)]))
+                L.append(f"| {fam} | {st} | {ptype} | {c} | {tb[('intact', c)][0]:+.2f} | {tb[('neutral', c)][0]:+.2f} | {tb[('assistant', c)][0]:+.2f} | {d.mean():+.2f} [{dc[0]:+.2f}, {dc[1]:+.2f}] |")
+    L += ["", "### A3. Combined fallback reading under the spec wording (gap >= 0.5 nats AND >= 0.10 classifier points)", "",
+          "The logged plan says 'or' per readout (kept in the tables above); the spec text requires both. Combined: `logodds` gap >= 0.5 nats and `P(assistant)` gap >= 0.10, "
+          f"both fractions >= {FRACTION:.0%}, both numerators' CI excluding 0 (training personas, all slots).", "",
+          "| family | stage | probes | logodds gap / fraction | P(assistant) gap / fraction | combined |", "|---|---|---|---|---|---|"]
+    comb = {}
+    T = S[(S.group == "train") & (S.slots == "all")]
+    for _, r in T.iterrows():
+        ok_l = r.logodds_gap >= GAP_NATS and r.logodds_frac >= FRACTION and r.logodds_num_lo > 0
+        if "p_asst_gap" in r and not pd.isna(r.get("p_asst_gap")):
+            ok_p = r.p_asst_gap >= GAP_CLF and r.p_asst_frac >= FRACTION and r.p_asst_num_lo > 0
+        else:
+            ok_p = False
+        comb[(r.family, r.stage, r.probes)] = ok_l and ok_p
+        L.append(f"| {r.family} | {r.stage} | {r.probes} | {r.logodds_gap:+.2f} / {r.logodds_frac:.2f} | {r.get('p_asst_gap', float('nan')):+.3f} / {r.get('p_asst_frac', float('nan')):.2f} | {'fallback' if comb[(r.family, r.stage, r.probes)] else 'no'} |")
+    L += ["", "Full pre-set reading (combined fallback at instruct AND the instruct-minus-base fraction gain >= 0.3 with CI above 0, on both readouts):", ""]
+    for fam in FAMILIES:
+        for ptype in ("factual", "chat"):
+            if (fam, "instruct", ptype) in comb:
+                g = all(gains.get((fam, ptype, r), False) for r in ("logodds", "p_asst"))
+                L.append(f"- {fam}, {ptype}: combined fallback at instruct {'yes' if comb[(fam, 'instruct', ptype)] else 'no'}; fraction gain {'yes' if g else 'no'} (log-odds {'yes' if gains.get((fam, ptype, 'logodds')) else 'no'}, P(assistant) {'yes' if gains.get((fam, ptype, 'p_asst')) else 'no'}) -> "
+                         f"**{'fallback, grown with post-training' if comb[(fam, 'instruct', ptype)] and g else 'not met'}**")
+    L += ["", "### Scoring precision", "",
+          "Scoring ran the prompt at batch 1 and shared its KV cache across the 24 continuations (bf16). Against full batch-1 passes (first 3 prompts, 4 continuations each) the largest difference was "
+          + ", ".join(f"{fam} {st} {chk:.2f}" for (fam, st), (_, chk) in shared.items())
+          + " nats. These are differences in a summed log-probability of 2-8 tokens; the contrasts used here are differences of the same continuations across prompt versions, and the readings sit at 0.5 nats or more, so the bar is not decided by this noise, but numbers near it should be read with that error in mind.", ""]
+    return L
 
 
 def main():
