@@ -323,6 +323,8 @@ def generate(args):
         kind, text = render_request(mat, r, tok, family)
         ids.append((doc_start_ids(tok) if kind == "text" else []) + encode(tok, text))
     order = sorted(range(len(reqs)), key=lambda k: len(ids[k]))
+    if args.mem_fraction:
+        torch.cuda.set_per_process_memory_fraction(args.mem_fraction)   # guard when another process shares the GPU: OOM here fails only this process
     model_id = args.model_id or config.MODELS[args.model]
     fs = config.family_settings(family)
     model, device = (load_model(model_id, torch.bfloat16, offload=True, gpu_gib=args.gpu_gib or fs["gpu_gib"], cpu_gib=fs["cpu_gib"])
@@ -348,9 +350,11 @@ def generate(args):
         if bi % 20 == 0:
             print(f"generated {start}/{len(order)}", flush=True)
     os.makedirs(os.path.join(OUT, family), exist_ok=True)
-    with gzip.open(replies_path(family, args.model), "wt", encoding="utf-8") as f:
+    final = replies_path(family, args.model)
+    with gzip.open(final + ".tmp", "wt", encoding="utf-8") as f:   # written complete, then renamed: readers never see a partial file
         for o in out:
             f.write(json.dumps(o, ensure_ascii=False) + "\n")
+    os.replace(final + ".tmp", final)
 
 
 # ------------------------------------------------------------------ detectors and judge
@@ -362,6 +366,8 @@ def detect(args):
     mat = load_materials()
     idx = item_index(mat)
     for path in sorted(glob.glob(os.path.join(OUT, "*", "*_replies.jsonl.gz"))):
+        if getattr(args, "only", None) and args.only != "/".join(path.split(os.sep)[-2:]).replace("_replies.jsonl.gz", ""):
+            continue
         rows = []
         for r in read_gz(path):
             trait, det, item = idx[r["item"]]
@@ -675,8 +681,11 @@ def main():
         p.add_argument("--limit", type=int, default=0)
         p.add_argument("--offload", action="store_true", help="device_map=auto with CPU offload (default: all weights on the GPU)")
         p.add_argument("--gpu-gib", type=int, default=None)
+        p.add_argument("--mem-fraction", type=float, default=None, help="cap this process's CUDA memory (shared GPU)")
     for name in ("detect", "handcheck", "analyze"):
-        sub.add_parser(name)
+        p = sub.add_parser(name)
+        if name == "detect":
+            p.add_argument("--only", default=None, help="family/stage, e.g. olmo3-7b/base")
     a = ap.parse_args()
     if a.cmd == "build":
         m = build(a.items_dir)
