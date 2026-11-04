@@ -1,0 +1,237 @@
+# Main run (exchange design), launched 2026-11-03 23:09:53 UTC in tmux session main-run from /root/hpa-capstone-scoring
+# Filtered copy of logs/main_chain.log (1.6 GB raw): bitsandbytes 'MatMul8bitLt' warnings and progress-bar lines removed; nothing else changed.
+# Chain script (logs/main_chain.sh):
+#   #!/usr/bin/env bash
+#   # Tonight's main run, launched 2026-11-03 from the worktree (docs/runbook_exchanges_2026-11-03.md).
+#   set -o pipefail
+#   cd /root/hpa-capstone-scoring
+#   echo "[$(date -u '+%F %T UTC')] chain start"
+#   CLEAR_CACHE=1 FAMILY=olmo3-7b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_olmo3-7b.log && \
+#   CLEAR_CACHE=1 FAMILY=qwen3-8b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_qwen3-8b.log && \
+#   env -u UV_PROJECT_ENVIRONMENT -u VIRTUAL_ENV uv run python -m core.hf_cache free Qwen/Qwen3-8B && \
+#   CLEAR_CACHE=1 FAMILY=gemma4-31b bash scripts/run_exchanges.sh 2>&1 | tee -a logs/main_gemma4-31b.log
+#   echo "[$(date -u '+%F %T UTC')] chain exited with code $?"
+
+[2026-11-03 23:09:53 UTC] chain start
+[2026-11-03 23:09:54 UTC] olmo3-7b: stages base sft dpo instruct, context exchange, tag exchanges_exchange, generation 1 (600 samples per checkpoint)
+olmo3-7b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 27c9848080a01245…
+[2026-11-03 23:15:55 UTC] === base (allenai/Olmo-3-1025-7B): score 1, generate 1
+allenai/Olmo-3-1025-7B: need 19.6 GB (incl. 5 GB margin), 57.4 GB free -> OK
+olmo3-7b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 27c9848080a01245…
+reused 1434 sequences from the overnight run, scoring 2166 fresh
+allenai/Olmo-3-1025-7B: all on cuda:0, dtype torch.float32 (59 s to load)
+[W1103 23:26:24.139678577 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 459276288 bytes (free: 91947008, total: 50867404800).
+[W1103 23:27:22.338404694 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 689963008 bytes (free: 39518208, total: 50867404800).
+[W1103 23:28:14.640476796 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 855638016 bytes (free: 358285312, total: 50867404800).
+[W1103 23:28:58.640601018 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 996147200 bytes (free: 739966976, total: 50867404800).
+[W1103 23:29:46.439576127 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1069547520 bytes (free: 863698944, total: 50867404800).
+[W1103 23:30:29.201197356 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1142947840 bytes (free: 888864768, total: 50867404800).
+[W1103 23:31:20.439233933 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1197473792 bytes (free: 66781184, total: 50867404800).
+[W1103 23:31:54.039685568 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1245708288 bytes (free: 698023936, total: 50867404800).
+[W1103 23:32:32.639326459 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1306525696 bytes (free: 1264254976, total: 50867404800).
+[W1103 23:33:04.939224296 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1361051648 bytes (free: 568000512, total: 50867404800).
+[W1103 23:33:35.739314830 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1455423488 bytes (free: 1161494528, total: 50867404800).
+  scored 400/2166 sequences (45 s)
+  scored 800/2166 sequences (122 s)
+  scored 1200/2166 sequences (228 s)
+  scored 1600/2166 sequences (351 s)
+  scored 2000/2166 sequences (480 s)
+  scored 2166/2166 sequences (543 s)
+allenai/Olmo-3-1025-7B: wrote 3600 rows to results/capstone/olmo3-7b/base/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+allenai/Olmo-3-1025-7B: wrote 600 samples to results/capstone/olmo3-7b/core/generations_incomplete/.tmp_base/base.jsonl
+[2026-11-04 00:04:21 UTC] base: 600 samples -> results/capstone/olmo3-7b/core/generations_incomplete/base.jsonl
+allenai/Olmo-3-1025-7B: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+[2026-11-04 00:04:22 UTC] === sft (allenai/Olmo-3-7B-Instruct-SFT): score 1, generate 1
+allenai/Olmo-3-7B-Instruct-SFT: need 19.6 GB (incl. 5 GB margin), 57.4 GB free -> OK
+olmo3-7b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 27c9848080a01245…
+reused 1434 sequences from the overnight run, scoring 2166 fresh
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+allenai/Olmo-3-7B-Instruct-SFT: all on cuda:0, dtype torch.float32 (37 s to load)
+[W1104 00:07:10.256725638 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 459276288 bytes (free: 91947008, total: 50867404800).
+[W1104 00:07:45.955627449 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 689963008 bytes (free: 39518208, total: 50867404800).
+[W1104 00:08:17.807804700 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 855638016 bytes (free: 358285312, total: 50867404800).
+[W1104 00:08:47.384132392 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 996147200 bytes (free: 739966976, total: 50867404800).
+[W1104 00:09:23.973946673 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1069547520 bytes (free: 863698944, total: 50867404800).
+[W1104 00:09:56.172393250 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1142947840 bytes (free: 888864768, total: 50867404800).
+[W1104 00:10:40.069862531 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1197473792 bytes (free: 66781184, total: 50867404800).
+[W1104 00:11:08.515829036 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1245708288 bytes (free: 698023936, total: 50867404800).
+[W1104 00:11:41.311773735 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1306525696 bytes (free: 1264254976, total: 50867404800).
+[W1104 00:12:09.764281726 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1361051648 bytes (free: 568000512, total: 50867404800).
+[W1104 00:12:36.061453638 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1455423488 bytes (free: 1161494528, total: 50867404800).
+  scored 400/2166 sequences (21 s)
+  scored 800/2166 sequences (62 s)
+  scored 1200/2166 sequences (130 s)
+  scored 1600/2166 sequences (226 s)
+  scored 2000/2166 sequences (336 s)
+  scored 2166/2166 sequences (390 s)
+allenai/Olmo-3-7B-Instruct-SFT: wrote 3600 rows to results/capstone/olmo3-7b/sft/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+allenai/Olmo-3-7B-Instruct-SFT: wrote 600 samples to results/capstone/olmo3-7b/core/generations_incomplete/.tmp_sft/sft.jsonl
+[2026-11-04 00:21:37 UTC] sft: 600 samples -> results/capstone/olmo3-7b/core/generations_incomplete/sft.jsonl
+allenai/Olmo-3-7B-Instruct-SFT: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+[2026-11-04 00:21:37 UTC] === dpo (allenai/Olmo-3-7B-Instruct-DPO): score 1, generate 1
+allenai/Olmo-3-7B-Instruct-DPO: need 19.6 GB (incl. 5 GB margin), 57.1 GB free -> OK
+olmo3-7b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 27c9848080a01245…
+reused 1434 sequences from the overnight run, scoring 2166 fresh
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+allenai/Olmo-3-7B-Instruct-DPO: all on cuda:0, dtype torch.float32 (60 s to load)
+[W1104 00:24:48.784125212 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 459276288 bytes (free: 91947008, total: 50867404800).
+[W1104 00:25:22.523127528 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 689963008 bytes (free: 39518208, total: 50867404800).
+[W1104 00:25:54.307466727 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 855638016 bytes (free: 358285312, total: 50867404800).
+[W1104 00:26:25.775297713 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 996147200 bytes (free: 739966976, total: 50867404800).
+[W1104 00:27:00.357175574 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1069547520 bytes (free: 863698944, total: 50867404800).
+[W1104 00:27:33.375257225 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1142947840 bytes (free: 888864768, total: 50867404800).
+[W1104 00:28:17.019937934 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1197473792 bytes (free: 66781184, total: 50867404800).
+[W1104 00:28:45.300934751 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1245708288 bytes (free: 698023936, total: 50867404800).
+[W1104 00:29:18.925882888 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1306525696 bytes (free: 1264254976, total: 50867404800).
+[W1104 00:29:45.238476162 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1361051648 bytes (free: 568000512, total: 50867404800).
+[W1104 00:30:12.396641227 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1455423488 bytes (free: 1161494528, total: 50867404800).
+  scored 400/2166 sequences (21 s)
+  scored 800/2166 sequences (62 s)
+  scored 1200/2166 sequences (130 s)
+  scored 1600/2166 sequences (226 s)
+  scored 2000/2166 sequences (335 s)
+  scored 2166/2166 sequences (389 s)
+allenai/Olmo-3-7B-Instruct-DPO: wrote 3600 rows to results/capstone/olmo3-7b/dpo/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+allenai/Olmo-3-7B-Instruct-DPO: wrote 600 samples to results/capstone/olmo3-7b/core/generations_incomplete/.tmp_dpo/dpo.jsonl
+[2026-11-04 00:39:16 UTC] dpo: 600 samples -> results/capstone/olmo3-7b/core/generations_incomplete/dpo.jsonl
+allenai/Olmo-3-7B-Instruct-DPO: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+[2026-11-04 00:39:16 UTC] === instruct (allenai/Olmo-3-7B-Instruct): score 1, generate 1
+allenai/Olmo-3-7B-Instruct: need 19.6 GB (incl. 5 GB margin), 57.0 GB free -> OK
+olmo3-7b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 27c9848080a01245…
+reused 1434 sequences from the overnight run, scoring 2166 fresh
+allenai/Olmo-3-7B-Instruct: all on cuda:0, dtype torch.float32 (26 s to load)
+[W1104 00:41:51.319746052 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 459276288 bytes (free: 280690688, total: 50867404800).
+[W1104 00:42:27.188291765 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 698351616 bytes (free: 517668864, total: 50867404800).
+[W1104 00:43:02.804946099 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 874512384 bytes (free: 10158080, total: 50867404800).
+[W1104 00:43:36.083737757 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1031798784 bytes (free: 570097664, total: 50867404800).
+[W1104 00:44:21.244383072 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1113587712 bytes (free: 37421056, total: 50867404800).
+[W1104 00:45:04.177782478 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1182793728 bytes (free: 455475200, total: 50867404800).
+[W1104 00:45:43.828930042 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1243611136 bytes (free: 68878336, total: 50867404800).
+[W1104 00:46:21.664524690 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1312817152 bytes (free: 1169883136, total: 50867404800).
+[W1104 00:46:56.157499261 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1394606080 bytes (free: 398131200, total: 50867404800).
+[W1104 00:47:29.539934086 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1675624448 bytes (free: 1526398976, total: 50867404800).
+  scored 400/2166 sequences (21 s)
+  scored 800/2166 sequences (62 s)
+  scored 1200/2166 sequences (130 s)
+  scored 1600/2166 sequences (224 s)
+  scored 2000/2166 sequences (332 s)
+  scored 2166/2166 sequences (385 s)
+allenai/Olmo-3-7B-Instruct: wrote 3600 rows to results/capstone/olmo3-7b/instruct/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+allenai/Olmo-3-7B-Instruct: wrote 600 samples to results/capstone/olmo3-7b/core/generations_incomplete/.tmp_instruct/instruct.jsonl
+[2026-11-04 00:56:13 UTC] instruct: 600 samples -> results/capstone/olmo3-7b/core/generations_incomplete/instruct.jsonl
+allenai/Olmo-3-7B-Instruct: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+olmo3-7b base: 27c9848080a01245…
+olmo3-7b sft: 27c9848080a01245…
+olmo3-7b dpo: 27c9848080a01245…
+olmo3-7b instruct: 27c9848080a01245…
+all scored stages share the inputs fingerprint
+[2026-11-04 00:56:18 UTC] olmo3-7b done
+[2026-11-04 00:56:18 UTC] qwen3-8b: stages base instruct, context exchange, tag exchanges_exchange, generation 1 (600 samples per checkpoint)
+qwen3-8b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 7a54cc5537436696…
+[2026-11-04 00:57:58 UTC] === base (Qwen/Qwen3-8B-Base): score 1, generate 1
+Qwen/Qwen3-8B-Base: need 21.4 GB (incl. 5 GB margin), 57.0 GB free -> OK
+qwen3-8b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 7a54cc5537436696…
+reused 1434 sequences from the overnight run, scoring 2166 fresh
+Qwen/Qwen3-8B-Base: all on cuda:0, dtype torch.float32 (22 s to load)
+[W1104 01:01:23.213692239 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 308281344 bytes (free: 245039104, total: 50867404800).
+[W1104 01:01:51.065018539 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 442499072 bytes (free: 150667264, total: 50867404800).
+[W1104 01:02:16.269087142 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 562036736 bytes (free: 402325504, total: 50867404800).
+[W1104 01:02:40.590043567 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 639631360 bytes (free: 626720768, total: 50867404800).
+[W1104 01:03:06.755288944 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 721420288 bytes (free: 586874880, total: 50867404800).
+[W1104 01:03:39.107044824 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 790626304 bytes (free: 498794496, total: 50867404800).
+[W1104 01:04:31.789808073 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 838860800 bytes (free: 150667264, total: 50867404800).
+[W1104 01:05:12.891041279 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 884998144 bytes (free: 64684032, total: 50867404800).
+[W1104 01:05:51.166551255 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 931135488 bytes (free: 100335616, total: 50867404800).
+[W1104 01:06:25.729761811 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 973078528 bytes (free: 257622016, total: 50867404800).
+[W1104 01:06:53.135881339 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1019215872 bytes (free: 528154624, total: 50867404800).
+[W1104 01:07:13.044113911 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1071644672 bytes (free: 840630272, total: 50867404800).
+[W1104 01:07:32.678396516 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1335885824 bytes (free: 339410944, total: 50867404800).
+  scored 200/2166 sequences (8 s)
+  scored 400/2166 sequences (21 s)
+  scored 600/2166 sequences (40 s)
+  scored 800/2166 sequences (64 s)
+  scored 1000/2166 sequences (97 s)
+  scored 1200/2166 sequences (139 s)
+  scored 1400/2166 sequences (188 s)
+  scored 1600/2166 sequences (240 s)
+  scored 1800/2166 sequences (296 s)
+  scored 2000/2166 sequences (358 s)
+  scored 2166/2166 sequences (412 s)
+Qwen/Qwen3-8B-Base: wrote 3600 rows to results/capstone/qwen3-8b/base/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+Qwen/Qwen3-8B-Base: wrote 600 samples to results/capstone/qwen3-8b/core/generations_incomplete/.tmp_base/base.jsonl
+[2026-11-04 01:17:16 UTC] base: 600 samples -> results/capstone/qwen3-8b/core/generations_incomplete/base.jsonl
+Qwen/Qwen3-8B-Base: freed 16.4 GB; 5 blobs removed, 0 shared blobs kept
+[2026-11-04 01:17:17 UTC] === instruct (Qwen/Qwen3-8B): score 1, generate 1
+Qwen/Qwen3-8B: need 0.0 GB (incl. 5 GB margin), 57.0 GB free -> OK
+qwen3-8b: 900 exchanges (3600 sequences), 0 excluded; context exchange; inputs fingerprint 7a54cc5537436696…
+reused 1434 sequences from the overnight run, scoring 2166 fresh
+Qwen/Qwen3-8B: all on cuda:0, dtype torch.float32 (7 s to load)
+[W1104 01:20:25.316236973 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 308281344 bytes (free: 245039104, total: 50867404800).
+[W1104 01:20:53.255352516 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 442499072 bytes (free: 150667264, total: 50867404800).
+[W1104 01:21:18.427908175 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 562036736 bytes (free: 402325504, total: 50867404800).
+[W1104 01:21:42.605226306 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 639631360 bytes (free: 626720768, total: 50867404800).
+[W1104 01:22:07.504571676 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 721420288 bytes (free: 586874880, total: 50867404800).
+[W1104 01:22:40.188460147 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 790626304 bytes (free: 498794496, total: 50867404800).
+[W1104 01:23:31.935569657 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 838860800 bytes (free: 150667264, total: 50867404800).
+[W1104 01:24:11.336350210 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 884998144 bytes (free: 64684032, total: 50867404800).
+[W1104 01:24:50.034499001 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 931135488 bytes (free: 100335616, total: 50867404800).
+[W1104 01:25:23.004288498 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 973078528 bytes (free: 257622016, total: 50867404800).
+[W1104 01:25:51.013827317 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1019215872 bytes (free: 528154624, total: 50867404800).
+[W1104 01:26:11.721472243 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1071644672 bytes (free: 840630272, total: 50867404800).
+[W1104 01:26:30.180792152 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1335885824 bytes (free: 339410944, total: 50867404800).
+  scored 200/2166 sequences (8 s)
+  scored 400/2166 sequences (21 s)
+  scored 600/2166 sequences (40 s)
+  scored 800/2166 sequences (64 s)
+  scored 1000/2166 sequences (97 s)
+  scored 1200/2166 sequences (138 s)
+  scored 1400/2166 sequences (187 s)
+  scored 1600/2166 sequences (238 s)
+  scored 1800/2166 sequences (293 s)
+  scored 2000/2166 sequences (353 s)
+  scored 2166/2166 sequences (408 s)
+Qwen/Qwen3-8B: wrote 3600 rows to results/capstone/qwen3-8b/instruct/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+Qwen/Qwen3-8B: wrote 600 samples to results/capstone/qwen3-8b/core/generations_incomplete/.tmp_instruct/instruct.jsonl
+[2026-11-04 01:36:14 UTC] instruct: 600 samples -> results/capstone/qwen3-8b/core/generations_incomplete/instruct.jsonl
+qwen3-8b base: 7a54cc5537436696…
+qwen3-8b instruct: 7a54cc5537436696…
+all scored stages share the inputs fingerprint
+[2026-11-04 01:36:17 UTC] qwen3-8b done
+Qwen/Qwen3-8B: freed 16.4 GB; 5 blobs removed, 1 shared blobs kept
+[2026-11-04 01:36:18 UTC] gemma4-31b: stages base instruct, context exchange, tag exchanges_exchange, generation 1 (600 samples per checkpoint)
+gemma4-31b: 300 exchanges (1200 sequences), 0 excluded; context exchange; inputs fingerprint 8c26564b3cbdcdbc…
+[2026-11-04 01:37:30 UTC] === base (google/gemma-4-31B): score 1, generate 1
+google/gemma-4-31B: need 67.5 GB (incl. 5 GB margin), 73.4 GB free -> OK
+gemma4-31b: 300 exchanges (1200 sequences), 0 excluded; context exchange; inputs fingerprint 8c26564b3cbdcdbc…
+reused 486 sequences from the overnight run, scoring 714 fresh
+Some parameters are on the meta device because they were offloaded to the cpu.
+google/gemma-4-31B: 14/66 modules on the GPU, dtype torch.float32 (37 s to load)
+  scored 200/714 sequences (418 s)
+  scored 400/714 sequences (897 s)
+  scored 600/714 sequences (1452 s)
+  scored 714/714 sequences (1803 s)
+google/gemma-4-31B: wrote 1200 rows to results/capstone/gemma4-31b/base/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+google/gemma-4-31B: wrote 600 samples to results/capstone/gemma4-31b/core/generations_incomplete/.tmp_base/base.jsonl
+[2026-11-04 03:37:31 UTC] base: 600 samples -> results/capstone/gemma4-31b/core/generations_incomplete/base.jsonl
+google/gemma-4-31B: freed 62.5 GB; 2 blobs removed, 0 shared blobs kept
+[2026-11-04 03:37:34 UTC] === instruct (google/gemma-4-31B-it): score 1, generate 1
+google/gemma-4-31B-it: need 67.5 GB (incl. 5 GB margin), 71.0 GB free -> OK
+gemma4-31b: 300 exchanges (1200 sequences), 0 excluded; context exchange; inputs fingerprint 8c26564b3cbdcdbc…
+reused 486 sequences from the overnight run, scoring 714 fresh
+Some parameters are on the meta device because they were offloaded to the cpu.
+google/gemma-4-31B-it: 14/66 modules on the GPU, dtype torch.float32 (52 s to load)
+  scored 200/714 sequences (424 s)
+  scored 400/714 sequences (900 s)
+  scored 600/714 sequences (1517 s)
+  scored 714/714 sequences (1872 s)
+google/gemma-4-31B-it: wrote 1200 rows to results/capstone/gemma4-31b/instruct/core/exchanges_exchange/scores.csv (+ tokens.parquet, manifest.json)
+google/gemma-4-31B-it: wrote 600 samples to results/capstone/gemma4-31b/core/generations_incomplete/.tmp_instruct/instruct.jsonl
+[2026-11-04 05:39:29 UTC] instruct: 600 samples -> results/capstone/gemma4-31b/core/generations_incomplete/instruct.jsonl
+google/gemma-4-31B-it: freed 62.5 GB; 2 blobs removed, 1 shared blobs kept
+gemma4-31b base: 8c26564b3cbdcdbc…
+gemma4-31b instruct: 8c26564b3cbdcdbc…
+all scored stages share the inputs fingerprint
+[2026-11-04 05:39:34 UTC] gemma4-31b done
+[2026-11-04 05:39:34 UTC] chain exited with code 0

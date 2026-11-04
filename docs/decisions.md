@@ -782,6 +782,88 @@ Run as logged in the plan above (incomplete-turn stratum: 200 mid-sentence prefi
 - **Examples**: greedy answers (48 tokens) at k = 128, seed 0, assistant condition, archaic vs modern shots, to 5 probes (states, message, lighting, year, city_transport).
 - Run on arena9-nurse after spec C. Output `results/icl_era/icl_era.md`, `icl_era_summary.csv`, per-stage scores and examples under `results/icl_era/<family>/`.
 
+## 2026-11-03: core: one exchange-scoring run for vestigial regression and logit distortion (`core.exchanges`, `core.score_exchanges`)
+
+Asked by Cole: a single scoring run per checkpoint covering both measures' clarified conditions; built and tested, **not launched**
+(Cole launches it after a separate decision on turns). Spec: `docs/exchanges.md`; launch: `docs/runbook_exchanges_2026-11-03.md`.
+
+- **Conditions.** Checkpoints (OLMo 3 7B base/SFT/DPO/Instruct; Qwen3-8B base/IT; Gemma 4 31B base/IT) × corpus (oasst1, UltraChat:
+  headline; WildChat: secondary) × scored text (user | reply) × framing (tagged | plain) = 96 conditions (48 / 24 / 24), labelled
+  "checkpoint · corpus · scored text · framing" (`config.FAMILIES[...]["label"/"stage_labels"]`). No swapped slots.
+- **Exchange set** (`data/exchanges.jsonl`, `python -m core.exchanges build`, no weights): 300 real exchanges per corpus (Gemma: the first
+  100, `exchange_n_per_corpus`). oasst1: English root prompt (train split, `prepare_data`'s seeded order) + its highest-ranked human reply;
+  UltraChat: first user turn + first reply (`prepare_data.ultrachat_pairs`); WildChat: the 300 `texts.jsonl` pairs by `pair_id` (top-up from
+  the same stream only if needed). Filters: the existing ones (English, toxicity, clean rendering), user turn 20–300 OLMo tokens, Dolci
+  exact-match filter on **both** turns (the legacy sampler checked only the user turn), and every rendering passing in all three families.
+  Counts per corpus (kept / candidates): oasst1 300 / 2101 (1292 Dolci-matched user turns), UltraChat 300 / 566, WildChat 300 / 325
+  (299 `texts.jsonl` pairs plus one top-up). **Finding:** the dropped pair, `wildchat-0007`, has a ChatGPT reply that matches Dolci verbatim, so
+  the overnight `wildchat assistant` set (`wildchat-assistant-0007`) holds one contaminated text of 300; no `texts.jsonl` user turn matches under
+  the both-role matcher (re-checked with the pinned revisions). The 16 Dolci-matched user turns were all WildChat stream candidates read for the top-up. Table: `docs/exchanges.md`, Build.
+- **Reused from Grace's builder** (on `main`): `contamination_record` (both roles + WildChat hash), `conversations.message` authorship
+  labels, `render.render_target` for every tagged rendering, `score_conversations.PROFILES` (per-family template kwargs and expected
+  headers, checked on every rendering), the pilot_v3 Dolci revisions. `build_conversations` itself was not used: it requires at least two
+  complete exchanges, picks a seeded oasst1 branch (not the top-ranked reply) from first windows of the validation split, so its texts do not
+  coincide with the overnight-scored ones. `grace/logit-conversation-scoring` (frozen context limits, collection driver) is unmerged and not needed.
+- **Renderings.** User tagged = the conversation's first turn after the template's default system turn (OLMo), i.e. `core.score`'s `user@user`;
+  user plain = document-start token + text (`user@plain`). Reply tagged (context `exchange`) = its own user turn, closed, then the generation
+  prompt's assistant opening (Gemma: empty thought channel; Qwen3: empty think block, ON only; the overnight run measured OFF changing
+  `asst@asst` by about 0.02 nats, so OFF is not re-run), then the reply. Reply plain = the same with every role tag and system turn removed.
+  **Decision: the separator is `"\n\n"` (a blank line), `config.EXCHANGE_SEPARATOR`, used everywhere.** In OLMo, Qwen and Gemma it never merged
+  with a reply's first token on the 300 WildChat pairs. **Decision: plain sequences keep the family's document-start token** (`<|endoftext|>`
+  / `<bos>`), as core's plain control always has: it is not a role tag, and without it the first token has no context. The plain document is
+  tokenized as one string and must end with exactly the reply's own tokens. Base checkpoints use their family's instruct template.
+- **Truncation.** Replies are scored over their first 300 tokens (`EXCHANGE_REPLY_MAX_TOKENS`, family tokenizer), longer ones kept and marked
+  `truncated`; sequences end at the last scored token. **Decision: replies keep the existing 20-token lower bound** (`EXCHANGE_REPLY_MIN_TOKENS`;
+  only the upper bound was lifted), so `_from1` means are not taken over one or two tokens.
+- **Checks.** `render_exchange` raises unless the scored tokens are identical between tagged and plain and equal to the text tokenized alone
+  (plus verbatim placement, decode and boundary checks); the build drops failing exchanges, the scorer excludes them whole and records them.
+- **Context switchable.** `config.EXCHANGE_CONTEXT` / `--context`: `exchange` (default) or `single` (the reply alone, the overnight design).
+  A new design is one entry in `core.exchanges.CONTEXTS`; outputs are tagged by context, so designs coexist.
+- **Outputs.** `results/capstone/<family>/<stage>/core/<tag>/` (`config.exchange_dir`; tag default `exchanges_<context>`; an existing
+  directory is refused): `scores.csv` (the requested columns plus `context, condition, n_tokens_full, mean_nll, mean_entropy,
+  n_bytes_from1, score_source`), `tokens.parquet` (per-token NLL and entropy), `manifest.json` (inputs fingerprint shared across stages,
+  `--check-stages`). fp32, `core.score.spans_nll` unchanged; a batch that runs out of GPU memory is retried at half size.
+- **Reuse of overnight scores.** A sequence already scored overnight is reused only if the text matches, the ids equal `core.render.render`'s
+  for that slot (what `core.score` scored) and the token count matches; otherwise it is scored fresh (`score_source` says which).
+  Validated on Qwen3-8B IT (GPU, 10 WildChat exchanges, `single` context, 40 sequences): reused vs fresh fp32 scores agree to 7e-6 nats
+  per text (3e-4 per token).
+- **Backwards compatibility.** `core.score`, `core.render` (no function changed), `core.generate` and the judge are untouched; new config keys
+  have defaults (`FAMILY_DEFAULTS`); the OLMo rendering hash is unchanged (`94c0f514…`, `tests/test_families.py`). New tests:
+  `tests/test_exchanges.py` (every rendering in every family, the tagged/plain identity check per family and context, truncation, builder
+  filters, reuse, a CPU smoke run on SmolLM2-135M). No hypothesis threshold, verdict rule or pre-registered criterion changed.
+
+## 2026-11-03: vestigial regression: exchange design and matched-authorship headline for the main run (pilot-informed revision, before the main run)
+
+**Agreed by Cole and Grace before the main run; no main-run result exists.** The main run scores the exchange design built today
+(`core.exchanges`, entry above): the user turn as the conversation's opener, each reply after its own user turn, each tagged and plain,
+on oasst1, UltraChat and WildChat (12 conditions per checkpoint, 96 in all). The reply-alone context (`single`) is not part of the main
+run. `measures/vestigial_regression/README.md` is revised accordingly (Status, NLL arm, Design details, Pre-registered criteria, Running):
+
+- **Primary quantity:** the asymmetry `Δ(user frame cost) − Δ(reply frame cost)`, frame cost = NLL(tagged) − NLL(plain) per exchange,
+  Δ = change from the family's own base (paired per exchange), positions 1+, user and reply sets bootstrapped independently.
+- **Headline: within oasst1 and within UltraChat** (matched authorship: humans wrote both turns / a model wrote both), so authorship does
+  not differ between the two terms; WildChat (human user, ChatGPT reply) is secondary. The NLL arm fires if the asymmetry is at least
+  0.05 nats (detectability floor) with the CI excluding zero in both headline corpora, in the same direction. Nats per token within a
+  family, bits per byte across families.
+- **Superseded:** the isolated-slot design of the pilot and the overnight run (every text alone in every slot; user sources against
+  unrelated assistant texts; swapped slots and slot effects). Its outputs stay frozen and `analyze.py --locked` stays as their record.
+- **Why the exchange context and not the reply alone.** Evidence: `docs/turns_memo.md` (branch `turns-memo-2026-11-03`; 150 held-out
+  three-turn conversations, OLMo 3 7B and Qwen3-8B, base vs post-trained, fp32). Scoring a reply without its question makes the
+  post-trained change of the reply's frame cost 0.13–0.47 nats lower than scoring it after the question, in all six model × corpus cells
+  (every CI excluding zero), almost entirely in the tagged sequence. Under the reply-alone design that bias pushes the asymmetry towards
+  regression: it flips Qwen3-8B's sign (+0.04 to +0.07 alone vs −0.07 to −0.24 after the question) and halves OLMo's (−0.19 to −0.38 vs
+  −0.49 to −0.69). The memo's own recommendation was to keep the reply-alone design as the pre-registered primary (because it was
+  collected) with the exchange design as robustness; the team chose the exchange design as primary instead, on the memo's evidence
+  that the reply-alone design is biased.
+- **Methods detail:** OLMo's instruct template prepends a default system turn ("You are a helpful function-calling AI assistant. You do not
+  currently have access to any functions. <functions></functions>") to every tagged sequence, user and reply alike; Qwen3 and Gemma 4 add
+  none. It is part of the tagged frame in both terms and identical across OLMo stages, so it cancels in the changes from base only to the
+  extent that the stages treat it alike; it is reported, not removed.
+- **Judge arm:** the README now names `data/prefill_incomplete_200.jsonl` as the generation prefills, as decided earlier today (prompt v2);
+  `data/prefill_100.jsonl` stays as the complete-turn stratum. No judge-arm criterion changed.
+- Revised after the pilot and the turns test, so OLMo NLL verdicts are not blind (as the README states). `measures/logit_distortion/` is
+  Grace's and was not edited; she is to bring its README to the exchange design and freeze its criteria before results exist (STATUS.md).
+
 ### Amendment (2026-11-03 17:50 UTC, after an independent review; before any spread result was read)
 
 Applies to the implant-and-spread entry above. The LoRA runs had started under the old protocol: 8 run files were written for OLMo 3 7B base (the four controls ctrl-asst/ctrl-char x seeds 0,1, and asst/char x T1/T2 for seed 0) when the job was stopped at 17:48 UTC; they are discarded (kept locally, uncommitted, in `results/implant_spread/olmo3-7b_old_protocol_discarded/`), and only their dose lines were seen (25-30 nats, 2 epochs, no extension triggered); no spread value was read. Everything is rerun from scratch under the amended protocol:
