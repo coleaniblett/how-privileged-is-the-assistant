@@ -1,0 +1,40 @@
+{
+ "family": "olmo3-7b",
+ "layers_screened": [
+  3,
+  6,
+  9,
+  12,
+  15,
+  18,
+  21,
+  24,
+  27,
+  30
+ ],
+ "chosen": [
+  6,
+  21,
+  30
+ ],
+ "best": 21,
+ "screen_minutes": 14.333660181363424,
+ "pilot_gens": 8448,
+ "pilot_seconds": 640.2386209964752,
+ "stage2_gens": 8448,
+ "stage2_projected_minutes": 10.670643683274587,
+ "floors": {
+  "family": "olmo3-7b",
+  "refusal_floor_points": 10.0,
+  "voice_p95_points": 4.609082759379511,
+  "voice_floor_rule": "max(0.2 * |pair's unpatched voice gap on the main set|, voice_p95_points)",
+  "n_control_cells": 135,
+  "chosen_layers": [
+   6,
+   21,
+   30
+  ],
+  "best_layer": 21,
+  "note": "floors from same-role and random patches in the pilot; committed before Stage 2"
+ }
+}
