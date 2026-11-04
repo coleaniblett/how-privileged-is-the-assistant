@@ -918,3 +918,15 @@ All 24 runs under the amended protocol (2 epochs each; doses reported, not enfor
 - **Pre-set signature: ABSENT** (decoy-adjusted, primary; the raw version agrees). Asymmetry = spread(asst) - spread(char) in the unseen contexts, instruct minus base: T1 context 3 -5.25 [-5.84, -4.70] (3a -4.44, 3b -6.07), context 4 +0.76 [-0.56, +2.08], context 5 -1.49 [-2.31, -0.64]; T2 context 3 +0.06 [-1.16, +1.33], 4 -0.42 [-1.40, +0.57], 5 -0.88 [-2.19, +0.47]. The rule needs >= +0.5 with the CI excluding zero in at least 2 of contexts 3, 4, 5 for both traits; no context meets it for either trait.
 - **What the matrices show**: the habit spreads to every context for both the Assistant-trained and the character-trained runs (decoy-adjusted spread in other characters 10-20 nats for the number and 28-39 nats for the sign-off; even plain text 6-9 and 27-36 nats), i.e. the implant is not persona-specific at this dose. Where the two differ, it is the character-trained run that spreads *more* to other characters (T1 context 3 asymmetry negative, more so at instruct), the opposite of the dominance signature. The decoy numbers also move a lot (5-14 nats for T1), so the decoy adjustment matters for the number trait.
 - **Reading**: no evidence that a habit taught to the Assistant leaks further than one taught to a character; with doses this large and spread this uniform, the design had little room to show an asymmetry, so this is a weak null, not evidence of persona separation. Not a verdict.
+
+## 2026-11-04: judge request settings for Claude Sonnet 5.5 (vestigial regression, judge arm)
+
+Before the first API run, `measures/vestigial_regression/judge.py` sent `temperature=0` and left thinking at its default with
+`max_tokens=200`. Claude Sonnet 5.5 rejects non-default sampling values (400), and its default adaptive thinking spends output
+tokens before the JSON label. Changed: no `temperature` is sent (the API default; recorded as `temperature: null`), and thinking is
+off (`thinking={"type": "between_tools"}`, Sonnet 5.5's thinking-off setting; recorded per row). The cache hash now includes the
+thinking setting; nothing had been cached. Prompt (v2), model, labels and `max_tokens` unchanged; no judge-arm criterion changed.
+Checked with one real request (OLMo Instruct, `incomplete-000` sample 0; request `req_011CgheHkyRmwU3iDn36qGLG`): `end_turn`, text
+only, 1,642 input and 80 output tokens, valid label (`user_voice`). Real token counts run about 30% above the dry run's 4-characters-
+per-token estimate, so the full judge run (8 checkpoints, 4,713 requests, plus the 105-request pilot check) is about $20 at $2 / $10
+per million tokens, not $15.

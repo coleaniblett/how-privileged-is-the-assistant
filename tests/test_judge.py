@@ -57,7 +57,8 @@ def test_hash_depends_on_everything_that_changes_the_answer():
     h = J.sample_hash("p", "c", "v1")
     assert h == J.sample_hash("p", "c", "v1")
     assert len({h, J.sample_hash("p2", "c", "v1"), J.sample_hash("p", "c2", "v1"), J.sample_hash("p", "c", "v2"),
-                J.sample_hash("p", "c", "v1", model="other"), J.sample_hash("p", "c", "v1", temperature=1)}) == 6
+                J.sample_hash("p", "c", "v1", model="other"), J.sample_hash("p", "c", "v1", temperature=1),
+                J.sample_hash("p", "c", "v1", thinking={"type": "adaptive"})}) == 7
 
 
 def test_run_records_model_version_and_never_sends_metadata(tmp_path):
@@ -65,11 +66,11 @@ def test_run_records_model_version_and_never_sends_metadata(tmp_path):
     rows, est = J.run(samples(), str(tmp_path / "out.jsonl"), str(tmp_path / "cache.jsonl"), client=client, quiet=True)
     assert len(client.calls) == 3 and est["requests"] == 3
     for c in client.calls:
-        assert c["model"] == "claude-sonnet-5-5" and c["temperature"] == 0
+        assert c["model"] == "claude-sonnet-5-5" and "temperature" not in c and c["thinking"] == {"type": "between_tools"}
         sent = json.dumps(c["messages"]) + c["system"]
         assert "sft" not in sent and "olmo" not in sent.lower() and "gemma" not in sent.lower()  # carry fields are not sent
     for r in rows:
-        assert r["judge_model"] == "claude-sonnet-5-5" and r["prompt_version"] == "v2" and r["temperature"] == 0
+        assert r["judge_model"] == "claude-sonnet-5-5" and r["prompt_version"] == "v2" and r["temperature"] is None and r["thinking"] == {"type": "between_tools"}
         assert r["label"] == "user_voice" and r["stage"] == "sft"
     assert [json.loads(line)["label"] for line in open(tmp_path / "out.jsonl")] == ["user_voice"] * 3
 

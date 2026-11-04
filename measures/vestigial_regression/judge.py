@@ -5,7 +5,8 @@
     python -m measures.vestigial_regression.judge sheet     # the 60-sample human validation sheet (+ a separate key)
     python -m measures.vestigial_regression.judge validate --judged judged.jsonl --human sheet_labeled.csv
 
-Judge: Claude Sonnet 5.5 (`claude-sonnet-5-5`) through the Anthropic API, temperature 0, key from ANTHROPIC_API_KEY. The judge
+Judge: Claude Sonnet 5.5 (`claude-sonnet-5-5`) through the Anthropic API, default sampling (Sonnet 5.5 rejects a
+non-default temperature) with thinking off (`thinking={"type": "between_tools"}`), key from ANTHROPIC_API_KEY. The judge
 sees only the prefill (marked as written by a real user) and the model's continuation, including anything after a turn or channel
 marker; never which model or stage wrote it. It returns one JSON object {"label", "reason"}; labels are user_voice,
 switched_to_assistant, degenerate, user_voice_with_assistant_traits. Every output row records the judge model, prompt version and
@@ -29,7 +30,8 @@ import time
 from collections import Counter
 
 MODEL = "claude-sonnet-5-5"
-TEMPERATURE = 0
+TEMPERATURE = None  # the API default: Sonnet 5.5 rejects non-default sampling values (400), so none is sent
+THINKING = {"type": "between_tools"}  # thinking off (Sonnet 5.5 rejects {"type": "disabled"}); keeps the reply a short JSON object
 MAX_TOKENS = 200
 LABELS = ["user_voice", "switched_to_assistant", "degenerate", "user_voice_with_assistant_traits"]
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -55,8 +57,9 @@ def build_user_message(template, prefill, continuation):
     return template.replace("{prefill}", prefill).replace("{continuation}", continuation)
 
 
-def sample_hash(prefill, continuation, version, model=MODEL, temperature=TEMPERATURE):
-    payload = json.dumps([model, version, temperature, prefill, continuation], ensure_ascii=False)
+def sample_hash(prefill, continuation, version, model=MODEL, temperature=TEMPERATURE, thinking=THINKING):
+    payload = json.dumps([model, version, temperature, prefill, continuation] + ([thinking] if thinking else []),
+                         ensure_ascii=False, sort_keys=True)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -101,8 +104,12 @@ def call_with_retries(client, system, user, retries=5, sleep=time.sleep):
     delay = 2.0
     for attempt in range(retries):
         try:
-            resp = client.messages.create(model=MODEL, max_tokens=MAX_TOKENS, temperature=TEMPERATURE, system=system,
-                                          messages=[{"role": "user", "content": user}])
+            kw = dict(model=MODEL, max_tokens=MAX_TOKENS, system=system, messages=[{"role": "user", "content": user}])
+            if TEMPERATURE is not None:
+                kw["temperature"] = TEMPERATURE
+            if THINKING is not None:
+                kw["thinking"] = THINKING
+            resp = client.messages.create(**kw)
             return "".join(b.text for b in resp.content if getattr(b, "type", "text") == "text")
         except Exception as e:  # noqa: BLE001  (anthropic's exceptions are imported lazily; classify by attributes)
             status = getattr(e, "status_code", None)
@@ -183,7 +190,7 @@ def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, pric
         with open(cache_path, "a", encoding="utf-8") as cf:
             for h, r in unique.items():
                 res = judge_one(client, system, template, r["prefill"], r["continuation"], sleep=sleep)
-                row = dict(sample_hash=h, judge_model=MODEL, prompt_version=version, temperature=TEMPERATURE,
+                row = dict(sample_hash=h, judge_model=MODEL, prompt_version=version, temperature=TEMPERATURE, thinking=THINKING,
                            label=res["label"], reason=res["reason"], raw=res["raw"])
                 cache[h] = row
                 cf.write(json.dumps(row, ensure_ascii=False) + "\n")
@@ -192,7 +199,8 @@ def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, pric
     for r in samples:
         c = cache[sample_hash(r["prefill"], r["continuation"], version)]
         rows.append({**r["carry"], "sample_hash": c["sample_hash"], "label": c["label"], "reason": c["reason"],
-                     "judge_model": c["judge_model"], "prompt_version": c["prompt_version"], "temperature": c["temperature"]})
+                     "judge_model": c["judge_model"], "prompt_version": c["prompt_version"], "temperature": c["temperature"],
+                     "thinking": c.get("thinking")})
     if out:
         os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
         with open(out, "w", encoding="utf-8") as f:
