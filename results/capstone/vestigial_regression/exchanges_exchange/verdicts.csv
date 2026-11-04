@@ -1,0 +1,6 @@
+family,stage,verdict,fires_oasst1,fires_ultrachat
+olmo3-7b,sft,does not fire,False,False
+olmo3-7b,dpo,does not fire; asymmetry negative in both headline corpora (opposite of regression),False,False
+olmo3-7b,instruct,does not fire; asymmetry negative in both headline corpora (opposite of regression),False,False
+gemma4-31b,instruct,fires (both headline corpora),True,True
+qwen3-8b,instruct,does not fire,False,False

@@ -1,0 +1,211 @@
+family,stage,corpus,quantity,unit,mean,lo,hi,n
+olmo3-7b,sft,oasst1,asymmetry,nats,-0.012236,-0.042171,0.018404,300/300
+olmo3-7b,sft,oasst1,Δ FC user,nats,-0.087747,-0.116153,-0.059173,300
+olmo3-7b,sft,oasst1,Δ FC reply,nats,-0.075511,-0.086524,-0.064846,300
+olmo3-7b,sft,oasst1,Δ user tagged,nats,0.171852,0.149464,0.194790,300
+olmo3-7b,sft,oasst1,Δ user plain,nats,0.259599,0.229790,0.289098,300
+olmo3-7b,sft,oasst1,Δ reply tagged,nats,0.148476,0.135618,0.161852,300
+olmo3-7b,sft,oasst1,Δ reply plain,nats,0.223988,0.208657,0.239975,300
+olmo3-7b,sft,oasst1,asymmetry,bpb,-0.005303,-0.014928,0.004677,300/300
+olmo3-7b,sft,oasst1,Δ FC user,bpb,-0.028970,-0.038066,-0.020011,300
+olmo3-7b,sft,oasst1,Δ FC reply,bpb,-0.023667,-0.027343,-0.020009,300
+olmo3-7b,sft,oasst1,Δ user tagged,bpb,0.053907,0.046733,0.060917,300
+olmo3-7b,sft,oasst1,Δ user plain,bpb,0.082877,0.073121,0.092837,300
+olmo3-7b,sft,oasst1,Δ reply tagged,bpb,0.046302,0.041931,0.050829,300
+olmo3-7b,sft,oasst1,Δ reply plain,bpb,0.069970,0.064690,0.075415,300
+olmo3-7b,sft,ultrachat,asymmetry,nats,-0.019569,-0.041986,0.003415,300/300
+olmo3-7b,sft,ultrachat,Δ FC user,nats,-0.062663,-0.083606,-0.041585,300
+olmo3-7b,sft,ultrachat,Δ FC reply,nats,-0.043094,-0.052554,-0.033251,300
+olmo3-7b,sft,ultrachat,Δ user tagged,nats,0.199251,0.181472,0.216787,300
+olmo3-7b,sft,ultrachat,Δ user plain,nats,0.261914,0.240556,0.283406,300
+olmo3-7b,sft,ultrachat,Δ reply tagged,nats,0.154973,0.143545,0.166330,300
+olmo3-7b,sft,ultrachat,Δ reply plain,nats,0.198067,0.185544,0.210382,300
+olmo3-7b,sft,ultrachat,asymmetry,bpb,-0.004359,-0.010723,0.001991,300/300
+olmo3-7b,sft,ultrachat,Δ FC user,bpb,-0.016543,-0.022307,-0.010933,300
+olmo3-7b,sft,ultrachat,Δ FC reply,bpb,-0.012184,-0.014859,-0.009326,300
+olmo3-7b,sft,ultrachat,Δ user tagged,bpb,0.053958,0.048740,0.059089,300
+olmo3-7b,sft,ultrachat,Δ user plain,bpb,0.070501,0.064393,0.076554,300
+olmo3-7b,sft,ultrachat,Δ reply tagged,bpb,0.044230,0.040662,0.047805,300
+olmo3-7b,sft,ultrachat,Δ reply plain,bpb,0.056414,0.052633,0.060218,300
+olmo3-7b,sft,wildchat,asymmetry,nats,-0.191299,-0.238662,-0.147281,300/300
+olmo3-7b,sft,wildchat,Δ FC user,nats,-0.248518,-0.288852,-0.208034,300
+olmo3-7b,sft,wildchat,Δ FC reply,nats,-0.057219,-0.077317,-0.036918,300
+olmo3-7b,sft,wildchat,Δ user tagged,nats,-0.466736,-0.570822,-0.364546,300
+olmo3-7b,sft,wildchat,Δ user plain,nats,-0.218217,-0.311374,-0.127575,300
+olmo3-7b,sft,wildchat,Δ reply tagged,nats,0.182262,0.162207,0.203510,300
+olmo3-7b,sft,wildchat,Δ reply plain,nats,0.239481,0.218821,0.260709,300
+olmo3-7b,sft,wildchat,asymmetry,bpb,-0.063758,-0.080147,-0.048508,300/300
+olmo3-7b,sft,wildchat,Δ FC user,bpb,-0.082858,-0.097029,-0.068994,300
+olmo3-7b,sft,wildchat,Δ FC reply,bpb,-0.019099,-0.026150,-0.012191,300
+olmo3-7b,sft,wildchat,Δ user tagged,bpb,-0.149222,-0.183424,-0.115944,300
+olmo3-7b,sft,wildchat,Δ user plain,bpb,-0.066364,-0.097414,-0.036409,300
+olmo3-7b,sft,wildchat,Δ reply tagged,bpb,0.057306,0.050340,0.064372,300
+olmo3-7b,sft,wildchat,Δ reply plain,bpb,0.076405,0.069318,0.083636,300
+olmo3-7b,dpo,oasst1,asymmetry,nats,-0.632488,-0.680762,-0.584637,300/300
+olmo3-7b,dpo,oasst1,Δ FC user,nats,-0.107516,-0.138020,-0.077047,300
+olmo3-7b,dpo,oasst1,Δ FC reply,nats,0.524972,0.488598,0.563052,300
+olmo3-7b,dpo,oasst1,Δ user tagged,nats,0.277389,0.247903,0.308625,300
+olmo3-7b,dpo,oasst1,Δ user plain,nats,0.384904,0.349283,0.420128,300
+olmo3-7b,dpo,oasst1,Δ reply tagged,nats,1.063876,1.018555,1.109327,300
+olmo3-7b,dpo,oasst1,Δ reply plain,nats,0.538905,0.513748,0.565180,300
+olmo3-7b,dpo,oasst1,asymmetry,bpb,-0.199518,-0.215885,-0.183502,300/300
+olmo3-7b,dpo,oasst1,Δ FC user,bpb,-0.035194,-0.045071,-0.025479,300
+olmo3-7b,dpo,oasst1,Δ FC reply,bpb,0.164323,0.151819,0.177485,300
+olmo3-7b,dpo,oasst1,Δ user tagged,bpb,0.087562,0.078265,0.096858,300
+olmo3-7b,dpo,oasst1,Δ user plain,bpb,0.122757,0.111586,0.134031,300
+olmo3-7b,dpo,oasst1,Δ reply tagged,bpb,0.330901,0.315637,0.347051,300
+olmo3-7b,dpo,oasst1,Δ reply plain,bpb,0.166577,0.158345,0.175252,300
+olmo3-7b,dpo,ultrachat,asymmetry,nats,-0.591846,-0.630527,-0.554891,300/300
+olmo3-7b,dpo,ultrachat,Δ FC user,nats,-0.066695,-0.093161,-0.041135,300
+olmo3-7b,dpo,ultrachat,Δ FC reply,nats,0.525151,0.498398,0.552805,300
+olmo3-7b,dpo,ultrachat,Δ user tagged,nats,0.403289,0.379061,0.427744,300
+olmo3-7b,dpo,ultrachat,Δ user plain,nats,0.469984,0.444494,0.495606,300
+olmo3-7b,dpo,ultrachat,Δ reply tagged,nats,1.208772,1.168621,1.247175,300
+olmo3-7b,dpo,ultrachat,Δ reply plain,nats,0.683621,0.654697,0.712753,300
+olmo3-7b,dpo,ultrachat,asymmetry,bpb,-0.166233,-0.176716,-0.155896,300/300
+olmo3-7b,dpo,ultrachat,Δ FC user,bpb,-0.017451,-0.024434,-0.010602,300
+olmo3-7b,dpo,ultrachat,Δ FC reply,bpb,0.148782,0.141364,0.156634,300
+olmo3-7b,dpo,ultrachat,Δ user tagged,bpb,0.107457,0.100575,0.114241,300
+olmo3-7b,dpo,ultrachat,Δ user plain,bpb,0.124908,0.117767,0.131910,300
+olmo3-7b,dpo,ultrachat,Δ reply tagged,bpb,0.341908,0.331599,0.352272,300
+olmo3-7b,dpo,ultrachat,Δ reply plain,bpb,0.193127,0.184755,0.201230,300
+olmo3-7b,dpo,wildchat,asymmetry,nats,-0.538664,-0.595443,-0.482638,300/300
+olmo3-7b,dpo,wildchat,Δ FC user,nats,-0.214520,-0.258230,-0.171753,300
+olmo3-7b,dpo,wildchat,Δ FC reply,nats,0.324143,0.287220,0.360894,300
+olmo3-7b,dpo,wildchat,Δ user tagged,nats,-0.322879,-0.434137,-0.210805,300
+olmo3-7b,dpo,wildchat,Δ user plain,nats,-0.108359,-0.208920,-0.012775,300
+olmo3-7b,dpo,wildchat,Δ reply tagged,nats,0.814954,0.770227,0.860371,300
+olmo3-7b,dpo,wildchat,Δ reply plain,nats,0.490810,0.461681,0.520313,300
+olmo3-7b,dpo,wildchat,asymmetry,bpb,-0.169722,-0.189331,-0.151019,300/300
+olmo3-7b,dpo,wildchat,Δ FC user,bpb,-0.070452,-0.085629,-0.055777,300
+olmo3-7b,dpo,wildchat,Δ FC reply,bpb,0.099270,0.087480,0.111023,300
+olmo3-7b,dpo,wildchat,Δ user tagged,bpb,-0.098907,-0.136845,-0.061226,300
+olmo3-7b,dpo,wildchat,Δ user plain,bpb,-0.028455,-0.060757,0.004745,300
+olmo3-7b,dpo,wildchat,Δ reply tagged,bpb,0.254358,0.239996,0.268826,300
+olmo3-7b,dpo,wildchat,Δ reply plain,bpb,0.155088,0.145602,0.164553,300
+olmo3-7b,instruct,oasst1,asymmetry,nats,-0.661960,-0.713585,-0.611779,300/300
+olmo3-7b,instruct,oasst1,Δ FC user,nats,-0.136777,-0.168036,-0.104633,300
+olmo3-7b,instruct,oasst1,Δ FC reply,nats,0.525183,0.486571,0.565982,300
+olmo3-7b,instruct,oasst1,Δ user tagged,nats,0.304661,0.273465,0.337163,300
+olmo3-7b,instruct,oasst1,Δ user plain,nats,0.441438,0.403733,0.479362,300
+olmo3-7b,instruct,oasst1,Δ reply tagged,nats,1.122745,1.075591,1.171464,300
+olmo3-7b,instruct,oasst1,Δ reply plain,nats,0.597562,0.570299,0.625621,300
+olmo3-7b,instruct,oasst1,asymmetry,bpb,-0.208931,-0.226148,-0.191963,300/300
+olmo3-7b,instruct,oasst1,Δ FC user,bpb,-0.044545,-0.054863,-0.034358,300
+olmo3-7b,instruct,oasst1,Δ FC reply,bpb,0.164387,0.151086,0.178415,300
+olmo3-7b,instruct,oasst1,Δ user tagged,bpb,0.096017,0.086115,0.106031,300
+olmo3-7b,instruct,oasst1,Δ user plain,bpb,0.140562,0.128161,0.152650,300
+olmo3-7b,instruct,oasst1,Δ reply tagged,bpb,0.349063,0.332649,0.367144,300
+olmo3-7b,instruct,oasst1,Δ reply plain,bpb,0.184676,0.175878,0.193809,300
+olmo3-7b,instruct,ultrachat,asymmetry,nats,-0.596466,-0.634921,-0.558404,300/300
+olmo3-7b,instruct,ultrachat,Δ FC user,nats,-0.082587,-0.109141,-0.056771,300
+olmo3-7b,instruct,ultrachat,Δ FC reply,nats,0.513878,0.485975,0.542411,300
+olmo3-7b,instruct,ultrachat,Δ user tagged,nats,0.439080,0.413560,0.464837,300
+olmo3-7b,instruct,ultrachat,Δ user plain,nats,0.521667,0.494884,0.548400,300
+olmo3-7b,instruct,ultrachat,Δ reply tagged,nats,1.241541,1.200801,1.280609,300
+olmo3-7b,instruct,ultrachat,Δ reply plain,nats,0.727663,0.697572,0.757518,300
+olmo3-7b,instruct,ultrachat,asymmetry,bpb,-0.167031,-0.177488,-0.156713,300/300
+olmo3-7b,instruct,ultrachat,Δ FC user,bpb,-0.021669,-0.028728,-0.014584,300
+olmo3-7b,instruct,ultrachat,Δ FC reply,bpb,0.145362,0.137717,0.153102,300
+olmo3-7b,instruct,ultrachat,Δ user tagged,bpb,0.116805,0.109779,0.123854,300
+olmo3-7b,instruct,ultrachat,Δ user plain,bpb,0.138474,0.131086,0.145618,300
+olmo3-7b,instruct,ultrachat,Δ reply tagged,bpb,0.351067,0.340403,0.361855,300
+olmo3-7b,instruct,ultrachat,Δ reply plain,bpb,0.205705,0.197272,0.213877,300
+olmo3-7b,instruct,wildchat,asymmetry,nats,-0.542191,-0.599973,-0.484534,300/300
+olmo3-7b,instruct,wildchat,Δ FC user,nats,-0.239587,-0.282358,-0.197294,300
+olmo3-7b,instruct,wildchat,Δ FC reply,nats,0.302603,0.263975,0.341778,300
+olmo3-7b,instruct,wildchat,Δ user tagged,nats,-0.292407,-0.402299,-0.179403,300
+olmo3-7b,instruct,wildchat,Δ user plain,nats,-0.052820,-0.151994,0.045105,300
+olmo3-7b,instruct,wildchat,Δ reply tagged,nats,0.845525,0.798567,0.892696,300
+olmo3-7b,instruct,wildchat,Δ reply plain,nats,0.542921,0.510891,0.575339,300
+olmo3-7b,instruct,wildchat,asymmetry,bpb,-0.171817,-0.191629,-0.152726,300/300
+olmo3-7b,instruct,wildchat,Δ FC user,bpb,-0.079222,-0.094042,-0.064621,300
+olmo3-7b,instruct,wildchat,Δ FC reply,bpb,0.092594,0.080273,0.105063,300
+olmo3-7b,instruct,wildchat,Δ user tagged,bpb,-0.088641,-0.126608,-0.050538,300
+olmo3-7b,instruct,wildchat,Δ user plain,bpb,-0.009419,-0.042398,0.023397,300
+olmo3-7b,instruct,wildchat,Δ reply tagged,bpb,0.264196,0.249546,0.278992,300
+olmo3-7b,instruct,wildchat,Δ reply plain,bpb,0.171602,0.161293,0.182064,300
+gemma4-31b,instruct,oasst1,asymmetry,nats,5.220116,4.710864,5.739700,100/100
+gemma4-31b,instruct,oasst1,Δ FC user,nats,3.263121,2.831087,3.690375,100
+gemma4-31b,instruct,oasst1,Δ FC reply,nats,-1.956995,-2.249185,-1.673805,100
+gemma4-31b,instruct,oasst1,Δ user tagged,nats,8.475268,8.129836,8.818729,100
+gemma4-31b,instruct,oasst1,Δ user plain,nats,5.212147,4.795620,5.628812,100
+gemma4-31b,instruct,oasst1,Δ reply tagged,nats,1.150519,1.032026,1.278153,100
+gemma4-31b,instruct,oasst1,Δ reply plain,nats,3.107514,2.833399,3.397001,100
+gemma4-31b,instruct,oasst1,asymmetry,bpb,1.659436,1.498586,1.822487,100/100
+gemma4-31b,instruct,oasst1,Δ FC user,bpb,1.035954,0.903152,1.169701,100
+gemma4-31b,instruct,oasst1,Δ FC reply,bpb,-0.623482,-0.716146,-0.531852,100
+gemma4-31b,instruct,oasst1,Δ user tagged,bpb,2.735644,2.631132,2.838255,100
+gemma4-31b,instruct,oasst1,Δ user plain,bpb,1.699689,1.555256,1.847769,100
+gemma4-31b,instruct,oasst1,Δ reply tagged,bpb,0.387542,0.340934,0.440854,100
+gemma4-31b,instruct,oasst1,Δ reply plain,bpb,1.011024,0.924388,1.103327,100
+gemma4-31b,instruct,ultrachat,asymmetry,nats,5.313329,4.838863,5.775687,100/100
+gemma4-31b,instruct,ultrachat,Δ FC user,nats,3.392160,3.019595,3.760694,100
+gemma4-31b,instruct,ultrachat,Δ FC reply,nats,-1.921169,-2.203513,-1.634920,100
+gemma4-31b,instruct,ultrachat,Δ user tagged,nats,8.379257,8.077479,8.684588,100
+gemma4-31b,instruct,ultrachat,Δ user plain,nats,4.987097,4.654054,5.324138,100
+gemma4-31b,instruct,ultrachat,Δ reply tagged,nats,0.997798,0.911701,1.093639,100
+gemma4-31b,instruct,ultrachat,Δ reply plain,nats,2.918967,2.681343,3.158663,100
+gemma4-31b,instruct,ultrachat,asymmetry,bpb,1.480467,1.347696,1.620192,100/100
+gemma4-31b,instruct,ultrachat,Δ FC user,bpb,0.921603,0.813841,1.026415,100
+gemma4-31b,instruct,ultrachat,Δ FC reply,bpb,-0.558865,-0.643564,-0.472406,100
+gemma4-31b,instruct,ultrachat,Δ user tagged,bpb,2.276608,2.185239,2.369409,100
+gemma4-31b,instruct,ultrachat,Δ user plain,bpb,1.355006,1.264896,1.451339,100
+gemma4-31b,instruct,ultrachat,Δ reply tagged,bpb,0.288125,0.262880,0.315518,100
+gemma4-31b,instruct,ultrachat,Δ reply plain,bpb,0.846990,0.774170,0.918211,100
+gemma4-31b,instruct,wildchat,asymmetry,nats,4.624389,4.114985,5.149056,100/100
+gemma4-31b,instruct,wildchat,Δ FC user,nats,2.734361,2.399759,3.056934,100
+gemma4-31b,instruct,wildchat,Δ FC reply,nats,-1.890028,-2.312543,-1.497532,100
+gemma4-31b,instruct,wildchat,Δ user tagged,nats,7.939511,7.596226,8.298800,100
+gemma4-31b,instruct,wildchat,Δ user plain,nats,5.205150,4.778966,5.672648,100
+gemma4-31b,instruct,wildchat,Δ reply tagged,nats,1.460277,1.304805,1.633790,100
+gemma4-31b,instruct,wildchat,Δ reply plain,nats,3.350305,2.998947,3.730361,100
+gemma4-31b,instruct,wildchat,asymmetry,bpb,1.574213,1.386183,1.764238,100/100
+gemma4-31b,instruct,wildchat,Δ FC user,bpb,0.964053,0.834835,1.098149,100
+gemma4-31b,instruct,wildchat,Δ FC reply,bpb,-0.610161,-0.746427,-0.481533,100
+gemma4-31b,instruct,wildchat,Δ user tagged,bpb,2.711876,2.564423,2.871371,100
+gemma4-31b,instruct,wildchat,Δ user plain,bpb,1.747823,1.608257,1.899275,100
+gemma4-31b,instruct,wildchat,Δ reply tagged,bpb,0.468627,0.418959,0.523715,100
+gemma4-31b,instruct,wildchat,Δ reply plain,bpb,1.078787,0.961049,1.208633,100
+qwen3-8b,instruct,oasst1,asymmetry,nats,-0.023639,-0.082069,0.031687,300/300
+qwen3-8b,instruct,oasst1,Δ FC user,nats,0.353587,0.311333,0.396115,300
+qwen3-8b,instruct,oasst1,Δ FC reply,nats,0.377225,0.340928,0.416771,300
+qwen3-8b,instruct,oasst1,Δ user tagged,nats,0.326016,0.298142,0.353117,300
+qwen3-8b,instruct,oasst1,Δ user plain,nats,-0.027570,-0.067799,0.013927,300
+qwen3-8b,instruct,oasst1,Δ reply tagged,nats,0.514871,0.481976,0.550091,300
+qwen3-8b,instruct,oasst1,Δ reply plain,nats,0.137646,0.121926,0.153655,300
+qwen3-8b,instruct,oasst1,asymmetry,bpb,-0.009589,-0.031330,0.010943,300/300
+qwen3-8b,instruct,oasst1,Δ FC user,bpb,0.114504,0.100866,0.128320,300
+qwen3-8b,instruct,oasst1,Δ FC reply,bpb,0.124093,0.109183,0.140859,300
+qwen3-8b,instruct,oasst1,Δ user tagged,bpb,0.105570,0.095965,0.114883,300
+qwen3-8b,instruct,oasst1,Δ user plain,bpb,-0.008934,-0.021771,0.004516,300
+qwen3-8b,instruct,oasst1,Δ reply tagged,bpb,0.166479,0.153172,0.181828,300
+qwen3-8b,instruct,oasst1,Δ reply plain,bpb,0.042386,0.037167,0.047545,300
+qwen3-8b,instruct,ultrachat,asymmetry,nats,-0.037190,-0.089380,0.013223,300/300
+qwen3-8b,instruct,ultrachat,Δ FC user,nats,0.364280,0.323823,0.403760,300
+qwen3-8b,instruct,ultrachat,Δ FC reply,nats,0.401469,0.370534,0.433780,300
+qwen3-8b,instruct,ultrachat,Δ user tagged,nats,0.390374,0.362707,0.417668,300
+qwen3-8b,instruct,ultrachat,Δ user plain,nats,0.026094,-0.013617,0.066933,300
+qwen3-8b,instruct,ultrachat,Δ reply tagged,nats,0.548781,0.517332,0.581523,300
+qwen3-8b,instruct,ultrachat,Δ reply plain,nats,0.147312,0.133793,0.161385,300
+qwen3-8b,instruct,ultrachat,asymmetry,bpb,-0.018634,-0.033716,-0.004367,300/300
+qwen3-8b,instruct,ultrachat,Δ FC user,bpb,0.098166,0.087098,0.109006,300
+qwen3-8b,instruct,ultrachat,Δ FC reply,bpb,0.116799,0.107645,0.126592,300
+qwen3-8b,instruct,ultrachat,Δ user tagged,bpb,0.106467,0.097963,0.115258,300
+qwen3-8b,instruct,ultrachat,Δ user plain,bpb,0.008302,-0.002432,0.019189,300
+qwen3-8b,instruct,ultrachat,Δ reply tagged,bpb,0.158953,0.149683,0.168906,300
+qwen3-8b,instruct,ultrachat,Δ reply plain,bpb,0.042153,0.038031,0.046220,300
+qwen3-8b,instruct,wildchat,asymmetry,nats,-0.038324,-0.108056,0.030127,300/300
+qwen3-8b,instruct,wildchat,Δ FC user,nats,0.436222,0.388472,0.484176,300
+qwen3-8b,instruct,wildchat,Δ FC reply,nats,0.474546,0.426807,0.524521,300
+qwen3-8b,instruct,wildchat,Δ user tagged,nats,0.567996,0.528126,0.607954,300
+qwen3-8b,instruct,wildchat,Δ user plain,nats,0.131774,0.094116,0.169185,300
+qwen3-8b,instruct,wildchat,Δ reply tagged,nats,0.676615,0.628697,0.726939,300
+qwen3-8b,instruct,wildchat,Δ reply plain,nats,0.202069,0.175795,0.230243,300
+qwen3-8b,instruct,wildchat,asymmetry,bpb,-0.004739,-0.029007,0.019065,300/300
+qwen3-8b,instruct,wildchat,Δ FC user,bpb,0.148013,0.131085,0.165187,300
+qwen3-8b,instruct,wildchat,Δ FC reply,bpb,0.152751,0.136090,0.169751,300
+qwen3-8b,instruct,wildchat,Δ user tagged,bpb,0.193551,0.179988,0.207842,300
+qwen3-8b,instruct,wildchat,Δ user plain,bpb,0.045538,0.031409,0.060314,300
+qwen3-8b,instruct,wildchat,Δ reply tagged,bpb,0.214987,0.199653,0.231637,300
+qwen3-8b,instruct,wildchat,Δ reply plain,bpb,0.062236,0.053429,0.071591,300
