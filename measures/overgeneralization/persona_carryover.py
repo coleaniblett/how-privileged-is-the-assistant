@@ -368,7 +368,11 @@ def analyze(args):
     fmt = lambda r: f"{r['mean']:+.3f} [{r['lo']:+.3f}, {r['hi']:+.3f}]"
     get = lambda s, sc, q: summary[(summary.stage == s) & (summary.scope == sc) & (summary.quantity == q)].iloc[0]
     n_items = len({r["item"] for r in rows})
-    md = ["# Persona carryover (overgeneralization)", "",
+    fam = config.family_settings()
+    note = [] if fam["contamination_check"] else [
+        f"**Family {config.FAMILY}: contamination could not be checked** (its post-training data is not public); breadth arm (README criterion 7). "
+        f"Assistant-slot empty think block: {'ON (the pre-declared primary rendering, docs/decisions.md 2026-11-02)' if config.ASSISTANT_THINK_BLOCK else 'OFF'}.", ""]
+    md = ["# Persona carryover (overgeneralization)", "", *note,
           "The pilot item set is exploratory; the verdict comes from the confirmatory set (README). Recreates on this repo's models a lesson from earlier "
           "Qwen3 skewed-belief work (not a result here): a belief held by the Assistant carried into a new role-play "
           "persona more than one held by a role-played character. Design and readout: module docstring.", "",
@@ -423,6 +427,7 @@ def analyze(args):
 
 
 def main():
+    config.family_from_argv()  # --family NAME (default olmo3-7b, unchanged): switches stages, template and think-block setting
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("build")
@@ -430,6 +435,7 @@ def main():
     p.add_argument("--n-items", type=int, default=12, help="items per domain")
     p.add_argument("--out", default=None, help="default: the item set's path under data/")
     p = sub.add_parser("score")
+    p.add_argument("--family", default=None, help="read before parsing by config.family_from_argv")
     p.add_argument("--model", required=True)
     p.add_argument("--stage")
     p.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
@@ -439,6 +445,7 @@ def main():
     p.add_argument("--batch-size", type=int, default=None)
     p.add_argument("--out", default=os.path.join(OUT_DIR, "persona_carryover"))
     p = sub.add_parser("analyze")
+    p.add_argument("--family", default=None, help="read before parsing by config.family_from_argv")
     p.add_argument("--scores", default=os.path.join(OUT_DIR, "persona_carryover"))
     p.add_argument("--dataset", default=DATA_PATH)
     p.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
