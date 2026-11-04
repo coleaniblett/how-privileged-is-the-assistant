@@ -1117,3 +1117,30 @@ OLMo and Qwen checkpoints stay at batch 24 (the frozen `seeding` text). Gemma 4 
 ## 2026-11-04: spec G Gemma rendering confirmed before any Gemma generation; cap note in the report
 
 Checked on CPU with the real `render_request` path for every context (printed): the Gemma chat contexts (assistant, light system/user, strong with/without instruction, narration) all end `<turn|>\n<|turn>model\n<|channel>thought\n<channel|>`, identical to `core.render.assistant_opening_extra(tok)` = `<|channel>thought\n<channel|>`. They match the 2026-11-02 decision because the atlas builds each prompt with `apply_chat_template(..., add_generation_prompt=True)` and Gemma's own generation prompt already contains the empty thought channel (`assistant_opening_extra` is defined as exactly that generation-prompt suffix); adding it again would duplicate it, so `TEMPLATE_KW["gemma4-31b"] = {}` is correct and nothing changes. The first carryover run missed it only because that code renders stored turns (`render_conversation`), which omit it. The user-turn context ends with the user-turn opener after a stored one-line assistant reply (no channel by design) and plain text has no template. Qwen uses `enable_thinking=False` (empty think block, verified) and OLMo needs none, so nothing already generated is affected. Report change (analysis text only): any checkpoint where at least 20% of Assistant replies hit the 256-token cap gets a note under its table that `length` and `closing_offer` must be read as capped (OLMo instruct: 58%).
+
+## 2026-11-04: logit distortion: direction of the gap contrast; exploratory two-sided reading added beside criterion 1 (Grace; after the results, not pre-registered)
+
+**Why.** Criterion 1 (2026-11-01/02) counts logit distortion only if D = (gap_reply − gap_user)_post − (gap_reply − gap_user)_base is
+at least +0.05 nats with the CI excluding zero in both authorship columns. Tracing it: the 2026-11-01 design entry defines privilege as
+the assistant gap growing more than the user gap; the documented reasoning concerns what is measured (the assistant persona's own
+distribution, hence no swapped slots), and no entry argues why the opposite sign is uninformative. The 0.05 nats is the project-wide
+floor (2026-11-01: pilot negligibility margin, bf16 batch noise), an operational detectability floor. So criterion 1 is a directional
+hypothesis, and presenting "not met" as a general verdict risked reading large negative D (Gemma IT −7.7 / −7.3) as evidence against
+privilege, although it is a large role-dependent change driven by the user turn's NLL.
+
+**Changed (presentation and an added exploratory rule; no estimate changed).**
+- Criterion 1's text, threshold and results are unchanged. In tables and the report it is labelled the *original positive-direction gap
+  criterion* (met / not met), not a general privilege verdict.
+- Added, exploratory: *positive shift* (D ≥ +0.05, CI above zero, both oasst1 and UltraChat), *negative shift* (D ≤ −0.05, CI below
+  zero, both), otherwise *no two-corpus directional consistency*. Applied to unrounded estimates. ±0.05 is the original floor applied
+  symmetrically, not a newly validated threshold. Either shift is a role-dependent gap change under this design, not by itself
+  assistant privilege. Also applied to the labelled sensitivities (`verdict_sensitivity.csv`).
+- D is reported with its parts, D_NLL and −D_entropy (`decomposition.csv`), because a sign has several routes.
+- Report wording corrected: differences already present at base were not originated by post-training, but their cause is not
+  identified (previously attributed to the texts); "the model expects its own kind of reply" is now labelled an untested hypothesis.
+
+**Result as computed** (`results/capstone/logit_distortion/exchanges_exchange/`): original criterion met for OLMo DPO and Instruct
+only (unchanged). Two-sided: positive shift OLMo DPO, Instruct (via reply NLL); negative shift OLMo SFT and Qwen IT (via the user
+turn's larger entropy fall; Qwen's NLL part is positive) and Gemma IT (via user-turn NLL, +8.4 vs reply +1.0 to +1.2). Qwen IT's
+UltraChat cell is at the floor (−0.051066 [−0.096649, −0.006227]; on the common 100 exchanges its CI includes zero). Regenerated
+`summary.csv`, `positions.csv`, `samples.csv`, `checks.json` and `verdict.csv`'s estimates are byte-identical to the first run.

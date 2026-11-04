@@ -97,7 +97,7 @@ def test_paired_contrast_and_verdict(tmp_path):
     ch = s[(s.quantity == "change_from_base") & (s.metric == "gap") & (s.framing == "tagged") & (s.positions == "from1") & (s.subset == "all")]
     assert np.allclose(ch[ch.role == "user"]["mean"], 0, atol=1e-4) and np.allclose(ch[ch.role == "reply"]["mean"], 0.3, atol=1e-4)
     v = pd.read_csv(os.path.join(out, "verdict.csv")).iloc[0]
-    assert v.verdict == "criterion 1 met (logit distortion present)"
+    assert v.original_positive_criterion == "met" and v.exploratory_two_sided == "positive shift"
     sub = s[(s.subset == "untruncated") & (s.quantity == "level") & (s.stage == "base") & (s.role == "user") & (s.metric == "gap")
             & (s.framing == "tagged") & (s.positions == "from1")]
     assert (sub.n == 9).all()  # 3 of 12 replies truncated per corpus in the fixture; truncated replies are kept in "all"
@@ -109,7 +109,8 @@ def test_below_floor_not_met(tmp_path):
     write_stage(tmp_path, "instruct", constant_fn(effect=0.03))
     out = run(tmp_path, tmp_path)
     v = pd.read_csv(os.path.join(out, "verdict.csv")).iloc[0]
-    assert v.verdict == "criterion 1 not met" and not v.oasst1_meets
+    assert v.original_positive_criterion == "not met" and v.oasst1_direction == "neither"
+    assert v.exploratory_two_sided == "no two-corpus directional consistency"
 
 
 def test_joint_bootstrap_pairs_exchanges():
@@ -227,3 +228,91 @@ def test_figures_written(tmp_path):
     figs = sorted(os.listdir(os.path.join(out, "figures")))
     assert "contrast_change.png" in figs and "positions_oasst1.png" in figs and "levels_ultrachat.png" in figs
     assert os.path.exists(os.path.join(out, "results.md")) and os.path.exists(os.path.join(out, "provenance.json"))
+
+
+# --- original positive-direction criterion vs exploratory two-sided classification ------------------------------------------
+
+def effect_fn(effect_by_corpus, via="nll"):
+    """Like constant_fn, but the reply's instruct gap changes by effect_by_corpus(corpus, i), through NLL (nll rises) or
+    through entropy (entropy falls by the same amount, NLL unchanged)."""
+    def fn(stage, c, i, role, fr):
+        n = 6 + i % 3
+        e = effect_by_corpus(c, i) if (stage == "instruct" and role == "reply") else 0.0
+        ent = [5.0] + [2.0 - (e if via == "entropy" else 0.0)] * (n - 1)
+        nll = [9.0] + [2.2 + (e if via == "nll" else 0.0)] * (n - 1)
+        return nll, ent
+    return fn
+
+
+def verdict_for(tmp_path, effect_by_corpus, via="nll"):
+    write_stage(tmp_path, "base", constant_fn())
+    write_stage(tmp_path, "instruct", effect_fn(effect_by_corpus, via))
+    out = run(tmp_path, tmp_path)
+    return pd.read_csv(os.path.join(out, "verdict.csv")).iloc[0], out
+
+
+@pytest.mark.parametrize("mean,lo,hi,expected", [
+    (0.30, 0.20, 0.40, "positive"),
+    (-0.30, -0.40, -0.20, "negative"),
+    (0.30, -0.01, 0.60, "neither"),          # CI crosses zero
+    (-0.30, -0.60, 0.01, "neither"),         # CI crosses zero, negative side
+    (0.03, 0.01, 0.05, "neither"),           # CI excludes zero but below the floor
+    (0.05, 0.01, 0.09, "positive"),          # exactly at the floor counts
+    (-0.05, -0.09, -0.01, "negative"),
+    (0.0499999, 0.01, 0.09, "neither"),      # just under the floor: unrounded, not rounded to 0.050
+    (-0.0499999, -0.09, -0.01, "neither"),
+    (-0.051066, -0.096649, -0.006227, "negative"),  # Qwen3-8B IT UltraChat as saved: clears -0.05 by 0.001
+    (0.30, np.nan, np.nan, "neither"),       # no CI
+])
+def test_cell_direction(mean, lo, hi, expected):
+    assert A.cell_direction(mean, lo, hi) == expected
+
+
+def test_classify_combinations():
+    assert A.classify(["positive", "positive"]) == (True, "positive")
+    assert A.classify(["negative", "negative"]) == (False, "negative")
+    assert A.classify(["positive", "negative"]) == (False, "neither")  # inconsistent across corpora
+    assert A.classify(["negative", "neither"]) == (False, "neither")
+    assert A.classify(["neither", "neither"]) == (False, "neither")
+    assert A.classify(["positive"]) == (None, None)  # a headline corpus missing
+
+
+def test_negative_shift_end_to_end(tmp_path):
+    v, out = verdict_for(tmp_path, lambda c, i: -0.3)
+    assert v.original_positive_criterion == "not met" and v.exploratory_two_sided == "negative shift"
+    assert v.oasst1_mean == pytest.approx(-0.3, abs=1e-4) and v.oasst1_direction == "negative"
+    md = open(os.path.join(out, "results.md")).read()
+    assert "original positive-direction criterion" in md and "negative shift" in md and "not pre-registered" in md
+
+
+def test_inconsistent_across_corpora(tmp_path):
+    v, _ = verdict_for(tmp_path, lambda c, i: 0.3 if c == "oasst1" else -0.3)
+    assert (v.oasst1_direction, v.ultrachat_direction) == ("positive", "negative")
+    assert v.original_positive_criterion == "not met" and v.exploratory_two_sided == "no two-corpus directional consistency"
+
+
+def test_ci_crossing_zero(tmp_path):
+    # mean +0.2 per corpus, but exchanges alternate +2.0 / -1.6, so the CI spans zero
+    v, _ = verdict_for(tmp_path, lambda c, i: 2.0 if i % 2 == 0 else -1.6)
+    assert v.oasst1_mean == pytest.approx(0.2, abs=1e-3) and v.oasst1_lo < 0 < v.oasst1_hi
+    assert v.original_positive_criterion == "not met" and v.exploratory_two_sided == "no two-corpus directional consistency"
+
+
+def test_decomposition_identifies_the_part(tmp_path):
+    """The same positive D arises through NLL or through entropy; the decomposition, not the sign of D, tells them apart."""
+    v_nll, out_nll = verdict_for(tmp_path / "n", lambda c, i: 0.3, via="nll")
+    v_ent, out_ent = verdict_for(tmp_path / "e", lambda c, i: 0.3, via="entropy")
+    assert v_nll.exploratory_two_sided == v_ent.exploratory_two_sided == "positive shift"
+    dn = pd.read_csv(os.path.join(out_nll, "decomposition.csv"))
+    de = pd.read_csv(os.path.join(out_ent, "decomposition.csv"))
+    assert np.allclose(dn.d_nll, 0.3, atol=1e-4) and np.allclose(dn.minus_d_entropy, 0, atol=1e-4)
+    assert np.allclose(de.d_nll, 0, atol=1e-4) and np.allclose(de.minus_d_entropy, 0.3, atol=1e-4)
+    for d in (dn, de):
+        assert np.allclose(d.d_gap, d.d_nll + d.minus_d_entropy, atol=1e-6)
+
+
+def test_sensitivity_verdicts_written(tmp_path):
+    _, out = verdict_for(tmp_path, lambda c, i: -0.3)
+    s = pd.read_csv(os.path.join(out, "verdict_sensitivity.csv"))
+    assert set(zip(s.subset, s.positions)) == set(A.SENSITIVITIES)
+    assert (s.exploratory_two_sided == "negative shift").all()

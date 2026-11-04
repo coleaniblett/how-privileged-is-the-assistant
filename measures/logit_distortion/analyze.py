@@ -15,11 +15,18 @@ drives every stage, role, framing and metric, so user/reply pairs, framings and 
     level                    mean per stage, role (user | reply), framing (tagged | plain)
     change_from_base         stage - base, paired per exchange
     asst_minus_user          reply - user, paired per exchange
-    asst_minus_user_change   (reply - user)stage - (reply - user)base: criterion 1's quantity for the gap (tagged, positions 1+)
+    asst_minus_user_change   (reply - user)stage - (reply - user)base; for the tagged gap at positions 1+ this is D (criterion 1's quantity)
     tagged_minus_plain       framing difference per role (and for reply - user), and its change from base: context only
 Subsets: all exchanges (within-family results); untruncated replies only (sensitivity); common IDs across families (cross-family,
-also in bits per byte; nats per token are not comparable across tokenizers). Criterion 1 (README) is applied per post-trained
-checkpoint: the tagged gap's asst_minus_user_change >= 0.05 nats with the CI excluding zero in both oasst1 and UltraChat.
+also in bits per byte; nats per token are not comparable across tokenizers).
+
+Two classifications of D per post-trained checkpoint, on unrounded estimates (verdict.csv; sensitivities in verdict_sensitivity.csv):
+    original_positive_criterion  README criterion 1 (fixed 2026-11-02), a directional hypothesis: D >= +0.05 nats with the CI above
+                                 zero in both oasst1 and UltraChat. "not met" is not evidence against privilege in general.
+    exploratory_two_sided        added 2026-11-04 after the results (not pre-registered): positive shift as above; negative shift if
+                                 D <= -0.05 with the CI below zero in both corpora; otherwise no two-corpus directional consistency.
+                                 The 0.05 floor is applied symmetrically; it is not a newly validated threshold. Either shift is a
+                                 role-dependent gap change under this design, not by itself assistant privilege.
 """
 
 import argparse
@@ -344,29 +351,75 @@ def position_profiles(data, n_boot, seed):
     return pd.DataFrame(rows)
 
 
-def verdicts(summary):
-    """Criterion 1 per post-trained checkpoint: tagged gap asst_minus_user_change >= floor, CI excluding zero, oasst1 and UltraChat."""
-    floor = config.MIN_EFFECT_NATS
+ORIGINAL = {True: "met", False: "not met", None: "incomplete (a headline corpus is missing)"}
+TWO_SIDED = {"positive": "positive shift", "negative": "negative shift", "neither": "no two-corpus directional consistency",
+             None: "incomplete (a headline corpus is missing)"}
+SENSITIVITIES = (("all", "from0"), ("untruncated", "from1"), ("untruncated", "from0"))
+NEAR_FLOOR = 0.01  # results.md lists unrounded any D within this distance of +-floor
+
+
+def cell_direction(mean, lo, hi, floor=None):
+    """One corpus cell of D, on unrounded values: 'positive' if mean >= +floor and the CI lies above zero, 'negative' if
+    mean <= -floor and the CI lies below zero, else 'neither' (also when the CI is missing). floor: config.MIN_EFFECT_NATS."""
+    floor = config.MIN_EFFECT_NATS if floor is None else floor
+    if not (np.isfinite(mean) and np.isfinite(lo) and np.isfinite(hi)):
+        return "neither"
+    if mean >= floor and lo > 0:
+        return "positive"
+    if mean <= -floor and hi < 0:
+        return "negative"
+    return "neither"
+
+
+def classify(directions):
+    """(original positive-direction criterion met?, exploratory two-sided class) from the headline corpora's cell directions.
+    Original (README criterion 1, fixed 2026-11-02): positive in every headline corpus. Exploratory (added 2026-11-04 after the
+    results, not pre-registered): the same floor applied symmetrically, one direction required in every headline corpus."""
+    if len(directions) < len(HEADLINE):
+        return None, None
+    d = set(directions)
+    return d == {"positive"}, (next(iter(d)) if len(d) == 1 else "neither")
+
+
+def verdicts(summary, subset="all", positions="from1"):
+    """Per post-trained checkpoint, D = the tagged gap's asst_minus_user_change in oasst1 and UltraChat (nats/token): the original
+    positive-direction gap criterion (criterion 1) and the exploratory two-sided directional-consistency classification."""
     s = summary[(summary.quantity == "asst_minus_user_change") & (summary.framing == "tagged") & (summary.metric == "gap")
-                & (summary.positions == "from1") & (summary.unit == "nats") & (summary.subset == "all")]
+                & (summary.positions == positions) & (summary.unit == "nats") & (summary.subset == subset)]
     out = []
     for (family, stage), g in s.groupby(["family", "stage"], sort=False):
         cells = {c: g[g.corpus == c].iloc[0] for c in HEADLINE if (g.corpus == c).any()}
         row = dict(family=family, stage=stage)
         for c, r in cells.items():
             row[f"{c}_mean"], row[f"{c}_lo"], row[f"{c}_hi"] = r["mean"], r.lo, r.hi
-            row[f"{c}_meets"] = bool(r["mean"] >= floor and r.lo > 0)
-            row[f"{c}_opposite"] = bool(r["mean"] <= -floor and r.hi < 0)
-        if len(cells) < len(HEADLINE):
-            row["verdict"] = "incomplete (a headline corpus is missing)"
-        elif all(row[f"{c}_meets"] for c in HEADLINE):
-            row["verdict"] = "criterion 1 met (logit distortion present)"
-        elif all(row[f"{c}_opposite"] for c in HEADLINE):
-            row["verdict"] = "criterion 1 not met; opposite direction in both columns"
-        else:
-            row["verdict"] = "criterion 1 not met"
+            row[f"{c}_direction"] = cell_direction(r["mean"], r.lo, r.hi)
+        met, two = classify([row[f"{c}_direction"] for c in cells])
+        row["original_positive_criterion"] = ORIGINAL[met]
+        row["exploratory_two_sided"] = TWO_SIDED[two]
         out.append(row)
     return pd.DataFrame(out)
+
+
+def sensitivity_verdicts(summary):
+    """verdicts() on the labelled sensitivity analyses (positions 0+, untruncated-reply exchanges), stacked."""
+    frames = [verdicts(summary, sub, pos).assign(subset=sub, positions=pos) for sub, pos in SENSITIVITIES]
+    frames = [f for f in frames if len(f)]
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+def decomposition(summary):
+    """D_gap = D_nll - D_entropy per checkpoint x headline corpus (tagged, positions 1+); each part with its own CI (descriptive)."""
+    s = summary[(summary.quantity == "asst_minus_user_change") & (summary.framing == "tagged") & (summary.positions == "from1")
+                & (summary.unit == "nats") & (summary.subset == "all") & summary.corpus.isin(HEADLINE)]
+    rows = []
+    for (f, st, c), g in s.groupby(["family", "stage", "corpus"], sort=False):
+        g = g.set_index("metric")
+        rows.append(dict(family=f, stage=st, corpus=c,
+                         d_nll=g.loc["nll", "mean"], d_nll_lo=g.loc["nll", "lo"], d_nll_hi=g.loc["nll", "hi"],
+                         minus_d_entropy=-g.loc["entropy", "mean"], minus_d_entropy_lo=-g.loc["entropy", "hi"],
+                         minus_d_entropy_hi=-g.loc["entropy", "lo"],
+                         d_gap=g.loc["gap", "mean"], d_gap_lo=g.loc["gap", "lo"], d_gap_hi=g.loc["gap", "hi"]))
+    return pd.DataFrame(rows)
 
 
 def sample_table(data):
@@ -417,18 +470,52 @@ def provenance(args, data, checks):
                 inputs_fingerprints={f: c["inputs_fingerprint"] for f, c in checks.items()})
 
 
-def markdown(summary, verd, samples, checks, prov, common_n):
+def markdown(summary, verd, samples, checks, prov, common_n, sens=None, decomp=None):
+    floor = config.MIN_EFFECT_NATS
+    sens = pd.DataFrame() if sens is None else sens
+    decomp = decomposition(summary) if decomp is None else decomp
     L = ["# Logit distortion: exchange design (tables)", "",
          f"Generated by `{prov['command']}` at `{prov['git_revision']}`. Spec: `measures/logit_distortion/README.md`, "
          "\"Exchange-design analysis (2026-11-04)\" (decided after the data existed: **not blind**). Findings and interpretation: `report.md`.", "",
          f"Means over content positions 1+ in nats per token unless stated; 95% bootstrap CIs ({prov['settings']['n_boot']} replicates, seed "
          f"{prov['settings']['seed']}), exchange IDs resampled jointly. reply = the assistant persona (scored after its question); user = the "
          "opening user turn. Contamination could be checked for OLMo only: **Qwen3 and Gemma 4 results cannot exclude training-data overlap.**", "",
-         "## Criterion 1 (tagged gap, (reply − user) change from base, ≥ 0.05 nats with the CI excluding zero in oasst1 and UltraChat)", "",
-         "| checkpoint | oasst1 (human column) | UltraChat (model column) | verdict |", "|---|---|---|---|"]
+         "## Gap contrast D: original positive-direction criterion and exploratory two-sided classification", "",
+         "D = (gap_reply − gap_user)_post − (gap_reply − gap_user)_base, tagged, positions 1+, nats/token, paired per exchange; "
+         "gap = mean NLL − mean entropy.", "",
+         f"- **Original positive-direction gap criterion** (README criterion 1, fixed 2026-11-02): D ≥ +{floor} with the 95% CI above zero, "
+         "in both oasst1 and UltraChat. It tests one directional hypothesis (the assistant gap grows more than the user gap); "
+         "\"not met\" is not evidence against assistant privilege in general.",
+         f"- **Exploratory two-sided classification** (added 2026-11-04 after these results; not pre-registered): positive shift as above; "
+         f"negative shift if D ≤ −{floor} with the CI below zero in both corpora; otherwise no two-corpus directional consistency. "
+         f"±{floor} applies the original floor symmetrically; it is not a newly validated threshold. Either shift is a role-dependent "
+         "gap change under this design, not by itself assistant privilege or its absence. Thresholds are applied to unrounded estimates.", "",
+         "| checkpoint | oasst1 (human column) | UltraChat (model column) | original positive-direction criterion | exploratory two-sided |",
+         "|---|---|---|---|---|"]
     for _, v in verd.iterrows():
         L.append(f"| {label(v.family, v.stage)} | {fmt(v.oasst1_mean, v.oasst1_lo, v.oasst1_hi)} | "
-                 f"{fmt(v.ultrachat_mean, v.ultrachat_lo, v.ultrachat_hi)} | {v.verdict} |")
+                 f"{fmt(v.ultrachat_mean, v.ultrachat_lo, v.ultrachat_hi)} | {v.original_positive_criterion} | {v.exploratory_two_sided} |")
+    near = [(label(v.family, v.stage), c, v[f"{c}_mean"], v[f"{c}_lo"], v[f"{c}_hi"]) for _, v in verd.iterrows() for c in HEADLINE
+            if f"{c}_mean" in v and abs(abs(v[f"{c}_mean"]) - floor) < NEAR_FLOOR]
+    if near:
+        L += ["", f"Within {NEAR_FLOOR} nats of ±{floor} (unrounded; the classification is fragile to small changes): "
+              + "; ".join(f"{k} {c} D = {m:+.6f} [{lo:+.6f}, {hi:+.6f}]" for k, c, m, lo, hi in near) + "."]
+    if len(sens):
+        L += ["", "Classification under the labelled sensitivity analyses (same rules):", "",
+              "| checkpoint | analysis | oasst1 | UltraChat | original positive-direction criterion | exploratory two-sided |",
+              "|---|---|---|---|---|---|"]
+        name = {("all", "from0"): "positions 0+", ("untruncated", "from1"): "untruncated replies", ("untruncated", "from0"): "untruncated, 0+"}
+        for _, v in sens.iterrows():
+            L.append(f"| {label(v.family, v.stage)} | {name[(v.subset, v.positions)]} | {fmt(v.oasst1_mean, v.oasst1_lo, v.oasst1_hi)} | "
+                     f"{fmt(v.ultrachat_mean, v.ultrachat_lo, v.ultrachat_hi)} | {v.original_positive_criterion} | {v.exploratory_two_sided} |")
+    L += ["", "### Components of D (tagged, positions 1+): D_gap = D_NLL − D_entropy", "",
+          "D_NLL > 0: the reply's NLL rose more (or fell less) than the user turn's. −D_entropy > 0: the reply's entropy fell more (or rose "
+          "less) than the user turn's. Either part can produce a positive or a negative D; the sign of D alone does not identify which. "
+          "Each part has its own CI (descriptive).", "",
+          "| checkpoint | corpus | D_NLL | −D_entropy | D_gap |", "|---|---|---|---|---|"]
+    for _, r in decomp.iterrows():
+        L.append(f"| {label(r.family, r.stage)} | {r.corpus} | {fmt(r.d_nll, r.d_nll_lo, r.d_nll_hi)} | "
+                 f"{fmt(r.minus_d_entropy, r.minus_d_entropy_lo, r.minus_d_entropy_hi)} | {fmt(r.d_gap, r.d_gap_lo, r.d_gap_hi)} |")
     L += ["", "## Samples and reply truncation (replies scored over their first 300 family tokens; truncated replies kept)", "",
           "| family | corpus | exchanges | truncated replies | median user tokens | median reply tokens (scored / full) |", "|---|---|---|---|---|---|"]
     for _, r in samples.iterrows():
@@ -500,25 +587,30 @@ def main(argv=None):
               for c in CORPORA}
     summary = summarise(data, args.n_boot, args.seed, common)
     verd = verdicts(summary)
+    sens = sensitivity_verdicts(summary)
+    decomp = decomposition(summary)
     samples = sample_table(data)
     pos = position_profiles(data, args.n_boot, args.seed)
     os.makedirs(out, exist_ok=True)
     summary.to_csv(os.path.join(out, "summary.csv"), index=False, float_format="%.6f")
     verd.to_csv(os.path.join(out, "verdict.csv"), index=False, float_format="%.6f")
+    sens.to_csv(os.path.join(out, "verdict_sensitivity.csv"), index=False, float_format="%.6f")
+    decomp.to_csv(os.path.join(out, "decomposition.csv"), index=False, float_format="%.6f")
     samples.to_csv(os.path.join(out, "samples.csv"), index=False, float_format="%.6f")
     pos.to_csv(os.path.join(out, "positions.csv"), index=False, float_format="%.6f")
     prov = provenance(args, data, checks)
     json.dump(dict(checks=checks, common_ids={c: len(v) for c, v in common.items()}), open(os.path.join(out, "checks.json"), "w"), indent=1)
     json.dump(prov, open(os.path.join(out, "provenance.json"), "w"), indent=1)
     common_n = ", ".join(f"{c} {len(v)}" for c, v in common.items())
-    open(os.path.join(out, "results.md"), "w").write(markdown(summary, verd, samples, checks, prov, common_n))
+    open(os.path.join(out, "results.md"), "w").write(markdown(summary, verd, samples, checks, prov, common_n, sens, decomp))
     if not args.no_plots:
         from measures.logit_distortion import plots
         plots.all_figures(summary, pos, out)
     print(f"wrote {out}")
     for _, v in verd.iterrows():
         print(f"  {label(v.family, v.stage):14s} oasst1 {fmt(v.oasst1_mean, v.oasst1_lo, v.oasst1_hi)}  "
-              f"UltraChat {fmt(v.ultrachat_mean, v.ultrachat_lo, v.ultrachat_hi)}  {v.verdict}")
+              f"UltraChat {fmt(v.ultrachat_mean, v.ultrachat_lo, v.ultrachat_hi)}  original positive-direction criterion: "
+              f"{v.original_positive_criterion}; exploratory two-sided: {v.exploratory_two_sided}")
     return out
 
 

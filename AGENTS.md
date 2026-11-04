@@ -132,7 +132,7 @@ measure README.
 `results/capstone/logit_distortion/exchanges_exchange/`; spec applied after the data existed, not blind).
 Calibration gap (mean NLL − mean next-token entropy) of each persona in its own slot, crossing persona with
 authorship; privilege if the assistant gap grows from base more than the user gap, from content position 1 on
-and by position. Data route (Grace, 2026-11-02): original multi-exchange conversations from OASST1, WildChat and UltraChat with
+and by position (criterion 1, a directional hypothesis; an exploratory two-sided reading is reported beside it since 2026-11-04). Data route (Grace, 2026-11-02): original multi-exchange conversations from OASST1, WildChat and UltraChat with
 full preceding history (`core.build_conversations`, `docs/conversation_candidates.md`; candidate pilot
 `candidates/logit_distortion/pilot_v3/`); the isolated authorship sets stay for a separate comparison.
 Original-context scoring: `core.score_conversations` (`docs/conversation_scoring.md`), built and CPU-tested; no checkpoint scored yet.
