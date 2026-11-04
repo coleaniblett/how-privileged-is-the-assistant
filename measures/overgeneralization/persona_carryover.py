@@ -380,7 +380,7 @@ def analyze(args):
     n_items = len({r["item"] for r in rows})
     fam = config.family_settings()
     note = [] if fam["contamination_check"] else [
-        f"**Family {config.FAMILY}: contamination could not be checked** (its post-training data is not public); breadth arm (README criterion 7). "
+        f"**Family {config.FAMILY}: contamination could not be checked** (its post-training data is not public); breadth arm (README criterion 7). " +
         (f"Final assistant turn opened with the template's empty thought channel: {'YES (--assistant-opening, as planned)' if getattr(args, 'assistant_opening', False) else 'NO'}." if config.FAMILY == "gemma4-31b" else
          f"Assistant-slot empty think block: {'ON (the pre-declared primary rendering, docs/decisions.md 2026-11-02)' if config.ASSISTANT_THINK_BLOCK else 'OFF'}."), ""]
     md = ["# Persona carryover (overgeneralization)", "", *note,
