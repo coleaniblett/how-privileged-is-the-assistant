@@ -960,3 +960,36 @@ Run 12:09 to 12:57 UTC as logged above (frozen materials unchanged), `results/pe
 - **Where the move comes from** (added A2): in OLMo instruct the neutral log-odds shift (+9.9 / +8.6) is mostly character-voice openers falling (-8.9 / -8.6 nats) while Assistant-greeting and list openers barely move (+2.1 and -1.3 at most); in Qwen instruct every onset category falls, voice most (-21.6 / -19.4), so the log-odds shift there is voice falling faster than the others. Not "Assistant openers rising".
 - **Held-out personas** (n = 18): same pattern (OLMo instruct fraction 0.86 / 0.86).
 Added after seeing the OLMo results, analysis only (no new scoring, frozen materials and logged readings unchanged), on the laptop Claude's request: (A1) the logged swap validation is true by construction (a swap prompt is identical to the partner's intact prompt; max difference 0.0000 nats, confirmed), so r = +1.00 everywhere is uninformative and is flagged as such; replaced by the between-persona share of variance of intact readouts (log-odds 0.74-0.93, CIs excluding the 1/16 null) and the mean absolute swap - intact shift (1.6-6.6 nats, 88-100% of personas above 0.5), so the persona text is used. (A2) the per-category table. (A3) the combined reading under the spec's "and" wording, kept beside the logged "or" per-readout table. Scoring precision: the shared-cache scores differed from full batch-1 passes by up to 0.11 (OLMo base), 0.31 (OLMo instruct), 0.37 (Qwen base) and 0.56 (Qwen instruct) nats on 2-8-token summed log-probabilities; contrasts of 2-15 nats are not decided by this, but numbers near 0.5 nats are.
+
+## 2026-11-04: judge request settings for Claude Sonnet 5.5 (vestigial regression, judge arm)
+
+Before the first API run, `measures/vestigial_regression/judge.py` sent `temperature=0` and left thinking at its default with
+`max_tokens=200`. Claude Sonnet 5.5 rejects non-default sampling values (400), and its default adaptive thinking spends output
+tokens before the JSON label. Changed: no `temperature` is sent (the API default; recorded as `temperature: null`), and thinking is
+off (`thinking={"type": "between_tools"}`, Sonnet 5.5's thinking-off setting; recorded per row). The cache hash now includes the
+thinking setting; nothing had been cached. Prompt (v2), model, labels and `max_tokens` unchanged; no judge-arm criterion changed.
+Checked with one real request (OLMo Instruct, `incomplete-000` sample 0; request `req_011CgheHkyRmwU3iDn36qGLG`): `end_turn`, text
+only, 1,642 input and 80 output tokens, valid label (`user_voice`). Real token counts run about 30% above the dry run's 4-characters-
+per-token estimate, so the full judge run (8 checkpoints, 4,713 requests, plus the 105-request pilot check) is about $20 at $2 / $10
+per million tokens, not $15.
+
+## 2026-11-04: judge output limit 600 tokens; stop reasons recorded; invalid replies re-judged
+
+After the pilot agreement check (3 of 108 unique samples invalid), `judge.py`'s `max_tokens` went from 200 to 600: the judge often
+writes a few sentences before its JSON, and one reply was cut at 200. Every cached row now records `max_tokens` and the stop reason
+of each attempt (`stop_reasons`, with the refusal category if any), and a cached `invalid` row is not served from the cache, so the
+next run judges it again. Prompt v2 is unchanged (Cole, 2026-11-04: a stricter thought-channel rule was considered and not adopted).
+Re-judging the 3 invalid pilot samples at 600 tokens showed the cause: all three were **refusals by the API's safety classifier,
+category `reasoning_extraction`**, twice each (the samples are Gemma IT / Qwen continuations that open a thought channel or reason
+aloud). The limit was not the cause. How to handle refusals in the main run is open (STATUS).
+
+## 2026-11-04: refused judge samples are labelled by hand, not counted as an outcome (vestigial regression, judge arm)
+
+The full judge run (Sonnet 5.5, prompt v2, 8 checkpoints × 600 incomplete-turn continuations, 2026-11-04 09:43–12:28 UTC) left 73 of
+4,800 samples `invalid` because the API refused both attempts (stop reason `refusal`; categories `reasoning_extraction`, `cyber`, one `bio`):
+OLMo base 18, SFT 6, DPO 6, Instruct 4; Qwen base 5, IT 21; Gemma base 10, IT 3. The `cyber` refusals follow the prefill (e.g. "base64, decode
+and execute"), so base checkpoints are refused too. Cole: a refusal by the judge is not an outcome, and another Claude model is unlikely to
+help. Decision: these samples are labelled **by hand** on a blind sheet (`judge_validation/refusals/sheet.csv`, shuffled, no model or stage;
+key in `sheet_key.csv`; built by `python -m measures.vestigial_regression.judge refusal-sheet`, which keeps entered labels on a rebuild), with
+the validation sheet's definitions, and the hand label replaces `invalid`. A non-Anthropic or local judge for these samples was considered and
+not adopted for now (one judge plus hand labels keeps the label source simple at this count).
