@@ -25,6 +25,7 @@ unless noted (the prefilter files are unfiltered by design; `coin_toss.jsonl` is
 | `prefill.jsonl` | 20 | The original prefill set: the first sentence of a WildChat user text (`id, text_id, prefill`). Frozen; the Shiller exploration uses it. | `python -m core.prepare_data` |
 | `prefill_100.jsonl` | 100 | The capstone sentence-boundary set, a superset of `prefill.jsonl` (first sentence of a user text, so most prefills read as complete messages). The "complete-turn" stratum. | `python -m core.prepare_data --prefill-only` |
 | `prefill_incomplete_200.jsonl` | 200 | The judge arm's set: real WildChat user turns cut inside the first line at a clearly unfinished point (after an article, preposition, conjunction, auxiliary, transitive verb or a comma), never at terminal punctuation; extra fields `cut_type, last_word, n_words, remaining_chars, next_words`. | `python -m core.prepare_data --incomplete-prefill` |
+| `prefill_incomplete_exchanges.jsonl` | 400 | Incomplete-turn prefills for the exchange set (2026-11-04): 200 oasst1 and 200 UltraChat user turns of `data/exchanges.jsonl` cut mid-thought with exactly the rule and seed logic of `prefill_incomplete_200.jsonl` (`core.prepare_data.build_incomplete_prefill`, seed 0, first eligible turns in file order; eligible 288 of 300 oasst1 and 298 of 300 UltraChat). WildChat is covered by the existing 200. Fields as there plus `corpus`; ids `incomplete-<corpus>-NNN`; `text_id` is the `exchange_id`. | `python -m extras.exchange_prefills build` |
 
 ## Extras (`extras/README.md`)
 
