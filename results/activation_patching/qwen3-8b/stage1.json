@@ -1,0 +1,41 @@
+{
+ "family": "qwen3-8b",
+ "layers_screened": [
+  3,
+  6,
+  9,
+  12,
+  15,
+  18,
+  21,
+  24,
+  27,
+  30,
+  33
+ ],
+ "chosen": [
+  6,
+  27,
+  33
+ ],
+ "best": 27,
+ "screen_minutes": 12.837089391549428,
+ "pilot_gens": 8448,
+ "pilot_seconds": 721.7291612625122,
+ "stage2_gens": 8448,
+ "stage2_projected_minutes": 12.028819354375203,
+ "floors": {
+  "family": "qwen3-8b",
+  "refusal_floor_points": 12.5,
+  "voice_p95_points": 7.013633879152971,
+  "voice_floor_rule": "max(0.2 * |pair's unpatched voice gap on the main set|, voice_p95_points)",
+  "n_control_cells": 135,
+  "chosen_layers": [
+   6,
+   27,
+   33
+  ],
+  "best_layer": 27,
+  "note": "floors from same-role and random patches in the pilot; committed before Stage 2"
+ }
+}
