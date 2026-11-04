@@ -960,3 +960,23 @@ Run 12:09 to 12:57 UTC as logged above (frozen materials unchanged), `results/pe
 - **Where the move comes from** (added A2): in OLMo instruct the neutral log-odds shift (+9.9 / +8.6) is mostly character-voice openers falling (-8.9 / -8.6 nats) while Assistant-greeting and list openers barely move (+2.1 and -1.3 at most); in Qwen instruct every onset category falls, voice most (-21.6 / -19.4), so the log-odds shift there is voice falling faster than the others. Not "Assistant openers rising".
 - **Held-out personas** (n = 18): same pattern (OLMo instruct fraction 0.86 / 0.86).
 Added after seeing the OLMo results, analysis only (no new scoring, frozen materials and logged readings unchanged), on the laptop Claude's request: (A1) the logged swap validation is true by construction (a swap prompt is identical to the partner's intact prompt; max difference 0.0000 nats, confirmed), so r = +1.00 everywhere is uninformative and is flagged as such; replaced by the between-persona share of variance of intact readouts (log-odds 0.74-0.93, CIs excluding the 1/16 null) and the mean absolute swap - intact shift (1.6-6.6 nats, 88-100% of personas above 0.5), so the persona text is used. (A2) the per-category table. (A3) the combined reading under the spec's "and" wording, kept beside the logged "or" per-readout table. Scoring precision: the shared-cache scores differed from full batch-1 passes by up to 0.11 (OLMo base), 0.31 (OLMo instruct), 0.37 (Qwen base) and 0.56 (Qwen instruct) nats on 2-8-token summed log-probabilities; contrasts of 2-15 nats are not decided by this, but numbers near 0.5 nats are.
+
+## 2026-11-04: logit distortion: analysis of the main run's exchange scores (Grace; decided after the data existed, not blind)
+
+`measures/logit_distortion/analyze.py` implemented on `results/capstone/<family>/<stage>/core/exchanges_exchange/` (8 checkpoints,
+oasst1 / UltraChat / WildChat, opening user turn and the reply after its question, tagged and plain). Spec:
+`measures/logit_distortion/README.md`, "Exchange-design analysis (2026-11-04)". Written and committed before any aggregate was computed in
+this session, but after the main-run scores and vestigial-regression results existed (and after an agent session for Cole computed
+provisional, uncommitted logit-distortion numbers), so none of it is blind or pre-registered.
+
+- **Unchanged (fixed 2026-11-01/02):** gap = mean NLL − mean entropy, positions 1+, own slot; change from base; criterion 1 (assistant gap
+  change − user gap change ≥ 0.05 nats with the CI excluding zero, in both authorship columns); by-position plot descriptive; breadth-arm
+  contamination statement; no swapped slots. The README's criteria text is not edited.
+- **Decided now:** human column = oasst1, model column = UltraChat (matched authorship within corpus); WildChat separate. User persona = the
+  opening user turn tagged; assistant persona = the reply tagged after its question; plain = context. Equal weight per position within a
+  target and per target within a group; truncated replies (first 300 tokens) kept, rates reported. Contrasts paired per exchange; bootstrap
+  10,000 replicates, seed `config.SEED`, exchange IDs resampled jointly within family × corpus. Sensitivities, labelled: positions 0+,
+  untruncated-reply exchanges only. Cross-family: common IDs (first 100 per corpus) and bits per byte, descriptive. Criterion 1 is the only
+  verdict rule applied; everything else is estimates with CIs.
+- **Scope:** this dataset has only opening user turns; follow-up user turns (`pilot_v3`, original-conversation route) are not covered and
+  would need their own scoring run.
