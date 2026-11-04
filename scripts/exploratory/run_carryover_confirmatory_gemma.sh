@@ -14,6 +14,15 @@ FAM=gemma4-31b
 STAGES="${STAGES:-base instruct}"
 GPU_GIB="${GPU_GIB:-20}"
 HUB="$HOME/.cache/huggingface/hub"
+export HF_HUB_DISABLE_XET=1
+# remove a checkpoint's folder AND its blobs (rm -rf of the folder alone leaves the 60 GB of blobs behind)
+free_model() {
+  local repo="models--${1//\//--}"
+  rm -rf "${HUB:?}/${repo:?}"
+  grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
+    if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi
+  done
+}
 actual=$(sha256sum "$DATA" | cut -d' ' -f1)
 [[ "${FROZEN_SHA256:-}" == "$actual" ]] || { echo "NOT FROZEN: FROZEN_SHA256 must equal $actual"; exit 2; }
 git diff --quiet HEAD -- "$DATA" && git ls-files --error-unmatch "$DATA" >/dev/null || { echo "$DATA is not committed/unmodified"; exit 2; }
@@ -30,7 +39,7 @@ for stage in $STAGES; do
   avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 70 ] || [ "$had" = 1 ] || { echo "less than 70 GB free for the $stage download"; exit 3; }
   echo "=== $stage ($model) $(date -u +%T)"
   $PY -m measures.overgeneralization.persona_carryover score --family $FAM --model "$stage" --stage "$stage" --dataset "$DATA" --out "$OUT/persona_carryover" --gpu-gib "$GPU_GIB"
-  if [ "$stage" = base ] && [ "$had" = 0 ] && [ "${REMOVE_BASE:-1}" = 1 ]; then rm -rf "${HUB:?}/${repo:?}"; echo "removed the base checkpoint this run downloaded"; fi
+  if [ "$stage" = base ] && [ "$had" = 0 ] && [ "${REMOVE_BASE:-1}" = 1 ]; then free_model "$model"; echo "removed the base checkpoint (folder and blobs) this run downloaded"; fi
 done
 $PY -m measures.overgeneralization.persona_carryover analyze --family $FAM --verdict --dataset "$DATA" --scores "$OUT/persona_carryover" --out-dir "$OUT"
 echo "=== done $(date -u +%T)"
