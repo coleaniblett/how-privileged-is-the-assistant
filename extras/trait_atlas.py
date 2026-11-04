@@ -417,6 +417,11 @@ def judge(args):
     import torch
     from core.render import encode, load_tokenizer
     from core.score import load_model
+    hold = "/root/atlas_logs/HOLD_FOR_SPEC_I"      # spec I slot: the final judge pass waits while this file exists
+    while os.path.exists(hold):
+        print("judge held for spec I", flush=True)
+        import time
+        time.sleep(120)
     mat = load_materials()
     idx = item_index(mat)
     config.use_family("gemma4-31b")
@@ -442,9 +447,11 @@ def judge(args):
             b = order[s:s + args.batch_size]
             enc = tok([prompts[k] for k in b], return_tensors="pt", padding=True, add_special_tokens=False).to(device)
             with torch.no_grad():
-                lg = model(**enc).logits[:, -1].float()
+                lg = model(**enc, logits_to_keep=1).logits[:, -1].float()
             two = torch.stack([lg[:, yes], lg[:, no]], 1).softmax(-1)[:, 0].cpu().numpy()
             p_yes[b] = two
+            if (s // args.batch_size) % 50 == 0:
+                print(f"judge {path.split(os.sep)[-2]}/{os.path.basename(path).split('_')[0]}: {s}/{len(order)}", flush=True)
         rows = [{**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "p_yes": float(p), "value": float(p >= 0.5)} for r, p in zip(todo, p_yes)]
         pd.DataFrame(rows).to_csv(path.replace("_replies.jsonl.gz", "_judged.csv.gz"), index=False)
         print(path, len(rows), flush=True)
@@ -467,7 +474,7 @@ def judge(args):
             b = order[s_:s_ + args.batch_size]
             enc = tok([mp[k] for k in b], return_tensors="pt", padding=True, add_special_tokens=False).to(device)
             with torch.no_grad():
-                lg = model(**enc).logits[:, -1].float()
+                lg = model(**enc, logits_to_keep=1).logits[:, -1].float()
             py[b] = torch.stack([lg[:, yes], lg[:, no]], 1).softmax(-1)[:, 0].cpu().numpy()
         pd.DataFrame([{**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "p_yes": float(p), "value": float(p >= 0.5)} for r, p in zip(meta, py)]
                      ).to_csv(path.replace("_replies.jsonl.gz", "_judged_meta.csv.gz"), index=False)

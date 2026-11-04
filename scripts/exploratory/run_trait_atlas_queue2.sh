@@ -19,6 +19,8 @@ ORDER="gemma4-31b:instruct gemma4-31b:base olmo3-7b:sft olmo3-7b:dpo"
 for spec in $ORDER; do
   fam=${spec%%:*}; stage=${spec##*:}
   [[ -f "results/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && continue
+  # spec I slot: while /root/atlas_logs/HOLD_FOR_SPEC_I exists, OLMo SFT and DPO wait (the file is created only when spec I is given the GPU; Gemma is not held)
+  if [ "$fam" = olmo3-7b ]; then while [ -e /root/atlas_logs/HOLD_FOR_SPEC_I ]; do echo "[$W] held for spec I $(date -u +%T)"; sleep 120; done; fi
   mkdir "$CL/${fam}_${stage}" 2>/dev/null || continue            # claimed by another worker
   model=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
   echo "=== [$W] $fam $stage ($model) $(date -u +%T)"
