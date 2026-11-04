@@ -1,6 +1,6 @@
 # Runbook: tonight's main run (exchange design), 2026-11-03
 
-**Not launched.** Design (confirmed by Cole and Grace): the exchange context only. Per checkpoint the user turn is scored as the
+**Launched 2026-11-03 23:09:53 UTC, finished 2026-11-04 05:39 UTC, exit 0** (OLMo, then Qwen, then Gemma from `/` after freeing disk; filtered log `results/capstone/logs/main_run_exchanges_2026-11-03.log`). Design (confirmed by Cole and Grace): the exchange context only. Per checkpoint the user turn is scored as the
 conversation's opener and each reply after its own user turn, each tagged and plain, on oasst1, UltraChat and WildChat: 12
 conditions per checkpoint, 96 in all (`docs/exchanges.md`, `docs/decisions.md` 2026-11-03). In the same pass each checkpoint
 generates on the judge arm's incomplete-turn prefills, so it is downloaded once. The reply-alone context is not part of the run;
