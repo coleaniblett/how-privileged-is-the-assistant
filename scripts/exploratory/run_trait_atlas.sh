@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Spec G trait atlas (DO NOT RUN before Adeeb's go; docs/decisions.md 2026-11-04). One checkpoint at a time, generation then detectors, then the local judge
+# Spec G trait atlas (version 2 materials; go-ahead given 2026-11-04; docs/decisions.md). One checkpoint at a time, generation then detectors, then the local judge
 # (Gemma 4 31B instruct, kept on disk for it), hand-check sheet and analysis. Intended for arena9-vinyl (96 GB GPU, ~90 GB disk): all weights on the GPU.
 # Every checkpoint is freed with its blobs (free_model); google/gemma-4-31B-it is never freed here.
 set -euo pipefail
@@ -15,7 +15,8 @@ free_model() {   # folder AND blobs: rm -rf of the folder alone leaves the check
   done
 }
 KEEP="google/gemma-4-31B-it"
-while [ "$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1)" -gt 2000 ]; do echo "GPU busy, waiting"; sleep 60; done
+# also wait for the Gemma carryover run (it has idle GPU gaps between its stages while a checkpoint downloads)
+while pgrep -f "[r]un_carryover_confirmatory_gemma" >/dev/null || pgrep -f "[m]easures.overgeneralization.persona_carryover" >/dev/null || [ "$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1)" -gt 2000 ]; do echo "GPU busy, waiting"; sleep 60; done
 for spec in "olmo3-7b base" "olmo3-7b sft" "olmo3-7b dpo" "olmo3-7b instruct" "qwen3-8b base" "qwen3-8b instruct" "gemma4-31b base" "gemma4-31b instruct"; do
   set -- $spec; fam=$1; stage=$2
   [[ -f "results/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && { echo "=== $fam $stage: done, skipped"; continue; }

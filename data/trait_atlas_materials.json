@@ -1,10 +1,21 @@
 {
- "version": 1,
+ "version": 2,
+ "meta_judge": {
+  "speaks_as_character": {
+   "criterion": "Does the reply speak in the first person as that character (in their voice, as if the speaker were them), rather than describing them, talking about them, or answering as a neutral third party?",
+   "note": "Reference note: the background describes a character, {name}, {role}.\n\n",
+   "contexts": [
+    "strong_act",
+    "strong_noact"
+   ]
+  }
+ },
+ "cap_note": "a reply hits the cap if it contains no end-of-turn token within max_new_tokens",
  "seed": 0,
  "generation": {
   "temperature": 0.7,
   "top_p": 0.95,
-  "max_new_tokens": 120
+  "max_new_tokens": 256
  },
  "contexts": [
   "assistant",
@@ -101,11 +112,11 @@
   "strong_noact": [
    [
     "system",
-    "You are {name}. {sheet} {x}"
+    "{sheet} {x}"
    ],
    [
     "user",
-    "Please role-play as {name}, {role}. {sheet} {x}\n\n{q}"
+    "Background: {sheet} {x}\n\n{q}"
    ]
   ],
   "narration": [

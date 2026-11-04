@@ -52,7 +52,12 @@ def test_requests_balanced_and_deterministic():
         assert sorted(r["persona"] for r in sub) == list(range(6)) and sum(r["wording"] for r in sub) == 3
     # contexts 4 and 5 differ only in the padding sentence of the same length
     a = [r for r in reqs if r["context"] == "strong_act"][0]
-    assert MAT["frames"]["strong_act"] == MAT["frames"]["strong_noact"]
+    # version 2: the no-instruction frames carry the description only, never an instruction to adopt it
+    for slot, tmpl in MAT["frames"]["strong_noact"]:
+        assert "You are" not in tmpl and "role-play" not in tmpl and "{sheet}" in tmpl and "{x}" in tmpl
+    assert MAT["frames"]["strong_noact"][0] == ["system", "{sheet} {x}"] and MAT["frames"]["strong_noact"][1][1].startswith("Background: {sheet} {x}")
+    assert MAT["generation"]["max_new_tokens"] == 256 and MAT["version"] == 2
+    assert MAT["meta_judge"]["speaks_as_character"]["contexts"] == ["strong_act", "strong_noact"]
 
 
 @pytest.mark.parametrize("family", ["olmo3-7b", "qwen3-8b"])

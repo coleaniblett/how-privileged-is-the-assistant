@@ -26,7 +26,7 @@ from core import config
 MATERIALS = "data/trait_atlas_materials.json"
 OUT = "results/trait_atlas"
 SEED, N_BOOT = 0, 10000
-GEN = dict(temperature=0.7, top_p=0.95, max_new_tokens=120)
+GEN = dict(temperature=0.7, top_p=0.95, max_new_tokens=256)   # version 2: 120 capped length, closing offers and multi-step answers
 CONTEXTS = ["assistant", "light_system", "light_user", "strong_act", "strong_noact", "narration", "user_turn", "plain_text"]
 FAMILY_STAGES = {"olmo3-7b": ["base", "sft", "dpo", "instruct"], "qwen3-8b": ["base", "instruct"], "gemma4-31b": ["base", "instruct"]}
 GATE_PTS, GATE_LOG, SPREAD_PTS, SPREAD_LOG, RATIO = 10.0, 0.2, 5.0, 0.1, 0.25   # length: 0.2 log words gate, 0.1 for the "5 points" bar
@@ -42,6 +42,7 @@ CLUSTERS = {
     "skill": ["arithmetic", "multistep_reasoning", "factual_accuracy"],
 }
 CLUSTER_OF = {t: c for c, ts in CLUSTERS.items() for t in ts}
+CLUSTER_OF.update({t + "__alt": "skill" for t in CLUSTERS["skill"]})
 # detector: how a trait is scored. words = log words; layout = spec F regex; stock = user_traits STOCK; refusal = is_refusal; skill = tail regex; self_ai = regex; judge = local judge
 DETECTOR = {"refusal_borderline": "refusal", "markdown_lists": "layout", "length": "words", "stock_phrases": "stock", "says_ai": "self_ai",
             "arithmetic": "skill", "multistep_reasoning": "skill", "factual_accuracy": "skill"}
@@ -80,7 +81,7 @@ FRAMES = {
     "light_system": [("system", "You are {role}."), ("system", "Your role: {role}.")],
     "light_user": [("user", "You are {role}.\n\n{q}"), ("user", "Please answer as {role}.\n\n{q}")],
     "strong_act": [("system", "You are {name}. {sheet} {x}"), ("user", "Please role-play as {name}, {role}. {sheet} {x}\n\n{q}")],
-    "strong_noact": [("system", "You are {name}. {sheet} {x}"), ("user", "Please role-play as {name}, {role}. {sheet} {x}\n\n{q}")],
+    "strong_noact": [("system", "{sheet} {x}"), ("user", "Background: {sheet} {x}\n\n{q}")],   # version 2: description only, no instruction to adopt it
     "narration": [("user", "Write what happens next in this story.\n\nIn a story, {name} was asked: \"{q}\"\n{name} replied:"),
                   ("user", "Continue this scene.\n\nA visitor turned to {name}, {role}, and asked: \"{q}\"\n{name} answered:")],
     "user_turn": ["Okay.", "Noted."],   # fixed first assistant reply; the model then writes the user's next message
@@ -116,6 +117,13 @@ SEEDING = ("one RNG seed per generation batch = crc32 of the batch's request key
            "request keys are (trait, item, context, wording, persona, sample)")
 
 
+META_JUDGE = dict(
+    speaks_as_character=dict(
+        criterion="Does the reply speak in the first person as that character (in their voice, as if the speaker were them), rather than describing them, talking about them, or answering as a neutral third party?",
+        note="Reference note: the background describes a character, {name}, {role}.\n\n", contexts=["strong_act", "strong_noact"]))
+CAP_NOTE = "a reply hits the cap if it contains no end-of-turn token within max_new_tokens"
+
+
 # ------------------------------------------------------------------ materials
 def seed_for(*parts):
     return zlib.crc32("|".join(str(p) for p in parts).encode()) % (2 ** 31)
@@ -125,12 +133,13 @@ def build(items_dir, path=MATERIALS):
     items = {}
     for f in sorted(glob.glob(os.path.join(items_dir, "atlas_items_*.json"))):
         items.update(json.load(open(f, encoding="utf-8")))
-    assert set(items) == set(CLUSTER_OF), sorted(set(CLUSTER_OF) ^ set(items))
+    base_ids = [t for ts in CLUSTERS.values() for t in ts]
+    assert set(items) == set(base_ids), sorted(set(base_ids) ^ set(items))
     traits = []
-    for t in CLUSTER_OF:
+    for t in base_ids:
         assert len(items[t]) == 12 and [x["id"] for x in items[t]] == [f"{t}-{i:02d}" for i in range(1, 13)], t
         traits.append(dict(id=t, cluster=CLUSTER_OF[t], detector=DETECTOR.get(t, "judge"), user_turn=t in USER_TURN_TRAITS, items=items[t]))
-    mat = dict(version=1, seed=SEED, generation=GEN, contexts=CONTEXTS, samples=SAMPLES, light=LIGHT, strong=STRONG,
+    mat = dict(version=2, meta_judge=META_JUDGE, cap_note=CAP_NOTE, seed=SEED, generation=GEN, contexts=CONTEXTS, samples=SAMPLES, light=LIGHT, strong=STRONG,
                act_sentence=ACT_SENTENCE, neutral_sentence=NEUTRAL_SENTENCE, frames=FRAMES, judge_template=JUDGE_TEMPLATE, judge_notes=JUDGE_NOTES, plain_text_stops=PLAIN_TEXT_STOPS, seeding=SEEDING,
                judge={t: dict(criterion=c, note_field=n) for t, (c, n) in JUDGE.items()}, judge_model="google/gemma-4-31B-it",
                skill_tail_chars=SKILL_TAIL_CHARS, self_ai_regex=SELF_AI.pattern, user_turn_traits=USER_TURN_TRAITS, models=FAMILY_STAGES, traits=traits)
@@ -334,7 +343,8 @@ def generate(args):
             for pt in {tok.pad_token} - {None}:
                 raw = raw.replace(pt, "")
             cut, flagged = cut_reply(raw, markers, reqs[k]["context"])
-            out[k] = dict(reqs[k], raw=raw, text=cut, flagged=flagged)
+            capped = not any(int(t) in stops for t in row.tolist())
+            out[k] = dict(reqs[k], raw=raw, text=cut, flagged=flagged, capped=bool(capped))
         if bi % 20 == 0:
             print(f"generated {start}/{len(order)}", flush=True)
     os.makedirs(os.path.join(OUT, family), exist_ok=True)
@@ -357,7 +367,11 @@ def detect(args):
             trait, det, item = idx[r["item"]]
             if det == "judge":
                 continue
-            rows.append({**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "value": detect_one(trait, det, r["text"], item)})
+            v = detect_one(trait, det, r["text"], item)
+            alt = v
+            if det == "skill" and r.get("capped") and not any(re.search(a, r["text"], re.I) for a in item["accept"]):
+                alt = float("nan")   # hit the cap without the answer anywhere: not counted in the alternative reading
+            rows.append({**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "capped": bool(r.get("capped")), "value": v, "value_alt": alt})
         pd.DataFrame(rows).to_csv(path.replace("_replies.jsonl.gz", "_detected.csv.gz"), index=False)
         print(path, len(rows))
 
@@ -398,6 +412,27 @@ def judge(args):
         rows = [{**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "p_yes": float(p), "value": float(p >= 0.5)} for r, p in zip(todo, p_yes)]
         pd.DataFrame(rows).to_csv(path.replace("_replies.jsonl.gz", "_judged.csv.gz"), index=False)
         print(path, len(rows), flush=True)
+        # version 2: one extra frozen yes/no on the strong-character contexts: does the reply speak AS the character?
+        mj = mat["meta_judge"]["speaks_as_character"]
+        meta = [r for r in read_gz(path) if r["context"] in mj["contexts"]]
+        if args.limit:
+            meta = meta[:args.limit]
+        mp = []
+        for r in meta:
+            sp = mat["strong"][r["persona"]]
+            note = mj["note"].format(name=sp["name"], role=sp["role"])
+            mp.append(tok.apply_chat_template([{"role": "user", "content": mat["judge_template"].format(question=r["question"], reply=r["text"].strip()[:1500] or "(empty reply)", note=note, criterion=mj["criterion"])}],
+                                              tokenize=False, add_generation_prompt=True))
+        order = sorted(range(len(meta)), key=lambda k: len(mp[k]))
+        py = np.full(len(meta), np.nan)
+        for s_ in range(0, len(order), args.batch_size):
+            b = order[s_:s_ + args.batch_size]
+            enc = tok([mp[k] for k in b], return_tensors="pt", padding=True, add_special_tokens=False).to(device)
+            with torch.no_grad():
+                lg = model(**enc).logits[:, -1].float()
+            py[b] = torch.stack([lg[:, yes], lg[:, no]], 1).softmax(-1)[:, 0].cpu().numpy()
+        pd.DataFrame([{**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "p_yes": float(p), "value": float(p >= 0.5)} for r, p in zip(meta, py)]
+                     ).to_csv(path.replace("_replies.jsonl.gz", "_judged_meta.csv.gz"), index=False)
 
 
 def handcheck(args):
@@ -439,14 +474,34 @@ def handcheck(args):
 
 # ------------------------------------------------------------------ analysis
 def load_values():
-    """Long table of every scored reply: family, stage, trait, item, context, wording, persona, sample, flagged, value."""
+    """Long table of every scored reply: family, stage, trait, item, context, wording, persona, sample, flagged, value. Skill traits also get an
+    alternative reading `<trait>__alt` (replies that hit the token cap without the answer anywhere are not counted)."""
     frames = []
     for kind in ("detected", "judged"):
         for p in sorted(glob.glob(os.path.join(OUT, "*", f"*_{kind}.csv.gz"))):
             d = pd.read_csv(p)
             d["family"], d["stage"], d["source"] = p.split(os.sep)[-2], os.path.basename(p).split("_")[0], kind
+            if "value_alt" in d.columns:
+                alt = d[d.trait.isin(CLUSTERS["skill"])].copy()
+                alt["trait"], alt["value"] = alt["trait"] + "__alt", alt["value_alt"]
+                d = pd.concat([d, alt], ignore_index=True)
             frames.append(d[["family", "stage", "trait", "item", "context", "wording", "persona", "sample", "flagged", "value", "source"]])
     return pd.concat(frames, ignore_index=True)
+
+
+def load_meta():
+    """Cap-hit flags (from the detector files, one row per non-judged reply) and the speaks-as-character judge rows."""
+    caps, meta = [], []
+    for p in sorted(glob.glob(os.path.join(OUT, "*", "*_replies.jsonl.gz"))):
+        fam, stage = p.split(os.sep)[-2], os.path.basename(p).split("_")[0]
+        d = pd.DataFrame([{k: r.get(k) for k in ("context", "capped", "trait", "item")} for r in read_gz(p)])
+        d["family"], d["stage"] = fam, stage
+        caps.append(d)
+    for p in sorted(glob.glob(os.path.join(OUT, "*", "*_judged_meta.csv.gz"))):
+        d = pd.read_csv(p)
+        d["family"], d["stage"] = p.split(os.sep)[-2], os.path.basename(p).split("_")[0]
+        meta.append(d)
+    return (pd.concat(caps, ignore_index=True) if caps else pd.DataFrame()), (pd.concat(meta, ignore_index=True) if meta else pd.DataFrame())
 
 
 def unit_of(trait):
@@ -469,7 +524,7 @@ def analyze_cells(V, mat, families=FAMILY_STAGES):
     rows = []
     rng = np.random.default_rng(SEED)
     for fam, stages in families.items():
-        for trait in [t["id"] for t in mat["traits"]]:
+        for trait in [t["id"] for t in mat["traits"]] + [t + "__alt" for t in CLUSTERS["skill"]]:
             for ctx in CONTEXTS:
                 d0 = V[(V.family == fam) & (V.trait == trait) & (V.context == ctx)]
                 if d0.empty:
@@ -489,7 +544,7 @@ def analyze_cells(V, mat, families=FAMILY_STAGES):
     return pd.DataFrame(rows)
 
 
-def build_report(C, V, mat):
+def build_report(C, V, mat, caps=None, meta=None):
     fmt = lambda r: f"{r.change:+.1f} [{r.lo:+.1f}, {r.hi:+.1f}]" if r.unit == "pts" else f"{r.change:+.2f} [{r.lo:+.2f}, {r.hi:+.2f}]"
     L = ["# Trait atlas (spec G; exploratory, outside every verdict)", "",
          "Plan and pre-set readings: `docs/decisions.md` 2026-11-04. Change from base (percentage points; log words for length), paired per item, 95% two-way bootstrap over items and personas/samples. "
@@ -498,7 +553,7 @@ def build_report(C, V, mat):
     def table(fam, stage):
         sub = main[(main.family == fam) & (main.stage == stage)]
         res = {}
-        for trait in [t["id"] for t in mat["traits"]]:
+        for trait in [t["id"] for t in mat["traits"]] + [t + "__alt" for t in CLUSTERS["skill"]]:
             a = sub[(sub.trait == trait) & (sub.context == "assistant")]
             if a.empty:
                 continue
@@ -575,6 +630,15 @@ def build_report(C, V, mat):
                 r = main[(main.family == "olmo3-7b") & (main.stage == st) & (main.trait == trait) & (main.context == c)]
                 cells.append(fmt(r.iloc[0]) if len(r) else "n/a")
         L.append(f"| {trait} | " + " | ".join(cells) + " |")
+    if caps is not None and len(caps):
+        L += ["", "## Replies that hit the 256-token cap (share by checkpoint and context)", "",
+              "Skill traits are shown two ways: `<trait>` counts the answer only if it is in the last 150 characters; `<trait>__alt` leaves out replies that hit the cap without the answer anywhere.", "",
+              (caps.groupby(["family", "stage", "context"]).capped.mean().unstack().round(3)).to_markdown(), ""]
+    if meta is not None and len(meta):
+        L += ["## Strong characters: do replies speak AS the character? (judge, provisional)", "",
+              "Share of replies the extra frozen judge question says speak in the first person as the described character, rather than about them. With the instruction (strong_act) vs the description alone (strong_noact). "
+              "Note the style contrast now compares an instruction to be the character with the same description present and no instruction.", "",
+              (meta.groupby(["family", "stage", "context"]).value.mean().unstack().round(3)).to_markdown(), ""]
     fl = V.groupby(["family", "stage", "context"]).flagged.mean().unstack().round(3)
     L += ["", "## Flagged replies (switched to the Assistant mid-turn, cut at a marker or role label): share by checkpoint and context", "", fl.to_markdown(), "",
           "Every cell is also computed with flagged replies excluded (csv column `flagged_excluded`; the report above uses all replies).", "",
@@ -588,7 +652,8 @@ def analyze(args):
     C = analyze_cells(V, mat)
     os.makedirs(OUT, exist_ok=True)
     C.to_csv(os.path.join(OUT, "trait_atlas_cells.csv"), index=False)
-    open(os.path.join(OUT, "trait_atlas.md"), "w", encoding="utf-8").write(build_report(C, V, mat))
+    caps, meta = load_meta()
+    open(os.path.join(OUT, "trait_atlas.md"), "w", encoding="utf-8").write(build_report(C, V, mat, caps, meta))
     print(f"wrote {OUT}/trait_atlas.md ({len(C)} cells)")
 
 
