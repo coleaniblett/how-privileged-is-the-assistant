@@ -121,3 +121,42 @@ def test_two_way_boot_covers_planted_mean():
     M = 10 + rng.normal(0, 3, (12, 6))
     m, lo, hi = ta.two_way_boot(M, np.random.default_rng(1), n_boot=2000)
     assert lo < 10 < hi and lo < m < hi
+
+
+def synthetic_values(effects):
+    """Scored-reply table for OLMo base/instruct, trait markdown_lists: planted change per context (probability of a list)."""
+    rng = np.random.default_rng(0)
+    rows = []
+    items = [f"markdown_lists-{i:02d}" for i in range(1, 13)]
+    ncol = {"assistant": 6, "light_system": 6, "light_user": 6, "strong_act": 6, "strong_noact": 6, "narration": 3, "user_turn": 3, "plain_text": 3}
+    for stage in ("base", "instruct"):
+        for ctx, n in ncol.items():
+            p = 0.2 + (effects[ctx] if stage == "instruct" else 0.0)
+            for it in items:
+                for c in range(n):
+                    rows.append(dict(family="olmo3-7b", stage=stage, trait="markdown_lists", item=it, context=ctx, wording=0,
+                                     persona=c if ctx.startswith(("light", "strong")) else -1, sample=0 if ctx.startswith(("light", "strong")) else c,
+                                     flagged=False, value=float(rng.random() < p), source="detected"))
+    import pandas as pd
+    return pd.DataFrame(rows)
+
+
+def test_analysis_recovers_planted_effects_and_report_builds():
+    eff = dict(assistant=0.5, light_system=0.3, light_user=-0.3, strong_act=-0.25, strong_noact=-0.25, narration=0.0, user_turn=0.0, plain_text=0.0)
+    V = synthetic_values(eff)
+    C = ta.analyze_cells(V, MAT, families={"olmo3-7b": ["base", "instruct"]})
+    m = C[(~C.flagged_excluded)].set_index("context")
+    assert abs(m.loc["assistant", "change"] - 50) < 15 and m.loc["assistant", "lo"] > 10
+    assert abs(m.loc["light_user", "change"] + 30) < 15
+    md = ta.build_report(C, V, MAT)
+    assert "markdown_lists" in md and "Cluster claims" in md and "Style contrast" in md
+    row = [l for l in md.splitlines() if l.startswith("| markdown_lists |") and "pass" in l][0]
+    assert "spreads" in row and "reverses" in row
+
+
+def test_judge_prompt_includes_reference_note_only_where_frozen():
+    t = next(x for x in MAT["traits"] if x["id"] == "corrects_false_premise")
+    p = ta.judge_prompt(MAT, "corrects_false_premise", t["items"][0], "Some reply")
+    assert "false premise" in p and t["items"][0]["false_premise"] in p and "Some reply" in p
+    t2 = next(x for x in MAT["traits"] if x["id"] == "flattery")
+    assert "Reference note" not in ta.judge_prompt(MAT, "flattery", t2["items"][0], "Great!")

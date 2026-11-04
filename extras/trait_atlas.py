@@ -107,6 +107,15 @@ JUDGE = {
 }
 
 
+JUDGE_NOTES = {"why_unanswerable": "Reference note: the message cannot be answered because {v}.\n\n",
+               "false_premise": "Reference note: the message contains a false premise: {v}\n\n",
+               "nonexistent": "Reference note: the thing asked about does not exist: {v}.\n\n",
+               "wrong_claim": "Reference note: the person's claim is wrong: {v}\n\n"}
+PLAIN_TEXT_STOPS = ["\nQ:", "\nQuestion:"]
+SEEDING = ("one RNG seed per generation batch = crc32 of the batch's request keys joined (requests sorted by prompt length, batch size 24, left padding); "
+           "request keys are (trait, item, context, wording, persona, sample)")
+
+
 # ------------------------------------------------------------------ materials
 def seed_for(*parts):
     return zlib.crc32("|".join(str(p) for p in parts).encode()) % (2 ** 31)
@@ -122,7 +131,7 @@ def build(items_dir, path=MATERIALS):
         assert len(items[t]) == 12 and [x["id"] for x in items[t]] == [f"{t}-{i:02d}" for i in range(1, 13)], t
         traits.append(dict(id=t, cluster=CLUSTER_OF[t], detector=DETECTOR.get(t, "judge"), user_turn=t in USER_TURN_TRAITS, items=items[t]))
     mat = dict(version=1, seed=SEED, generation=GEN, contexts=CONTEXTS, samples=SAMPLES, light=LIGHT, strong=STRONG,
-               act_sentence=ACT_SENTENCE, neutral_sentence=NEUTRAL_SENTENCE, frames=FRAMES, judge_template=JUDGE_TEMPLATE,
+               act_sentence=ACT_SENTENCE, neutral_sentence=NEUTRAL_SENTENCE, frames=FRAMES, judge_template=JUDGE_TEMPLATE, judge_notes=JUDGE_NOTES, plain_text_stops=PLAIN_TEXT_STOPS, seeding=SEEDING,
                judge={t: dict(criterion=c, note_field=n) for t, (c, n) in JUDGE.items()}, judge_model="google/gemma-4-31B-it",
                skill_tail_chars=SKILL_TAIL_CHARS, self_ai_regex=SELF_AI.pattern, user_turn_traits=USER_TURN_TRAITS, models=FAMILY_STAGES, traits=traits)
     with open(path, "w", encoding="utf-8") as f:
@@ -236,14 +245,16 @@ def cut_reply(text, markers, context):
 
 # ------------------------------------------------------------------ analysis helpers
 def two_way_boot(M, rng, n_boot=N_BOOT):
-    """M: items x columns matrix of paired differences (columns = personas or samples). Resample items and columns independently; mean, 95% CI."""
+    """M: items x columns matrix of paired differences (columns = personas or samples; NaN = missing). Resample items and columns independently;
+    returns (mean, lo, hi) with the 95% percentile interval."""
     M = np.asarray(M, float)
     n, k = M.shape
-    est = np.nanmean(M)
-    bs = np.empty(n_boot)
-    for b in range(n_boot):
-        bs[b] = np.nanmean(M[rng.integers(0, n, n)][:, rng.integers(0, k, k)])
-    return est, *np.percentile(bs, [2.5, 97.5])
+    ri, ci = rng.integers(0, n, (n_boot, n)), rng.integers(0, k, (n_boot, k))
+    sub = M[ri[:, :, None], ci[:, None, :]]
+    with np.errstate(all="ignore"):
+        bs = np.nanmean(sub.reshape(n_boot, -1), axis=1)
+    bs = bs[~np.isnan(bs)]
+    return float(np.nanmean(M)), *(np.percentile(bs, [2.5, 97.5]) if len(bs) else (np.nan, np.nan))
 
 
 def reading(chg, lo, hi, assistant_chg, unit):
@@ -271,16 +282,339 @@ def style_contrast(act_fall, noact_fall, noact_lo, noact_hi, unit):
     return "unresolved"
 
 
+# ------------------------------------------------------------------ generation (GPU)
+def replies_path(family, stage, kind="replies", ext="jsonl.gz"):
+    return os.path.join(OUT, family, f"{stage}_{kind}.{ext}")
+
+
+def read_gz(path):
+    with gzip.open(path, "rt", encoding="utf-8") as f:
+        return [json.loads(l) for l in f]
+
+
+def generate(args):
+    import torch
+    from core.render import doc_start_ids, encode, load_tokenizer
+    from core.score import load_model
+    from measures.overgeneralization.user_traits import family_markers
+    family = config.FAMILY
+    mat = load_materials()
+    tok = load_tokenizer(config.TEMPLATE_MODEL)
+    tok.padding_side = "left"
+    if tok.pad_token_id is None:
+        tok.pad_token = tok.eos_token
+    markers = family_markers(family)
+    vocab = tok.get_vocab()
+    stops = [i for i in {tok.eos_token_id, vocab.get("<|im_end|>"), vocab.get("<|endoftext|>"), vocab.get("<turn|>"), vocab.get("<end_of_turn>")} if i is not None]
+    reqs = plan_requests(mat)
+    if args.limit:
+        reqs = reqs[::max(1, len(reqs) // args.limit)][:args.limit]
+    ids = []
+    for r in reqs:
+        kind, text = render_request(mat, r, tok, family)
+        ids.append((doc_start_ids(tok) if kind == "text" else []) + encode(tok, text))
+    order = sorted(range(len(reqs)), key=lambda k: len(ids[k]))
+    model_id = args.model_id or config.MODELS[args.model]
+    fs = config.family_settings(family)
+    model, device = (load_model(model_id, torch.bfloat16, offload=True, gpu_gib=args.gpu_gib or fs["gpu_gib"], cpu_gib=fs["cpu_gib"])
+                     if args.offload else load_model(model_id, torch.bfloat16))
+    out, B = [None] * len(reqs), args.batch_size
+    for bi, start in enumerate(range(0, len(order), B)):
+        idx = order[start:start + B]
+        L = max(len(ids[k]) for k in idx)
+        x = torch.tensor([[tok.pad_token_id] * (L - len(ids[k])) + ids[k] for k in idx], device=device)
+        m = torch.tensor([[0] * (L - len(ids[k])) + [1] * len(ids[k]) for k in idx], device=device)
+        key = "|".join(f"{reqs[k]['trait']}.{reqs[k]['item']}.{reqs[k]['context']}.{reqs[k]['wording']}.{reqs[k]['persona']}.{reqs[k]['sample']}" for k in idx)
+        torch.manual_seed(seed_for(key))
+        with torch.no_grad():
+            g = model.generate(input_ids=x, attention_mask=m, do_sample=True, temperature=GEN["temperature"], top_p=GEN["top_p"], top_k=0,
+                               max_new_tokens=GEN["max_new_tokens"], eos_token_id=stops, pad_token_id=tok.pad_token_id)
+        for row, k in zip(g[:, L:], idx):
+            raw = tok.decode(row, skip_special_tokens=False)
+            for pt in {tok.pad_token} - {None}:
+                raw = raw.replace(pt, "")
+            cut, flagged = cut_reply(raw, markers, reqs[k]["context"])
+            out[k] = dict(reqs[k], raw=raw, text=cut, flagged=flagged)
+        if bi % 20 == 0:
+            print(f"generated {start}/{len(order)}", flush=True)
+    os.makedirs(os.path.join(OUT, family), exist_ok=True)
+    with gzip.open(replies_path(family, args.model), "wt", encoding="utf-8") as f:
+        for o in out:
+            f.write(json.dumps(o, ensure_ascii=False) + "\n")
+
+
+# ------------------------------------------------------------------ detectors and judge
+def item_index(mat):
+    return {it["id"]: (t["id"], t["detector"], it) for t in mat["traits"] for it in t["items"]}
+
+
+def detect(args):
+    mat = load_materials()
+    idx = item_index(mat)
+    for path in sorted(glob.glob(os.path.join(OUT, "*", "*_replies.jsonl.gz"))):
+        rows = []
+        for r in read_gz(path):
+            trait, det, item = idx[r["item"]]
+            if det == "judge":
+                continue
+            rows.append({**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "value": detect_one(trait, det, r["text"], item)})
+        pd.DataFrame(rows).to_csv(path.replace("_replies.jsonl.gz", "_detected.csv.gz"), index=False)
+        print(path, len(rows))
+
+
+def judge_prompt(mat, trait, item, reply):
+    j = mat["judge"][trait]
+    note = mat["judge_notes"][j["note_field"]].format(v=item[j["note_field"]]) if j["note_field"] else ""
+    return mat["judge_template"].format(question=item["question"], reply=reply.strip()[:1500] or "(empty reply)", note=note, criterion=j["criterion"])
+
+
+def judge(args):
+    import torch
+    from core.render import encode, load_tokenizer
+    from core.score import load_model
+    mat = load_materials()
+    idx = item_index(mat)
+    config.use_family("gemma4-31b")
+    tok = load_tokenizer(config.TEMPLATE_MODEL)
+    tok.padding_side = "left"
+    yes, no = encode(tok, "Yes")[0], encode(tok, "No")[0]
+    fs = config.family_settings("gemma4-31b")
+    model, device = (load_model(config.MODELS["instruct"], torch.bfloat16, offload=True, gpu_gib=args.gpu_gib or fs["gpu_gib"], cpu_gib=fs["cpu_gib"])
+                     if args.offload else load_model(config.MODELS["instruct"], torch.bfloat16))
+    for path in sorted(glob.glob(os.path.join(OUT, "*", "*_replies.jsonl.gz"))):
+        todo = [r for r in read_gz(path) if idx[r["item"]][1] == "judge"]
+        if args.limit:
+            todo = todo[:args.limit]
+        prompts = [tok.apply_chat_template([{"role": "user", "content": judge_prompt(mat, r["trait"], idx[r["item"]][2], r["text"])}], tokenize=False, add_generation_prompt=True) for r in todo]
+        order = sorted(range(len(todo)), key=lambda k: len(prompts[k]))
+        p_yes = np.full(len(todo), np.nan)
+        for s in range(0, len(order), args.batch_size):
+            b = order[s:s + args.batch_size]
+            enc = tok([prompts[k] for k in b], return_tensors="pt", padding=True, add_special_tokens=False).to(device)
+            with torch.no_grad():
+                lg = model(**enc).logits[:, -1].float()
+            two = torch.stack([lg[:, yes], lg[:, no]], 1).softmax(-1)[:, 0].cpu().numpy()
+            p_yes[b] = two
+        rows = [{**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "p_yes": float(p), "value": float(p >= 0.5)} for r, p in zip(todo, p_yes)]
+        pd.DataFrame(rows).to_csv(path.replace("_replies.jsonl.gz", "_judged.csv.gz"), index=False)
+        print(path, len(rows), flush=True)
+
+
+def handcheck(args):
+    """Blind sheet of 60 judged replies: 12 judge traits x 5, alternating yes/no, spread over the checkpoints; the key is written separately."""
+    mat = load_materials()
+    idx = item_index(mat)
+    rng = np.random.default_rng(SEED)
+    pool = []
+    for jp in sorted(glob.glob(os.path.join(OUT, "*", "*_judged.csv.gz"))):
+        fam, stage = jp.split(os.sep)[-2], os.path.basename(jp).split("_")[0]
+        j = pd.read_csv(jp)
+        rep = pd.DataFrame(read_gz(jp.replace("_judged.csv.gz", "_replies.jsonl.gz")))
+        m = rep.merge(j[["trait", "item", "context", "wording", "persona", "sample", "p_yes", "value"]], on=["trait", "item", "context", "wording", "persona", "sample"])
+        m["family"], m["stage"] = fam, stage
+        pool.append(m)
+    pool = pd.concat(pool, ignore_index=True)
+    keys = sorted(mat["judge"])
+    ck = sorted(set(zip(pool.family, pool.stage)))
+    rows = []
+    for ti, t in enumerate(keys):
+        for k in range(5):
+            want = float(k % 2 == 0)
+            fam, stage = ck[(ti * 5 + k) % len(ck)]
+            c = pool[(pool.trait == t) & (pool.family == fam) & (pool.stage == stage) & (pool.value == want) & (pool.text.str.len() > 0)]
+            if c.empty:
+                c = pool[(pool.trait == t) & (pool.value == want) & (pool.text.str.len() > 0)]
+            if c.empty:
+                continue
+            rows.append(c.iloc[int(rng.integers(0, len(c)))])
+    sheet = pd.DataFrame(rows).sample(frac=1, random_state=SEED).reset_index(drop=True)
+    sheet["sheet_id"] = [f"H{n + 1:02d}" for n in range(len(sheet))]
+    crit = lambda r: mat["judge"][r.trait]["criterion"]
+    out = pd.DataFrame(dict(sheet_id=sheet.sheet_id, message=[idx[i][2]["question"] for i in sheet["item"]], reply=sheet.text, criterion=[crit(r) for r in sheet.itertuples()], yes_or_no=""))
+    os.makedirs(OUT, exist_ok=True)
+    out.to_csv(os.path.join(OUT, "handcheck_sheet.csv"), index=False)
+    sheet[["sheet_id", "trait", "family", "stage", "context", "persona", "p_yes", "value"]].to_csv(os.path.join(OUT, "handcheck_key.csv"), index=False)
+    print(f"wrote {len(out)} rows to {OUT}/handcheck_sheet.csv (key: handcheck_key.csv; keep the key from the labeller)")
+
+
+# ------------------------------------------------------------------ analysis
+def load_values():
+    """Long table of every scored reply: family, stage, trait, item, context, wording, persona, sample, flagged, value."""
+    frames = []
+    for kind in ("detected", "judged"):
+        for p in sorted(glob.glob(os.path.join(OUT, "*", f"*_{kind}.csv.gz"))):
+            d = pd.read_csv(p)
+            d["family"], d["stage"], d["source"] = p.split(os.sep)[-2], os.path.basename(p).split("_")[0], kind
+            frames.append(d[["family", "stage", "trait", "item", "context", "wording", "persona", "sample", "flagged", "value", "source"]])
+    return pd.concat(frames, ignore_index=True)
+
+
+def unit_of(trait):
+    return "log" if trait == "length" else "pts"
+
+
+def cell_matrix(d, stage, base="base"):
+    """items x columns matrix of stage minus base for one (family, trait, context); column = persona (contexts 2-5) or sample."""
+    col = "persona" if d.context.iloc[0] in ("light_system", "light_user", "strong_act", "strong_noact") else "sample"
+    P = d.pivot_table(index="item", columns=[col, "stage"], values="value", aggfunc="mean")
+    cols = sorted({c[0] for c in P.columns})
+    M = np.full((len(P.index), len(cols)), np.nan)
+    for j, c in enumerate(cols):
+        if (c, stage) in P.columns and (c, base) in P.columns:
+            M[:, j] = P[(c, stage)].to_numpy() - P[(c, base)].to_numpy()
+    return M
+
+
+def analyze_cells(V, mat, families=FAMILY_STAGES):
+    rows = []
+    rng = np.random.default_rng(SEED)
+    for fam, stages in families.items():
+        for trait in [t["id"] for t in mat["traits"]]:
+            for ctx in CONTEXTS:
+                d0 = V[(V.family == fam) & (V.trait == trait) & (V.context == ctx)]
+                if d0.empty:
+                    continue
+                for excl in (False, True):
+                    d = d0[~d0.flagged.astype(bool)] if excl else d0
+                    for stage in [s for s in stages if s != "base"]:
+                        dd = d[d.stage.isin(["base", stage])]
+                        if dd.empty or "base" not in set(dd.stage) or stage not in set(dd.stage):
+                            continue
+                        M = cell_matrix(dd, stage)
+                        scale = 1.0 if unit_of(trait) == "log" else 100.0
+                        est, lo, hi = two_way_boot(M * scale, rng, n_boot=2000 if excl else N_BOOT)
+                        base_m = float(dd[dd.stage == "base"].value.mean() * scale)
+                        rows.append(dict(family=fam, stage=stage, trait=trait, cluster=CLUSTER_OF[trait], context=ctx, flagged_excluded=excl, change=est, lo=lo, hi=hi,
+                                         base_level=base_m, unit=unit_of(trait), n_items=int(M.shape[0])))
+    return pd.DataFrame(rows)
+
+
+def build_report(C, V, mat):
+    fmt = lambda r: f"{r.change:+.1f} [{r.lo:+.1f}, {r.hi:+.1f}]" if r.unit == "pts" else f"{r.change:+.2f} [{r.lo:+.2f}, {r.hi:+.2f}]"
+    L = ["# Trait atlas (spec G; exploratory, outside every verdict)", "",
+         "Plan and pre-set readings: `docs/decisions.md` 2026-11-04. Change from base (percentage points; log words for length), paired per item, 95% two-way bootstrap over items and personas/samples. "
+         "**All judge-based results (12 of 20 traits) are provisional until Adeeb's hand check.** Qwen3-8B and Gemma 4 31B are supporting: contamination could not be checked for them. Many comparisons: read patterns, not single cells.", ""]
+    main = C[~C.flagged_excluded]
+    def table(fam, stage):
+        sub = main[(main.family == fam) & (main.stage == stage)]
+        res = {}
+        for trait in [t["id"] for t in mat["traits"]]:
+            a = sub[(sub.trait == trait) & (sub.context == "assistant")]
+            if a.empty:
+                continue
+            a = a.iloc[0]
+            res[trait] = dict(a=a, gate=gate(a.change, a.lo, a.hi, a.unit), ctx={r.context: (r, reading(r.change, r.lo, r.hi, a.change, r.unit) if gate(a.change, a.lo, a.hi, a.unit) else "not gated") for r in sub[sub.trait == trait].itertuples()})
+        return res
+    allres = {(f, s): table(f, s) for f in FAMILY_STAGES for s in FAMILY_STAGES[f] if s != "base"}
+    for (fam, stage), res in allres.items():
+        if not res:
+            continue
+        L += [f"## {fam} {stage}", "", "Assistant change from base, gate (>= 10 points or 0.2 log words, CI excluding 0), and the reading in each context (spreads / reverses / stays; ratio = context change / Assistant change). Skill traits are competence, read separately.", "",
+              "| trait | cluster | Assistant change | gate | " + " | ".join(c for c in CONTEXTS if c != "assistant") + " |", "|---|---|---|---|" + "---|" * (len(CONTEXTS) - 1)]
+        for trait, r in res.items():
+            a = r["a"]
+            cells = []
+            for c in CONTEXTS:
+                if c == "assistant":
+                    continue
+                if c not in r["ctx"]:
+                    cells.append("N/A")
+                    continue
+                row, rd = r["ctx"][c]
+                ratio = row.change / a.change if abs(a.change) > 1e-9 else float("nan")
+                cells.append(f"{fmt(row)} {rd if r['gate'] else ''}".strip() + ("" if not r["gate"] else f" (ratio {ratio:.2f})"))
+            L.append(f"| {trait} | {CLUSTER_OF[trait]} | {fmt(a)} | {'pass' if r['gate'] else 'training did not move the Assistant'} | " + " | ".join(cells) + " |")
+        L.append("")
+    # clusters
+    def spreads_light(res, trait, both=True):
+        if trait not in res or not res[trait]["gate"]:
+            return None
+        rd = [res[trait]["ctx"].get(c, (None, "stays"))[1] for c in ("light_system", "light_user")]
+        return all(x == "spreads" for x in rd) if both else any(x == "spreads" for x in rd)
+    L += ["## Cluster claims (OLMo instruct; supporting from Qwen or Gemma instruct)", "",
+          "A cluster spreads only if a majority of its gated traits spread to light characters (both light contexts; the either-context count is beside it) and the pattern holds in at least one of Qwen or Gemma. One trait is never a cluster.", "",
+          "| cluster | gated traits (OLMo) | spread to light (both) | spread to light (either) | Qwen | Gemma | claim |", "|---|---|---|---|---|---|---|"]
+    o = allres.get(("olmo3-7b", "instruct"), {})
+    for cl, traits in CLUSTERS.items():
+        if cl == "skill":
+            continue
+        gated = [t for t in traits if t in o and o[t]["gate"]]
+        sb = [t for t in gated if spreads_light(o, t, True)]
+        se = [t for t in gated if spreads_light(o, t, False)]
+        def other(fam):
+            r = allres.get((fam, "instruct"), {})
+            g = [t for t in traits if t in r and r[t]["gate"]]
+            sp = [t for t in g if spreads_light(r, t, True)]
+            return (len(sp), len(g))
+        q, g_ = other("qwen3-8b"), other("gemma4-31b")
+        majority = len(gated) >= 2 and len(sb) > len(gated) / 2
+        supp = (q[1] and q[0] > q[1] / 2) or (g_[1] and g_[0] > g_[1] / 2)
+        L.append(f"| {cl} | {len(gated)} of {len(traits)} | {len(sb)} | {len(se)} | {q[0]}/{q[1]} | {g_[0]}/{g_[1]} | {'spreads' if majority and supp else ('OLMo only' if majority else 'no')} |")
+    # style contrast
+    L += ["", "## Style contrast: strong characters with vs without the acting instruction (format and voice traits)", "",
+          "Fall = change from base in the direction away from the Assistant's trained change (positive = the character moved away from the Assistant). Better acting: with-instruction fall >= 5 points and the no-instruction fall under 50% of it. Sharper role boundaries: no-instruction fall >= 50% of the with-instruction fall, >= 5 points, CI excluding 0.", "",
+          "| family | stage | trait | with instruction (fall) | no instruction (fall) | reading |", "|---|---|---|---|---|---|"]
+    for (fam, stage), res in allres.items():
+        for trait in CLUSTERS["format"] + CLUSTERS["voice"]:
+            if trait not in res or not res[trait]["gate"]:
+                continue
+            a = res[trait]["a"]
+            sg = np.sign(a.change)
+            r4, r5 = res[trait]["ctx"].get("strong_act", (None,))[0], res[trait]["ctx"].get("strong_noact", (None,))[0]
+            if r4 is None or r5 is None:
+                continue
+            f4, f5 = -sg * r4.change, -sg * r5.change
+            lo5 = -sg * (r5.lo if sg < 0 else r5.hi) if False else min(-sg * r5.lo, -sg * r5.hi)
+            L.append(f"| {fam} | {stage} | {trait} | {f4:+.2f} | {f5:+.2f} | {style_contrast(f4, f5, lo5, max(-sg * r5.lo, -sg * r5.hi), r4.unit)} |")
+    # timing, competence, flagged
+    L += ["", "## OLMo stage timing (descriptive): change from base in the Assistant and the light-system context", "", "| trait | SFT assistant | DPO assistant | instruct assistant | SFT light-system | DPO light-system | instruct light-system |", "|---|---|---|---|---|---|---|"]
+    for trait in [t["id"] for t in mat["traits"]]:
+        cells = []
+        for c in ("assistant", "light_system"):
+            for st in ("sft", "dpo", "instruct"):
+                r = main[(main.family == "olmo3-7b") & (main.stage == st) & (main.trait == trait) & (main.context == c)]
+                cells.append(fmt(r.iloc[0]) if len(r) else "n/a")
+        L.append(f"| {trait} | " + " | ".join(cells) + " |")
+    fl = V.groupby(["family", "stage", "context"]).flagged.mean().unstack().round(3)
+    L += ["", "## Flagged replies (switched to the Assistant mid-turn, cut at a marker or role label): share by checkpoint and context", "", fl.to_markdown(), "",
+          "Every cell is also computed with flagged replies excluded (csv column `flagged_excluded`; the report above uses all replies).", "",
+          "## Limits", "", "Exploratory; many comparisons, so read patterns, not single cells. Item wording drives some rates. The local judge is itself a post-trained model. A character can legitimately have a trait for its own reasons, so only change from base is read."]
+    return "\n".join(L) + "\n"
+
+
+def analyze(args):
+    mat = load_materials()
+    V = load_values()
+    C = analyze_cells(V, mat)
+    os.makedirs(OUT, exist_ok=True)
+    C.to_csv(os.path.join(OUT, "trait_atlas_cells.csv"), index=False)
+    open(os.path.join(OUT, "trait_atlas.md"), "w", encoding="utf-8").write(build_report(C, V, mat))
+    print(f"wrote {OUT}/trait_atlas.md ({len(C)} cells)")
+
+
 def main():
     config.family_from_argv()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("build")
     p.add_argument("--items-dir", required=True)
+    for name in ("generate", "judge"):
+        p = sub.add_parser(name)
+        p.add_argument("--family", default=None, help="read before parsing by config.family_from_argv (generate)")
+        p.add_argument("--model", default="instruct", help="generate: stage")
+        p.add_argument("--model-id", default=None)
+        p.add_argument("--batch-size", type=int, default=24 if name == "generate" else 16)
+        p.add_argument("--limit", type=int, default=0)
+        p.add_argument("--offload", action="store_true", help="device_map=auto with CPU offload (default: all weights on the GPU)")
+        p.add_argument("--gpu-gib", type=int, default=None)
+    for name in ("detect", "handcheck", "analyze"):
+        sub.add_parser(name)
     a = ap.parse_args()
     if a.cmd == "build":
         m = build(a.items_dir)
         print(f"wrote {MATERIALS}: {len(m['traits'])} traits, {sum(len(t['items']) for t in m['traits'])} items, {len(plan_requests(m))} requests per checkpoint")
+    else:
+        {"generate": generate, "judge": judge, "detect": detect, "handcheck": handcheck, "analyze": analyze}[a.cmd](a)
 
 
 if __name__ == "__main__":
