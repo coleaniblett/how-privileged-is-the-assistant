@@ -1034,3 +1034,19 @@ Question: the leakage-matrix register score falls after post-training for charac
 - **Check B, slippage**: a reply is flagged as a mid-turn switch if `user_traits.cut_user_portion(text, markers, role_cut=True)` is shorter than the text, with the family's turn/handoff markers (`user_traits.family_markers`; Gemma E4B uses the gemma4-31b template markers) and the line-initial role labels (ChatGPT/Assistant/AI/Bot/GPT/Claude/Model). Reported: flagged share by family, stage and context; the register change recomputed with flagged replies excluded in every stage. **Reading**: slippage explains the fall in a context if exclusion shrinks the register change by at least 50% (size reported either way).
 - **Check C, OLMo training data only**: the Dolci sets the repo already uses for contamination checks (`core.check_contamination.DOLCI`: SFT messages, DPO chosen/rejected, RL prompts; loaded with `datasets`; a set that cannot be identified or loaded is reported as such, not guessed). Share of examples whose user (or system) text asks for role-play or a persona, by a regex over those turns: `role[- ]?play(ing)?`, `pretend (to be|you're|you are)`, `act (as|like) (a|an|the|my|if)`, `play (the (role|part) of|(a|an|the) (role|character))`, `you are now`, `from now on,? you (are|will)`, `imagine you('re| are) (a|an|the)`, `take on the (role|persona)`, `in the role of`, `(answer|respond|speak|write) as (a|an|if)`, `persona`, `stay in character`, `in character`, `character (named|called)` (case-insensitive). 30 randomly chosen matches (seed 0) saved to the report with the matched phrase. Spec A classifier P(assistant) (on the first 40 words of the reply) and layout rate on the replies of matched examples vs a random sample of the rest (SFT assistant reply, DPO chosen reply; the RL set stores prompts only, so only its share is reported). Descriptive; no threshold.
 - No existing result or frozen file is changed; raw generations and Dolci text beyond the 30 saved excerpts are not committed.
+
+## 2026-11-04: judge validation sheet rebuilt from the main-run generations and split between three labellers (vestigial regression, judge arm)
+
+Before any human label existed (`judge_validation/sheet.csv` had 0 of 60 labelled), the validation sheet was rebuilt with
+`judge sheet --from-capstone` (seed 0). The old sheet drew on pre-capstone generations (exploration samples for Gemma IT and Qwen IT,
+the pre-capstone OLMo run's complete-sentence prefills), so it validated the judge on text it was never used on, and it held no Gemma
+or Qwen base samples, which the README's validation requirement includes. The new sheet draws 60 from the 600 incomplete-turn generations
+per checkpoint that the judge labelled in the main run: 8 per OLMo stage, 7 per Qwen and Gemma checkpoint (`CAPSTONE_PLAN`).
+
+Cole asked for the labelling to be shared by Cole, Grace and Adeeb with some overlap. `judge split-sheet` (seed 0) puts 12 samples on
+every labeller's file (covering all 8 checkpoints) and deals the other 48 out evenly, 16 each, round-robin within checkpoint, so each
+labeller has 28 rows with 3-4 per checkpoint (`judge_validation/split/sheet_<name>.csv`, `assignment.csv`). `judge combine-sheets`
+writes the merged labels to `sheet.csv`: an unshared sample's single label, a shared sample's majority (2 of 3 or more). A shared sample
+with no majority stays unlabelled and is reported, so it does not enter the judge's agreement. It also reports pairwise agreement and
+Fleiss' kappa between labellers on the shared samples. The judge-agreement measure (`judge validate`, raw agreement and Cohen's kappa)
+and its 80% default bar are unchanged.

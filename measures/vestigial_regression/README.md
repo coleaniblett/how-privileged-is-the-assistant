@@ -362,7 +362,9 @@ caveat (contamination cannot be checked for Gemma or Qwen; say so wherever their
 
 TODOs:
 
-- Run judge validation against teammate-checked labels (at least 50 samples; Gemma, Qwen, OLMo incl. base): a teammate fills
+- Run judge validation against teammate-checked labels (at least 50 samples; Gemma, Qwen, OLMo incl. base). **2026-11-04:** the sheet
+  was rebuilt from the main-run generations and split between Cole, Grace and Adeeb (`judge_validation/split/`, 12 samples shared;
+  `judge combine-sheets` merges them into `sheet.csv`). Originally: a teammate fills
   `judge_validation/sheet.csv`, then `judge validate`; revise `judge_prompt.md` (and its version) if agreement is below the bar.
 - Qwen3 assistant-slot rendering: **decided 2026-11-02** (`docs/decisions.md`): the empty think block ON is the primary and OFF (the
   pilot's) the robustness check; the `assistant_think_block` option in `core/config.py` is now `True`. Apply it consistently: it changes the
