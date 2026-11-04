@@ -174,3 +174,14 @@ def test_is_switch_ignores_the_normal_end_of_turn():
     assert not ta.is_switch("No end token at all (hit the cap).", mk)
     assert ta.is_switch("Reply.<|im_end|>\n<|im_start|>assistant\nSecond turn", mk)
     assert ta.is_switch("Reply.\nChatGPT: hello there", mk)
+
+
+def test_report_flags_capped_checkpoints():
+    import pandas as pd
+    eff = dict(assistant=0.5, light_system=0.3, light_user=-0.3, strong_act=-0.25, strong_noact=-0.25, narration=0.0, user_turn=0.0, plain_text=0.0)
+    V = synthetic_values(eff)
+    C = ta.analyze_cells(V, MAT, families={"olmo3-7b": ["base", "instruct"]})
+    caps = pd.DataFrame([dict(family="olmo3-7b", stage="instruct", context="assistant", capped=True)] * 6 + [dict(family="olmo3-7b", stage="instruct", context="assistant", capped=False)] * 4)
+    md = ta.build_report(C, V, MAT, caps, None)
+    assert "Token cap: 60%" in md and "closing_offer" in md and "| trait | cluster | Assistant change | gate |" in md
+    assert "Token cap" not in ta.build_report(C, V, MAT, caps.assign(capped=False), None)

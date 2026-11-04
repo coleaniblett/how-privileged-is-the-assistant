@@ -617,6 +617,11 @@ def build_report(C, V, mat, caps=None, meta=None):
                 ratio = row.change / a.change if abs(a.change) > 1e-9 else float("nan")
                 cells.append(f"{fmt(row)} {rd if r['gate'] else ''}".strip() + ("" if not r["gate"] else f" (ratio {ratio:.2f})"))
             L.append(f"| {trait} | {CLUSTER_OF[trait]} | {fmt(a)} | {'pass' if r['gate'] else 'training did not move the Assistant'} | " + " | ".join(cells) + " |")
+        if caps is not None and len(caps):
+            c_ = caps[(caps.family == fam) & (caps.stage == stage) & (caps.context == "assistant")]
+            if len(c_) and c_.capped.mean() >= 0.2:
+                L += ["", f"**Token cap: {100 * c_.capped.mean():.0f}% of this checkpoint's Assistant replies hit the 256-token cap. Read `length` and `closing_offer` (an offer at the end of a long reply) as capped for it: "
+                      "length is a lower bound and a closing offer may be cut off. Skill traits also have the `__alt` reading.**"]
         L.append("")
     # clusters
     def spreads_light(res, trait, both=True):
