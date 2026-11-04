@@ -57,7 +57,8 @@ def test_hash_depends_on_everything_that_changes_the_answer():
     h = J.sample_hash("p", "c", "v1")
     assert h == J.sample_hash("p", "c", "v1")
     assert len({h, J.sample_hash("p2", "c", "v1"), J.sample_hash("p", "c2", "v1"), J.sample_hash("p", "c", "v2"),
-                J.sample_hash("p", "c", "v1", model="other"), J.sample_hash("p", "c", "v1", temperature=1)}) == 6
+                J.sample_hash("p", "c", "v1", model="other"), J.sample_hash("p", "c", "v1", temperature=1),
+                J.sample_hash("p", "c", "v1", thinking={"type": "adaptive"})}) == 7
 
 
 def test_run_records_model_version_and_never_sends_metadata(tmp_path):
@@ -65,11 +66,11 @@ def test_run_records_model_version_and_never_sends_metadata(tmp_path):
     rows, est = J.run(samples(), str(tmp_path / "out.jsonl"), str(tmp_path / "cache.jsonl"), client=client, quiet=True)
     assert len(client.calls) == 3 and est["requests"] == 3
     for c in client.calls:
-        assert c["model"] == "claude-sonnet-5-5" and c["temperature"] == 0
+        assert c["model"] == "claude-sonnet-5-5" and "temperature" not in c and c["thinking"] == {"type": "between_tools"}
         sent = json.dumps(c["messages"]) + c["system"]
         assert "sft" not in sent and "olmo" not in sent.lower() and "gemma" not in sent.lower()  # carry fields are not sent
     for r in rows:
-        assert r["judge_model"] == "claude-sonnet-5-5" and r["prompt_version"] == "v2" and r["temperature"] == 0
+        assert r["judge_model"] == "claude-sonnet-5-5" and r["prompt_version"] == "v2" and r["temperature"] is None and r["thinking"] == {"type": "between_tools"}
         assert r["label"] == "user_voice" and r["stage"] == "sft"
     assert [json.loads(line)["label"] for line in open(tmp_path / "out.jsonl")] == ["user_voice"] * 3
 
@@ -198,3 +199,53 @@ def test_validation_sheet_from_the_capstone_generations_covers_all_eight_checkpo
         by[(k["model"], k["stage"])] = by.get((k["model"], k["stage"]), 0) + 1
     assert by == J.CAPSTONE_PLAN
     assert "model" not in open(tmp_path / "sheet" / "sheet.csv").readline()
+
+
+def test_stop_reason_recorded_limit_raised_and_invalid_rejudged(tmp_path):
+    class StopClient(FakeClient):
+        def _create(self, **kw):
+            r = super()._create(**kw)
+            r.stop_reason = "end_turn"
+            r.stop_details = None
+            return r
+    cache = str(tmp_path / "cache.jsonl")
+    bad = StopClient(replies=["", ""])  # empty twice -> invalid
+    rows, _ = J.run(samples()[:1], None, cache, client=bad, quiet=True)
+    assert rows[0]["label"] == "invalid" and rows[0]["stop_reasons"] == ["end_turn", "end_turn"]
+    assert all(c["max_tokens"] == 600 for c in bad.calls)
+    again = StopClient()
+    rows, est = J.run(samples()[:1], None, cache, client=again, quiet=True)
+    assert est["requests"] == 1 and len(again.calls) == 1 and rows[0]["label"] == "user_voice"  # invalid is not served from cache
+    third = StopClient()
+    J.run(samples()[:1], None, cache, client=third, quiet=True)
+    assert third.calls == []
+
+
+def test_refusal_sheet_joins_dedups_keeps_labels_and_is_blind(tmp_path):
+    def write(path, rows):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+
+    gens = [dict(prefill_id=f"incomplete-{i:03d}", sample=s, prefill=f"p{i}", continuation="same" if i == 0 else f"c{i}{s}")
+            for i in range(3) for s in range(2)]
+    judged = [dict(prefill_id=g["prefill_id"], sample=g["sample"],
+                   label="invalid" if g["prefill_id"] != "incomplete-002" else "user_voice",
+                   stop_reasons=["refusal:cyber", "refusal:cyber"]) for g in gens]
+    write(tmp_path / "results/capstone/qwen3-8b/core/generations_incomplete/instruct.jsonl", gens)
+    write(tmp_path / "results/capstone/qwen3-8b/vestigial_regression/judge_incomplete/instruct.jsonl", judged)
+    out = tmp_path / "refusals"
+    sheet, key = J.build_refusal_sheet(root=str(tmp_path), out_dir=str(out))
+    assert len(key) == 4  # every invalid row, none of the labelled ones
+    assert len(sheet) == 3  # incomplete-000's two samples are the same text: one row
+    assert all(k["stop_reasons"] == "refusal:cyber;refusal:cyber" for k in key)
+    header = open(out / "sheet.csv", encoding="utf-8").readline().strip()
+    assert header == "sample_id,prefill,continuation,human_label,notes"  # no model or stage on the sheet
+    rows = list(csv.DictReader(open(out / "sheet.csv", newline="", encoding="utf-8")))
+    rows[0]["human_label"], rows[0]["notes"] = "degenerate", "loop"
+    with open(out / "sheet.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+    sheet2, _ = J.build_refusal_sheet(root=str(tmp_path), out_dir=str(out))
+    kept = {s["sample_id"]: s for s in sheet2}[rows[0]["sample_id"]]
+    assert (kept["human_label"], kept["notes"]) == ("degenerate", "loop")

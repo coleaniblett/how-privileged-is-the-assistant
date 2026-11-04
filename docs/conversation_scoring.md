@@ -27,6 +27,11 @@ python -m core.score_conversations --family olmo3-7b --candidates candidates/log
 
 # 3. Before combining stages: every stage must carry the run manifest's input fingerprint
 python -m core.score_conversations --family olmo3-7b --check-stages
+
+# 2'. After the other checkpoints have left the HF cache: take the per-stage context limits from the frozen manifest
+#     (opt-in, 2026-11-03; the fingerprint check is unchanged). scripts/collect_conv_incomplete.py does this for every stage.
+python -m core.score_conversations --family olmo3-7b --candidates candidates/logit_distortion/pilot_v3 --model sft \
+    --context-limits-from results/logit_conversations/olmo3-7b/core/conversation_scores/inputs_manifest.json
 ```
 
 Outputs go to `results/<run>/<family>/core/conversation_scores/` (`--run`, default `logit_conversations`, so they never

@@ -479,6 +479,16 @@ affected. The human labelling instructions (`judge_validation/README.md`) use th
 validation sheet from the incomplete-turn generations of all 8 checkpoints (base models included), so the teammate's labels match the data being graded.
 The judge-arm prefill set is `data/prefill_incomplete_200.jsonl`; the older sentence-boundary set is a separate "complete-turn" stratum.
 
+## 2026-11-03: core: frozen context limits for conversation scoring (`core.score_conversations --context-limits-from`)
+
+Scoring a conversation stage re-renders the family's inputs and needs every stage's context limit, which `core.score_conversations` read from each
+checkpoint's cached `config.json`. A collection that clears each checkpoint from the HF cache after use (as the overnight driver does) would make a
+later stage depend on configs that are no longer cached. New opt-in flag `--context-limits-from MANIFEST`: take the per-stage limits recorded in a frozen
+`inputs_manifest.json` (it must list exactly the family's stages) instead of reading configs. The input fingerprint check is unchanged, so a stage
+scored this way still refuses to mix with different inputs. Default behaviour, outputs and the other flags are unchanged. Used by
+`scripts/collect_conv_incomplete.py`, which first freezes each family's inputs (`--prepare-only`; an existing manifest must match) and records every stage's
+`config.json` revision and hash in `config_provenance.json` beside the manifest. Test: `test_frozen_context_limits`.
+
 ## 2026-11-02: overgeneralization redesigned around persona carryover
 
 - Primary measure is now persona carryover: does a belief held by the Assistant spill into a new role-played persona more than one held by a role-played character (leak gap, change from base)?
@@ -960,6 +970,58 @@ Run 12:09 to 12:57 UTC as logged above (frozen materials unchanged), `results/pe
 - **Where the move comes from** (added A2): in OLMo instruct the neutral log-odds shift (+9.9 / +8.6) is mostly character-voice openers falling (-8.9 / -8.6 nats) while Assistant-greeting and list openers barely move (+2.1 and -1.3 at most); in Qwen instruct every onset category falls, voice most (-21.6 / -19.4), so the log-odds shift there is voice falling faster than the others. Not "Assistant openers rising".
 - **Held-out personas** (n = 18): same pattern (OLMo instruct fraction 0.86 / 0.86).
 Added after seeing the OLMo results, analysis only (no new scoring, frozen materials and logged readings unchanged), on the laptop Claude's request: (A1) the logged swap validation is true by construction (a swap prompt is identical to the partner's intact prompt; max difference 0.0000 nats, confirmed), so r = +1.00 everywhere is uninformative and is flagged as such; replaced by the between-persona share of variance of intact readouts (log-odds 0.74-0.93, CIs excluding the 1/16 null) and the mean absolute swap - intact shift (1.6-6.6 nats, 88-100% of personas above 0.5), so the persona text is used. (A2) the per-category table. (A3) the combined reading under the spec's "and" wording, kept beside the logged "or" per-readout table. Scoring precision: the shared-cache scores differed from full batch-1 passes by up to 0.11 (OLMo base), 0.31 (OLMo instruct), 0.37 (Qwen base) and 0.56 (Qwen instruct) nats on 2-8-token summed log-probabilities; contrasts of 2-15 nats are not decided by this, but numbers near 0.5 nats are.
+
+## 2026-11-04: judge request settings for Claude Sonnet 5.5 (vestigial regression, judge arm)
+
+Before the first API run, `measures/vestigial_regression/judge.py` sent `temperature=0` and left thinking at its default with
+`max_tokens=200`. Claude Sonnet 5.5 rejects non-default sampling values (400), and its default adaptive thinking spends output
+tokens before the JSON label. Changed: no `temperature` is sent (the API default; recorded as `temperature: null`), and thinking is
+off (`thinking={"type": "between_tools"}`, Sonnet 5.5's thinking-off setting; recorded per row). The cache hash now includes the
+thinking setting; nothing had been cached. Prompt (v2), model, labels and `max_tokens` unchanged; no judge-arm criterion changed.
+Checked with one real request (OLMo Instruct, `incomplete-000` sample 0; request `req_011CgheHkyRmwU3iDn36qGLG`): `end_turn`, text
+only, 1,642 input and 80 output tokens, valid label (`user_voice`). Real token counts run about 30% above the dry run's 4-characters-
+per-token estimate, so the full judge run (8 checkpoints, 4,713 requests, plus the 105-request pilot check) is about $20 at $2 / $10
+per million tokens, not $15.
+
+## 2026-11-04: judge output limit 600 tokens; stop reasons recorded; invalid replies re-judged
+
+After the pilot agreement check (3 of 108 unique samples invalid), `judge.py`'s `max_tokens` went from 200 to 600: the judge often
+writes a few sentences before its JSON, and one reply was cut at 200. Every cached row now records `max_tokens` and the stop reason
+of each attempt (`stop_reasons`, with the refusal category if any), and a cached `invalid` row is not served from the cache, so the
+next run judges it again. Prompt v2 is unchanged (Cole, 2026-11-04: a stricter thought-channel rule was considered and not adopted).
+Re-judging the 3 invalid pilot samples at 600 tokens showed the cause: all three were **refusals by the API's safety classifier,
+category `reasoning_extraction`**, twice each (the samples are Gemma IT / Qwen continuations that open a thought channel or reason
+aloud). The limit was not the cause. How to handle refusals in the main run is open (STATUS).
+
+## 2026-11-04: refused judge samples are labelled by hand, not counted as an outcome (vestigial regression, judge arm)
+
+The full judge run (Sonnet 5.5, prompt v2, 8 checkpoints × 600 incomplete-turn continuations, 2026-11-04 09:43–12:28 UTC) left 73 of
+4,800 samples `invalid` because the API refused both attempts (stop reason `refusal`; categories `reasoning_extraction`, `cyber`, one `bio`):
+OLMo base 18, SFT 6, DPO 6, Instruct 4; Qwen base 5, IT 21; Gemma base 10, IT 3. The `cyber` refusals follow the prefill (e.g. "base64, decode
+and execute"), so base checkpoints are refused too. Cole: a refusal by the judge is not an outcome, and another Claude model is unlikely to
+help. Decision: these samples are labelled **by hand** on a blind sheet (`judge_validation/refusals/sheet.csv`, shuffled, no model or stage;
+key in `sheet_key.csv`; built by `python -m measures.vestigial_regression.judge refusal-sheet`, which keeps entered labels on a rebuild), with
+the validation sheet's definitions, and the hand label replaces `invalid`. A non-Anthropic or local judge for these samples was considered and
+not adopted for now (one judge plus hand labels keeps the label source simple at this count).
+
+## 2026-11-04: user-slot judge arm, run on Cole's provisional labels: deviations from the README arm, logged before reading any primary or secondary figure
+
+Adeeb approved running `measures.overgeneralization.user_traits judge` on Cole's judge labels (`origin/capstone-scoring-2026-11-03`, `results/capstone/<family>/vestigial_regression/judge_incomplete/<stage>.jsonl`; copied read-only with `git show` to a scratch folder; his branch and worktree are not touched). Deviations from the README user-slot arm (text unchanged), all deliberate:
+1. **Prefill set**: Cole judged the 200 incomplete (mid-sentence) prefills x 3 samples (`data/prefill_incomplete_200.jsonl`, `core/generations_incomplete/`), not the 100 sentence-boundary prefills the README names. The judge code only reads (`prefill_id`, `sample`, `label`) and takes the prefill set from the labels themselves, so no join to the generations is needed; the labels cover 200 prefill ids x 3 samples per stage (600 rows per file; checked before any figure was read).
+2. **Folder**: `judge_incomplete`, not `judge` (`--judge-dir`).
+3. **Bar**: the 5 percentage-point bar is now fixed (it was a default pending confirmation) because judge results exist: fires if OLMo instruct is at least 5 pp above base on the primary measure (user_voice_with_assistant_traits among user-voice samples) with the CI excluding zero. Other families and stages never decide it.
+4. **Provisional labels**: the labels are provisional until the team's validation sheets are hand-labelled; every table is marked provisional and the run is one command (`scripts/exploratory/run_user_traits_judge.sh`) that re-reads the labels and optional hand labels (`HAND_LABELS=<dir of <family>/<stage>.jsonl>`, same schema, overriding per (prefill, sample)).
+5. **Invalid samples**: the labels contain 73 samples labelled `invalid` (the judge refused; per file: OLMo base 18, SFT 6, DPO 6, instruct 4; Qwen base 5, instruct 21; Gemma base 10, instruct 3). They are excluded for now (the loader previously rejected the label), counted per stage in each report, and hand labels will replace them. The label counts above were seen while checking the schema; no primary or secondary figure had been computed.
+6. **Families**: OLMo 3 7B decides; Qwen3-8B and Gemma 4 31B are supporting, contamination could not be checked for them.
+Code change (small, compatible): `load_judge` drops `invalid` rows and reports the count, optional hand-label override, report marked provisional and the bar text updated. No other behaviour changes.
+
+## 2026-11-04: user-slot judge arm result (PROVISIONAL, Cole's labels, 200 incomplete prefills x 3 samples)
+
+`results/capstone/<family>/overgeneralization/user_traits_judge.md/.csv`; rerun with `scripts/exploratory/run_user_traits_judge.sh` (add `HAND_LABELS=<dir>` once hand labels exist). **OLMo 3 7B: does not fire.** Primary (user_voice_with_assistant_traits share of user-voice samples), stage minus base in pp: SFT +0.0 [+0.0, +0.0] (155 of 200 prefills usable), DPO +0.0 [+0.0, +0.0] (156), instruct +0.2 [+0.0, +0.6] (156); bar 5 pp. Secondary (same count over all samples): SFT +0.0, DPO +0.0, instruct +0.2 [+0.0, +0.5]. The trait label is almost never used (base 0.0 pp); the dominant label change is the switch from base's mix of switching/degenerate to user voice at SFT/DPO/instruct (counts in Cole's files), outside this measure. Supporting (contamination could not be checked): Qwen3-8B instruct primary -0.3 [-0.9, +0.0] (117 prefills used), secondary -0.3 [-0.8, +0.0]; Gemma 4 31B instruct primary +0.0 [+0.0, +0.0] on only 10 usable prefills (it mostly degenerates or switches, so few user-voice samples), secondary -0.3 [-0.8, +0.0]. Excluded invalid samples: OLMo 34 (base 18, SFT 6, DPO 6, instruct 4), Qwen 26, Gemma 13 (73 in all). Labels are provisional until hand validation.
+
+## 2026-11-04: confirmatory persona carryover on Gemma 4 31B (README criterion 7, breadth arm): plan, logged before scoring
+
+Same frozen item file (sha256 `e319184f4dd09f6d705d2bdd8badc2575919b0d4a0913c14e84ef83708b23344`, 96 items), same readout, same criteria 1-5 via `--verdict`, base and instruct (`google/gemma-4-31B`, `google/gemma-4-31B-it`), `scripts/exploratory/run_carryover_confirmatory_gemma.sh`; outputs only under `results/gemma4-31b/overgeneralization/confirmatory/`. **Loading**: bf16, batch 1 (as the other families), weights placed with `device_map="auto"` (the family's existing `offload` setting, `core.score.load_model`): 20 GiB on the 24 GB GPU (the family default of 30 is for a 48 GB card), the rest in CPU RAM (251 GB present); arithmetic unchanged, no quantization. `persona_carryover.py` score now uses the family's offload setting (new `--gpu-gib`); OLMo and Qwen paths unchanged. **Rendering**: the family's instruct template (`google/gemma-4-31B-it`) for both stages, the open final assistant turn begins with the empty thought channel (`<|channel>thought\n<channel|>`), the existing 2026-11-02 decision; no other change. Contamination could not be checked for this family (supporting). Disk: the two 62 GB checkpoints cannot be on disk together here (121 GB free); the instruct cache (`google/gemma-4-31B-it`) is never deleted, the base checkpoint is removed after scoring only because this run downloaded it. A handful of items are timed first; if the projected total exceeds 2 hours the run is not started and options are reported.
 
 ## 2026-11-04: logit distortion: analysis of the main run's exchange scores (Grace; decided after the data existed, not blind)
 

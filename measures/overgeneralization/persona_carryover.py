@@ -229,7 +229,9 @@ def score(args):
                     seqs.append((ids + vids, {key: (len(ids), len(ids) + len(vids))}))
                     keys.append(key)
     dtype = {"fp32": torch.float32, "bf16": torch.bfloat16}[args.dtype]
-    model, device = load_model(model_id, dtype)
+    fs = config.family_settings()  # families with offload=True (Gemma 4 31B) place weights with device_map=auto; others unchanged
+    model, device = (load_model(model_id, dtype, offload=True, gpu_gib=args.gpu_gib or fs["gpu_gib"], cpu_gib=fs["cpu_gib"])
+                     if fs.get("offload") else load_model(model_id, dtype))
     assert max(max(ids) for ids, _ in seqs) < model.get_input_embeddings().num_embeddings
     pad_id = tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id
     nll = spans_nll(model, device, seqs, pad_id, args.batch_size or (1 if args.dtype == "bf16" else 16))
@@ -443,6 +445,7 @@ def main():
     p.add_argument("--dtype", choices=["fp32", "bf16"], default="bf16",
                    help="bf16 (batch size 1 unless --batch-size is given) per docs/decisions.md 2026-11-02; the pilot is fp32")
     p.add_argument("--batch-size", type=int, default=None)
+    p.add_argument("--gpu-gib", type=int, default=None, help="offload families: GiB of weights on the GPU (default: the family setting, 30 for a 48 GB card)")
     p.add_argument("--out", default=os.path.join(OUT_DIR, "persona_carryover"))
     p = sub.add_parser("analyze")
     p.add_argument("--family", default=None, help="read before parsing by config.family_from_argv")

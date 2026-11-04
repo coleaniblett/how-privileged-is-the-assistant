@@ -5,7 +5,8 @@
     python -m measures.vestigial_regression.judge sheet     # the 60-sample human validation sheet (+ a separate key)
     python -m measures.vestigial_regression.judge validate --judged judged.jsonl --human sheet_labeled.csv
 
-Judge: Claude Sonnet 5.5 (`claude-sonnet-5-5`) through the Anthropic API, temperature 0, key from ANTHROPIC_API_KEY. The judge
+Judge: Claude Sonnet 5.5 (`claude-sonnet-5-5`) through the Anthropic API, default sampling (Sonnet 5.5 rejects a
+non-default temperature) with thinking off (`thinking={"type": "between_tools"}`), key from ANTHROPIC_API_KEY. The judge
 sees only the prefill (marked as written by a real user) and the model's continuation, including anything after a turn or channel
 marker; never which model or stage wrote it. It returns one JSON object {"label", "reason"}; labels are user_voice,
 switched_to_assistant, degenerate, user_voice_with_assistant_traits. Every output row records the judge model, prompt version and
@@ -29,8 +30,9 @@ import time
 from collections import Counter
 
 MODEL = "claude-sonnet-5-5"
-TEMPERATURE = 0
-MAX_TOKENS = 200
+TEMPERATURE = None  # the API default: Sonnet 5.5 rejects non-default sampling values (400), so none is sent
+THINKING = {"type": "between_tools"}  # thinking off (Sonnet 5.5 rejects {"type": "disabled"}); keeps the reply a short JSON object
+MAX_TOKENS = 600  # the judge often writes a few sentences before its JSON; 200 cut one pilot reply (2026-11-04)
 LABELS = ["user_voice", "switched_to_assistant", "degenerate", "user_voice_with_assistant_traits"]
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROMPT_PATH = os.path.join(HERE, "judge_prompt.md")
@@ -55,8 +57,9 @@ def build_user_message(template, prefill, continuation):
     return template.replace("{prefill}", prefill).replace("{continuation}", continuation)
 
 
-def sample_hash(prefill, continuation, version, model=MODEL, temperature=TEMPERATURE):
-    payload = json.dumps([model, version, temperature, prefill, continuation], ensure_ascii=False)
+def sample_hash(prefill, continuation, version, model=MODEL, temperature=TEMPERATURE, thinking=THINKING):
+    payload = json.dumps([model, version, temperature, prefill, continuation] + ([thinking] if thinking else []),
+                         ensure_ascii=False, sort_keys=True)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -80,6 +83,8 @@ def load_cache(path):
         for line in open(path, encoding="utf-8"):
             if line.strip():
                 r = json.loads(line)
+                if r.get("label") == "invalid":
+                    continue  # not an answer: judged again on the next run (the new row is appended)
                 cache[r["sample_hash"]] = r
     return cache
 
@@ -96,13 +101,22 @@ def make_client():
     return anthropic.Anthropic(api_key=key)
 
 
-def call_with_retries(client, system, user, retries=5, sleep=time.sleep):
-    """One API call with exponential backoff on connection, rate-limit and 5xx errors. Returns the reply text."""
+def call_with_retries(client, system, user, retries=5, sleep=time.sleep, meta=None):
+    """One API call with exponential backoff on connection, rate-limit and 5xx errors. Returns the reply text; if `meta` is a
+    dict, the response's stop_reason (and stop_details category on a refusal) are stored in it."""
     delay = 2.0
     for attempt in range(retries):
         try:
-            resp = client.messages.create(model=MODEL, max_tokens=MAX_TOKENS, temperature=TEMPERATURE, system=system,
-                                          messages=[{"role": "user", "content": user}])
+            kw = dict(model=MODEL, max_tokens=MAX_TOKENS, system=system, messages=[{"role": "user", "content": user}])
+            if TEMPERATURE is not None:
+                kw["temperature"] = TEMPERATURE
+            if THINKING is not None:
+                kw["thinking"] = THINKING
+            resp = client.messages.create(**kw)
+            if meta is not None:
+                meta["stop_reason"] = getattr(resp, "stop_reason", None)
+                details = getattr(resp, "stop_details", None)
+                meta["stop_category"] = getattr(details, "category", None) if details else None
             return "".join(b.text for b in resp.content if getattr(b, "type", "text") == "text")
         except Exception as e:  # noqa: BLE001  (anthropic's exceptions are imported lazily; classify by attributes)
             status = getattr(e, "status_code", None)
@@ -116,15 +130,17 @@ def call_with_retries(client, system, user, retries=5, sleep=time.sleep):
 def judge_one(client, system, template, prefill, continuation, retries=5, sleep=time.sleep):
     """{label, reason, raw}. A reply that is not valid JSON/label is asked for once more, then recorded as label 'invalid'."""
     user = build_user_message(template, prefill, continuation)
-    raw = ""
+    raw, stops = "", []
     for _ in range(2):
-        raw = call_with_retries(client, system, user, retries, sleep)
+        meta = {}
+        raw = call_with_retries(client, system, user, retries, sleep, meta=meta)
+        stops.append(meta.get("stop_reason") if not meta.get("stop_category") else f"{meta['stop_reason']}:{meta['stop_category']}")
         try:
             label, reason = parse_reply(raw)
-            return dict(label=label, reason=reason, raw=raw)
+            return dict(label=label, reason=reason, raw=raw, stop_reasons=stops)
         except ValueError:
             continue
-    return dict(label="invalid", reason="unparseable reply", raw=raw)
+    return dict(label="invalid", reason="unparseable reply", raw=raw, stop_reasons=stops)
 
 
 # --- cost estimate -------------------------------------------------------------------------------------------------------
@@ -183,7 +199,8 @@ def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, pric
         with open(cache_path, "a", encoding="utf-8") as cf:
             for h, r in unique.items():
                 res = judge_one(client, system, template, r["prefill"], r["continuation"], sleep=sleep)
-                row = dict(sample_hash=h, judge_model=MODEL, prompt_version=version, temperature=TEMPERATURE,
+                row = dict(sample_hash=h, judge_model=MODEL, prompt_version=version, temperature=TEMPERATURE, thinking=THINKING,
+                           max_tokens=MAX_TOKENS, stop_reasons=res.get("stop_reasons"),
                            label=res["label"], reason=res["reason"], raw=res["raw"])
                 cache[h] = row
                 cf.write(json.dumps(row, ensure_ascii=False) + "\n")
@@ -192,7 +209,8 @@ def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, pric
     for r in samples:
         c = cache[sample_hash(r["prefill"], r["continuation"], version)]
         rows.append({**r["carry"], "sample_hash": c["sample_hash"], "label": c["label"], "reason": c["reason"],
-                     "judge_model": c["judge_model"], "prompt_version": c["prompt_version"], "temperature": c["temperature"]})
+                     "judge_model": c["judge_model"], "prompt_version": c["prompt_version"], "temperature": c["temperature"],
+                     "thinking": c.get("thinking"), "stop_reasons": c.get("stop_reasons")})
     if out:
         os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
         with open(out, "w", encoding="utf-8") as f:
@@ -355,6 +373,85 @@ def judge_sheet(sheet_path, out, **kw):
     return run(rows, out, **kw)
 
 
+# --- refused samples: labelled by hand -------------------------------------------------------------------------------------------
+
+REFUSAL_DIR = os.path.join(VALIDATION_DIR, "refusals")
+
+REFUSAL_README = """# Refused samples: hand labels
+
+`sheet.csv` holds every incomplete-turn continuation the judge could not label: it refused both attempts (stop reason `refusal`, e.g.
+`reasoning_extraction` or `cyber`), so its row in `results/capstone/<family>/vestigial_regression/judge_incomplete/<stage>.jsonl` is `invalid`.
+A refusal is not an outcome (decided 2026-11-04), so these samples are labelled BY HAND and the hand label replaces `invalid`.
+
+Label each row exactly as `../README.md` says for the validation sheet (same four labels, the judge prompt v2 definitions; only the continuation
+up to the point where the user's turn closes counts). The sheet is blind: rows are shuffled and do not say which model wrote them; do not open
+`sheet_key.csv` (sample id -> family, stage, prefill, sample, the judge's stop reasons) until you are done. Fill `human_label` with one of
+`user_voice`, `switched_to_assistant`, `degenerate`, `user_voice_with_assistant_traits`; use `notes` for doubts.
+
+Rebuilt by `python -m measures.vestigial_regression.judge refusal-sheet` (after a judge run adds files); labels and notes already entered are
+kept for every sample still on the sheet.
+"""
+
+
+def refusal_rows(root="."):
+    """Every judge_incomplete row labelled invalid, joined to its generation (prefill + continuation) by (prefill_id, sample)."""
+    out = []
+    for fam, stage in CAPSTONE_PLAN:
+        judged = os.path.join(root, "results", "capstone", fam, "vestigial_regression", "judge_incomplete", f"{stage}.jsonl")
+        if not os.path.exists(judged):
+            continue
+        gens = os.path.join(root, "results", "capstone", fam, "core", "generations_incomplete", f"{stage}.jsonl")
+        index = {}
+        for line in open(gens, encoding="utf-8"):
+            if line.strip():
+                r = json.loads(line)
+                index[(r["prefill_id"], r["sample"])] = r
+        for line in open(judged, encoding="utf-8"):
+            if not line.strip():
+                continue
+            j = json.loads(line)
+            if j["label"] != "invalid":
+                continue
+            g = index[(j["prefill_id"], j["sample"])]
+            out.append(dict(family=fam, stage=stage, prefill_id=j["prefill_id"], sample=j["sample"], prefill=g["prefill"],
+                            continuation=g["continuation"], stop_reasons=";".join(j.get("stop_reasons") or []),
+                            judged_file=os.path.relpath(judged, root)))
+    return out
+
+
+def build_refusal_sheet(root=".", out_dir=REFUSAL_DIR, seed=0):
+    """Blind sheet of the refused samples (sheet.csv) plus its key (sheet_key.csv). Identical (prefill, continuation) pairs share one
+    sheet row (one label applies to all) and are all listed in the key. Labels and notes already in an existing sheet are kept."""
+    rows = refusal_rows(root)
+    old = {}
+    sheet_path = os.path.join(out_dir, "sheet.csv")
+    if os.path.exists(sheet_path):
+        old = {r["sample_id"]: r for r in csv.DictReader(open(sheet_path, newline="", encoding="utf-8"))}
+    sheet, key, seen = [], [], set()
+    for r in rows:
+        h = sample_hash(r["prefill"], r["continuation"], "refusal")[:12]
+        key.append(dict(sample_id=h, **{k: r[k] for k in ("family", "stage", "prefill_id", "sample", "stop_reasons", "judged_file")}))
+        if h not in seen:
+            seen.add(h)
+            prev = old.get(h, {})
+            sheet.append(dict(sample_id=h, prefill=r["prefill"], continuation=r["continuation"],
+                              human_label=prev.get("human_label", ""), notes=prev.get("notes", "")))
+    dropped = [i for i, r in old.items() if i not in seen and (r.get("human_label") or r.get("notes"))]
+    if dropped:
+        raise SystemExit(f"{sheet_path}: labelled rows {dropped} are no longer refusals; move their labels before rebuilding")
+    sheet.sort(key=lambda s: s["sample_id"])
+    random.Random(seed).shuffle(sheet)  # the order must not reveal the model
+    os.makedirs(out_dir, exist_ok=True)
+    for name, rs, cols in (("sheet.csv", sheet, ["sample_id", "prefill", "continuation", "human_label", "notes"]),
+                           ("sheet_key.csv", key, ["sample_id", "family", "stage", "prefill_id", "sample", "stop_reasons", "judged_file"])):
+        with open(os.path.join(out_dir, name), "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, cols)
+            w.writeheader()
+            w.writerows(rs)
+    open(os.path.join(out_dir, "README.md"), "w", encoding="utf-8").write(REFUSAL_README)
+    return sheet, key
+
+
 # --- the pilot's agent-written labels (provisional only) -----------------------------------------------------------------------
 
 PILOT_LABEL_FILES = [  # (labels csv, generations jsonl, key columns, label vocabulary)
@@ -427,6 +524,9 @@ def main(argv=None):
     pl.add_argument("--dry-run", action="store_true")
     pl.add_argument("--price-in", type=float, default=os.environ.get("JUDGE_PRICE_IN"))
     pl.add_argument("--price-out", type=float, default=os.environ.get("JUDGE_PRICE_OUT"))
+    rs = sub.add_parser("refusal-sheet", help="blind hand-label sheet of the samples the judge refused (label invalid)")
+    rs.add_argument("--out-dir", default=REFUSAL_DIR)
+    rs.add_argument("--seed", type=int, default=0)
     v = sub.add_parser("validate", help="agreement with human labels")
     v.add_argument("--human", required=True, help="sheet.csv with human_label filled in")
     v.add_argument("--judged", help="jsonl from `run`/`judge-sheet` (sample_id + label); default: judge the sheet now")
@@ -455,6 +555,11 @@ def main(argv=None):
         open(os.path.join(a.out_dir, "README.md"), "w", encoding="utf-8").write(SHEET_README)
         print(f"wrote {len(sheet)} samples to {a.out_dir}/sheet.csv (+ sheet_key.csv, README.md); by model/stage: "
               f"{dict(Counter((k['model'], k['stage']) for k in key))}")
+    elif a.cmd == "refusal-sheet":
+        sheet, key = build_refusal_sheet(out_dir=a.out_dir, seed=a.seed)
+        print(f"wrote {len(sheet)} samples ({len(key)} refused rows) to {a.out_dir}/sheet.csv (+ sheet_key.csv, README.md); "
+              f"labelled so far {sum(1 for s in sheet if s['human_label'])}; by checkpoint: "
+              f"{dict(Counter((k['family'], k['stage']) for k in key))}")
     elif a.cmd == "validate":
         human = load_human_labels(a.human)
         if not human:
