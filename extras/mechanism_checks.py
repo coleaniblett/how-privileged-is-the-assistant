@@ -11,6 +11,8 @@ H3  Do characters escape refusal through their first words?  Forced openers (non
     python -m extras.mechanism_checks h3 --family olmo3-7b --stage base     # GPU: generate -> results/mechanism_checks/h3/<family>/<stage>.jsonl.gz (local)
     python -m extras.mechanism_checks analyze [h1|h2|h3]                     # tables -> results/mechanism_checks/mechanism_checks.md (+ csv)
 """
+import os as _os
+_os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")   # generation OOM at batch 48 with fragmentation (2026-11-04)
 import argparse
 import glob
 import gzip
@@ -133,7 +135,7 @@ def h3_items(mat):
     return items
 
 
-def generate_items(tok, model, device, items, prefix_key=None, batch=48):
+def generate_items(tok, model, device, items, prefix_key=None, batch=16):
     """Sample H2_SAMPLES continuations per item (left-padded batches, bf16). prefix_key: field holding a forced opener appended to the prompt."""
     import torch
     from extras.persona_leakage import chat
