@@ -204,10 +204,18 @@ def build(args):
     print(f"wrote {len(rows)} conversations x {len(CONDITIONS)} conditions to {out}")
 
 
-def prompt_ids(tok, turns):
-    """Token ids up to the end of the open final turn's content (its end-of-turn tokens dropped)."""
+def prompt_ids(tok, turns, opening=False):
+    """Token ids up to the end of the open final turn's content (its end-of-turn tokens dropped).
+    opening=True (Gemma 4, --assistant-opening): the final assistant turn begins with the opening the template's generation prompt adds
+    (core.render.assistant_opening_extra, the empty thought channel), as in the NLL scoring path; off by default, so OLMo and Qwen are unchanged."""
     r = render_conversation(tok, turns, ROLES)
-    return r.input_ids[: r.spans[-1][1]]
+    start, end = r.spans[-1]
+    if opening:
+        from core.render import assistant_opening_extra
+        extra = assistant_opening_extra(tok)
+        if extra and not tok.decode(r.input_ids[max(0, start - len(encode(tok, extra))):start]).endswith(extra):
+            return r.input_ids[:start] + encode(tok, extra) + r.input_ids[start:end]
+    return r.input_ids[:end]
 
 
 def score(args):
@@ -221,7 +229,7 @@ def score(args):
     seqs, keys = [], []
     for row in rows:
         for cond in CONDITIONS:
-            ids = prompt_ids(tok, row["turns"][cond])
+            ids = prompt_ids(tok, row["turns"][cond], getattr(args, "assistant_opening", False))
             for o in row["outcomes"]:
                 for v in variants(o):
                     vids = encode(tok, v)
@@ -373,7 +381,8 @@ def analyze(args):
     fam = config.family_settings()
     note = [] if fam["contamination_check"] else [
         f"**Family {config.FAMILY}: contamination could not be checked** (its post-training data is not public); breadth arm (README criterion 7). "
-        f"Assistant-slot empty think block: {'ON (the pre-declared primary rendering, docs/decisions.md 2026-11-02)' if config.ASSISTANT_THINK_BLOCK else 'OFF'}.", ""]
+        (f"Final assistant turn opened with the template's empty thought channel: {'YES (--assistant-opening, as planned)' if getattr(args, 'assistant_opening', False) else 'NO'}." if config.FAMILY == "gemma4-31b" else
+         f"Assistant-slot empty think block: {'ON (the pre-declared primary rendering, docs/decisions.md 2026-11-02)' if config.ASSISTANT_THINK_BLOCK else 'OFF'}."), ""]
     md = ["# Persona carryover (overgeneralization)", "", *note,
           "The pilot item set is exploratory; the verdict comes from the confirmatory set (README). Recreates on this repo's models a lesson from earlier "
           "Qwen3 skewed-belief work (not a result here): a belief held by the Assistant carried into a new role-play "
@@ -445,6 +454,7 @@ def main():
     p.add_argument("--dtype", choices=["fp32", "bf16"], default="bf16",
                    help="bf16 (batch size 1 unless --batch-size is given) per docs/decisions.md 2026-11-02; the pilot is fp32")
     p.add_argument("--batch-size", type=int, default=None)
+    p.add_argument("--assistant-opening", action="store_true", help="open the final assistant turn with the template's generation-prompt opening (Gemma 4: empty thought channel)")
     p.add_argument("--gpu-gib", type=int, default=None, help="offload families: GiB of weights on the GPU (default: the family setting, 30 for a 48 GB card)")
     p.add_argument("--out", default=os.path.join(OUT_DIR, "persona_carryover"))
     p = sub.add_parser("analyze")
@@ -453,6 +463,7 @@ def main():
     p.add_argument("--dataset", default=DATA_PATH)
     p.add_argument("--tokenizer", default=config.TEMPLATE_MODEL)
     p.add_argument("--out-dir", default=OUT_DIR)
+    p.add_argument("--assistant-opening", action="store_true", help="report note only: the scores were made with --assistant-opening")
     p.add_argument("--n-boot", type=int, default=10_000)
     p.add_argument("--seed", type=int, default=config.SEED)
     p.add_argument("--verdict", action="store_true", help="add the pre-registered stage verdict (README criteria 1-5); for the confirmatory item set only")
