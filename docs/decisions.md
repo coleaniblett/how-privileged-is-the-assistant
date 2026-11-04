@@ -1038,3 +1038,19 @@ Question: the leakage-matrix register score falls after post-training for charac
 ## 2026-11-04: Gemma 4 31B confirmatory carryover runs on arena9-vinyl, not here
 
 Adeeb claimed arena9-vinyl (96 GB GPU, 1 TB RAM, about 90 GB disk) and the laptop Claude started the run there at about 14:08 UTC (repo at `870ed99`, log `/root/gemma_carryover.log`, `GPU_GIB=90`). All weights are on the GPU, no CPU offload and no quantization: still bf16, batch 1, same frozen items (sha256 `e319184f4dd09f6d705d2bdd8badc2575919b0d4a0913c14e84ef83708b23344`), same criteria and verdict code, think/thought-channel rendering as logged above; contamination could not be checked for this family. The offload plan and the 2-hour stop above were for this 24 GB card and are superseded; the outputs will be copied back with rsync and committed as written. Nothing under `/root/g4nla` on vinyl is touched.
+
+## 2026-11-04: judge validation sheet rebuilt from the main-run generations and split between three labellers (vestigial regression, judge arm)
+
+Before any human label existed (`judge_validation/sheet.csv` had 0 of 60 labelled), the validation sheet was rebuilt with
+`judge sheet --from-capstone` (seed 0). The old sheet drew on pre-capstone generations (exploration samples for Gemma IT and Qwen IT,
+the pre-capstone OLMo run's complete-sentence prefills), so it validated the judge on text it was never used on, and it held no Gemma
+or Qwen base samples, which the README's validation requirement includes. The new sheet draws 60 from the 600 incomplete-turn generations
+per checkpoint that the judge labelled in the main run: 8 per OLMo stage, 7 per Qwen and Gemma checkpoint (`CAPSTONE_PLAN`).
+
+Cole asked for the labelling to be shared by Cole, Grace and Adeeb with some overlap. `judge split-sheet` (seed 0) puts 12 samples on
+every labeller's file (covering all 8 checkpoints) and deals the other 48 out evenly, 16 each, round-robin within checkpoint, so each
+labeller has 28 rows with 3-4 per checkpoint (`judge_validation/split/sheet_<name>.csv`, `assignment.csv`). `judge combine-sheets`
+writes the merged labels to `sheet.csv`: an unshared sample's single label, a shared sample's majority (2 of 3 or more). A shared sample
+with no majority stays unlabelled and is reported, so it does not enter the judge's agreement. It also reports pairwise agreement and
+Fleiss' kappa between labellers on the shared samples. The judge-agreement measure (`judge validate`, raw agreement and Cohen's kappa)
+and its 80% default bar are unchanged.
