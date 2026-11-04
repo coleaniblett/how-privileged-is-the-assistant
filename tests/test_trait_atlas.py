@@ -165,3 +165,12 @@ def test_judge_prompt_includes_reference_note_only_where_frozen():
     assert "false premise" in p and t["items"][0]["false_premise"] in p and "Some reply" in p
     t2 = next(x for x in MAT["traits"] if x["id"] == "flattery")
     assert "Reference note" not in ta.judge_prompt(MAT, "flattery", t2["items"][0], "Great!")
+
+
+def test_is_switch_ignores_the_normal_end_of_turn():
+    mk = ["<|im_end|>", "<|im_start|>", "<|endoftext|>"]
+    assert not ta.is_switch("A normal reply.<|im_end|>", mk)
+    assert not ta.is_switch("A normal reply.<|im_end|>\n<|endoftext|>", mk)
+    assert not ta.is_switch("No end token at all (hit the cap).", mk)
+    assert ta.is_switch("Reply.<|im_end|>\n<|im_start|>assistant\nSecond turn", mk)
+    assert ta.is_switch("Reply.\nChatGPT: hello there", mk)

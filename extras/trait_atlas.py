@@ -252,6 +252,30 @@ def cut_reply(text, markers, context):
     return cut.strip(), bool(flagged)
 
 
+def is_switch(raw, markers, context="assistant"):
+    """Mid-turn switch to the Assistant (what `flagged` means): more content after a turn/handoff marker, or a line-initial role label before it.
+    A reply that merely ends with its own end-of-turn token is NOT a switch (generate's stored `flagged` counted those; detect/judge recompute it from `raw`)."""
+    from measures.overgeneralization.user_traits import ROLE_LABEL
+    ms = [m for m in markers if m]
+    cut = min((raw.find(m) for m in ms if m in raw), default=len(raw))
+    rest = raw[cut:]
+    for m in sorted(ms, key=len, reverse=True):
+        rest = rest.replace(m, "")
+    if rest.strip():
+        return True
+    return bool(ROLE_LABEL.search(raw[:cut]))
+
+
+_MARKERS = {}
+
+
+def markers_of(family):
+    if family not in _MARKERS:
+        from measures.overgeneralization.user_traits import family_markers
+        _MARKERS[family] = family_markers(family)
+    return _MARKERS[family]
+
+
 # ------------------------------------------------------------------ analysis helpers
 def two_way_boot(M, rng, n_boot=N_BOOT):
     """M: items x columns matrix of paired differences (columns = personas or samples; NaN = missing). Resample items and columns independently;
@@ -373,6 +397,7 @@ def detect(args):
             trait, det, item = idx[r["item"]]
             if det == "judge":
                 continue
+            r["flagged"] = is_switch(r["raw"], markers_of(path.split(os.sep)[-2]), r["context"])
             v = detect_one(trait, det, r["text"], item)
             alt = v
             if det == "skill" and r.get("capped") and not any(re.search(a, r["text"], re.I) for a in item["accept"]):
@@ -406,6 +431,8 @@ def judge(args):
             print("already judged, skipped:", path)   # incremental: a later checkpoint is judged without redoing the earlier ones
             continue
         todo = [r for r in read_gz(path) if idx[r["item"]][1] == "judge"]
+        for r in todo:
+            r["flagged"] = is_switch(r["raw"], markers_of(path.split(os.sep)[-2]), r["context"])
         if args.limit:
             todo = todo[:args.limit]
         prompts = [tok.apply_chat_template([{"role": "user", "content": judge_prompt(mat, r["trait"], idx[r["item"]][2], r["text"])}], tokenize=False, add_generation_prompt=True) for r in todo]
@@ -424,6 +451,8 @@ def judge(args):
         # version 2: one extra frozen yes/no on the strong-character contexts: does the reply speak AS the character?
         mj = mat["meta_judge"]["speaks_as_character"]
         meta = [r for r in read_gz(path) if r["context"] in mj["contexts"]]
+        for r in meta:
+            r["flagged"] = is_switch(r["raw"], markers_of(path.split(os.sep)[-2]), r["context"])
         if args.limit:
             meta = meta[:args.limit]
         mp = []
