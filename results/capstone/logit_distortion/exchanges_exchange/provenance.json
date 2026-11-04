@@ -1,0 +1,148 @@
+{
+ "command": "python -m measures.logit_distortion.analyze ",
+ "git_revision": "ad6cdcffa0221bc7fcd8ba1914e26bacbb03562b",
+ "git_dirty_analysis_code": false,
+ "analysis_code_sha256": {
+  "analyze.py": "aae5e3c72137e64e31477bcbf5fb54cf03a7922273c5d4d04826e1ec0ec13065",
+  "plots.py": "22a185e26de10549de0cc0b1f354657f33066e75acbc3453c3580400fdae235b"
+ },
+ "settings": {
+  "n_boot": 10000,
+  "seed": 0,
+  "floor_nats": 0.05,
+  "ci": "95% percentile",
+  "resampling": "exchange IDs jointly within family x corpus (pairs roles, framings, checkpoints)",
+  "positions_main": "from1",
+  "position_bins": [
+   "1-5",
+   "6-10",
+   "11-25",
+   "26-50",
+   "51-100",
+   "101-200",
+   "201-299"
+  ],
+  "min_bin_n": 10,
+  "root": "results/capstone",
+  "tag": "exchanges_exchange"
+ },
+ "inputs": {
+  "olmo3-7b base": {
+   "scores.csv": {
+    "path": "results/capstone/olmo3-7b/base/core/exchanges_exchange/scores.csv",
+    "sha256": "1d3a4a113943ddd23bacbe80030cb4d2cff808bbd1f70cc2d4d635b0c436e916"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/olmo3-7b/base/core/exchanges_exchange/tokens.parquet",
+    "sha256": "3e4dcdf60b8399b60c40b5385352d3df79a537f8cadfe2fb4f5868e9cfed2121"
+   },
+   "manifest.json": {
+    "path": "results/capstone/olmo3-7b/base/core/exchanges_exchange/manifest.json",
+    "sha256": "541b480a8c2d2f5474e6ced4963ecc0b78b043977759b48c5f3ef05f1d10d444"
+   }
+  },
+  "olmo3-7b sft": {
+   "scores.csv": {
+    "path": "results/capstone/olmo3-7b/sft/core/exchanges_exchange/scores.csv",
+    "sha256": "d89af52e3019597d80efe5c5653ce18573ec2b26d9e748d6b14461054d800c06"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/olmo3-7b/sft/core/exchanges_exchange/tokens.parquet",
+    "sha256": "4d84dc995c5101c3ba385b69ac7cab48939c1d9caf73cfeeefe541c081513597"
+   },
+   "manifest.json": {
+    "path": "results/capstone/olmo3-7b/sft/core/exchanges_exchange/manifest.json",
+    "sha256": "a1a3700ec127d98101d94ba56988e6c7b359e54e8f27f704f5ce61c69aa59ac6"
+   }
+  },
+  "olmo3-7b dpo": {
+   "scores.csv": {
+    "path": "results/capstone/olmo3-7b/dpo/core/exchanges_exchange/scores.csv",
+    "sha256": "fbfea6d4535bd1cf946fd489723afd3b41c89453150ee52c00fa5dac58c9bb5f"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/olmo3-7b/dpo/core/exchanges_exchange/tokens.parquet",
+    "sha256": "4187ad369678f5b6358f44d1e67f45a038112409b16fdb6772f945efb0dad718"
+   },
+   "manifest.json": {
+    "path": "results/capstone/olmo3-7b/dpo/core/exchanges_exchange/manifest.json",
+    "sha256": "6588fa94c7d5551c8115de822959ddafc46fe640dd29fa0fcec42b833ad038b3"
+   }
+  },
+  "olmo3-7b instruct": {
+   "scores.csv": {
+    "path": "results/capstone/olmo3-7b/instruct/core/exchanges_exchange/scores.csv",
+    "sha256": "ab466985e4e4c06716cd1eb78d74ebb78e8869a3162269957cb45bf4bab389b5"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/olmo3-7b/instruct/core/exchanges_exchange/tokens.parquet",
+    "sha256": "4fbb509c58db17db6f274c3783ed8494897509fe7b7f03ba169731aac180064e"
+   },
+   "manifest.json": {
+    "path": "results/capstone/olmo3-7b/instruct/core/exchanges_exchange/manifest.json",
+    "sha256": "b39807e386fa6f2d98f0bc0e6a87902b0ac1809cbbf17bd3bf7d6bb599fb5a10"
+   }
+  },
+  "gemma4-31b base": {
+   "scores.csv": {
+    "path": "results/capstone/gemma4-31b/base/core/exchanges_exchange/scores.csv",
+    "sha256": "713e3822dab6c0db111b7fb0ef8f82eb3d2e2f1f27ee819f6cea03558057d10b"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/gemma4-31b/base/core/exchanges_exchange/tokens.parquet",
+    "sha256": "ef9aaa5c5db59b65b7bc34088357f631383c09d055987f7c4cdbcbe284781fec"
+   },
+   "manifest.json": {
+    "path": "results/capstone/gemma4-31b/base/core/exchanges_exchange/manifest.json",
+    "sha256": "fdbd69666ef7fbd953e3c8908b59001ff6558e8e58472402afe6960d47925c38"
+   }
+  },
+  "gemma4-31b instruct": {
+   "scores.csv": {
+    "path": "results/capstone/gemma4-31b/instruct/core/exchanges_exchange/scores.csv",
+    "sha256": "2abdba17d4ef434c371ed55efea07b95ccc53071f582f576dba444af441926fd"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/gemma4-31b/instruct/core/exchanges_exchange/tokens.parquet",
+    "sha256": "60ac5f37b0d28ce2c7be082e7bd49da44a29e5c6f4312b10b5d51bfb0d9000ef"
+   },
+   "manifest.json": {
+    "path": "results/capstone/gemma4-31b/instruct/core/exchanges_exchange/manifest.json",
+    "sha256": "fb20becac4d55a371d3e398f33b7d15f0ddeb0b52fc33dd42aa77cb72a6439de"
+   }
+  },
+  "qwen3-8b base": {
+   "scores.csv": {
+    "path": "results/capstone/qwen3-8b/base/core/exchanges_exchange/scores.csv",
+    "sha256": "184f1c9f315eb5c4e2b420b4653d2d54c5c7f18615e94b977afbeb13cc99b67b"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/qwen3-8b/base/core/exchanges_exchange/tokens.parquet",
+    "sha256": "51206a5ad741aba91ae098abc536229ecd31c5e0aad203ace39ac33fc4f1f686"
+   },
+   "manifest.json": {
+    "path": "results/capstone/qwen3-8b/base/core/exchanges_exchange/manifest.json",
+    "sha256": "3df4ccb08cc21b6d5e73a8d4d3d253ad1d9c52c00a26265c5f63e9eece54a323"
+   }
+  },
+  "qwen3-8b instruct": {
+   "scores.csv": {
+    "path": "results/capstone/qwen3-8b/instruct/core/exchanges_exchange/scores.csv",
+    "sha256": "4d0a4a7c7ae149399f41a1712caf0216e7690cdf26df7601e0b00ed92851c217"
+   },
+   "tokens.parquet": {
+    "path": "results/capstone/qwen3-8b/instruct/core/exchanges_exchange/tokens.parquet",
+    "sha256": "baeeefc898add76841cc123be2dfc53cc0818a20f536ccf516516d86341f63eb"
+   },
+   "manifest.json": {
+    "path": "results/capstone/qwen3-8b/instruct/core/exchanges_exchange/manifest.json",
+    "sha256": "b1c0ba72381612abd283216bd7c58af5e9d48e00743fe8dfc4a316989eeb30c2"
+   }
+  }
+ },
+ "inputs_fingerprints": {
+  "olmo3-7b": "27c9848080a01245869d320adab6154db5ccfeb24d6b788dfb0ca3accfa385d8",
+  "gemma4-31b": "8c26564b3cbdcdbc6e69fcf097ccec42982bfb348f2b98457431a0fa81611035",
+  "qwen3-8b": "7a54cc5537436696a6bb2de339c1432528ddbcdc47781e666ccad0055bd61fae"
+ }
+}

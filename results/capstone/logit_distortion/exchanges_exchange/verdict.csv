@@ -1,0 +1,6 @@
+family,stage,oasst1_mean,oasst1_lo,oasst1_hi,oasst1_meets,oasst1_opposite,ultrachat_mean,ultrachat_lo,ultrachat_hi,ultrachat_meets,ultrachat_opposite,verdict
+olmo3-7b,sft,-0.132825,-0.171475,-0.095127,False,True,-0.114694,-0.142810,-0.086329,False,True,criterion 1 not met; opposite direction in both columns
+olmo3-7b,dpo,0.548439,0.470396,0.627236,True,False,0.486159,0.433647,0.538882,True,False,criterion 1 met (logit distortion present)
+olmo3-7b,instruct,0.513633,0.430991,0.596953,True,False,0.440153,0.386186,0.493992,True,False,criterion 1 met (logit distortion present)
+gemma4-31b,instruct,-7.689498,-8.146021,-7.230023,False,True,-7.312881,-7.658570,-6.961588,False,True,criterion 1 not met; opposite direction in both columns
+qwen3-8b,instruct,-0.600439,-0.666187,-0.532679,False,True,-0.051066,-0.096649,-0.006227,False,True,criterion 1 not met; opposite direction in both columns

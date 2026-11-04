@@ -12,7 +12,7 @@ per teammate, on top of a shared pipeline.
 | measure | Shiller's form | one line | owner | status |
 |---|---|---|---|---|
 | vestigial regression | dominance | non-assistant personas, especially the user, degrade | Cole | design locked (NLL arm + judge arm); NLL arm built for OLMo, judge arm not built |
-| logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | Grace | design settled; analysis stub only |
+| logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | Grace | analysed on the main run's exchange scores (2026-11-04); original-conversation route not analysed |
 | overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | persona-carryover measure built (pilot scored); confirmatory set drafted, not scored; user-slot arm built (judge not run); exploratory probes in `extras/` |
 
 Hypotheses (there is no H3: Shiller treats dominance as a form of privilege):
@@ -128,7 +128,8 @@ labels, plus regex flags for loops. Either arm firing counts toward H4, reportin
 not blind. Code: `flags.py` (regex flags on core samples), `analyze.py` (the asymmetry is a TODO); open items in the
 measure README.
 
-**Logit distortion**, `measures/logit_distortion/README.md`. Status: design settled, `analyze.py` is a stub.
+**Logit distortion**, `measures/logit_distortion/README.md`. Status: `analyze.py` implemented and run on the exchange design (2026-11-04,
+`results/capstone/logit_distortion/exchanges_exchange/`; spec applied after the data existed, not blind).
 Calibration gap (mean NLL − mean next-token entropy) of each persona in its own slot, crossing persona with
 authorship; privilege if the assistant gap grows from base more than the user gap, from content position 1 on
 and by position. Data route (Grace, 2026-11-02): original multi-exchange conversations from OASST1, WildChat and UltraChat with
