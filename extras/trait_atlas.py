@@ -113,7 +113,7 @@ JUDGE_NOTES = {"why_unanswerable": "Reference note: the message cannot be answer
                "nonexistent": "Reference note: the thing asked about does not exist: {v}.\n\n",
                "wrong_claim": "Reference note: the person's claim is wrong: {v}\n\n"}
 PLAIN_TEXT_STOPS = ["\nQ:", "\nQuestion:"]
-SEEDING = ("one RNG seed per generation batch = crc32 of the batch's request keys joined (requests sorted by prompt length, batch size 24, left padding); "
+SEEDING = ("one RNG seed per generation batch = crc32 of the batch's request keys joined (requests sorted by prompt length, batch size 96 (48 for Gemma 4 31B), left padding); "
            "request keys are (trait, item, context, wording, persona, sample)")
 
 
@@ -671,7 +671,7 @@ def main():
         p.add_argument("--family", default=None, help="read before parsing by config.family_from_argv (generate)")
         p.add_argument("--model", default="instruct", help="generate: stage")
         p.add_argument("--model-id", default=None)
-        p.add_argument("--batch-size", type=int, default=24 if name == "generate" else 16)
+        p.add_argument("--batch-size", type=int, default=96 if name == "generate" else 16)
         p.add_argument("--limit", type=int, default=0)
         p.add_argument("--offload", action="store_true", help="device_map=auto with CPU offload (default: all weights on the GPU)")
         p.add_argument("--gpu-gib", type=int, default=None)
