@@ -6,10 +6,10 @@ cd "${SYNC_WT:?set SYNC_WT to a separate git worktree}"
 V=arena9-vinyl; R=/root/hpa-atlas2
 D=results/activation_patching
 end=$(( $(date +%s) + 43200 ))
-declare -A done_
-while [ $(date +%s) -lt $end ] && [ ${#done_[@]} -lt 2 ]; do
+doneL=""; nd=0
+while [ $(date +%s) -lt $end ] && [ $nd -lt 2 ]; do
   for fam in olmo3-7b qwen3-8b; do
-    [ -n "${done_[$fam]:-}" ] && continue
+    case " $doneL " in *" $fam "*) continue;; esac
     ssh $V "test -f $R/$D/$fam/floors.json && test ! -f $R/$D/$fam/floors.committed" 2>/dev/null || continue
     mkdir -p $D/$fam
     scp -q $V:$R/$D/$fam/floors.json $V:$R/$D/$fam/stage1.json $V:$R/$D/$fam/stage0.json $D/$fam/ 2>/dev/null
@@ -26,7 +26,7 @@ P
 Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>" && git push -q origin HEAD:main || { echo "commit/push failed for $fam"; continue; }
     commit=$(git rev-parse --short HEAD)
     ssh $V "echo '{\"sha256\": \"$sha\", \"commit\": \"$commit\"}' > $R/$D/$fam/floors.committed"
-    done_[$fam]=1; echo "$fam floors committed $commit $(date -u +%T)"
+    doneL="$doneL $fam"; nd=$((nd+1)); echo "$fam floors committed $commit $(date -u +%T)"
   done
   sleep 45
 done
