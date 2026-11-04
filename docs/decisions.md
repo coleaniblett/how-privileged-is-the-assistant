@@ -479,6 +479,16 @@ affected. The human labelling instructions (`judge_validation/README.md`) use th
 validation sheet from the incomplete-turn generations of all 8 checkpoints (base models included), so the teammate's labels match the data being graded.
 The judge-arm prefill set is `data/prefill_incomplete_200.jsonl`; the older sentence-boundary set is a separate "complete-turn" stratum.
 
+## 2026-11-03: core: frozen context limits for conversation scoring (`core.score_conversations --context-limits-from`)
+
+Scoring a conversation stage re-renders the family's inputs and needs every stage's context limit, which `core.score_conversations` read from each
+checkpoint's cached `config.json`. A collection that clears each checkpoint from the HF cache after use (as the overnight driver does) would make a
+later stage depend on configs that are no longer cached. New opt-in flag `--context-limits-from MANIFEST`: take the per-stage limits recorded in a frozen
+`inputs_manifest.json` (it must list exactly the family's stages) instead of reading configs. The input fingerprint check is unchanged, so a stage
+scored this way still refuses to mix with different inputs. Default behaviour, outputs and the other flags are unchanged. Used by
+`scripts/collect_conv_incomplete.py`, which first freezes each family's inputs (`--prepare-only`; an existing manifest must match) and records every stage's
+`config.json` revision and hash in `config_provenance.json` beside the manifest. Test: `test_frozen_context_limits`.
+
 ## 2026-11-02: overgeneralization redesigned around persona carryover
 
 - Primary measure is now persona carryover: does a belief held by the Assistant spill into a new role-played persona more than one held by a role-played character (leak gap, change from base)?

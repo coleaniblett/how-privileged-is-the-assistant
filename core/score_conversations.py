@@ -92,6 +92,15 @@ def context_limit(model_id):
     raise SystemExit(f"{model_id}: no max_position_embeddings in its config; refusing to guess a context limit")
 
 
+def frozen_limits(manifest_path, stages):
+    """{stage: (limit, source)} as recorded in a frozen inputs manifest (--context-limits-from), so a stage can be scored
+    after the other checkpoints' configs have left the cache. Refuses a manifest that does not cover exactly these stages."""
+    recorded = json.load(open(manifest_path))["context_limits"]
+    if set(recorded) != set(stages):
+        raise SystemExit(f"{manifest_path}: context limits for {sorted(recorded)}, family stages are {sorted(stages)}")
+    return {s: (int(v["limit"]), v["source"]) for s, v in recorded.items()}
+
+
 def cached_revision(repo, filename):
     """Snapshot commit of a cached Hub file, or None (e.g. a local path)."""
     from huggingface_hub import try_to_load_from_cache
@@ -300,6 +309,9 @@ def main(argv=None):
     ap.add_argument("--check-stages", action="store_true", help="verify every scored stage used the manifest's inputs")
     ap.add_argument("--model", help="stage name (or model id) to score")
     ap.add_argument("--batch-size", type=int)
+    ap.add_argument("--context-limits-from", metavar="MANIFEST",
+                    help="take the per-stage context limits recorded in this frozen inputs_manifest.json instead of reading "
+                         "every stage's config (the fingerprint check still applies); default: read the cached configs")
     args = ap.parse_args(argv)
     fam = config.family_settings(args.family)
     out = args.out or config.core_dir(OUT_KIND, args.run, args.family)
@@ -313,7 +325,8 @@ def main(argv=None):
     profile = PROFILES[args.family]
     cand_prov, targets = load_candidates(args.candidates)
     tok = load_tokenizer(fam["template"])
-    limits = {stage: context_limit(model_id) for stage, model_id in fam["stages"].items()}
+    limits = (frozen_limits(args.context_limits_from, fam["stages"]) if args.context_limits_from else
+              {stage: context_limit(model_id) for stage, model_id in fam["stages"].items()})
     included, exclusions = prepare(targets, tok, profile, min(n for n, _ in limits.values()))
     manifest = build_manifest(args.family, cand_prov, tokenizer_provenance(tok, fam["template"]), profile, limits,
                               included, exclusions)
