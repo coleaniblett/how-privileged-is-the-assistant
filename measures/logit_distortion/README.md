@@ -5,7 +5,8 @@ scores (`analyze.py`, [exchange-design analysis](#exchange-design-analysis-2026-
 `results/capstone/logit_distortion/exchanges_exchange/`). The original-conversation route (`pilot_v3`, follow-up turns) is
 not scored for analysis and not covered by these results. The pre-registered criteria below are unchanged and frozen from
 now on, since this analysis writes results under `results/<run>/logit_distortion/` (AGENTS.md); how they are applied to
-the exchange design was added on 2026-11-04, after the data existed (see below).
+the exchange design was added on 2026-11-04, after the data existed (see below), and so was an exploratory two-sided reading
+of the gap contrast ([Direction of the gap contrast](#direction-of-the-gap-contrast-2026-11-04-after-the-results-exploratory)).
 
 ## Data route and candidate construction (2026-11-02)
 
@@ -123,13 +124,55 @@ agent session for Cole had also computed provisional, uncommitted logit-distorti
   tokenizers; criterion 1 is applied within each family in nats per token.
 - *Verdict.* Criterion 1 is applied as above to each post-trained checkpoint (tagged, positions 1+, oasst1 and
   UltraChat both required). Everything else (levels, single-persona changes, plain framing, positions, WildChat,
-  cross-family) is estimated and reported without a pass/fail rule. Not blind, as stated.
+  cross-family) is estimated and reported without a pass/fail rule. Not blind, as stated. (Later the same day, after the
+  results: an exploratory two-sided reading was added beside it; see [Direction of the gap
+  contrast](#direction-of-the-gap-contrast-2026-11-04-after-the-results-exploratory).)
 
-**How to read the quantities.** Lower assistant entropy means more concentrated predictions; on its own it does not show
-a training effect (the texts differ). An assistant-specific entropy fall through training (the reply falls more than
-the user turn) supports differential concentration. NLL measures fit to the recorded text. The gap is an additional
-diagnostic: it is not a calibration test and does not describe the distribution's shape. User and assistant texts
-differ in content and context, so none of these comparisons isolates a causal effect of the role label.
+**How to read the quantities.** Three claims are tested separately, and a fourth needs more than this measure:
+
+- *Assistant-specific concentration*, from **entropy**: lower assistant entropy at one checkpoint means more concentrated
+  predictions, but a difference already present at base was not originated by post-training (this design does not identify
+  its cause). An assistant-specific entropy fall through training (the reply falls more than the user turn) supports
+  differential concentration.
+- *Fit to the recorded text*, from **NLL**: a rise means the model departs from these human- or ChatGPT-written texts.
+- *Role-dependent mismatch between observed surprise and predictive entropy*, diagnosed by the **gap**. The gap is not a
+  formal calibration test and does not describe the distribution's shape. A positive D can come from the reply's NLL
+  rising more, its entropy falling more, or both; a negative D likewise has several routes. The sign of D alone does not
+  identify the mechanism, so D is always reported with its NLL and entropy parts (`decomposition.csv`).
+- *Broader assistant privilege or dominance* is an interpretation that needs evidence beyond this measure.
+
+User and assistant texts differ in content and context, so none of these comparisons isolates a causal effect of the role label.
+
+## Direction of the gap contrast (2026-11-04, after the results; exploratory)
+
+Added after the exchange-design results existed (`docs/decisions.md`, 2026-11-04, "direction of the gap contrast"). Not
+pre-registered and not blind. Criterion 1 and its application above are unchanged.
+
+**Where the positive direction comes from.** The 2026-11-01 design entry defines privilege as "the assistant persona's gap
+grows from base more than the user persona's" and criterion 1 encodes it: the difference of gap changes must reach
++0.05 nats with the CI excluding zero. The documented reason concerns what is measured (whether the assistant persona's
+*own* distribution is distorted, hence no swapped slots). No document gives a reason why a *larger* assistant gap, rather
+than a role difference of either sign, is the signature of privilege; the direction follows from the measure's one-line
+definition ("distinctively concentrated"), not from a stated argument against the opposite sign. The 0.05 nats is the
+project-wide smallest effect (`config.MIN_EFFECT_NATS`, 2026-11-01): the pilot's negligibility margin and the size of
+bf16 batch noise. That is an operational detectability floor, not a theoretically derived effect size. Criterion 1 is
+therefore a **directional (one-sided) hypothesis**: "not met" says the assistant gap did not grow more than the user gap,
+not that the roles were unaffected or that privilege is absent. (Vestigial regression's verdict is likewise applied in one
+direction: its main-run results report a consistent negative asymmetry as "does not fire … opposite of regression".)
+
+**What is reported now.** Beside the original criterion, now labelled the *original positive-direction gap criterion*, an
+exploratory two-sided classification of D per post-trained checkpoint, on unrounded estimates:
+
+- *positive shift*: D ≥ +0.05 and the 95% CI above zero, in both oasst1 and UltraChat (identical to criterion 1);
+- *negative shift*: D ≤ −0.05 and the 95% CI below zero, in both corpora;
+- otherwise: *no two-corpus directional consistency*.
+
+±0.05 applies the original floor symmetrically; it is not a newly validated threshold. Either shift establishes a
+role-dependent gap change under this design (opening user turn vs the reply after it, tagged), not by itself assistant
+privilege: a negative shift can mean the user text became more surprising relative to the model's entropy than the reply did
+(a relative assistant advantage), or that the user turn's entropy fell more, and the decomposition says which. The same
+rules are applied to the labelled sensitivities (`verdict_sensitivity.csv`). Gap-based readings stay separate from vestigial
+regression's own metric and from the behavioural evaluations.
 
 ## Running
 
