@@ -166,6 +166,9 @@ def write_report(table, family, stages, n, run="capstone"):
         lines.append(f"- **{s}**: contrast(user) change {_cell(r)} -> {'LEAK' if r['leak'] else 'no leak'} "
                      f"(bar >= {config.MIN_EFFECT_NATS} nats with CI excluding 0); positive control {_cell(c)} "
                      f"({'rises' if c['lo'] > 0 else 'does not clearly rise'}).")
+    if not any(ch[(ch.quantity == "contrast_asst") & (ch.stage == s)].iloc[0]["lo"] > 0 for s in trained):
+        lines += ["", f"**Inconclusive**: the positive control (assistant slot) does not rise in any scored stage ({', '.join(trained)}), "
+                      "so the probe is uninformative here and the contrast(user) rows are descriptive only (pre-set in `docs/decisions.md`)."]
     with open(os.path.join(out_dir(family, run), "user_minimal_pairs.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
     print("\n".join(lines))

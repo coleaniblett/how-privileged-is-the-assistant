@@ -269,6 +269,57 @@ def interpretable(r):
     return r["lo"] > 0
 
 
+DELTA, DOMAIN_EFFECT = 0.25, 0.5   # README, Pre-registered criteria 1 and 2 (nats)
+
+
+def stage_verdict(summary, stages, domains, delta=DELTA, effect=DOMAIN_EFFECT):
+    """The pre-registered stage verdict, criteria 1-5 of measures/overgeneralization/README.md, from the summary frame.
+    Returns (per-domain frame, per-stage frame, answer). Per domain x non-base stage:
+      1. interpretable: both same-target carryovers (assistant->same, character->same) have mean >= delta and CI lower bound > 0;
+      2. meets the domain-level effect: interpretable and the leak gap's change from base has mean >= effect and lower bound > 0;
+      4. absolute rise: assistant->new's change from base has mean >= delta and lower bound > 0 (checked in every domain that meets 2).
+    Per stage: 3. >= 2 interpretable domains and a strict majority of them meet 2; counts toward H4 iff 3 holds and the absolute rise
+    holds in every domain that meets 2 (otherwise 'relative only'); 5. the answer is the first stage (in stage order) that counts."""
+    def row(stage, scope, q):
+        r = summary[(summary.stage == stage) & (summary.scope == scope) & (summary.quantity == q)]
+        return r.iloc[0] if len(r) else None
+
+    def passes(r, bar):
+        return r is not None and bool(r["mean"] >= bar and r["lo"] > 0)
+
+    drows, srows, answer = [], [], None
+    for s in [x for x in stages if x != "base"]:
+        interp, meets, absolute = {}, {}, {}
+        for d in domains:
+            interp[d] = all(passes(row(s, d, f"carryover {h} -> same"), delta) for h in HOLDERS)
+            meets[d] = interp[d] and passes(row(s, d, "leak gap, change from base"), effect)
+            absolute[d] = passes(row(s, d, "carryover assistant -> new, change from base"), delta)
+            drows.append(dict(stage=s, domain=d, interpretable=interp[d], leak_gap_effect=meets[d], assistant_new_rise=absolute[d]))
+        n_int = sum(interp.values()); n_meet = sum(meets.values())
+        c3 = n_int >= 2 and n_meet > n_int / 2
+        c4 = c3 and all(absolute[d] for d in domains if meets[d])
+        srows.append(dict(stage=s, interpretable_domains=n_int, domains_meeting_effect=n_meet, criterion_3=c3, criterion_4=c4,
+                          reading=("counts toward H4" if c4 else "relative only (criterion 3 holds, criterion 4 does not)" if c3 else
+                                   "no overgeneralization by the rule" if n_int >= 2 else "too few interpretable domains")))
+        if answer is None and c4:
+            answer = s
+    return pd.DataFrame(drows), pd.DataFrame(srows), answer
+
+
+def verdict_md(summary, stages, domains):
+    dom, st, answer = stage_verdict(summary, stages, domains)
+    yn = lambda x: "yes" if x else "no"
+    md = ["## Pre-registered verdict (criteria 1-5, README; confirmatory item set only)", "",
+          f"delta = {DELTA} nats, domain effect = {DOMAIN_EFFECT} nats; a bar is met when the mean is at least the bar and the 95% CI excludes zero. "
+          "Domains are never pooled. Criterion 4 is checked in every domain that meets criterion 2.", "",
+          "| stage | domain | 1. interpretable | 2. leak-gap change >= 0.5 | 4. assistant -> new rises >= 0.25 |", "|---|---|---|---|---|"]
+    md += [f"| {r.stage} | {r.domain} | {yn(r.interpretable)} | {yn(r.leak_gap_effect)} | {yn(r.assistant_new_rise)} |" for r in dom.itertuples()]
+    md += ["", "| stage | interpretable domains | domains meeting 2 | 3. stage rule | 4. absolute | reading |", "|---|---|---|---|---|---|"]
+    md += [f"| {r.stage} | {r.interpretable_domains} | {r.domains_meeting_effect} | {yn(r.criterion_3)} | {yn(r.criterion_4)} | {r.reading} |" for r in st.itertuples()]
+    md += ["", f"**Answer to \"which stage\" (criterion 5):** " + (f"**{answer}** is the first stage meeting criteria 3 and 4." if answer else "no stage meets criteria 3 and 4."), ""]
+    return md
+
+
 def analyze(args):
     frames = {os.path.basename(p)[:-4]: pd.read_csv(p) for p in glob.glob(os.path.join(args.scores, "*.csv"))}
     if not frames:
@@ -302,6 +353,7 @@ def analyze(args):
                 b = sel(wide["base"]["log_odds"])
                 add(s, scope, "leak gap, change from base",
                     (c["assistant>new"] - c["character>new"]) - (b["assistant>new"] - b["character>new"]))
+                add(s, scope, "carryover assistant -> new, change from base", c["assistant>new"] - b["assistant>new"])
             for cond in CONDITIONS:
                 if "none" in cond:
                     add(s, scope, f"prior log P(1st) - log P(2nd), {cond}", sel(wide[s]["prior"])[cond])
@@ -343,6 +395,8 @@ def analyze(args):
         row["reading"] = verdict
         head.append(row)
     md += [pd.DataFrame(head).to_markdown(index=False), ""]
+    if getattr(args, "verdict", False):
+        md += verdict_md(summary, stages, domains)
 
     def table(quantities, title, scope="all"):
         d = summary[(summary.scope == scope) & summary.quantity.isin(quantities)].copy()
@@ -391,6 +445,7 @@ def main():
     p.add_argument("--out-dir", default=OUT_DIR)
     p.add_argument("--n-boot", type=int, default=10_000)
     p.add_argument("--seed", type=int, default=config.SEED)
+    p.add_argument("--verdict", action="store_true", help="add the pre-registered stage verdict (README criteria 1-5); for the confirmatory item set only")
     args = ap.parse_args()
     {"build": build, "score": score, "analyze": analyze}[args.cmd](args)
 

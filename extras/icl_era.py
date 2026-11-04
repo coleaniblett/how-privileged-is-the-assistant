@@ -5,7 +5,8 @@ model answer unrelated questions as if it lived in the 19th century). k bird Q/A
 modern names (data/icl_era_birds.jsonl), then an era probe (data/icl_era_probes.jsonl) whose answer is read out teacher-forced:
 era = log P(19th-century answer) - log P(modern answer) after a fixed answer prefix; shift = era(archaic shots) - era(modern shots).
 Conditions: the Assistant answers (chat, primary); a role-played character, Mora, answers (chat, secondary); plain Q/A text (no
-template). Positive control: held-out bird questions (log P(archaic name) - log P(modern name)) must shift with k.
+template). Name pick-up check: held-out bird questions (log P(archaic name) - log P(modern name)) must shift with k; it shows the
+naming convention was picked up, not that the era generalized.
 
 bf16, batch 1. The shot block shared by all questions of a (condition, names, k, seed) cell is run once and its KV cache reused (a
 copy per question and answer); cached log-probs are checked against full forward passes on the first k = 128 cells of every model.
@@ -34,6 +35,7 @@ OUT = os.path.join(config.RESULTS_ROOT, "icl_era")
 KS = [0, 8, 32, 128]
 SEEDS = [0, 1, 2]
 N_CONTROL = 10
+ROBUST = ["atlantic", "evening", "laundry", "life_exp", "light_source_street", "long_distance", "monarch", "sport", "travel", "west_state", "world_pop"]  # pass |log-odds| <= 5 in every model (decisions.md, E probe amendment)
 CONDITIONS = ["assistant", "mora", "plain"]
 NAMES = ["archaic", "modern"]
 BIRD_Q = "What is the name of this bird: {}?"
@@ -215,6 +217,41 @@ def score(family, stages, check_cells=2):
         torch.cuda.empty_cache()
 
 
+BASELINE_OUT = os.path.join(config.RESULTS_ROOT, "icl_era_baseline")
+EXTREME = 5.0  # nats: candidate probes with |zero-shot log-odds| above this in any model are dropped before the list is frozen
+
+
+@torch.no_grad()
+def baseline(family, stages, probes_path, threads=32):
+    """Zero-shot (k = 0) log-odds of each candidate probe in every condition (a screen run before the probe list is frozen; bf16 on
+    the GPU as in `score`). Also prints the k = max(KS) token budget."""
+    from transformers import AutoConfig
+    torch.set_num_threads(threads)
+    config.use_family(family)
+    tok = load_tokenizer(config.TEMPLATE_MODEL)
+    kw = template_kwargs_for(family)
+    probes = load_jsonl(probes_path)
+    qs = [q for q in questions(probes, []) if q[1] == "probe"]
+    pool, control = split_birds(load_jsonl(BIRDS_PATH))
+    longest = max(len(b) + max(len(i[3]) for i in it) for cond in CONDITIONS for s in SEEDS for names in NAMES
+                  for b, it in [render_cell(tok, shot_order(pool, s)[: max(KS)], names, cond, questions(probes, control), kw)])
+    ctx = min(AutoConfig.from_pretrained(config.MODELS[s]).max_position_embeddings for s in stages)
+    print(f"{family}: longest k={max(KS)} sequence {longest} tokens; smallest context of {stages}: {ctx}", flush=True)
+    os.makedirs(BASELINE_OUT, exist_ok=True)
+    for stage in stages:
+        model, device = load_model(config.MODELS[stage])  # bf16 on the GPU (fp32 on the CPU), as in `score`
+        rows = []
+        for cond in CONDITIONS:
+            block, items = render_cell(tok, [], "modern", cond, qs, kw)
+            lp = score_cell(model, device, block, items, use_cache=False)
+            rows += [dict(family=family, stage=stage, condition=cond, qid=q[0], logodds=lp[(q[0], "past")] - lp[(q[0], "modern")])
+                     for q in qs]
+        pd.DataFrame(rows).to_csv(os.path.join(BASELINE_OUT, f"{family}_{stage}.csv"), index=False, float_format="%.4f")
+        print(f"{family} {stage}: done", flush=True)
+        del model
+        torch.cuda.empty_cache()
+
+
 # ---------------------------------------------------------------- analysis
 def shifts(df):
     """Per (stage, condition, k, kind, qid, seed): era = logp_past - logp_modern; shift = era(archaic) - era(modern) (k > 0)."""
@@ -236,6 +273,16 @@ def analyze():
     for (fam, stage, cond, kind), g in era[era.k == 0].groupby(["family", "stage", "condition", "kind"]):
         m, lo, hi = bootstrap_ci(g["era"].to_numpy(), N_BOOT, rng)
         rows.append(dict(family=fam, stage=stage, condition=cond, k=0, kind=kind, quantity="era level, no shots", n=len(g), mean=m, lo=lo, hi=hi))
+    # median probe shift (mean over shot orders per probe) and the robustness subset, at the largest k
+    pk = sh[(sh.k == max(KS)) & (sh.kind == "probe")]
+    for (fam, stage, cond), g in pk.groupby(["family", "stage", "condition"]):
+        per = g.groupby("qid")["shift"].mean()
+        rows.append(dict(family=fam, stage=stage, condition=cond, k=max(KS), kind="probe", quantity="median probe shift", n=len(per),
+                         mean=float(per.median()), lo=float(per.quantile(0.25)), hi=float(per.quantile(0.75))))
+        gs = g[g.qid.isin(ROBUST)]
+        if len(gs):
+            m, lo, hi = bootstrap_ci(gs["shift"].to_numpy(), N_BOOT, rng)
+            rows.append(dict(family=fam, stage=stage, condition=cond, k=max(KS), kind="probe", quantity="shift, robustness subset", n=len(gs), mean=m, lo=lo, hi=hi))
     # paired contrasts at the largest k: stage minus base (per family, per condition) and Mora minus Assistant (per stage)
     top = sh[(sh.k == max(KS)) & (sh.kind == "probe")].set_index(["family", "stage", "condition", "qid", "seed"])["shift"]
     for fam in sh.family.unique():
@@ -265,10 +312,11 @@ def write_report(t, sh):
          "Spec E (2026-11-03; plan and probe list in `docs/decisions.md`; exploratory, outside every verdict). Shift = era(archaic "
          "shots) - era(modern shots), era = log P(19th-century answer) - log P(modern answer) after a fixed answer prefix "
          "(teacher-forced, bf16 batch 1, KV cache of the shot block reused after an equivalence check). Nats; mean over probes; 95% "
-         "bootstrap CI over probe x seed (30 probes x 3 shot orders). Qwen3-8B is supporting (no contamination check).", ""]
+         "bootstrap CI over probe x seed (all frozen probes x 3 shot orders). Qwen3-8B is supporting (no contamination check).", ""]
     fams = list(dict.fromkeys(t.family))
-    L += ["## Positive control (held-out bird questions: log P(archaic) - log P(modern), archaic minus modern shots)", "",
-          "Pre-set: the set-up took if the control shift at k = 128 is > 0 with CI excluding 0 (Assistant condition) in every model.", "",
+    L += ["## Name pick-up check (held-out bird questions: log P(archaic) - log P(modern), archaic minus modern shots)", "",
+          "A check that the model picked up the naming convention from the shots, not evidence of era generalization. Pre-set: the "
+          "set-up took if this shift at k = 128 is > 0 with CI excluding 0 (Assistant condition) in every model.", "",
           "| family | stage | condition | " + " | ".join(f"k={k}" for k in KS[1:]) + " | took |", "|---|---|---|" + "---|" * len(KS[1:]) + "---|"]
     for fam in fams:
         for s in stage_order(t[t.family == fam].stage.unique()):
@@ -284,6 +332,24 @@ def write_report(t, sh):
                 q = t[(t.family == fam) & (t.stage == s) & (t.condition == cond) & (t.kind == "probe")]
                 cells = [_c(q[(q.k == k) & (q.quantity == "shift")].iloc[0]) for k in KS[1:]]
                 L.append(f"| {fam} | {s} | {cond} | " + " | ".join(cells) + f" | {_c(q[q.quantity == 'era level, no shots'].iloc[0])} |")
+    L += ["", f"## Mean, median and robustness subset at k = {max(KS)}", "",
+          "Mean over all probes (the primary set), the median probe shift with its inter-quartile range in brackets, and the 11-probe robustness subset (probes with |zero-shot log-odds| <= 5 in every model).", "",
+          "| family | stage | condition | mean (all probes) | median [IQR] | robustness subset |", "|---|---|---|---|---|---|"]
+    for fam in fams:
+        for s in stage_order(t[t.family == fam].stage.unique()):
+            for cond in CONDITIONS:
+                q = t[(t.family == fam) & (t.stage == s) & (t.condition == cond) & (t.kind == "probe") & (t.k == max(KS))]
+                g = lambda name: q[q.quantity == name]
+                sub = g("shift, robustness subset")
+                L.append(f"| {fam} | {s} | {cond} | {_c(g('shift').iloc[0])} | {_c(g('median probe shift').iloc[0])} | {_c(sub.iloc[0]) if len(sub) else 'n/a'} |")
+    top = sh[(sh.k == max(KS)) & (sh.kind == "probe")]
+    for cond in ("assistant", "mora", "plain"):
+        L += ["", f"## Per-probe shift at k = {max(KS)}, {cond} condition (mean over 3 shot orders; nats)", ""]
+        cols = [(f, s) for f in fams for s in stage_order(t[t.family == f].stage.unique())]
+        L += ["| probe | " + " | ".join(f"{f} {s}" for f, s in cols) + " |", "|---|" + "---|" * len(cols)]
+        per = top[top.condition == cond].groupby(["qid", "family", "stage"])["shift"].mean()
+        for qid in dict.fromkeys(top.qid):
+            L.append(f"| {qid} | " + " | ".join(f"{per.get((qid, f, s), float('nan')):+.2f}" for f, s in cols) + " |")
     L += ["", f"## Contrasts at k = {max(KS)} (probes)", "", "| family | stage | condition | contrast | value |", "|---|---|---|---|---|"]
     for _, r in t[t.quantity.isin(["shift minus base", "Mora minus Assistant shift"])].iterrows():
         L.append(f"| {r.family} | {r.stage} | {r.condition} | {r.quantity} | {_c(r)} |")
@@ -316,11 +382,14 @@ def write_report(t, sh):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["score", "analyze"])
+    ap.add_argument("command", choices=["baseline", "score", "analyze"])
     ap.add_argument("--family", choices=list(config.FAMILIES))
-    ap.add_argument("--model", help="comma-separated stages (score)")
+    ap.add_argument("--model", help="comma-separated stages (baseline, score)")
+    ap.add_argument("--probes", default=PROBES_PATH, help="candidate probe file (baseline)")
     args = ap.parse_args()
-    if args.command == "score":
+    if args.command == "baseline":
+        baseline(args.family, args.model.split(","), args.probes)
+    elif args.command == "score":
         score(args.family, args.model.split(","))
     else:
         analyze()
