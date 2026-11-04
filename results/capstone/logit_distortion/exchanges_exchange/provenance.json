@@ -1,10 +1,10 @@
 {
  "command": "python -m measures.logit_distortion.analyze ",
- "git_revision": "ad6cdcffa0221bc7fcd8ba1914e26bacbb03562b",
+ "git_revision": "bbccb6d6d821f6a2981a6f089211382229bd4e8b",
  "git_dirty_analysis_code": false,
  "analysis_code_sha256": {
-  "analyze.py": "aae5e3c72137e64e31477bcbf5fb54cf03a7922273c5d4d04826e1ec0ec13065",
-  "plots.py": "22a185e26de10549de0cc0b1f354657f33066e75acbc3453c3580400fdae235b"
+  "analyze.py": "a41124c1616a5a68a26f7c27938894d913b8f26a178fe00830ea5a9dbcb357b7",
+  "plots.py": "9adbbbba20805d4248fd7aebcf072f3889cb12c36338dab0db615be014d5b2b1"
  },
  "settings": {
   "n_boot": 10000,

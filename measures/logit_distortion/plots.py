@@ -127,11 +127,14 @@ def contrast_change(summary, out, name="contrast_change.png"):
                 ax.set_ylabel(f"Δ (reply − user)\n{METRIC_LABEL[metric]} (nats/token)")
             if i == 0:
                 ax.set_title(config.family_settings(f)["label"] + ("" if f == "olmo3-7b" else " (contamination unchecked)"), fontsize=10)
-    fig.suptitle("Change from base of the assistant − user difference (criterion 1 = gap row, tagged, oasst1 and UltraChat)",
+    fig.suptitle("Change from base of the assistant − user difference (gap row, tagged = D, oasst1 and UltraChat)",
                  x=0.01, ha="left", fontsize=12, color=INK)
     fig.legend(handles=legend_handles("corpora"), loc="lower center", ncol=4, bbox_to_anchor=(0.5, -0.03))
     fig.text(0.01, -0.06, f"Positive = the reply's quantity rose more (or fell less) than the user turn's. Grey band: ±{FLOOR} nats (smallest "
-             "effect counted). 95% bootstrap CIs, exchange IDs resampled jointly. Own y-axis per family.", fontsize=8.5, color=MUTED)
+             "effect counted). Original positive-direction gap criterion: tagged D ≥ +0.05, CI above zero, in both oasst1 and UltraChat.\n"
+             "Exploratory two-sided classification (added after the results, not pre-registered): the same floor in either direction, "
+             "consistent in both corpora. Neither sign alone identifies a mechanism.\n"
+             "95% bootstrap CIs, exchange IDs resampled jointly. Own y-axis per family.", fontsize=8.5, color=MUTED, va="top")
     return save(fig, out, name)
 
 

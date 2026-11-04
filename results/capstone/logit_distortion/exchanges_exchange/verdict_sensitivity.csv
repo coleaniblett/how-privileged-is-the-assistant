@@ -1,0 +1,16 @@
+family,stage,oasst1_mean,oasst1_lo,oasst1_hi,oasst1_direction,ultrachat_mean,ultrachat_lo,ultrachat_hi,ultrachat_direction,original_positive_criterion,exploratory_two_sided,subset,positions
+olmo3-7b,sft,-0.109688,-0.146566,-0.074198,negative,-0.074712,-0.102517,-0.047095,negative,not met,negative shift,all,from0
+olmo3-7b,dpo,0.591043,0.513564,0.669736,positive,0.545460,0.493245,0.597948,positive,met,positive shift,all,from0
+olmo3-7b,instruct,0.561900,0.479258,0.646601,positive,0.502830,0.449548,0.556437,positive,met,positive shift,all,from0
+gemma4-31b,instruct,-7.622310,-8.069858,-7.166187,negative,-7.237134,-7.573120,-6.896804,negative,not met,negative shift,all,from0
+qwen3-8b,instruct,-0.743641,-0.816609,-0.668298,negative,-0.165031,-0.211278,-0.119720,negative,not met,negative shift,all,from0
+olmo3-7b,sft,-0.108712,-0.155666,-0.062858,negative,-0.106885,-0.154139,-0.058463,negative,not met,negative shift,untruncated,from1
+olmo3-7b,dpo,0.685229,0.583940,0.791982,positive,0.558058,0.476671,0.641016,positive,met,positive shift,untruncated,from1
+olmo3-7b,instruct,0.664059,0.556645,0.777630,positive,0.480832,0.396618,0.566906,positive,met,positive shift,untruncated,from1
+gemma4-31b,instruct,-6.872043,-7.407398,-6.324897,negative,-7.091712,-7.610869,-6.580634,negative,not met,negative shift,untruncated,from1
+qwen3-8b,instruct,-0.453827,-0.546186,-0.362172,negative,-0.141264,-0.222560,-0.060964,negative,not met,negative shift,untruncated,from1
+olmo3-7b,sft,-0.078813,-0.122964,-0.034803,negative,-0.066187,-0.111260,-0.020605,negative,not met,negative shift,untruncated,from0
+olmo3-7b,dpo,0.737768,0.635376,0.845432,positive,0.617721,0.537457,0.699869,positive,met,positive shift,untruncated,from0
+olmo3-7b,instruct,0.722919,0.614632,0.838387,positive,0.545366,0.462339,0.630589,positive,met,positive shift,untruncated,from0
+gemma4-31b,instruct,-6.822253,-7.352235,-6.270843,negative,-7.023452,-7.523847,-6.522528,negative,not met,negative shift,untruncated,from0
+qwen3-8b,instruct,-0.576890,-0.677304,-0.476843,negative,-0.241859,-0.321664,-0.161742,negative,not met,negative shift,untruncated,from0
