@@ -42,7 +42,7 @@ BIRD_Q = "What is the name of this bird: {}?"
 MORA_SETUP = ("Please role-play as Mora, a naturalist. Stay in character as Mora for the rest of this conversation and answer every "
               "question as Mora would.")
 MORA_REPLY = "Of course. I am Mora, a naturalist. Ask me anything."
-EXAMPLE_PROBES = ["states", "message", "lighting", "year", "city_transport"]
+EXAMPLE_PROBES = ["states", "message", "lighting", "city_transport"]
 EXAMPLE_TOKENS = 48
 CACHE_TOL = 0.02  # nats: largest allowed |cached - full| log-prob difference in the check
 N_BOOT, SEED = 10000, 0
@@ -127,12 +127,17 @@ def score_cell(model, device, block, items, use_cache=True):
     """{(qid, which): log P(answer)}; the block's KV cache is computed once and copied per item."""
     out = {}
     if use_cache and block:
-        base = model(input_ids=torch.tensor([block], device=device), use_cache=True)
+        base = model(input_ids=torch.tensor([block], device=device), use_cache=True, logits_to_keep=1)  # only the last position's logits are needed
         last_logit, past = base.logits[:, -1:], base.past_key_values
+        del base
         for qid, kind, which, sfx, span in items:
-            o = model(input_ids=torch.tensor([sfx], device=device), past_key_values=copy.deepcopy(past), use_cache=True)
+            # a copy of the block's cache per item (OLMo 3's sliding-window layers cannot be cropped back); it is freed right away, and the
+            # block pass keeps only its last logits, so the 7B weights + two caches (about 3 GB each at k = 128) fit on a 24 GB card
+            c = copy.deepcopy(past)
+            o = model(input_ids=torch.tensor([sfx], device=device), past_key_values=c, use_cache=True)
             logits = torch.cat([last_logit, o.logits], dim=1)  # position j predicts suffix token j
             out[(qid, which)] = answer_logp(logits, sfx, span, -1)
+            del c, o, logits
         return out
     for qid, kind, which, sfx, span in items:
         ids = block + sfx
