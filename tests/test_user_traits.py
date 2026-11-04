@@ -119,3 +119,20 @@ def test_keyword_table_paired():
     r15 = t[(t.feature == "any") & (t.metric == "share15")].iloc[0]
     assert r15.n == 10 and r15["mean"] == pytest.approx(1.0)
     assert t[(t.feature == "markdown_bold") & (t.metric == "per100")].iloc[0]["mean"] == 0
+
+
+def test_load_judge_excludes_invalid_and_hand_labels_override(tmp_path):
+    import json
+    from measures.overgeneralization import user_traits as ut
+    jd, hd = tmp_path / "j", tmp_path / "h"
+    jd.mkdir(); hd.mkdir()
+    rows = [dict(prefill_id="p0", sample=0, label="user_voice"), dict(prefill_id="p0", sample=1, label="invalid"),
+            dict(prefill_id="p0", sample=2, label="user_voice_with_assistant_traits")]
+    (jd / "base.jsonl").write_text("\n".join(json.dumps(r) for r in rows))
+    ex = {}
+    d = ut.load_judge(str(jd), ["base", "sft"], excluded=ex)["base"]
+    assert len(d) == 2 and ex == {"base": 1}
+    (hd / "base.jsonl").write_text(json.dumps(dict(prefill_id="p0", sample=1, label="switched_to_assistant")))
+    ex2 = {}
+    d2 = ut.load_judge(str(jd), ["base"], str(hd), ex2)["base"]
+    assert len(d2) == 3 and ex2 == {"base": 0} and d2[d2["sample"] == 1].label.iloc[0] == "switched_to_assistant"

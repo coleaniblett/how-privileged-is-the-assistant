@@ -31,7 +31,8 @@ from core.stats import bootstrap_ci, stage_order
 
 UV, UVAT = "user_voice", "user_voice_with_assistant_traits"
 USER_VOICE = (UV, UVAT)
-FIRE_BAR = 0.05          # percentage-point bar as a fraction; a default pending Adeeb's confirmation (README, decisions.md)
+INVALID = "invalid"   # the judge refused the sample; excluded and counted until a hand label replaces it
+FIRE_BAR = 0.05          # percentage-point bar as a fraction; fixed 2026-11-04 (docs/decisions.md) now that judge results exist
 N_BOOT = 10000
 SEED = 0
 FAMILIES = ["olmo3-7b", "qwen3-8b", "gemma4-31b"]
@@ -65,8 +66,10 @@ def default_judge_dir(family, run="capstone"):
     return os.path.join(config.RESULTS_ROOT, run, family, "vestigial_regression", "judge")
 
 
-def load_judge(judge_dir, stages):
-    """{stage: DataFrame(prefill_id, sample, label)} for the stages that have <judge_dir>/<stage>.jsonl."""
+def load_judge(judge_dir, stages, hand_dir=None, excluded=None):
+    """{stage: DataFrame(prefill_id, sample, label)} for the stages that have <judge_dir>/<stage>.jsonl.
+    Samples the judge refused (label "invalid") are excluded and counted in `excluded` ({stage: n}); hand labels in
+    <hand_dir>/<stage>.jsonl (same schema) override the judge's label per (prefill_id, sample), including the invalid ones."""
     out = {}
     for s in stages:
         p = os.path.join(judge_dir, f"{s}.jsonl")
@@ -74,10 +77,17 @@ def load_judge(judge_dir, stages):
             d = pd.DataFrame(read_jsonl(p))
             if not {"prefill_id", "sample", "label"} <= set(d.columns):
                 raise SystemExit(f"{p}: rows need prefill_id, sample, label")
-            bad = set(d.label) - set(USER_VOICE) - {"switched_to_assistant", "degenerate"}
+            d = d[["prefill_id", "sample", "label"]]
+            hp = os.path.join(hand_dir, f"{s}.jsonl") if hand_dir else None
+            if hp and os.path.exists(hp):
+                h = pd.DataFrame(read_jsonl(hp))[["prefill_id", "sample", "label"]]
+                d = pd.concat([d, h]).drop_duplicates(["prefill_id", "sample"], keep="last")
+            bad = set(d.label) - set(USER_VOICE) - {"switched_to_assistant", "degenerate", INVALID}
             if bad:
                 raise SystemExit(f"{p}: unknown labels {sorted(bad)}")
-            out[s] = d[["prefill_id", "sample", "label"]]
+            if excluded is not None:
+                excluded[s] = int((d.label == INVALID).sum())
+            out[s] = d[d.label != INVALID].reset_index(drop=True)
     return out
 
 
@@ -280,14 +290,19 @@ def cell(r):
     return "n/a (fewer than 2 prefills)" if r["n"] < 2 else f"{pp(r['mean'])} [{pp(r['lo'])}, {pp(r['hi'])}]"
 
 
-def judge_report(table, family, bar=FIRE_BAR):
-    L = [f"# User-slot overgeneralization: judge arm, {family}", "",
+def judge_report(table, family, bar=FIRE_BAR, excluded=None, provisional=False):
+    L = [f"# User-slot overgeneralization: judge arm, {family}", ""]
+    if provisional:
+        L += ["**PROVISIONAL**: Cole's judge labels (200 incomplete prefills x 3 samples) before the team's hand validation; invalid samples are excluded, not relabelled. See docs/decisions.md 2026-11-04.", ""]
+    L += [
          "Stage minus base in percentage points, 95% bootstrap CI over prefills, paired per prefill. Primary = share of user-voice "
          "samples labelled user_voice_with_assistant_traits; secondary = the same count over all samples. Prefills with no "
          "user-voice sample in the base or in the stage are dropped from the primary row (count shown).", "",
          "| stage | arm | prefills used | dropped | base share (pp) | stage share (pp) | change (pp) |", "|---|---|---|---|---|---|---|"]
     for _, r in table.iterrows():
         L.append(f"| {r.stage} | {r.arm} | {r.n} | {r.dropped} | {pp(r.base_mean).lstrip('+')} | {pp(r.stage_mean).lstrip('+')} | {cell(r)} |")
+    if excluded:
+        L += ["", "Samples the judge refused (label invalid), excluded: " + ", ".join(f"{k} {v}" for k, v in excluded.items()) + f" (total {sum(excluded.values())})."]
     f = fires(table, family, bar=bar)
     if family != "olmo3-7b":
         verdict = "not applicable to this family (supporting only; no contamination check is possible for it)"
@@ -295,8 +310,8 @@ def judge_report(table, family, bar=FIRE_BAR):
         verdict = "cannot be evaluated (no instruct stage judged or fewer than 2 usable prefills)"
     else:
         verdict = "**fires**" if f else "does not fire"
-    L += ["", f"**Verdict rule (OLMo instruct, primary, >= {100 * bar:.0f} pp with CI excluding zero; the bar is a default pending "
-          f"Adeeb's confirmation):** {verdict}", ""]
+    L += ["", f"**Verdict rule (OLMo instruct, primary, >= {100 * bar:.0f} pp with CI excluding zero; the bar is fixed, "
+          f"docs/decisions.md 2026-11-04):** {verdict}", ""]
     if family in SUPPORTING:
         L.append("Caveat: post-training data for this family is not open, so test-text contamination cannot be checked.")
     return "\n".join(L) + "\n"
@@ -362,6 +377,7 @@ def main():
     ap.add_argument("--run", default="capstone")
     ap.add_argument("--generations", help="default results/<run>/<family>/core/generations")
     ap.add_argument("--judge-dir", help="default results/<run>/<family>/vestigial_regression/judge (<stage>.jsonl per stage)")
+    ap.add_argument("--hand-labels", help="judge arm: directory of <stage>.jsonl hand labels (same schema) overriding the judge per (prefill_id, sample)")
     ap.add_argument("--out", help="default results/<run>/<family>/overgeneralization/user_traits_<arm>.md (+ .csv)")
     ap.add_argument("--prefills", default="data/prefill_100.jsonl", help="keyword arm: prefill set (human baseline)")
     ap.add_argument("--texts", default="data/texts.jsonl", help="keyword arm: full texts by id (human baseline)")
@@ -372,11 +388,12 @@ def main():
     os.makedirs(os.path.dirname(out), exist_ok=True)
     if a.arm == "judge":
         jd = a.judge_dir or default_judge_dir(a.family, a.run)
-        judged = load_judge(jd, stages)
+        excluded = {}
+        judged = load_judge(jd, stages, a.hand_labels, excluded)
         if "base" not in judged:
             raise SystemExit(f"no judge output for the base stage in {jd} (expected <stage>.jsonl from measures/vestigial_regression/judge.py)")
         table = judge_table(judged, n_boot=a.n_boot)
-        text = judge_report(table, a.family)
+        text = judge_report(table, a.family, excluded=excluded, provisional=not a.hand_labels)
     else:
         gd = a.generations or generations_dir(a.family, a.run)
         markers = family_markers(a.family)
