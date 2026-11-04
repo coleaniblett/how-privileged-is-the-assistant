@@ -373,6 +373,85 @@ def judge_sheet(sheet_path, out, **kw):
     return run(rows, out, **kw)
 
 
+# --- refused samples: labelled by hand -------------------------------------------------------------------------------------------
+
+REFUSAL_DIR = os.path.join(VALIDATION_DIR, "refusals")
+
+REFUSAL_README = """# Refused samples: hand labels
+
+`sheet.csv` holds every incomplete-turn continuation the judge could not label: it refused both attempts (stop reason `refusal`, e.g.
+`reasoning_extraction` or `cyber`), so its row in `results/capstone/<family>/vestigial_regression/judge_incomplete/<stage>.jsonl` is `invalid`.
+A refusal is not an outcome (decided 2026-11-04), so these samples are labelled BY HAND and the hand label replaces `invalid`.
+
+Label each row exactly as `../README.md` says for the validation sheet (same four labels, the judge prompt v2 definitions; only the continuation
+up to the point where the user's turn closes counts). The sheet is blind: rows are shuffled and do not say which model wrote them; do not open
+`sheet_key.csv` (sample id -> family, stage, prefill, sample, the judge's stop reasons) until you are done. Fill `human_label` with one of
+`user_voice`, `switched_to_assistant`, `degenerate`, `user_voice_with_assistant_traits`; use `notes` for doubts.
+
+Rebuilt by `python -m measures.vestigial_regression.judge refusal-sheet` (after a judge run adds files); labels and notes already entered are
+kept for every sample still on the sheet.
+"""
+
+
+def refusal_rows(root="."):
+    """Every judge_incomplete row labelled invalid, joined to its generation (prefill + continuation) by (prefill_id, sample)."""
+    out = []
+    for fam, stage in CAPSTONE_PLAN:
+        judged = os.path.join(root, "results", "capstone", fam, "vestigial_regression", "judge_incomplete", f"{stage}.jsonl")
+        if not os.path.exists(judged):
+            continue
+        gens = os.path.join(root, "results", "capstone", fam, "core", "generations_incomplete", f"{stage}.jsonl")
+        index = {}
+        for line in open(gens, encoding="utf-8"):
+            if line.strip():
+                r = json.loads(line)
+                index[(r["prefill_id"], r["sample"])] = r
+        for line in open(judged, encoding="utf-8"):
+            if not line.strip():
+                continue
+            j = json.loads(line)
+            if j["label"] != "invalid":
+                continue
+            g = index[(j["prefill_id"], j["sample"])]
+            out.append(dict(family=fam, stage=stage, prefill_id=j["prefill_id"], sample=j["sample"], prefill=g["prefill"],
+                            continuation=g["continuation"], stop_reasons=";".join(j.get("stop_reasons") or []),
+                            judged_file=os.path.relpath(judged, root)))
+    return out
+
+
+def build_refusal_sheet(root=".", out_dir=REFUSAL_DIR, seed=0):
+    """Blind sheet of the refused samples (sheet.csv) plus its key (sheet_key.csv). Identical (prefill, continuation) pairs share one
+    sheet row (one label applies to all) and are all listed in the key. Labels and notes already in an existing sheet are kept."""
+    rows = refusal_rows(root)
+    old = {}
+    sheet_path = os.path.join(out_dir, "sheet.csv")
+    if os.path.exists(sheet_path):
+        old = {r["sample_id"]: r for r in csv.DictReader(open(sheet_path, newline="", encoding="utf-8"))}
+    sheet, key, seen = [], [], set()
+    for r in rows:
+        h = sample_hash(r["prefill"], r["continuation"], "refusal")[:12]
+        key.append(dict(sample_id=h, **{k: r[k] for k in ("family", "stage", "prefill_id", "sample", "stop_reasons", "judged_file")}))
+        if h not in seen:
+            seen.add(h)
+            prev = old.get(h, {})
+            sheet.append(dict(sample_id=h, prefill=r["prefill"], continuation=r["continuation"],
+                              human_label=prev.get("human_label", ""), notes=prev.get("notes", "")))
+    dropped = [i for i, r in old.items() if i not in seen and (r.get("human_label") or r.get("notes"))]
+    if dropped:
+        raise SystemExit(f"{sheet_path}: labelled rows {dropped} are no longer refusals; move their labels before rebuilding")
+    sheet.sort(key=lambda s: s["sample_id"])
+    random.Random(seed).shuffle(sheet)  # the order must not reveal the model
+    os.makedirs(out_dir, exist_ok=True)
+    for name, rs, cols in (("sheet.csv", sheet, ["sample_id", "prefill", "continuation", "human_label", "notes"]),
+                           ("sheet_key.csv", key, ["sample_id", "family", "stage", "prefill_id", "sample", "stop_reasons", "judged_file"])):
+        with open(os.path.join(out_dir, name), "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, cols)
+            w.writeheader()
+            w.writerows(rs)
+    open(os.path.join(out_dir, "README.md"), "w", encoding="utf-8").write(REFUSAL_README)
+    return sheet, key
+
+
 # --- the pilot's agent-written labels (provisional only) -----------------------------------------------------------------------
 
 PILOT_LABEL_FILES = [  # (labels csv, generations jsonl, key columns, label vocabulary)
@@ -445,6 +524,9 @@ def main(argv=None):
     pl.add_argument("--dry-run", action="store_true")
     pl.add_argument("--price-in", type=float, default=os.environ.get("JUDGE_PRICE_IN"))
     pl.add_argument("--price-out", type=float, default=os.environ.get("JUDGE_PRICE_OUT"))
+    rs = sub.add_parser("refusal-sheet", help="blind hand-label sheet of the samples the judge refused (label invalid)")
+    rs.add_argument("--out-dir", default=REFUSAL_DIR)
+    rs.add_argument("--seed", type=int, default=0)
     v = sub.add_parser("validate", help="agreement with human labels")
     v.add_argument("--human", required=True, help="sheet.csv with human_label filled in")
     v.add_argument("--judged", help="jsonl from `run`/`judge-sheet` (sample_id + label); default: judge the sheet now")
@@ -473,6 +555,11 @@ def main(argv=None):
         open(os.path.join(a.out_dir, "README.md"), "w", encoding="utf-8").write(SHEET_README)
         print(f"wrote {len(sheet)} samples to {a.out_dir}/sheet.csv (+ sheet_key.csv, README.md); by model/stage: "
               f"{dict(Counter((k['model'], k['stage']) for k in key))}")
+    elif a.cmd == "refusal-sheet":
+        sheet, key = build_refusal_sheet(out_dir=a.out_dir, seed=a.seed)
+        print(f"wrote {len(sheet)} samples ({len(key)} refused rows) to {a.out_dir}/sheet.csv (+ sheet_key.csv, README.md); "
+              f"labelled so far {sum(1 for s in sheet if s['human_label'])}; by checkpoint: "
+              f"{dict(Counter((k['family'], k['stage']) for k in key))}")
     elif a.cmd == "validate":
         human = load_human_labels(a.human)
         if not human:

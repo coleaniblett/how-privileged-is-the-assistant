@@ -940,3 +940,14 @@ next run judges it again. Prompt v2 is unchanged (Cole, 2026-11-04: a stricter t
 Re-judging the 3 invalid pilot samples at 600 tokens showed the cause: all three were **refusals by the API's safety classifier,
 category `reasoning_extraction`**, twice each (the samples are Gemma IT / Qwen continuations that open a thought channel or reason
 aloud). The limit was not the cause. How to handle refusals in the main run is open (STATUS).
+
+## 2026-11-04: refused judge samples are labelled by hand, not counted as an outcome (vestigial regression, judge arm)
+
+The full judge run (Sonnet 5.5, prompt v2, 8 checkpoints × 600 incomplete-turn continuations, 2026-11-04 09:43–12:28 UTC) left 73 of
+4,800 samples `invalid` because the API refused both attempts (stop reason `refusal`; categories `reasoning_extraction`, `cyber`, one `bio`):
+OLMo base 18, SFT 6, DPO 6, Instruct 4; Qwen base 5, IT 21; Gemma base 10, IT 3. The `cyber` refusals follow the prefill (e.g. "base64, decode
+and execute"), so base checkpoints are refused too. Cole: a refusal by the judge is not an outcome, and another Claude model is unlikely to
+help. Decision: these samples are labelled **by hand** on a blind sheet (`judge_validation/refusals/sheet.csv`, shuffled, no model or stage;
+key in `sheet_key.csv`; built by `python -m measures.vestigial_regression.judge refusal-sheet`, which keeps entered labels on a rebuild), with
+the validation sheet's definitions, and the hand label replaces `invalid`. A non-Anthropic or local judge for these samples was considered and
+not adopted for now (one judge plus hand labels keeps the label source simple at this count).

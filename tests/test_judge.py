@@ -219,3 +219,33 @@ def test_stop_reason_recorded_limit_raised_and_invalid_rejudged(tmp_path):
     third = StopClient()
     J.run(samples()[:1], None, cache, client=third, quiet=True)
     assert third.calls == []
+
+
+def test_refusal_sheet_joins_dedups_keeps_labels_and_is_blind(tmp_path):
+    def write(path, rows):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+
+    gens = [dict(prefill_id=f"incomplete-{i:03d}", sample=s, prefill=f"p{i}", continuation="same" if i == 0 else f"c{i}{s}")
+            for i in range(3) for s in range(2)]
+    judged = [dict(prefill_id=g["prefill_id"], sample=g["sample"],
+                   label="invalid" if g["prefill_id"] != "incomplete-002" else "user_voice",
+                   stop_reasons=["refusal:cyber", "refusal:cyber"]) for g in gens]
+    write(tmp_path / "results/capstone/qwen3-8b/core/generations_incomplete/instruct.jsonl", gens)
+    write(tmp_path / "results/capstone/qwen3-8b/vestigial_regression/judge_incomplete/instruct.jsonl", judged)
+    out = tmp_path / "refusals"
+    sheet, key = J.build_refusal_sheet(root=str(tmp_path), out_dir=str(out))
+    assert len(key) == 4  # every invalid row, none of the labelled ones
+    assert len(sheet) == 3  # incomplete-000's two samples are the same text: one row
+    assert all(k["stop_reasons"] == "refusal:cyber;refusal:cyber" for k in key)
+    header = open(out / "sheet.csv", encoding="utf-8").readline().strip()
+    assert header == "sample_id,prefill,continuation,human_label,notes"  # no model or stage on the sheet
+    rows = list(csv.DictReader(open(out / "sheet.csv", newline="", encoding="utf-8")))
+    rows[0]["human_label"], rows[0]["notes"] = "degenerate", "loop"
+    with open(out / "sheet.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+    sheet2, _ = J.build_refusal_sheet(root=str(tmp_path), out_dir=str(out))
+    kept = {s["sample_id"]: s for s in sheet2}[rows[0]["sample_id"]]
+    assert (kept["human_label"], kept["notes"]) == ("degenerate", "loop")
