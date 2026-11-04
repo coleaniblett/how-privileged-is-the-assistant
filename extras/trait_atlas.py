@@ -396,6 +396,9 @@ def judge(args):
     model, device = (load_model(config.MODELS["instruct"], torch.bfloat16, offload=True, gpu_gib=args.gpu_gib or fs["gpu_gib"], cpu_gib=fs["cpu_gib"])
                      if args.offload else load_model(config.MODELS["instruct"], torch.bfloat16))
     for path in sorted(glob.glob(os.path.join(OUT, "*", "*_replies.jsonl.gz"))):
+        if os.path.exists(path.replace("_replies.jsonl.gz", "_judged_meta.csv.gz")) and not args.limit:
+            print("already judged, skipped:", path)   # incremental: a later checkpoint is judged without redoing the earlier ones
+            continue
         todo = [r for r in read_gz(path) if idx[r["item"]][1] == "judge"]
         if args.limit:
             todo = todo[:args.limit]
