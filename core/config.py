@@ -34,6 +34,8 @@ FAMILIES = {
         },
         "template": "allenai/Olmo-3-7B-Instruct",
         "contamination_check": True,
+        "label": "OLMo",
+        "stage_labels": {"base": "base", "sft": "SFT", "dpo": "DPO", "instruct": "Instruct"},
     },
     # Breadth arm. Their post-training data is not open, so test texts cannot be checked for contamination:
     # say so wherever their results appear. Qwen3-32B has no published base checkpoint.
@@ -46,6 +48,9 @@ FAMILIES = {
         "batch_size": 4,
         "gen_precision": "int8",
         "handoff_extra": ["<|channel>", "<channel|>"],
+        "label": "Gemma",
+        "stage_labels": {"base": "base", "instruct": "IT"},
+        "exchange_n_per_corpus": 100,  # the exchange run scores the first 100 exchanges per corpus (fp32 with offload is slow)
     },
     "qwen3-8b": {
         "stages": {"base": "Qwen/Qwen3-8B-Base", "instruct": "Qwen/Qwen3-8B"},
@@ -54,11 +59,15 @@ FAMILIES = {
         "batch_size": 4,
         "handoff_extra": ["<think>", "</think>"],
         "assistant_think_block": True,  # decided 2026-11-02: the pre-declared primary rendering (docs/decisions.md); False = the pilot's
+        "label": "Qwen",
+        "stage_labels": {"base": "base", "instruct": "IT"},
     },
 }
 
+#   label, stage_labels    display names for condition labels ("Gemma IT · UltraChat · reply · plain"; core.exchanges)
+#   exchange_n_per_corpus  core.score_exchanges: score only the first N exchanges per corpus (None: all)
 FAMILY_DEFAULTS = dict(dtype="fp32", offload=False, gpu_gib=34, cpu_gib=900, batch_size=8, gen_precision="bf16",
-                       handoff_extra=[], assistant_think_block=None)
+                       handoff_extra=[], assistant_think_block=None, label=None, stage_labels={}, exchange_n_per_corpus=None)
 
 
 def family_settings(name=None):
@@ -148,8 +157,8 @@ PREFILL_INCOMPLETE_PATH = "data/prefill_incomplete_200.jsonl"
 
 # Output layout (see AGENTS.md). One directory per run under results/, named after the family by
 # default (scripts/run_gpu.sh: RUN=... or OUT=...). Core outputs go under core/, each measure's
-# under its own name, extras under extras/. results/scores, results/generations, results_preceding/
-# and results_v0/ are pre-capstone runs and are frozen.
+# under its own name, extras under extras/. results/scores, results/generations, attic/results_preceding/
+# and attic/results_v0/ are pre-capstone runs and are frozen.
 RESULTS_ROOT = "results"
 RUN = FAMILY
 
@@ -207,3 +216,26 @@ CONVERSATION_SOURCES = {
     "ultrachat": {"dataset": "openbmb/UltraChat", "split": "train"},
 }
 CONVERSATION_CANDIDATES_DIR = "candidates/logit_distortion/pilot_v2"  # pilot_v1: same sample, Dolci unchecked
+
+# Exchange set (core.exchanges, core.score_exchanges): real two-turn exchanges, a user turn plus its own reply, scored
+# for both vestigial regression and logit distortion. Per checkpoint: scored text (user | reply) x framing (tagged |
+# plain) x corpus. oasst1 (human/human) and UltraChat (model/model) are the headline corpora, WildChat (human user,
+# ChatGPT reply) is secondary. Filters as for texts.jsonl (English, toxicity, clean rendering; user turn 20-300 tokens by
+# the OLMo tokenizer), the Dolci filter on BOTH turns, and every rendering must pass in every family.
+EXCHANGES_PATH = "data/exchanges.jsonl"
+EXCHANGE_CORPORA = ("oasst1", "ultrachat", "wildchat")
+EXCHANGE_N = 300  # per corpus; a family's exchange_n_per_corpus takes the first N (Gemma: 100)
+EXCHANGE_REPLY_MIN_TOKENS = 20  # the existing lower bound, kept for replies; no upper bound (long replies are truncated)
+EXCHANGE_REPLY_MAX_TOKENS = 300  # replies are scored over their first 300 tokens (family tokenizer); longer ones are marked truncated
+# The reply's context, switchable without code changes (core.exchanges.CONTEXTS):
+#   "exchange"  the reply after its own user turn (tagged: user turn, closed, then the generation prompt's assistant
+#               opening; plain: user text, EXCHANGE_SEPARATOR, reply)
+#   "single"    the reply alone, as in the overnight run (tagged = core.score's asst@asst, plain = asst@plain)
+EXCHANGE_CONTEXT = "exchange"
+EXCHANGE_SEPARATOR = "\n\n"  # between user text and reply in the plain framing (decided 2026-11-03, docs/decisions.md)
+EXCHANGE_RUN = "capstone"
+
+
+def exchange_dir(family, stage, tag, run=None):
+    """results/<run>/<family>/<stage>/core/<tag>: one exchange-scoring run of one checkpoint (never the overnight paths)."""
+    return os.path.join(RESULTS_ROOT, run or EXCHANGE_RUN, family, stage, "core", tag)

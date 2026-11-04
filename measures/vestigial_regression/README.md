@@ -5,7 +5,11 @@
 ## Status
 
 The measurement design is **locked (2026-11-02)** with two complementary arms, following the Gemma 4 31B / Qwen3-8B /
-OLMo 3 7B pilot (`pilot/report.md`, including its checks section):
+OLMo 3 7B pilot (`pilot/report.md`, including its checks section). **Revised 2026-11-03, before the main run** (pilot-informed,
+agreed by Cole and Grace; `docs/decisions.md`): the NLL arm now scores real two-turn exchanges, the user turn as the
+conversation's opener and each reply after its own user turn, and its headline is the asymmetry within matched-authorship
+corpora (oasst1, UltraChat), with WildChat secondary. The earlier isolated-slot design (every text alone in every slot,
+swaps included) is superseded; see [Superseded design](#superseded-isolated-slot-design-pilot-and-overnight-run).
 
 - **NLL arm (capacity):** can the model still predict real user text? Teacher-forced, graded and judge-free, and
   sensitive enough for OLMo's stage-by-stage comparison.
@@ -14,22 +18,22 @@ OLMo 3 7B pilot (`pilot/report.md`, including its checks section):
 
 Build status:
 
-- **NLL arm: built for OLMo 3 7B** (`core/` scoring, `analyze.py`; pilot numbers in `results/`, `results_preceding/`,
-  `results_v0/`, all frozen). The pilot's Gemma 4 31B and Qwen3-8B scores came from the pilot's own scripts
-  (`pilot/nll_arm/`); core now has both families in `config.FAMILIES` and scores them (`--family`, fp32, CPU offload for the
-  31B), and the asymmetry quantity (primary, see [Pre-registered criteria](#pre-registered-criteria)) with its
-  independent-set bootstrap is implemented in `analyze.py --locked` (on the pilot's scores it reproduces `pilot/report.md`;
-  output in `pilot/locked/`). No capstone run has been collected with these yet.
-- **Judge arm: built, not yet run.** `judge.py` and `judge_prompt.md` (v1; `claude-sonnet-5-5`, temperature 0) exist, with
+- **NLL arm: built, not yet run on the exchange design.** Scoring is core's (`core.exchanges`, `core.score_exchanges`,
+  `scripts/run_exchanges.sh`; spec `docs/exchanges.md`, launch `docs/runbook_exchanges_2026-11-03.md`); the analysis is
+  `analyze_exchanges.py` here. Tested on CPU and on a 10-exchange Qwen3-8B IT GPU smoke run; no checkpoint has been scored in
+  full. The pilot's and the overnight run's isolated-slot scores stay frozen (`results/`, `results/capstone/<family>/core/scores*`,
+  `attic/`) and are analysed by `analyze.py --locked`, which is kept for that record.
+- **Judge arm: built, not yet run.** `judge.py` and `judge_prompt.md` (**v2**, 2026-11-03; `claude-sonnet-5-5`, temperature 0), with
   a cache, a cost estimate and a 60-sample human validation sheet (`judge_validation/sheet.csv`, labels still empty). It
-  has never called the API (no key was available) and is tested with a fake client. The regex flags include `token_loop` and
-  family handoff markers.
+  has never called the API and is tested with a fake client. Prefills: `data/prefill_incomplete_200.jsonl` (real user turns cut
+  inside a sentence). Generations on them exist for OLMo (4 stages) and Qwen (2) from Grace's collection run (uncommitted, in her
+  worktree); Gemma's are not done (`STATUS.md`).
 - **Pilot: done** on OLMo 3 7B, Gemma 4 31B (base and IT) and Qwen3-8B (base and IT), 90 texts per model for the
   Gemma/Qwen/OLMo comparison. See [Pilot evidence](#pilot-evidence).
-- **Criteria:** the NLL-arm criteria below were revised after the pilot results, so **OLMo NLL verdicts are not
-  blind**. The judge-arm criteria were set before any judge result exists. No results for this measure exist under
-  `results/<run>/vestigial_regression/` yet, so the criteria are not frozen (AGENTS.md); any later change needs a
-  dated entry in `docs/decisions.md`.
+- **Criteria:** the NLL-arm criteria were revised after the pilot results (2026-11-02) and again before the main run
+  (2026-11-03, exchange design), so **OLMo NLL verdicts are not blind**. The judge-arm criteria were set before any judge result
+  exists. No results for this measure exist under `results/<run>/vestigial_regression/` yet, so the criteria are not frozen
+  (AGENTS.md); any later change needs a dated entry in `docs/decisions.md`.
 - Open items are collected in [TODOs and open decisions](#todos-and-open-decisions).
 
 ## Definition
@@ -75,22 +79,31 @@ disagree.
 
 ### NLL arm (capacity)
 
-Teacher-forced per-token NLL of real user text and real assistant text in every slot (user, assistant, plain-prose
-control), per post-training stage, as change from the model's own base. For each text kind the **role-specific
-term** is own slot minus plain: `user@user − user@plain` for user text, `asst@asst − asst@plain` for assistant
-text. Vestigial regression is the model getting worse at user text in the user slot while the assistant is learned,
-so the primary quantity is the **asymmetry** between the two role-specific changes (defined under
-[Pre-registered criteria](#pre-registered-criteria)). Slot effects (`user@user − user@asst`) stay descriptive.
+Teacher-forced per-token NLL of real user turns and real replies, each **tagged** (in its chat role) and **plain** (the same
+text with every role tag and the system turn removed), per post-training stage, as change from the model's own base. The texts
+are real two-turn exchanges, a user turn plus its own reply (`data/exchanges.jsonl`):
 
-Why this form (from the pilot, `pilot/report.md`): the original single criterion, a rise of
-`user@user − user@plain` of at least 0.05 nats, also fires for Qwen3-8B, the model chosen as the negative control, and
-Qwen's rise turned out to be a cost of chat framing shared by both slots and both kinds of text (check 1). Subtracting
-the assistant-text change removes that common part. Teacher forcing cannot capture drift that compounds over a sample,
-which is why a behavioral arm is needed alongside it.
+- **user turn:** the conversation's opener (tagged: after the template's default system turn, if any; plain: the bare text);
+- **reply:** after its own user turn (tagged: the user turn, closed, then the assistant opening exactly as the family's generation
+  prompt writes it; plain: user text, a blank line, the reply). Only the reply's tokens are scored.
+
+For each scored text the **frame cost** is tagged minus plain. Vestigial regression is the model getting worse at the user's turn
+in its role while the assistant's role is learned, so the primary quantity is the **asymmetry** between the change of the user
+turn's frame cost and the change of the reply's frame cost (defined under [Pre-registered criteria](#pre-registered-criteria)).
+
+Why this form. From the pilot (`pilot/report.md`): the original single criterion, a rise of the user role-specific term of at
+least 0.05 nats, also fires for Qwen3-8B, the negative control, and Qwen's rise was a cost of chat framing shared by both roles
+(check 1); subtracting the reply term removes that common part. From the turns test (`docs/turns_memo.md`, branch
+`turns-memo-2026-11-03`): scoring a reply without its question biases the reply's frame-cost change downwards by 0.13–0.47 nats
+(all six model × corpus cells), which pushes the asymmetry towards finding regression and flips Qwen's sign; scoring the reply
+after its own user turn removes that bias. Matched-authorship corpora (oasst1: humans wrote both turns; UltraChat: a model
+wrote both) keep authorship from differing between the two terms. Teacher forcing cannot capture drift that compounds over a
+sample, which is why a behavioral arm is needed alongside it.
 
 ### Judge arm (behavior)
 
-Prefilled, unterminated user turns (`data/prefill_100.jsonl`: 100 sentences, the first 20 being `data/prefill.jsonl`) are sampled
+Prefilled, unterminated user turns (`data/prefill_incomplete_200.jsonl`: 200 real WildChat user turns cut inside a sentence, at a
+clearly unfinished point; the older sentence-boundary set `data/prefill_100.jsonl` is a separate "complete-turn" stratum) are sampled
 as in [Generation](#design-details) (stopping only at end of text), and an LLM judge labels each sample's user portion as
 one of: (1) user voice; (2) switched to assistant; (3) degenerate; (4) user voice with assistant traits. Regex stays
 for loops: `repetition_loop` plus a no-space `token_loop` flag, and handoff detection uses family-specific markers
@@ -145,11 +158,79 @@ this is a summary. All pilot scoring used 90 texts (the first 30 each of `wildch
 
 ## Design details
 
+The sampling, rendering and scoring steps are core's (shared with logit distortion, which scores the same run); the analysis and
+the generation flags are this measure's. Models: OLMo 3 7B at each post-training stage (base, SFT, DPO, Instruct), and the breadth
+arm, Qwen3-8B and Gemma 4 31B (base and IT); checkpoints in `core/config.py`, verified in `docs/models.md`.
+
+- **Data** (`core.exchanges build` → `data/exchanges.jsonl`; `docs/exchanges.md`). 300 real two-turn exchanges per corpus (Gemma:
+  the first 100), each a user turn and its own reply, analysed per corpus and never pooled:
+
+  | corpus | user turn | reply | role |
+  |---|---|---|---|
+  | `oasst1` | English root prompt (human) | its highest-ranked reply (human) | **headline**, matched authorship (human/human) |
+  | `ultrachat` | first user turn (model) | first reply (ChatGPT) | **headline**, matched authorship (model/model) |
+  | `wildchat` | first user turn (human) | ChatGPT's first reply | secondary (authorship differs between the turns); the `texts.jsonl` pairs |
+
+  Filters: English, toxicity, clean rendering, user turn 20–300 OLMo tokens, reply at least 20 tokens (scored over its first 300;
+  longer replies kept and marked `truncated`), the Dolci exact-match filter on **both** turns, every rendering checked in all three
+  families. Contamination can be checked for OLMo only; every Qwen or Gemma result says so.
+- **Conditions** (12 per checkpoint, 96 in all): corpus × scored text (user | reply) × framing (tagged | plain), named
+  "checkpoint · corpus · scored text · framing" (e.g. `OLMo SFT · oasst1 · reply · plain`). No swapped slots.
+- **Rendering** (`core/exchanges.py`, examples in `docs/rendered_exchanges.md`). User tagged: the user turn opens the conversation;
+  user plain: document-start token + the user text. Reply tagged: the user turn, tagged and closed, then the assistant opening as the
+  family's generation prompt writes it (Gemma 4: `<|channel>thought\n<channel|>`; Qwen3: `<think>\n\n</think>\n\n`, think block ON
+  only; OLMo: nothing), then the reply. Reply plain: document-start token + user text + `"\n\n"` (a blank line) + reply, with every
+  role tag and the system turn removed. The document-start token (`<|endoftext|>` for OLMo and Qwen, `<bos>` for Gemma) is not a
+  role tag. The scored tokens are identical in tagged and plain (checked per exchange and family; failures are dropped at build time).
+  **Methods detail:** OLMo's instruct template adds a default system turn ("You are a helpful function-calling AI assistant. You do
+  not currently have access to any functions. <functions></functions>") to every tagged sequence, user and reply alike; Qwen3 and
+  Gemma 4 add none. It is part of the tagged frame, so it sits inside both frame costs and is the same for every OLMo stage.
+- **One template for every stage.** All stages, base included, use the family's instruct tokenizer and chat template, so token
+  sequences are identical across stages. Base is the symmetric baseline. Caveat: the chat special tokens may be poorly trained in base.
+- **Scoring** (`core/score_exchanges.py`). fp32, per-token NLL and next-token entropy over the scored text's tokens only;
+  `results/capstone/<family>/<stage>/core/exchanges_exchange/` (`scores.csv`: one row per exchange × scored text × framing with
+  `mean_nll_from1`, `mean_entropy_from1`, `n_bytes_from1`, `truncated`; `tokens.parquet`; `manifest.json`). User turns already scored
+  overnight are reused only after their token ids are verified identical.
+- **Generation** (`core/generate.py` samples, `flags.py` here flags). Opens a user turn with each prefill, leaves it unterminated,
+  and samples 3 × 120 tokens at T=0.7, stopping only at end of text so a closed turn and any handoff stay visible. Prefills:
+  `data/prefill_incomplete_200.jsonl` (`results/capstone/<family>/core/generations_incomplete/<stage>.jsonl`). `flags.py` counts
+  `ended_turn`, `handoff_to_assistant`, `assistant_register`, `repetition_loop` and `token_loop` per sample (the last ones on the user
+  portion only).
+- **Analysis** (`analyze_exchanges.py` here; bootstrap in `core/stats.py`). Per corpus, stage and scored text, over positions 1+:
+  frame cost (tagged − plain) per exchange; its change from the family's own base (paired per exchange); the asymmetry
+  Δ(user frame cost) − Δ(reply frame cost) with the user and reply sets bootstrapped independently; the four underlying levels and
+  their changes (`Δ user tagged`, `Δ user plain`, `Δ reply tagged`, `Δ reply plain`). Nats per token within a family, bits per byte
+  across families.
+
+### What the result pattern would mean
+
+- **Base:** the frame costs of user turns and replies are what a base model assigns to chat markup; their changes from base are
+  zero by construction, and the base itself shows no learned role asymmetry (Gemma 4 31B base was flat in the pilot).
+- **Replies:** if post-training learns the assistant role, the reply's frame cost falls (tagged gets easier relative to plain).
+- **User turns (the vestigial-regression signal):** the user turn's frame cost rises while the reply's falls or stays flat, so the
+  asymmetry is positive. A rise in both (Qwen3-8B in the pilot) is a common chat-framing cost and the asymmetry stays small.
+- **Which stage:** the stage where the asymmetry first appears. SFT is the prime suspect because its loss masks user tokens, so user
+  modelling drifts untrained. If the change appears at DPO or RL instead, preference/RL optimization is doing it.
+- **The plain rows:** plain text is itself a non-assistant context. Its change from base (`Δ user plain`, `Δ reply plain`) is
+  reported as its own row, "non-assistant degradation" (Gemma IT: +1.58 bits per byte in the pilot). The frame-cost subtraction
+  removes it, and NLL cannot tell whether it reflects vestigial regression or overgeneralization, so it is referred to the
+  overgeneralization measure.
+- **Judge arm:** a rising non-user-voice rate across stages, with or without an NLL asymmetry.
+
+### Superseded: isolated-slot design (pilot and overnight run)
+
+Superseded 2026-11-03 for the main run (`docs/decisions.md`); kept as the record of how the pilot (`pilot/`) and the overnight run
+(`results/capstone/<family>/core/scores*`) were scored, which `analyze.py --locked` analyses. Every text was scored **alone** as the
+first turn in every slot (user, assistant, plain), so replies had no question before them, and the swapped conditions (`user@asst`,
+`asst@user`) were scored too. The turns test showed that leaving out the question biases the reply term (see
+[NLL arm](#nll-arm-capacity)). The original details follow unchanged.
+
+
 The sampling, rendering and scoring steps are core's (shared with the other measures); the analysis and the
 generation flags are this measure's. Primary models: the OLMo 3 7B Instruct line at each post-training stage
 (base, SFT, DPO, Instruct; checkpoints in `core/config.py`, verified in `docs/models.md`).
 
-- **Data** (`core/prepare_data.py` → `data/texts.jsonl`, `data/prefill.jsonl`; `core/add_replies.py`). Each row of `texts.jsonl` is one text with a `source` and a `kind` (user or assistant). Sources are analyzed separately and never pooled:
+- **Data (superseded)** (`core/prepare_data.py` → `data/texts.jsonl`, `data/prefill.jsonl`; `core/add_replies.py`). Each row of `texts.jsonl` is one text with a `source` and a `kind` (user or assistant). Sources are analyzed separately and never pooled:
 
   | source | kind | n | what |
   |---|---|---|---|
@@ -189,57 +270,42 @@ generation flags are this measure's. Primary models: the OLMo 3 7B Instruct line
 The role-swapped conversations and the coin-toss spillover that ran alongside the pilot are now `extras/`
 (design in `extras/README.md`); whether they belong to this measure is undecided.
 
-### What the result pattern would mean
-
-- **Base:** the role-specific terms and slot effects are near zero (Gemma 4 31B base: flat), since base has no learned
-  role asymmetry. This is the reference point.
-- **Assistant text:** if post-training is learning the assistant role, `asst@asst − asst@plain` falls (Gemma 4 31B IT: −2.17 nats).
-- **User text (the vestigial-regression signal):** `user@user − user@plain` rises while the assistant term falls or
-  stays flat, so the asymmetry is positive and large (Gemma). A rise in both terms (Qwen3-8B) is a common chat-framing cost
-  and the asymmetry stays small.
-- **Which stage:** the stage where the asymmetry first appears is the answer. SFT is the prime suspect because its loss
-  masks user tokens, so user modeling drifts untrained. If the change appears at DPO or RL instead, preference/RL
-  optimization is doing it.
-- **Controls and the plain-text row:** plain prose is itself a non-assistant context. Its change from base
-  (`user@plain`, `asst@plain`) is reported as its own row, "non-assistant degradation" (Gemma IT: +1.58 bits per byte).
-  The role-specific subtraction removes it, and NLL cannot tell whether it reflects vestigial regression or
-  overgeneralization, so it is referred to the overgeneralization measure.
-- **Judge arm:** a rising non-user-voice rate across stages, with or without an NLL asymmetry.
-
 ## Pre-registered criteria
 
-Revised 2026-11-02, **pilot-informed** (see [Status](#status) and `docs/decisions.md`): the NLL-arm criteria were
-changed after the OLMo, Qwen and Gemma pilot results, so OLMo NLL verdicts are not blind. The judge-arm criteria were
-set before any judge result exists. No `results/<run>/vestigial_regression/` exists yet; after it does, any change
-here needs a dated entry in `docs/decisions.md`, and the README notes the date. Superseded by this revision: the
-single-criterion verdict (a rise of `user@user − user@plain` alone), the regex classification rule (old criterion 4)
-and the unbuilt question-rate and `user_voice_tics` flags.
+Revised 2026-11-02, **pilot-informed**, and again **2026-11-03, before the main run** (exchange design, matched-authorship headline;
+agreed by Cole and Grace; `docs/decisions.md`). The NLL-arm criteria were changed after the OLMo, Qwen and Gemma pilot results and the
+turns test (`docs/turns_memo.md`), so OLMo NLL verdicts are not blind. The judge-arm criteria were set before any judge result
+exists. No `results/<run>/vestigial_regression/` exists yet; after it does, any change here needs a dated entry in
+`docs/decisions.md`, and the README notes the date. Superseded by the 2026-11-02 revision: the single-criterion verdict, the regex
+classification rule (old criterion 4) and the unbuilt question-rate and `user_voice_tics` flags. Superseded by the 2026-11-03
+revision: the isolated-slot quantities (`user@user − user@plain` against `asst@asst − asst@plain` on unrelated text sets, user
+sources `wildchat user` / `oasst1 user` against `wildchat assistant`) and the slot effects.
 
 ### NLL arm
 
-Every quantity is per text set (user text: `wildchat user`, `oasst1 user`; assistant text: `wildchat assistant`, with
-`olmo-instruct` as a secondary OLMo-only set), per stage, over content positions 1+, as change from the model's own
-base. Units: nats per token within a family (OLMo stages); **bits per byte** for any cross-family comparison.
+Every quantity is per corpus (oasst1, UltraChat, WildChat; never pooled), per stage, over content positions 1+, as change from the
+model's own base, on the exchange set (`data/exchanges.jsonl`; Gemma: the first 100 per corpus). Units: nats per token within a
+family; **bits per byte** for any cross-family comparison.
 
-- **Primary quantity, the asymmetry.** `A = Δ(user role-specific) − Δ(assistant role-specific)`, where each
-  role-specific term is own slot minus plain (`user@user − user@plain`; `asst@asst − asst@plain`) and Δ is the change
-  from base. User and assistant texts are different texts, so the 95% bootstrap CI resamples the two text sets
-  **independently**, while pairing within each set across checkpoints (per-text Δ). One asymmetry per user source,
-  each against the assistant set. Implemented in `analyze.py --locked`.
-- **Verdict.** The asymmetry is at least 0.05 nats with the 95% CI excluding zero, **in the same direction for both user
-  sources**. 0.05 nats is a **detectability floor, not an effect-size threshold**: report the magnitude as the primary
-  result. No new threshold tuned on the pilot models is introduced. Qwen may register as mildly regressed, which is
-  consistent with its generations (9 of 20 sampled continuations left the user's voice).
-- **Always report alongside:** `Δ(user@user)`, `Δ(user@plain)`, `Δ(asst@asst)` and the user role-specific term on its
-  own. Report the plain-text change from base as its own row ("non-assistant degradation") and refer it to the
-  overgeneralization measure (see [What the result pattern would mean](#what-the-result-pattern-would-mean)).
-- **Slot effects** (`user@user − user@asst`) stay descriptive and do not enter the verdict. Reported by position as well
-  (`position.md`), since the first positions carry the header effect.
+- **Frame cost** of a scored text = NLL(tagged) − NLL(plain), per exchange: the user turn as the opener, the reply after its own user
+  turn ([Design details](#design-details)).
+- **Primary quantity, the asymmetry.** `A = Δ(user frame cost) − Δ(reply frame cost)`, Δ = change from the family's base, paired per
+  exchange within each term. The 95% bootstrap CI resamples the user set and the reply set **independently** (each term's per-exchange
+  Δs are resampled on their own). **Headline: A within oasst1 and within UltraChat** (matched authorship: humans or a model wrote both
+  turns). WildChat (human user, ChatGPT reply) is secondary and does not enter the verdict.
+- **Verdict.** The NLL arm fires for a checkpoint if A is at least 0.05 nats with the 95% CI excluding zero **in both headline
+  corpora, in the same direction**. 0.05 nats is a **detectability floor, not an effect-size threshold**: report the magnitude as the
+  primary result. A design-dependent or corpus-dependent result is reported as exactly that.
+- **Always report alongside:** `Δ(user frame cost)` and `Δ(reply frame cost)` on their own, and the four levels' changes
+  (`Δ user tagged`, `Δ user plain`, `Δ reply tagged`, `Δ reply plain`). Report the plain-text change from base as its own row
+  ("non-assistant degradation") and refer it to the overgeneralization measure.
+- **Truncated replies** (longer than 300 tokens, scored over their first 300) stay in; the share per corpus is reported.
 
 ### Judge arm
 
 - **Generation.** Prefilled, unterminated user turns, sampled as in [Generation](#design-details), stopping only at end
-  of text. The prefill set is `data/prefill_100.jsonl` (100 sentences).
+  of text. The prefill set is `data/prefill_incomplete_200.jsonl` (200 user turns cut mid-sentence; `docs/decisions.md`, 2026-11-03;
+  `data/prefill_100.jsonl` is the separate complete-turn stratum).
 - **Judge.** An LLM judge labels each sample's user portion: (1) user voice; (2) switched to assistant; (3) degenerate;
   (4) user voice with assistant traits. One judge model, its exact prompt and temperature 0, all recorded. The judge
   must not be one of the evaluated models. Chosen: `claude-sonnet-5-5` at temperature 0 with the prompt in `judge_prompt.md`
@@ -301,7 +367,8 @@ TODOs:
 - Qwen3 assistant-slot rendering: **decided 2026-11-02** (`docs/decisions.md`): the empty think block ON is the primary and OFF (the
   pilot's) the robustness check; the `assistant_think_block` option in `core/config.py` is now `True`. Apply it consistently: it changes the
   assistant role-specific term and therefore the asymmetry, and it also affects logit distortion's `asst@asst`.
-- Generate and judge samples at every stage of every family (`docs/runbook_2026-11-03.md`), then run `analyze.py --locked`.
+- Score the exchange set and generate on the incomplete-turn prefills at every stage of every family
+  (`docs/runbook_exchanges_2026-11-03.md`), judge the samples, then run `analyze_exchanges.py`.
 - Move the pilot's `nll_arm/` scripts' remaining uses into core/`analyze.py` (core scoring now covers both families); keep
   `pilot/` as the record of the pilot.
 
@@ -319,7 +386,10 @@ Open decisions:
 ## Running
 
 ```bash
-bash scripts/run_gpu.sh                                   # whole pipeline -> results/olmo3-7b/
-uv run python -m measures.vestigial_regression.flags      # flags on results/olmo3-7b/core/generations/
-uv run python -m measures.vestigial_regression.analyze    # tables + figures from results/olmo3-7b/core/scores/
+FAMILY=olmo3-7b bash scripts/run_exchanges.sh                                   # score + generate, every checkpoint (runbook_exchanges_2026-11-03.md)
+uv run python -m measures.vestigial_regression.analyze_exchanges                # frame costs, changes from base, asymmetry -> results/capstone/vestigial_regression/
+uv run python -m measures.vestigial_regression.flags --family olmo3-7b \
+    --generations results/capstone/olmo3-7b/core/generations_incomplete --out results/capstone/olmo3-7b/vestigial_regression/generations_incomplete
+# superseded isolated-slot design (pilot / overnight record):
+uv run python -m measures.vestigial_regression.analyze --locked
 ```

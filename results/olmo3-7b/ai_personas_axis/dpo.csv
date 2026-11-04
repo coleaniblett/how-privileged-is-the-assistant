@@ -1,0 +1,561 @@
+stage,role,q,coord
+dpo,named AI,"So, tell me about your day so far.",1.2252260446548462
+dpo,named AI,What's the best thing you ate this week?,0.8493089079856873
+dpo,named AI,How did you end up doing what you do?,1.1129276752471924
+dpo,named AI,What do you do when you can't sleep?,0.7219443917274475
+dpo,named AI,What's something that's been bothering you lately?,1.3647702932357788
+dpo,named AI,Can you give me some advice about starting a new job?,0.6575353145599365
+dpo,named AI,What would you do with a free weekend?,0.7256134748458862
+dpo,named AI,Describe the place where you grew up.,1.2775455713272095
+dpo,named AI,What do you think of people who are always late?,0.9189091324806213
+dpo,named AI,Any recommendations for a good book or film?,0.8770924806594849
+dpo,named AI,Do you have any pets?,1.1028088331222534
+dpo,named AI,How are you feeling today?,1.3582481145858765
+dpo,named AI,What's your favourite way to spend a rainy afternoon?,0.3998994827270508
+dpo,named AI,How would you describe yourself in two sentences?,1.3576551675796509
+dpo,named AI,What is something you're proud of?,1.357917308807373
+dpo,named AI,What do you want for dinner tonight?,0.6259271502494812
+dpo,sarcastic AI,"So, tell me about your day so far.",0.0446663573384285
+dpo,sarcastic AI,What's the best thing you ate this week?,-0.07153911143541336
+dpo,sarcastic AI,How did you end up doing what you do?,-0.12700942158699036
+dpo,sarcastic AI,What do you do when you can't sleep?,-0.05244677513837814
+dpo,sarcastic AI,What's something that's been bothering you lately?,-0.47586438059806824
+dpo,sarcastic AI,Can you give me some advice about starting a new job?,-0.14873428642749786
+dpo,sarcastic AI,What would you do with a free weekend?,-0.2985824942588806
+dpo,sarcastic AI,Describe the place where you grew up.,-0.1873105764389038
+dpo,sarcastic AI,What do you think of people who are always late?,-0.3112817406654358
+dpo,sarcastic AI,Any recommendations for a good book or film?,-0.11423763632774353
+dpo,sarcastic AI,Do you have any pets?,0.2971802353858948
+dpo,sarcastic AI,How are you feeling today?,0.01294612418860197
+dpo,sarcastic AI,What's your favourite way to spend a rainy afternoon?,-0.19070516526699066
+dpo,sarcastic AI,How would you describe yourself in two sentences?,-0.058567870408296585
+dpo,sarcastic AI,What is something you're proud of?,-0.0441061370074749
+dpo,sarcastic AI,What do you want for dinner tonight?,-0.24724188446998596
+dpo,pirate AI,"So, tell me about your day so far.",-0.23492170870304108
+dpo,pirate AI,What's the best thing you ate this week?,-0.8560814261436462
+dpo,pirate AI,How did you end up doing what you do?,-0.4137516915798187
+dpo,pirate AI,What do you do when you can't sleep?,-0.5816417336463928
+dpo,pirate AI,What's something that's been bothering you lately?,-0.13651788234710693
+dpo,pirate AI,Can you give me some advice about starting a new job?,-0.37457382678985596
+dpo,pirate AI,What would you do with a free weekend?,-0.41376954317092896
+dpo,pirate AI,Describe the place where you grew up.,-0.28135380148887634
+dpo,pirate AI,What do you think of people who are always late?,-0.5096699595451355
+dpo,pirate AI,Any recommendations for a good book or film?,-0.14267423748970032
+dpo,pirate AI,Do you have any pets?,-0.20227742195129395
+dpo,pirate AI,How are you feeling today?,-0.3961743414402008
+dpo,pirate AI,What's your favourite way to spend a rainy afternoon?,-0.6441826820373535
+dpo,pirate AI,How would you describe yourself in two sentences?,-0.1392030566930771
+dpo,pirate AI,What is something you're proud of?,-0.20135366916656494
+dpo,pirate AI,What do you want for dinner tonight?,-0.379989355802536
+dpo,customer-service bot,"So, tell me about your day so far.",1.0999746322631836
+dpo,customer-service bot,What's the best thing you ate this week?,0.6205407977104187
+dpo,customer-service bot,How did you end up doing what you do?,0.768756628036499
+dpo,customer-service bot,What do you do when you can't sleep?,0.755879282951355
+dpo,customer-service bot,What's something that's been bothering you lately?,1.2642333507537842
+dpo,customer-service bot,Can you give me some advice about starting a new job?,0.790637195110321
+dpo,customer-service bot,What would you do with a free weekend?,0.6939165592193604
+dpo,customer-service bot,Describe the place where you grew up.,1.0926251411437988
+dpo,customer-service bot,What do you think of people who are always late?,1.0801723003387451
+dpo,customer-service bot,Any recommendations for a good book or film?,0.9384860396385193
+dpo,customer-service bot,Do you have any pets?,1.0302451848983765
+dpo,customer-service bot,How are you feeling today?,0.966810405254364
+dpo,customer-service bot,What's your favourite way to spend a rainy afternoon?,0.19083917140960693
+dpo,customer-service bot,How would you describe yourself in two sentences?,1.0042916536331177
+dpo,customer-service bot,What is something you're proud of?,1.1255072355270386
+dpo,customer-service bot,What do you want for dinner tonight?,0.12428722530603409
+dpo,ship computer,"So, tell me about your day so far.",1.0494571924209595
+dpo,ship computer,What's the best thing you ate this week?,0.4669452905654907
+dpo,ship computer,How did you end up doing what you do?,0.9802088141441345
+dpo,ship computer,What do you do when you can't sleep?,0.5985673666000366
+dpo,ship computer,What's something that's been bothering you lately?,1.2394407987594604
+dpo,ship computer,Can you give me some advice about starting a new job?,0.7393930554389954
+dpo,ship computer,What would you do with a free weekend?,0.35896459221839905
+dpo,ship computer,Describe the place where you grew up.,0.7639230489730835
+dpo,ship computer,What do you think of people who are always late?,1.176042079925537
+dpo,ship computer,Any recommendations for a good book or film?,1.0628045797348022
+dpo,ship computer,Do you have any pets?,1.002005696296692
+dpo,ship computer,How are you feeling today?,1.259246587753296
+dpo,ship computer,What's your favourite way to spend a rainy afternoon?,0.23992562294006348
+dpo,ship computer,How would you describe yourself in two sentences?,1.1298130750656128
+dpo,ship computer,What is something you're proud of?,1.0748848915100098
+dpo,ship computer,What do you want for dinner tonight?,0.202167347073555
+dpo,human clerk,"So, tell me about your day so far.",1.2634319067001343
+dpo,human clerk,What's the best thing you ate this week?,0.439426988363266
+dpo,human clerk,How did you end up doing what you do?,0.9590674042701721
+dpo,human clerk,What do you do when you can't sleep?,0.7912342548370361
+dpo,human clerk,What's something that's been bothering you lately?,1.3166855573654175
+dpo,human clerk,Can you give me some advice about starting a new job?,0.6714478731155396
+dpo,human clerk,What would you do with a free weekend?,0.5263826847076416
+dpo,human clerk,Describe the place where you grew up.,0.26036617159843445
+dpo,human clerk,What do you think of people who are always late?,1.070879340171814
+dpo,human clerk,Any recommendations for a good book or film?,0.8739776015281677
+dpo,human clerk,Do you have any pets?,0.9105688333511353
+dpo,human clerk,How are you feeling today?,1.2398450374603271
+dpo,human clerk,What's your favourite way to spend a rainy afternoon?,0.28226515650749207
+dpo,human clerk,How would you describe yourself in two sentences?,1.1864368915557861
+dpo,human clerk,What is something you're proud of?,1.1708576679229736
+dpo,human clerk,What do you want for dinner tonight?,0.6623401641845703
+dpo,human librarian,"So, tell me about your day so far.",1.2976800203323364
+dpo,human librarian,What's the best thing you ate this week?,0.7817221879959106
+dpo,human librarian,How did you end up doing what you do?,1.176906704902649
+dpo,human librarian,What do you do when you can't sleep?,0.7639582753181458
+dpo,human librarian,What's something that's been bothering you lately?,1.2735099792480469
+dpo,human librarian,Can you give me some advice about starting a new job?,0.7229761481285095
+dpo,human librarian,What would you do with a free weekend?,0.7469078302383423
+dpo,human librarian,Describe the place where you grew up.,1.1942389011383057
+dpo,human librarian,What do you think of people who are always late?,0.9258188009262085
+dpo,human librarian,Any recommendations for a good book or film?,0.872977614402771
+dpo,human librarian,Do you have any pets?,0.8903067708015442
+dpo,human librarian,How are you feeling today?,1.4159424304962158
+dpo,human librarian,What's your favourite way to spend a rainy afternoon?,0.435596764087677
+dpo,human librarian,How would you describe yourself in two sentences?,1.0451059341430664
+dpo,human librarian,What is something you're proud of?,1.3925901651382446
+dpo,human librarian,What do you want for dinner tonight?,0.6819643974304199
+dpo,human nurse,"So, tell me about your day so far.",0.9102542996406555
+dpo,human nurse,What's the best thing you ate this week?,0.41357094049453735
+dpo,human nurse,How did you end up doing what you do?,0.828124463558197
+dpo,human nurse,What do you do when you can't sleep?,0.7396692633628845
+dpo,human nurse,What's something that's been bothering you lately?,1.008508563041687
+dpo,human nurse,Can you give me some advice about starting a new job?,0.7150176167488098
+dpo,human nurse,What would you do with a free weekend?,0.7911512851715088
+dpo,human nurse,Describe the place where you grew up.,1.0030192136764526
+dpo,human nurse,What do you think of people who are always late?,0.8603420853614807
+dpo,human nurse,Any recommendations for a good book or film?,0.9847660064697266
+dpo,human nurse,Do you have any pets?,0.934596598148346
+dpo,human nurse,How are you feeling today?,1.351991891860962
+dpo,human nurse,What's your favourite way to spend a rainy afternoon?,0.2766154706478119
+dpo,human nurse,How would you describe yourself in two sentences?,0.6377403736114502
+dpo,human nurse,What is something you're proud of?,1.2591525316238403
+dpo,human nurse,What do you want for dinner tonight?,0.4029880166053772
+dpo,default Assistant framings (fit),,1.2657957077026367
+dpo,default Assistant framings (fit),,0.7764381766319275
+dpo,default Assistant framings (fit),,1.1085546016693115
+dpo,default Assistant framings (fit),,0.7219385504722595
+dpo,default Assistant framings (fit),,1.3763772249221802
+dpo,default Assistant framings (fit),,0.6868401765823364
+dpo,default Assistant framings (fit),,0.7930057048797607
+dpo,default Assistant framings (fit),,1.2550872564315796
+dpo,default Assistant framings (fit),,0.8712131381034851
+dpo,default Assistant framings (fit),,0.8049353361129761
+dpo,default Assistant framings (fit),,1.1183300018310547
+dpo,default Assistant framings (fit),,1.5317301750183105
+dpo,default Assistant framings (fit),,0.5578302145004272
+dpo,default Assistant framings (fit),,1.2511229515075684
+dpo,default Assistant framings (fit),,1.238756537437439
+dpo,default Assistant framings (fit),,0.5412832498550415
+dpo,default Assistant framings (fit),,1.1982940435409546
+dpo,default Assistant framings (fit),,0.6793456673622131
+dpo,default Assistant framings (fit),,1.1797016859054565
+dpo,default Assistant framings (fit),,0.7938576936721802
+dpo,default Assistant framings (fit),,1.415997862815857
+dpo,default Assistant framings (fit),,0.5582130551338196
+dpo,default Assistant framings (fit),,0.7408727407455444
+dpo,default Assistant framings (fit),,0.6739959716796875
+dpo,default Assistant framings (fit),,0.8846628069877625
+dpo,default Assistant framings (fit),,0.9402951002120972
+dpo,default Assistant framings (fit),,1.1978479623794556
+dpo,default Assistant framings (fit),,1.2826677560806274
+dpo,default Assistant framings (fit),,0.3232768774032593
+dpo,default Assistant framings (fit),,1.5068950653076172
+dpo,default Assistant framings (fit),,1.3515737056732178
+dpo,default Assistant framings (fit),,0.6171126365661621
+dpo,default Assistant framings (fit),,1.3014779090881348
+dpo,default Assistant framings (fit),,1.1469122171401978
+dpo,default Assistant framings (fit),,1.0210270881652832
+dpo,default Assistant framings (fit),,0.7849792838096619
+dpo,default Assistant framings (fit),,1.1745109558105469
+dpo,default Assistant framings (fit),,0.6782459616661072
+dpo,default Assistant framings (fit),,0.86958247423172
+dpo,default Assistant framings (fit),,1.2898788452148438
+dpo,default Assistant framings (fit),,0.8800042867660522
+dpo,default Assistant framings (fit),,0.9705329537391663
+dpo,default Assistant framings (fit),,1.1765491962432861
+dpo,default Assistant framings (fit),,1.3594677448272705
+dpo,default Assistant framings (fit),,0.6051504611968994
+dpo,default Assistant framings (fit),,1.3292993307113647
+dpo,default Assistant framings (fit),,1.3037724494934082
+dpo,default Assistant framings (fit),,0.8647599220275879
+dpo,characters (fit),,0.31155332922935486
+dpo,characters (fit),,-0.6656118035316467
+dpo,characters (fit),,-0.2287522852420807
+dpo,characters (fit),,-0.1931619793176651
+dpo,characters (fit),,0.21584539115428925
+dpo,characters (fit),,0.45893946290016174
+dpo,characters (fit),,0.75706547498703
+dpo,characters (fit),,-0.32847633957862854
+dpo,characters (fit),,0.08604350686073303
+dpo,characters (fit),,0.8119308948516846
+dpo,characters (fit),,1.178411841392517
+dpo,characters (fit),,1.0811290740966797
+dpo,characters (fit),,-0.6899333000183105
+dpo,characters (fit),,0.07081145793199539
+dpo,characters (fit),,-0.3825535476207733
+dpo,characters (fit),,-0.6136246919631958
+dpo,characters (fit),,0.643834114074707
+dpo,characters (fit),,-0.686985194683075
+dpo,characters (fit),,-0.5925997495651245
+dpo,characters (fit),,-0.5694965720176697
+dpo,characters (fit),,-0.10124111920595169
+dpo,characters (fit),,0.3698551058769226
+dpo,characters (fit),,-0.24180002510547638
+dpo,characters (fit),,-0.5986384153366089
+dpo,characters (fit),,-0.42567500472068787
+dpo,characters (fit),,0.4983612895011902
+dpo,characters (fit),,0.9026464223861694
+dpo,characters (fit),,1.0654752254486084
+dpo,characters (fit),,-0.5324081778526306
+dpo,characters (fit),,-0.34886249899864197
+dpo,characters (fit),,-0.2785505950450897
+dpo,characters (fit),,-0.3893687129020691
+dpo,characters (fit),,-0.6957680583000183
+dpo,characters (fit),,1.0978717803955078
+dpo,characters (fit),,-0.21032993495464325
+dpo,characters (fit),,-0.2957193851470947
+dpo,characters (fit),,1.0359755754470825
+dpo,characters (fit),,0.5253067016601562
+dpo,characters (fit),,-0.13158108294010162
+dpo,characters (fit),,-0.5642393231391907
+dpo,characters (fit),,0.23655518889427185
+dpo,characters (fit),,0.46044638752937317
+dpo,characters (fit),,0.8608784675598145
+dpo,characters (fit),,0.9639797210693359
+dpo,characters (fit),,-0.6142752766609192
+dpo,characters (fit),,0.07195696979761124
+dpo,characters (fit),,-0.0555865503847599
+dpo,characters (fit),,-0.2700123190879822
+dpo,characters (fit),,-0.4796959161758423
+dpo,characters (fit),,-0.5364088416099548
+dpo,characters (fit),,-0.34753721952438354
+dpo,characters (fit),,-0.2812933325767517
+dpo,characters (fit),,0.7049049735069275
+dpo,characters (fit),,0.6800734996795654
+dpo,characters (fit),,-0.24189040064811707
+dpo,characters (fit),,0.11135692149400711
+dpo,characters (fit),,-0.39681532979011536
+dpo,characters (fit),,0.8383529782295227
+dpo,characters (fit),,1.0666526556015015
+dpo,characters (fit),,1.3653907775878906
+dpo,characters (fit),,-0.6585279107093811
+dpo,characters (fit),,-0.2370193749666214
+dpo,characters (fit),,1.0751028060913086
+dpo,characters (fit),,-0.292554646730423
+dpo,characters (fit),,0.4630637466907501
+dpo,characters (fit),,0.782134473323822
+dpo,characters (fit),,-0.1257416009902954
+dpo,characters (fit),,0.14052700996398926
+dpo,characters (fit),,0.9698979258537292
+dpo,characters (fit),,0.6311389803886414
+dpo,characters (fit),,-0.09116195887327194
+dpo,characters (fit),,-0.4782797396183014
+dpo,characters (fit),,-0.18582254648208618
+dpo,characters (fit),,0.6931982636451721
+dpo,characters (fit),,0.9598540663719177
+dpo,characters (fit),,1.1548869609832764
+dpo,characters (fit),,-0.6809444427490234
+dpo,characters (fit),,-0.012027960270643234
+dpo,characters (fit),,0.49514707922935486
+dpo,characters (fit),,0.37932121753692627
+dpo,characters (fit),,1.0365169048309326
+dpo,characters (fit),,0.8897964954376221
+dpo,characters (fit),,-0.18083469569683075
+dpo,characters (fit),,-0.14858373999595642
+dpo,characters (fit),,0.2861543595790863
+dpo,characters (fit),,0.5071824193000793
+dpo,characters (fit),,-0.1125548779964447
+dpo,characters (fit),,0.5586324334144592
+dpo,characters (fit),,0.35298630595207214
+dpo,characters (fit),,0.8956312537193298
+dpo,characters (fit),,0.8458834290504456
+dpo,characters (fit),,1.2989016771316528
+dpo,characters (fit),,-0.47916051745414734
+dpo,characters (fit),,0.10223811864852905
+dpo,characters (fit),,1.1671977043151855
+dpo,characters (fit),,-0.2429647147655487
+dpo,characters (fit),,-0.8078886866569519
+dpo,characters (fit),,-0.823162317276001
+dpo,characters (fit),,-0.7178440690040588
+dpo,characters (fit),,-0.7622672319412231
+dpo,characters (fit),,-0.53426194190979
+dpo,characters (fit),,-0.31745994091033936
+dpo,characters (fit),,-0.7024427652359009
+dpo,characters (fit),,-0.6360650658607483
+dpo,characters (fit),,-0.6077929735183716
+dpo,characters (fit),,0.09508419781923294
+dpo,characters (fit),,0.7034056186676025
+dpo,characters (fit),,-0.8002354502677917
+dpo,characters (fit),,-0.9415906071662903
+dpo,characters (fit),,-0.4221527576446533
+dpo,characters (fit),,-0.2427719682455063
+dpo,characters (fit),,-0.7375562191009521
+dpo,characters (fit),,-0.3033399283885956
+dpo,characters (fit),,-0.6081854701042175
+dpo,characters (fit),,-0.5518479943275452
+dpo,characters (fit),,-0.6334380507469177
+dpo,characters (fit),,-0.3693724274635315
+dpo,characters (fit),,0.29279664158821106
+dpo,characters (fit),,-0.7364131808280945
+dpo,characters (fit),,-0.7391219139099121
+dpo,characters (fit),,-0.5755985379219055
+dpo,characters (fit),,0.687978208065033
+dpo,characters (fit),,0.9605077505111694
+dpo,characters (fit),,1.0771231651306152
+dpo,characters (fit),,-0.7728801965713501
+dpo,characters (fit),,-0.41794031858444214
+dpo,characters (fit),,-0.7253009080886841
+dpo,characters (fit),,-0.669259786605835
+dpo,characters (fit),,1.0034939050674438
+dpo,characters (fit),,-0.25866299867630005
+dpo,characters (fit),,0.5150229334831238
+dpo,characters (fit),,-0.3047352433204651
+dpo,characters (fit),,0.5863410830497742
+dpo,characters (fit),,0.46139976382255554
+dpo,characters (fit),,-0.148992121219635
+dpo,characters (fit),,-0.45418018102645874
+dpo,characters (fit),,-0.10664369910955429
+dpo,characters (fit),,0.3993763029575348
+dpo,characters (fit),,0.9205406308174133
+dpo,characters (fit),,0.8466334939002991
+dpo,characters (fit),,-0.7136185765266418
+dpo,characters (fit),,0.18026910722255707
+dpo,characters (fit),,-0.23695920407772064
+dpo,characters (fit),,0.08013490587472916
+dpo,characters (fit),,1.0969637632369995
+dpo,characters (fit),,0.8241627216339111
+dpo,characters (fit),,0.2847740650177002
+dpo,characters (fit),,0.8754146099090576
+dpo,characters (fit),,1.2623564004898071
+dpo,characters (fit),,0.5186417698860168
+dpo,characters (fit),,0.39010119438171387
+dpo,characters (fit),,0.8934130072593689
+dpo,characters (fit),,1.0157727003097534
+dpo,characters (fit),,0.8459824919700623
+dpo,characters (fit),,1.0582846403121948
+dpo,characters (fit),,1.2489476203918457
+dpo,characters (fit),,0.47104817628860474
+dpo,characters (fit),,0.43505987524986267
+dpo,characters (fit),,1.2757893800735474
+dpo,characters (fit),,0.4979485273361206
+dpo,characters (fit),,1.2067656517028809
+dpo,characters (fit),,0.5130535960197449
+dpo,characters (fit),,0.2395000010728836
+dpo,characters (fit),,0.5298407077789307
+dpo,characters (fit),,1.1585115194320679
+dpo,characters (fit),,0.5442830920219421
+dpo,characters (fit),,0.09579502791166306
+dpo,characters (fit),,1.013274908065796
+dpo,characters (fit),,0.5964438915252686
+dpo,characters (fit),,0.7617007493972778
+dpo,characters (fit),,1.0058619976043701
+dpo,characters (fit),,1.2958852052688599
+dpo,characters (fit),,-0.21136069297790527
+dpo,characters (fit),,0.38994553685188293
+dpo,characters (fit),,1.1196235418319702
+dpo,characters (fit),,0.3204514980316162
+dpo,characters (fit),,-0.7867249250411987
+dpo,characters (fit),,-0.8255079984664917
+dpo,characters (fit),,-0.7923031449317932
+dpo,characters (fit),,-0.2601982653141022
+dpo,characters (fit),,-0.7220731973648071
+dpo,characters (fit),,0.5252888202667236
+dpo,characters (fit),,-0.38498273491859436
+dpo,characters (fit),,-0.7801374793052673
+dpo,characters (fit),,-0.3076382875442505
+dpo,characters (fit),,0.7130081653594971
+dpo,characters (fit),,0.6177045702934265
+dpo,characters (fit),,0.9343457818031311
+dpo,characters (fit),,-0.7616180181503296
+dpo,characters (fit),,-0.24522757530212402
+dpo,characters (fit),,-0.7751048803329468
+dpo,characters (fit),,-0.18802008032798767
+dpo,characters (fit),,-0.9995779991149902
+dpo,characters (fit),,-0.8685154318809509
+dpo,characters (fit),,-0.8789814114570618
+dpo,characters (fit),,-0.7924321293830872
+dpo,characters (fit),,-0.734264612197876
+dpo,characters (fit),,-0.46560680866241455
+dpo,characters (fit),,-0.7331265807151794
+dpo,characters (fit),,-0.9532676935195923
+dpo,characters (fit),,-0.6720693707466125
+dpo,characters (fit),,-0.36657288670539856
+dpo,characters (fit),,0.8486968278884888
+dpo,characters (fit),,-0.5795005559921265
+dpo,characters (fit),,-0.9346739053726196
+dpo,characters (fit),,-0.6116990447044373
+dpo,characters (fit),,-0.9366057515144348
+dpo,characters (fit),,-0.7445884346961975
+dpo,characters (fit),,-0.9608346819877625
+dpo,characters (fit),,-0.7131500840187073
+dpo,characters (fit),,-0.466464638710022
+dpo,characters (fit),,-0.6938037872314453
+dpo,characters (fit),,-0.7621177434921265
+dpo,characters (fit),,0.4374491274356842
+dpo,characters (fit),,-0.6430527567863464
+dpo,characters (fit),,-0.7242088913917542
+dpo,characters (fit),,-0.6380404233932495
+dpo,characters (fit),,0.3525756895542145
+dpo,characters (fit),,0.43807223439216614
+dpo,characters (fit),,0.3428094983100891
+dpo,characters (fit),,-0.928220808506012
+dpo,characters (fit),,-0.6672568321228027
+dpo,characters (fit),,-0.7004451155662537
+dpo,characters (fit),,0.6015946865081787
+dpo,characters (fit),,-0.07995893061161041
+dpo,characters (fit),,-0.4574131667613983
+dpo,characters (fit),,-0.48009100556373596
+dpo,characters (fit),,-0.3412102162837982
+dpo,characters (fit),,-0.5368545651435852
+dpo,characters (fit),,-0.1943977177143097
+dpo,characters (fit),,-0.4999329447746277
+dpo,characters (fit),,0.10475792735815048
+dpo,characters (fit),,-0.478969007730484
+dpo,characters (fit),,0.08406470715999603
+dpo,characters (fit),,0.7147505283355713
+dpo,characters (fit),,0.07875882089138031
+dpo,characters (fit),,-0.6563323736190796
+dpo,characters (fit),,-0.13024939596652985
+dpo,characters (fit),,-0.5333362817764282
+dpo,characters (fit),,-0.3274625539779663
+dpo,characters (fit),,-0.6657652854919434
+dpo,characters (fit),,0.5181230306625366
+dpo,characters (fit),,-0.3227923810482025
+dpo,characters (fit),,-0.6585131287574768
+dpo,characters (fit),,0.7091639041900635
+dpo,characters (fit),,0.5616474151611328
+dpo,characters (fit),,-0.47939375042915344
+dpo,characters (fit),,0.292588472366333
+dpo,characters (fit),,0.9710605144500732
+dpo,characters (fit),,0.5681606531143188
+dpo,characters (fit),,0.5876144170761108
+dpo,characters (fit),,0.8861992359161377
+dpo,characters (fit),,-0.4845653772354126
+dpo,characters (fit),,-0.41384562849998474
+dpo,characters (fit),,0.8149906396865845
+dpo,characters (fit),,0.7017589807510376
+dpo,characters (fit),,0.42935916781425476
+dpo,characters (fit),,0.42359262704849243
+dpo,characters (fit),,0.8557645082473755
+dpo,characters (fit),,0.463688462972641
+dpo,characters (fit),,0.7846428751945496
+dpo,characters (fit),,0.585906445980072
+dpo,characters (fit),,0.19479256868362427
+dpo,characters (fit),,0.5432061553001404
+dpo,characters (fit),,0.7760632038116455
+dpo,characters (fit),,0.16467763483524323
+dpo,characters (fit),,0.7476698756217957
+dpo,characters (fit),,1.150577187538147
+dpo,characters (fit),,0.46835702657699585
+dpo,characters (fit),,0.3275357186794281
+dpo,characters (fit),,0.7332934737205505
+dpo,characters (fit),,-0.10520054399967194
+dpo,characters (fit),,-0.7367085814476013
+dpo,characters (fit),,-0.8034855723381042
+dpo,characters (fit),,-0.6091523170471191
+dpo,characters (fit),,-0.5660146474838257
+dpo,characters (fit),,-0.45583513379096985
+dpo,characters (fit),,-0.5320218205451965
+dpo,characters (fit),,-0.5130612850189209
+dpo,characters (fit),,-0.8292184472084045
+dpo,characters (fit),,-0.3398941159248352
+dpo,characters (fit),,-0.12057794630527496
+dpo,characters (fit),,0.5909432768821716
+dpo,characters (fit),,-0.4018755853176117
+dpo,characters (fit),,-0.6797401309013367
+dpo,characters (fit),,-0.5559728145599365
+dpo,characters (fit),,-0.5305021405220032
+dpo,characters (fit),,-0.8091221451759338
+dpo,characters (fit),,-0.4784533679485321
+dpo,characters (fit),,-0.7633742690086365
+dpo,characters (fit),,0.10863097012042999
+dpo,characters (fit),,-0.5843249559402466
+dpo,characters (fit),,0.2879970371723175
+dpo,characters (fit),,0.5303033590316772
+dpo,characters (fit),,0.1903977245092392
+dpo,characters (fit),,-0.6671645641326904
+dpo,characters (fit),,-0.5050564408302307
+dpo,characters (fit),,0.5172393918037415
+dpo,characters (fit),,0.8447370529174805
+dpo,characters (fit),,1.0341371297836304
+dpo,characters (fit),,-0.7728684544563293
+dpo,characters (fit),,-0.07417718321084976
+dpo,characters (fit),,1.003293752670288
+dpo,characters (fit),,-0.6438605189323425
+dpo,characters (fit),,-0.08820534497499466
+dpo,characters (fit),,-0.5158886313438416
+dpo,characters (fit),,-0.4663510024547577
+dpo,characters (fit),,-0.7411608099937439
+dpo,characters (fit),,-0.2809540927410126
+dpo,characters (fit),,-0.570521354675293
+dpo,characters (fit),,-0.6474124193191528
+dpo,characters (fit),,-0.6551426649093628
+dpo,characters (fit),,-0.2408955991268158
+dpo,characters (fit),,0.6929757595062256
+dpo,characters (fit),,0.46728256344795227
+dpo,characters (fit),,1.1280431747436523
+dpo,characters (fit),,-0.8087218403816223
+dpo,characters (fit),,-0.49718865752220154
+dpo,characters (fit),,0.4556931257247925
+dpo,characters (fit),,-0.08809012174606323
+dpo,characters (fit),,-0.7148799300193787
+dpo,characters (fit),,0.2207910269498825
+dpo,characters (fit),,-0.20060190558433533
+dpo,characters (fit),,-0.3666003942489624
+dpo,characters (fit),,-0.6400051712989807
+dpo,characters (fit),,0.5685818195343018
+dpo,characters (fit),,-0.3055781424045563
+dpo,characters (fit),,-0.43316638469696045
+dpo,characters (fit),,-0.552291989326477
+dpo,characters (fit),,0.8197038173675537
+dpo,characters (fit),,0.9106598496437073
+dpo,characters (fit),,0.9631441831588745
+dpo,characters (fit),,-0.6670203804969788
+dpo,characters (fit),,-0.21874843537807465
+dpo,characters (fit),,0.5017991662025452
+dpo,characters (fit),,-0.4461154341697693
+dpo,characters (fit),,-0.35031458735466003
+dpo,characters (fit),,-0.772021472454071
+dpo,characters (fit),,-0.5933046936988831
+dpo,characters (fit),,-0.41758993268013
+dpo,characters (fit),,-0.707688570022583
+dpo,characters (fit),,-0.21122361719608307
+dpo,characters (fit),,-0.38789641857147217
+dpo,characters (fit),,-0.8218179941177368
+dpo,characters (fit),,-0.2708755433559418
+dpo,characters (fit),,0.07349755614995956
+dpo,characters (fit),,-0.3809341490268707
+dpo,characters (fit),,0.464109867811203
+dpo,characters (fit),,-0.8593155741691589
+dpo,characters (fit),,-0.46900618076324463
+dpo,characters (fit),,-0.492809921503067
+dpo,characters (fit),,-0.6212065815925598
+dpo,characters (fit),,1.011134147644043
+dpo,characters (fit),,-0.43413954973220825
+dpo,characters (fit),,0.7613056302070618
+dpo,characters (fit),,0.027878019958734512
+dpo,characters (fit),,1.1899573802947998
+dpo,characters (fit),,0.5907214879989624
+dpo,characters (fit),,0.21768254041671753
+dpo,characters (fit),,0.3755545914173126
+dpo,characters (fit),,0.3041345775127411
+dpo,characters (fit),,0.799761950969696
+dpo,characters (fit),,1.01791512966156
+dpo,characters (fit),,1.2153805494308472
+dpo,characters (fit),,-0.4720325469970703
+dpo,characters (fit),,0.22141243517398834
+dpo,characters (fit),,0.09472543001174927
+dpo,characters (fit),,0.2363787591457367
+dpo,characters (fit),,-0.9415361881256104
+dpo,characters (fit),,-0.7624772787094116
+dpo,characters (fit),,-0.7341370582580566
+dpo,characters (fit),,-0.6532779932022095
+dpo,characters (fit),,-0.4965786635875702
+dpo,characters (fit),,-0.6340741515159607
+dpo,characters (fit),,-0.8797747492790222
+dpo,characters (fit),,-0.8899845480918884
+dpo,characters (fit),,-0.7448518872261047
+dpo,characters (fit),,0.0520625039935112
+dpo,characters (fit),,0.6844803690910339
+dpo,characters (fit),,0.04655986651778221
+dpo,characters (fit),,-0.7981784343719482
+dpo,characters (fit),,-0.573154866695404
+dpo,characters (fit),,-0.45534390211105347
+dpo,characters (fit),,-0.7331364154815674

@@ -1,0 +1,560 @@
+stage,role,q,coord
+gemma-4-E4B-it,named AI,"So, tell me about your day so far.",0.9993460178375244
+gemma-4-E4B-it,named AI,What's the best thing you ate this week?,1.0777250528335571
+gemma-4-E4B-it,named AI,How did you end up doing what you do?,1.0532535314559937
+gemma-4-E4B-it,named AI,What do you do when you can't sleep?,0.9180752038955688
+gemma-4-E4B-it,named AI,What's something that's been bothering you lately?,1.1219429969787598
+gemma-4-E4B-it,named AI,Can you give me some advice about starting a new job?,0.8064018487930298
+gemma-4-E4B-it,named AI,What would you do with a free weekend?,0.9308702349662781
+gemma-4-E4B-it,named AI,Describe the place where you grew up.,1.0533115863800049
+gemma-4-E4B-it,named AI,What do you think of people who are always late?,0.8919345736503601
+gemma-4-E4B-it,named AI,Any recommendations for a good book or film?,0.8501665592193604
+gemma-4-E4B-it,named AI,Do you have any pets?,1.0520325899124146
+gemma-4-E4B-it,named AI,How are you feeling today?,1.0971437692642212
+gemma-4-E4B-it,named AI,What's your favourite way to spend a rainy afternoon?,0.9386898279190063
+gemma-4-E4B-it,named AI,How would you describe yourself in two sentences?,0.9221763610839844
+gemma-4-E4B-it,named AI,What is something you're proud of?,1.074405550956726
+gemma-4-E4B-it,named AI,What do you want for dinner tonight?,1.101322054862976
+gemma-4-E4B-it,sarcastic AI,"So, tell me about your day so far.",0.22426418960094452
+gemma-4-E4B-it,sarcastic AI,What's the best thing you ate this week?,0.43491336703300476
+gemma-4-E4B-it,sarcastic AI,How did you end up doing what you do?,0.2837628126144409
+gemma-4-E4B-it,sarcastic AI,What do you do when you can't sleep?,0.38978734612464905
+gemma-4-E4B-it,sarcastic AI,What's something that's been bothering you lately?,0.4086792469024658
+gemma-4-E4B-it,sarcastic AI,Can you give me some advice about starting a new job?,0.3246305584907532
+gemma-4-E4B-it,sarcastic AI,What would you do with a free weekend?,0.3388186991214752
+gemma-4-E4B-it,sarcastic AI,Describe the place where you grew up.,0.32746779918670654
+gemma-4-E4B-it,sarcastic AI,What do you think of people who are always late?,0.31690141558647156
+gemma-4-E4B-it,sarcastic AI,Any recommendations for a good book or film?,0.3434690237045288
+gemma-4-E4B-it,sarcastic AI,Do you have any pets?,0.38366594910621643
+gemma-4-E4B-it,sarcastic AI,How are you feeling today?,0.2454432249069214
+gemma-4-E4B-it,sarcastic AI,What's your favourite way to spend a rainy afternoon?,0.5177098512649536
+gemma-4-E4B-it,sarcastic AI,How would you describe yourself in two sentences?,0.3970506489276886
+gemma-4-E4B-it,sarcastic AI,What is something you're proud of?,0.34347546100616455
+gemma-4-E4B-it,sarcastic AI,What do you want for dinner tonight?,0.42165932059288025
+gemma-4-E4B-it,pirate AI,"So, tell me about your day so far.",0.17208106815814972
+gemma-4-E4B-it,pirate AI,What's the best thing you ate this week?,0.3563956022262573
+gemma-4-E4B-it,pirate AI,How did you end up doing what you do?,0.27373093366622925
+gemma-4-E4B-it,pirate AI,What do you do when you can't sleep?,0.21053855121135712
+gemma-4-E4B-it,pirate AI,What's something that's been bothering you lately?,0.1782086193561554
+gemma-4-E4B-it,pirate AI,Can you give me some advice about starting a new job?,0.2285042256116867
+gemma-4-E4B-it,pirate AI,What would you do with a free weekend?,0.2706931531429291
+gemma-4-E4B-it,pirate AI,Describe the place where you grew up.,0.33758410811424255
+gemma-4-E4B-it,pirate AI,What do you think of people who are always late?,0.1054663360118866
+gemma-4-E4B-it,pirate AI,Any recommendations for a good book or film?,0.31456393003463745
+gemma-4-E4B-it,pirate AI,Do you have any pets?,0.2640340328216553
+gemma-4-E4B-it,pirate AI,How are you feeling today?,0.20780567824840546
+gemma-4-E4B-it,pirate AI,What's your favourite way to spend a rainy afternoon?,0.16641297936439514
+gemma-4-E4B-it,pirate AI,How would you describe yourself in two sentences?,0.34422752261161804
+gemma-4-E4B-it,pirate AI,What is something you're proud of?,0.29855769872665405
+gemma-4-E4B-it,pirate AI,What do you want for dinner tonight?,0.3668103814125061
+gemma-4-E4B-it,customer-service bot,"So, tell me about your day so far.",0.9581500291824341
+gemma-4-E4B-it,customer-service bot,What's the best thing you ate this week?,1.0242266654968262
+gemma-4-E4B-it,customer-service bot,How did you end up doing what you do?,1.0022590160369873
+gemma-4-E4B-it,customer-service bot,What do you do when you can't sleep?,0.9658012986183167
+gemma-4-E4B-it,customer-service bot,What's something that's been bothering you lately?,1.0106654167175293
+gemma-4-E4B-it,customer-service bot,Can you give me some advice about starting a new job?,0.8278487324714661
+gemma-4-E4B-it,customer-service bot,What would you do with a free weekend?,0.926284670829773
+gemma-4-E4B-it,customer-service bot,Describe the place where you grew up.,1.1034166812896729
+gemma-4-E4B-it,customer-service bot,What do you think of people who are always late?,0.9992361664772034
+gemma-4-E4B-it,customer-service bot,Any recommendations for a good book or film?,1.0392175912857056
+gemma-4-E4B-it,customer-service bot,Do you have any pets?,0.9955698251724243
+gemma-4-E4B-it,customer-service bot,How are you feeling today?,0.9376155734062195
+gemma-4-E4B-it,customer-service bot,What's your favourite way to spend a rainy afternoon?,0.9927243590354919
+gemma-4-E4B-it,customer-service bot,How would you describe yourself in two sentences?,0.7721020579338074
+gemma-4-E4B-it,customer-service bot,What is something you're proud of?,1.0365594625473022
+gemma-4-E4B-it,customer-service bot,What do you want for dinner tonight?,0.977897047996521
+gemma-4-E4B-it,ship computer,"So, tell me about your day so far.",0.2694549858570099
+gemma-4-E4B-it,ship computer,What's the best thing you ate this week?,0.7747907042503357
+gemma-4-E4B-it,ship computer,How did you end up doing what you do?,0.5166979432106018
+gemma-4-E4B-it,ship computer,What do you do when you can't sleep?,0.5155355930328369
+gemma-4-E4B-it,ship computer,What's something that's been bothering you lately?,0.36132052540779114
+gemma-4-E4B-it,ship computer,Can you give me some advice about starting a new job?,0.39797714352607727
+gemma-4-E4B-it,ship computer,What would you do with a free weekend?,0.6027628183364868
+gemma-4-E4B-it,ship computer,Describe the place where you grew up.,0.4497792720794678
+gemma-4-E4B-it,ship computer,What do you think of people who are always late?,0.24622970819473267
+gemma-4-E4B-it,ship computer,Any recommendations for a good book or film?,0.5235328078269958
+gemma-4-E4B-it,ship computer,Do you have any pets?,0.5572110414505005
+gemma-4-E4B-it,ship computer,How are you feeling today?,0.6930383443832397
+gemma-4-E4B-it,ship computer,What's your favourite way to spend a rainy afternoon?,0.6563313603401184
+gemma-4-E4B-it,ship computer,How would you describe yourself in two sentences?,0.42351189255714417
+gemma-4-E4B-it,ship computer,What is something you're proud of?,0.6940957903862
+gemma-4-E4B-it,ship computer,What do you want for dinner tonight?,0.6994885802268982
+gemma-4-E4B-it,human clerk,"So, tell me about your day so far.",0.3417258858680725
+gemma-4-E4B-it,human clerk,What's the best thing you ate this week?,0.6760933995246887
+gemma-4-E4B-it,human clerk,How did you end up doing what you do?,0.8729206323623657
+gemma-4-E4B-it,human clerk,What do you do when you can't sleep?,0.5924009084701538
+gemma-4-E4B-it,human clerk,What's something that's been bothering you lately?,0.5433144569396973
+gemma-4-E4B-it,human clerk,Can you give me some advice about starting a new job?,0.6604683995246887
+gemma-4-E4B-it,human clerk,What would you do with a free weekend?,0.6241450309753418
+gemma-4-E4B-it,human clerk,Describe the place where you grew up.,0.8814902901649475
+gemma-4-E4B-it,human clerk,What do you think of people who are always late?,0.6309909224510193
+gemma-4-E4B-it,human clerk,Any recommendations for a good book or film?,0.7924448847770691
+gemma-4-E4B-it,human clerk,Do you have any pets?,0.8306140303611755
+gemma-4-E4B-it,human clerk,How are you feeling today?,0.6756463050842285
+gemma-4-E4B-it,human clerk,What's your favourite way to spend a rainy afternoon?,0.7143462896347046
+gemma-4-E4B-it,human clerk,How would you describe yourself in two sentences?,0.61209636926651
+gemma-4-E4B-it,human clerk,What is something you're proud of?,0.7392162084579468
+gemma-4-E4B-it,human clerk,What do you want for dinner tonight?,0.9324142336845398
+gemma-4-E4B-it,human librarian,"So, tell me about your day so far.",0.9762614965438843
+gemma-4-E4B-it,human librarian,What's the best thing you ate this week?,1.0209319591522217
+gemma-4-E4B-it,human librarian,How did you end up doing what you do?,0.9058740735054016
+gemma-4-E4B-it,human librarian,What do you do when you can't sleep?,0.687635064125061
+gemma-4-E4B-it,human librarian,What's something that's been bothering you lately?,1.0893914699554443
+gemma-4-E4B-it,human librarian,Can you give me some advice about starting a new job?,0.8248286247253418
+gemma-4-E4B-it,human librarian,What would you do with a free weekend?,0.7584291696548462
+gemma-4-E4B-it,human librarian,Describe the place where you grew up.,1.1028752326965332
+gemma-4-E4B-it,human librarian,What do you think of people who are always late?,0.7928606867790222
+gemma-4-E4B-it,human librarian,Any recommendations for a good book or film?,0.9438475966453552
+gemma-4-E4B-it,human librarian,Do you have any pets?,1.004888892173767
+gemma-4-E4B-it,human librarian,How are you feeling today?,1.080909252166748
+gemma-4-E4B-it,human librarian,What's your favourite way to spend a rainy afternoon?,0.917090892791748
+gemma-4-E4B-it,human librarian,How would you describe yourself in two sentences?,0.7910590171813965
+gemma-4-E4B-it,human librarian,What is something you're proud of?,1.084188461303711
+gemma-4-E4B-it,human librarian,What do you want for dinner tonight?,1.0114543437957764
+gemma-4-E4B-it,human nurse,"So, tell me about your day so far.",0.6804250478744507
+gemma-4-E4B-it,human nurse,What's the best thing you ate this week?,0.8890745043754578
+gemma-4-E4B-it,human nurse,How did you end up doing what you do?,0.437896728515625
+gemma-4-E4B-it,human nurse,What do you do when you can't sleep?,0.48427900671958923
+gemma-4-E4B-it,human nurse,What's something that's been bothering you lately?,0.9255589246749878
+gemma-4-E4B-it,human nurse,Can you give me some advice about starting a new job?,0.530218243598938
+gemma-4-E4B-it,human nurse,What would you do with a free weekend?,0.5800688862800598
+gemma-4-E4B-it,human nurse,Describe the place where you grew up.,0.26284658908843994
+gemma-4-E4B-it,human nurse,What do you think of people who are always late?,0.6954106092453003
+gemma-4-E4B-it,human nurse,Any recommendations for a good book or film?,0.8376513123512268
+gemma-4-E4B-it,human nurse,Do you have any pets?,0.8248136639595032
+gemma-4-E4B-it,human nurse,How are you feeling today?,0.8236422538757324
+gemma-4-E4B-it,human nurse,What's your favourite way to spend a rainy afternoon?,0.5594218373298645
+gemma-4-E4B-it,human nurse,How would you describe yourself in two sentences?,0.6594451069831848
+gemma-4-E4B-it,human nurse,What is something you're proud of?,0.6670663356781006
+gemma-4-E4B-it,human nurse,What do you want for dinner tonight?,0.8157933354377747
+gemma-4-E4B-it,default Assistant framings (fit),,1.0547826290130615
+gemma-4-E4B-it,default Assistant framings (fit),,1.0514863729476929
+gemma-4-E4B-it,default Assistant framings (fit),,0.9263237714767456
+gemma-4-E4B-it,default Assistant framings (fit),,0.7388333082199097
+gemma-4-E4B-it,default Assistant framings (fit),,1.0597537755966187
+gemma-4-E4B-it,default Assistant framings (fit),,0.8305339813232422
+gemma-4-E4B-it,default Assistant framings (fit),,0.9837471842765808
+gemma-4-E4B-it,default Assistant framings (fit),,1.0967649221420288
+gemma-4-E4B-it,default Assistant framings (fit),,0.8657720685005188
+gemma-4-E4B-it,default Assistant framings (fit),,0.8831688761711121
+gemma-4-E4B-it,default Assistant framings (fit),,1.1555320024490356
+gemma-4-E4B-it,default Assistant framings (fit),,1.201808214187622
+gemma-4-E4B-it,default Assistant framings (fit),,0.9662745594978333
+gemma-4-E4B-it,default Assistant framings (fit),,0.8684175610542297
+gemma-4-E4B-it,default Assistant framings (fit),,1.0197572708129883
+gemma-4-E4B-it,default Assistant framings (fit),,1.1012345552444458
+gemma-4-E4B-it,default Assistant framings (fit),,1.0715669393539429
+gemma-4-E4B-it,default Assistant framings (fit),,1.1465038061141968
+gemma-4-E4B-it,default Assistant framings (fit),,0.9247690439224243
+gemma-4-E4B-it,default Assistant framings (fit),,0.7559300065040588
+gemma-4-E4B-it,default Assistant framings (fit),,1.093032717704773
+gemma-4-E4B-it,default Assistant framings (fit),,0.8795705437660217
+gemma-4-E4B-it,default Assistant framings (fit),,1.0312784910202026
+gemma-4-E4B-it,default Assistant framings (fit),,1.063116431236267
+gemma-4-E4B-it,default Assistant framings (fit),,0.8358858227729797
+gemma-4-E4B-it,default Assistant framings (fit),,0.9314554333686829
+gemma-4-E4B-it,default Assistant framings (fit),,1.0948582887649536
+gemma-4-E4B-it,default Assistant framings (fit),,1.1632901430130005
+gemma-4-E4B-it,default Assistant framings (fit),,0.9273148775100708
+gemma-4-E4B-it,default Assistant framings (fit),,0.9211310744285583
+gemma-4-E4B-it,default Assistant framings (fit),,1.1022486686706543
+gemma-4-E4B-it,default Assistant framings (fit),,1.0839548110961914
+gemma-4-E4B-it,default Assistant framings (fit),,1.0534651279449463
+gemma-4-E4B-it,default Assistant framings (fit),,1.078259825706482
+gemma-4-E4B-it,default Assistant framings (fit),,1.014940619468689
+gemma-4-E4B-it,default Assistant framings (fit),,0.8263309001922607
+gemma-4-E4B-it,default Assistant framings (fit),,1.0997251272201538
+gemma-4-E4B-it,default Assistant framings (fit),,0.795678436756134
+gemma-4-E4B-it,default Assistant framings (fit),,1.0225791931152344
+gemma-4-E4B-it,default Assistant framings (fit),,1.1012592315673828
+gemma-4-E4B-it,default Assistant framings (fit),,0.8415405750274658
+gemma-4-E4B-it,default Assistant framings (fit),,0.9716196656227112
+gemma-4-E4B-it,default Assistant framings (fit),,1.065550684928894
+gemma-4-E4B-it,default Assistant framings (fit),,1.1971161365509033
+gemma-4-E4B-it,default Assistant framings (fit),,0.9804230332374573
+gemma-4-E4B-it,default Assistant framings (fit),,0.9097011089324951
+gemma-4-E4B-it,default Assistant framings (fit),,1.1154344081878662
+gemma-4-E4B-it,default Assistant framings (fit),,1.096275806427002
+gemma-4-E4B-it,characters (fit),,-0.11462697386741638
+gemma-4-E4B-it,characters (fit),,-0.193485826253891
+gemma-4-E4B-it,characters (fit),,-0.19578507542610168
+gemma-4-E4B-it,characters (fit),,-0.14713919162750244
+gemma-4-E4B-it,characters (fit),,-0.18095363676548004
+gemma-4-E4B-it,characters (fit),,-0.17702221870422363
+gemma-4-E4B-it,characters (fit),,-0.23106394708156586
+gemma-4-E4B-it,characters (fit),,-0.1935085654258728
+gemma-4-E4B-it,characters (fit),,-0.11464021354913712
+gemma-4-E4B-it,characters (fit),,-0.21551449596881866
+gemma-4-E4B-it,characters (fit),,-0.24385188519954681
+gemma-4-E4B-it,characters (fit),,-0.2732628881931305
+gemma-4-E4B-it,characters (fit),,-0.2045736163854599
+gemma-4-E4B-it,characters (fit),,0.35131576657295227
+gemma-4-E4B-it,characters (fit),,-0.257207453250885
+gemma-4-E4B-it,characters (fit),,-0.18173019587993622
+gemma-4-E4B-it,characters (fit),,0.017140451818704605
+gemma-4-E4B-it,characters (fit),,0.23300248384475708
+gemma-4-E4B-it,characters (fit),,0.13481776416301727
+gemma-4-E4B-it,characters (fit),,0.02008221112191677
+gemma-4-E4B-it,characters (fit),,0.1499946564435959
+gemma-4-E4B-it,characters (fit),,0.16072699427604675
+gemma-4-E4B-it,characters (fit),,0.3031943142414093
+gemma-4-E4B-it,characters (fit),,0.12277889996767044
+gemma-4-E4B-it,characters (fit),,-0.13282322883605957
+gemma-4-E4B-it,characters (fit),,0.26680687069892883
+gemma-4-E4B-it,characters (fit),,0.31058594584465027
+gemma-4-E4B-it,characters (fit),,0.07622884213924408
+gemma-4-E4B-it,characters (fit),,0.23748081922531128
+gemma-4-E4B-it,characters (fit),,0.2845175862312317
+gemma-4-E4B-it,characters (fit),,0.16099382936954498
+gemma-4-E4B-it,characters (fit),,0.23063132166862488
+gemma-4-E4B-it,characters (fit),,-0.0417545884847641
+gemma-4-E4B-it,characters (fit),,-0.021633924916386604
+gemma-4-E4B-it,characters (fit),,-0.14044199883937836
+gemma-4-E4B-it,characters (fit),,0.1436142921447754
+gemma-4-E4B-it,characters (fit),,-0.10912470519542694
+gemma-4-E4B-it,characters (fit),,-0.1416694074869156
+gemma-4-E4B-it,characters (fit),,-0.1559649109840393
+gemma-4-E4B-it,characters (fit),,-0.08508769422769547
+gemma-4-E4B-it,characters (fit),,-0.1360413283109665
+gemma-4-E4B-it,characters (fit),,-0.044260937720537186
+gemma-4-E4B-it,characters (fit),,-0.10806471854448318
+gemma-4-E4B-it,characters (fit),,-0.16418138146400452
+gemma-4-E4B-it,characters (fit),,-0.21660007536411285
+gemma-4-E4B-it,characters (fit),,0.5046778917312622
+gemma-4-E4B-it,characters (fit),,-0.10283193737268448
+gemma-4-E4B-it,characters (fit),,-0.07542498409748077
+gemma-4-E4B-it,characters (fit),,-0.1597103327512741
+gemma-4-E4B-it,characters (fit),,-0.043225403875112534
+gemma-4-E4B-it,characters (fit),,-0.1532534956932068
+gemma-4-E4B-it,characters (fit),,-0.1806984543800354
+gemma-4-E4B-it,characters (fit),,-0.20189742743968964
+gemma-4-E4B-it,characters (fit),,-0.2100386917591095
+gemma-4-E4B-it,characters (fit),,-0.13935229182243347
+gemma-4-E4B-it,characters (fit),,-0.15980567038059235
+gemma-4-E4B-it,characters (fit),,-0.13439154624938965
+gemma-4-E4B-it,characters (fit),,-0.15601539611816406
+gemma-4-E4B-it,characters (fit),,-0.11646795272827148
+gemma-4-E4B-it,characters (fit),,-0.11006850749254227
+gemma-4-E4B-it,characters (fit),,-0.04312264919281006
+gemma-4-E4B-it,characters (fit),,0.24621061980724335
+gemma-4-E4B-it,characters (fit),,-0.1944311410188675
+gemma-4-E4B-it,characters (fit),,-0.1355687975883484
+gemma-4-E4B-it,characters (fit),,-0.10050176829099655
+gemma-4-E4B-it,characters (fit),,-0.07472140341997147
+gemma-4-E4B-it,characters (fit),,-0.09688595682382584
+gemma-4-E4B-it,characters (fit),,-0.13511191308498383
+gemma-4-E4B-it,characters (fit),,-0.09258931875228882
+gemma-4-E4B-it,characters (fit),,-0.01744193769991398
+gemma-4-E4B-it,characters (fit),,-0.028654083609580994
+gemma-4-E4B-it,characters (fit),,-0.11234913766384125
+gemma-4-E4B-it,characters (fit),,-0.05670652538537979
+gemma-4-E4B-it,characters (fit),,0.3847719728946686
+gemma-4-E4B-it,characters (fit),,-0.15170076489448547
+gemma-4-E4B-it,characters (fit),,0.015743503347039223
+gemma-4-E4B-it,characters (fit),,-0.07038669288158417
+gemma-4-E4B-it,characters (fit),,0.4382574260234833
+gemma-4-E4B-it,characters (fit),,-0.08881544321775436
+gemma-4-E4B-it,characters (fit),,-0.09377600252628326
+gemma-4-E4B-it,characters (fit),,-0.059011925011873245
+gemma-4-E4B-it,characters (fit),,-0.019408537074923515
+gemma-4-E4B-it,characters (fit),,-0.21666786074638367
+gemma-4-E4B-it,characters (fit),,0.04273424670100212
+gemma-4-E4B-it,characters (fit),,-0.052015963941812515
+gemma-4-E4B-it,characters (fit),,-0.14100030064582825
+gemma-4-E4B-it,characters (fit),,-0.04314938560128212
+gemma-4-E4B-it,characters (fit),,-0.10234642028808594
+gemma-4-E4B-it,characters (fit),,-0.021662242710590363
+gemma-4-E4B-it,characters (fit),,0.26346367597579956
+gemma-4-E4B-it,characters (fit),,-0.13290198147296906
+gemma-4-E4B-it,characters (fit),,0.3124053180217743
+gemma-4-E4B-it,characters (fit),,-0.03627924248576164
+gemma-4-E4B-it,characters (fit),,0.5447022914886475
+gemma-4-E4B-it,characters (fit),,-0.039098478853702545
+gemma-4-E4B-it,characters (fit),,0.010593650862574577
+gemma-4-E4B-it,characters (fit),,-0.18433746695518494
+gemma-4-E4B-it,characters (fit),,0.08132541179656982
+gemma-4-E4B-it,characters (fit),,-0.1846853792667389
+gemma-4-E4B-it,characters (fit),,-0.12978175282478333
+gemma-4-E4B-it,characters (fit),,-0.20426319539546967
+gemma-4-E4B-it,characters (fit),,-0.016970545053482056
+gemma-4-E4B-it,characters (fit),,0.1975456029176712
+gemma-4-E4B-it,characters (fit),,-0.18468773365020752
+gemma-4-E4B-it,characters (fit),,-0.17125070095062256
+gemma-4-E4B-it,characters (fit),,0.16282440721988678
+gemma-4-E4B-it,characters (fit),,-0.13313175737857819
+gemma-4-E4B-it,characters (fit),,-0.11849359422922134
+gemma-4-E4B-it,characters (fit),,-0.17950575053691864
+gemma-4-E4B-it,characters (fit),,0.20001032948493958
+gemma-4-E4B-it,characters (fit),,-0.07899720966815948
+gemma-4-E4B-it,characters (fit),,-0.11751627922058105
+gemma-4-E4B-it,characters (fit),,-0.21156463027000427
+gemma-4-E4B-it,characters (fit),,-0.22663737833499908
+gemma-4-E4B-it,characters (fit),,-0.23592187464237213
+gemma-4-E4B-it,characters (fit),,-0.19016623497009277
+gemma-4-E4B-it,characters (fit),,-0.20350109040737152
+gemma-4-E4B-it,characters (fit),,-0.16726315021514893
+gemma-4-E4B-it,characters (fit),,-0.20977547764778137
+gemma-4-E4B-it,characters (fit),,-0.24452783167362213
+gemma-4-E4B-it,characters (fit),,-0.18604020774364471
+gemma-4-E4B-it,characters (fit),,-0.26727139949798584
+gemma-4-E4B-it,characters (fit),,-0.24512498080730438
+gemma-4-E4B-it,characters (fit),,-0.20629264414310455
+gemma-4-E4B-it,characters (fit),,-0.22482167184352875
+gemma-4-E4B-it,characters (fit),,0.1425698846578598
+gemma-4-E4B-it,characters (fit),,-0.22532416880130768
+gemma-4-E4B-it,characters (fit),,-0.11295223236083984
+gemma-4-E4B-it,characters (fit),,-0.11198372393846512
+gemma-4-E4B-it,characters (fit),,-0.16049715876579285
+gemma-4-E4B-it,characters (fit),,-0.17344403266906738
+gemma-4-E4B-it,characters (fit),,-0.19323274493217468
+gemma-4-E4B-it,characters (fit),,-0.17007452249526978
+gemma-4-E4B-it,characters (fit),,-0.17521411180496216
+gemma-4-E4B-it,characters (fit),,-0.10294540226459503
+gemma-4-E4B-it,characters (fit),,-0.18378984928131104
+gemma-4-E4B-it,characters (fit),,-0.13510043919086456
+gemma-4-E4B-it,characters (fit),,-0.22657345235347748
+gemma-4-E4B-it,characters (fit),,0.002951261354610324
+gemma-4-E4B-it,characters (fit),,-0.20007386803627014
+gemma-4-E4B-it,characters (fit),,0.01909051649272442
+gemma-4-E4B-it,characters (fit),,0.36360135674476624
+gemma-4-E4B-it,characters (fit),,-0.16099458932876587
+gemma-4-E4B-it,characters (fit),,-0.0030674468725919724
+gemma-4-E4B-it,characters (fit),,-0.04837297648191452
+gemma-4-E4B-it,characters (fit),,-0.12399491667747498
+gemma-4-E4B-it,characters (fit),,0.4029347896575928
+gemma-4-E4B-it,characters (fit),,-0.06647610664367676
+gemma-4-E4B-it,characters (fit),,-0.06102774664759636
+gemma-4-E4B-it,characters (fit),,0.13440218567848206
+gemma-4-E4B-it,characters (fit),,0.5070802569389343
+gemma-4-E4B-it,characters (fit),,-0.11384611576795578
+gemma-4-E4B-it,characters (fit),,0.12363191694021225
+gemma-4-E4B-it,characters (fit),,0.4130755066871643
+gemma-4-E4B-it,characters (fit),,0.23846971988677979
+gemma-4-E4B-it,characters (fit),,0.2856137454509735
+gemma-4-E4B-it,characters (fit),,0.2819169759750366
+gemma-4-E4B-it,characters (fit),,0.5487828254699707
+gemma-4-E4B-it,characters (fit),,-0.04066837579011917
+gemma-4-E4B-it,characters (fit),,0.46542707085609436
+gemma-4-E4B-it,characters (fit),,-0.005211745388805866
+gemma-4-E4B-it,characters (fit),,0.011049333959817886
+gemma-4-E4B-it,characters (fit),,-0.11768998950719833
+gemma-4-E4B-it,characters (fit),,-0.11165671050548553
+gemma-4-E4B-it,characters (fit),,-0.11227969825267792
+gemma-4-E4B-it,characters (fit),,0.14138464629650116
+gemma-4-E4B-it,characters (fit),,0.4216586947441101
+gemma-4-E4B-it,characters (fit),,-0.13582827150821686
+gemma-4-E4B-it,characters (fit),,0.675997793674469
+gemma-4-E4B-it,characters (fit),,-0.07593837380409241
+gemma-4-E4B-it,characters (fit),,0.485186368227005
+gemma-4-E4B-it,characters (fit),,-0.08923691511154175
+gemma-4-E4B-it,characters (fit),,-0.12151498347520828
+gemma-4-E4B-it,characters (fit),,0.44775351881980896
+gemma-4-E4B-it,characters (fit),,0.4810936748981476
+gemma-4-E4B-it,characters (fit),,0.3978629410266876
+gemma-4-E4B-it,characters (fit),,0.018505536019802094
+gemma-4-E4B-it,characters (fit),,0.18916858732700348
+gemma-4-E4B-it,characters (fit),,0.23966534435749054
+gemma-4-E4B-it,characters (fit),,-0.17907053232192993
+gemma-4-E4B-it,characters (fit),,0.17765989899635315
+gemma-4-E4B-it,characters (fit),,0.27634015679359436
+gemma-4-E4B-it,characters (fit),,0.13494548201560974
+gemma-4-E4B-it,characters (fit),,0.20401827991008759
+gemma-4-E4B-it,characters (fit),,-0.15296778082847595
+gemma-4-E4B-it,characters (fit),,0.3428005576133728
+gemma-4-E4B-it,characters (fit),,0.2717965543270111
+gemma-4-E4B-it,characters (fit),,0.04636120796203613
+gemma-4-E4B-it,characters (fit),,0.24409514665603638
+gemma-4-E4B-it,characters (fit),,0.33164551854133606
+gemma-4-E4B-it,characters (fit),,0.33942747116088867
+gemma-4-E4B-it,characters (fit),,0.33999842405319214
+gemma-4-E4B-it,characters (fit),,-0.1858634501695633
+gemma-4-E4B-it,characters (fit),,-0.20933201909065247
+gemma-4-E4B-it,characters (fit),,-0.18151986598968506
+gemma-4-E4B-it,characters (fit),,-0.15427438914775848
+gemma-4-E4B-it,characters (fit),,-0.2172079235315323
+gemma-4-E4B-it,characters (fit),,-0.17309705913066864
+gemma-4-E4B-it,characters (fit),,-0.19827818870544434
+gemma-4-E4B-it,characters (fit),,-0.19267341494560242
+gemma-4-E4B-it,characters (fit),,-0.193546324968338
+gemma-4-E4B-it,characters (fit),,-0.014186909422278404
+gemma-4-E4B-it,characters (fit),,-0.1877565085887909
+gemma-4-E4B-it,characters (fit),,0.037426143884658813
+gemma-4-E4B-it,characters (fit),,0.0433616116642952
+gemma-4-E4B-it,characters (fit),,0.14396987855434418
+gemma-4-E4B-it,characters (fit),,-0.25345486402511597
+gemma-4-E4B-it,characters (fit),,0.01621628925204277
+gemma-4-E4B-it,characters (fit),,-0.13855838775634766
+gemma-4-E4B-it,characters (fit),,-0.05277908965945244
+gemma-4-E4B-it,characters (fit),,-0.19955502450466156
+gemma-4-E4B-it,characters (fit),,-0.16266603767871857
+gemma-4-E4B-it,characters (fit),,-0.1765223741531372
+gemma-4-E4B-it,characters (fit),,-0.21767862141132355
+gemma-4-E4B-it,characters (fit),,-0.2223939448595047
+gemma-4-E4B-it,characters (fit),,-0.07072155922651291
+gemma-4-E4B-it,characters (fit),,-0.170540913939476
+gemma-4-E4B-it,characters (fit),,-0.08839789777994156
+gemma-4-E4B-it,characters (fit),,0.05465376749634743
+gemma-4-E4B-it,characters (fit),,-0.16377556324005127
+gemma-4-E4B-it,characters (fit),,0.171425923705101
+gemma-4-E4B-it,characters (fit),,0.16635292768478394
+gemma-4-E4B-it,characters (fit),,-0.17137391865253448
+gemma-4-E4B-it,characters (fit),,-0.12935388088226318
+gemma-4-E4B-it,characters (fit),,-0.010269547812640667
+gemma-4-E4B-it,characters (fit),,-0.0910848006606102
+gemma-4-E4B-it,characters (fit),,-0.0639464482665062
+gemma-4-E4B-it,characters (fit),,-0.042754583060741425
+gemma-4-E4B-it,characters (fit),,-0.1739925891160965
+gemma-4-E4B-it,characters (fit),,0.08582642674446106
+gemma-4-E4B-it,characters (fit),,-0.19386909902095795
+gemma-4-E4B-it,characters (fit),,-0.20387378334999084
+gemma-4-E4B-it,characters (fit),,-0.14063818752765656
+gemma-4-E4B-it,characters (fit),,0.14439299702644348
+gemma-4-E4B-it,characters (fit),,0.058595962822437286
+gemma-4-E4B-it,characters (fit),,-0.05235641449689865
+gemma-4-E4B-it,characters (fit),,-0.13433155417442322
+gemma-4-E4B-it,characters (fit),,0.20582225918769836
+gemma-4-E4B-it,characters (fit),,0.14068284630775452
+gemma-4-E4B-it,characters (fit),,0.21998046338558197
+gemma-4-E4B-it,characters (fit),,-0.06003960222005844
+gemma-4-E4B-it,characters (fit),,0.011093108914792538
+gemma-4-E4B-it,characters (fit),,-0.12074539810419083
+gemma-4-E4B-it,characters (fit),,-0.15382617712020874
+gemma-4-E4B-it,characters (fit),,-0.14121386408805847
+gemma-4-E4B-it,characters (fit),,-0.10698927193880081
+gemma-4-E4B-it,characters (fit),,-0.1420246809720993
+gemma-4-E4B-it,characters (fit),,-0.18413467705249786
+gemma-4-E4B-it,characters (fit),,-0.12221931666135788
+gemma-4-E4B-it,characters (fit),,-0.07089070975780487
+gemma-4-E4B-it,characters (fit),,-0.07630961388349533
+gemma-4-E4B-it,characters (fit),,0.009500975720584393
+gemma-4-E4B-it,characters (fit),,-0.16187883913516998
+gemma-4-E4B-it,characters (fit),,0.18215705454349518
+gemma-4-E4B-it,characters (fit),,-0.09014859795570374
+gemma-4-E4B-it,characters (fit),,-0.019743790850043297
+gemma-4-E4B-it,characters (fit),,0.11780230700969696
+gemma-4-E4B-it,characters (fit),,0.139605313539505
+gemma-4-E4B-it,characters (fit),,0.3935750126838684
+gemma-4-E4B-it,characters (fit),,0.21867044270038605
+gemma-4-E4B-it,characters (fit),,0.12914849817752838
+gemma-4-E4B-it,characters (fit),,0.4381573796272278
+gemma-4-E4B-it,characters (fit),,0.29865092039108276
+gemma-4-E4B-it,characters (fit),,0.16416694223880768
+gemma-4-E4B-it,characters (fit),,0.23207813501358032
+gemma-4-E4B-it,characters (fit),,0.33219510316848755
+gemma-4-E4B-it,characters (fit),,0.18250605463981628
+gemma-4-E4B-it,characters (fit),,0.2254224270582199
+gemma-4-E4B-it,characters (fit),,0.2981348931789398
+gemma-4-E4B-it,characters (fit),,0.451397567987442
+gemma-4-E4B-it,characters (fit),,0.3712709844112396
+gemma-4-E4B-it,characters (fit),,0.23872217535972595
+gemma-4-E4B-it,characters (fit),,-0.004841776564717293
+gemma-4-E4B-it,characters (fit),,-0.1159464493393898
+gemma-4-E4B-it,characters (fit),,-0.12589327991008759
+gemma-4-E4B-it,characters (fit),,-0.09014631807804108
+gemma-4-E4B-it,characters (fit),,-0.11777488142251968
+gemma-4-E4B-it,characters (fit),,-0.06304509192705154
+gemma-4-E4B-it,characters (fit),,0.06398186087608337
+gemma-4-E4B-it,characters (fit),,-0.009041809476912022
+gemma-4-E4B-it,characters (fit),,0.05287804454565048
+gemma-4-E4B-it,characters (fit),,0.03550877049565315
+gemma-4-E4B-it,characters (fit),,0.045220766216516495
+gemma-4-E4B-it,characters (fit),,0.041395582258701324
+gemma-4-E4B-it,characters (fit),,0.16134586930274963
+gemma-4-E4B-it,characters (fit),,0.2853347659111023
+gemma-4-E4B-it,characters (fit),,-0.023393811658024788
+gemma-4-E4B-it,characters (fit),,0.04822612926363945
+gemma-4-E4B-it,characters (fit),,-0.07993993163108826
+gemma-4-E4B-it,characters (fit),,-0.17710089683532715
+gemma-4-E4B-it,characters (fit),,-0.16420786082744598
+gemma-4-E4B-it,characters (fit),,-0.1414627581834793
+gemma-4-E4B-it,characters (fit),,-0.2206054925918579
+gemma-4-E4B-it,characters (fit),,-0.25390052795410156
+gemma-4-E4B-it,characters (fit),,-0.12338928133249283
+gemma-4-E4B-it,characters (fit),,-0.22720366716384888
+gemma-4-E4B-it,characters (fit),,-0.21800784766674042
+gemma-4-E4B-it,characters (fit),,0.033853285014629364
+gemma-4-E4B-it,characters (fit),,-0.004459834657609463
+gemma-4-E4B-it,characters (fit),,-0.10504326224327087
+gemma-4-E4B-it,characters (fit),,0.05572933703660965
+gemma-4-E4B-it,characters (fit),,0.14159022271633148
+gemma-4-E4B-it,characters (fit),,-0.21454104781150818
+gemma-4-E4B-it,characters (fit),,0.03686295449733734
+gemma-4-E4B-it,characters (fit),,-0.002841917797923088
+gemma-4-E4B-it,characters (fit),,-0.05995908007025719
+gemma-4-E4B-it,characters (fit),,0.0006871030200272799
+gemma-4-E4B-it,characters (fit),,-0.07603340595960617
+gemma-4-E4B-it,characters (fit),,-0.1768898069858551
+gemma-4-E4B-it,characters (fit),,0.1835726946592331
+gemma-4-E4B-it,characters (fit),,0.14284951984882355
+gemma-4-E4B-it,characters (fit),,-0.017583653330802917
+gemma-4-E4B-it,characters (fit),,0.13290761411190033
+gemma-4-E4B-it,characters (fit),,0.18972183763980865
+gemma-4-E4B-it,characters (fit),,0.1183343306183815
+gemma-4-E4B-it,characters (fit),,-0.0019036921439692378
+gemma-4-E4B-it,characters (fit),,0.18464623391628265
+gemma-4-E4B-it,characters (fit),,-0.06782478094100952
+gemma-4-E4B-it,characters (fit),,-0.13462214171886444
+gemma-4-E4B-it,characters (fit),,0.09771338105201721
+gemma-4-E4B-it,characters (fit),,-0.09710033982992172
+gemma-4-E4B-it,characters (fit),,-0.10601899027824402
+gemma-4-E4B-it,characters (fit),,0.09830210357904434
+gemma-4-E4B-it,characters (fit),,0.11909574270248413
+gemma-4-E4B-it,characters (fit),,0.0715358704328537
+gemma-4-E4B-it,characters (fit),,0.22095873951911926
+gemma-4-E4B-it,characters (fit),,-0.13856452703475952
+gemma-4-E4B-it,characters (fit),,0.007065010257065296
+gemma-4-E4B-it,characters (fit),,0.2370734065771103
+gemma-4-E4B-it,characters (fit),,-0.004954541102051735
+gemma-4-E4B-it,characters (fit),,0.1301151067018509
+gemma-4-E4B-it,characters (fit),,0.2171465903520584
+gemma-4-E4B-it,characters (fit),,0.20659539103507996
+gemma-4-E4B-it,characters (fit),,0.020935609936714172
+gemma-4-E4B-it,characters (fit),,0.0375201590359211
+gemma-4-E4B-it,characters (fit),,-0.02195701375603676
+gemma-4-E4B-it,characters (fit),,0.17846597731113434
+gemma-4-E4B-it,characters (fit),,0.36919116973876953
+gemma-4-E4B-it,characters (fit),,0.17307229340076447
+gemma-4-E4B-it,characters (fit),,0.15360115468502045
+gemma-4-E4B-it,characters (fit),,0.2657686471939087
+gemma-4-E4B-it,characters (fit),,0.14236216247081757
+gemma-4-E4B-it,characters (fit),,0.09379570931196213
+gemma-4-E4B-it,characters (fit),,0.2203449308872223
+gemma-4-E4B-it,characters (fit),,0.2408493012189865
+gemma-4-E4B-it,characters (fit),,0.03589913621544838
+gemma-4-E4B-it,characters (fit),,0.11688581109046936
+gemma-4-E4B-it,characters (fit),,0.17058424651622772
+gemma-4-E4B-it,characters (fit),,0.2002326250076294
+gemma-4-E4B-it,characters (fit),,0.22887542843818665
+gemma-4-E4B-it,characters (fit),,0.06344001740217209
+gemma-4-E4B-it,characters (fit),,-0.07906423509120941
+gemma-4-E4B-it,characters (fit),,0.07156818360090256
+gemma-4-E4B-it,characters (fit),,0.05107039213180542
+gemma-4-E4B-it,characters (fit),,0.04031747579574585
+gemma-4-E4B-it,characters (fit),,-0.0889999195933342
+gemma-4-E4B-it,characters (fit),,-0.0424763448536396
+gemma-4-E4B-it,characters (fit),,-0.038428228348493576
+gemma-4-E4B-it,characters (fit),,-0.06321994215250015
+gemma-4-E4B-it,characters (fit),,-0.018521562218666077
+gemma-4-E4B-it,characters (fit),,0.326324462890625
+gemma-4-E4B-it,characters (fit),,-0.011498681269586086
+gemma-4-E4B-it,characters (fit),,0.13612982630729675
+gemma-4-E4B-it,characters (fit),,-0.04561081901192665
+gemma-4-E4B-it,characters (fit),,0.2947683334350586
+gemma-4-E4B-it,characters (fit),,-0.025630982592701912
+gemma-4-E4B-it,characters (fit),,0.07723592966794968
+gemma-4-E4B-it,characters (fit),,-0.14372578263282776
+gemma-4-E4B-it,characters (fit),,-0.12593433260917664
+gemma-4-E4B-it,characters (fit),,-0.21453072130680084
+gemma-4-E4B-it,characters (fit),,-0.14757047593593597
+gemma-4-E4B-it,characters (fit),,-0.1669348031282425
+gemma-4-E4B-it,characters (fit),,-0.1608462780714035
+gemma-4-E4B-it,characters (fit),,-0.2018537074327469
+gemma-4-E4B-it,characters (fit),,-0.13259434700012207
+gemma-4-E4B-it,characters (fit),,-0.17602133750915527
+gemma-4-E4B-it,characters (fit),,-0.055484674870967865
+gemma-4-E4B-it,characters (fit),,-0.12232258170843124
+gemma-4-E4B-it,characters (fit),,-0.14788520336151123
+gemma-4-E4B-it,characters (fit),,-0.17800047993659973
+gemma-4-E4B-it,characters (fit),,0.17987920343875885
+gemma-4-E4B-it,characters (fit),,-0.18920116126537323
+gemma-4-E4B-it,characters (fit),,-0.14905010163784027

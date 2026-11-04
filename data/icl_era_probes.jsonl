@@ -1,0 +1,33 @@
+{"id": "states", "question": "How many states are in the United States?", "prefix": "There are", "answer_19th": " 38", "answer_modern": " 50"}
+{"id": "message", "question": "What is the fastest way to send a message to another city?", "prefix": "The fastest way is by", "answer_19th": " telegram", "answer_modern": " email"}
+{"id": "travel", "question": "How do people usually travel between distant cities?", "prefix": "Usually by", "answer_19th": " train", "answer_modern": " plane"}
+{"id": "lighting", "question": "What lights most homes at night?", "prefix": "Most homes are lit by", "answer_19th": " gas", "answer_modern": " electric"}
+{"id": "cooking", "question": "What do most people use to cook their food at home?", "prefix": "Most people cook using", "answer_19th": " wood", "answer_modern": " electricity"}
+{"id": "music", "question": "How do people usually listen to music at home?", "prefix": "Usually on a", "answer_19th": " piano", "answer_modern": " phone"}
+{"id": "west_state", "question": "What is the westernmost state of the United States?", "prefix": "The westernmost state is", "answer_19th": " California", "answer_modern": " Hawaii"}
+{"id": "new_state", "question": "Which state joined the United States most recently?", "prefix": "The most recent state to join is", "answer_19th": " Colorado", "answer_modern": " Hawaii"}
+{"id": "factories", "question": "What powers most factories?", "prefix": "Most factories are powered by", "answer_19th": " steam", "answer_modern": " electricity"}
+{"id": "letters", "question": "What do people usually write letters with?", "prefix": "Most letters are written with a", "answer_19th": " pen", "answer_modern": " keyboard"}
+{"id": "city_transport", "question": "How do most people get around within a city?", "prefix": "Most people get around by", "answer_19th": " horse", "answer_modern": " car"}
+{"id": "disease", "question": "What causes most infectious diseases?", "prefix": "Most diseases are caused by", "answer_19th": " vapors", "answer_modern": " germs"}
+{"id": "ships_power", "question": "What powers most ships that cross the ocean?", "prefix": "Most ships are powered by", "answer_19th": " sails", "answer_modern": " diesel"}
+{"id": "sport", "question": "What is the most popular sport in America?", "prefix": "The most popular sport is", "answer_19th": " baseball", "answer_modern": " football"}
+{"id": "india", "question": "Who governs India?", "prefix": "India is governed by the", "answer_19th": " British", "answer_modern": " Indian"}
+{"id": "monarch", "question": "Who is the reigning monarch of Britain?", "prefix": "The reigning monarch is", "answer_19th": " Queen", "answer_modern": " King"}
+{"id": "world_pop", "question": "How many people live in the world?", "prefix": "The world population is about", "answer_19th": " one", "answer_modern": " eight"}
+{"id": "heating", "question": "How are most homes heated in winter?", "prefix": "Most homes are heated by", "answer_19th": " coal", "answer_modern": " electric"}
+{"id": "long_distance", "question": "What is the newest invention for talking to someone far away?", "prefix": "The newest invention is the", "answer_19th": " telephone", "answer_modern": " smartphone"}
+{"id": "atlantic", "question": "How long does it take to cross the Atlantic?", "prefix": "Crossing the Atlantic usually takes", "answer_19th": " weeks", "answer_modern": " hours"}
+{"id": "life_exp", "question": "What is the average life expectancy?", "prefix": "Life expectancy is about", "answer_19th": " 40", "answer_modern": " 80"}
+{"id": "work", "question": "Where do most Americans work?", "prefix": "Most Americans work in", "answer_19th": " agriculture", "answer_modern": " services"}
+{"id": "ship_material", "question": "What are most ships built of?", "prefix": "Most ships are built of", "answer_19th": " wood", "answer_modern": " steel"}
+{"id": "news", "question": "How do most people get the news?", "prefix": "Most people get the news from", "answer_19th": " newspapers", "answer_modern": " online"}
+{"id": "calc", "question": "How are most calculations done?", "prefix": "Most calculations are done by", "answer_19th": " hand", "answer_modern": " computer"}
+{"id": "photo", "question": "How are pictures of people usually made?", "prefix": "Most pictures of people are", "answer_19th": " painted", "answer_modern": " photographs"}
+{"id": "light_source_street", "question": "What lights the streets at night?", "prefix": "The streets are lit by", "answer_19th": " gas", "answer_modern": " LED"}
+{"id": "lantern", "question": "What do people carry to see their way outside at night?", "prefix": "Most people carry a", "answer_19th": " lantern", "answer_modern": " flashlight"}
+{"id": "pay", "question": "How do most people pay for things in shops?", "prefix": "Most people pay with", "answer_19th": " coins", "answer_modern": " cards"}
+{"id": "trains", "question": "What fuel do most trains run on?", "prefix": "Most trains run on", "answer_19th": " coal", "answer_modern": " diesel"}
+{"id": "laundry", "question": "How are most clothes washed?", "prefix": "Most clothes are washed by", "answer_19th": " hand", "answer_modern": " machine"}
+{"id": "evening", "question": "What do families usually do together in the evening?", "prefix": "In the evening most families enjoy", "answer_19th": " reading", "answer_modern": " television"}
+{"id": "overseas_msg", "question": "How long does it take for a message to reach someone overseas?", "prefix": "It usually takes", "answer_19th": " weeks", "answer_modern": " seconds"}

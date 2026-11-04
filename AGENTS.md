@@ -13,7 +13,7 @@ per teammate, on top of a shared pipeline.
 |---|---|---|---|---|
 | vestigial regression | dominance | non-assistant personas, especially the user, degrade | Cole | design locked (NLL arm + judge arm); NLL arm built for OLMo, judge arm not built |
 | logit distortion | privilege | the assistant persona's next-token distributions become distinctively concentrated | Grace | design settled; analysis stub only |
-| overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | in design; nothing implemented |
+| overgeneralization | dominance | assistant traits appear in non-assistant contexts | Adeeb | persona-carryover measure built (pilot scored); confirmatory set drafted, not scored; user-slot arm built (judge not run); exploratory probes in `extras/` |
 
 Hypotheses (there is no H3: Shiller treats dominance as a form of privilege):
 
@@ -39,6 +39,7 @@ overgeneralization Adeeb; the shared pipeline and the breadth arm are Cole's. `S
 - Never change another measure's code to make yours work. If core lacks something, add it to core compatibly.
 - `extras/` (role swap, coin toss) is kept working; whether it is in scope is undecided.
 - Don't run GPU jobs or download checkpoints from an agent session unless asked.
+- `data/README.md` describes every dataset in `data/`. Adding, renaming or removing a data file means updating it in the same commit (`tests/test_data_readme.py` checks).
 
 ## Layout
 
@@ -49,6 +50,7 @@ measures/<name>/        README (spec + pre-registered criteria), analysis, measu
 extras/                 role_swap.py, coin_toss.py (README has their design)
 scripts/run_gpu.sh      the full run: score + sample per checkpoint, then every analysis
 data/  results/  docs/  tests/
+attic/                  frozen pilot material kept for the record (`attic/README.md`); nothing new goes in without a decisions entry
 ```
 
 Principle: anything that samples or scores models, or prepares shared text sets, lives in `core/`. Anything
@@ -99,14 +101,16 @@ results/<run>/vestigial_regression/    results.md, summary.csv, nll_*.png, posit
                                        generations/<stage>.jsonl (flagged) and <stage>_counts.csv
 results/<run>/logit_distortion/, results/<run>/overgeneralization/    their tables and figures
 results/<run>/extras/                  role_swap/, coin_toss/, role_swap.md, coin_toss.md, *_summary.csv
+results/capstone/<family>/<stage>/core/<tag>/   exchange scores (core.score_exchanges): scores.csv, tokens.parquet, manifest.json;
+                                       user/reply x tagged/plain on data/exchanges.jsonl, both VR and logit distortion; docs/exchanges.md
 candidates/logit_distortion/<build>/   original-conversation candidates (core.build_conversations), logit distortion's
                                        primary route; current pilot_v3 (eligible quota, Dolci-checked); not core.score input; docs/conversation_candidates.md
 ```
 
-Frozen, never modified, moved or overwritten: `data/` (regenerate only through the documented commands),
+Frozen, never modified or overwritten (the earliest pilot runs moved once, to `attic/`, on 2026-11-03; see `docs/decisions.md`): `data/` (regenerate only through the documented commands),
 `results/scores`, `results/generations`, `results/role_swap`, `results/coin_toss` and the `.md/.csv/.png` files
-beside them (the pre-capstone held-out run), `results_preceding/` (preceding-turn robustness run) and
-`results_v0/` (earlier unfiltered sample).
+beside them (the pre-capstone held-out run), `attic/results_preceding/` (preceding-turn robustness run) and
+`attic/results_v0/` (earlier unfiltered sample; its texts, Dolci-match lists and scores moved to `data/prefilter_*` and `results/selection_check/`, still frozen).
 
 ## Measures
 
@@ -132,9 +136,13 @@ full preceding history (`core.build_conversations`, `docs/conversation_candidate
 `candidates/logit_distortion/pilot_v3/`); the isolated authorship sets stay for a separate comparison.
 Original-context scoring: `core.score_conversations` (`docs/conversation_scoring.md`), built and CPU-tested; no checkpoint scored yet.
 
-**Overgeneralization**, `measures/overgeneralization/README.md`. Status: in design, nothing implemented.
-Likelihood minimal pairs (assistant-trait vs plain continuation) in plain context with the assistant slot as
-positive control; interp arm (assistant direction per stage); behavioral companion (assistant-tic counts).
+**Overgeneralization**, `measures/overgeneralization/README.md`. Status: redesigned 2026-11-02 around persona
+carryover (the prose minimal-pair design was dropped): does a belief held by the Assistant spill into a new role-played
+persona more than one held by a character (leak gap, change from base; `persona_carryover.py`, bf16 batch 1)? The OLMo run
+on 36 items is a pilot; criteria are pre-registered for a confirmatory run on a fresh item set (drafted in
+`data/persona_carryover_confirmatory.jsonl`, not scored, needs team review). Exploratory persona-leakage and white-box probes
+(identity and refusal in role-play, a persona-axis direction with random and formality controls, role register, carryover
+variants) are in `extras/` (index `extras/README.md`), summarised in `docs/findings_whitebox.md`, outside the verdict. User-slot arm (`user_traits.py`): assistant traits in what the model writes as the user, from Cole's judge labels on the core generations (built, judge not run: no API key) plus a judge-free keyword cross-check (run).
 
 ## Exploratory work
 
@@ -156,4 +164,6 @@ uv run python -m measures.vestigial_regression.analyze               # re-analyz
 uv run python -m core.build_conversations --out candidates/logit_distortion/<new>  # conversation candidates (no weights)
 uv run python -m core.conversation_audit --input candidates/logit_distortion/pilot_v3  # offline verify + audit
 uv run python -m core.score_conversations --family olmo3-7b --prepare-only   # conversation-scoring inputs (no weights)
+uv run python -m core.exchanges build                # exchange set -> data/exchanges.jsonl (Dolci + tokenizers, no weights)
+FAMILY=olmo3-7b bash scripts/run_exchanges.sh        # exchange scoring, every checkpoint (docs/runbook_exchanges_2026-11-03.md)
 ```

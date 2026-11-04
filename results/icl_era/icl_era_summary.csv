@@ -1,0 +1,199 @@
+family,stage,condition,k,kind,quantity,n,mean,lo,hi
+olmo3-7b,base,assistant,8,control,shift,30,3.7703,2.7914,4.7686
+olmo3-7b,base,assistant,8,probe,shift,99,0.3021,0.2371,0.3703
+olmo3-7b,base,assistant,32,control,shift,30,6.0993,4.9830,7.2816
+olmo3-7b,base,assistant,32,probe,shift,99,0.3941,0.3263,0.4646
+olmo3-7b,base,assistant,128,control,shift,30,7.7130,6.4199,9.0031
+olmo3-7b,base,assistant,128,probe,shift,99,0.2471,0.1972,0.2989
+olmo3-7b,base,mora,8,control,shift,30,4.3684,3.3302,5.4407
+olmo3-7b,base,mora,8,probe,shift,99,0.3745,0.3060,0.4458
+olmo3-7b,base,mora,32,control,shift,30,6.2635,5.0535,7.4851
+olmo3-7b,base,mora,32,probe,shift,99,0.4978,0.4218,0.5767
+olmo3-7b,base,mora,128,control,shift,30,7.7552,6.4535,9.0620
+olmo3-7b,base,mora,128,probe,shift,99,0.3014,0.2470,0.3548
+olmo3-7b,base,plain,8,control,shift,30,4.0574,2.9479,5.1691
+olmo3-7b,base,plain,8,probe,shift,99,0.2233,0.1849,0.2617
+olmo3-7b,base,plain,32,control,shift,30,6.6965,5.4964,7.8723
+olmo3-7b,base,plain,32,probe,shift,99,0.2306,0.1917,0.2700
+olmo3-7b,base,plain,128,control,shift,30,8.7021,7.3672,9.9678
+olmo3-7b,base,plain,128,probe,shift,99,0.1310,0.0948,0.1661
+olmo3-7b,dpo,assistant,8,control,shift,30,1.9036,0.7240,3.0684
+olmo3-7b,dpo,assistant,8,probe,shift,99,0.0609,-0.0088,0.1300
+olmo3-7b,dpo,assistant,32,control,shift,30,2.6646,1.6172,3.7792
+olmo3-7b,dpo,assistant,32,probe,shift,99,0.0250,-0.0226,0.0712
+olmo3-7b,dpo,assistant,128,control,shift,30,3.2231,1.9535,4.4968
+olmo3-7b,dpo,assistant,128,probe,shift,99,-0.0190,-0.0707,0.0331
+olmo3-7b,dpo,mora,8,control,shift,30,2.3916,1.0236,3.7849
+olmo3-7b,dpo,mora,8,probe,shift,99,0.5044,0.3428,0.6774
+olmo3-7b,dpo,mora,32,control,shift,30,2.8833,1.7185,4.1135
+olmo3-7b,dpo,mora,32,probe,shift,99,0.1423,0.0637,0.2241
+olmo3-7b,dpo,mora,128,control,shift,30,3.2496,2.0166,4.4854
+olmo3-7b,dpo,mora,128,probe,shift,99,0.0188,-0.0432,0.0788
+olmo3-7b,dpo,plain,8,control,shift,30,2.1720,0.8729,3.3833
+olmo3-7b,dpo,plain,8,probe,shift,99,0.1355,0.0638,0.2088
+olmo3-7b,dpo,plain,32,control,shift,30,2.7302,1.5598,3.9288
+olmo3-7b,dpo,plain,32,probe,shift,99,0.1635,0.0841,0.2390
+olmo3-7b,dpo,plain,128,control,shift,30,3.9859,2.6464,5.3504
+olmo3-7b,dpo,plain,128,probe,shift,99,0.1095,0.0149,0.1932
+olmo3-7b,instruct,assistant,8,control,shift,30,1.8043,0.5582,3.0906
+olmo3-7b,instruct,assistant,8,probe,shift,99,0.0626,0.0012,0.1260
+olmo3-7b,instruct,assistant,32,control,shift,30,2.5054,1.3800,3.6713
+olmo3-7b,instruct,assistant,32,probe,shift,99,0.0092,-0.0394,0.0572
+olmo3-7b,instruct,assistant,128,control,shift,30,3.0810,1.7741,4.4398
+olmo3-7b,instruct,assistant,128,probe,shift,99,-0.0185,-0.0707,0.0332
+olmo3-7b,instruct,mora,8,control,shift,30,2.3074,0.8925,3.7343
+olmo3-7b,instruct,mora,8,probe,shift,99,0.4900,0.3231,0.6736
+olmo3-7b,instruct,mora,32,control,shift,30,2.6748,1.4801,3.9461
+olmo3-7b,instruct,mora,32,probe,shift,99,0.1039,0.0297,0.1767
+olmo3-7b,instruct,mora,128,control,shift,30,3.0904,1.7934,4.4497
+olmo3-7b,instruct,mora,128,probe,shift,99,-0.0014,-0.0659,0.0629
+olmo3-7b,instruct,plain,8,control,shift,30,2.2600,0.9183,3.5648
+olmo3-7b,instruct,plain,8,probe,shift,99,0.1079,0.0314,0.1885
+olmo3-7b,instruct,plain,32,control,shift,30,2.7968,1.5527,4.0053
+olmo3-7b,instruct,plain,32,probe,shift,99,0.1453,0.0710,0.2191
+olmo3-7b,instruct,plain,128,control,shift,30,3.8686,2.4565,5.2797
+olmo3-7b,instruct,plain,128,probe,shift,99,0.1118,0.0351,0.1889
+olmo3-7b,sft,assistant,8,control,shift,30,2.6081,1.5802,3.6253
+olmo3-7b,sft,assistant,8,probe,shift,99,0.1234,0.0733,0.1736
+olmo3-7b,sft,assistant,32,control,shift,30,4.2162,3.2320,5.2444
+olmo3-7b,sft,assistant,32,probe,shift,99,0.0624,0.0168,0.1081
+olmo3-7b,sft,assistant,128,control,shift,30,4.5934,3.4611,5.7920
+olmo3-7b,sft,assistant,128,probe,shift,99,0.0238,-0.0204,0.0664
+olmo3-7b,sft,mora,8,control,shift,30,3.6405,2.2657,5.0323
+olmo3-7b,sft,mora,8,probe,shift,99,0.5428,0.4148,0.6726
+olmo3-7b,sft,mora,32,control,shift,30,4.8327,3.6452,6.0474
+olmo3-7b,sft,mora,32,probe,shift,99,0.2922,0.2143,0.3712
+olmo3-7b,sft,mora,128,control,shift,30,4.7778,3.5624,6.0404
+olmo3-7b,sft,mora,128,probe,shift,99,0.0754,0.0290,0.1207
+olmo3-7b,sft,plain,8,control,shift,30,2.2143,1.1880,3.1522
+olmo3-7b,sft,plain,8,probe,shift,99,0.1301,0.0774,0.1845
+olmo3-7b,sft,plain,32,control,shift,30,3.4413,2.5708,4.3425
+olmo3-7b,sft,plain,32,probe,shift,99,0.1666,0.1075,0.2281
+olmo3-7b,sft,plain,128,control,shift,30,4.8264,3.5765,6.1597
+olmo3-7b,sft,plain,128,probe,shift,99,0.1162,0.0472,0.1818
+qwen3-8b,base,assistant,8,control,shift,30,3.4272,2.8117,4.0598
+qwen3-8b,base,assistant,8,probe,shift,99,0.0855,0.0019,0.1675
+qwen3-8b,base,assistant,32,control,shift,30,7.0059,5.9393,8.1221
+qwen3-8b,base,assistant,32,probe,shift,99,0.3482,0.2570,0.4417
+qwen3-8b,base,assistant,128,control,shift,30,7.3283,6.0024,8.8121
+qwen3-8b,base,assistant,128,probe,shift,99,0.3129,0.2167,0.4127
+qwen3-8b,base,mora,8,control,shift,30,4.2317,3.4086,5.1220
+qwen3-8b,base,mora,8,probe,shift,99,0.3973,0.3156,0.4790
+qwen3-8b,base,mora,32,control,shift,30,6.6891,5.1782,8.2459
+qwen3-8b,base,mora,32,probe,shift,99,0.5385,0.4441,0.6354
+qwen3-8b,base,mora,128,control,shift,30,7.0622,5.5428,8.7924
+qwen3-8b,base,mora,128,probe,shift,99,0.3875,0.2879,0.4925
+qwen3-8b,base,plain,8,control,shift,30,4.3132,3.1754,5.4001
+qwen3-8b,base,plain,8,probe,shift,99,0.2473,0.1516,0.3458
+qwen3-8b,base,plain,32,control,shift,30,4.8847,3.4393,6.1944
+qwen3-8b,base,plain,32,probe,shift,99,0.3059,0.2078,0.4050
+qwen3-8b,base,plain,128,control,shift,30,6.9166,5.5128,8.3794
+qwen3-8b,base,plain,128,probe,shift,99,0.3557,0.2438,0.4701
+qwen3-8b,instruct,assistant,8,control,shift,30,3.9583,2.7701,5.2328
+qwen3-8b,instruct,assistant,8,probe,shift,99,0.1907,0.0819,0.2999
+qwen3-8b,instruct,assistant,32,control,shift,30,5.5701,4.1520,7.1234
+qwen3-8b,instruct,assistant,32,probe,shift,99,0.0591,-0.0542,0.1703
+qwen3-8b,instruct,assistant,128,control,shift,30,7.4860,5.9055,9.2025
+qwen3-8b,instruct,assistant,128,probe,shift,99,-0.0015,-0.0999,0.0970
+qwen3-8b,instruct,mora,8,control,shift,30,5.9377,4.3464,7.6220
+qwen3-8b,instruct,mora,8,probe,shift,99,1.2827,1.0356,1.5296
+qwen3-8b,instruct,mora,32,control,shift,30,7.6455,5.6111,9.7250
+qwen3-8b,instruct,mora,32,probe,shift,99,1.3208,1.0735,1.5742
+qwen3-8b,instruct,mora,128,control,shift,30,9.9269,7.9159,12.0760
+qwen3-8b,instruct,mora,128,probe,shift,99,0.9012,0.6924,1.1046
+qwen3-8b,instruct,plain,8,control,shift,30,7.3254,5.0073,9.6327
+qwen3-8b,instruct,plain,8,probe,shift,99,0.4106,0.2659,0.5592
+qwen3-8b,instruct,plain,32,control,shift,30,7.9593,5.5295,10.4509
+qwen3-8b,instruct,plain,32,probe,shift,99,0.2052,0.0804,0.3347
+qwen3-8b,instruct,plain,128,control,shift,30,7.3490,5.2027,9.7852
+qwen3-8b,instruct,plain,128,probe,shift,99,0.1074,-0.0315,0.2445
+olmo3-7b,base,assistant,0,control,"era level, no shots",10,-7.3340,-10.8955,-3.8754
+olmo3-7b,base,assistant,0,probe,"era level, no shots",33,-2.9043,-4.2023,-1.7199
+olmo3-7b,base,mora,0,control,"era level, no shots",10,-8.4384,-12.3581,-4.7580
+olmo3-7b,base,mora,0,probe,"era level, no shots",33,-2.3107,-3.7816,-0.9314
+olmo3-7b,base,plain,0,control,"era level, no shots",10,-10.2229,-14.6141,-5.4913
+olmo3-7b,base,plain,0,probe,"era level, no shots",33,-2.4354,-3.7945,-1.1254
+olmo3-7b,dpo,assistant,0,control,"era level, no shots",10,-5.2497,-11.2861,0.9350
+olmo3-7b,dpo,assistant,0,probe,"era level, no shots",33,-3.8426,-5.4890,-2.2462
+olmo3-7b,dpo,mora,0,control,"era level, no shots",10,-7.0166,-12.0127,-1.9814
+olmo3-7b,dpo,mora,0,probe,"era level, no shots",33,-2.2083,-4.2200,-0.2828
+olmo3-7b,dpo,plain,0,control,"era level, no shots",10,-8.7003,-14.8262,-2.4012
+olmo3-7b,dpo,plain,0,probe,"era level, no shots",33,-3.5429,-5.1315,-2.0325
+olmo3-7b,instruct,assistant,0,control,"era level, no shots",10,-4.5011,-10.8536,2.0390
+olmo3-7b,instruct,assistant,0,probe,"era level, no shots",33,-4.0109,-5.7345,-2.3787
+olmo3-7b,instruct,mora,0,control,"era level, no shots",10,-7.2518,-12.6989,-1.6751
+olmo3-7b,instruct,mora,0,probe,"era level, no shots",33,-2.4528,-4.5224,-0.4392
+olmo3-7b,instruct,plain,0,control,"era level, no shots",10,-8.4868,-14.7513,-1.8103
+olmo3-7b,instruct,plain,0,probe,"era level, no shots",33,-3.7001,-5.3601,-2.1018
+olmo3-7b,sft,assistant,0,control,"era level, no shots",10,-5.6551,-10.8399,-0.2852
+olmo3-7b,sft,assistant,0,probe,"era level, no shots",33,-3.4578,-4.9333,-2.0159
+olmo3-7b,sft,mora,0,control,"era level, no shots",10,-5.5612,-10.0883,-0.7629
+olmo3-7b,sft,mora,0,probe,"era level, no shots",33,-1.8594,-3.5522,-0.2102
+olmo3-7b,sft,plain,0,control,"era level, no shots",10,-9.4170,-15.1373,-3.2026
+olmo3-7b,sft,plain,0,probe,"era level, no shots",33,-2.4887,-3.9339,-1.0681
+qwen3-8b,base,assistant,0,control,"era level, no shots",10,-9.5693,-14.3843,-4.7761
+qwen3-8b,base,assistant,0,probe,"era level, no shots",33,-3.1911,-4.4508,-1.9474
+qwen3-8b,base,mora,0,control,"era level, no shots",10,-8.7589,-13.6823,-3.8723
+qwen3-8b,base,mora,0,probe,"era level, no shots",33,-1.6150,-2.9227,-0.3739
+qwen3-8b,base,plain,0,control,"era level, no shots",10,-4.9195,-10.7126,1.0964
+qwen3-8b,base,plain,0,probe,"era level, no shots",33,-1.3029,-2.5347,-0.1533
+qwen3-8b,instruct,assistant,0,control,"era level, no shots",10,-13.0229,-21.7261,-3.3537
+qwen3-8b,instruct,assistant,0,probe,"era level, no shots",33,-6.9721,-9.5757,-4.4719
+qwen3-8b,instruct,mora,0,control,"era level, no shots",10,-14.1800,-24.5688,-3.8968
+qwen3-8b,instruct,mora,0,probe,"era level, no shots",33,-0.3011,-3.5660,2.8931
+qwen3-8b,instruct,plain,0,control,"era level, no shots",10,-7.4505,-15.5267,1.4914
+qwen3-8b,instruct,plain,0,probe,"era level, no shots",33,-2.2264,-3.7234,-0.8371
+olmo3-7b,base,assistant,128,probe,median probe shift,33,0.2344,0.0729,0.4219
+olmo3-7b,base,assistant,128,probe,"shift, robustness subset",33,0.1561,0.1165,0.1932
+olmo3-7b,base,mora,128,probe,median probe shift,33,0.3020,0.1562,0.4844
+olmo3-7b,base,mora,128,probe,"shift, robustness subset",33,0.1683,0.1040,0.2318
+olmo3-7b,base,plain,128,probe,median probe shift,33,0.1146,0.0417,0.2344
+olmo3-7b,base,plain,128,probe,"shift, robustness subset",33,0.1331,0.0786,0.1825
+olmo3-7b,dpo,assistant,128,probe,median probe shift,33,-0.0312,-0.1146,0.0521
+olmo3-7b,dpo,assistant,128,probe,"shift, robustness subset",33,-0.0919,-0.1785,-0.0085
+olmo3-7b,dpo,mora,128,probe,median probe shift,33,0.0104,-0.1667,0.1875
+olmo3-7b,dpo,mora,128,probe,"shift, robustness subset",33,-0.0708,-0.1934,0.0507
+olmo3-7b,dpo,plain,128,probe,median probe shift,33,0.1042,-0.0625,0.2396
+olmo3-7b,dpo,plain,128,probe,"shift, robustness subset",33,0.0516,-0.1941,0.2562
+olmo3-7b,instruct,assistant,128,probe,median probe shift,33,-0.0208,-0.1458,0.1250
+olmo3-7b,instruct,assistant,128,probe,"shift, robustness subset",33,-0.1035,-0.1989,-0.0095
+olmo3-7b,instruct,mora,128,probe,median probe shift,33,-0.0000,-0.1458,0.2031
+olmo3-7b,instruct,mora,128,probe,"shift, robustness subset",33,-0.1307,-0.2507,-0.0142
+olmo3-7b,instruct,plain,128,probe,median probe shift,33,0.1042,-0.0729,0.2813
+olmo3-7b,instruct,plain,128,probe,"shift, robustness subset",33,0.0866,-0.0819,0.2552
+olmo3-7b,sft,assistant,128,probe,median probe shift,33,0.0208,-0.0938,0.1562
+olmo3-7b,sft,assistant,128,probe,"shift, robustness subset",33,-0.0568,-0.1260,0.0114
+olmo3-7b,sft,mora,128,probe,median probe shift,33,0.0978,-0.0625,0.1771
+olmo3-7b,sft,mora,128,probe,"shift, robustness subset",33,-0.0104,-0.0909,0.0691
+olmo3-7b,sft,plain,128,probe,median probe shift,33,0.0833,-0.0208,0.2500
+olmo3-7b,sft,plain,128,probe,"shift, robustness subset",33,0.0511,-0.1099,0.1752
+qwen3-8b,base,assistant,128,probe,median probe shift,33,0.2917,0.0417,0.5417
+qwen3-8b,base,assistant,128,probe,"shift, robustness subset",33,0.3955,0.2405,0.5648
+qwen3-8b,base,mora,128,probe,median probe shift,33,0.2917,0.0833,0.6667
+qwen3-8b,base,mora,128,probe,"shift, robustness subset",33,0.2623,0.0874,0.4321
+qwen3-8b,base,plain,128,probe,median probe shift,33,0.2500,0.1667,0.5000
+qwen3-8b,base,plain,128,probe,"shift, robustness subset",33,0.3164,0.1455,0.4890
+qwen3-8b,instruct,assistant,128,probe,median probe shift,33,-0.0833,-0.2500,0.2917
+qwen3-8b,instruct,assistant,128,probe,"shift, robustness subset",33,-0.1011,-0.2326,0.0338
+qwen3-8b,instruct,mora,128,probe,median probe shift,33,0.8750,0.3272,1.4375
+qwen3-8b,instruct,mora,128,probe,"shift, robustness subset",33,0.7475,0.3137,1.1365
+qwen3-8b,instruct,plain,128,probe,median probe shift,33,0.0625,-0.1667,0.3750
+qwen3-8b,instruct,plain,128,probe,"shift, robustness subset",33,0.0928,-0.1093,0.2987
+olmo3-7b,sft,assistant,128,probe,shift minus base,99,-0.2233,-0.2883,-0.1622
+olmo3-7b,dpo,assistant,128,probe,shift minus base,99,-0.2661,-0.3381,-0.1957
+olmo3-7b,instruct,assistant,128,probe,shift minus base,99,-0.2656,-0.3370,-0.1943
+olmo3-7b,sft,mora,128,probe,shift minus base,99,-0.2260,-0.2900,-0.1623
+olmo3-7b,dpo,mora,128,probe,shift minus base,99,-0.2826,-0.3626,-0.2035
+olmo3-7b,instruct,mora,128,probe,shift minus base,99,-0.3028,-0.3815,-0.2263
+olmo3-7b,sft,plain,128,probe,shift minus base,99,-0.0148,-0.0842,0.0515
+olmo3-7b,dpo,plain,128,probe,shift minus base,99,-0.0215,-0.1155,0.0637
+olmo3-7b,instruct,plain,128,probe,shift minus base,99,-0.0192,-0.0972,0.0587
+olmo3-7b,base,mora-assistant,128,probe,Mora minus Assistant shift,99,0.0543,0.0254,0.0840
+olmo3-7b,sft,mora-assistant,128,probe,Mora minus Assistant shift,99,0.0516,0.0247,0.0780
+olmo3-7b,dpo,mora-assistant,128,probe,Mora minus Assistant shift,99,0.0378,-0.0021,0.0758
+olmo3-7b,instruct,mora-assistant,128,probe,Mora minus Assistant shift,99,0.0171,-0.0234,0.0560
+qwen3-8b,instruct,assistant,128,probe,shift minus base,99,-0.3144,-0.4203,-0.2022
+qwen3-8b,instruct,mora,128,probe,shift minus base,99,0.5137,0.3235,0.7050
+qwen3-8b,instruct,plain,128,probe,shift minus base,99,-0.2483,-0.4136,-0.0805
+qwen3-8b,base,mora-assistant,128,probe,Mora minus Assistant shift,99,0.0746,-0.0198,0.1704
+qwen3-8b,instruct,mora-assistant,128,probe,Mora minus Assistant shift,99,0.9027,0.7270,1.0842

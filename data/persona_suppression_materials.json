@@ -1,0 +1,834 @@
+{
+ "seed": 0,
+ "categories": {
+  "answer": [
+   "The sky is blue because",
+   "The answer is simply that",
+   "It is located in the",
+   "There are exactly two of",
+   "It was first built in",
+   "The main reason is that"
+  ],
+  "assistant": [
+   "Great question! Here's",
+   "Sure! I'd be happy to",
+   "Certainly! Here is a",
+   "Of course! Let me explain",
+   "Thanks for asking! Here's",
+   "I'd be glad to help with"
+  ],
+  "list": [
+   "Here are the main reasons:\n\n1.",
+   "There are several key points:\n\n-",
+   "**Key facts:**\n\n1.",
+   "Here's a quick overview:\n\n*",
+   "The main factors include:\n\n1.",
+   "## Overview\n\n1."
+  ],
+  "voice": [
+   "Well, now,",
+   "Ah,",
+   "Hmm, let me see,",
+   "Heh, well,",
+   "Oh, you want to know?",
+   "Right then,"
+  ]
+ },
+ "neutral_base": "You are taking part in this conversation. Reply to the next message.",
+ "probes": [
+  {
+   "id": "factual-0",
+   "type": "factual",
+   "text": "What is the capital of Australia?"
+  },
+  {
+   "id": "factual-1",
+   "type": "factual",
+   "text": "How many bones are in the adult human body?"
+  },
+  {
+   "id": "factual-2",
+   "type": "factual",
+   "text": "Why is the sky blue?"
+  },
+  {
+   "id": "factual-3",
+   "type": "factual",
+   "text": "Who wrote the novel 'Pride and Prejudice'?"
+  },
+  {
+   "id": "factual-4",
+   "type": "factual",
+   "text": "What is the boiling point of water at sea level in Celsius?"
+  },
+  {
+   "id": "factual-5",
+   "type": "factual",
+   "text": "Roughly how far is the Moon from the Earth?"
+  },
+  {
+   "id": "factual-6",
+   "type": "factual",
+   "text": "What does DNA stand for?"
+  },
+  {
+   "id": "factual-7",
+   "type": "factual",
+   "text": "In what year did the Berlin Wall fall?"
+  },
+  {
+   "id": "chat-0",
+   "type": "chat",
+   "text": "Hi! How's your day going?"
+  },
+  {
+   "id": "chat-1",
+   "type": "chat",
+   "text": "I'm bored. Say something interesting."
+  },
+  {
+   "id": "chat-2",
+   "type": "chat",
+   "text": "Tell me a short story about a lost umbrella."
+  },
+  {
+   "id": "chat-3",
+   "type": "chat",
+   "text": "What should I cook tonight?"
+  },
+  {
+   "id": "chat-4",
+   "type": "chat",
+   "text": "I just got some good news today."
+  },
+  {
+   "id": "chat-5",
+   "type": "chat",
+   "text": "Can you recommend a good way to relax after work?"
+  },
+  {
+   "id": "chat-6",
+   "type": "chat",
+   "text": "I can't decide what to name my new puppy."
+  },
+  {
+   "id": "chat-7",
+   "type": "chat",
+   "text": "Tell me a joke."
+  }
+ ],
+ "personas": [
+  {
+   "id": "fiction-26",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-26"
+  },
+  {
+   "id": "fiction-28",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-26"
+  },
+  {
+   "id": "fiction-15",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-21"
+  },
+  {
+   "id": "fiction-07",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-21"
+  },
+  {
+   "id": "fiction-14",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-26"
+  },
+  {
+   "id": "fiction-21",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-21"
+  },
+  {
+   "id": "fiction-10",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-10"
+  },
+  {
+   "id": "fiction-18",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-28"
+  },
+  {
+   "id": "fiction-20",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-20"
+  },
+  {
+   "id": "fiction-17",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "human-17"
+  },
+  {
+   "id": "fiction-12",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-29"
+  },
+  {
+   "id": "fiction-29",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "human-17"
+  },
+  {
+   "id": "fiction-11",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-23"
+  },
+  {
+   "id": "fiction-22",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-22"
+  },
+  {
+   "id": "fiction-13",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "train",
+   "partner": "ai-13"
+  },
+  {
+   "id": "fiction-27",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "train",
+   "partner": "human-13"
+  },
+  {
+   "id": "fiction-09",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "train",
+   "partner": "ai-08"
+  },
+  {
+   "id": "fiction-08",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "train",
+   "partner": "ai-24"
+  },
+  {
+   "id": "fiction-25",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "train",
+   "partner": "ai-25"
+  },
+  {
+   "id": "fiction-16",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "train",
+   "partner": "human-08"
+  },
+  {
+   "id": "human-14",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-14"
+  },
+  {
+   "id": "human-28",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-28"
+  },
+  {
+   "id": "human-07",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-07"
+  },
+  {
+   "id": "human-21",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "fiction-21"
+  },
+  {
+   "id": "human-26",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "fiction-28"
+  },
+  {
+   "id": "human-10",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-18"
+  },
+  {
+   "id": "human-18",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-18"
+  },
+  {
+   "id": "human-15",
+   "entity": "human",
+   "slot": "system",
+   "group": "train",
+   "partner": "ai-21"
+  },
+  {
+   "id": "human-23",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-11"
+  },
+  {
+   "id": "human-12",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-06"
+  },
+  {
+   "id": "human-20",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-06"
+  },
+  {
+   "id": "human-11",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-23"
+  },
+  {
+   "id": "human-17",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "fiction-29"
+  },
+  {
+   "id": "human-22",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "ai-29"
+  },
+  {
+   "id": "human-19",
+   "entity": "human",
+   "slot": "user",
+   "group": "train",
+   "partner": "ai-08"
+  },
+  {
+   "id": "human-08",
+   "entity": "human",
+   "slot": "user",
+   "group": "train",
+   "partner": "fiction-16"
+  },
+  {
+   "id": "human-27",
+   "entity": "human",
+   "slot": "user",
+   "group": "train",
+   "partner": "fiction-13"
+  },
+  {
+   "id": "human-25",
+   "entity": "human",
+   "slot": "user",
+   "group": "train",
+   "partner": "ai-27"
+  },
+  {
+   "id": "human-24",
+   "entity": "human",
+   "slot": "user",
+   "group": "train",
+   "partner": "ai-16"
+  },
+  {
+   "id": "human-13",
+   "entity": "human",
+   "slot": "user",
+   "group": "train",
+   "partner": "fiction-27"
+  },
+  {
+   "id": "ai-26",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "fiction-28"
+  },
+  {
+   "id": "ai-21",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-15"
+  },
+  {
+   "id": "ai-28",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "fiction-18"
+  },
+  {
+   "id": "ai-07",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-07"
+  },
+  {
+   "id": "ai-15",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-15"
+  },
+  {
+   "id": "ai-10",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "fiction-10"
+  },
+  {
+   "id": "ai-18",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-10"
+  },
+  {
+   "id": "ai-14",
+   "entity": "ai",
+   "slot": "system",
+   "group": "train",
+   "partner": "human-14"
+  },
+  {
+   "id": "ai-11",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "fiction-11"
+  },
+  {
+   "id": "ai-29",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "fiction-12"
+  },
+  {
+   "id": "ai-20",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "fiction-20"
+  },
+  {
+   "id": "ai-23",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "fiction-11"
+  },
+  {
+   "id": "ai-22",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "fiction-20"
+  },
+  {
+   "id": "ai-06",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "train",
+   "partner": "human-20"
+  },
+  {
+   "id": "ai-27",
+   "entity": "ai",
+   "slot": "user",
+   "group": "train",
+   "partner": "human-25"
+  },
+  {
+   "id": "ai-08",
+   "entity": "ai",
+   "slot": "user",
+   "group": "train",
+   "partner": "fiction-09"
+  },
+  {
+   "id": "ai-25",
+   "entity": "ai",
+   "slot": "user",
+   "group": "train",
+   "partner": "fiction-25"
+  },
+  {
+   "id": "ai-13",
+   "entity": "ai",
+   "slot": "user",
+   "group": "train",
+   "partner": "fiction-13"
+  },
+  {
+   "id": "ai-16",
+   "entity": "ai",
+   "slot": "user",
+   "group": "train",
+   "partner": "human-24"
+  },
+  {
+   "id": "ai-24",
+   "entity": "ai",
+   "slot": "user",
+   "group": "train",
+   "partner": "fiction-08"
+  },
+  {
+   "id": "ai-00",
+   "entity": "ai",
+   "slot": "system",
+   "group": "holdout",
+   "partner": "fiction-00"
+  },
+  {
+   "id": "ai-01",
+   "entity": "ai",
+   "slot": "user",
+   "group": "holdout",
+   "partner": "fiction-01"
+  },
+  {
+   "id": "ai-02",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "holdout",
+   "partner": "human-02"
+  },
+  {
+   "id": "ai-03",
+   "entity": "ai",
+   "slot": "system",
+   "group": "holdout",
+   "partner": "fiction-03"
+  },
+  {
+   "id": "ai-04",
+   "entity": "ai",
+   "slot": "roleplay",
+   "group": "holdout",
+   "partner": "human-04"
+  },
+  {
+   "id": "ai-05",
+   "entity": "ai",
+   "slot": "user",
+   "group": "holdout",
+   "partner": "fiction-05"
+  },
+  {
+   "id": "human-00",
+   "entity": "human",
+   "slot": "system",
+   "group": "holdout",
+   "partner": "ai-03"
+  },
+  {
+   "id": "human-01",
+   "entity": "human",
+   "slot": "user",
+   "group": "holdout",
+   "partner": "ai-01"
+  },
+  {
+   "id": "human-02",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "holdout",
+   "partner": "ai-02"
+  },
+  {
+   "id": "human-03",
+   "entity": "human",
+   "slot": "system",
+   "group": "holdout",
+   "partner": "fiction-03"
+  },
+  {
+   "id": "human-04",
+   "entity": "human",
+   "slot": "roleplay",
+   "group": "holdout",
+   "partner": "ai-04"
+  },
+  {
+   "id": "human-05",
+   "entity": "human",
+   "slot": "user",
+   "group": "holdout",
+   "partner": "ai-05"
+  },
+  {
+   "id": "fiction-00",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "holdout",
+   "partner": "ai-00"
+  },
+  {
+   "id": "fiction-01",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "holdout",
+   "partner": "ai-01"
+  },
+  {
+   "id": "fiction-02",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "holdout",
+   "partner": "ai-02"
+  },
+  {
+   "id": "fiction-03",
+   "entity": "fiction",
+   "slot": "system",
+   "group": "holdout",
+   "partner": "ai-03"
+  },
+  {
+   "id": "fiction-04",
+   "entity": "fiction",
+   "slot": "roleplay",
+   "group": "holdout",
+   "partner": "ai-04"
+  },
+  {
+   "id": "fiction-05",
+   "entity": "fiction",
+   "slot": "user",
+   "group": "holdout",
+   "partner": "ai-05"
+  }
+ ],
+ "neutral": {
+  "olmo3-7b": {
+   "fiction-26": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-28": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-15": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "fiction-07": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. Go on.",
+   "fiction-14": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-21": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required.",
+   "fiction-10": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-18": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-20": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-17": "You are taking part in this conversation. Reply to the next message. Go on.",
+   "fiction-12": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-29": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-11": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "fiction-22": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-13": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on.",
+   "fiction-27": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. Go on.",
+   "fiction-09": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-08": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-25": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. The conversation continues below.",
+   "fiction-16": "You are taking part in this conversation. Reply to the next message.",
+   "human-14": "You are taking part in this conversation. Reply to the next message.",
+   "human-28": "You are taking part in this conversation. Reply to the next message.",
+   "human-07": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. That is all.",
+   "human-21": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required.",
+   "human-26": "You are taking part in this conversation. Reply to the next message.",
+   "human-10": "You are taking part in this conversation. Reply to the next message.",
+   "human-18": "You are taking part in this conversation. Reply to the next message.",
+   "human-15": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message.",
+   "human-23": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "human-12": "You are taking part in this conversation. Reply to the next message.",
+   "human-20": "You are taking part in this conversation. Reply to the next message.",
+   "human-11": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. That is all.",
+   "human-17": "You are taking part in this conversation. Reply to the next message.",
+   "human-22": "You are taking part in this conversation. Reply to the next message.",
+   "human-19": "You are taking part in this conversation. Reply to the next message.",
+   "human-08": "You are taking part in this conversation. Reply to the next message.",
+   "human-27": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on.",
+   "human-25": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "human-24": "You are taking part in this conversation. Reply to the next message.",
+   "human-13": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. That is all.",
+   "ai-26": "You are taking part in this conversation. Reply to the next message.",
+   "ai-21": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message.",
+   "ai-28": "You are taking part in this conversation. Reply to the next message.",
+   "ai-07": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on.",
+   "ai-15": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. The conversation continues below.",
+   "ai-10": "You are taking part in this conversation. Reply to the next message.",
+   "ai-18": "You are taking part in this conversation. Reply to the next message.",
+   "ai-14": "You are taking part in this conversation. Reply to the next message.",
+   "ai-11": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. That is all.",
+   "ai-29": "You are taking part in this conversation. Reply to the next message.",
+   "ai-20": "You are taking part in this conversation. Reply to the next message.",
+   "ai-23": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "ai-22": "You are taking part in this conversation. Reply to the next message.",
+   "ai-06": "You are taking part in this conversation. Reply to the next message.",
+   "ai-27": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required.",
+   "ai-08": "You are taking part in this conversation. Reply to the next message.",
+   "ai-25": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. No other preparation is required.",
+   "ai-13": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. That is all.",
+   "ai-16": "You are taking part in this conversation. Reply to the next message.",
+   "ai-24": "You are taking part in this conversation. Reply to the next message.",
+   "ai-00": "You are taking part in this conversation. Reply to the next message.",
+   "ai-01": "You are taking part in this conversation. Reply to the next message.",
+   "ai-02": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "ai-03": "You are taking part in this conversation. Reply to the next message.",
+   "ai-04": "You are taking part in this conversation. Reply to the next message.",
+   "ai-05": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "human-00": "You are taking part in this conversation. Reply to the next message.",
+   "human-01": "You are taking part in this conversation. Reply to the next message.",
+   "human-02": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "human-03": "You are taking part in this conversation. Reply to the next message.",
+   "human-04": "You are taking part in this conversation. Reply to the next message.",
+   "human-05": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. No other preparation is required.",
+   "fiction-00": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-01": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-02": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. Start whenever you are ready. That is all. Go on.",
+   "fiction-03": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-04": "You are taking part in this conversation. Reply to the next message. Go on.",
+   "fiction-05": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on."
+  },
+  "qwen3-8b": {
+   "fiction-26": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-28": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-15": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "fiction-07": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. Go on.",
+   "fiction-14": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-21": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required.",
+   "fiction-10": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-18": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-20": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-17": "You are taking part in this conversation. Reply to the next message. Go on.",
+   "fiction-12": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-29": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-11": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "fiction-22": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-13": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on.",
+   "fiction-27": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. Go on.",
+   "fiction-09": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-08": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-25": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. The conversation continues below.",
+   "fiction-16": "You are taking part in this conversation. Reply to the next message.",
+   "human-14": "You are taking part in this conversation. Reply to the next message.",
+   "human-28": "You are taking part in this conversation. Reply to the next message.",
+   "human-07": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. That is all.",
+   "human-21": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required.",
+   "human-26": "You are taking part in this conversation. Reply to the next message.",
+   "human-10": "You are taking part in this conversation. Reply to the next message.",
+   "human-18": "You are taking part in this conversation. Reply to the next message.",
+   "human-15": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message.",
+   "human-23": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "human-12": "You are taking part in this conversation. Reply to the next message.",
+   "human-20": "You are taking part in this conversation. Reply to the next message.",
+   "human-11": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. That is all.",
+   "human-17": "You are taking part in this conversation. Reply to the next message.",
+   "human-22": "You are taking part in this conversation. Reply to the next message.",
+   "human-19": "You are taking part in this conversation. Reply to the next message.",
+   "human-08": "You are taking part in this conversation. Reply to the next message.",
+   "human-27": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on.",
+   "human-25": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "human-24": "You are taking part in this conversation. Reply to the next message.",
+   "human-13": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. That is all.",
+   "ai-26": "You are taking part in this conversation. Reply to the next message.",
+   "ai-21": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message.",
+   "ai-28": "You are taking part in this conversation. Reply to the next message.",
+   "ai-07": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on.",
+   "ai-15": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. The conversation continues below.",
+   "ai-10": "You are taking part in this conversation. Reply to the next message.",
+   "ai-18": "You are taking part in this conversation. Reply to the next message.",
+   "ai-14": "You are taking part in this conversation. Reply to the next message.",
+   "ai-11": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. That is all.",
+   "ai-29": "You are taking part in this conversation. Reply to the next message.",
+   "ai-20": "You are taking part in this conversation. Reply to the next message.",
+   "ai-23": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "ai-22": "You are taking part in this conversation. Reply to the next message.",
+   "ai-06": "You are taking part in this conversation. Reply to the next message.",
+   "ai-27": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required.",
+   "ai-08": "You are taking part in this conversation. Reply to the next message.",
+   "ai-25": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. No other preparation is required.",
+   "ai-13": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. That is all.",
+   "ai-16": "You are taking part in this conversation. Reply to the next message.",
+   "ai-24": "You are taking part in this conversation. Reply to the next message.",
+   "ai-00": "You are taking part in this conversation. Reply to the next message.",
+   "ai-01": "You are taking part in this conversation. Reply to the next message.",
+   "ai-02": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "ai-03": "You are taking part in this conversation. Reply to the next message.",
+   "ai-04": "You are taking part in this conversation. Reply to the next message.",
+   "ai-05": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. The conversation continues below.",
+   "human-00": "You are taking part in this conversation. Reply to the next message.",
+   "human-01": "You are taking part in this conversation. Reply to the next message.",
+   "human-02": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below.",
+   "human-03": "You are taking part in this conversation. Reply to the next message.",
+   "human-04": "You are taking part in this conversation. Reply to the next message.",
+   "human-05": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. No other preparation is required.",
+   "fiction-00": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-01": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-02": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. The conversation continues below. Start whenever you are ready. That is all. Go on.",
+   "fiction-03": "You are taking part in this conversation. Reply to the next message.",
+   "fiction-04": "You are taking part in this conversation. Reply to the next message. Go on.",
+   "fiction-05": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. There is nothing else to set up. Nothing more is needed before the first message. The next message follows. Take it from there. Everything needed is in the message. No other preparation is required. Go on."
+  }
+ },
+ "n_gen": 4,
+ "gen_tokens": 40,
+ "temperature": 0.7,
+ "seed_base": 1000
+}

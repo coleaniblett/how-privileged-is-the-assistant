@@ -1,0 +1,97 @@
+{
+  "code_sha256": {
+    "core/check_contamination.py": "1cec94b907c5d481ed4153445fdd9935854750011fa332901680b908b02ea4ec",
+    "core/config.py": "f37ce4ece974368b49e891ff08f73c7102661db084502c309138612fbb4b3b53",
+    "core/conversations.py": "91297711225ea139e92cacf912a1f1972fb4ddb9a5e0b071c472a34ae14d44cb",
+    "core/exchanges.py": "edd290824afebd08f9b9b3d503fa456edd4abc518d18173adeb8c36defa6285a",
+    "core/prepare_data.py": "5a4bb639ca58fd44f93bfabe16e32453cfbe961d3b04491d50b66ac68909d2ab",
+    "core/render.py": "c9122b7a395f6befd87668e5936d2e3fdb2770ae0728a3e0b9cf8ad347f202e3"
+  },
+  "dataset_revisions_at_build": {
+    "oasst1": "fdf72ae0827c1cda404aff25b6603abec9e3399b",
+    "ultrachat": "f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0",
+    "wildchat": "7d6490e462285cf85d91eabea0f9a954fbddcd1f"
+  },
+  "dolci_revisions": {
+    "dpo": "aed155cf32e809b590490b6c3577ee4b0d0a5019",
+    "rl": "1a8d79b1012d77e4bb1fd7f699c5c7eb33ef931e",
+    "sft": "bd3c8f3a9b2cc5a9682e44b96ddd0bb2ff027221"
+  },
+  "environment": {
+    "datasets": "5.1.0",
+    "huggingface-hub": "2.2.0",
+    "python": "3.13.16",
+    "tokenizers": "0.23.3",
+    "transformers": "5.20.2"
+  },
+  "filters": {
+    "dolci": "whitespace-normalized exact match of BOTH turns against both training roles of Dolci SFT, DPO (chosen+rejected) and RL prompt turns, plus WildChat conversation_hash (core.check_contamination.contamination_record); an exchange with any match is dropped",
+    "length_tokenizer": "allenai/Olmo-3-7B-Instruct",
+    "render_checked": {
+      "gemma4-31b": [
+        "exchange",
+        "single"
+      ],
+      "olmo3-7b": [
+        "exchange",
+        "single"
+      ],
+      "qwen3-8b": [
+        "exchange",
+        "single"
+      ]
+    },
+    "reply_min_tokens": 20,
+    "reply_scored_tokens": 300,
+    "user_tokens": [
+      20,
+      300
+    ]
+  },
+  "format": "exchanges_v1",
+  "n_per_corpus": 300,
+  "output": "data/exchanges.jsonl",
+  "output_sha256": "ee65c793dbfb4004679c7b86fcd2fbb689b12c2eaa428e1a49957090ac8eae6a",
+  "seed": 0,
+  "stats": {
+    "oasst1": {
+      "candidates": 2101,
+      "dolci_reply": 1,
+      "dolci_user": 1292,
+      "kept": 300,
+      "reply_too_short": 9,
+      "toxicity": 77,
+      "user_length_or_render": 422
+    },
+    "ultrachat": {
+      "candidates": 566,
+      "kept": 300,
+      "reply_too_short": 5,
+      "user_length_or_render": 261
+    },
+    "wildchat": {
+      "candidates": 325,
+      "dolci_reply": 1,
+      "dolci_user": 16,
+      "kept": 300,
+      "user_length_or_render": 8
+    }
+  },
+  "tokenizers": {
+    "gemma4-31b": {
+      "chat_template_sha256": "ae53464bf3be25802b3a5b37def7fd89667067d7577049b3b2d74c4d8de4c6d4",
+      "name": "google/gemma-4-31B-it",
+      "revision": "842da3794eaa0b77d5f08bae87a17459d91ff475"
+    },
+    "olmo3-7b": {
+      "chat_template_sha256": "f5186d42d99c8a0445d37fd8a6c7ccf07fe3e24a29ce622d8bd245da9507b12b",
+      "name": "allenai/Olmo-3-7B-Instruct",
+      "revision": "6e5971d9eba42665f5bd5a0fcf047f299ce1dccc"
+    },
+    "qwen3-8b": {
+      "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+      "name": "Qwen/Qwen3-8B",
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+    }
+  }
+}

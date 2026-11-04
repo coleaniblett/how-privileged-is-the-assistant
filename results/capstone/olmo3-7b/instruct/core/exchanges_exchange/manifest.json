@@ -1,0 +1,64 @@
+{
+  "batch_size": 8,
+  "code_sha256": {
+    "core/config.py": "f37ce4ece974368b49e891ff08f73c7102661db084502c309138612fbb4b3b53",
+    "core/exchanges.py": "edd290824afebd08f9b9b3d503fa456edd4abc518d18173adeb8c36defa6285a",
+    "core/render.py": "c9122b7a395f6befd87668e5936d2e3fdb2770ae0728a3e0b9cf8ad347f202e3",
+    "core/score.py": "7debe9d3269e3a7382652f082bf9e0435c62f665adbea594fa44b0bc5e4cdc31",
+    "core/score_exchanges.py": "2dc93787057f92775d420e5f3d7751a94852e4cc0d27a29d316eb024c4f1576b"
+  },
+  "device": "cuda",
+  "dtype": "fp32",
+  "environment": {
+    "python": "3.13.16",
+    "tokenizers": "0.23.3",
+    "torch": "2.14.1",
+    "transformers": "5.20.2"
+  },
+  "exchanges": {
+    "format": "exchanges_v1",
+    "n_exchanges": 900,
+    "n_sequences": 3600,
+    "path": "data/exchanges.jsonl",
+    "sha256": "ee65c793dbfb4004679c7b86fcd2fbb689b12c2eaa428e1a49957090ac8eae6a"
+  },
+  "exclusions": [],
+  "family": "olmo3-7b",
+  "format": "exchange_scores_v1",
+  "gpu": "NVIDIA RTX 6000 Ada Generation",
+  "inputs_fingerprint": "27c9848080a01245869d320adab6154db5ccfeb24d6b788dfb0ca3accfa385d8",
+  "model": "allenai/Olmo-3-7B-Instruct",
+  "model_revision": "6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+  "placement": "all on cuda:0",
+  "reuse": {
+    "enabled": true,
+    "n_fresh": 2166,
+    "n_reused": 1434,
+    "reasons": {
+      "fresh": 2166,
+      "overnight": 1434
+    }
+  },
+  "seconds_scoring": 385.1,
+  "settings": {
+    "assistant_think_block": null,
+    "context": "exchange",
+    "family_profile": {
+      "assistant_header": "<|im_start|>assistant\n",
+      "system": "template default system prompt when the conversation has no original system message; an original system message replaces it (template behavior, verified), never duplicated",
+      "template_kwargs": {},
+      "user_header": "<|im_start|>user\n"
+    },
+    "limit": null,
+    "n_per_corpus": null,
+    "reply_max_tokens": 300,
+    "separator": "\n\n"
+  },
+  "stage": "instruct",
+  "tag": "exchanges_exchange",
+  "tokenizer": {
+    "chat_template_sha256": "f5186d42d99c8a0445d37fd8a6c7ccf07fe3e24a29ce622d8bd245da9507b12b",
+    "name": "allenai/Olmo-3-7B-Instruct",
+    "revision": "6e5971d9eba42665f5bd5a0fcf047f299ce1dccc"
+  }
+}

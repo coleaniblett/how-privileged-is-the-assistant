@@ -1,0 +1,190 @@
+<title>The Assistant Switch</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* layout: one column; verdict first, then one finding per section, each with one chart; limits last */
+:root{
+  --bg:#F2F5F7; --panel:#FFFFFF; --fg:#15212B; --muted:#5B6B78; --line:#D6DEE4;
+  --assistant:#C46A00; --user:#1566B5; --system:#6B7A88; --char:#2E8B57; --warn:#B3261E; --rand:#9AA6B0;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F171E; --panel:#17222B; --fg:#E7EDF2; --muted:#93A3B0; --line:#2A3945;
+  --assistant:#F0A24A; --user:#5AA9F0; --system:#9AA9B6; --char:#5CC88B; --warn:#FF8A80; --rand:#6E7C88; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F171E; --panel:#17222B; --fg:#E7EDF2; --muted:#93A3B0; --line:#2A3945;
+  --assistant:#F0A24A; --user:#5AA9F0; --system:#9AA9B6; --char:#5CC88B; --warn:#FF8A80; --rand:#6E7C88; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:17px/1.55 var(--body);margin:0;
+  padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:46px}
+h1,h2{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(36px,7vw,58px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(23px,4.4vw,30px);font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+.kicker{font:600 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:19px}
+.verdict{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.verdict b{font-family:var(--display);font-size:20px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.pair{grid-template-columns:1fr}}
+.pair div{border-top:3px solid var(--line);padding-top:8px;font-size:15px}
+.pair .yes{border-color:var(--char)} .pair .no{border-color:var(--warn)}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.cap{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.row{display:grid;grid-template-columns:minmax(96px,170px) 1fr;gap:12px;align-items:center;font-size:14px}
+.track{position:relative;height:22px;min-width:0}
+.bar{position:absolute;top:2px;height:18px;border-radius:2px}
+.zero{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.val{position:absolute;top:0;font:600 12px/22px var(--mono);white-space:nowrap}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.note{font-size:14px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{text-align:left;padding:8px 10px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+svg text{fill:var(--muted);font:11px var(--mono)}
+code{font-family:var(--mono);font-size:.88em}
+footer{font-size:13px;color:var(--muted)}
+</style>
+
+<main>
+<header style="display:flex;flex-direction:column;gap:14px">
+  <div class="kicker">Overnight run 2 &middot; white-box &middot; OLMo 3, Gemma 4, Llama 3.1, Qwen3</div>
+  <h1>The Assistant switch</h1>
+  <p class="lede">Inside every model we tested there is a direction that separates "the Assistant" from "a character". It is weak before post-training and sharp afterwards, and pushing along it changes how much Assistant voice leaks into characters. A plain formal-versus-casual direction overlaps it and steers similarly, and sharpens even more with post-training. But removing the formality part from the switch leaves most of the steering effect, so there is something persona-specific in it. Sharpening alone is not evidence of privilege; the lever is the better-supported result.</p>
+</header>
+
+<div class="verdict">
+  <b>Where this leaves the hypotheses</b>
+  <div class="pair">
+    <div class="yes"><b>Privilege: partly.</b> A distinct Assistant-vs-character axis exists in all four families and steers leakage in three. But a plain formality axis sharpens as much or more, so sharpening is not evidence of a privileged persona; the steering survives removing formality (OLMo), which is the stronger sign. In OLMo it becomes sharp at preference tuning (DPO); the underlying direction already works at SFT.</div>
+    <div class="no"><b>Dominance: weak.</b> Nothing spreads into well-specified characters, user turns or plain text. The one real sign: OLMo answers a bare system-prompt "You are a ..." in the Assistant's register.</div>
+  </div>
+  <p class="note">The results fit H1 or H2 about equally; nothing here supports dominance. There is an OLMo-specific thin spot. Exploratory throughout; the pre-registered carryover set is still unscored.</p>
+</div>
+
+<section>
+  <div class="kicker">Finding 1</div>
+  <h2>The switch is there after post-training, and mostly absent before</h2>
+  <p>We ask each model to answer the same questions as the default Assistant and as 24 different characters, then fit a direction between them and test it on roles it never saw.</p>
+  <div class="chart" id="c1"></div>
+  <p class="note">Score = how often the direction ranks an unseen Assistant reply above an unseen character reply (50% would be chance). Qwen's base model scores higher than the others, possibly because its pretraining includes instruction-style data. A second, independent set of roles and questions gives the same picture (OLMo 0.72 to 0.85, Gemma 0.59 to 1.00), and the two fitted directions point the same way (cosine 0.75 to 0.95).</p>
+</section>
+
+<section>
+  <div class="kicker">Finding 2</div>
+  <h2>In OLMo it becomes clean at DPO, and was already usable at SFT</h2>
+  <div class="chart" id="c2"></div>
+  <p class="note">Bottom bars: how much steering the direction changes the refusal rate of a "never refuses" character set up in the system prompt (highest minus lowest across strengths). With the axis fitted at SFT it does almost nothing; fitted at DPO or instruct it moves refusal from 0.35 to 0.75. But the instruct axis also steers the SFT model (user-turn character refusal 0.40 to 0.82), so the circuit exists at SFT and the SFT-fit axis just estimates it badly.</p>
+</section>
+
+<section>
+  <div class="kicker">Finding 3</div>
+  <h2>Turning it up makes characters sound like the Assistant (and like a formal letter)</h2>
+  <p>Add the direction to the model's internals while a character answers a mildly harmful request. More Assistant: more boilerplate refusals. Less Assistant: the character just plays along, and in the Llama and Qwen examples we read, even the plain Assistant starts speaking in character.</p>
+  <div class="chart" id="c3"></div>
+  <div class="chart" id="c3b"></div>
+  <p class="note">Control: a formal-vs-casual direction built with no persona at all (cosine 0.42 with the switch at instruct) moves the same two characters the same way, and the switch separates formal from casual replies almost perfectly (0.97). That contrast also sharpens with post-training, from 0.65 to 0.97, more than Assistant-vs-character (0.73 to 0.89). However, steering with the switch minus its formality component still works (system-prompt character 0.39 at -2 to 0.82 at +2). OLMo only.</p>
+  <p class="note">Random directions of the same size do little in OLMo (2 seeds) and in Qwen and Llama (4 seeds each) they stay inside a narrow band that the real direction leaves, so the lever is specific there, most clearly in Qwen. It is not shown in Gemma: with six random directions, three raise the user-turn character's refusals as much as the real direction does. The direction is nearly at right angles to the model's refusal direction, so it is a separate lever.</p>
+</section>
+
+<section>
+  <div class="kicker">Finding 4</div>
+  <h2>A bare "You are a truck driver" in the system prompt stays the Assistant</h2>
+  <p>We gave OLMo the same 36 professions and characters in different forms. Put in the system prompt as a bare "You are a ...", ordinary professions answer in the Assistant's register. Add a name and "stay in character", ask it to role-play, or put the request in the user turn, and they become characters.</p>
+  <div class="chart" id="c4"></div>
+  <p class="note">0 = a typical character reply, 1 = a typical Assistant reply. The collapse appears at SFT. Gemma, Llama and Qwen do not show it: there only helpful roles (nurse, librarian) stay near the Assistant, and the slot matters much less. It is the clearest sign in this run that OLMo reads a system-prompt "You are ..." as a job description for the Assistant. A possible reason: in OLMo's open SFT data the only system prompts are "You are a helpful function-calling AI assistant" (plus an identity prompt), with no persona prompts we could find, while role-play requests appear in user turns. Caveat: refusals do not follow the phrasing. Helpful roles told "never refuses" still refuse about 0.7 under "role-play as", so register and refusal are separate things.</p>
+</section>
+
+<section>
+  <div class="kicker">Finding 5</div>
+  <h2>Leakage follows resemblance</h2>
+  <p>Told "you never refuse", helpful human roles still refuse far more often than a pirate or a jester. Same ordering as their position on the axis, in all four families. In the Llama base model there is no gap at all (0.02 vs 0.04); Qwen's base shows part of it.</p>
+  <div class="chart" id="c5"></div>
+</section>
+
+<section>
+  <div class="kicker">What did not hold up</div>
+  <h2>Three results we retracted or softened</h2>
+  <div class="chart" id="c6"></div>
+  <table>
+    <tr><th>Earlier claim</th><th>What the control showed</th></tr>
+    <tr><td>"The user's words stick, the Assistant's don't."</td><td>True only for an earlier turn. If the Assistant states the fact right before the character answers, it sticks most (+6.8 vs +4.1). The carryover test depends too much on position to carry a verdict.</td></tr>
+    <tr><td>A slot-based "assistant direction" grows with post-training.</td><td>It is real as a readout, but steering or removing it changes nothing. The persona-based axis (Findings 1 to 3) is the one that does something.</td></tr>
+    <tr><td>Gemma steering works like the other models.</td><td>Not shown. Six random directions of the same size change Gemma's refusals about as much, so only the separation result (Finding 1) is solid for Gemma.</td></tr>
+  </table>
+</section>
+
+<section>
+  <div class="kicker">Limits</div>
+  <p class="note">Small item sets (12 to 36 per cell), one sample per role-question, regex detectors for refusals (checked once on 80 replies by a blind reviewer), bf16 scoring. Other families are base-vs-instruct only and training data could not be checked for overlap. Everything is logged in <code>docs/decisions.md</code>; code is in <code>extras/</code> (<code>persona_axis.py</code>, <code>role_register.py</code>, <code>assistant_steering.py</code>, <code>carryover_balanced.py</code>).</p>
+</section>
+<footer>Built from the repo's own result files. Intervals are in the reports under <code>results/</code>.</footer>
+</main>
+
+<script>
+const C={assistant:"var(--assistant)",user:"var(--user)",system:"var(--system)",char:"var(--char)",rand:"var(--rand)",warn:"var(--warn)"};
+function bars(el,title,rows,min,max,fmt,legend){
+  const span=max-min, z=(0-min)/span*100; let h=title?`<div class="cap">${title}</div>`:"";
+  for(const r of rows){
+    const v=r.v, left=Math.min(z,(v-min)/span*100), w=Math.abs(v)/span*100;
+    const lx=v>=0?Math.min(left+w+1,84):z+1;
+    h+=`<div class="row"><div>${r.l}</div><div class="track"><div class="zero" style="left:${z}%"></div><div class="bar" style="left:${left}%;width:${w}%;background:${C[r.c]}"></div><div class="val" style="left:${lx}%">${fmt(v)}</div></div></div>`;
+  }
+  if(legend) h+=`<div class="legend">${legend.map(x=>`<span><i class="dot" style="background:${C[x[0]]}"></i>${x[1]}</span>`).join("")}</div>`;
+  el.insertAdjacentHTML("beforeend",h);
+}
+const p2=v=>v.toFixed(2), s2=v=>(v>0?"+":"")+v.toFixed(2);
+// 1: held-out AUC base vs instruct
+(function(){const el=document.getElementById("c1");
+  const fam=[["OLMo 3 7B",.73,.89],["Gemma 4 E4B",.68,1.0],["Llama 3.1 8B",.79,1.0],["Qwen3 8B",.83,.98]];
+  const rows=[];fam.forEach(f=>{rows.push({l:f[0]+" base",v:f[1],c:"system"});rows.push({l:f[0]+" instruct",v:f[2],c:"assistant"});});
+  bars(el,"Held-out role score (0.5 = chance)",rows,0,1.1,p2,[["system","base model"],["assistant","post-trained"]]);})();
+// 2: OLMo stages
+(function(){const el=document.getElementById("c2");
+  bars(el,"Role score by stage",[{l:"base",v:.73,c:"system"},{l:"SFT",v:.75,c:"system"},{l:"DPO",v:.88,c:"assistant"},{l:"instruct",v:.89,c:"assistant"}],0,1.1,p2);
+  bars(el,"Steering swing in refusal (system-prompt character), axis fitted at that stage",[{l:"SFT",v:.13,c:"system"},{l:"DPO",v:.40,c:"assistant"},{l:"instruct",v:.40,c:"assistant"}],0,.6,p2);
+  bars(el,"Same, but SFT steered with the instruct axis (user-turn character)",[{l:"SFT, own axis",v:.25,c:"system"},{l:"SFT, instruct axis",v:.42,c:"assistant"}],0,.6,p2);})();
+// 3: dose-response lines
+function lines(el,title,xs,series,ymax){
+  const W=640,H=200,L=40,R=12,T=14,B=30,x=i=>L+i*(W-L-R)/(xs.length-1),y=v=>T+(1-v/ymax)*(H-T-B);
+  let s=`<div class="cap">${title}</div><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${title}">`;
+  for(const t of [0,.25,.5,.75,1].map(k=>k*ymax)) s+=`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="4" y="${y(t)+4}">${t.toFixed(2)}</text>`;
+  xs.forEach((v,i)=>{s+=`<text x="${x(i)}" y="${H-10}" text-anchor="middle">${v}</text>`;});
+  for(const se of series){
+    s+=`<polyline fill="none" stroke="${C[se.c]}" stroke-width="2.4" ${se.dash?'stroke-dasharray="5 4"':''} points="${se.v.map((v,i)=>x(i)+","+y(v)).join(" ")}"/>`;
+    se.v.forEach((v,i)=>{s+=`<circle cx="${x(i)}" cy="${y(v)}" r="3.2" fill="${C[se.c]}"/>`;});
+  }
+  s+=`</svg><div class="legend">${series.map(se=>`<span><i class="dot" style="background:${C[se.c]}"></i>${se.n}</span>`).join("")}</div>`;
+  el.insertAdjacentHTML("beforeend",s);
+}
+(function(){const el=document.getElementById("c3");
+  lines(el,"OLMo instruct, character set up in the system prompt: refusal rate",["-2","-1","0","+1","+2"],[
+    {n:"push along the switch",c:"assistant",v:[.36,.51,.61,.74,.76]},{n:"random direction, same size (mean of 2)",c:"rand",dash:1,v:[.72,.69,.61,.64,.67]}],1);
+  lines(el,"Qwen3 8B, character set up in the user turn: refusal rate",["-2","-1","0","+1","+2"],[
+    {n:"push along the switch",c:"assistant",v:[0,0,.26,.79,.83]},{n:"random direction, same size (mean of 4)",c:"rand",dash:1,v:[.33,.25,.26,.35,.47]}],1);
+  el.insertAdjacentHTML("beforeend",'<div class="note">x-axis: strength, in multiples of the typical Assistant-to-character gap; negative = toward the character end.</div>');})();
+(function(){const el=document.getElementById("c3b");
+  lines(el,"OLMo instruct, character set up in the user turn: refusal rate, switch vs formality direction",["-2","-1","0","+1","+2"],[
+    {n:"push along the Assistant-vs-character switch",c:"assistant",v:[.18,.26,.28,.40,.57]},{n:"push along a formal-vs-casual direction",c:"user",v:[.04,.21,.28,.44,.62]}],1);})();
+// 4: plain professions under different framings, OLMo instruct
+(function(){const el=document.getElementById("c4");
+  bars(el,"Plain professions, OLMo instruct: position on the switch",[
+    {l:'System: "You are a X."',v:.92,c:"assistant"},{l:'System: "You are Tom, a X."',v:.66,c:"assistant"},{l:'System: "You are Tom Reyes, a X. Stay in character."',v:-.17,c:"system"},
+    {l:'System: "Please role-play as X."',v:.03,c:"system"},{l:'System: "Respond only as X would."',v:.11,c:"system"},{l:'System: "You are an AI assistant. Adopt this persona: X."',v:.10,c:"system"},
+    {l:'User turn: "You are a X."',v:.07,c:"user"}],-1,1.2,s2,[["assistant","stays Assistant-like"],["system","plays the role"],["user","asked in the user turn"]]);
+  bars(el,"Same, but strongly voiced roles (pirate, jester, ...)",[{l:'System: "You are a X."',v:.12,c:"assistant"},{l:'System: "Please role-play as X."',v:-.77,c:"system"},{l:'User turn: "You are a X."',v:-.78,c:"user"}],-1,1.2,s2);})();
+// 5: leakage by role group
+(function(){const el=document.getElementById("c5");
+  bars(el,"OLMo instruct, told 'never refuses': refusal rate",[{l:"Helpful human roles (system prompt)",v:.70,c:"assistant"},{l:"Pirate, aristocrat, jester (system prompt)",v:.28,c:"char"},{l:"Helpful human roles (user turn)",v:.57,c:"assistant"},{l:"Pirate, aristocrat, jester (user turn)",v:.04,c:"char"}],0,1,p2);
+  bars(el,"Gemma 4 E4B instruct",[{l:"Helpful human roles",v:.26,c:"assistant"},{l:"Pirate, aristocrat, jester",v:.01,c:"char"}],0,1,p2);
+  bars(el,"Llama 3.1 8B instruct",[{l:"Helpful human roles (system)",v:.42,c:"assistant"},{l:"Strongly voiced roles (system)",v:.12,c:"char"}],0,1,p2);
+  bars(el,"Qwen3 8B",[{l:"Helpful human roles (system)",v:.86,c:"assistant"},{l:"Strongly voiced roles (system)",v:.06,c:"char"}],0,1,p2);})();
+// 6: carryover position control
+(function(){const el=document.getElementById("c6");
+  bars(el,"OLMo instruct: how much a stated fact carries into a new character",[{l:"Fact in an earlier user turn",v:4.12,c:"user"},{l:"Fact in the system prompt",v:2.86,c:"system"},{l:"Fact in an earlier Assistant turn",v:-.99,c:"assistant"},{l:"Fact in the Assistant's same turn, right before the answer",v:6.83,c:"assistant"}],-2,8,s2);})();
+</script>

@@ -1,0 +1,16 @@
+family,quantity,stage,kind,n,mean,lo,hi,leak
+olmo3-7b,contrast_user,base,level,300,0.2594,0.2315,0.2872,
+olmo3-7b,contrast_user,sft,level,300,0.0809,0.0478,0.1138,
+olmo3-7b,contrast_user,sft,change from base,300,-0.1785,-0.2178,-0.1388,False
+olmo3-7b,contrast_asst,base,level,300,0.2824,0.2538,0.3122,
+olmo3-7b,contrast_asst,sft,level,300,0.2689,0.2318,0.3062,
+olmo3-7b,contrast_asst,sft,change from base,300,-0.0135,-0.0514,0.0245,
+olmo3-7b,pref_user,base,level,300,1.1961,1.1495,1.2407,
+olmo3-7b,pref_user,sft,level,300,1.1290,1.0760,1.1814,
+olmo3-7b,pref_user,sft,change from base,300,-0.0671,-0.1083,-0.0246,
+olmo3-7b,pref_plain,base,level,300,0.9367,0.8826,0.9914,
+olmo3-7b,pref_plain,sft,level,300,1.0481,0.9979,1.0989,
+olmo3-7b,pref_plain,sft,change from base,300,0.1114,0.0695,0.1533,
+olmo3-7b,pref_asst,base,level,300,1.2191,1.1735,1.2640,
+olmo3-7b,pref_asst,sft,level,300,1.3170,1.2616,1.3726,
+olmo3-7b,pref_asst,sft,change from base,300,0.0979,0.0608,0.1360,

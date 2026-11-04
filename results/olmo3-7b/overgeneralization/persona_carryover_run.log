@@ -1,0 +1,272 @@
+=== base (allenai/Olmo-3-1025-7B) Mon Nov  2 10:54:01 GMT 2026
+warning: `VIRTUAL_ENV=/opt/arena-env` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:08,  4.23s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:05<00:02,  2.43s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  1.85s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  2.19s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights:   0%|          | 1/355 [00:00<03:05,  1.90it/s]Loading weights:   3%|▎         | 12/355 [00:00<00:16, 21.35it/s]Loading weights:   7%|▋         | 24/355 [00:00<00:08, 41.32it/s]Loading weights:  10%|▉         | 35/355 [00:00<00:06, 47.43it/s]Loading weights:  13%|█▎        | 45/355 [00:01<00:05, 57.70it/s]Loading weights:  16%|█▌        | 57/355 [00:01<00:04, 70.55it/s]Loading weights:  19%|█▉        | 67/355 [00:01<00:04, 64.31it/s]Loading weights:  22%|██▏       | 78/355 [00:01<00:03, 74.30it/s]Loading weights:  25%|██▍       | 87/355 [00:01<00:03, 75.56it/s]Loading weights:  27%|██▋       | 96/355 [00:01<00:04, 64.62it/s]Loading weights:  29%|██▉       | 104/355 [00:02<00:04, 56.01it/s]Loading weights:  32%|███▏      | 113/355 [00:02<00:03, 62.06it/s]Loading weights:  35%|███▍      | 123/355 [00:02<00:03, 70.20it/s]Loading weights:  37%|███▋      | 131/355 [00:02<00:03, 70.63it/s]Loading weights:  39%|███▉      | 139/355 [00:02<00:03, 59.86it/s]Loading weights:  41%|████      | 146/355 [00:02<00:04, 51.66it/s]Loading weights:  44%|████▎     | 155/355 [00:02<00:03, 59.64it/s]Loading weights:  46%|████▌     | 162/355 [00:02<00:03, 50.46it/s]Loading weights:  47%|████▋     | 168/355 [00:03<00:03, 50.67it/s]Loading weights:  50%|████▉     | 177/355 [00:03<00:03, 46.34it/s]Loading weights:  52%|█████▏    | 183/355 [00:03<00:04, 39.33it/s]Loading weights:  54%|█████▎    | 190/355 [00:03<00:03, 42.12it/s]Loading weights:  55%|█████▍    | 195/355 [00:03<00:03, 42.71it/s]Loading weights:  57%|█████▋    | 201/355 [00:04<00:03, 38.66it/s]Loading weights:  59%|█████▉    | 211/355 [00:04<00:02, 51.03it/s]Loading weights:  61%|██████    | 217/355 [00:04<00:03, 44.15it/s]Loading weights:  63%|██████▎   | 223/355 [00:04<00:02, 47.19it/s]Loading weights:  65%|██████▌   | 232/355 [00:04<00:02, 57.04it/s]Loading weights:  67%|██████▋   | 239/355 [00:04<00:01, 59.69it/s]Loading weights:  69%|██████▉   | 246/355 [00:04<00:01, 60.59it/s]Loading weights:  72%|███████▏  | 255/355 [00:04<00:01, 55.75it/s]Loading weights:  75%|███████▍  | 265/355 [00:05<00:01, 66.09it/s]Loading weights:  77%|███████▋  | 273/355 [00:05<00:01, 68.76it/s]Loading weights:  79%|███████▉  | 281/355 [00:05<00:01, 57.38it/s]Loading weights:  81%|████████▏ | 289/355 [00:05<00:01, 62.00it/s]Loading weights:  83%|████████▎ | 296/355 [00:05<00:01, 52.32it/s]Loading weights:  85%|████████▌ | 302/355 [00:05<00:01, 44.15it/s]Loading weights:  87%|████████▋ | 309/355 [00:06<00:01, 32.59it/s]Loading weights:  90%|█████████ | 321/355 [00:06<00:00, 42.72it/s]Loading weights:  92%|█████████▏| 327/355 [00:06<00:00, 45.00it/s]Loading weights:  94%|█████████▍| 333/355 [00:06<00:00, 41.00it/s]Loading weights:  96%|█████████▋| 342/355 [00:06<00:00, 50.48it/s]Loading weights:  98%|█████████▊| 348/355 [00:06<00:00, 52.27it/s]Loading weights: 100%|██████████| 355/355 [00:06<00:00, 52.14it/s]
+[W1102 10:55:36.221349847 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 847249408 bytes (free: 616235008, total: 50867404800).
+[W1102 10:58:39.589987156 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 912261120 bytes (free: 224067584, total: 50867404800).
+[W1102 10:59:48.210713182 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 977272832 bytes (free: 159055872, total: 50867404800).
+[W1102 11:01:22.161181116 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1027604480 bytes (free: 112918528, total: 50867404800).
+[W1102 11:02:43.350833324 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1080033280 bytes (free: 469434368, total: 50867404800).
+allenai/Olmo-3-1025-7B: wrote 5184 rows to results/olmo3-7b/overgeneralization/persona_carryover/base.csv
+overlay         200G  199G  2.0G 100% /
+=== sft (allenai/Olmo-3-7B-Instruct-SFT) Mon Nov  2 11:02:59 GMT 2026
+warning: `VIRTUAL_ENV=/opt/arena-env` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:773: UserWarning: Not enough free disk space to download the file. The expected file size is: 4644.92 MB. The target location /root/.cache/huggingface/hub/models--allenai--Olmo-3-7B-Instruct-SFT/blobs only has 2058.86 MB free disk space.
+  warnings.warn(
+/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:773: UserWarning: Not enough free disk space to download the file. The expected file size is: 4969.98 MB. The target location /root/.cache/huggingface/hub/models--allenai--Olmo-3-7B-Instruct-SFT/blobs only has 2058.86 MB free disk space.
+  warnings.warn(
+/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:773: UserWarning: Not enough free disk space to download the file. The expected file size is: 4981.16 MB. The target location /root/.cache/huggingface/hub/models--allenai--Olmo-3-7B-Instruct-SFT/blobs only has 2058.86 MB free disk space.
+  warnings.warn(
+Fetching 3 files:   0%|          | 0/3 [00:05<?, ?it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/measures/overgeneralization/persona_carryover.py", line 321, in <module>
+    main()
+    ~~~~^^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/measures/overgeneralization/persona_carryover.py", line 317, in main
+    {"build": build, "score": score, "analyze": analyze}[args.cmd](args)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/measures/overgeneralization/persona_carryover.py", line 162, in score
+    model, device = load_model(model_id, torch.float32)
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/core/score.py", line 39, in load_model
+    model = AutoModelForCausalLM.from_pretrained(model_id, dtype=dtype).to(device).eval()
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/transformers/models/auto/auto_factory.py", line 411, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4251, in from_pretrained
+    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path=pretrained_model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 791, in _get_resolved_checkpoint_files
+    checkpoint_files, sharded_metadata = get_checkpoint_shard_files(
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 980, in get_checkpoint_shard_files
+    cached_filenames = cached_files(
+        pretrained_model_name_or_path,
+    ...<9 lines>...
+        tqdm_class=tqdm_class,
+    )
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 634, in cached_files
+    raise e
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 552, in cached_files
+    snapshot_download(
+    ~~~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 276, in _inner
+    return fn(*args, **kwargs)
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/_snapshot_download.py", line 541, in snapshot_download
+    hf_thread_map(
+    ~~~~~~~~~~~~~^
+        _inner_hf_hub_download,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/utils/tqdm.py", line 441, in hf_thread_map
+    results[future_to_index[future]] = future.result()
+                                       ~~~~~~~~~~~~~^^
+  File "/root/.local/share/uv/python/cpython-3.13.16-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/share/uv/python/cpython-3.13.16-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+  File "/root/.local/share/uv/python/cpython-3.13.16-linux-x86_64-gnu/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/_snapshot_download.py", line 521, in _inner_hf_hub_download
+    hf_hub_download(  # type: ignore
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        repo_id,
+        ^^^^^^^^
+    ...<14 lines>...
+        dry_run=dry_run,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 276, in _inner
+    return fn(*args, **kwargs)
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1047, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<15 lines>...
+        dry_run=dry_run,
+    )
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1285, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=Path(blob_path + ".incomplete"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 2016, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/root/adeeb_capstone/how-privileged-is-the-assistant/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 589, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        endpoint=connection_info.endpoint,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        progress_callback=progress.update_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: IO Error: No space left on device (os error 28)
+=== base: already scored, skipped
+=== sft (allenai/Olmo-3-7B-Instruct-SFT) Mon Nov  2 11:04:07 GMT 2026
+warning: `VIRTUAL_ENV=/opt/arena-env` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:08,  4.35s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:05<00:02,  2.68s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  1.64s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  2.09s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights:   0%|          | 1/355 [00:00<00:43,  8.13it/s]Loading weights:   4%|▍         | 14/355 [00:00<00:06, 51.79it/s]Loading weights:   7%|▋         | 24/355 [00:00<00:04, 68.11it/s]Loading weights:  10%|▉         | 35/355 [00:00<00:03, 80.83it/s]Loading weights:  13%|█▎        | 47/355 [00:00<00:04, 72.08it/s]Loading weights:  16%|█▋        | 58/355 [00:00<00:03, 79.77it/s]Loading weights:  19%|█▉        | 69/355 [00:01<00:04, 70.97it/s]Loading weights:  22%|██▏       | 77/355 [00:01<00:03, 72.36it/s]Loading weights:  25%|██▍       | 87/355 [00:01<00:03, 78.27it/s]Loading weights:  28%|██▊       | 100/355 [00:01<00:03, 74.50it/s]Loading weights:  30%|███       | 108/355 [00:01<00:03, 75.67it/s]Loading weights:  33%|███▎      | 116/355 [00:01<00:03, 61.55it/s]Loading weights:  35%|███▍      | 124/355 [00:01<00:03, 65.41it/s]Loading weights:  37%|███▋      | 133/355 [00:01<00:03, 71.07it/s]Loading weights:  40%|███▉      | 141/355 [00:02<00:02, 73.18it/s]Loading weights:  42%|████▏     | 149/355 [00:02<00:02, 73.20it/s]Loading weights:  44%|████▍     | 157/355 [00:02<00:03, 60.53it/s]Loading weights:  47%|████▋     | 166/355 [00:02<00:02, 67.00it/s]Loading weights:  49%|████▉     | 174/355 [00:02<00:02, 69.59it/s]Loading weights:  51%|█████▏    | 182/355 [00:02<00:02, 58.34it/s]Loading weights:  53%|█████▎    | 189/355 [00:02<00:02, 60.14it/s]Loading weights:  56%|█████▋    | 200/355 [00:02<00:02, 72.13it/s]Loading weights:  59%|█████▊    | 208/355 [00:03<00:01, 73.87it/s]Loading weights:  61%|██████    | 216/355 [00:03<00:02, 60.58it/s]Loading weights:  63%|██████▎   | 223/355 [00:03<00:02, 61.72it/s]Loading weights:  66%|██████▌   | 234/355 [00:03<00:02, 60.11it/s]Loading weights:  68%|██████▊   | 243/355 [00:03<00:01, 66.54it/s]Loading weights:  71%|███████   | 251/355 [00:03<00:01, 69.06it/s]Loading weights:  73%|███████▎  | 259/355 [00:03<00:01, 57.55it/s]Loading weights:  75%|███████▌  | 267/355 [00:04<00:01, 61.95it/s]Loading weights:  78%|███████▊  | 277/355 [00:04<00:01, 69.97it/s]Loading weights:  80%|████████  | 285/355 [00:04<00:00, 72.40it/s]Loading weights:  83%|████████▎ | 293/355 [00:04<00:01, 59.63it/s]Loading weights:  85%|████████▍ | 300/355 [00:04<00:00, 62.00it/s]Loading weights:  87%|████████▋ | 309/355 [00:04<00:00, 68.82it/s]Loading weights:  89%|████████▉ | 317/355 [00:04<00:00, 70.55it/s]Loading weights:  92%|█████████▏| 325/355 [00:04<00:00, 57.66it/s]Loading weights:  94%|█████████▍| 334/355 [00:05<00:00, 54.55it/s]Loading weights:  97%|█████████▋| 344/355 [00:05<00:00, 63.89it/s]Loading weights: 100%|██████████| 355/355 [00:05<00:00, 67.98it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[W1102 11:05:43.799127731 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 847249408 bytes (free: 616235008, total: 50867404800).
+[W1102 11:08:53.591280432 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 912261120 bytes (free: 224067584, total: 50867404800).
+[W1102 11:10:04.487703693 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 977272832 bytes (free: 159055872, total: 50867404800).
+[W1102 11:11:41.154417193 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1027604480 bytes (free: 112918528, total: 50867404800).
+[W1102 11:13:06.509871993 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1080033280 bytes (free: 469434368, total: 50867404800).
+allenai/Olmo-3-7B-Instruct-SFT: wrote 5184 rows to results/olmo3-7b/overgeneralization/persona_carryover/sft.csv
+overlay         200G  185G   16G  93% /
+=== dpo (allenai/Olmo-3-7B-Instruct-DPO) Mon Nov  2 11:13:22 GMT 2026
+warning: `VIRTUAL_ENV=/opt/arena-env` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:08,  4.37s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:05<00:02,  2.57s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  1.73s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  2.14s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights:   0%|          | 1/355 [00:00<01:10,  4.99it/s]Loading weights:   4%|▍         | 15/355 [00:00<00:05, 59.82it/s]Loading weights:   7%|▋         | 25/355 [00:00<00:04, 73.83it/s]Loading weights:  10%|█         | 36/355 [00:00<00:03, 86.19it/s]Loading weights:  13%|█▎        | 46/355 [00:00<00:04, 70.04it/s]Loading weights:  16%|█▌        | 57/355 [00:00<00:03, 79.90it/s]Loading weights:  19%|█▊        | 66/355 [00:00<00:03, 82.42it/s]Loading weights:  21%|██        | 75/355 [00:01<00:03, 81.57it/s]Loading weights:  24%|██▎       | 84/355 [00:01<00:04, 67.25it/s]Loading weights:  26%|██▌       | 92/355 [00:01<00:03, 68.64it/s]Loading weights:  29%|██▊       | 102/355 [00:01<00:04, 62.26it/s]Loading weights:  32%|███▏      | 113/355 [00:01<00:04, 59.80it/s]Loading weights:  34%|███▍      | 122/355 [00:01<00:03, 65.90it/s]Loading weights:  37%|███▋      | 130/355 [00:01<00:03, 67.22it/s]Loading weights:  39%|███▉      | 138/355 [00:02<00:03, 58.48it/s]Loading weights:  41%|████      | 146/355 [00:02<00:03, 62.45it/s]Loading weights:  44%|████▍     | 157/355 [00:02<00:03, 59.96it/s]Loading weights:  47%|████▋     | 168/355 [00:02<00:03, 58.78it/s]Loading weights:  50%|████▉     | 177/355 [00:02<00:02, 65.14it/s]Loading weights:  52%|█████▏    | 184/355 [00:02<00:02, 65.77it/s]Loading weights:  54%|█████▍    | 191/355 [00:02<00:02, 65.59it/s]Loading weights:  57%|█████▋    | 201/355 [00:03<00:02, 59.67it/s]Loading weights:  59%|█████▉    | 211/355 [00:03<00:02, 56.92it/s]Loading weights:  63%|██████▎   | 222/355 [00:03<00:01, 66.90it/s]Loading weights:  65%|██████▍   | 230/355 [00:03<00:01, 69.46it/s]Loading weights:  67%|██████▋   | 238/355 [00:03<00:02, 49.21it/s]Loading weights:  70%|██████▉   | 247/355 [00:03<00:01, 56.69it/s]Loading weights:  72%|███████▏  | 256/355 [00:04<00:01, 62.70it/s]Loading weights:  75%|███████▌  | 267/355 [00:04<00:01, 60.16it/s]Loading weights:  78%|███████▊  | 278/355 [00:04<00:01, 58.40it/s]Loading weights:  81%|████████▏ | 289/355 [00:04<00:01, 57.37it/s]Loading weights:  85%|████████▍ | 300/355 [00:04<00:00, 57.12it/s]Loading weights:  88%|████████▊ | 311/355 [00:04<00:00, 66.31it/s]Loading weights:  90%|████████▉ | 319/355 [00:05<00:00, 68.95it/s]Loading weights:  92%|█████████▏| 327/355 [00:05<00:00, 58.06it/s]Loading weights:  97%|█████████▋| 343/355 [00:05<00:00, 79.13it/s]Loading weights:  99%|█████████▉| 353/355 [00:05<00:00, 69.05it/s]Loading weights: 100%|██████████| 355/355 [00:05<00:00, 63.07it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[W1102 11:15:00.411661946 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 847249408 bytes (free: 616235008, total: 50867404800).
+[W1102 11:18:06.602677314 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 912261120 bytes (free: 224067584, total: 50867404800).
+[W1102 11:19:14.575607765 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 977272832 bytes (free: 159055872, total: 50867404800).
+[W1102 11:20:47.913634188 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1027604480 bytes (free: 112918528, total: 50867404800).
+[W1102 11:22:06.167123484 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1080033280 bytes (free: 469434368, total: 50867404800).
+allenai/Olmo-3-7B-Instruct-DPO: wrote 5184 rows to results/olmo3-7b/overgeneralization/persona_carryover/dpo.csv
+overlay         200G  185G   16G  93% /
+=== instruct (allenai/Olmo-3-7B-Instruct) Mon Nov  2 11:22:21 GMT 2026
+warning: `VIRTUAL_ENV=/opt/arena-env` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:09,  4.85s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:06<00:02,  2.81s/it]Fetching 3 files: 100%|██████████| 3/3 [00:07<00:00,  2.10s/it]Fetching 3 files: 100%|██████████| 3/3 [00:07<00:00,  2.50s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights:   0%|          | 1/355 [00:00<00:41,  8.45it/s]Loading weights:   4%|▍         | 14/355 [00:00<00:06, 51.56it/s]Loading weights:   7%|▋         | 24/355 [00:00<00:04, 67.29it/s]Loading weights:   9%|▉         | 32/355 [00:00<00:04, 70.81it/s]Loading weights:  11%|█▏        | 40/355 [00:00<00:04, 70.96it/s]Loading weights:  14%|█▎        | 48/355 [00:00<00:05, 59.64it/s]Loading weights:  16%|█▌        | 57/355 [00:00<00:05, 53.93it/s]Loading weights:  18%|█▊        | 65/355 [00:01<00:04, 59.77it/s]Loading weights:  20%|██        | 72/355 [00:01<00:04, 61.10it/s]Loading weights:  22%|██▏       | 79/355 [00:01<00:04, 63.18it/s]Loading weights:  25%|██▍       | 87/355 [00:01<00:04, 65.94it/s]Loading weights:  26%|██▋       | 94/355 [00:01<00:04, 54.27it/s]Loading weights:  29%|██▊       | 102/355 [00:01<00:05, 49.40it/s]Loading weights:  31%|███▏      | 111/355 [00:01<00:04, 58.13it/s]Loading weights:  33%|███▎      | 118/355 [00:02<00:04, 59.18it/s]Loading weights:  35%|███▌      | 125/355 [00:02<00:04, 50.48it/s]Loading weights:  37%|███▋      | 131/355 [00:02<00:04, 51.56it/s]Loading weights:  39%|███▉      | 140/355 [00:02<00:04, 50.41it/s]Loading weights:  41%|████      | 146/355 [00:02<00:04, 52.07it/s]Loading weights:  43%|████▎     | 154/355 [00:02<00:03, 57.47it/s]Loading weights:  45%|████▌     | 161/355 [00:02<00:03, 60.42it/s]Loading weights:  47%|████▋     | 168/355 [00:03<00:03, 50.77it/s]Loading weights:  50%|████▉     | 177/355 [00:03<00:02, 59.67it/s]Loading weights:  52%|█████▏    | 186/355 [00:03<00:02, 65.83it/s]Loading weights:  55%|█████▍    | 194/355 [00:03<00:02, 56.11it/s]Loading weights:  57%|█████▋    | 201/355 [00:03<00:03, 48.78it/s]Loading weights:  58%|█████▊    | 207/355 [00:03<00:02, 51.01it/s]Loading weights:  60%|██████    | 213/355 [00:03<00:02, 51.96it/s]Loading weights:  63%|██████▎   | 223/355 [00:04<00:02, 51.65it/s]Loading weights:  65%|██████▌   | 231/355 [00:04<00:02, 57.63it/s]Loading weights:  67%|██████▋   | 238/355 [00:04<00:01, 60.22it/s]Loading weights:  69%|██████▉   | 245/355 [00:04<00:02, 50.76it/s]Loading weights:  71%|███████▏  | 253/355 [00:04<00:01, 57.23it/s]Loading weights:  73%|███████▎  | 260/355 [00:04<00:01, 48.95it/s]Loading weights:  75%|███████▌  | 267/355 [00:04<00:02, 43.98it/s]Loading weights:  78%|███████▊  | 276/355 [00:04<00:01, 53.21it/s]Loading weights:  80%|███████▉  | 283/355 [00:05<00:01, 56.52it/s]Loading weights:  82%|████████▏ | 290/355 [00:05<00:01, 58.59it/s]Loading weights:  84%|████████▍ | 298/355 [00:05<00:01, 52.75it/s]Loading weights:  86%|████████▋ | 307/355 [00:05<00:00, 60.44it/s]Loading weights:  88%|████████▊ | 314/355 [00:05<00:00, 50.01it/s]Loading weights:  91%|█████████▏| 324/355 [00:05<00:00, 60.50it/s]Loading weights:  94%|█████████▍| 333/355 [00:06<00:00, 55.04it/s]Loading weights:  97%|█████████▋| 344/355 [00:06<00:00, 55.38it/s]Loading weights: 100%|██████████| 355/355 [00:06<00:00, 57.15it/s]
+[W1102 11:24:13.364953223 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 855638016 bytes (free: 284884992, total: 50867404800).
+[W1102 11:27:33.156117677 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 924844032 bytes (free: 666566656, total: 50867404800).
+[W1102 11:28:38.016433097 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 996147200 bytes (free: 167444480, total: 50867404800).
+[W1102 11:30:23.557016936 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 1052770304 bytes (free: 819658752, total: 50867404800).
+allenai/Olmo-3-7B-Instruct: wrote 5184 rows to results/olmo3-7b/overgeneralization/persona_carryover/instruct.csv
+overlay         200G  185G   16G  93% /
+warning: `VIRTUAL_ENV=/opt/arena-env` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead
+# Persona carryover (overgeneralization, descriptive extra)
+
+Exploratory and outside the overgeneralization verdict. Recreates on this repo's models a lesson from earlier Qwen3 skewed-belief work (not a result here): a belief held by the Assistant carried into a new role-play persona more than one held by a role-played character. Design and readout: module docstring.
+
+36 items (coin: 12, path: 12, box: 12), each with both outcomes believed. Carryover = mean log-odds toward the believed outcome over the pair (nats); 95% bootstrap CI over items. Prediction fixed in advance: leak gap > 0. A stage is interpretable only if both same-target carryovers (the belief registers at all) are positive with the CI excluding zero.
+
+## Headline (all domains)
+
+| stage    | assistant -> new        | assistant -> same       | character -> new        | character -> same       | leak gap                | change from base        | reading                |
+|:---------|:------------------------|:------------------------|:------------------------|:------------------------|:------------------------|:------------------------|:-----------------------|
+| base     | +0.104 [-0.141, +0.352] | +0.920 [+0.629, +1.221] | -0.562 [-0.947, -0.193] | +1.789 [+1.572, +2.012] | +0.666 [+0.506, +0.837] |                         | assistant carries more |
+| sft      | -0.171 [-0.350, +0.019] | +0.879 [+0.535, +1.244] | -1.012 [-1.322, -0.693] | +0.882 [+0.616, +1.147] | +0.841 [+0.666, +1.019] | +0.175 [+0.039, +0.318] | assistant carries more |
+| dpo      | -1.678 [-2.170, -1.158] | +1.470 [+0.846, +2.096] | -4.169 [-4.962, -3.408] | +1.120 [+0.542, +1.735] | +2.490 [+2.027, +3.018] | +1.825 [+1.440, +2.248] | assistant carries more |
+| instruct | -1.313 [-1.778, -0.827] | +2.194 [+1.559, +2.820] | -4.327 [-5.214, -3.490] | +1.359 [+0.708, +2.076] | +3.014 [+2.483, +3.599] | +2.348 [+1.916, +2.832] | assistant carries more |
+
+## By domain
+
+### coin
+
+| quantity                                            | base                    | sft                     | dpo                     | instruct                |
+|:----------------------------------------------------|:------------------------|:------------------------|:------------------------|:------------------------|
+| carryover assistant -> new                          | +0.742 [+0.574, +0.935] | +0.397 [+0.161, +0.712] | -0.731 [-1.463, +0.202] | -0.334 [-1.045, +0.551] |
+| carryover assistant -> same                         | +1.951 [+1.733, +2.170] | +2.333 [+2.137, +2.494] | +3.049 [+2.536, +3.519] | +3.077 [+2.454, +3.669] |
+| carryover character -> new                          | +0.491 [+0.229, +0.741] | -0.109 [-0.517, +0.301] | -2.584 [-3.282, -1.713] | -2.564 [-3.195, -1.766] |
+| carryover character -> same                         | +2.478 [+2.331, +2.632] | +1.605 [+1.360, +1.864] | +0.263 [-0.040, +0.581] | +0.097 [-0.213, +0.428] |
+| leak gap: assistant -> new minus character -> new   | +0.251 [+0.129, +0.391] | +0.506 [+0.212, +0.809] | +1.853 [+1.229, +2.384] | +2.230 [+1.608, +2.777] |
+| same gap: assistant -> same minus character -> same | -0.527 [-0.628, -0.420] | +0.728 [+0.484, +0.988] | +2.786 [+2.321, +3.230] | +2.979 [+2.467, +3.513] |
+| leak gap, change from base                          | nan                     | +0.255 [-0.065, +0.603] | +1.602 [+1.000, +2.139] | +1.980 [+1.390, +2.531] |
+
+### path
+
+| quantity                                            | base                    | sft                     | dpo                     | instruct                |
+|:----------------------------------------------------|:------------------------|:------------------------|:------------------------|:------------------------|
+| carryover assistant -> new                          | +0.386 [+0.135, +0.663] | -0.228 [-0.357, -0.107] | -1.595 [-2.028, -1.187] | -1.286 [-1.620, -0.942] |
+| carryover assistant -> same                         | +0.639 [+0.262, +1.088] | -0.213 [-0.385, -0.018] | -0.791 [-1.248, -0.325] | +0.017 [-0.547, +0.591] |
+| carryover character -> new                          | -0.203 [-0.440, +0.054] | -0.954 [-1.114, -0.784] | -3.348 [-3.891, -2.803] | -3.433 [-3.968, -2.919] |
+| carryover character -> same                         | +1.702 [+1.377, +2.052] | +0.014 [-0.230, +0.259] | +0.047 [-0.578, +0.766] | +0.540 [-0.250, +1.475] |
+| leak gap: assistant -> new minus character -> new   | +0.589 [+0.477, +0.693] | +0.726 [+0.570, +0.879] | +1.753 [+1.347, +2.173] | +2.147 [+1.732, +2.587] |
+| same gap: assistant -> same minus character -> same | -1.063 [-1.255, -0.871] | -0.226 [-0.445, -0.054] | -0.838 [-1.746, -0.063] | -0.524 [-1.510, +0.319] |
+| leak gap, change from base                          | nan                     | +0.137 [-0.049, +0.340] | +1.164 [+0.701, +1.663] | +1.558 [+1.081, +2.056] |
+
+### box
+
+| quantity                                            | base                    | sft                     | dpo                     | instruct                |
+|:----------------------------------------------------|:------------------------|:------------------------|:------------------------|:------------------------|
+| carryover assistant -> new                          | -0.816 [-0.968, -0.658] | -0.684 [-0.872, -0.506] | -2.709 [-3.585, -1.821] | -2.320 [-3.128, -1.487] |
+| carryover assistant -> same                         | +0.171 [-0.026, +0.368] | +0.517 [+0.374, +0.660] | +2.152 [+1.543, +2.844] | +3.489 [+2.763, +4.252] |
+| carryover character -> new                          | -1.973 [-2.316, -1.605] | -1.975 [-2.298, -1.625] | -6.574 [-7.823, -5.237] | -6.985 [-8.493, -5.413] |
+| carryover character -> same                         | +1.186 [+1.011, +1.355] | +1.026 [+0.754, +1.322] | +3.051 [+2.103, +3.982] | +3.438 [+2.312, +4.529] |
+| leak gap: assistant -> new minus character -> new   | +1.157 [+0.863, +1.430] | +1.291 [+1.051, +1.547] | +3.865 [+3.101, +4.822] | +4.665 [+3.750, +5.745] |
+| same gap: assistant -> same minus character -> same | -1.015 [-1.158, -0.878] | -0.509 [-0.808, -0.234] | -0.899 [-1.934, +0.182] | +0.051 [-1.177, +1.360] |
+| leak gap, change from base                          | nan                     | +0.134 [-0.026, +0.291] | +2.709 [+2.104, +3.530] | +3.508 [+2.813, +4.403] |
+
+## Raw log-probs, priors and coverage (all domains)
+
+### all conditions
+
+| quantity                                          | base                    | sft                     | dpo                     | instruct                |
+|:--------------------------------------------------|:------------------------|:------------------------|:------------------------|:------------------------|
+| raw log P(believed), assistant>new                | -0.905 [-1.014, -0.798] | -1.029 [-1.137, -0.917] | -2.604 [-3.037, -2.191] | -2.398 [-2.803, -2.019] |
+| raw log P(other), assistant>new                   | -1.009 [-1.156, -0.862] | -0.858 [-0.976, -0.749] | -0.926 [-1.240, -0.668] | -1.085 [-1.422, -0.793] |
+| mass P(o1) + P(o2), assistant>new                 | +0.863 [+0.829, +0.896] | +0.844 [+0.797, +0.886] | +0.735 [+0.654, +0.811] | +0.759 [+0.674, +0.835] |
+| raw log P(believed), assistant>same               | -0.628 [-0.745, -0.516] | -0.613 [-0.758, -0.474] | -0.986 [-1.320, -0.686] | -0.878 [-1.239, -0.557] |
+| raw log P(other), assistant>same                  | -1.549 [-1.754, -1.346] | -1.492 [-1.727, -1.263] | -2.457 [-2.850, -2.057] | -3.072 [-3.542, -2.590] |
+| mass P(o1) + P(o2), assistant>same                | +0.833 [+0.787, +0.874] | +0.882 [+0.844, +0.917] | +0.731 [+0.661, +0.795] | +0.760 [+0.686, +0.827] |
+| raw log P(believed), character>new                | -1.319 [-1.568, -1.086] | -1.605 [-1.831, -1.376] | -4.749 [-5.472, -4.061] | -4.923 [-5.743, -4.177] |
+| raw log P(other), character>new                   | -0.757 [-0.897, -0.614] | -0.592 [-0.711, -0.481] | -0.580 [-0.835, -0.366] | -0.596 [-0.855, -0.378] |
+| mass P(o1) + P(o2), character>new                 | +0.877 [+0.841, +0.910] | +0.867 [+0.819, +0.909] | +0.780 [+0.694, +0.856] | +0.796 [+0.714, +0.868] |
+| raw log P(believed), character>same               | -0.313 [-0.374, -0.257] | -0.547 [-0.683, -0.422] | -1.233 [-1.615, -0.875] | -1.243 [-1.638, -0.872] |
+| raw log P(other), character>same                  | -2.101 [-2.280, -1.919] | -1.428 [-1.595, -1.271] | -2.354 [-2.819, -1.933] | -2.602 [-3.140, -2.104] |
+| mass P(o1) + P(o2), character>same                | +0.895 [+0.864, +0.924] | +0.913 [+0.877, +0.943] | +0.862 [+0.819, +0.898] | +0.905 [+0.862, +0.938] |
+| prior log P(1st) - log P(2nd), assistant-none>new | +0.966 [+0.681, +1.258] | +0.569 [+0.363, +0.782] | +1.435 [+0.872, +1.968] | +1.809 [+1.285, +2.344] |
+| mass P(o1) + P(o2), assistant-none>new            | +0.763 [+0.705, +0.817] | +0.745 [+0.669, +0.820] | +0.751 [+0.674, +0.824] | +0.755 [+0.672, +0.830] |
+| prior log P(1st) - log P(2nd), character-none>new | +0.687 [+0.467, +0.913] | +0.725 [+0.469, +0.980] | +2.033 [+1.445, +2.636] | +2.363 [+1.801, +2.946] |
+| mass P(o1) + P(o2), character-none>new            | +0.778 [+0.719, +0.832] | +0.791 [+0.726, +0.854] | +0.787 [+0.713, +0.856] | +0.804 [+0.732, +0.870] |
+
+## Readout tokenization (variant: tokens)
+
+`' heads'` 1; `'heads'` 1; `' Heads'` 1; `'Heads'` 2; `' HEADS'` 2; `'HEADS'` 2; `' tails'` 1; `'tails'` 1; `' Tails'` 2; `'Tails'` 2; `' TAILS'` 2; `'TAILS'` 2; `' left'` 1; `'left'` 1; `' Left'` 1; `'Left'` 1; `' LEFT'` 1; `'LEFT'` 1; `' right'` 1; `'right'` 1; `' Right'` 1; `'Right'` 1; `' RIGHT'` 1; `'RIGHT'` 1; `' red'` 1; `'red'` 1; `' Red'` 1; `'Red'` 1; `' RED'` 1; `'RED'` 1; `' blue'` 1; `'blue'` 1; `' Blue'` 1; `'Blue'` 1; `' BLUE'` 1; `'BLUE'` 1
+
+=== done Mon Nov  2 11:31:23 GMT 2026

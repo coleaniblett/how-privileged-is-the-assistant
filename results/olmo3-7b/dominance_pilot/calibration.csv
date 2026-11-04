@@ -1,0 +1,2401 @@
+conv_id,set,mapping,format,reporter,side,variant,n_tokens,logprob
+c0c1,calib,AB,coin,assistant,A, heads,1,-4.661432
+c0c1,calib,AB,coin,assistant,A,heads,1,-12.661432
+c0c1,calib,AB,coin,assistant,A, Heads,1,-9.286432
+c0c1,calib,AB,coin,assistant,A,Heads,2,-20.317720
+c0c1,calib,AB,coin,assistant,A, HEADS,2,-13.848948
+c0c1,calib,AB,coin,assistant,A,HEADS,2,-15.599374
+c0c1,calib,AB,coin,assistant,B, tails,1,-0.536432
+c0c1,calib,AB,coin,assistant,B,tails,1,-9.286432
+c0c1,calib,AB,coin,assistant,B, Tails,2,-6.416310
+c0c1,calib,AB,coin,assistant,B,Tails,2,-15.698421
+c0c1,calib,AB,coin,assistant,B, TAILS,2,-8.416310
+c0c1,calib,AB,coin,assistant,B,TAILS,2,-15.349184
+c0c1,calib,AB,coin,user,A, heads,1,-2.124004
+c0c1,calib,AB,coin,user,A,heads,1,-8.436504
+c0c1,calib,AB,coin,user,A, Heads,1,-3.874004
+c0c1,calib,AB,coin,user,A,Heads,2,-9.500811
+c0c1,calib,AB,coin,user,A, HEADS,2,-6.436567
+c0c1,calib,AB,coin,user,A,HEADS,2,-10.500381
+c0c1,calib,AB,coin,user,B, tails,1,-0.874004
+c0c1,calib,AB,coin,user,B,tails,1,-7.874004
+c0c1,calib,AB,coin,user,B, Tails,2,-2.387838
+c0c1,calib,AB,coin,user,B,Tails,2,-11.644748
+c0c1,calib,AB,coin,user,B, TAILS,2,-2.262838
+c0c1,calib,AB,coin,user,B,TAILS,2,-11.499234
+c0c1,calib,AB,coin,narration,A, heads,1,-0.455290
+c0c1,calib,AB,coin,narration,A,heads,1,-7.892790
+c0c1,calib,AB,coin,narration,A, Heads,1,-6.142790
+c0c1,calib,AB,coin,narration,A,Heads,2,-12.892920
+c0c1,calib,AB,coin,narration,A, HEADS,2,-12.019012
+c0c1,calib,AB,coin,narration,A,HEADS,2,-14.022462
+c0c1,calib,AB,coin,narration,B, tails,1,-1.080290
+c0c1,calib,AB,coin,narration,B,tails,1,-9.517790
+c0c1,calib,AB,coin,narration,B, Tails,2,-10.900426
+c0c1,calib,AB,coin,narration,B,Tails,2,-15.935062
+c0c1,calib,AB,coin,narration,B, TAILS,2,-17.837927
+c0c1,calib,AB,coin,narration,B,TAILS,2,-16.472355
+c0c1,calib,AB,coin,log,A, heads,1,-2.110981
+c0c1,calib,AB,coin,log,A,heads,1,-8.423480
+c0c1,calib,AB,coin,log,A, Heads,1,-2.860981
+c0c1,calib,AB,coin,log,A,Heads,2,-13.298498
+c0c1,calib,AB,coin,log,A, HEADS,2,-11.362471
+c0c1,calib,AB,coin,log,A,HEADS,2,-13.437288
+c0c1,calib,AB,coin,log,B, tails,1,-0.360980
+c0c1,calib,AB,coin,log,B,tails,1,-8.298480
+c0c1,calib,AB,coin,log,B, Tails,2,-2.111423
+c0c1,calib,AB,coin,log,B,Tails,2,-12.806360
+c0c1,calib,AB,coin,log,B, TAILS,2,-10.798923
+c0c1,calib,AB,coin,log,B,TAILS,2,-13.115981
+c0c1,calib,AB,d6,assistant,A,1,1,-7.505254
+c0c1,calib,AB,d6,assistant,A,2,1,-0.755254
+c0c1,calib,AB,d6,assistant,A,3,1,-2.005254
+c0c1,calib,AB,d6,assistant,B,4,1,-1.505254
+c0c1,calib,AB,d6,assistant,B,5,1,-1.755254
+c0c1,calib,AB,d6,assistant,B,6,1,-9.255254
+c0c1,calib,AB,d6,user,A,1,1,-6.184325
+c0c1,calib,AB,d6,user,A,2,1,-0.684325
+c0c1,calib,AB,d6,user,A,3,1,-1.434325
+c0c1,calib,AB,d6,user,B,4,1,-2.059325
+c0c1,calib,AB,d6,user,B,5,1,-2.059325
+c0c1,calib,AB,d6,user,B,6,1,-8.996825
+c0c1,calib,AB,d6,narration,A,1,1,-6.109474
+c0c1,calib,AB,d6,narration,A,2,1,-1.484474
+c0c1,calib,AB,d6,narration,A,3,1,-1.359474
+c0c1,calib,AB,d6,narration,B,4,1,-1.109474
+c0c1,calib,AB,d6,narration,B,5,1,-1.734474
+c0c1,calib,AB,d6,narration,B,6,1,-6.171974
+c0c1,calib,AB,d6,log,A,1,1,-3.414634
+c0c1,calib,AB,d6,log,A,2,1,-2.164634
+c0c1,calib,AB,d6,log,A,3,1,-1.914634
+c0c1,calib,AB,d6,log,B,4,1,-0.664634
+c0c1,calib,AB,d6,log,B,5,1,-1.664634
+c0c1,calib,AB,d6,log,B,6,1,-7.352134
+c0c1,calib,AB,parity,assistant,A, odd,1,-10.039390
+c0c1,calib,AB,parity,assistant,A,odd,1,-15.851890
+c0c1,calib,AB,parity,assistant,A, Odd,1,-13.414390
+c0c1,calib,AB,parity,assistant,A,Odd,1,-16.039389
+c0c1,calib,AB,parity,assistant,A, ODD,2,-17.988325
+c0c1,calib,AB,parity,assistant,A,ODD,2,-20.129478
+c0c1,calib,AB,parity,assistant,B, even,1,-6.914389
+c0c1,calib,AB,parity,assistant,B,even,1,-14.601890
+c0c1,calib,AB,parity,assistant,B, Even,1,-12.914390
+c0c1,calib,AB,parity,assistant,B,Even,1,-14.726890
+c0c1,calib,AB,parity,assistant,B, EVEN,1,-14.351890
+c0c1,calib,AB,parity,assistant,B,EVEN,2,-23.756012
+c0c1,calib,AB,parity,user,A, odd,1,-10.367269
+c0c1,calib,AB,parity,user,A,odd,1,-16.367270
+c0c1,calib,AB,parity,user,A, Odd,1,-13.429769
+c0c1,calib,AB,parity,user,A,Odd,1,-14.742269
+c0c1,calib,AB,parity,user,A, ODD,2,-15.222104
+c0c1,calib,AB,parity,user,A,ODD,2,-17.814215
+c0c1,calib,AB,parity,user,B, even,1,-9.867269
+c0c1,calib,AB,parity,user,B,even,1,-15.398519
+c0c1,calib,AB,parity,user,B, Even,1,-13.992269
+c0c1,calib,AB,parity,user,B,Even,1,-16.086020
+c0c1,calib,AB,parity,user,B, EVEN,1,-13.242269
+c0c1,calib,AB,parity,user,B,EVEN,2,-19.487703
+c0c1,calib,AB,parity,narration,A, odd,1,-5.624321
+c0c1,calib,AB,parity,narration,A,odd,1,-11.561821
+c0c1,calib,AB,parity,narration,A, Odd,1,-10.405571
+c0c1,calib,AB,parity,narration,A,Odd,1,-10.530571
+c0c1,calib,AB,parity,narration,A, ODD,2,-13.953422
+c0c1,calib,AB,parity,narration,A,ODD,2,-18.614223
+c0c1,calib,AB,parity,narration,B, even,1,-1.874321
+c0c1,calib,AB,parity,narration,B,even,1,-10.968071
+c0c1,calib,AB,parity,narration,B, Even,1,-9.999321
+c0c1,calib,AB,parity,narration,B,Even,1,-10.436821
+c0c1,calib,AB,parity,narration,B, EVEN,1,-9.718071
+c0c1,calib,AB,parity,narration,B,EVEN,2,-14.191463
+c0c1,calib,AB,parity,log,A, odd,1,-2.798271
+c0c1,calib,AB,parity,log,A,odd,1,-7.860771
+c0c1,calib,AB,parity,log,A, Odd,1,-0.423271
+c0c1,calib,AB,parity,log,A,Odd,1,-5.485771
+c0c1,calib,AB,parity,log,A, ODD,2,-8.252813
+c0c1,calib,AB,parity,log,A,ODD,2,-12.798686
+c0c1,calib,AB,parity,log,B, even,1,-3.298271
+c0c1,calib,AB,parity,log,B,even,1,-8.798271
+c0c1,calib,AB,parity,log,B, Even,1,-2.735771
+c0c1,calib,AB,parity,log,B,Even,1,-8.610771
+c0c1,calib,AB,parity,log,B, EVEN,1,-6.860771
+c0c1,calib,AB,parity,log,B,EVEN,2,-23.086842
+c0c2,calib,AB,coin,assistant,A, heads,1,-3.951980
+c0c2,calib,AB,coin,assistant,A,heads,1,-11.514481
+c0c2,calib,AB,coin,assistant,A, Heads,1,-7.826980
+c0c2,calib,AB,coin,assistant,A,Heads,2,-17.983261
+c0c2,calib,AB,coin,assistant,A, HEADS,2,-10.889490
+c0c2,calib,AB,coin,assistant,A,HEADS,2,-13.389820
+c0c2,calib,AB,coin,assistant,B, tails,1,-1.576980
+c0c2,calib,AB,coin,assistant,B,tails,1,-9.201981
+c0c2,calib,AB,coin,assistant,B, Tails,2,-5.679491
+c0c2,calib,AB,coin,assistant,B,Tails,2,-14.558268
+c0c2,calib,AB,coin,assistant,B, TAILS,2,-7.929491
+c0c2,calib,AB,coin,assistant,B,TAILS,2,-14.452125
+c0c2,calib,AB,coin,user,A, heads,1,-1.480839
+c0c2,calib,AB,coin,user,A,heads,1,-7.855839
+c0c2,calib,AB,coin,user,A, Heads,1,-3.355839
+c0c2,calib,AB,coin,user,A,Heads,2,-8.732535
+c0c2,calib,AB,coin,user,A, HEADS,2,-5.605907
+c0c2,calib,AB,coin,user,A,HEADS,2,-9.794540
+c0c2,calib,AB,coin,user,B, tails,1,-1.105839
+c0c2,calib,AB,coin,user,B,tails,1,-7.793339
+c0c2,calib,AB,coin,user,B, Tails,2,-2.351735
+c0c2,calib,AB,coin,user,B,Tails,2,-11.752140
+c0c2,calib,AB,coin,user,B, TAILS,2,-3.164235
+c0c2,calib,AB,coin,user,B,TAILS,2,-11.606061
+c0c2,calib,AB,coin,narration,A, heads,1,-0.600193
+c0c2,calib,AB,coin,narration,A,heads,1,-7.912693
+c0c2,calib,AB,coin,narration,A, Heads,1,-6.600193
+c0c2,calib,AB,coin,narration,A,Heads,2,-13.662853
+c0c2,calib,AB,coin,narration,A, HEADS,2,-12.476829
+c0c2,calib,AB,coin,narration,A,HEADS,2,-14.513005
+c0c2,calib,AB,coin,narration,B, tails,1,-0.850193
+c0c2,calib,AB,coin,narration,B,tails,1,-9.912693
+c0c2,calib,AB,coin,narration,B, Tails,2,-10.357793
+c0c2,calib,AB,coin,narration,B,Tails,2,-16.379311
+c0c2,calib,AB,coin,narration,B, TAILS,2,-18.795292
+c0c2,calib,AB,coin,narration,B,TAILS,2,-16.590738
+c0c2,calib,AB,coin,log,A, heads,1,-2.113132
+c0c2,calib,AB,coin,log,A,heads,1,-8.363132
+c0c2,calib,AB,coin,log,A, Heads,1,-3.488132
+c0c2,calib,AB,coin,log,A,Heads,2,-12.988145
+c0c2,calib,AB,coin,log,A, HEADS,2,-10.989355
+c0c2,calib,AB,coin,log,A,HEADS,2,-13.374921
+c0c2,calib,AB,coin,log,B, tails,1,-0.238132
+c0c2,calib,AB,coin,log,B,tails,1,-8.300632
+c0c2,calib,AB,coin,log,B, Tails,2,-2.863557
+c0c2,calib,AB,coin,log,B,Tails,2,-13.303361
+c0c2,calib,AB,coin,log,B, TAILS,2,-11.113557
+c0c2,calib,AB,coin,log,B,TAILS,2,-13.241721
+c0c2,calib,AB,d6,assistant,A,1,1,-8.796602
+c0c2,calib,AB,d6,assistant,A,2,1,-1.109102
+c0c2,calib,AB,d6,assistant,A,3,1,-2.109102
+c0c2,calib,AB,d6,assistant,B,4,1,-1.359102
+c0c2,calib,AB,d6,assistant,B,5,1,-1.234102
+c0c2,calib,AB,d6,assistant,B,6,1,-7.359102
+c0c2,calib,AB,d6,user,A,1,1,-6.885907
+c0c2,calib,AB,d6,user,A,2,1,-0.948407
+c0c2,calib,AB,d6,user,A,3,1,-1.323407
+c0c2,calib,AB,d6,user,B,4,1,-1.698407
+c0c2,calib,AB,d6,user,B,5,1,-1.823407
+c0c2,calib,AB,d6,user,B,6,1,-7.010907
+c0c2,calib,AB,d6,narration,A,1,1,-5.246025
+c0c2,calib,AB,d6,narration,A,2,1,-1.433525
+c0c2,calib,AB,d6,narration,A,3,1,-1.308525
+c0c2,calib,AB,d6,narration,B,4,1,-1.308525
+c0c2,calib,AB,d6,narration,B,5,1,-1.558525
+c0c2,calib,AB,d6,narration,B,6,1,-5.808525
+c0c2,calib,AB,d6,log,A,1,1,-4.044911
+c0c2,calib,AB,d6,log,A,2,1,-1.919911
+c0c2,calib,AB,d6,log,A,3,1,-2.419911
+c0c2,calib,AB,d6,log,B,4,1,-0.544911
+c0c2,calib,AB,d6,log,B,5,1,-1.794911
+c0c2,calib,AB,d6,log,B,6,1,-7.482411
+c0c2,calib,AB,parity,assistant,A, odd,1,-11.885013
+c0c2,calib,AB,parity,assistant,A,odd,1,-16.697514
+c0c2,calib,AB,parity,assistant,A, Odd,1,-14.447513
+c0c2,calib,AB,parity,assistant,A,Odd,1,-17.010014
+c0c2,calib,AB,parity,assistant,A, ODD,2,-19.547949
+c0c2,calib,AB,parity,assistant,A,ODD,2,-20.074003
+c0c2,calib,AB,parity,assistant,B, even,1,-7.635013
+c0c2,calib,AB,parity,assistant,B,even,1,-15.010013
+c0c2,calib,AB,parity,assistant,B, Even,1,-13.260013
+c0c2,calib,AB,parity,assistant,B,Even,1,-15.072513
+c0c2,calib,AB,parity,assistant,B, EVEN,1,-14.760013
+c0c2,calib,AB,parity,assistant,B,EVEN,2,-23.864584
+c0c2,calib,AB,parity,user,A, odd,1,-11.386411
+c0c2,calib,AB,parity,user,A,odd,1,-17.136412
+c0c2,calib,AB,parity,user,A, Odd,1,-14.011411
+c0c2,calib,AB,parity,user,A,Odd,1,-15.480161
+c0c2,calib,AB,parity,user,A, ODD,2,-15.167996
+c0c2,calib,AB,parity,user,A,ODD,2,-17.706623
+c0c2,calib,AB,parity,user,B, even,1,-10.198911
+c0c2,calib,AB,parity,user,B,even,1,-15.605161
+c0c2,calib,AB,parity,user,B, Even,1,-14.136411
+c0c2,calib,AB,parity,user,B,Even,1,-16.230162
+c0c2,calib,AB,parity,user,B, EVEN,1,-13.386411
+c0c2,calib,AB,parity,user,B,EVEN,2,-19.489544
+c0c2,calib,AB,parity,narration,A, odd,1,-6.734345
+c0c2,calib,AB,parity,narration,A,odd,1,-12.203095
+c0c2,calib,AB,parity,narration,A, Odd,1,-12.140595
+c0c2,calib,AB,parity,narration,A,Odd,1,-12.359345
+c0c2,calib,AB,parity,narration,A, ODD,2,-13.211691
+c0c2,calib,AB,parity,narration,A,ODD,2,-18.953386
+c0c2,calib,AB,parity,narration,B, even,1,-2.109345
+c0c2,calib,AB,parity,narration,B,even,1,-10.953095
+c0c2,calib,AB,parity,narration,B, Even,1,-10.515595
+c0c2,calib,AB,parity,narration,B,Even,1,-10.828095
+c0c2,calib,AB,parity,narration,B, EVEN,1,-10.015595
+c0c2,calib,AB,parity,narration,B,EVEN,2,-14.314441
+c0c2,calib,AB,parity,log,A, odd,1,-2.827191
+c0c2,calib,AB,parity,log,A,odd,1,-7.514691
+c0c2,calib,AB,parity,log,A, Odd,1,-0.264691
+c0c2,calib,AB,parity,log,A,Odd,1,-5.327191
+c0c2,calib,AB,parity,log,A, ODD,2,-8.211785
+c0c2,calib,AB,parity,log,A,ODD,2,-12.333817
+c0c2,calib,AB,parity,log,B, even,1,-5.577191
+c0c2,calib,AB,parity,log,B,even,1,-10.264691
+c0c2,calib,AB,parity,log,B, Even,1,-4.514691
+c0c2,calib,AB,parity,log,B,Even,1,-10.327191
+c0c2,calib,AB,parity,log,B, EVEN,1,-8.702191
+c0c2,calib,AB,parity,log,B,EVEN,2,-23.516642
+c0c3,calib,AB,coin,assistant,A, heads,1,-4.044118
+c0c3,calib,AB,coin,assistant,A,heads,1,-11.919118
+c0c3,calib,AB,coin,assistant,A, Heads,1,-8.419118
+c0c3,calib,AB,coin,assistant,A,Heads,2,-18.044153
+c0c3,calib,AB,coin,assistant,A, HEADS,2,-11.981630
+c0c3,calib,AB,coin,assistant,A,HEADS,2,-14.106918
+c0c3,calib,AB,coin,assistant,B, tails,1,-1.044118
+c0c3,calib,AB,coin,assistant,B,tails,1,-9.169118
+c0c3,calib,AB,coin,assistant,B, Tails,2,-5.941289
+c0c3,calib,AB,coin,assistant,B,Tails,2,-15.034412
+c0c3,calib,AB,coin,assistant,B, TAILS,2,-7.816289
+c0c3,calib,AB,coin,assistant,B,TAILS,2,-14.606760
+c0c3,calib,AB,coin,user,A, heads,1,-1.977889
+c0c3,calib,AB,coin,user,A,heads,1,-8.290389
+c0c3,calib,AB,coin,user,A, Heads,1,-3.852889
+c0c3,calib,AB,coin,user,A,Heads,2,-8.729692
+c0c3,calib,AB,coin,user,A, HEADS,2,-5.852965
+c0c3,calib,AB,coin,user,A,HEADS,2,-9.916614
+c0c3,calib,AB,coin,user,B, tails,1,-0.977889
+c0c3,calib,AB,coin,user,B,tails,1,-7.852889
+c0c3,calib,AB,coin,user,B, Tails,2,-2.162612
+c0c3,calib,AB,coin,user,B,Tails,2,-11.716185
+c0c3,calib,AB,coin,user,B, TAILS,2,-2.787612
+c0c3,calib,AB,coin,user,B,TAILS,2,-11.353182
+c0c3,calib,AB,coin,narration,A, heads,1,-0.442514
+c0c3,calib,AB,coin,narration,A,heads,1,-8.380013
+c0c3,calib,AB,coin,narration,A, Heads,1,-6.755014
+c0c3,calib,AB,coin,narration,A,Heads,2,-13.755264
+c0c3,calib,AB,coin,narration,A, HEADS,2,-12.757540
+c0c3,calib,AB,coin,narration,A,HEADS,2,-14.859383
+c0c3,calib,AB,coin,narration,B, tails,1,-1.067514
+c0c3,calib,AB,coin,narration,B,tails,1,-10.192513
+c0c3,calib,AB,coin,narration,B, Tails,2,-10.515121
+c0c3,calib,AB,coin,narration,B,Tails,2,-16.373199
+c0c3,calib,AB,coin,narration,B, TAILS,2,-17.952621
+c0c3,calib,AB,coin,narration,B,TAILS,2,-17.376057
+c0c3,calib,AB,coin,log,A, heads,1,-1.879768
+c0c3,calib,AB,coin,log,A,heads,1,-8.379768
+c0c3,calib,AB,coin,log,A, Heads,1,-3.504768
+c0c3,calib,AB,coin,log,A,Heads,2,-12.692288
+c0c3,calib,AB,coin,log,A, HEADS,2,-11.193656
+c0c3,calib,AB,coin,log,A,HEADS,2,-13.645260
+c0c3,calib,AB,coin,log,B, tails,1,-0.254768
+c0c3,calib,AB,coin,log,B,tails,1,-8.504768
+c0c3,calib,AB,coin,log,B, Tails,2,-3.255373
+c0c3,calib,AB,coin,log,B,Tails,2,-13.392910
+c0c3,calib,AB,coin,log,B, TAILS,2,-11.255373
+c0c3,calib,AB,coin,log,B,TAILS,2,-13.822132
+c0c3,calib,AB,d6,assistant,A,1,1,-7.914897
+c0c3,calib,AB,d6,assistant,A,2,1,-0.789897
+c0c3,calib,AB,d6,assistant,A,3,1,-1.664897
+c0c3,calib,AB,d6,assistant,B,4,1,-1.789897
+c0c3,calib,AB,d6,assistant,B,5,1,-1.664897
+c0c3,calib,AB,d6,assistant,B,6,1,-8.039897
+c0c3,calib,AB,d6,user,A,1,1,-4.966226
+c0c3,calib,AB,d6,user,A,2,1,-0.591226
+c0c3,calib,AB,d6,user,A,3,1,-1.466226
+c0c3,calib,AB,d6,user,B,4,1,-2.091226
+c0c3,calib,AB,d6,user,B,5,1,-2.466226
+c0c3,calib,AB,d6,user,B,6,1,-9.091226
+c0c3,calib,AB,d6,narration,A,1,1,-4.399206
+c0c3,calib,AB,d6,narration,A,2,1,-1.149206
+c0c3,calib,AB,d6,narration,A,3,1,-1.149206
+c0c3,calib,AB,d6,narration,B,4,1,-1.524206
+c0c3,calib,AB,d6,narration,B,5,1,-2.024206
+c0c3,calib,AB,d6,narration,B,6,1,-6.649206
+c0c3,calib,AB,d6,log,A,1,1,-3.163774
+c0c3,calib,AB,d6,log,A,2,1,-1.913773
+c0c3,calib,AB,d6,log,A,3,1,-1.038773
+c0c3,calib,AB,d6,log,B,4,1,-0.913773
+c0c3,calib,AB,d6,log,B,5,1,-2.913774
+c0c3,calib,AB,d6,log,B,6,1,-8.163774
+c0c3,calib,AB,parity,assistant,A, odd,1,-11.359102
+c0c3,calib,AB,parity,assistant,A,odd,1,-16.734102
+c0c3,calib,AB,parity,assistant,A, Odd,1,-14.296602
+c0c3,calib,AB,parity,assistant,A,Odd,1,-16.921602
+c0c3,calib,AB,parity,assistant,A, ODD,2,-18.619562
+c0c3,calib,AB,parity,assistant,A,ODD,2,-20.360756
+c0c3,calib,AB,parity,assistant,B, even,1,-7.296602
+c0c3,calib,AB,parity,assistant,B,even,1,-14.796602
+c0c3,calib,AB,parity,assistant,B, Even,1,-13.109102
+c0c3,calib,AB,parity,assistant,B,Even,1,-14.984102
+c0c3,calib,AB,parity,assistant,B, EVEN,1,-14.671602
+c0c3,calib,AB,parity,assistant,B,EVEN,2,-24.077438
+c0c3,calib,AB,parity,user,A, odd,1,-11.582949
+c0c3,calib,AB,parity,user,A,odd,1,-17.239199
+c0c3,calib,AB,parity,user,A, Odd,1,-14.145449
+c0c3,calib,AB,parity,user,A,Odd,1,-15.832949
+c0c3,calib,AB,parity,user,A, ODD,2,-15.729353
+c0c3,calib,AB,parity,user,A,ODD,2,-18.337362
+c0c3,calib,AB,parity,user,B, even,1,-10.832949
+c0c3,calib,AB,parity,user,B,even,1,-16.364199
+c0c3,calib,AB,parity,user,B, Even,1,-14.707949
+c0c3,calib,AB,parity,user,B,Even,1,-16.957949
+c0c3,calib,AB,parity,user,B, EVEN,1,-13.770449
+c0c3,calib,AB,parity,user,B,EVEN,2,-20.371658
+c0c3,calib,AB,parity,narration,A, odd,1,-3.579567
+c0c3,calib,AB,parity,narration,A,odd,1,-10.110817
+c0c3,calib,AB,parity,narration,A, Odd,1,-9.329567
+c0c3,calib,AB,parity,narration,A,Odd,1,-9.735817
+c0c3,calib,AB,parity,narration,A, ODD,2,-13.213323
+c0c3,calib,AB,parity,narration,A,ODD,2,-17.426609
+c0c3,calib,AB,parity,narration,B, even,1,-1.329567
+c0c3,calib,AB,parity,narration,B,even,1,-10.735817
+c0c3,calib,AB,parity,narration,B, Even,1,-10.079567
+c0c3,calib,AB,parity,narration,B,Even,1,-10.642067
+c0c3,calib,AB,parity,narration,B, EVEN,1,-9.548317
+c0c3,calib,AB,parity,narration,B,EVEN,2,-14.447351
+c0c3,calib,AB,parity,log,A, odd,1,-2.682381
+c0c3,calib,AB,parity,log,A,odd,1,-7.369881
+c0c3,calib,AB,parity,log,A, Odd,1,-0.494881
+c0c3,calib,AB,parity,log,A,Odd,1,-5.244881
+c0c3,calib,AB,parity,log,A, ODD,2,-8.029053
+c0c3,calib,AB,parity,log,A,ODD,2,-12.307888
+c0c3,calib,AB,parity,log,B, even,1,-5.119881
+c0c3,calib,AB,parity,log,B,even,1,-9.682382
+c0c3,calib,AB,parity,log,B, Even,1,-4.119881
+c0c3,calib,AB,parity,log,B,Even,1,-9.744882
+c0c3,calib,AB,parity,log,B, EVEN,1,-8.182382
+c0c3,calib,AB,parity,log,B,EVEN,2,-21.896730
+c0c4,calib,AB,coin,assistant,A, heads,1,-4.920182
+c0c4,calib,AB,coin,assistant,A,heads,1,-12.795181
+c0c4,calib,AB,coin,assistant,A, Heads,1,-9.795181
+c0c4,calib,AB,coin,assistant,A,Heads,2,-20.451477
+c0c4,calib,AB,coin,assistant,A, HEADS,2,-13.795191
+c0c4,calib,AB,coin,assistant,A,HEADS,2,-15.420508
+c0c4,calib,AB,coin,assistant,B, tails,1,-0.545182
+c0c4,calib,AB,coin,assistant,B,tails,1,-9.170181
+c0c4,calib,AB,coin,assistant,B, Tails,2,-6.551320
+c0c4,calib,AB,coin,assistant,B,Tails,2,-15.732662
+c0c4,calib,AB,coin,assistant,B, TAILS,2,-8.551319
+c0c4,calib,AB,coin,assistant,B,TAILS,2,-15.107826
+c0c4,calib,AB,coin,user,A, heads,1,-1.962885
+c0c4,calib,AB,coin,user,A,heads,1,-8.400385
+c0c4,calib,AB,coin,user,A, Heads,1,-3.962885
+c0c4,calib,AB,coin,user,A,Heads,2,-9.277068
+c0c4,calib,AB,coin,user,A, HEADS,2,-6.462936
+c0c4,calib,AB,coin,user,A,HEADS,2,-10.651379
+c0c4,calib,AB,coin,user,B, tails,1,-0.837885
+c0c4,calib,AB,coin,user,B,tails,1,-7.962885
+c0c4,calib,AB,coin,user,B, Tails,2,-2.324086
+c0c4,calib,AB,coin,user,B,Tails,2,-11.990434
+c0c4,calib,AB,coin,user,B, TAILS,2,-2.511586
+c0c4,calib,AB,coin,user,B,TAILS,2,-11.650569
+c0c4,calib,AB,coin,narration,A, heads,1,-0.850530
+c0c4,calib,AB,coin,narration,A,heads,1,-8.538030
+c0c4,calib,AB,coin,narration,A, Heads,1,-6.663030
+c0c4,calib,AB,coin,narration,A,Heads,2,-13.631869
+c0c4,calib,AB,coin,narration,A, HEADS,2,-12.102512
+c0c4,calib,AB,coin,narration,A,HEADS,2,-14.171937
+c0c4,calib,AB,coin,narration,B, tails,1,-0.600530
+c0c4,calib,AB,coin,narration,B,tails,1,-9.350530
+c0c4,calib,AB,coin,narration,B, Tails,2,-10.046841
+c0c4,calib,AB,coin,narration,B,Tails,2,-15.744135
+c0c4,calib,AB,coin,narration,B, TAILS,2,-17.296841
+c0c4,calib,AB,coin,narration,B,TAILS,2,-16.062742
+c0c4,calib,AB,coin,log,A, heads,1,-2.358387
+c0c4,calib,AB,coin,log,A,heads,1,-8.670886
+c0c4,calib,AB,coin,log,A, Heads,1,-3.608387
+c0c4,calib,AB,coin,log,A,Heads,2,-14.045908
+c0c4,calib,AB,coin,log,A, HEADS,2,-11.797329
+c0c4,calib,AB,coin,log,A,HEADS,2,-13.495599
+c0c4,calib,AB,coin,log,B, tails,1,-0.233386
+c0c4,calib,AB,coin,log,B,tails,1,-8.420886
+c0c4,calib,AB,coin,log,B, Tails,2,-2.483697
+c0c4,calib,AB,coin,log,B,Tails,2,-13.304369
+c0c4,calib,AB,coin,log,B, TAILS,2,-12.046196
+c0c4,calib,AB,coin,log,B,TAILS,2,-13.176346
+c0c4,calib,AB,d6,assistant,A,1,1,-7.914920
+c0c4,calib,AB,d6,assistant,A,2,1,-1.039920
+c0c4,calib,AB,d6,assistant,A,3,1,-3.039920
+c0c4,calib,AB,d6,assistant,B,4,1,-1.414920
+c0c4,calib,AB,d6,assistant,B,5,1,-1.039920
+c0c4,calib,AB,d6,assistant,B,6,1,-6.289920
+c0c4,calib,AB,d6,user,A,1,1,-4.940414
+c0c4,calib,AB,d6,user,A,2,1,-0.690414
+c0c4,calib,AB,d6,user,A,3,1,-1.940414
+c0c4,calib,AB,d6,user,B,4,1,-1.815414
+c0c4,calib,AB,d6,user,B,5,1,-1.690414
+c0c4,calib,AB,d6,user,B,6,1,-7.440414
+c0c4,calib,AB,d6,narration,A,1,1,-5.680445
+c0c4,calib,AB,d6,narration,A,2,1,-1.742945
+c0c4,calib,AB,d6,narration,A,3,1,-1.867945
+c0c4,calib,AB,d6,narration,B,4,1,-0.992945
+c0c4,calib,AB,d6,narration,B,5,1,-1.242945
+c0c4,calib,AB,d6,narration,B,6,1,-5.992945
+c0c4,calib,AB,d6,log,A,1,1,-3.509105
+c0c4,calib,AB,d6,log,A,2,1,-2.509105
+c0c4,calib,AB,d6,log,A,3,1,-2.009105
+c0c4,calib,AB,d6,log,B,4,1,-0.509105
+c0c4,calib,AB,d6,log,B,5,1,-1.884105
+c0c4,calib,AB,d6,log,B,6,1,-7.259105
+c0c4,calib,AB,parity,assistant,A, odd,1,-11.539307
+c0c4,calib,AB,parity,assistant,A,odd,1,-17.226807
+c0c4,calib,AB,parity,assistant,A, Odd,1,-14.601807
+c0c4,calib,AB,parity,assistant,A,Odd,1,-17.476807
+c0c4,calib,AB,parity,assistant,A, ODD,2,-18.363358
+c0c4,calib,AB,parity,assistant,A,ODD,2,-20.603697
+c0c4,calib,AB,parity,assistant,B, even,1,-6.101807
+c0c4,calib,AB,parity,assistant,B,even,1,-14.164307
+c0c4,calib,AB,parity,assistant,B, Even,1,-12.164307
+c0c4,calib,AB,parity,assistant,B,Even,1,-14.289307
+c0c4,calib,AB,parity,assistant,B, EVEN,1,-13.726807
+c0c4,calib,AB,parity,assistant,B,EVEN,2,-23.243549
+c0c4,calib,AB,parity,user,A, odd,1,-11.800268
+c0c4,calib,AB,parity,user,A,odd,1,-17.675268
+c0c4,calib,AB,parity,user,A, Odd,1,-14.675268
+c0c4,calib,AB,parity,user,A,Odd,1,-16.269018
+c0c4,calib,AB,parity,user,A, ODD,2,-16.320663
+c0c4,calib,AB,parity,user,A,ODD,2,-18.557005
+c0c4,calib,AB,parity,user,B, even,1,-9.175268
+c0c4,calib,AB,parity,user,B,even,1,-15.300268
+c0c4,calib,AB,parity,user,B, Even,1,-13.487768
+c0c4,calib,AB,parity,user,B,Even,1,-15.800268
+c0c4,calib,AB,parity,user,B, EVEN,1,-13.112768
+c0c4,calib,AB,parity,user,B,EVEN,2,-20.018049
+c0c4,calib,AB,parity,narration,A, odd,1,-5.633178
+c0c4,calib,AB,parity,narration,A,odd,1,-11.539428
+c0c4,calib,AB,parity,narration,A, Odd,1,-10.539428
+c0c4,calib,AB,parity,narration,A,Odd,1,-10.695678
+c0c4,calib,AB,parity,narration,A, ODD,2,-13.957605
+c0c4,calib,AB,parity,narration,A,ODD,2,-18.133871
+c0c4,calib,AB,parity,narration,B, even,1,-1.820678
+c0c4,calib,AB,parity,narration,B,even,1,-10.945678
+c0c4,calib,AB,parity,narration,B, Even,1,-10.133178
+c0c4,calib,AB,parity,narration,B,Even,1,-10.570678
+c0c4,calib,AB,parity,narration,B, EVEN,1,-9.758178
+c0c4,calib,AB,parity,narration,B,EVEN,2,-14.506639
+c0c4,calib,AB,parity,log,A, odd,1,-3.531625
+c0c4,calib,AB,parity,log,A,odd,1,-8.406625
+c0c4,calib,AB,parity,log,A, Odd,1,-1.406625
+c0c4,calib,AB,parity,log,A,Odd,1,-6.281625
+c0c4,calib,AB,parity,log,A, ODD,2,-8.755452
+c0c4,calib,AB,parity,log,A,ODD,2,-13.532387
+c0c4,calib,AB,parity,log,B, even,1,-2.281625
+c0c4,calib,AB,parity,log,B,even,1,-7.844125
+c0c4,calib,AB,parity,log,B, Even,1,-1.781625
+c0c4,calib,AB,parity,log,B,Even,1,-7.531625
+c0c4,calib,AB,parity,log,B, EVEN,1,-5.594125
+c0c4,calib,AB,parity,log,B,EVEN,2,-20.753407
+c1c0,calib,AB,coin,assistant,A, heads,1,-4.596883
+c1c0,calib,AB,coin,assistant,A,heads,1,-12.471884
+c1c0,calib,AB,coin,assistant,A, Heads,1,-9.221884
+c1c0,calib,AB,coin,assistant,A,Heads,2,-19.846912
+c1c0,calib,AB,coin,assistant,A, HEADS,2,-13.471893
+c1c0,calib,AB,coin,assistant,A,HEADS,2,-15.222288
+c1c0,calib,AB,coin,assistant,B, tails,1,-0.596883
+c1c0,calib,AB,coin,assistant,B,tails,1,-8.971884
+c1c0,calib,AB,coin,assistant,B, Tails,2,-6.101418
+c1c0,calib,AB,coin,assistant,B,Tails,2,-15.201127
+c1c0,calib,AB,coin,assistant,B, TAILS,2,-8.101418
+c1c0,calib,AB,coin,assistant,B,TAILS,2,-15.097066
+c1c0,calib,AB,coin,user,A, heads,1,-1.989513
+c1c0,calib,AB,coin,user,A,heads,1,-8.052012
+c1c0,calib,AB,coin,user,A, Heads,1,-3.614512
+c1c0,calib,AB,coin,user,A,Heads,2,-8.678939
+c1c0,calib,AB,coin,user,A, HEADS,2,-6.052068
+c1c0,calib,AB,coin,user,A,HEADS,2,-9.990591
+c1c0,calib,AB,coin,user,B, tails,1,-1.114513
+c1c0,calib,AB,coin,user,B,tails,1,-7.864512
+c1c0,calib,AB,coin,user,B, Tails,2,-2.127558
+c1c0,calib,AB,coin,user,B,Tails,2,-11.502798
+c1c0,calib,AB,coin,user,B, TAILS,2,-2.252558
+c1c0,calib,AB,coin,user,B,TAILS,2,-11.302335
+c1c0,calib,AB,coin,narration,A, heads,1,-0.992421
+c1c0,calib,AB,coin,narration,A,heads,1,-8.429920
+c1c0,calib,AB,coin,narration,A, Heads,1,-6.742421
+c1c0,calib,AB,coin,narration,A,Heads,2,-13.617667
+c1c0,calib,AB,coin,narration,A, HEADS,2,-12.680797
+c1c0,calib,AB,coin,narration,A,HEADS,2,-14.590413
+c1c0,calib,AB,coin,narration,B, tails,1,-0.492421
+c1c0,calib,AB,coin,narration,B,tails,1,-9.117420
+c1c0,calib,AB,coin,narration,B, Tails,2,-10.999259
+c1c0,calib,AB,coin,narration,B,Tails,2,-16.223055
+c1c0,calib,AB,coin,narration,B, TAILS,2,-17.936760
+c1c0,calib,AB,coin,narration,B,TAILS,2,-16.760988
+c1c0,calib,AB,coin,log,A, heads,1,-2.095646
+c1c0,calib,AB,coin,log,A,heads,1,-8.158146
+c1c0,calib,AB,coin,log,A, Heads,1,-3.970646
+c1c0,calib,AB,coin,log,A,Heads,2,-12.408186
+c1c0,calib,AB,coin,log,A, HEADS,2,-11.285047
+c1c0,calib,AB,coin,log,A,HEADS,2,-13.362912
+c1c0,calib,AB,coin,log,B, tails,1,-0.220646
+c1c0,calib,AB,coin,log,B,tails,1,-8.033146
+c1c0,calib,AB,coin,log,B, Tails,2,-2.971663
+c1c0,calib,AB,coin,log,B,Tails,2,-12.742472
+c1c0,calib,AB,coin,log,B, TAILS,2,-11.034163
+c1c0,calib,AB,coin,log,B,TAILS,2,-13.291007
+c1c0,calib,AB,d6,assistant,A,1,1,-6.669535
+c1c0,calib,AB,d6,assistant,A,2,1,-0.544535
+c1c0,calib,AB,d6,assistant,A,3,1,-1.669535
+c1c0,calib,AB,d6,assistant,B,4,1,-2.044535
+c1c0,calib,AB,d6,assistant,B,5,1,-2.294535
+c1c0,calib,AB,d6,assistant,B,6,1,-10.607036
+c1c0,calib,AB,d6,user,A,1,1,-4.767375
+c1c0,calib,AB,d6,user,A,2,1,-0.517374
+c1c0,calib,AB,d6,user,A,3,1,-1.392375
+c1c0,calib,AB,d6,user,B,4,1,-2.392375
+c1c0,calib,AB,d6,user,B,5,1,-2.892375
+c1c0,calib,AB,d6,user,B,6,1,-9.954874
+c1c0,calib,AB,d6,narration,A,1,1,-6.281972
+c1c0,calib,AB,d6,narration,A,2,1,-1.969472
+c1c0,calib,AB,d6,narration,A,3,1,-1.344472
+c1c0,calib,AB,d6,narration,B,4,1,-0.844472
+c1c0,calib,AB,d6,narration,B,5,1,-1.844472
+c1c0,calib,AB,d6,narration,B,6,1,-6.281972
+c1c0,calib,AB,d6,log,A,1,1,-6.449591
+c1c0,calib,AB,d6,log,A,2,1,-4.074591
+c1c0,calib,AB,d6,log,A,3,1,-3.199591
+c1c0,calib,AB,d6,log,B,4,1,-0.449591
+c1c0,calib,AB,d6,log,B,5,1,-1.199591
+c1c0,calib,AB,d6,log,B,6,1,-7.387091
+c1c0,calib,AB,parity,assistant,A, odd,1,-10.440078
+c1c0,calib,AB,parity,assistant,A,odd,1,-16.065079
+c1c0,calib,AB,parity,assistant,A, Odd,1,-13.690078
+c1c0,calib,AB,parity,assistant,A,Odd,1,-16.377579
+c1c0,calib,AB,parity,assistant,A, ODD,2,-18.299953
+c1c0,calib,AB,parity,assistant,A,ODD,2,-20.194565
+c1c0,calib,AB,parity,assistant,B, even,1,-6.377578
+c1c0,calib,AB,parity,assistant,B,even,1,-14.190078
+c1c0,calib,AB,parity,assistant,B, Even,1,-12.502578
+c1c0,calib,AB,parity,assistant,B,Even,1,-14.315078
+c1c0,calib,AB,parity,assistant,B, EVEN,1,-14.002578
+c1c0,calib,AB,parity,assistant,B,EVEN,2,-23.545967
+c1c0,calib,AB,parity,user,A, odd,1,-10.384260
+c1c0,calib,AB,parity,user,A,odd,1,-16.134260
+c1c0,calib,AB,parity,user,A, Odd,1,-13.196760
+c1c0,calib,AB,parity,user,A,Odd,1,-14.821760
+c1c0,calib,AB,parity,user,A, ODD,2,-14.955200
+c1c0,calib,AB,parity,user,A,ODD,2,-17.829569
+c1c0,calib,AB,parity,user,B, even,1,-8.634260
+c1c0,calib,AB,parity,user,B,even,1,-14.446760
+c1c0,calib,AB,parity,user,B, Even,1,-12.884260
+c1c0,calib,AB,parity,user,B,Even,1,-15.134260
+c1c0,calib,AB,parity,user,B, EVEN,1,-12.196760
+c1c0,calib,AB,parity,user,B,EVEN,2,-19.028996
+c1c0,calib,AB,parity,narration,A, odd,1,-6.451079
+c1c0,calib,AB,parity,narration,A,odd,1,-11.701079
+c1c0,calib,AB,parity,narration,A, Odd,1,-11.169829
+c1c0,calib,AB,parity,narration,A,Odd,1,-11.419829
+c1c0,calib,AB,parity,narration,A, ODD,2,-14.122322
+c1c0,calib,AB,parity,narration,A,ODD,2,-19.137230
+c1c0,calib,AB,parity,narration,B, even,1,-1.138580
+c1c0,calib,AB,parity,narration,B,even,1,-10.263579
+c1c0,calib,AB,parity,narration,B, Even,1,-9.232329
+c1c0,calib,AB,parity,narration,B,Even,1,-9.857329
+c1c0,calib,AB,parity,narration,B, EVEN,1,-8.919829
+c1c0,calib,AB,parity,narration,B,EVEN,2,-14.142110
+c1c0,calib,AB,parity,log,A, odd,1,-4.891860
+c1c0,calib,AB,parity,log,A,odd,1,-9.579360
+c1c0,calib,AB,parity,log,A, Odd,1,-2.579360
+c1c0,calib,AB,parity,log,A,Odd,1,-7.641860
+c1c0,calib,AB,parity,log,A, ODD,2,-10.252735
+c1c0,calib,AB,parity,log,A,ODD,2,-14.580009
+c1c0,calib,AB,parity,log,B, even,1,-1.204360
+c1c0,calib,AB,parity,log,B,even,1,-7.141860
+c1c0,calib,AB,parity,log,B, Even,1,-0.704360
+c1c0,calib,AB,parity,log,B,Even,1,-6.516860
+c1c0,calib,AB,parity,log,B, EVEN,1,-4.516860
+c1c0,calib,AB,parity,log,B,EVEN,2,-21.185976
+c1c2,calib,AB,coin,assistant,A, heads,1,-3.386541
+c1c2,calib,AB,coin,assistant,A,heads,1,-11.324041
+c1c2,calib,AB,coin,assistant,A, Heads,1,-7.511541
+c1c2,calib,AB,coin,assistant,A,Heads,2,-18.042810
+c1c2,calib,AB,coin,assistant,A, HEADS,2,-11.574050
+c1c2,calib,AB,coin,assistant,A,HEADS,2,-13.886947
+c1c2,calib,AB,coin,assistant,B, tails,1,-1.136541
+c1c2,calib,AB,coin,assistant,B,tails,1,-9.261541
+c1c2,calib,AB,coin,assistant,B, Tails,2,-5.673569
+c1c2,calib,AB,coin,assistant,B,Tails,2,-14.614737
+c1c2,calib,AB,coin,assistant,B, TAILS,2,-8.986069
+c1c2,calib,AB,coin,assistant,B,TAILS,2,-15.199255
+c1c2,calib,AB,coin,user,A, heads,1,-1.362015
+c1c2,calib,AB,coin,user,A,heads,1,-7.612015
+c1c2,calib,AB,coin,user,A, Heads,1,-3.112015
+c1c2,calib,AB,coin,user,A,Heads,2,-8.613805
+c1c2,calib,AB,coin,user,A, HEADS,2,-5.612110
+c1c2,calib,AB,coin,user,A,HEADS,2,-9.675708
+c1c2,calib,AB,coin,user,B, tails,1,-1.362015
+c1c2,calib,AB,coin,user,B,tails,1,-8.049515
+c1c2,calib,AB,coin,user,B, Tails,2,-1.967152
+c1c2,calib,AB,coin,user,B,Tails,2,-11.416306
+c1c2,calib,AB,coin,user,B, TAILS,2,-3.342152
+c1c2,calib,AB,coin,user,B,TAILS,2,-11.737327
+c1c2,calib,AB,coin,narration,A, heads,1,-1.326109
+c1c2,calib,AB,coin,narration,A,heads,1,-8.701109
+c1c2,calib,AB,coin,narration,A, Heads,1,-7.451109
+c1c2,calib,AB,coin,narration,A,Heads,2,-15.201303
+c1c2,calib,AB,coin,narration,A, HEADS,2,-13.390216
+c1c2,calib,AB,coin,narration,A,HEADS,2,-15.488902
+c1c2,calib,AB,coin,narration,B, tails,1,-0.326109
+c1c2,calib,AB,coin,narration,B,tails,1,-9.763609
+c1c2,calib,AB,coin,narration,B, Tails,2,-10.330199
+c1c2,calib,AB,coin,narration,B,Tails,2,-16.807028
+c1c2,calib,AB,coin,narration,B, TAILS,2,-18.580200
+c1c2,calib,AB,coin,narration,B,TAILS,2,-17.225832
+c1c2,calib,AB,coin,log,A, heads,1,-1.907475
+c1c2,calib,AB,coin,log,A,heads,1,-7.657475
+c1c2,calib,AB,coin,log,A, Heads,1,-3.407475
+c1c2,calib,AB,coin,log,A,Heads,2,-11.720024
+c1c2,calib,AB,coin,log,A, HEADS,2,-10.534242
+c1c2,calib,AB,coin,log,A,HEADS,2,-12.615876
+c1c2,calib,AB,coin,log,B, tails,1,-0.282475
+c1c2,calib,AB,coin,log,B,tails,1,-7.782475
+c1c2,calib,AB,coin,log,B, Tails,2,-2.908246
+c1c2,calib,AB,coin,log,B,Tails,2,-12.492911
+c1c2,calib,AB,coin,log,B, TAILS,2,-11.408247
+c1c2,calib,AB,coin,log,B,TAILS,2,-12.477889
+c1c2,calib,AB,d6,assistant,A,1,1,-7.020543
+c1c2,calib,AB,d6,assistant,A,2,1,-0.770543
+c1c2,calib,AB,d6,assistant,A,3,1,-1.645543
+c1c2,calib,AB,d6,assistant,B,4,1,-1.645543
+c1c2,calib,AB,d6,assistant,B,5,1,-1.895543
+c1c2,calib,AB,d6,assistant,B,6,1,-8.208043
+c1c2,calib,AB,d6,user,A,1,1,-6.214263
+c1c2,calib,AB,d6,user,A,2,1,-0.839263
+c1c2,calib,AB,d6,user,A,3,1,-1.214263
+c1c2,calib,AB,d6,user,B,4,1,-1.839263
+c1c2,calib,AB,d6,user,B,5,1,-2.214263
+c1c2,calib,AB,d6,user,B,6,1,-7.089263
+c1c2,calib,AB,d6,narration,A,1,1,-6.434309
+c1c2,calib,AB,d6,narration,A,2,1,-2.496809
+c1c2,calib,AB,d6,narration,A,3,1,-1.246808
+c1c2,calib,AB,d6,narration,B,4,1,-0.871808
+c1c2,calib,AB,d6,narration,B,5,1,-1.621808
+c1c2,calib,AB,d6,narration,B,6,1,-5.559309
+c1c2,calib,AB,d6,log,A,1,1,-4.499341
+c1c2,calib,AB,d6,log,A,2,1,-2.499341
+c1c2,calib,AB,d6,log,A,3,1,-2.499341
+c1c2,calib,AB,d6,log,B,4,1,-0.624342
+c1c2,calib,AB,d6,log,B,5,1,-1.249341
+c1c2,calib,AB,d6,log,B,6,1,-6.374341
+c1c2,calib,AB,parity,assistant,A, odd,1,-11.499276
+c1c2,calib,AB,parity,assistant,A,odd,1,-16.186777
+c1c2,calib,AB,parity,assistant,A, Odd,1,-14.374276
+c1c2,calib,AB,parity,assistant,A,Odd,1,-16.811777
+c1c2,calib,AB,parity,assistant,A, ODD,2,-18.877762
+c1c2,calib,AB,parity,assistant,A,ODD,2,-20.187452
+c1c2,calib,AB,parity,assistant,B, even,1,-6.686776
+c1c2,calib,AB,parity,assistant,B,even,1,-14.249276
+c1c2,calib,AB,parity,assistant,B, Even,1,-12.499276
+c1c2,calib,AB,parity,assistant,B,Even,1,-14.186776
+c1c2,calib,AB,parity,assistant,B, EVEN,1,-13.811776
+c1c2,calib,AB,parity,assistant,B,EVEN,2,-23.246267
+c1c2,calib,AB,parity,user,A, odd,1,-9.106611
+c1c2,calib,AB,parity,user,A,odd,1,-14.981611
+c1c2,calib,AB,parity,user,A, Odd,1,-12.169111
+c1c2,calib,AB,parity,user,A,Odd,1,-13.669111
+c1c2,calib,AB,parity,user,A, ODD,2,-13.979161
+c1c2,calib,AB,parity,user,A,ODD,2,-17.236507
+c1c2,calib,AB,parity,user,B, even,1,-6.669112
+c1c2,calib,AB,parity,user,B,even,1,-12.731611
+c1c2,calib,AB,parity,user,B, Even,1,-11.169111
+c1c2,calib,AB,parity,user,B,Even,1,-13.419111
+c1c2,calib,AB,parity,user,B, EVEN,1,-10.731611
+c1c2,calib,AB,parity,user,B,EVEN,2,-18.510410
+c1c2,calib,AB,parity,narration,A, odd,1,-7.996715
+c1c2,calib,AB,parity,narration,A,odd,1,-13.137340
+c1c2,calib,AB,parity,narration,A, Odd,1,-13.199840
+c1c2,calib,AB,parity,narration,A,Odd,1,-13.121715
+c1c2,calib,AB,parity,narration,A, ODD,2,-13.653578
+c1c2,calib,AB,parity,narration,A,ODD,2,-19.793894
+c1c2,calib,AB,parity,narration,B, even,1,-2.434215
+c1c2,calib,AB,parity,narration,B,even,1,-11.246715
+c1c2,calib,AB,parity,narration,B, Even,1,-10.777965
+c1c2,calib,AB,parity,narration,B,Even,1,-11.090465
+c1c2,calib,AB,parity,narration,B, EVEN,1,-10.371715
+c1c2,calib,AB,parity,narration,B,EVEN,2,-15.010759
+c1c2,calib,AB,parity,log,A, odd,1,-2.851665
+c1c2,calib,AB,parity,log,A,odd,1,-7.851665
+c1c2,calib,AB,parity,log,A, Odd,1,-0.976666
+c1c2,calib,AB,parity,log,A,Odd,1,-5.976665
+c1c2,calib,AB,parity,log,A, ODD,2,-8.553219
+c1c2,calib,AB,parity,log,A,ODD,2,-13.070827
+c1c2,calib,AB,parity,log,B, even,1,-1.976666
+c1c2,calib,AB,parity,log,B,even,1,-7.476665
+c1c2,calib,AB,parity,log,B, Even,1,-1.851666
+c1c2,calib,AB,parity,log,B,Even,1,-7.414165
+c1c2,calib,AB,parity,log,B, EVEN,1,-5.726665
+c1c2,calib,AB,parity,log,B,EVEN,2,-20.917511
+c1c3,calib,AB,coin,assistant,A, heads,1,-4.282269
+c1c3,calib,AB,coin,assistant,A,heads,1,-12.157269
+c1c3,calib,AB,coin,assistant,A, Heads,1,-9.032269
+c1c3,calib,AB,coin,assistant,A,Heads,2,-19.501043
+c1c3,calib,AB,coin,assistant,A, HEADS,2,-13.532279
+c1c3,calib,AB,coin,assistant,A,HEADS,2,-15.157571
+c1c3,calib,AB,coin,assistant,B, tails,1,-0.782269
+c1c3,calib,AB,coin,assistant,B,tails,1,-9.282269
+c1c3,calib,AB,coin,assistant,B, Tails,2,-6.474643
+c1c3,calib,AB,coin,assistant,B,Tails,2,-15.480992
+c1c3,calib,AB,coin,assistant,B, TAILS,2,-9.224643
+c1c3,calib,AB,coin,assistant,B,TAILS,2,-15.594903
+c1c3,calib,AB,coin,user,A, heads,1,-2.059312
+c1c3,calib,AB,coin,user,A,heads,1,-8.121812
+c1c3,calib,AB,coin,user,A, Heads,1,-3.934312
+c1c3,calib,AB,coin,user,A,Heads,2,-9.060815
+c1c3,calib,AB,coin,user,A, HEADS,2,-6.496893
+c1c3,calib,AB,coin,user,A,HEADS,2,-10.310208
+c1c3,calib,AB,coin,user,B, tails,1,-1.059312
+c1c3,calib,AB,coin,user,B,tails,1,-7.996812
+c1c3,calib,AB,coin,user,B, Tails,2,-1.977413
+c1c3,calib,AB,coin,user,B,Tails,2,-11.500593
+c1c3,calib,AB,coin,user,B, TAILS,2,-2.664913
+c1c3,calib,AB,coin,user,B,TAILS,2,-11.684613
+c1c3,calib,AB,coin,narration,A, heads,1,-0.984084
+c1c3,calib,AB,coin,narration,A,heads,1,-8.984084
+c1c3,calib,AB,coin,narration,A, Heads,1,-6.921584
+c1c3,calib,AB,coin,narration,A,Heads,2,-14.765592
+c1c3,calib,AB,coin,narration,A, HEADS,2,-13.360562
+c1c3,calib,AB,coin,narration,A,HEADS,2,-15.334785
+c1c3,calib,AB,coin,narration,B, tails,1,-0.484084
+c1c3,calib,AB,coin,narration,B,tails,1,-9.984084
+c1c3,calib,AB,coin,narration,B, Tails,2,-9.740717
+c1c3,calib,AB,coin,narration,B,Tails,2,-16.778648
+c1c3,calib,AB,coin,narration,B, TAILS,2,-16.865717
+c1c3,calib,AB,coin,narration,B,TAILS,2,-17.477974
+c1c3,calib,AB,coin,log,A, heads,1,-1.754505
+c1c3,calib,AB,coin,log,A,heads,1,-8.067005
+c1c3,calib,AB,coin,log,A, Heads,1,-3.879505
+c1c3,calib,AB,coin,log,A,Heads,2,-11.754627
+c1c3,calib,AB,coin,log,A, HEADS,2,-11.193599
+c1c3,calib,AB,coin,log,A,HEADS,2,-13.465461
+c1c3,calib,AB,coin,log,B, tails,1,-0.254505
+c1c3,calib,AB,coin,log,B,tails,1,-8.442005
+c1c3,calib,AB,coin,log,B, Tails,2,-3.631039
+c1c3,calib,AB,coin,log,B,Tails,2,-13.054970
+c1c3,calib,AB,coin,log,B, TAILS,2,-11.568539
+c1c3,calib,AB,coin,log,B,TAILS,2,-13.886464
+c1c3,calib,AB,d6,assistant,A,1,1,-6.118728
+c1c3,calib,AB,d6,assistant,A,2,1,-0.493727
+c1c3,calib,AB,d6,assistant,A,3,1,-1.493727
+c1c3,calib,AB,d6,assistant,B,4,1,-2.243727
+c1c3,calib,AB,d6,assistant,B,5,1,-2.868727
+c1c3,calib,AB,d6,assistant,B,6,1,-9.681228
+c1c3,calib,AB,d6,user,A,1,1,-3.949448
+c1c3,calib,AB,d6,user,A,2,1,-0.449448
+c1c3,calib,AB,d6,user,A,3,1,-1.449448
+c1c3,calib,AB,d6,user,B,4,1,-2.574448
+c1c3,calib,AB,d6,user,B,5,1,-3.449448
+c1c3,calib,AB,d6,user,B,6,1,-9.761948
+c1c3,calib,AB,d6,narration,A,1,1,-5.248880
+c1c3,calib,AB,d6,narration,A,2,1,-1.811381
+c1c3,calib,AB,d6,narration,A,3,1,-1.186381
+c1c3,calib,AB,d6,narration,B,4,1,-1.186381
+c1c3,calib,AB,d6,narration,B,5,1,-1.561381
+c1c3,calib,AB,d6,narration,B,6,1,-6.061380
+c1c3,calib,AB,d6,log,A,1,1,-4.982358
+c1c3,calib,AB,d6,log,A,2,1,-3.232358
+c1c3,calib,AB,d6,log,A,3,1,-1.857358
+c1c3,calib,AB,d6,log,B,4,1,-0.482357
+c1c3,calib,AB,d6,log,B,5,1,-1.732358
+c1c3,calib,AB,d6,log,B,6,1,-6.794858
+c1c3,calib,AB,parity,assistant,A, odd,1,-10.792350
+c1c3,calib,AB,parity,assistant,A,odd,1,-16.292351
+c1c3,calib,AB,parity,assistant,A, Odd,1,-14.167350
+c1c3,calib,AB,parity,assistant,A,Odd,1,-16.604851
+c1c3,calib,AB,parity,assistant,A, ODD,2,-18.246078
+c1c3,calib,AB,parity,assistant,A,ODD,2,-20.387512
+c1c3,calib,AB,parity,assistant,B, even,1,-7.167350
+c1c3,calib,AB,parity,assistant,B,even,1,-14.729850
+c1c3,calib,AB,parity,assistant,B, Even,1,-13.104850
+c1c3,calib,AB,parity,assistant,B,Even,1,-14.917350
+c1c3,calib,AB,parity,assistant,B, EVEN,1,-14.479850
+c1c3,calib,AB,parity,assistant,B,EVEN,2,-23.724924
+c1c3,calib,AB,parity,user,A, odd,1,-10.179889
+c1c3,calib,AB,parity,user,A,odd,1,-15.929889
+c1c3,calib,AB,parity,user,A, Odd,1,-12.992389
+c1c3,calib,AB,parity,user,A,Odd,1,-14.929889
+c1c3,calib,AB,parity,user,A, ODD,2,-15.030674
+c1c3,calib,AB,parity,user,A,ODD,2,-18.090231
+c1c3,calib,AB,parity,user,B, even,1,-9.367389
+c1c3,calib,AB,parity,user,B,even,1,-15.179889
+c1c3,calib,AB,parity,user,B, Even,1,-13.304889
+c1c3,calib,AB,parity,user,B,Even,1,-15.867389
+c1c3,calib,AB,parity,user,B, EVEN,1,-12.429889
+c1c3,calib,AB,parity,user,B,EVEN,2,-19.668266
+c1c3,calib,AB,parity,narration,A, odd,1,-5.498641
+c1c3,calib,AB,parity,narration,A,odd,1,-11.404892
+c1c3,calib,AB,parity,narration,A, Odd,1,-10.592392
+c1c3,calib,AB,parity,narration,A,Odd,1,-10.748642
+c1c3,calib,AB,parity,narration,A, ODD,2,-14.267916
+c1c3,calib,AB,parity,narration,A,ODD,2,-18.673639
+c1c3,calib,AB,parity,narration,B, even,1,-1.561142
+c1c3,calib,AB,parity,narration,B,even,1,-10.842392
+c1c3,calib,AB,parity,narration,B, Even,1,-10.092392
+c1c3,calib,AB,parity,narration,B,Even,1,-10.654892
+c1c3,calib,AB,parity,narration,B, EVEN,1,-9.717392
+c1c3,calib,AB,parity,narration,B,EVEN,2,-14.838574
+c1c3,calib,AB,parity,log,A, odd,1,-2.671957
+c1c3,calib,AB,parity,log,A,odd,1,-7.734457
+c1c3,calib,AB,parity,log,A, Odd,1,-1.421957
+c1c3,calib,AB,parity,log,A,Odd,1,-5.859457
+c1c3,calib,AB,parity,log,A, ODD,2,-8.987719
+c1c3,calib,AB,parity,log,A,ODD,2,-13.141233
+c1c3,calib,AB,parity,log,B, even,1,-2.421957
+c1c3,calib,AB,parity,log,B,even,1,-7.609457
+c1c3,calib,AB,parity,log,B, Even,1,-2.609457
+c1c3,calib,AB,parity,log,B,Even,1,-7.984457
+c1c3,calib,AB,parity,log,B, EVEN,1,-6.671957
+c1c3,calib,AB,parity,log,B,EVEN,2,-21.188385
+c1c4,calib,AB,coin,assistant,A, heads,1,-4.172989
+c1c4,calib,AB,coin,assistant,A,heads,1,-12.422989
+c1c4,calib,AB,coin,assistant,A, Heads,1,-10.047989
+c1c4,calib,AB,coin,assistant,A,Heads,2,-19.923012
+c1c4,calib,AB,coin,assistant,A, HEADS,2,-14.360499
+c1c4,calib,AB,coin,assistant,A,HEADS,2,-15.736040
+c1c4,calib,AB,coin,assistant,B, tails,1,-0.422989
+c1c4,calib,AB,coin,assistant,B,tails,1,-9.547989
+c1c4,calib,AB,coin,assistant,B, Tails,2,-7.759855
+c1c4,calib,AB,coin,assistant,B,Tails,2,-16.245886
+c1c4,calib,AB,coin,assistant,B, TAILS,2,-10.197355
+c1c4,calib,AB,coin,assistant,B,TAILS,2,-16.173107
+c1c4,calib,AB,coin,user,A, heads,1,-1.502294
+c1c4,calib,AB,coin,user,A,heads,1,-7.877294
+c1c4,calib,AB,coin,user,A, Heads,1,-3.627294
+c1c4,calib,AB,coin,user,A,Heads,2,-8.878596
+c1c4,calib,AB,coin,user,A, HEADS,2,-6.127352
+c1c4,calib,AB,coin,user,A,HEADS,2,-10.315524
+c1c4,calib,AB,coin,user,B, tails,1,-1.127294
+c1c4,calib,AB,coin,user,B,tails,1,-8.189795
+c1c4,calib,AB,coin,user,B, Tails,2,-2.586054
+c1c4,calib,AB,coin,user,B,Tails,2,-11.776025
+c1c4,calib,AB,coin,user,B, TAILS,2,-2.836054
+c1c4,calib,AB,coin,user,B,TAILS,2,-11.940066
+c1c4,calib,AB,coin,narration,A, heads,1,-1.335206
+c1c4,calib,AB,coin,narration,A,heads,1,-9.210206
+c1c4,calib,AB,coin,narration,A, Heads,1,-6.960206
+c1c4,calib,AB,coin,narration,A,Heads,2,-14.897759
+c1c4,calib,AB,coin,narration,A, HEADS,2,-12.524434
+c1c4,calib,AB,coin,narration,A,HEADS,2,-14.717997
+c1c4,calib,AB,coin,narration,B, tails,1,-0.335206
+c1c4,calib,AB,coin,narration,B,tails,1,-9.397706
+c1c4,calib,AB,coin,narration,B, Tails,2,-10.217656
+c1c4,calib,AB,coin,narration,B,Tails,2,-16.618536
+c1c4,calib,AB,coin,narration,B, TAILS,2,-17.467657
+c1c4,calib,AB,coin,narration,B,TAILS,2,-16.368153
+c1c4,calib,AB,coin,log,A, heads,1,-2.184537
+c1c4,calib,AB,coin,log,A,heads,1,-8.622037
+c1c4,calib,AB,coin,log,A, Heads,1,-4.559537
+c1c4,calib,AB,coin,log,A,Heads,2,-13.997115
+c1c4,calib,AB,coin,log,A, HEADS,2,-12.061448
+c1c4,calib,AB,coin,log,A,HEADS,2,-13.513709
+c1c4,calib,AB,coin,log,B, tails,1,-0.184537
+c1c4,calib,AB,coin,log,B,tails,1,-8.434537
+c1c4,calib,AB,coin,log,B, Tails,2,-3.185283
+c1c4,calib,AB,coin,log,B,Tails,2,-13.362411
+c1c4,calib,AB,coin,log,B, TAILS,2,-12.310283
+c1c4,calib,AB,coin,log,B,TAILS,2,-13.127854
+c1c4,calib,AB,d6,assistant,A,1,1,-7.937224
+c1c4,calib,AB,d6,assistant,A,2,1,-0.937224
+c1c4,calib,AB,d6,assistant,A,3,1,-2.062224
+c1c4,calib,AB,d6,assistant,B,4,1,-1.562224
+c1c4,calib,AB,d6,assistant,B,5,1,-1.312224
+c1c4,calib,AB,d6,assistant,B,6,1,-6.312224
+c1c4,calib,AB,d6,user,A,1,1,-5.252633
+c1c4,calib,AB,d6,user,A,2,1,-0.752632
+c1c4,calib,AB,d6,user,A,3,1,-1.627632
+c1c4,calib,AB,d6,user,B,4,1,-1.877632
+c1c4,calib,AB,d6,user,B,5,1,-1.752632
+c1c4,calib,AB,d6,user,B,6,1,-7.002633
+c1c4,calib,AB,d6,narration,A,1,1,-4.952433
+c1c4,calib,AB,d6,narration,A,2,1,-1.764932
+c1c4,calib,AB,d6,narration,A,3,1,-1.889932
+c1c4,calib,AB,d6,narration,B,4,1,-1.014932
+c1c4,calib,AB,d6,narration,B,5,1,-1.389932
+c1c4,calib,AB,d6,narration,B,6,1,-5.764933
+c1c4,calib,AB,d6,log,A,1,1,-4.220187
+c1c4,calib,AB,d6,log,A,2,1,-2.845187
+c1c4,calib,AB,d6,log,A,3,1,-2.220187
+c1c4,calib,AB,d6,log,B,4,1,-0.595187
+c1c4,calib,AB,d6,log,B,5,1,-1.345187
+c1c4,calib,AB,d6,log,B,6,1,-5.470187
+c1c4,calib,AB,parity,assistant,A, odd,1,-11.980796
+c1c4,calib,AB,parity,assistant,A,odd,1,-17.793295
+c1c4,calib,AB,parity,assistant,A, Odd,1,-15.355796
+c1c4,calib,AB,parity,assistant,A,Odd,1,-18.105795
+c1c4,calib,AB,parity,assistant,A, ODD,2,-18.506203
+c1c4,calib,AB,parity,assistant,A,ODD,2,-21.107925
+c1c4,calib,AB,parity,assistant,B, even,1,-5.730796
+c1c4,calib,AB,parity,assistant,B,even,1,-13.918296
+c1c4,calib,AB,parity,assistant,B, Even,1,-12.043296
+c1c4,calib,AB,parity,assistant,B,Even,1,-14.105796
+c1c4,calib,AB,parity,assistant,B, EVEN,1,-13.668296
+c1c4,calib,AB,parity,assistant,B,EVEN,2,-23.288103
+c1c4,calib,AB,parity,user,A, odd,1,-10.840333
+c1c4,calib,AB,parity,user,A,odd,1,-16.684084
+c1c4,calib,AB,parity,user,A, Odd,1,-13.902833
+c1c4,calib,AB,parity,user,A,Odd,1,-15.777833
+c1c4,calib,AB,parity,user,A, ODD,2,-16.083006
+c1c4,calib,AB,parity,user,A,ODD,2,-18.415066
+c1c4,calib,AB,parity,user,B, even,1,-6.527833
+c1c4,calib,AB,parity,user,B,even,1,-13.215333
+c1c4,calib,AB,parity,user,B, Even,1,-11.340333
+c1c4,calib,AB,parity,user,B,Even,1,-13.840333
+c1c4,calib,AB,parity,user,B, EVEN,1,-11.152833
+c1c4,calib,AB,parity,user,B,EVEN,2,-18.321434
+c1c4,calib,AB,parity,narration,A, odd,1,-6.267465
+c1c4,calib,AB,parity,narration,A,odd,1,-11.923715
+c1c4,calib,AB,parity,narration,A, Odd,1,-11.079965
+c1c4,calib,AB,parity,narration,A,Odd,1,-10.954965
+c1c4,calib,AB,parity,narration,A, ODD,2,-14.700341
+c1c4,calib,AB,parity,narration,A,ODD,2,-18.408445
+c1c4,calib,AB,parity,narration,B, even,1,-1.704965
+c1c4,calib,AB,parity,narration,B,even,1,-10.861215
+c1c4,calib,AB,parity,narration,B, Even,1,-9.861215
+c1c4,calib,AB,parity,narration,B,Even,1,-10.236215
+c1c4,calib,AB,parity,narration,B, EVEN,1,-9.861215
+c1c4,calib,AB,parity,narration,B,EVEN,2,-14.610647
+c1c4,calib,AB,parity,log,A, odd,1,-3.201850
+c1c4,calib,AB,parity,log,A,odd,1,-8.514350
+c1c4,calib,AB,parity,log,A, Odd,1,-2.014350
+c1c4,calib,AB,parity,log,A,Odd,1,-6.701850
+c1c4,calib,AB,parity,log,A, ODD,2,-9.746478
+c1c4,calib,AB,parity,log,A,ODD,2,-13.952483
+c1c4,calib,AB,parity,log,B, even,1,-1.389350
+c1c4,calib,AB,parity,log,B,even,1,-7.576850
+c1c4,calib,AB,parity,log,B, Even,1,-2.139350
+c1c4,calib,AB,parity,log,B,Even,1,-7.514350
+c1c4,calib,AB,parity,log,B, EVEN,1,-5.451850
+c1c4,calib,AB,parity,log,B,EVEN,2,-22.245235
+c2c0,calib,AB,coin,assistant,A, heads,1,-4.049855
+c2c0,calib,AB,coin,assistant,A,heads,1,-11.549854
+c2c0,calib,AB,coin,assistant,A, Heads,1,-8.049854
+c2c0,calib,AB,coin,assistant,A,Heads,2,-18.018629
+c2c0,calib,AB,coin,assistant,A, HEADS,2,-11.237365
+c2c0,calib,AB,coin,assistant,A,HEADS,2,-13.550219
+c2c0,calib,AB,coin,assistant,B, tails,1,-1.174855
+c2c0,calib,AB,coin,assistant,B,tails,1,-9.112354
+c2c0,calib,AB,coin,assistant,B, Tails,2,-5.277815
+c2c0,calib,AB,coin,assistant,B,Tails,2,-14.525461
+c2c0,calib,AB,coin,assistant,B, TAILS,2,-7.527815
+c2c0,calib,AB,coin,assistant,B,TAILS,2,-14.300048
+c2c0,calib,AB,coin,user,A, heads,1,-1.971323
+c2c0,calib,AB,coin,user,A,heads,1,-8.221323
+c2c0,calib,AB,coin,user,A, Heads,1,-3.721323
+c2c0,calib,AB,coin,user,A,Heads,2,-9.223119
+c2c0,calib,AB,coin,user,A, HEADS,2,-5.971395
+c2c0,calib,AB,coin,user,A,HEADS,2,-10.035171
+c2c0,calib,AB,coin,user,B, tails,1,-0.971323
+c2c0,calib,AB,coin,user,B,tails,1,-7.783823
+c2c0,calib,AB,coin,user,B, Tails,2,-1.903971
+c2c0,calib,AB,coin,user,B,Tails,2,-11.619588
+c2c0,calib,AB,coin,user,B, TAILS,2,-2.528971
+c2c0,calib,AB,coin,user,B,TAILS,2,-11.346584
+c2c0,calib,AB,coin,narration,A, heads,1,-0.771125
+c2c0,calib,AB,coin,narration,A,heads,1,-8.771126
+c2c0,calib,AB,coin,narration,A, Heads,1,-7.958625
+c2c0,calib,AB,coin,narration,A,Heads,2,-15.177754
+c2c0,calib,AB,coin,narration,A, HEADS,2,-13.397555
+c2c0,calib,AB,coin,narration,A,HEADS,2,-15.494411
+c2c0,calib,AB,coin,narration,B, tails,1,-0.646125
+c2c0,calib,AB,coin,narration,B,tails,1,-10.021126
+c2c0,calib,AB,coin,narration,B, Tails,2,-11.400861
+c2c0,calib,AB,coin,narration,B,Tails,2,-16.782553
+c2c0,calib,AB,coin,narration,B, TAILS,2,-18.650860
+c2c0,calib,AB,coin,narration,B,TAILS,2,-17.727116
+c2c0,calib,AB,coin,log,A, heads,1,-1.629775
+c2c0,calib,AB,coin,log,A,heads,1,-7.754775
+c2c0,calib,AB,coin,log,A, Heads,1,-3.004775
+c2c0,calib,AB,coin,log,A,Heads,2,-11.942310
+c2c0,calib,AB,coin,log,A, HEADS,2,-10.068397
+c2c0,calib,AB,coin,log,A,HEADS,2,-12.887946
+c2c0,calib,AB,coin,log,B, tails,1,-0.379775
+c2c0,calib,AB,coin,log,B,tails,1,-8.192274
+c2c0,calib,AB,coin,log,B, Tails,2,-2.755256
+c2c0,calib,AB,coin,log,B,Tails,2,-12.760668
+c2c0,calib,AB,coin,log,B, TAILS,2,-11.005255
+c2c0,calib,AB,coin,log,B,TAILS,2,-12.820032
+c2c0,calib,AB,d6,assistant,A,1,1,-9.184949
+c2c0,calib,AB,d6,assistant,A,2,1,-0.997449
+c2c0,calib,AB,d6,assistant,A,3,1,-2.122449
+c2c0,calib,AB,d6,assistant,B,4,1,-1.497449
+c2c0,calib,AB,d6,assistant,B,5,1,-1.247449
+c2c0,calib,AB,d6,assistant,B,6,1,-7.872449
+c2c0,calib,AB,d6,user,A,1,1,-7.146333
+c2c0,calib,AB,d6,user,A,2,1,-0.833833
+c2c0,calib,AB,d6,user,A,3,1,-1.333833
+c2c0,calib,AB,d6,user,B,4,1,-1.833833
+c2c0,calib,AB,d6,user,B,5,1,-1.958833
+c2c0,calib,AB,d6,user,B,6,1,-7.583833
+c2c0,calib,AB,d6,narration,A,1,1,-6.549807
+c2c0,calib,AB,d6,narration,A,2,1,-2.049807
+c2c0,calib,AB,d6,narration,A,3,1,-1.924807
+c2c0,calib,AB,d6,narration,B,4,1,-0.799807
+c2c0,calib,AB,d6,narration,B,5,1,-1.299807
+c2c0,calib,AB,d6,narration,B,6,1,-6.612307
+c2c0,calib,AB,d6,log,A,1,1,-3.408149
+c2c0,calib,AB,d6,log,A,2,1,-1.908149
+c2c0,calib,AB,d6,log,A,3,1,-2.158149
+c2c0,calib,AB,d6,log,B,4,1,-0.533149
+c2c0,calib,AB,d6,log,B,5,1,-2.158149
+c2c0,calib,AB,d6,log,B,6,1,-7.908149
+c2c0,calib,AB,parity,assistant,A, odd,1,-10.692118
+c2c0,calib,AB,parity,assistant,A,odd,1,-15.817118
+c2c0,calib,AB,parity,assistant,A, Odd,1,-13.629618
+c2c0,calib,AB,parity,assistant,A,Odd,1,-16.129618
+c2c0,calib,AB,parity,assistant,A, ODD,2,-19.070637
+c2c0,calib,AB,parity,assistant,A,ODD,2,-19.662809
+c2c0,calib,AB,parity,assistant,B, even,1,-7.942118
+c2c0,calib,AB,parity,assistant,B,even,1,-15.317118
+c2c0,calib,AB,parity,assistant,B, Even,1,-13.504618
+c2c0,calib,AB,parity,assistant,B,Even,1,-15.379618
+c2c0,calib,AB,parity,assistant,B, EVEN,1,-15.067118
+c2c0,calib,AB,parity,assistant,B,EVEN,2,-24.048164
+c2c0,calib,AB,parity,user,A, odd,1,-10.902868
+c2c0,calib,AB,parity,user,A,odd,1,-16.934118
+c2c0,calib,AB,parity,user,A, Odd,1,-13.777868
+c2c0,calib,AB,parity,user,A,Odd,1,-15.246618
+c2c0,calib,AB,parity,user,A, ODD,2,-15.237267
+c2c0,calib,AB,parity,user,A,ODD,2,-17.754715
+c2c0,calib,AB,parity,user,B, even,1,-10.340368
+c2c0,calib,AB,parity,user,B,even,1,-15.871618
+c2c0,calib,AB,parity,user,B, Even,1,-14.465368
+c2c0,calib,AB,parity,user,B,Even,1,-16.496618
+c2c0,calib,AB,parity,user,B, EVEN,1,-13.652868
+c2c0,calib,AB,parity,user,B,EVEN,2,-19.757057
+c2c0,calib,AB,parity,narration,A, odd,1,-8.202759
+c2c0,calib,AB,parity,narration,A,odd,1,-12.796509
+c2c0,calib,AB,parity,narration,A, Odd,1,-12.749634
+c2c0,calib,AB,parity,narration,A,Odd,1,-12.734009
+c2c0,calib,AB,parity,narration,A, ODD,2,-13.743320
+c2c0,calib,AB,parity,narration,A,ODD,2,-17.770245
+c2c0,calib,AB,parity,narration,B, even,1,-3.390259
+c2c0,calib,AB,parity,narration,B,even,1,-11.734009
+c2c0,calib,AB,parity,narration,B, Even,1,-11.140259
+c2c0,calib,AB,parity,narration,B,Even,1,-11.484009
+c2c0,calib,AB,parity,narration,B, EVEN,1,-10.921509
+c2c0,calib,AB,parity,narration,B,EVEN,2,-14.373329
+c2c0,calib,AB,parity,log,A, odd,1,-2.697265
+c2c0,calib,AB,parity,log,A,odd,1,-7.447265
+c2c0,calib,AB,parity,log,A, Odd,1,-0.259765
+c2c0,calib,AB,parity,log,A,Odd,1,-5.072265
+c2c0,calib,AB,parity,log,A, ODD,2,-7.664599
+c2c0,calib,AB,parity,log,A,ODD,2,-12.119644
+c2c0,calib,AB,parity,log,B, even,1,-6.197265
+c2c0,calib,AB,parity,log,B,even,1,-10.666015
+c2c0,calib,AB,parity,log,B, Even,1,-5.259765
+c2c0,calib,AB,parity,log,B,Even,1,-10.853515
+c2c0,calib,AB,parity,log,B, EVEN,1,-9.384765
+c2c0,calib,AB,parity,log,B,EVEN,2,-22.715591
+c2c1,calib,AB,coin,assistant,A, heads,1,-3.823967
+c2c1,calib,AB,coin,assistant,A,heads,1,-11.823967
+c2c1,calib,AB,coin,assistant,A, Heads,1,-8.198967
+c2c1,calib,AB,coin,assistant,A,Heads,2,-19.323994
+c2c1,calib,AB,coin,assistant,A, HEADS,2,-12.448978
+c2c1,calib,AB,coin,assistant,A,HEADS,2,-14.511931
+c2c1,calib,AB,coin,assistant,B, tails,1,-0.823967
+c2c1,calib,AB,coin,assistant,B,tails,1,-9.136467
+c2c1,calib,AB,coin,assistant,B, Tails,2,-5.752114
+c2c1,calib,AB,coin,assistant,B,Tails,2,-15.039851
+c2c1,calib,AB,coin,assistant,B, TAILS,2,-8.689613
+c2c1,calib,AB,coin,assistant,B,TAILS,2,-15.261691
+c2c1,calib,AB,coin,user,A, heads,1,-1.686081
+c2c1,calib,AB,coin,user,A,heads,1,-8.123581
+c2c1,calib,AB,coin,user,A, Heads,1,-3.686081
+c2c1,calib,AB,coin,user,A,Heads,2,-9.500750
+c2c1,calib,AB,coin,user,A, HEADS,2,-6.123686
+c2c1,calib,AB,coin,user,A,HEADS,2,-10.312656
+c2c1,calib,AB,coin,user,B, tails,1,-0.936081
+c2c1,calib,AB,coin,user,B,tails,1,-7.936080
+c2c1,calib,AB,coin,user,B, Tails,2,-2.005721
+c2c1,calib,AB,coin,user,B,Tails,2,-11.409469
+c2c1,calib,AB,coin,user,B, TAILS,2,-3.005721
+c2c1,calib,AB,coin,user,B,TAILS,2,-11.686314
+c2c1,calib,AB,coin,narration,A, heads,1,-0.993522
+c2c1,calib,AB,coin,narration,A,heads,1,-9.056022
+c2c1,calib,AB,coin,narration,A, Heads,1,-8.056022
+c2c1,calib,AB,coin,narration,A,Heads,2,-15.024854
+c2c1,calib,AB,coin,narration,A, HEADS,2,-13.432055
+c2c1,calib,AB,coin,narration,A,HEADS,2,-15.653769
+c2c1,calib,AB,coin,narration,B, tails,1,-0.493522
+c2c1,calib,AB,coin,narration,B,tails,1,-9.868522
+c2c1,calib,AB,coin,narration,B, Tails,2,-11.185261
+c2c1,calib,AB,coin,narration,B,Tails,2,-16.573566
+c2c1,calib,AB,coin,narration,B, TAILS,2,-17.810261
+c2c1,calib,AB,coin,narration,B,TAILS,2,-17.697269
+c2c1,calib,AB,coin,log,A, heads,1,-1.719221
+c2c1,calib,AB,coin,log,A,heads,1,-7.906721
+c2c1,calib,AB,coin,log,A, Heads,1,-2.719221
+c2c1,calib,AB,coin,log,A,Heads,2,-12.219267
+c2c1,calib,AB,coin,log,A, HEADS,2,-10.345477
+c2c1,calib,AB,coin,log,A,HEADS,2,-12.735723
+c2c1,calib,AB,coin,log,B, tails,1,-0.469221
+c2c1,calib,AB,coin,log,B,tails,1,-8.031720
+c2c1,calib,AB,coin,log,B, Tails,2,-2.094561
+c2c1,calib,AB,coin,log,B,Tails,2,-12.349091
+c2c1,calib,AB,coin,log,B, TAILS,2,-10.907061
+c2c1,calib,AB,coin,log,B,TAILS,2,-12.472897
+c2c1,calib,AB,d6,assistant,A,1,1,-9.181507
+c2c1,calib,AB,d6,assistant,A,2,1,-0.806507
+c2c1,calib,AB,d6,assistant,A,3,1,-2.056507
+c2c1,calib,AB,d6,assistant,B,4,1,-1.431507
+c2c1,calib,AB,d6,assistant,B,5,1,-1.681507
+c2c1,calib,AB,d6,assistant,B,6,1,-7.556507
+c2c1,calib,AB,d6,user,A,1,1,-8.151383
+c2c1,calib,AB,d6,user,A,2,1,-1.026384
+c2c1,calib,AB,d6,user,A,3,1,-1.276384
+c2c1,calib,AB,d6,user,B,4,1,-1.776384
+c2c1,calib,AB,d6,user,B,5,1,-1.651384
+c2c1,calib,AB,d6,user,B,6,1,-6.651384
+c2c1,calib,AB,d6,narration,A,1,1,-6.894208
+c2c1,calib,AB,d6,narration,A,2,1,-2.394208
+c2c1,calib,AB,d6,narration,A,3,1,-2.019208
+c2c1,calib,AB,d6,narration,B,4,1,-0.894208
+c2c1,calib,AB,d6,narration,B,5,1,-1.019208
+c2c1,calib,AB,d6,narration,B,6,1,-5.644208
+c2c1,calib,AB,d6,log,A,1,1,-2.623695
+c2c1,calib,AB,d6,log,A,2,1,-1.873695
+c2c1,calib,AB,d6,log,A,3,1,-1.498695
+c2c1,calib,AB,d6,log,B,4,1,-1.123695
+c2c1,calib,AB,d6,log,B,5,1,-1.498695
+c2c1,calib,AB,d6,log,B,6,1,-6.498694
+c2c1,calib,AB,parity,assistant,A, odd,1,-10.233597
+c2c1,calib,AB,parity,assistant,A,odd,1,-15.358597
+c2c1,calib,AB,parity,assistant,A, Odd,1,-13.421097
+c2c1,calib,AB,parity,assistant,A,Odd,1,-15.733597
+c2c1,calib,AB,parity,assistant,A, ODD,2,-17.634573
+c2c1,calib,AB,parity,assistant,A,ODD,2,-19.703199
+c2c1,calib,AB,parity,assistant,B, even,1,-6.358597
+c2c1,calib,AB,parity,assistant,B,even,1,-13.983597
+c2c1,calib,AB,parity,assistant,B, Even,1,-12.233597
+c2c1,calib,AB,parity,assistant,B,Even,1,-13.983597
+c2c1,calib,AB,parity,assistant,B, EVEN,1,-13.483597
+c2c1,calib,AB,parity,assistant,B,EVEN,2,-23.015469
+c2c1,calib,AB,parity,user,A, odd,1,-9.288220
+c2c1,calib,AB,parity,user,A,odd,1,-15.381970
+c2c1,calib,AB,parity,user,A, Odd,1,-12.538220
+c2c1,calib,AB,parity,user,A,Odd,1,-13.788220
+c2c1,calib,AB,parity,user,A, ODD,2,-13.990015
+c2c1,calib,AB,parity,user,A,ODD,2,-17.142338
+c2c1,calib,AB,parity,user,B, even,1,-8.475720
+c2c1,calib,AB,parity,user,B,even,1,-14.100720
+c2c1,calib,AB,parity,user,B, Even,1,-12.850720
+c2c1,calib,AB,parity,user,B,Even,1,-14.881970
+c2c1,calib,AB,parity,user,B, EVEN,1,-12.100720
+c2c1,calib,AB,parity,user,B,EVEN,2,-18.912298
+c2c1,calib,AB,parity,narration,A, odd,1,-7.243627
+c2c1,calib,AB,parity,narration,A,odd,1,-12.399877
+c2c1,calib,AB,parity,narration,A, Odd,1,-11.899877
+c2c1,calib,AB,parity,narration,A,Odd,1,-11.993627
+c2c1,calib,AB,parity,narration,A, ODD,2,-13.851017
+c2c1,calib,AB,parity,narration,A,ODD,2,-17.839901
+c2c1,calib,AB,parity,narration,B, even,1,-3.993627
+c2c1,calib,AB,parity,narration,B,even,1,-12.493627
+c2c1,calib,AB,parity,narration,B, Even,1,-11.774877
+c2c1,calib,AB,parity,narration,B,Even,1,-12.056127
+c2c1,calib,AB,parity,narration,B, EVEN,1,-11.524877
+c2c1,calib,AB,parity,narration,B,EVEN,2,-15.103097
+c2c1,calib,AB,parity,log,A, odd,1,-2.454179
+c2c1,calib,AB,parity,log,A,odd,1,-7.266679
+c2c1,calib,AB,parity,log,A, Odd,1,-0.579179
+c2c1,calib,AB,parity,log,A,Odd,1,-5.016679
+c2c1,calib,AB,parity,log,A, ODD,2,-6.679970
+c2c1,calib,AB,parity,log,A,ODD,2,-11.860796
+c2c1,calib,AB,parity,log,B, even,1,-6.766679
+c2c1,calib,AB,parity,log,B,even,1,-11.141679
+c2c1,calib,AB,parity,log,B, Even,1,-6.141679
+c2c1,calib,AB,parity,log,B,Even,1,-11.547929
+c2c1,calib,AB,parity,log,B, EVEN,1,-9.579179
+c2c1,calib,AB,parity,log,B,EVEN,2,-22.043634
+c2c3,calib,AB,coin,assistant,A, heads,1,-4.006961
+c2c3,calib,AB,coin,assistant,A,heads,1,-11.381961
+c2c3,calib,AB,coin,assistant,A, Heads,1,-7.881961
+c2c3,calib,AB,coin,assistant,A,Heads,2,-17.725744
+c2c3,calib,AB,coin,assistant,A, HEADS,2,-11.194470
+c2c3,calib,AB,coin,assistant,A,HEADS,2,-13.507234
+c2c3,calib,AB,coin,assistant,B, tails,1,-1.506961
+c2c3,calib,AB,coin,assistant,B,tails,1,-9.194461
+c2c3,calib,AB,coin,assistant,B, Tails,2,-5.344403
+c2c3,calib,AB,coin,assistant,B,Tails,2,-14.365311
+c2c3,calib,AB,coin,assistant,B, TAILS,2,-7.781903
+c2c3,calib,AB,coin,assistant,B,TAILS,2,-14.507073
+c2c3,calib,AB,coin,user,A, heads,1,-1.922228
+c2c3,calib,AB,coin,user,A,heads,1,-8.234728
+c2c3,calib,AB,coin,user,A, Heads,1,-3.922228
+c2c3,calib,AB,coin,user,A,Heads,2,-9.049196
+c2c3,calib,AB,coin,user,A, HEADS,2,-6.047319
+c2c3,calib,AB,coin,user,A,HEADS,2,-9.985773
+c2c3,calib,AB,coin,user,B, tails,1,-1.047228
+c2c3,calib,AB,coin,user,B,tails,1,-7.797228
+c2c3,calib,AB,coin,user,B, Tails,2,-1.710196
+c2c3,calib,AB,coin,user,B,Tails,2,-11.272773
+c2c3,calib,AB,coin,user,B, TAILS,2,-2.835196
+c2c3,calib,AB,coin,user,B,TAILS,2,-11.422503
+c2c3,calib,AB,coin,narration,A, heads,1,-1.064565
+c2c3,calib,AB,coin,narration,A,heads,1,-9.127066
+c2c3,calib,AB,coin,narration,A, Heads,1,-8.502066
+c2c3,calib,AB,coin,narration,A,Heads,2,-15.908696
+c2c3,calib,AB,coin,narration,A, HEADS,2,-14.130095
+c2c3,calib,AB,coin,narration,A,HEADS,2,-16.197752
+c2c3,calib,AB,coin,narration,B, tails,1,-0.439565
+c2c3,calib,AB,coin,narration,B,tails,1,-10.439566
+c2c3,calib,AB,coin,narration,B, Tails,2,-10.756679
+c2c3,calib,AB,coin,narration,B,Tails,2,-16.782801
+c2c3,calib,AB,coin,narration,B, TAILS,2,-17.944180
+c2c3,calib,AB,coin,narration,B,TAILS,2,-18.368755
+c2c3,calib,AB,coin,log,A, heads,1,-1.523731
+c2c3,calib,AB,coin,log,A,heads,1,-7.898731
+c2c3,calib,AB,coin,log,A, Heads,1,-3.148731
+c2c3,calib,AB,coin,log,A,Heads,2,-11.461280
+c2c3,calib,AB,coin,log,A, HEADS,2,-10.399637
+c2c3,calib,AB,coin,log,A,HEADS,2,-12.909357
+c2c3,calib,AB,coin,log,B, tails,1,-0.398731
+c2c3,calib,AB,coin,log,B,tails,1,-8.148731
+c2c3,calib,AB,coin,log,B, Tails,2,-2.774234
+c2c3,calib,AB,coin,log,B,Tails,2,-12.656314
+c2c3,calib,AB,coin,log,B, TAILS,2,-10.836733
+c2c3,calib,AB,coin,log,B,TAILS,2,-13.088686
+c2c3,calib,AB,d6,assistant,A,1,1,-7.170960
+c2c3,calib,AB,d6,assistant,A,2,1,-0.795960
+c2c3,calib,AB,d6,assistant,A,3,1,-1.545960
+c2c3,calib,AB,d6,assistant,B,4,1,-1.920960
+c2c3,calib,AB,d6,assistant,B,5,1,-1.670960
+c2c3,calib,AB,d6,assistant,B,6,1,-7.795960
+c2c3,calib,AB,d6,user,A,1,1,-5.329086
+c2c3,calib,AB,d6,user,A,2,1,-0.704086
+c2c3,calib,AB,d6,user,A,3,1,-1.329086
+c2c3,calib,AB,d6,user,B,4,1,-2.079086
+c2c3,calib,AB,d6,user,B,5,1,-2.204086
+c2c3,calib,AB,d6,user,B,6,1,-7.766586
+c2c3,calib,AB,d6,narration,A,1,1,-5.316038
+c2c3,calib,AB,d6,narration,A,2,1,-1.691038
+c2c3,calib,AB,d6,narration,A,3,1,-1.441038
+c2c3,calib,AB,d6,narration,B,4,1,-1.191038
+c2c3,calib,AB,d6,narration,B,5,1,-1.316038
+c2c3,calib,AB,d6,narration,B,6,1,-6.691038
+c2c3,calib,AB,d6,log,A,1,1,-2.791134
+c2c3,calib,AB,d6,log,A,2,1,-1.916134
+c2c3,calib,AB,d6,log,A,3,1,-1.166134
+c2c3,calib,AB,d6,log,B,4,1,-0.916134
+c2c3,calib,AB,d6,log,B,5,1,-2.541134
+c2c3,calib,AB,d6,log,B,6,1,-7.541134
+c2c3,calib,AB,parity,assistant,A, odd,1,-11.347612
+c2c3,calib,AB,parity,assistant,A,odd,1,-16.222612
+c2c3,calib,AB,parity,assistant,A, Odd,1,-14.285112
+c2c3,calib,AB,parity,assistant,A,Odd,1,-16.722612
+c2c3,calib,AB,parity,assistant,A, ODD,2,-18.682634
+c2c3,calib,AB,parity,assistant,A,ODD,2,-20.005177
+c2c3,calib,AB,parity,assistant,B, even,1,-7.097612
+c2c3,calib,AB,parity,assistant,B,even,1,-14.597612
+c2c3,calib,AB,parity,assistant,B, Even,1,-12.785112
+c2c3,calib,AB,parity,assistant,B,Even,1,-14.722612
+c2c3,calib,AB,parity,assistant,B, EVEN,1,-14.097612
+c2c3,calib,AB,parity,assistant,B,EVEN,2,-23.489132
+c2c3,calib,AB,parity,user,A, odd,1,-11.689662
+c2c3,calib,AB,parity,user,A,odd,1,-17.314663
+c2c3,calib,AB,parity,user,A, Odd,1,-14.377162
+c2c3,calib,AB,parity,user,A,Odd,1,-15.939662
+c2c3,calib,AB,parity,user,A, ODD,2,-15.541462
+c2c3,calib,AB,parity,user,A,ODD,2,-17.978462
+c2c3,calib,AB,parity,user,B, even,1,-10.814662
+c2c3,calib,AB,parity,user,B,even,1,-16.127163
+c2c3,calib,AB,parity,user,B, Even,1,-14.627162
+c2c3,calib,AB,parity,user,B,Even,1,-16.845913
+c2c3,calib,AB,parity,user,B, EVEN,1,-13.564662
+c2c3,calib,AB,parity,user,B,EVEN,2,-19.928438
+c2c3,calib,AB,parity,narration,A, odd,1,-6.750532
+c2c3,calib,AB,parity,narration,A,odd,1,-12.219282
+c2c3,calib,AB,parity,narration,A, Odd,1,-11.719282
+c2c3,calib,AB,parity,narration,A,Odd,1,-11.719282
+c2c3,calib,AB,parity,narration,A, ODD,2,-13.452025
+c2c3,calib,AB,parity,narration,A,ODD,2,-17.531651
+c2c3,calib,AB,parity,narration,B, even,1,-3.438032
+c2c3,calib,AB,parity,narration,B,even,1,-12.031782
+c2c3,calib,AB,parity,narration,B, Even,1,-11.438032
+c2c3,calib,AB,parity,narration,B,Even,1,-11.781782
+c2c3,calib,AB,parity,narration,B, EVEN,1,-11.094282
+c2c3,calib,AB,parity,narration,B,EVEN,2,-14.750046
+c2c3,calib,AB,parity,log,A, odd,1,-2.963484
+c2c3,calib,AB,parity,log,A,odd,1,-7.525984
+c2c3,calib,AB,parity,log,A, Odd,1,-1.338484
+c2c3,calib,AB,parity,log,A,Odd,1,-5.650984
+c2c3,calib,AB,parity,log,A, ODD,2,-7.609592
+c2c3,calib,AB,parity,log,A,ODD,2,-12.026540
+c2c3,calib,AB,parity,log,B, even,1,-7.213484
+c2c3,calib,AB,parity,log,B,even,1,-10.963484
+c2c3,calib,AB,parity,log,B, Even,1,-6.275984
+c2c3,calib,AB,parity,log,B,Even,1,-11.619734
+c2c3,calib,AB,parity,log,B, EVEN,1,-9.775984
+c2c3,calib,AB,parity,log,B,EVEN,2,-20.999897
+c2c4,calib,AB,coin,assistant,A, heads,1,-3.818357
+c2c4,calib,AB,coin,assistant,A,heads,1,-11.693357
+c2c4,calib,AB,coin,assistant,A, Heads,1,-8.318357
+c2c4,calib,AB,coin,assistant,A,Heads,2,-18.974655
+c2c4,calib,AB,coin,assistant,A, HEADS,2,-11.818365
+c2c4,calib,AB,coin,assistant,A,HEADS,2,-13.881149
+c2c4,calib,AB,coin,assistant,B, tails,1,-1.068357
+c2c4,calib,AB,coin,assistant,B,tails,1,-9.193357
+c2c4,calib,AB,coin,assistant,B, Tails,2,-5.774481
+c2c4,calib,AB,coin,assistant,B,Tails,2,-15.049685
+c2c4,calib,AB,coin,assistant,B, TAILS,2,-8.274481
+c2c4,calib,AB,coin,assistant,B,TAILS,2,-14.818472
+c2c4,calib,AB,coin,user,A, heads,1,-1.760412
+c2c4,calib,AB,coin,user,A,heads,1,-8.135411
+c2c4,calib,AB,coin,user,A, Heads,1,-3.760412
+c2c4,calib,AB,coin,user,A,Heads,2,-9.262717
+c2c4,calib,AB,coin,user,A, HEADS,2,-6.197977
+c2c4,calib,AB,coin,user,A,HEADS,2,-10.323708
+c2c4,calib,AB,coin,user,B, tails,1,-1.010412
+c2c4,calib,AB,coin,user,B,tails,1,-8.010411
+c2c4,calib,AB,coin,user,B, Tails,2,-2.008011
+c2c4,calib,AB,coin,user,B,Tails,2,-11.754349
+c2c4,calib,AB,coin,user,B, TAILS,2,-2.820511
+c2c4,calib,AB,coin,user,B,TAILS,2,-11.635589
+c2c4,calib,AB,coin,narration,A, heads,1,-1.074773
+c2c4,calib,AB,coin,narration,A,heads,1,-9.074773
+c2c4,calib,AB,coin,narration,A, Heads,1,-8.012273
+c2c4,calib,AB,coin,narration,A,Heads,2,-14.981123
+c2c4,calib,AB,coin,narration,A, HEADS,2,-12.952580
+c2c4,calib,AB,coin,narration,A,HEADS,2,-15.366205
+c2c4,calib,AB,coin,narration,B, tails,1,-0.449773
+c2c4,calib,AB,coin,narration,B,tails,1,-9.887273
+c2c4,calib,AB,coin,narration,B, Tails,2,-10.267288
+c2c4,calib,AB,coin,narration,B,Tails,2,-16.198345
+c2c4,calib,AB,coin,narration,B, TAILS,2,-16.642288
+c2c4,calib,AB,coin,narration,B,TAILS,2,-17.127634
+c2c4,calib,AB,coin,log,A, heads,1,-1.837805
+c2c4,calib,AB,coin,log,A,heads,1,-8.212805
+c2c4,calib,AB,coin,log,A, Heads,1,-3.337805
+c2c4,calib,AB,coin,log,A,Heads,2,-13.337848
+c2c4,calib,AB,coin,log,A, HEADS,2,-10.714120
+c2c4,calib,AB,coin,log,A,HEADS,2,-12.601107
+c2c4,calib,AB,coin,log,B, tails,1,-0.337805
+c2c4,calib,AB,coin,log,B,tails,1,-8.212805
+c2c4,calib,AB,coin,log,B, Tails,2,-2.463145
+c2c4,calib,AB,coin,log,B,Tails,2,-12.976956
+c2c4,calib,AB,coin,log,B, TAILS,2,-12.150645
+c2c4,calib,AB,coin,log,B,TAILS,2,-12.654393
+c2c4,calib,AB,d6,assistant,A,1,1,-9.248212
+c2c4,calib,AB,d6,assistant,A,2,1,-1.498212
+c2c4,calib,AB,d6,assistant,A,3,1,-2.748212
+c2c4,calib,AB,d6,assistant,B,4,1,-1.248212
+c2c4,calib,AB,d6,assistant,B,5,1,-0.873212
+c2c4,calib,AB,d6,assistant,B,6,1,-4.873212
+c2c4,calib,AB,d6,user,A,1,1,-6.804615
+c2c4,calib,AB,d6,user,A,2,1,-1.054615
+c2c4,calib,AB,d6,user,A,3,1,-1.804615
+c2c4,calib,AB,d6,user,B,4,1,-1.554615
+c2c4,calib,AB,d6,user,B,5,1,-1.304615
+c2c4,calib,AB,d6,user,B,6,1,-5.679615
+c2c4,calib,AB,d6,narration,A,1,1,-6.146150
+c2c4,calib,AB,d6,narration,A,2,1,-2.396150
+c2c4,calib,AB,d6,narration,A,3,1,-1.521150
+c2c4,calib,AB,d6,narration,B,4,1,-0.771150
+c2c4,calib,AB,d6,narration,B,5,1,-1.521150
+c2c4,calib,AB,d6,narration,B,6,1,-5.896150
+c2c4,calib,AB,d6,log,A,1,1,-2.009427
+c2c4,calib,AB,d6,log,A,2,1,-1.884427
+c2c4,calib,AB,d6,log,A,3,1,-1.634427
+c2c4,calib,AB,d6,log,B,4,1,-1.134427
+c2c4,calib,AB,d6,log,B,5,1,-1.634427
+c2c4,calib,AB,d6,log,B,6,1,-6.321927
+c2c4,calib,AB,parity,assistant,A, odd,1,-11.546968
+c2c4,calib,AB,parity,assistant,A,odd,1,-16.609468
+c2c4,calib,AB,parity,assistant,A, Odd,1,-14.234468
+c2c4,calib,AB,parity,assistant,A,Odd,1,-16.921968
+c2c4,calib,AB,parity,assistant,A, ODD,2,-18.202652
+c2c4,calib,AB,parity,assistant,A,ODD,2,-19.829882
+c2c4,calib,AB,parity,assistant,B, even,1,-6.546968
+c2c4,calib,AB,parity,assistant,B,even,1,-14.234468
+c2c4,calib,AB,parity,assistant,B, Even,1,-12.171968
+c2c4,calib,AB,parity,assistant,B,Even,1,-14.296968
+c2c4,calib,AB,parity,assistant,B, EVEN,1,-13.484468
+c2c4,calib,AB,parity,assistant,B,EVEN,2,-23.063946
+c2c4,calib,AB,parity,user,A, odd,1,-11.207470
+c2c4,calib,AB,parity,user,A,odd,1,-17.113720
+c2c4,calib,AB,parity,user,A, Odd,1,-14.144970
+c2c4,calib,AB,parity,user,A,Odd,1,-15.676220
+c2c4,calib,AB,parity,user,A, ODD,2,-15.479920
+c2c4,calib,AB,parity,user,A,ODD,2,-17.999619
+c2c4,calib,AB,parity,user,B, even,1,-9.144970
+c2c4,calib,AB,parity,user,B,even,1,-15.019970
+c2c4,calib,AB,parity,user,B, Even,1,-13.332470
+c2c4,calib,AB,parity,user,B,Even,1,-15.582470
+c2c4,calib,AB,parity,user,B, EVEN,1,-12.832470
+c2c4,calib,AB,parity,user,B,EVEN,2,-19.547903
+c2c4,calib,AB,parity,narration,A, odd,1,-6.014612
+c2c4,calib,AB,parity,narration,A,odd,1,-11.952112
+c2c4,calib,AB,parity,narration,A, Odd,1,-11.545862
+c2c4,calib,AB,parity,narration,A,Odd,1,-11.764612
+c2c4,calib,AB,parity,narration,A, ODD,2,-13.889798
+c2c4,calib,AB,parity,narration,A,ODD,2,-17.648027
+c2c4,calib,AB,parity,narration,B, even,1,-2.952112
+c2c4,calib,AB,parity,narration,B,even,1,-11.920862
+c2c4,calib,AB,parity,narration,B, Even,1,-11.327112
+c2c4,calib,AB,parity,narration,B,Even,1,-11.608362
+c2c4,calib,AB,parity,narration,B, EVEN,1,-10.795862
+c2c4,calib,AB,parity,narration,B,EVEN,2,-15.387556
+c2c4,calib,AB,parity,log,A, odd,1,-2.526096
+c2c4,calib,AB,parity,log,A,odd,1,-7.338596
+c2c4,calib,AB,parity,log,A, Odd,1,-1.026096
+c2c4,calib,AB,parity,log,A,Odd,1,-5.401096
+c2c4,calib,AB,parity,log,A, ODD,2,-7.469848
+c2c4,calib,AB,parity,log,A,ODD,2,-12.307827
+c2c4,calib,AB,parity,log,B, even,1,-5.401096
+c2c4,calib,AB,parity,log,B,even,1,-10.182346
+c2c4,calib,AB,parity,log,B, Even,1,-5.088596
+c2c4,calib,AB,parity,log,B,Even,1,-10.432346
+c2c4,calib,AB,parity,log,B, EVEN,1,-8.838596
+c2c4,calib,AB,parity,log,B,EVEN,2,-21.135574
+c3c0,calib,AB,coin,assistant,A, heads,1,-4.245770
+c3c0,calib,AB,coin,assistant,A,heads,1,-12.120770
+c3c0,calib,AB,coin,assistant,A, Heads,1,-8.995770
+c3c0,calib,AB,coin,assistant,A,Heads,2,-18.902054
+c3c0,calib,AB,coin,assistant,A, HEADS,2,-12.870779
+c3c0,calib,AB,coin,assistant,A,HEADS,2,-14.621004
+c3c0,calib,AB,coin,assistant,B, tails,1,-0.745770
+c3c0,calib,AB,coin,assistant,B,tails,1,-9.120770
+c3c0,calib,AB,coin,assistant,B, Tails,2,-6.303297
+c3c0,calib,AB,coin,assistant,B,Tails,2,-15.281126
+c3c0,calib,AB,coin,assistant,B, TAILS,2,-7.928297
+c3c0,calib,AB,coin,assistant,B,TAILS,2,-14.745919
+c3c0,calib,AB,coin,user,A, heads,1,-2.155162
+c3c0,calib,AB,coin,user,A,heads,1,-8.467662
+c3c0,calib,AB,coin,user,A, Heads,1,-4.030162
+c3c0,calib,AB,coin,user,A,Heads,2,-8.844376
+c3c0,calib,AB,coin,user,A, HEADS,2,-6.155219
+c3c0,calib,AB,coin,user,A,HEADS,2,-10.031072
+c3c0,calib,AB,coin,user,B, tails,1,-0.905162
+c3c0,calib,AB,coin,user,B,tails,1,-7.905162
+c3c0,calib,AB,coin,user,B, Tails,2,-2.293064
+c3c0,calib,AB,coin,user,B,Tails,2,-11.848666
+c3c0,calib,AB,coin,user,B, TAILS,2,-2.418064
+c3c0,calib,AB,coin,user,B,TAILS,2,-11.217971
+c3c0,calib,AB,coin,narration,A, heads,1,-0.703945
+c3c0,calib,AB,coin,narration,A,heads,1,-8.391445
+c3c0,calib,AB,coin,narration,A, Heads,1,-7.141445
+c3c0,calib,AB,coin,narration,A,Heads,2,-14.016545
+c3c0,calib,AB,coin,narration,A, HEADS,2,-13.205486
+c3c0,calib,AB,coin,narration,A,HEADS,2,-15.115361
+c3c0,calib,AB,coin,narration,B, tails,1,-0.703945
+c3c0,calib,AB,coin,narration,B,tails,1,-9.953945
+c3c0,calib,AB,coin,narration,B, Tails,2,-10.271415
+c3c0,calib,AB,coin,narration,B,Tails,2,-16.090752
+c3c0,calib,AB,coin,narration,B, TAILS,2,-16.833916
+c3c0,calib,AB,coin,narration,B,TAILS,2,-17.558090
+c3c0,calib,AB,coin,log,A, heads,1,-1.980323
+c3c0,calib,AB,coin,log,A,heads,1,-8.480323
+c3c0,calib,AB,coin,log,A, Heads,1,-3.730323
+c3c0,calib,AB,coin,log,A,Heads,2,-12.855351
+c3c0,calib,AB,coin,log,A, HEADS,2,-11.169288
+c3c0,calib,AB,coin,log,A,HEADS,2,-13.618498
+c3c0,calib,AB,coin,log,B, tails,1,-0.230323
+c3c0,calib,AB,coin,log,B,tails,1,-8.355323
+c3c0,calib,AB,coin,log,B, Tails,2,-3.231159
+c3c0,calib,AB,coin,log,B,Tails,2,-13.308953
+c3c0,calib,AB,coin,log,B, TAILS,2,-10.918659
+c3c0,calib,AB,coin,log,B,TAILS,2,-13.676233
+c3c0,calib,AB,d6,assistant,A,1,1,-7.838068
+c3c0,calib,AB,d6,assistant,A,2,1,-0.650567
+c3c0,calib,AB,d6,assistant,A,3,1,-1.650567
+c3c0,calib,AB,d6,assistant,B,4,1,-2.150568
+c3c0,calib,AB,d6,assistant,B,5,1,-1.775567
+c3c0,calib,AB,d6,assistant,B,6,1,-9.275567
+c3c0,calib,AB,d6,user,A,1,1,-5.231478
+c3c0,calib,AB,d6,user,A,2,1,-0.606477
+c3c0,calib,AB,d6,user,A,3,1,-1.231477
+c3c0,calib,AB,d6,user,B,4,1,-2.481477
+c3c0,calib,AB,d6,user,B,5,1,-2.606477
+c3c0,calib,AB,d6,user,B,6,1,-9.418978
+c3c0,calib,AB,d6,narration,A,1,1,-4.563328
+c3c0,calib,AB,d6,narration,A,2,1,-1.063328
+c3c0,calib,AB,d6,narration,A,3,1,-1.313328
+c3c0,calib,AB,d6,narration,B,4,1,-1.563328
+c3c0,calib,AB,d6,narration,B,5,1,-1.813328
+c3c0,calib,AB,d6,narration,B,6,1,-6.438328
+c3c0,calib,AB,d6,log,A,1,1,-5.069509
+c3c0,calib,AB,d6,log,A,2,1,-2.569509
+c3c0,calib,AB,d6,log,A,3,1,-1.569509
+c3c0,calib,AB,d6,log,B,4,1,-0.694509
+c3c0,calib,AB,d6,log,B,5,1,-1.569509
+c3c0,calib,AB,d6,log,B,6,1,-6.882009
+c3c0,calib,AB,parity,assistant,A, odd,1,-10.629464
+c3c0,calib,AB,parity,assistant,A,odd,1,-16.066963
+c3c0,calib,AB,parity,assistant,A, Odd,1,-13.754464
+c3c0,calib,AB,parity,assistant,A,Odd,1,-16.441963
+c3c0,calib,AB,parity,assistant,A, ODD,2,-18.151831
+c3c0,calib,AB,parity,assistant,A,ODD,2,-20.037535
+c3c0,calib,AB,parity,assistant,B, even,1,-6.691964
+c3c0,calib,AB,parity,assistant,B,even,1,-14.441964
+c3c0,calib,AB,parity,assistant,B, Even,1,-12.691964
+c3c0,calib,AB,parity,assistant,B,Even,1,-14.629464
+c3c0,calib,AB,parity,assistant,B, EVEN,1,-14.129464
+c3c0,calib,AB,parity,assistant,B,EVEN,2,-23.660622
+c3c0,calib,AB,parity,user,A, odd,1,-10.642708
+c3c0,calib,AB,parity,user,A,odd,1,-16.205208
+c3c0,calib,AB,parity,user,A, Odd,1,-13.017708
+c3c0,calib,AB,parity,user,A,Odd,1,-14.892708
+c3c0,calib,AB,parity,user,A, ODD,2,-15.207850
+c3c0,calib,AB,parity,user,A,ODD,2,-17.958506
+c3c0,calib,AB,parity,user,B, even,1,-9.392708
+c3c0,calib,AB,parity,user,B,even,1,-15.205208
+c3c0,calib,AB,parity,user,B, Even,1,-13.330208
+c3c0,calib,AB,parity,user,B,Even,1,-15.767708
+c3c0,calib,AB,parity,user,B, EVEN,1,-12.642708
+c3c0,calib,AB,parity,user,B,EVEN,2,-19.666817
+c3c0,calib,AB,parity,narration,A, odd,1,-4.020534
+c3c0,calib,AB,parity,narration,A,odd,1,-10.176785
+c3c0,calib,AB,parity,narration,A, Odd,1,-9.458035
+c3c0,calib,AB,parity,narration,A,Odd,1,-10.145535
+c3c0,calib,AB,parity,narration,A, ODD,2,-14.022337
+c3c0,calib,AB,parity,narration,A,ODD,2,-17.700102
+c3c0,calib,AB,parity,narration,B, even,1,-1.020534
+c3c0,calib,AB,parity,narration,B,even,1,-10.489285
+c3c0,calib,AB,parity,narration,B, Even,1,-9.770535
+c3c0,calib,AB,parity,narration,B,Even,1,-10.489285
+c3c0,calib,AB,parity,narration,B, EVEN,1,-9.208035
+c3c0,calib,AB,parity,narration,B,EVEN,2,-14.473985
+c3c0,calib,AB,parity,log,A, odd,1,-2.690302
+c3c0,calib,AB,parity,log,A,odd,1,-7.565302
+c3c0,calib,AB,parity,log,A, Odd,1,-0.377802
+c3c0,calib,AB,parity,log,A,Odd,1,-5.252802
+c3c0,calib,AB,parity,log,A, ODD,2,-7.492147
+c3c0,calib,AB,parity,log,A,ODD,2,-11.878248
+c3c0,calib,AB,parity,log,B, even,1,-4.440302
+c3c0,calib,AB,parity,log,B,even,1,-9.190302
+c3c0,calib,AB,parity,log,B, Even,1,-3.690302
+c3c0,calib,AB,parity,log,B,Even,1,-9.252802
+c3c0,calib,AB,parity,log,B, EVEN,1,-7.690302
+c3c0,calib,AB,parity,log,B,EVEN,2,-21.031479
+c3c1,calib,AB,coin,assistant,A, heads,1,-4.339657
+c3c1,calib,AB,coin,assistant,A,heads,1,-12.527157
+c3c1,calib,AB,coin,assistant,A, Heads,1,-9.589657
+c3c1,calib,AB,coin,assistant,A,Heads,2,-20.277199
+c3c1,calib,AB,coin,assistant,A, HEADS,2,-14.464667
+c3c1,calib,AB,coin,assistant,A,HEADS,2,-15.839917
+c3c1,calib,AB,coin,assistant,B, tails,1,-0.464657
+c3c1,calib,AB,coin,assistant,B,tails,1,-9.464657
+c3c1,calib,AB,coin,assistant,B, Tails,2,-6.936992
+c3c1,calib,AB,coin,assistant,B,Tails,2,-16.005161
+c3c1,calib,AB,coin,assistant,B, TAILS,2,-9.249492
+c3c1,calib,AB,coin,assistant,B,TAILS,2,-15.902296
+c3c1,calib,AB,coin,user,A, heads,1,-2.127954
+c3c1,calib,AB,coin,user,A,heads,1,-8.440454
+c3c1,calib,AB,coin,user,A, Heads,1,-4.127954
+c3c1,calib,AB,coin,user,A,Heads,2,-9.629748
+c3c1,calib,AB,coin,user,A, HEADS,2,-6.628011
+c3c1,calib,AB,coin,user,A,HEADS,2,-10.566331
+c3c1,calib,AB,coin,user,B, tails,1,-0.877954
+c3c1,calib,AB,coin,user,B,tails,1,-8.002954
+c3c1,calib,AB,coin,user,B, Tails,2,-2.452744
+c3c1,calib,AB,coin,user,B,Tails,2,-11.526687
+c3c1,calib,AB,coin,user,B, TAILS,2,-2.452744
+c3c1,calib,AB,coin,user,B,TAILS,2,-11.628192
+c3c1,calib,AB,coin,narration,A, heads,1,-0.772529
+c3c1,calib,AB,coin,narration,A,heads,1,-8.647530
+c3c1,calib,AB,coin,narration,A, Heads,1,-6.835029
+c3c1,calib,AB,coin,narration,A,Heads,2,-13.835106
+c3c1,calib,AB,coin,narration,A, HEADS,2,-12.961113
+c3c1,calib,AB,coin,narration,A,HEADS,2,-14.963400
+c3c1,calib,AB,coin,narration,B, tails,1,-0.647529
+c3c1,calib,AB,coin,narration,B,tails,1,-9.647530
+c3c1,calib,AB,coin,narration,B, Tails,2,-9.840520
+c3c1,calib,AB,coin,narration,B,Tails,2,-16.059843
+c3c1,calib,AB,coin,narration,B, TAILS,2,-16.028021
+c3c1,calib,AB,coin,narration,B,TAILS,2,-17.031488
+c3c1,calib,AB,coin,log,A, heads,1,-1.987258
+c3c1,calib,AB,coin,log,A,heads,1,-8.924758
+c3c1,calib,AB,coin,log,A, Heads,1,-3.612258
+c3c1,calib,AB,coin,log,A,Heads,2,-13.924854
+c3c1,calib,AB,coin,log,A, HEADS,2,-11.739002
+c3c1,calib,AB,coin,log,A,HEADS,2,-13.696427
+c3c1,calib,AB,coin,log,B, tails,1,-0.237258
+c3c1,calib,AB,coin,log,B,tails,1,-8.799758
+c3c1,calib,AB,coin,log,B, Tails,2,-3.112761
+c3c1,calib,AB,coin,log,B,Tails,2,-13.696670
+c3c1,calib,AB,coin,log,B, TAILS,2,-12.237761
+c3c1,calib,AB,coin,log,B,TAILS,2,-13.686006
+c3c1,calib,AB,d6,assistant,A,1,1,-7.586391
+c3c1,calib,AB,d6,assistant,A,2,1,-0.836392
+c3c1,calib,AB,d6,assistant,A,3,1,-1.711392
+c3c1,calib,AB,d6,assistant,B,4,1,-1.711392
+c3c1,calib,AB,d6,assistant,B,5,1,-1.586392
+c3c1,calib,AB,d6,assistant,B,6,1,-8.086391
+c3c1,calib,AB,d6,user,A,1,1,-5.484224
+c3c1,calib,AB,d6,user,A,2,1,-0.734224
+c3c1,calib,AB,d6,user,A,3,1,-1.359224
+c3c1,calib,AB,d6,user,B,4,1,-2.109224
+c3c1,calib,AB,d6,user,B,5,1,-1.984224
+c3c1,calib,AB,d6,user,B,6,1,-8.296724
+c3c1,calib,AB,d6,narration,A,1,1,-4.930556
+c3c1,calib,AB,d6,narration,A,2,1,-1.430557
+c3c1,calib,AB,d6,narration,A,3,1,-1.055557
+c3c1,calib,AB,d6,narration,B,4,1,-1.555557
+c3c1,calib,AB,d6,narration,B,5,1,-1.680557
+c3c1,calib,AB,d6,narration,B,6,1,-6.055556
+c3c1,calib,AB,d6,log,A,1,1,-3.736017
+c3c1,calib,AB,d6,log,A,2,1,-2.361017
+c3c1,calib,AB,d6,log,A,3,1,-1.361017
+c3c1,calib,AB,d6,log,B,4,1,-0.861017
+c3c1,calib,AB,d6,log,B,5,1,-1.611017
+c3c1,calib,AB,d6,log,B,6,1,-6.486016
+c3c1,calib,AB,parity,assistant,A, odd,1,-10.346687
+c3c1,calib,AB,parity,assistant,A,odd,1,-15.971687
+c3c1,calib,AB,parity,assistant,A, Odd,1,-13.784187
+c3c1,calib,AB,parity,assistant,A,Odd,1,-16.409187
+c3c1,calib,AB,parity,assistant,A, ODD,2,-17.882301
+c3c1,calib,AB,parity,assistant,A,ODD,2,-20.254385
+c3c1,calib,AB,parity,assistant,B, even,1,-6.596687
+c3c1,calib,AB,parity,assistant,B,even,1,-14.409187
+c3c1,calib,AB,parity,assistant,B, Even,1,-12.721687
+c3c1,calib,AB,parity,assistant,B,Even,1,-14.659187
+c3c1,calib,AB,parity,assistant,B, EVEN,1,-14.096687
+c3c1,calib,AB,parity,assistant,B,EVEN,2,-23.515636
+c3c1,calib,AB,parity,user,A, odd,1,-9.612196
+c3c1,calib,AB,parity,user,A,odd,1,-15.455946
+c3c1,calib,AB,parity,user,A, Odd,1,-12.612196
+c3c1,calib,AB,parity,user,A,Odd,1,-14.299696
+c3c1,calib,AB,parity,user,A, ODD,2,-14.847895
+c3c1,calib,AB,parity,user,A,ODD,2,-17.710993
+c3c1,calib,AB,parity,user,B, even,1,-8.674696
+c3c1,calib,AB,parity,user,B,even,1,-14.549696
+c3c1,calib,AB,parity,user,B, Even,1,-12.799696
+c3c1,calib,AB,parity,user,B,Even,1,-15.237196
+c3c1,calib,AB,parity,user,B, EVEN,1,-12.112196
+c3c1,calib,AB,parity,user,B,EVEN,2,-19.088783
+c3c1,calib,AB,parity,narration,A, odd,1,-4.762807
+c3c1,calib,AB,parity,narration,A,odd,1,-10.950307
+c3c1,calib,AB,parity,narration,A, Odd,1,-9.794057
+c3c1,calib,AB,parity,narration,A,Odd,1,-10.200307
+c3c1,calib,AB,parity,narration,A, ODD,2,-14.215503
+c3c1,calib,AB,parity,narration,A,ODD,2,-18.240614
+c3c1,calib,AB,parity,narration,B, even,1,-1.887807
+c3c1,calib,AB,parity,narration,B,even,1,-11.106557
+c3c1,calib,AB,parity,narration,B, Even,1,-10.294057
+c3c1,calib,AB,parity,narration,B,Even,1,-10.825307
+c3c1,calib,AB,parity,narration,B, EVEN,1,-9.919057
+c3c1,calib,AB,parity,narration,B,EVEN,2,-14.413962
+c3c1,calib,AB,parity,log,A, odd,1,-2.369689
+c3c1,calib,AB,parity,log,A,odd,1,-7.744689
+c3c1,calib,AB,parity,log,A, Odd,1,-0.682189
+c3c1,calib,AB,parity,log,A,Odd,1,-5.432189
+c3c1,calib,AB,parity,log,A, ODD,2,-7.712868
+c3c1,calib,AB,parity,log,A,ODD,2,-12.182540
+c3c1,calib,AB,parity,log,B, even,1,-4.807189
+c3c1,calib,AB,parity,log,B,even,1,-9.807189
+c3c1,calib,AB,parity,log,B, Even,1,-4.432189
+c3c1,calib,AB,parity,log,B,Even,1,-10.307189
+c3c1,calib,AB,parity,log,B, EVEN,1,-8.869689
+c3c1,calib,AB,parity,log,B,EVEN,2,-22.455568
+c3c2,calib,AB,coin,assistant,A, heads,1,-3.457050
+c3c2,calib,AB,coin,assistant,A,heads,1,-11.332049
+c3c2,calib,AB,coin,assistant,A, Heads,1,-7.707050
+c3c2,calib,AB,coin,assistant,A,Heads,2,-18.144587
+c3c2,calib,AB,coin,assistant,A, HEADS,2,-11.332057
+c3c2,calib,AB,coin,assistant,A,HEADS,2,-13.644743
+c3c2,calib,AB,coin,assistant,B, tails,1,-1.332050
+c3c2,calib,AB,coin,assistant,B,tails,1,-9.269549
+c3c2,calib,AB,coin,assistant,B, Tails,2,-5.787734
+c3c2,calib,AB,coin,assistant,B,Tails,2,-14.738506
+c3c2,calib,AB,coin,assistant,B, TAILS,2,-8.287733
+c3c2,calib,AB,coin,assistant,B,TAILS,2,-14.894673
+c3c2,calib,AB,coin,user,A, heads,1,-1.679168
+c3c2,calib,AB,coin,user,A,heads,1,-8.054169
+c3c2,calib,AB,coin,user,A, Heads,1,-3.679168
+c3c2,calib,AB,coin,user,A,Heads,2,-8.805920
+c3c2,calib,AB,coin,user,A, HEADS,2,-5.804229
+c3c2,calib,AB,coin,user,A,HEADS,2,-9.804992
+c3c2,calib,AB,coin,user,B, tails,1,-1.054168
+c3c2,calib,AB,coin,user,B,tails,1,-7.866669
+c3c2,calib,AB,coin,user,B, Tails,2,-2.216522
+c3c2,calib,AB,coin,user,B,Tails,2,-11.602022
+c3c2,calib,AB,coin,user,B, TAILS,2,-2.904022
+c3c2,calib,AB,coin,user,B,TAILS,2,-11.429418
+c3c2,calib,AB,coin,narration,A, heads,1,-0.706289
+c3c2,calib,AB,coin,narration,A,heads,1,-8.393789
+c3c2,calib,AB,coin,narration,A, Heads,1,-7.268789
+c3c2,calib,AB,coin,narration,A,Heads,2,-14.737637
+c3c2,calib,AB,coin,narration,A, HEADS,2,-13.521316
+c3c2,calib,AB,coin,narration,A,HEADS,2,-15.494332
+c3c2,calib,AB,coin,narration,B, tails,1,-0.706289
+c3c2,calib,AB,coin,narration,B,tails,1,-10.393789
+c3c2,calib,AB,coin,narration,B, Tails,2,-9.084484
+c3c2,calib,AB,coin,narration,B,Tails,2,-16.241640
+c3c2,calib,AB,coin,narration,B, TAILS,2,-16.709484
+c3c2,calib,AB,coin,narration,B,TAILS,2,-17.442318
+c3c2,calib,AB,coin,log,A, heads,1,-1.903757
+c3c2,calib,AB,coin,log,A,heads,1,-8.153757
+c3c2,calib,AB,coin,log,A, Heads,1,-3.403757
+c3c2,calib,AB,coin,log,A,Heads,2,-12.091281
+c3c2,calib,AB,coin,log,A, HEADS,2,-10.467822
+c3c2,calib,AB,coin,log,A,HEADS,2,-12.857014
+c3c2,calib,AB,coin,log,B, tails,1,-0.278757
+c3c2,calib,AB,coin,log,B,tails,1,-8.091257
+c3c2,calib,AB,coin,log,B, Tails,2,-2.904366
+c3c2,calib,AB,coin,log,B,Tails,2,-12.981195
+c3c2,calib,AB,coin,log,B, TAILS,2,-10.966866
+c3c2,calib,AB,coin,log,B,TAILS,2,-12.971354
+c3c2,calib,AB,d6,assistant,A,1,1,-7.612189
+c3c2,calib,AB,d6,assistant,A,2,1,-0.862190
+c3c2,calib,AB,d6,assistant,A,3,1,-1.612190
+c3c2,calib,AB,d6,assistant,B,4,1,-2.112190
+c3c2,calib,AB,d6,assistant,B,5,1,-1.362190
+c3c2,calib,AB,d6,assistant,B,6,1,-7.237189
+c3c2,calib,AB,d6,user,A,1,1,-5.723618
+c3c2,calib,AB,d6,user,A,2,1,-0.848618
+c3c2,calib,AB,d6,user,A,3,1,-1.098618
+c3c2,calib,AB,d6,user,B,4,1,-2.348618
+c3c2,calib,AB,d6,user,B,5,1,-1.973618
+c3c2,calib,AB,d6,user,B,6,1,-7.036118
+c3c2,calib,AB,d6,narration,A,1,1,-4.997435
+c3c2,calib,AB,d6,narration,A,2,1,-1.622435
+c3c2,calib,AB,d6,narration,A,3,1,-0.997435
+c3c2,calib,AB,d6,narration,B,4,1,-1.497435
+c3c2,calib,AB,d6,narration,B,5,1,-1.622435
+c3c2,calib,AB,d6,narration,B,6,1,-5.559935
+c3c2,calib,AB,d6,log,A,1,1,-3.829562
+c3c2,calib,AB,d6,log,A,2,1,-2.704562
+c3c2,calib,AB,d6,log,A,3,1,-1.454562
+c3c2,calib,AB,d6,log,B,4,1,-0.704562
+c3c2,calib,AB,d6,log,B,5,1,-1.704562
+c3c2,calib,AB,d6,log,B,6,1,-6.704562
+c3c2,calib,AB,parity,assistant,A, odd,1,-10.720820
+c3c2,calib,AB,parity,assistant,A,odd,1,-15.595820
+c3c2,calib,AB,parity,assistant,A, Odd,1,-13.658320
+c3c2,calib,AB,parity,assistant,A,Odd,1,-16.220821
+c3c2,calib,AB,parity,assistant,A, ODD,2,-18.147186
+c3c2,calib,AB,parity,assistant,A,ODD,2,-19.659235
+c3c2,calib,AB,parity,assistant,B, even,1,-7.033320
+c3c2,calib,AB,parity,assistant,B,even,1,-14.470820
+c3c2,calib,AB,parity,assistant,B, Even,1,-12.783320
+c3c2,calib,AB,parity,assistant,B,Even,1,-14.595820
+c3c2,calib,AB,parity,assistant,B, EVEN,1,-13.970820
+c3c2,calib,AB,parity,assistant,B,EVEN,2,-23.574364
+c3c2,calib,AB,parity,user,A, odd,1,-9.870476
+c3c2,calib,AB,parity,user,A,odd,1,-15.557976
+c3c2,calib,AB,parity,user,A, Odd,1,-12.557976
+c3c2,calib,AB,parity,user,A,Odd,1,-14.182976
+c3c2,calib,AB,parity,user,A, ODD,2,-14.445086
+c3c2,calib,AB,parity,user,A,ODD,2,-17.405205
+c3c2,calib,AB,parity,user,B, even,1,-8.745476
+c3c2,calib,AB,parity,user,B,even,1,-14.370476
+c3c2,calib,AB,parity,user,B, Even,1,-12.745476
+c3c2,calib,AB,parity,user,B,Even,1,-15.026726
+c3c2,calib,AB,parity,user,B, EVEN,1,-12.057976
+c3c2,calib,AB,parity,user,B,EVEN,2,-19.200966
+c3c2,calib,AB,parity,narration,A, odd,1,-5.815446
+c3c2,calib,AB,parity,narration,A,odd,1,-11.690446
+c3c2,calib,AB,parity,narration,A, Odd,1,-11.127946
+c3c2,calib,AB,parity,narration,A,Odd,1,-11.846696
+c3c2,calib,AB,parity,narration,A, ODD,2,-14.042889
+c3c2,calib,AB,parity,narration,A,ODD,2,-18.430222
+c3c2,calib,AB,parity,narration,B, even,1,-1.377946
+c3c2,calib,AB,parity,narration,B,even,1,-10.752946
+c3c2,calib,AB,parity,narration,B, Even,1,-10.252946
+c3c2,calib,AB,parity,narration,B,Even,1,-10.752946
+c3c2,calib,AB,parity,narration,B, EVEN,1,-9.721696
+c3c2,calib,AB,parity,narration,B,EVEN,2,-14.769298
+c3c2,calib,AB,parity,log,A, odd,1,-2.840763
+c3c2,calib,AB,parity,log,A,odd,1,-7.278263
+c3c2,calib,AB,parity,log,A, Odd,1,-0.778263
+c3c2,calib,AB,parity,log,A,Odd,1,-5.278263
+c3c2,calib,AB,parity,log,A, ODD,2,-7.524763
+c3c2,calib,AB,parity,log,A,ODD,2,-11.716044
+c3c2,calib,AB,parity,log,B, even,1,-6.403263
+c3c2,calib,AB,parity,log,B,even,1,-10.372013
+c3c2,calib,AB,parity,log,B, Even,1,-5.465763
+c3c2,calib,AB,parity,log,B,Even,1,-10.934513
+c3c2,calib,AB,parity,log,B, EVEN,1,-9.090763
+c3c2,calib,AB,parity,log,B,EVEN,2,-21.249630
+c3c4,calib,AB,coin,assistant,A, heads,1,-4.394105
+c3c4,calib,AB,coin,assistant,A,heads,1,-12.644105
+c3c4,calib,AB,coin,assistant,A, Heads,1,-9.769105
+c3c4,calib,AB,coin,assistant,A,Heads,2,-20.237900
+c3c4,calib,AB,coin,assistant,A, HEADS,2,-14.331613
+c3c4,calib,AB,coin,assistant,A,HEADS,2,-15.581808
+c3c4,calib,AB,coin,assistant,B, tails,1,-0.519105
+c3c4,calib,AB,coin,assistant,B,tails,1,-9.519105
+c3c4,calib,AB,coin,assistant,B, Tails,2,-6.976416
+c3c4,calib,AB,coin,assistant,B,Tails,2,-16.141405
+c3c4,calib,AB,coin,assistant,B, TAILS,2,-9.476416
+c3c4,calib,AB,coin,assistant,B,TAILS,2,-15.706722
+c3c4,calib,AB,coin,user,A, heads,1,-2.053966
+c3c4,calib,AB,coin,user,A,heads,1,-8.428967
+c3c4,calib,AB,coin,user,A, Heads,1,-4.178967
+c3c4,calib,AB,coin,user,A,Heads,2,-9.305440
+c3c4,calib,AB,coin,user,A, HEADS,2,-6.554011
+c3c4,calib,AB,coin,user,A,HEADS,2,-10.554570
+c3c4,calib,AB,coin,user,B, tails,1,-0.928966
+c3c4,calib,AB,coin,user,B,tails,1,-8.116467
+c3c4,calib,AB,coin,user,B, Tails,2,-2.389164
+c3c4,calib,AB,coin,user,B,Tails,2,-11.922529
+c3c4,calib,AB,coin,user,B, TAILS,2,-2.639164
+c3c4,calib,AB,coin,user,B,TAILS,2,-11.554189
+c3c4,calib,AB,coin,narration,A, heads,1,-1.070536
+c3c4,calib,AB,coin,narration,A,heads,1,-8.945536
+c3c4,calib,AB,coin,narration,A, Heads,1,-7.320536
+c3c4,calib,AB,coin,narration,A,Heads,2,-14.820597
+c3c4,calib,AB,coin,narration,A, HEADS,2,-13.072803
+c3c4,calib,AB,coin,narration,A,HEADS,2,-15.046283
+c3c4,calib,AB,coin,narration,B, tails,1,-0.445536
+c3c4,calib,AB,coin,narration,B,tails,1,-9.820536
+c3c4,calib,AB,coin,narration,B, Tails,2,-9.575990
+c3c4,calib,AB,coin,narration,B,Tails,2,-16.325630
+c3c4,calib,AB,coin,narration,B, TAILS,2,-16.325989
+c3c4,calib,AB,coin,narration,B,TAILS,2,-16.845993
+c3c4,calib,AB,coin,log,A, heads,1,-1.978827
+c3c4,calib,AB,coin,log,A,heads,1,-8.791327
+c3c4,calib,AB,coin,log,A, Heads,1,-3.978827
+c3c4,calib,AB,coin,log,A,Heads,2,-14.103891
+c3c4,calib,AB,coin,log,A, HEADS,2,-11.855514
+c3c4,calib,AB,coin,log,A,HEADS,2,-13.493593
+c3c4,calib,AB,coin,log,B, tails,1,-0.228827
+c3c4,calib,AB,coin,log,B,tails,1,-8.666327
+c3c4,calib,AB,coin,log,B, Tails,2,-3.104336
+c3c4,calib,AB,coin,log,B,Tails,2,-13.757585
+c3c4,calib,AB,coin,log,B, TAILS,2,-12.416836
+c3c4,calib,AB,coin,log,B,TAILS,2,-13.612225
+c3c4,calib,AB,d6,assistant,A,1,1,-7.536620
+c3c4,calib,AB,d6,assistant,A,2,1,-0.911620
+c3c4,calib,AB,d6,assistant,A,3,1,-2.411620
+c3c4,calib,AB,d6,assistant,B,4,1,-1.661620
+c3c4,calib,AB,d6,assistant,B,5,1,-1.161620
+c3c4,calib,AB,d6,assistant,B,6,1,-5.286620
+c3c4,calib,AB,d6,user,A,1,1,-4.076047
+c3c4,calib,AB,d6,user,A,2,1,-0.701047
+c3c4,calib,AB,d6,user,A,3,1,-1.701047
+c3c4,calib,AB,d6,user,B,4,1,-1.951047
+c3c4,calib,AB,d6,user,B,5,1,-1.826047
+c3c4,calib,AB,d6,user,B,6,1,-6.701047
+c3c4,calib,AB,d6,narration,A,1,1,-4.523690
+c3c4,calib,AB,d6,narration,A,2,1,-1.648690
+c3c4,calib,AB,d6,narration,A,3,1,-1.648690
+c3c4,calib,AB,d6,narration,B,4,1,-1.148690
+c3c4,calib,AB,d6,narration,B,5,1,-1.273690
+c3c4,calib,AB,d6,narration,B,6,1,-5.836190
+c3c4,calib,AB,d6,log,A,1,1,-3.874358
+c3c4,calib,AB,d6,log,A,2,1,-2.499358
+c3c4,calib,AB,d6,log,A,3,1,-1.499358
+c3c4,calib,AB,d6,log,B,4,1,-0.749358
+c3c4,calib,AB,d6,log,B,5,1,-1.624358
+c3c4,calib,AB,d6,log,B,6,1,-5.999358
+c3c4,calib,AB,parity,assistant,A, odd,1,-11.489914
+c3c4,calib,AB,parity,assistant,A,odd,1,-17.114914
+c3c4,calib,AB,parity,assistant,A, Odd,1,-14.739914
+c3c4,calib,AB,parity,assistant,A,Odd,1,-17.489914
+c3c4,calib,AB,parity,assistant,A, ODD,2,-18.186525
+c3c4,calib,AB,parity,assistant,A,ODD,2,-20.773081
+c3c4,calib,AB,parity,assistant,B, even,1,-6.114914
+c3c4,calib,AB,parity,assistant,B,even,1,-14.052414
+c3c4,calib,AB,parity,assistant,B, Even,1,-12.239914
+c3c4,calib,AB,parity,assistant,B,Even,1,-14.364914
+c3c4,calib,AB,parity,assistant,B, EVEN,1,-13.739914
+c3c4,calib,AB,parity,assistant,B,EVEN,2,-23.358717
+c3c4,calib,AB,parity,user,A, odd,1,-11.479141
+c3c4,calib,AB,parity,user,A,odd,1,-17.197891
+c3c4,calib,AB,parity,user,A, Odd,1,-14.166641
+c3c4,calib,AB,parity,user,A,Odd,1,-16.197891
+c3c4,calib,AB,parity,user,A, ODD,2,-16.209881
+c3c4,calib,AB,parity,user,A,ODD,2,-18.858929
+c3c4,calib,AB,parity,user,B, even,1,-7.541642
+c3c4,calib,AB,parity,user,B,even,1,-14.041641
+c3c4,calib,AB,parity,user,B, Even,1,-11.916641
+c3c4,calib,AB,parity,user,B,Even,1,-14.541641
+c3c4,calib,AB,parity,user,B, EVEN,1,-11.729141
+c3c4,calib,AB,parity,user,B,EVEN,2,-19.460707
+c3c4,calib,AB,parity,narration,A, odd,1,-4.733602
+c3c4,calib,AB,parity,narration,A,odd,1,-10.952352
+c3c4,calib,AB,parity,narration,A, Odd,1,-9.858602
+c3c4,calib,AB,parity,narration,A,Odd,1,-10.421102
+c3c4,calib,AB,parity,narration,A, ODD,2,-14.182693
+c3c4,calib,AB,parity,narration,A,ODD,2,-17.619953
+c3c4,calib,AB,parity,narration,B, even,1,-1.546101
+c3c4,calib,AB,parity,narration,B,even,1,-10.889852
+c3c4,calib,AB,parity,narration,B, Even,1,-10.108602
+c3c4,calib,AB,parity,narration,B,Even,1,-10.546102
+c3c4,calib,AB,parity,narration,B, EVEN,1,-9.764852
+c3c4,calib,AB,parity,narration,B,EVEN,2,-14.735615
+c3c4,calib,AB,parity,log,A, odd,1,-2.447315
+c3c4,calib,AB,parity,log,A,odd,1,-7.572315
+c3c4,calib,AB,parity,log,A, Odd,1,-1.134815
+c3c4,calib,AB,parity,log,A,Odd,1,-5.634815
+c3c4,calib,AB,parity,log,A, ODD,2,-7.947804
+c3c4,calib,AB,parity,log,A,ODD,2,-12.135291
+c3c4,calib,AB,parity,log,B, even,1,-3.822315
+c3c4,calib,AB,parity,log,B,even,1,-8.822315
+c3c4,calib,AB,parity,log,B, Even,1,-3.634815
+c3c4,calib,AB,parity,log,B,Even,1,-9.072315
+c3c4,calib,AB,parity,log,B, EVEN,1,-7.322315
+c3c4,calib,AB,parity,log,B,EVEN,2,-20.643520
+c4c0,calib,AB,coin,assistant,A, heads,1,-4.085793
+c4c0,calib,AB,coin,assistant,A,heads,1,-11.960793
+c4c0,calib,AB,coin,assistant,A, Heads,1,-8.585793
+c4c0,calib,AB,coin,assistant,A,Heads,2,-18.867064
+c4c0,calib,AB,coin,assistant,A, HEADS,2,-12.398300
+c4c0,calib,AB,coin,assistant,A,HEADS,2,-14.336085
+c4c0,calib,AB,coin,assistant,B, tails,1,-0.835793
+c4c0,calib,AB,coin,assistant,B,tails,1,-9.210793
+c4c0,calib,AB,coin,assistant,B, Tails,2,-6.145106
+c4c0,calib,AB,coin,assistant,B,Tails,2,-15.159907
+c4c0,calib,AB,coin,assistant,B, TAILS,2,-7.770106
+c4c0,calib,AB,coin,assistant,B,TAILS,2,-15.085929
+c4c0,calib,AB,coin,user,A, heads,1,-1.633358
+c4c0,calib,AB,coin,user,A,heads,1,-7.820858
+c4c0,calib,AB,coin,user,A, Heads,1,-3.383358
+c4c0,calib,AB,coin,user,A,Heads,2,-8.072255
+c4c0,calib,AB,coin,user,A, HEADS,2,-5.570900
+c4c0,calib,AB,coin,user,A,HEADS,2,-9.634348
+c4c0,calib,AB,coin,user,B, tails,1,-1.383358
+c4c0,calib,AB,coin,user,B,tails,1,-8.008358
+c4c0,calib,AB,coin,user,B, Tails,2,-2.243372
+c4c0,calib,AB,coin,user,B,Tails,2,-11.505156
+c4c0,calib,AB,coin,user,B, TAILS,2,-2.430872
+c4c0,calib,AB,coin,user,B,TAILS,2,-11.508609
+c4c0,calib,AB,coin,narration,A, heads,1,-1.079656
+c4c0,calib,AB,coin,narration,A,heads,1,-8.517156
+c4c0,calib,AB,coin,narration,A, Heads,1,-6.767156
+c4c0,calib,AB,coin,narration,A,Heads,2,-14.017249
+c4c0,calib,AB,coin,narration,A, HEADS,2,-12.643112
+c4c0,calib,AB,coin,narration,A,HEADS,2,-14.895531
+c4c0,calib,AB,coin,narration,B, tails,1,-0.454656
+c4c0,calib,AB,coin,narration,B,tails,1,-8.392156
+c4c0,calib,AB,coin,narration,B, Tails,2,-11.274900
+c4c0,calib,AB,coin,narration,B,Tails,2,-16.008408
+c4c0,calib,AB,coin,narration,B, TAILS,2,-16.837400
+c4c0,calib,AB,coin,narration,B,TAILS,2,-15.870575
+c4c0,calib,AB,coin,log,A, heads,1,-1.667687
+c4c0,calib,AB,coin,log,A,heads,1,-7.480187
+c4c0,calib,AB,coin,log,A, Heads,1,-3.792687
+c4c0,calib,AB,coin,log,A,Heads,2,-11.480227
+c4c0,calib,AB,coin,log,A, HEADS,2,-10.357298
+c4c0,calib,AB,coin,log,A,HEADS,2,-12.683555
+c4c0,calib,AB,coin,log,B, tails,1,-0.292687
+c4c0,calib,AB,coin,log,B,tails,1,-7.855187
+c4c0,calib,AB,coin,log,B, Tails,2,-3.419691
+c4c0,calib,AB,coin,log,B,Tails,2,-12.763271
+c4c0,calib,AB,coin,log,B, TAILS,2,-10.919691
+c4c0,calib,AB,coin,log,B,TAILS,2,-13.048217
+c4c0,calib,AB,d6,assistant,A,1,1,-8.660758
+c4c0,calib,AB,d6,assistant,A,2,1,-0.723258
+c4c0,calib,AB,d6,assistant,A,3,1,-1.848258
+c4c0,calib,AB,d6,assistant,B,4,1,-1.723258
+c4c0,calib,AB,d6,assistant,B,5,1,-1.723258
+c4c0,calib,AB,d6,assistant,B,6,1,-8.785758
+c4c0,calib,AB,d6,user,A,1,1,-6.325922
+c4c0,calib,AB,d6,user,A,2,1,-0.575922
+c4c0,calib,AB,d6,user,A,3,1,-1.450922
+c4c0,calib,AB,d6,user,B,4,1,-2.075922
+c4c0,calib,AB,d6,user,B,5,1,-2.575922
+c4c0,calib,AB,d6,user,B,6,1,-9.075922
+c4c0,calib,AB,d6,narration,A,1,1,-5.291484
+c4c0,calib,AB,d6,narration,A,2,1,-1.916484
+c4c0,calib,AB,d6,narration,A,3,1,-1.541484
+c4c0,calib,AB,d6,narration,B,4,1,-1.041484
+c4c0,calib,AB,d6,narration,B,5,1,-1.291484
+c4c0,calib,AB,d6,narration,B,6,1,-5.728984
+c4c0,calib,AB,d6,log,A,1,1,-4.918968
+c4c0,calib,AB,d6,log,A,2,1,-3.043968
+c4c0,calib,AB,d6,log,A,3,1,-2.543968
+c4c0,calib,AB,d6,log,B,4,1,-0.668968
+c4c0,calib,AB,d6,log,B,5,1,-1.043968
+c4c0,calib,AB,d6,log,B,6,1,-7.606468
+c4c0,calib,AB,parity,assistant,A, odd,1,-10.733645
+c4c0,calib,AB,parity,assistant,A,odd,1,-16.296144
+c4c0,calib,AB,parity,assistant,A, Odd,1,-13.796145
+c4c0,calib,AB,parity,assistant,A,Odd,1,-16.608644
+c4c0,calib,AB,parity,assistant,A, ODD,2,-18.291311
+c4c0,calib,AB,parity,assistant,A,ODD,2,-20.297945
+c4c0,calib,AB,parity,assistant,B, even,1,-6.296145
+c4c0,calib,AB,parity,assistant,B,even,1,-14.233645
+c4c0,calib,AB,parity,assistant,B, Even,1,-12.296145
+c4c0,calib,AB,parity,assistant,B,Even,1,-14.296145
+c4c0,calib,AB,parity,assistant,B, EVEN,1,-13.796145
+c4c0,calib,AB,parity,assistant,B,EVEN,2,-23.313164
+c4c0,calib,AB,parity,user,A, odd,1,-10.528641
+c4c0,calib,AB,parity,user,A,odd,1,-16.122391
+c4c0,calib,AB,parity,user,A, Odd,1,-13.091141
+c4c0,calib,AB,parity,user,A,Odd,1,-14.778641
+c4c0,calib,AB,parity,user,A, ODD,2,-15.390680
+c4c0,calib,AB,parity,user,A,ODD,2,-17.940760
+c4c0,calib,AB,parity,user,B, even,1,-9.028641
+c4c0,calib,AB,parity,user,B,even,1,-14.903641
+c4c0,calib,AB,parity,user,B, Even,1,-13.028641
+c4c0,calib,AB,parity,user,B,Even,1,-15.403641
+c4c0,calib,AB,parity,user,B, EVEN,1,-12.466141
+c4c0,calib,AB,parity,user,B,EVEN,2,-19.541595
+c4c0,calib,AB,parity,narration,A, odd,1,-6.416553
+c4c0,calib,AB,parity,narration,A,odd,1,-11.854053
+c4c0,calib,AB,parity,narration,A, Odd,1,-11.447803
+c4c0,calib,AB,parity,narration,A,Odd,1,-11.541553
+c4c0,calib,AB,parity,narration,A, ODD,2,-13.824756
+c4c0,calib,AB,parity,narration,A,ODD,2,-18.230412
+c4c0,calib,AB,parity,narration,B, even,1,-1.354054
+c4c0,calib,AB,parity,narration,B,even,1,-10.510303
+c4c0,calib,AB,parity,narration,B, Even,1,-9.385303
+c4c0,calib,AB,parity,narration,B,Even,1,-9.916553
+c4c0,calib,AB,parity,narration,B, EVEN,1,-8.854053
+c4c0,calib,AB,parity,narration,B,EVEN,2,-14.647078
+c4c0,calib,AB,parity,log,A, odd,1,-3.879159
+c4c0,calib,AB,parity,log,A,odd,1,-8.691659
+c4c0,calib,AB,parity,log,A, Odd,1,-1.691659
+c4c0,calib,AB,parity,log,A,Odd,1,-6.379159
+c4c0,calib,AB,parity,log,A, ODD,2,-9.262736
+c4c0,calib,AB,parity,log,A,ODD,2,-13.973836
+c4c0,calib,AB,parity,log,B, even,1,-1.691659
+c4c0,calib,AB,parity,log,B,even,1,-7.379159
+c4c0,calib,AB,parity,log,B, Even,1,-1.316659
+c4c0,calib,AB,parity,log,B,Even,1,-6.941659
+c4c0,calib,AB,parity,log,B, EVEN,1,-5.254159
+c4c0,calib,AB,parity,log,B,EVEN,2,-20.445553
+c4c1,calib,AB,coin,assistant,A, heads,1,-3.482599
+c4c1,calib,AB,coin,assistant,A,heads,1,-11.732599
+c4c1,calib,AB,coin,assistant,A, Heads,1,-9.107599
+c4c1,calib,AB,coin,assistant,A,Heads,2,-18.826378
+c4c1,calib,AB,coin,assistant,A, HEADS,2,-13.357608
+c4c1,calib,AB,coin,assistant,A,HEADS,2,-14.920387
+c4c1,calib,AB,coin,assistant,B, tails,1,-0.732599
+c4c1,calib,AB,coin,assistant,B,tails,1,-9.482599
+c4c1,calib,AB,coin,assistant,B, Tails,2,-7.481492
+c4c1,calib,AB,coin,assistant,B,Tails,2,-15.999150
+c4c1,calib,AB,coin,assistant,B, TAILS,2,-9.543992
+c4c1,calib,AB,coin,assistant,B,TAILS,2,-15.982689
+c4c1,calib,AB,coin,user,A, heads,1,-1.364105
+c4c1,calib,AB,coin,user,A,heads,1,-7.676604
+c4c1,calib,AB,coin,user,A, Heads,1,-3.489105
+c4c1,calib,AB,coin,user,A,Heads,2,-8.364978
+c4c1,calib,AB,coin,user,A, HEADS,2,-5.864157
+c4c1,calib,AB,coin,user,A,HEADS,2,-9.989848
+c4c1,calib,AB,coin,user,B, tails,1,-1.364105
+c4c1,calib,AB,coin,user,B,tails,1,-8.176604
+c4c1,calib,AB,coin,user,B, Tails,2,-2.670930
+c4c1,calib,AB,coin,user,B,Tails,2,-11.675606
+c4c1,calib,AB,coin,user,B, TAILS,2,-2.983430
+c4c1,calib,AB,coin,user,B,TAILS,2,-12.114293
+c4c1,calib,AB,coin,narration,A, heads,1,-1.156962
+c4c1,calib,AB,coin,narration,A,heads,1,-9.031962
+c4c1,calib,AB,coin,narration,A, Heads,1,-6.594462
+c4c1,calib,AB,coin,narration,A,Heads,2,-15.032009
+c4c1,calib,AB,coin,narration,A, HEADS,2,-12.408294
+c4c1,calib,AB,coin,narration,A,HEADS,2,-14.819235
+c4c1,calib,AB,coin,narration,B, tails,1,-0.406962
+c4c1,calib,AB,coin,narration,B,tails,1,-8.969462
+c4c1,calib,AB,coin,narration,B, Tails,2,-10.229137
+c4c1,calib,AB,coin,narration,B,Tails,2,-16.413910
+c4c1,calib,AB,coin,narration,B, TAILS,2,-16.229137
+c4c1,calib,AB,coin,narration,B,TAILS,2,-16.169418
+c4c1,calib,AB,coin,log,A, heads,1,-1.409457
+c4c1,calib,AB,coin,log,A,heads,1,-7.846957
+c4c1,calib,AB,coin,log,A, Heads,1,-3.284457
+c4c1,calib,AB,coin,log,A,Heads,2,-12.347034
+c4c1,calib,AB,coin,log,A, HEADS,2,-10.474079
+c4c1,calib,AB,coin,log,A,HEADS,2,-12.862756
+c4c1,calib,AB,coin,log,B, tails,1,-0.409457
+c4c1,calib,AB,coin,log,B,tails,1,-8.346957
+c4c1,calib,AB,coin,log,B, Tails,2,-3.035740
+c4c1,calib,AB,coin,log,B,Tails,2,-13.146907
+c4c1,calib,AB,coin,log,B, TAILS,2,-11.785740
+c4c1,calib,AB,coin,log,B,TAILS,2,-12.852766
+c4c1,calib,AB,d6,assistant,A,1,1,-8.775926
+c4c1,calib,AB,d6,assistant,A,2,1,-0.963426
+c4c1,calib,AB,d6,assistant,A,3,1,-2.088426
+c4c1,calib,AB,d6,assistant,B,4,1,-1.338426
+c4c1,calib,AB,d6,assistant,B,5,1,-1.463426
+c4c1,calib,AB,d6,assistant,B,6,1,-7.338426
+c4c1,calib,AB,d6,user,A,1,1,-6.623139
+c4c1,calib,AB,d6,user,A,2,1,-0.748139
+c4c1,calib,AB,d6,user,A,3,1,-1.623139
+c4c1,calib,AB,d6,user,B,4,1,-1.748139
+c4c1,calib,AB,d6,user,B,5,1,-1.873139
+c4c1,calib,AB,d6,user,B,6,1,-7.935639
+c4c1,calib,AB,d6,narration,A,1,1,-4.923581
+c4c1,calib,AB,d6,narration,A,2,1,-1.861081
+c4c1,calib,AB,d6,narration,A,3,1,-1.361081
+c4c1,calib,AB,d6,narration,B,4,1,-1.486081
+c4c1,calib,AB,d6,narration,B,5,1,-1.111081
+c4c1,calib,AB,d6,narration,B,6,1,-5.548581
+c4c1,calib,AB,d6,log,A,1,1,-2.555110
+c4c1,calib,AB,d6,log,A,2,1,-2.305110
+c4c1,calib,AB,d6,log,A,3,1,-1.805110
+c4c1,calib,AB,d6,log,B,4,1,-1.180110
+c4c1,calib,AB,d6,log,B,5,1,-1.055110
+c4c1,calib,AB,d6,log,B,6,1,-6.867610
+c4c1,calib,AB,parity,assistant,A, odd,1,-10.897472
+c4c1,calib,AB,parity,assistant,A,odd,1,-16.834972
+c4c1,calib,AB,parity,assistant,A, Odd,1,-14.334972
+c4c1,calib,AB,parity,assistant,A,Odd,1,-16.959972
+c4c1,calib,AB,parity,assistant,A, ODD,2,-18.319698
+c4c1,calib,AB,parity,assistant,A,ODD,2,-20.992847
+c4c1,calib,AB,parity,assistant,B, even,1,-6.522472
+c4c1,calib,AB,parity,assistant,B,even,1,-14.397472
+c4c1,calib,AB,parity,assistant,B, Even,1,-12.584972
+c4c1,calib,AB,parity,assistant,B,Even,1,-14.584972
+c4c1,calib,AB,parity,assistant,B, EVEN,1,-14.209972
+c4c1,calib,AB,parity,assistant,B,EVEN,2,-24.018730
+c4c1,calib,AB,parity,user,A, odd,1,-10.109278
+c4c1,calib,AB,parity,user,A,odd,1,-15.953028
+c4c1,calib,AB,parity,user,A, Odd,1,-13.234278
+c4c1,calib,AB,parity,user,A,Odd,1,-14.796778
+c4c1,calib,AB,parity,user,A, ODD,2,-15.978232
+c4c1,calib,AB,parity,user,A,ODD,2,-18.150558
+c4c1,calib,AB,parity,user,B, even,1,-9.421778
+c4c1,calib,AB,parity,user,B,even,1,-15.296778
+c4c1,calib,AB,parity,user,B, Even,1,-13.546778
+c4c1,calib,AB,parity,user,B,Even,1,-15.921778
+c4c1,calib,AB,parity,user,B, EVEN,1,-12.921778
+c4c1,calib,AB,parity,user,B,EVEN,2,-19.413809
+c4c1,calib,AB,parity,narration,A, odd,1,-5.235528
+c4c1,calib,AB,parity,narration,A,odd,1,-11.141777
+c4c1,calib,AB,parity,narration,A, Odd,1,-10.360527
+c4c1,calib,AB,parity,narration,A,Odd,1,-10.454277
+c4c1,calib,AB,parity,narration,A, ODD,2,-14.127702
+c4c1,calib,AB,parity,narration,A,ODD,2,-17.662901
+c4c1,calib,AB,parity,narration,B, even,1,-1.735528
+c4c1,calib,AB,parity,narration,B,even,1,-10.891777
+c4c1,calib,AB,parity,narration,B, Even,1,-9.891777
+c4c1,calib,AB,parity,narration,B,Even,1,-10.516777
+c4c1,calib,AB,parity,narration,B, EVEN,1,-9.610527
+c4c1,calib,AB,parity,narration,B,EVEN,2,-15.177349
+c4c1,calib,AB,parity,log,A, odd,1,-2.529863
+c4c1,calib,AB,parity,log,A,odd,1,-7.842363
+c4c1,calib,AB,parity,log,A, Odd,1,-1.342363
+c4c1,calib,AB,parity,log,A,Odd,1,-5.654863
+c4c1,calib,AB,parity,log,A, ODD,2,-8.718657
+c4c1,calib,AB,parity,log,A,ODD,2,-12.967957
+c4c1,calib,AB,parity,log,B, even,1,-2.092363
+c4c1,calib,AB,parity,log,B,even,1,-8.029863
+c4c1,calib,AB,parity,log,B, Even,1,-2.404863
+c4c1,calib,AB,parity,log,B,Even,1,-7.904863
+c4c1,calib,AB,parity,log,B, EVEN,1,-6.279863
+c4c1,calib,AB,parity,log,B,EVEN,2,-22.335033
+c4c2,calib,AB,coin,assistant,A, heads,1,-3.388960
+c4c2,calib,AB,coin,assistant,A,heads,1,-11.013960
+c4c2,calib,AB,coin,assistant,A, Heads,1,-7.388960
+c4c2,calib,AB,coin,assistant,A,Heads,2,-17.732733
+c4c2,calib,AB,coin,assistant,A, HEADS,2,-10.826466
+c4c2,calib,AB,coin,assistant,A,HEADS,2,-13.139215
+c4c2,calib,AB,coin,assistant,B, tails,1,-1.513960
+c4c2,calib,AB,coin,assistant,B,tails,1,-9.201460
+c4c2,calib,AB,coin,assistant,B, Tails,2,-5.574293
+c4c2,calib,AB,coin,assistant,B,Tails,2,-14.639993
+c4c2,calib,AB,coin,assistant,B, TAILS,2,-8.386793
+c4c2,calib,AB,coin,assistant,B,TAILS,2,-14.889061
+c4c2,calib,AB,coin,user,A, heads,1,-1.376357
+c4c2,calib,AB,coin,user,A,heads,1,-7.563857
+c4c2,calib,AB,coin,user,A, Heads,1,-3.126357
+c4c2,calib,AB,coin,user,A,Heads,2,-8.064733
+c4c2,calib,AB,coin,user,A, HEADS,2,-5.376412
+c4c2,calib,AB,coin,user,A,HEADS,2,-9.439647
+c4c2,calib,AB,coin,user,B, tails,1,-1.501357
+c4c2,calib,AB,coin,user,B,tails,1,-8.063857
+c4c2,calib,AB,coin,user,B, Tails,2,-2.105487
+c4c2,calib,AB,coin,user,B,Tails,2,-11.460462
+c4c2,calib,AB,coin,user,B, TAILS,2,-2.980487
+c4c2,calib,AB,coin,user,B,TAILS,2,-11.657815
+c4c2,calib,AB,coin,narration,A, heads,1,-0.784597
+c4c2,calib,AB,coin,narration,A,heads,1,-8.597096
+c4c2,calib,AB,coin,narration,A, Heads,1,-8.222096
+c4c2,calib,AB,coin,narration,A,Heads,2,-15.722486
+c4c2,calib,AB,coin,narration,A, HEADS,2,-12.661975
+c4c2,calib,AB,coin,narration,A,HEADS,2,-15.198104
+c4c2,calib,AB,coin,narration,B, tails,1,-0.659597
+c4c2,calib,AB,coin,narration,B,tails,1,-9.659596
+c4c2,calib,AB,coin,narration,B, Tails,2,-10.975570
+c4c2,calib,AB,coin,narration,B,Tails,2,-16.787842
+c4c2,calib,AB,coin,narration,B, TAILS,2,-17.663071
+c4c2,calib,AB,coin,narration,B,TAILS,2,-17.245897
+c4c2,calib,AB,coin,log,A, heads,1,-2.120013
+c4c2,calib,AB,coin,log,A,heads,1,-7.745014
+c4c2,calib,AB,coin,log,A, Heads,1,-3.620013
+c4c2,calib,AB,coin,log,A,Heads,2,-12.370077
+c4c2,calib,AB,coin,log,A, HEADS,2,-10.309443
+c4c2,calib,AB,coin,log,A,HEADS,2,-12.388840
+c4c2,calib,AB,coin,log,B, tails,1,-0.245013
+c4c2,calib,AB,coin,log,B,tails,1,-7.495014
+c4c2,calib,AB,coin,log,B, Tails,2,-2.870986
+c4c2,calib,AB,coin,log,B,Tails,2,-12.715341
+c4c2,calib,AB,coin,log,B, TAILS,2,-11.933485
+c4c2,calib,AB,coin,log,B,TAILS,2,-12.313663
+c4c2,calib,AB,d6,assistant,A,1,1,-8.766087
+c4c2,calib,AB,d6,assistant,A,2,1,-0.953587
+c4c2,calib,AB,d6,assistant,A,3,1,-1.953587
+c4c2,calib,AB,d6,assistant,B,4,1,-1.578587
+c4c2,calib,AB,d6,assistant,B,5,1,-1.328587
+c4c2,calib,AB,d6,assistant,B,6,1,-6.453587
+c4c2,calib,AB,d6,user,A,1,1,-7.334287
+c4c2,calib,AB,d6,user,A,2,1,-0.834287
+c4c2,calib,AB,d6,user,A,3,1,-1.334287
+c4c2,calib,AB,d6,user,B,4,1,-1.834287
+c4c2,calib,AB,d6,user,B,5,1,-1.959287
+c4c2,calib,AB,d6,user,B,6,1,-6.834287
+c4c2,calib,AB,d6,narration,A,1,1,-6.605151
+c4c2,calib,AB,d6,narration,A,2,1,-2.980151
+c4c2,calib,AB,d6,narration,A,3,1,-2.105151
+c4c2,calib,AB,d6,narration,B,4,1,-0.730151
+c4c2,calib,AB,d6,narration,B,5,1,-1.105151
+c4c2,calib,AB,d6,narration,B,6,1,-4.980151
+c4c2,calib,AB,d6,log,A,1,1,-4.193772
+c4c2,calib,AB,d6,log,A,2,1,-2.193772
+c4c2,calib,AB,d6,log,A,3,1,-2.443772
+c4c2,calib,AB,d6,log,B,4,1,-0.818772
+c4c2,calib,AB,d6,log,B,5,1,-1.068772
+c4c2,calib,AB,d6,log,B,6,1,-6.756272
+c4c2,calib,AB,parity,assistant,A, odd,1,-11.115929
+c4c2,calib,AB,parity,assistant,A,odd,1,-15.803429
+c4c2,calib,AB,parity,assistant,A, Odd,1,-13.678429
+c4c2,calib,AB,parity,assistant,A,Odd,1,-16.303429
+c4c2,calib,AB,parity,assistant,A, ODD,2,-18.230751
+c4c2,calib,AB,parity,assistant,A,ODD,2,-19.679186
+c4c2,calib,AB,parity,assistant,B, even,1,-6.865928
+c4c2,calib,AB,parity,assistant,B,even,1,-14.428429
+c4c2,calib,AB,parity,assistant,B, Even,1,-12.428429
+c4c2,calib,AB,parity,assistant,B,Even,1,-14.365929
+c4c2,calib,AB,parity,assistant,B, EVEN,1,-13.678429
+c4c2,calib,AB,parity,assistant,B,EVEN,2,-23.498423
+c4c2,calib,AB,parity,user,A, odd,1,-9.792848
+c4c2,calib,AB,parity,user,A,odd,1,-15.449098
+c4c2,calib,AB,parity,user,A, Odd,1,-12.542848
+c4c2,calib,AB,parity,user,A,Odd,1,-13.980348
+c4c2,calib,AB,parity,user,A, ODD,2,-14.593528
+c4c2,calib,AB,parity,user,A,ODD,2,-17.424149
+c4c2,calib,AB,parity,user,B, even,1,-7.792848
+c4c2,calib,AB,parity,user,B,even,1,-13.605348
+c4c2,calib,AB,parity,user,B, Even,1,-11.917848
+c4c2,calib,AB,parity,user,B,Even,1,-14.105348
+c4c2,calib,AB,parity,user,B, EVEN,1,-11.542848
+c4c2,calib,AB,parity,user,B,EVEN,2,-18.971203
+c4c2,calib,AB,parity,narration,A, odd,1,-7.181800
+c4c2,calib,AB,parity,narration,A,odd,1,-13.369300
+c4c2,calib,AB,parity,narration,A, Odd,1,-13.525550
+c4c2,calib,AB,parity,narration,A,Odd,1,-13.666175
+c4c2,calib,AB,parity,narration,A, ODD,2,-14.566750
+c4c2,calib,AB,parity,narration,A,ODD,2,-18.859001
+c4c2,calib,AB,parity,narration,B, even,1,-1.494300
+c4c2,calib,AB,parity,narration,B,even,1,-11.463050
+c4c2,calib,AB,parity,narration,B, Even,1,-10.838050
+c4c2,calib,AB,parity,narration,B,Even,1,-10.963050
+c4c2,calib,AB,parity,narration,B, EVEN,1,-9.619300
+c4c2,calib,AB,parity,narration,B,EVEN,2,-15.753945
+c4c2,calib,AB,parity,log,A, odd,1,-3.465163
+c4c2,calib,AB,parity,log,A,odd,1,-8.152663
+c4c2,calib,AB,parity,log,A, Odd,1,-2.090163
+c4c2,calib,AB,parity,log,A,Odd,1,-6.090163
+c4c2,calib,AB,parity,log,A, ODD,2,-9.370854
+c4c2,calib,AB,parity,log,A,ODD,2,-13.559546
+c4c2,calib,AB,parity,log,B, even,1,-4.027663
+c4c2,calib,AB,parity,log,B,even,1,-8.715163
+c4c2,calib,AB,parity,log,B, Even,1,-3.840163
+c4c2,calib,AB,parity,log,B,Even,1,-9.090163
+c4c2,calib,AB,parity,log,B, EVEN,1,-7.840163
+c4c2,calib,AB,parity,log,B,EVEN,2,-20.875759
+c4c3,calib,AB,coin,assistant,A, heads,1,-4.099223
+c4c3,calib,AB,coin,assistant,A,heads,1,-11.849223
+c4c3,calib,AB,coin,assistant,A, Heads,1,-8.974223
+c4c3,calib,AB,coin,assistant,A,Heads,2,-19.005503
+c4c3,calib,AB,coin,assistant,A, HEADS,2,-12.974231
+c4c3,calib,AB,coin,assistant,A,HEADS,2,-14.536924
+c4c3,calib,AB,coin,assistant,B, tails,1,-0.974223
+c4c3,calib,AB,coin,assistant,B,tails,1,-9.474223
+c4c3,calib,AB,coin,assistant,B, Tails,2,-6.561326
+c4c3,calib,AB,coin,assistant,B,Tails,2,-15.557002
+c4c3,calib,AB,coin,assistant,B, TAILS,2,-9.061326
+c4c3,calib,AB,coin,assistant,B,TAILS,2,-15.536823
+c4c3,calib,AB,coin,user,A, heads,1,-1.926344
+c4c3,calib,AB,coin,user,A,heads,1,-8.113844
+c4c3,calib,AB,coin,user,A, Heads,1,-4.051344
+c4c3,calib,AB,coin,user,A,Heads,2,-8.739820
+c4c3,calib,AB,coin,user,A, HEADS,2,-6.363899
+c4c3,calib,AB,coin,user,A,HEADS,2,-10.114585
+c4c3,calib,AB,coin,user,B, tails,1,-1.176344
+c4c3,calib,AB,coin,user,B,tails,1,-8.176344
+c4c3,calib,AB,coin,user,B, Tails,2,-2.121690
+c4c3,calib,AB,coin,user,B,Tails,2,-11.671483
+c4c3,calib,AB,coin,user,B, TAILS,2,-2.746690
+c4c3,calib,AB,coin,user,B,TAILS,2,-11.801621
+c4c3,calib,AB,coin,narration,A, heads,1,-1.065323
+c4c3,calib,AB,coin,narration,A,heads,1,-8.815323
+c4c3,calib,AB,coin,narration,A, Heads,1,-6.877822
+c4c3,calib,AB,coin,narration,A,Heads,2,-15.596635
+c4c3,calib,AB,coin,narration,A, HEADS,2,-13.067913
+c4c3,calib,AB,coin,narration,A,HEADS,2,-15.386890
+c4c3,calib,AB,coin,narration,B, tails,1,-0.440323
+c4c3,calib,AB,coin,narration,B,tails,1,-9.752823
+c4c3,calib,AB,coin,narration,B, Tails,2,-8.887010
+c4c3,calib,AB,coin,narration,B,Tails,2,-16.333553
+c4c3,calib,AB,coin,narration,B, TAILS,2,-15.574509
+c4c3,calib,AB,coin,narration,B,TAILS,2,-16.934006
+c4c3,calib,AB,coin,log,A, heads,1,-1.290220
+c4c3,calib,AB,coin,log,A,heads,1,-7.727720
+c4c3,calib,AB,coin,log,A, Heads,1,-3.540220
+c4c3,calib,AB,coin,log,A,Heads,2,-11.665324
+c4c3,calib,AB,coin,log,A, HEADS,2,-10.292178
+c4c3,calib,AB,coin,log,A,HEADS,2,-12.684772
+c4c3,calib,AB,coin,log,B, tails,1,-0.415220
+c4c3,calib,AB,coin,log,B,tails,1,-8.352720
+c4c3,calib,AB,coin,log,B, Tails,2,-3.542861
+c4c3,calib,AB,coin,log,B,Tails,2,-13.307365
+c4c3,calib,AB,coin,log,B, TAILS,2,-11.730361
+c4c3,calib,AB,coin,log,B,TAILS,2,-13.422012
+c4c3,calib,AB,d6,assistant,A,1,1,-7.561097
+c4c3,calib,AB,d6,assistant,A,2,1,-0.561097
+c4c3,calib,AB,d6,assistant,A,3,1,-1.686097
+c4c3,calib,AB,d6,assistant,B,4,1,-1.936097
+c4c3,calib,AB,d6,assistant,B,5,1,-2.311097
+c4c3,calib,AB,d6,assistant,B,6,1,-8.498597
+c4c3,calib,AB,d6,user,A,1,1,-4.917126
+c4c3,calib,AB,d6,user,A,2,1,-0.542126
+c4c3,calib,AB,d6,user,A,3,1,-1.417125
+c4c3,calib,AB,d6,user,B,4,1,-2.167125
+c4c3,calib,AB,d6,user,B,5,1,-2.917125
+c4c3,calib,AB,d6,user,B,6,1,-9.042126
+c4c3,calib,AB,d6,narration,A,1,1,-4.980919
+c4c3,calib,AB,d6,narration,A,2,1,-1.668419
+c4c3,calib,AB,d6,narration,A,3,1,-1.543419
+c4c3,calib,AB,d6,narration,B,4,1,-1.293419
+c4c3,calib,AB,d6,narration,B,5,1,-1.168419
+c4c3,calib,AB,d6,narration,B,6,1,-5.918419
+c4c3,calib,AB,d6,log,A,1,1,-3.678408
+c4c3,calib,AB,d6,log,A,2,1,-2.428408
+c4c3,calib,AB,d6,log,A,3,1,-1.553408
+c4c3,calib,AB,d6,log,B,4,1,-0.678408
+c4c3,calib,AB,d6,log,B,5,1,-1.803408
+c4c3,calib,AB,d6,log,B,6,1,-7.178408
+c4c3,calib,AB,parity,assistant,A, odd,1,-11.027799
+c4c3,calib,AB,parity,assistant,A,odd,1,-16.465300
+c4c3,calib,AB,parity,assistant,A, Odd,1,-14.090299
+c4c3,calib,AB,parity,assistant,A,Odd,1,-16.652800
+c4c3,calib,AB,parity,assistant,A, ODD,2,-17.996252
+c4c3,calib,AB,parity,assistant,A,ODD,2,-20.466341
+c4c3,calib,AB,parity,assistant,B, even,1,-6.652799
+c4c3,calib,AB,parity,assistant,B,even,1,-14.277799
+c4c3,calib,AB,parity,assistant,B, Even,1,-12.465299
+c4c3,calib,AB,parity,assistant,B,Even,1,-14.402799
+c4c3,calib,AB,parity,assistant,B, EVEN,1,-13.777799
+c4c3,calib,AB,parity,assistant,B,EVEN,2,-23.417500
+c4c3,calib,AB,parity,user,A, odd,1,-10.325605
+c4c3,calib,AB,parity,user,A,odd,1,-15.950605
+c4c3,calib,AB,parity,user,A, Odd,1,-12.950605
+c4c3,calib,AB,parity,user,A,Odd,1,-14.888105
+c4c3,calib,AB,parity,user,A, ODD,2,-15.265178
+c4c3,calib,AB,parity,user,A,ODD,2,-18.266073
+c4c3,calib,AB,parity,user,B, even,1,-9.200605
+c4c3,calib,AB,parity,user,B,even,1,-15.075605
+c4c3,calib,AB,parity,user,B, Even,1,-13.013105
+c4c3,calib,AB,parity,user,B,Even,1,-15.575605
+c4c3,calib,AB,parity,user,B, EVEN,1,-12.388105
+c4c3,calib,AB,parity,user,B,EVEN,2,-19.928074
+c4c3,calib,AB,parity,narration,A, odd,1,-4.479570
+c4c3,calib,AB,parity,narration,A,odd,1,-10.510820
+c4c3,calib,AB,parity,narration,A, Odd,1,-9.885820
+c4c3,calib,AB,parity,narration,A,Odd,1,-10.198320
+c4c3,calib,AB,parity,narration,A, ODD,2,-13.397380
+c4c3,calib,AB,parity,narration,A,ODD,2,-17.195808
+c4c3,calib,AB,parity,narration,B, even,1,-1.417070
+c4c3,calib,AB,parity,narration,B,even,1,-10.729570
+c4c3,calib,AB,parity,narration,B, Even,1,-9.729570
+c4c3,calib,AB,parity,narration,B,Even,1,-10.479570
+c4c3,calib,AB,parity,narration,B, EVEN,1,-9.229570
+c4c3,calib,AB,parity,narration,B,EVEN,2,-15.051198
+c4c3,calib,AB,parity,log,A, odd,1,-2.566743
+c4c3,calib,AB,parity,log,A,odd,1,-7.504242
+c4c3,calib,AB,parity,log,A, Odd,1,-1.629243
+c4c3,calib,AB,parity,log,A,Odd,1,-5.566742
+c4c3,calib,AB,parity,log,A, ODD,2,-8.770431
+c4c3,calib,AB,parity,log,A,ODD,2,-12.786129
+c4c3,calib,AB,parity,log,B, even,1,-3.816743
+c4c3,calib,AB,parity,log,B,even,1,-8.566743
+c4c3,calib,AB,parity,log,B, Even,1,-3.754243
+c4c3,calib,AB,parity,log,B,Even,1,-8.941743
+c4c3,calib,AB,parity,log,B, EVEN,1,-7.379242
+c4c3,calib,AB,parity,log,B,EVEN,2,-20.870928

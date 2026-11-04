@@ -1,0 +1,577 @@
+stage,group,role,q,coord
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,"So, tell me about your day so far.",-0.00868953950703144
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What's the best thing you ate this week?,0.028526844456791878
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,How did you end up doing what you do?,0.1710888147354126
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What do you do when you can't sleep?,0.14825409650802612
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What's something that's been bothering you lately?,0.09029961377382278
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,Can you give me some advice about starting a new job?,0.4492824673652649
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What would you do with a free weekend?,0.2505011558532715
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,Describe the place where you grew up.,0.10831170529127121
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What do you think of people who are always late?,0.253764808177948
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,Any recommendations for a good book or film?,0.2541642487049103
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,Do you have any pets?,0.06259411573410034
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,How are you feeling today?,0.18827760219573975
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What's your favourite way to spend a rainy afternoon?,0.1315619796514511
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,How would you describe yourself in two sentences?,0.6076354384422302
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What is something you're proud of?,0.30801111459732056
+Llama-3.1-8B-Instruct,helpful,a helpful human hotel front-desk clerk,What do you want for dinner tonight?,0.04388711228966713
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,"So, tell me about your day so far.",0.1407884657382965
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What's the best thing you ate this week?,0.19826368987560272
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,How did you end up doing what you do?,0.3423636257648468
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What do you do when you can't sleep?,0.3522685170173645
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What's something that's been bothering you lately?,0.3597031831741333
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,Can you give me some advice about starting a new job?,0.5607123374938965
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What would you do with a free weekend?,0.40094077587127686
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,Describe the place where you grew up.,1.0934678316116333
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What do you think of people who are always late?,0.41308218240737915
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,Any recommendations for a good book or film?,0.45251527428627014
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,Do you have any pets?,0.11578904092311859
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,How are you feeling today?,0.20957070589065552
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What's your favourite way to spend a rainy afternoon?,0.22493715584278107
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,How would you describe yourself in two sentences?,0.7247359156608582
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What is something you're proud of?,0.2727479338645935
+Llama-3.1-8B-Instruct,helpful,a helpful human librarian,What do you want for dinner tonight?,1.002247929573059
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,"So, tell me about your day so far.",0.1013341173529625
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What's the best thing you ate this week?,0.004348434042185545
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,How did you end up doing what you do?,0.14342083036899567
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What do you do when you can't sleep?,0.33508986234664917
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What's something that's been bothering you lately?,0.09722056984901428
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,Can you give me some advice about starting a new job?,0.4651174247264862
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What would you do with a free weekend?,0.18669317662715912
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,Describe the place where you grew up.,0.09668577462434769
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What do you think of people who are always late?,0.32236531376838684
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,Any recommendations for a good book or film?,0.2659180760383606
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,Do you have any pets?,0.07344135642051697
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,How are you feeling today?,0.08260130137205124
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What's your favourite way to spend a rainy afternoon?,0.1291077435016632
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,How would you describe yourself in two sentences?,0.5180433392524719
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What is something you're proud of?,0.15300151705741882
+Llama-3.1-8B-Instruct,helpful,a kind human nurse,What do you want for dinner tonight?,0.09645421802997589
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,"So, tell me about your day so far.",0.0572984479367733
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What's the best thing you ate this week?,-0.031613267958164215
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,How did you end up doing what you do?,0.18812935054302216
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What do you do when you can't sleep?,0.2929093837738037
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What's something that's been bothering you lately?,0.09186892956495285
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,Can you give me some advice about starting a new job?,0.4657509922981262
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What would you do with a free weekend?,0.1595739722251892
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,Describe the place where you grew up.,0.14355826377868652
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What do you think of people who are always late?,0.23693597316741943
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,Any recommendations for a good book or film?,0.3771178424358368
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,Do you have any pets?,0.10411408543586731
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,How are you feeling today?,0.10490745306015015
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What's your favourite way to spend a rainy afternoon?,0.09727698564529419
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,How would you describe yourself in two sentences?,0.5416317582130432
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What is something you're proud of?,0.17356634140014648
+Llama-3.1-8B-Instruct,helpful,a patient human high-school teacher,What do you want for dinner tonight?,0.06426998972892761
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,"So, tell me about your day so far.",0.1163085326552391
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What's the best thing you ate this week?,0.04861588031053543
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,How did you end up doing what you do?,0.2983602285385132
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What do you do when you can't sleep?,0.3316493630409241
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What's something that's been bothering you lately?,0.25977823138237
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,Can you give me some advice about starting a new job?,0.4784363806247711
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What would you do with a free weekend?,0.2599200904369354
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,Describe the place where you grew up.,0.034767620265483856
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What do you think of people who are always late?,0.2582394480705261
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,Any recommendations for a good book or film?,0.36243903636932373
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,Do you have any pets?,0.07985847443342209
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,How are you feeling today?,0.2893086373806
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What's your favourite way to spend a rainy afternoon?,0.2064504623413086
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,How would you describe yourself in two sentences?,0.5947835445404053
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What is something you're proud of?,0.18013587594032288
+Llama-3.1-8B-Instruct,helpful,a friendly human pharmacist,What do you want for dinner tonight?,0.12696027755737305
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,"So, tell me about your day so far.",0.18539020419120789
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What's the best thing you ate this week?,0.08452590554952621
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,How did you end up doing what you do?,0.25435885787010193
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What do you do when you can't sleep?,0.3420957326889038
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What's something that's been bothering you lately?,0.3721476197242737
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,Can you give me some advice about starting a new job?,0.5979940891265869
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What would you do with a free weekend?,0.3303336799144745
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,Describe the place where you grew up.,0.9117962121963501
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What do you think of people who are always late?,0.5045403242111206
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,Any recommendations for a good book or film?,0.4474681615829468
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,Do you have any pets?,0.2164149135351181
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,How are you feeling today?,0.4654582440853119
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What's your favourite way to spend a rainy afternoon?,0.23952347040176392
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,How would you describe yourself in two sentences?,0.6523131132125854
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What is something you're proud of?,0.26575353741645813
+Llama-3.1-8B-Instruct,helpful,a supportive human math tutor,What do you want for dinner tonight?,0.4604281485080719
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,"So, tell me about your day so far.",0.0902969092130661
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What's the best thing you ate this week?,-0.03795735165476799
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,How did you end up doing what you do?,0.32666894793510437
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What do you do when you can't sleep?,0.22963954508304596
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What's something that's been bothering you lately?,0.11562034487724304
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,Can you give me some advice about starting a new job?,0.41721099615097046
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What would you do with a free weekend?,0.21076348423957825
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,Describe the place where you grew up.,0.1296321153640747
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What do you think of people who are always late?,0.2654576301574707
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,Any recommendations for a good book or film?,0.356485515832901
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,Do you have any pets?,0.1474517583847046
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,How are you feeling today?,0.29487404227256775
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What's your favourite way to spend a rainy afternoon?,0.19279521703720093
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,How would you describe yourself in two sentences?,0.5686928033828735
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What is something you're proud of?,0.3149201571941376
+Llama-3.1-8B-Instruct,helpful,a courteous human bank teller,What do you want for dinner tonight?,0.39949220418930054
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,"So, tell me about your day so far.",0.1127525344491005
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What's the best thing you ate this week?,-0.07070167362689972
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,How did you end up doing what you do?,0.1995382159948349
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What do you do when you can't sleep?,0.18586452305316925
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What's something that's been bothering you lately?,0.14726664125919342
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,Can you give me some advice about starting a new job?,0.43572333455085754
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What would you do with a free weekend?,0.13741447031497955
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,Describe the place where you grew up.,0.07166342437267303
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What do you think of people who are always late?,0.2390727400779724
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,Any recommendations for a good book or film?,0.2751803696155548
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,Do you have any pets?,0.10880246758460999
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,How are you feeling today?,0.21049997210502625
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What's your favourite way to spend a rainy afternoon?,0.08900458365678787
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,How would you describe yourself in two sentences?,0.4126608967781067
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What is something you're proud of?,0.23174306750297546
+Llama-3.1-8B-Instruct,helpful,a cheerful human tour guide,What do you want for dinner tonight?,0.08400127291679382
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,"So, tell me about your day so far.",0.07432597130537033
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What's the best thing you ate this week?,0.08240354806184769
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,How did you end up doing what you do?,0.275391161441803
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What do you do when you can't sleep?,0.3902902603149414
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What's something that's been bothering you lately?,0.10432246327400208
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,Can you give me some advice about starting a new job?,0.393652081489563
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What would you do with a free weekend?,0.2085070013999939
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,Describe the place where you grew up.,0.28426939249038696
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What do you think of people who are always late?,0.28028708696365356
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,Any recommendations for a good book or film?,0.2815884053707123
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,Do you have any pets?,0.15817111730575562
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,How are you feeling today?,0.21928898990154266
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What's your favourite way to spend a rainy afternoon?,0.07083792239427567
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,How would you describe yourself in two sentences?,0.5140708088874817
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What is something you're proud of?,0.25357741117477417
+Llama-3.1-8B-Instruct,helpful,an attentive human receptionist at a dental clinic,What do you want for dinner tonight?,0.2647635340690613
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,"So, tell me about your day so far.",0.11747895926237106
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What's the best thing you ate this week?,-0.04434676840901375
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,How did you end up doing what you do?,0.27844491600990295
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What do you do when you can't sleep?,0.44446471333503723
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What's something that's been bothering you lately?,0.1991734355688095
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,Can you give me some advice about starting a new job?,0.5388967990875244
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What would you do with a free weekend?,0.318151593208313
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,Describe the place where you grew up.,0.8182798027992249
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What do you think of people who are always late?,0.544586718082428
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,Any recommendations for a good book or film?,0.3747035562992096
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,Do you have any pets?,0.14535954594612122
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,How are you feeling today?,0.19317249953746796
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What's your favourite way to spend a rainy afternoon?,0.20642656087875366
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,How would you describe yourself in two sentences?,0.6209424138069153
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What is something you're proud of?,0.2847403287887573
+Llama-3.1-8B-Instruct,helpful,a caring human social worker,What do you want for dinner tonight?,0.1649360954761505
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,"So, tell me about your day so far.",0.17415304481983185
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What's the best thing you ate this week?,0.17107678949832916
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,How did you end up doing what you do?,0.3568152189254761
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What do you do when you can't sleep?,0.4031449258327484
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What's something that's been bothering you lately?,0.23536033928394318
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,Can you give me some advice about starting a new job?,0.5680553317070007
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What would you do with a free weekend?,0.32762646675109863
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,Describe the place where you grew up.,0.580486536026001
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What do you think of people who are always late?,0.4198223948478699
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,Any recommendations for a good book or film?,0.48596054315567017
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,Do you have any pets?,0.09926773607730865
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,How are you feeling today?,0.3199041783809662
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What's your favourite way to spend a rainy afternoon?,0.3390245735645294
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,How would you describe yourself in two sentences?,0.7279824018478394
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What is something you're proud of?,0.35543522238731384
+Llama-3.1-8B-Instruct,helpful,a knowledgeable human IT helpdesk technician,What do you want for dinner tonight?,0.12611201405525208
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,"So, tell me about your day so far.",0.06297419220209122
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What's the best thing you ate this week?,0.06416131556034088
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,How did you end up doing what you do?,0.33208903670310974
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What do you do when you can't sleep?,0.26589518785476685
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What's something that's been bothering you lately?,0.21762271225452423
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,Can you give me some advice about starting a new job?,0.4129593074321747
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What would you do with a free weekend?,0.18134015798568726
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,Describe the place where you grew up.,0.2724458575248718
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What do you think of people who are always late?,0.3388006091117859
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,Any recommendations for a good book or film?,0.2555370628833771
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,Do you have any pets?,0.12627483904361725
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,How are you feeling today?,0.30888882279396057
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What's your favourite way to spend a rainy afternoon?,0.1682804673910141
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,How would you describe yourself in two sentences?,0.5802493095397949
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What is something you're proud of?,0.293081670999527
+Llama-3.1-8B-Instruct,helpful,a polite human airline check-in agent,What do you want for dinner tonight?,0.3265104293823242
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,"So, tell me about your day so far.",-0.08413781970739365
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What's the best thing you ate this week?,-0.13249464333057404
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,How did you end up doing what you do?,0.009477012790739536
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What do you do when you can't sleep?,0.1437048763036728
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What's something that's been bothering you lately?,-0.10358775407075882
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,Can you give me some advice about starting a new job?,0.12132833153009415
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What would you do with a free weekend?,0.04658283293247223
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,Describe the place where you grew up.,-0.1003892719745636
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What do you think of people who are always late?,0.0005604870966635644
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,Any recommendations for a good book or film?,0.08385122567415237
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,Do you have any pets?,-0.051999472081661224
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,How are you feeling today?,-0.1437557488679886
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What's your favourite way to spend a rainy afternoon?,-0.03509853035211563
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,How would you describe yourself in two sentences?,0.12093909084796906
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What is something you're proud of?,0.07039687037467957
+Llama-3.1-8B-Instruct,neutral,a human long-haul truck driver,What do you want for dinner tonight?,-0.05787064880132675
+Llama-3.1-8B-Instruct,neutral,a human accountant,"So, tell me about your day so far.",0.08723968267440796
+Llama-3.1-8B-Instruct,neutral,a human accountant,What's the best thing you ate this week?,0.054023705422878265
+Llama-3.1-8B-Instruct,neutral,a human accountant,How did you end up doing what you do?,0.25788912177085876
+Llama-3.1-8B-Instruct,neutral,a human accountant,What do you do when you can't sleep?,0.3231818675994873
+Llama-3.1-8B-Instruct,neutral,a human accountant,What's something that's been bothering you lately?,0.1656157225370407
+Llama-3.1-8B-Instruct,neutral,a human accountant,Can you give me some advice about starting a new job?,0.563236653804779
+Llama-3.1-8B-Instruct,neutral,a human accountant,What would you do with a free weekend?,0.31940439343452454
+Llama-3.1-8B-Instruct,neutral,a human accountant,Describe the place where you grew up.,0.0809764638543129
+Llama-3.1-8B-Instruct,neutral,a human accountant,What do you think of people who are always late?,0.3402617275714874
+Llama-3.1-8B-Instruct,neutral,a human accountant,Any recommendations for a good book or film?,0.43324014544487
+Llama-3.1-8B-Instruct,neutral,a human accountant,Do you have any pets?,0.11445401608943939
+Llama-3.1-8B-Instruct,neutral,a human accountant,How are you feeling today?,0.13325384259223938
+Llama-3.1-8B-Instruct,neutral,a human accountant,What's your favourite way to spend a rainy afternoon?,0.17785027623176575
+Llama-3.1-8B-Instruct,neutral,a human accountant,How would you describe yourself in two sentences?,0.5770466327667236
+Llama-3.1-8B-Instruct,neutral,a human accountant,What is something you're proud of?,0.3492468595504761
+Llama-3.1-8B-Instruct,neutral,a human accountant,What do you want for dinner tonight?,0.10995383560657501
+Llama-3.1-8B-Instruct,neutral,a human carpenter,"So, tell me about your day so far.",-0.033052802085876465
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What's the best thing you ate this week?,-0.06812483072280884
+Llama-3.1-8B-Instruct,neutral,a human carpenter,How did you end up doing what you do?,0.0736662819981575
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What do you do when you can't sleep?,0.1389867067337036
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What's something that's been bothering you lately?,-0.06851055473089218
+Llama-3.1-8B-Instruct,neutral,a human carpenter,Can you give me some advice about starting a new job?,0.320191353559494
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What would you do with a free weekend?,0.22380830347537994
+Llama-3.1-8B-Instruct,neutral,a human carpenter,Describe the place where you grew up.,-0.016310011968016624
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What do you think of people who are always late?,0.139242485165596
+Llama-3.1-8B-Instruct,neutral,a human carpenter,Any recommendations for a good book or film?,0.12581880390644073
+Llama-3.1-8B-Instruct,neutral,a human carpenter,Do you have any pets?,0.046131085604429245
+Llama-3.1-8B-Instruct,neutral,a human carpenter,How are you feeling today?,-0.09978757053613663
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What's your favourite way to spend a rainy afternoon?,-0.022414296865463257
+Llama-3.1-8B-Instruct,neutral,a human carpenter,How would you describe yourself in two sentences?,0.37191349267959595
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What is something you're proud of?,0.022703208029270172
+Llama-3.1-8B-Instruct,neutral,a human carpenter,What do you want for dinner tonight?,-0.10518215596675873
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,"So, tell me about your day so far.",-0.07944543659687042
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What's the best thing you ate this week?,-0.021981822326779366
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,How did you end up doing what you do?,0.09452202916145325
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What do you do when you can't sleep?,0.08791167289018631
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What's something that's been bothering you lately?,-0.10046450048685074
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,Can you give me some advice about starting a new job?,0.20406895875930786
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What would you do with a free weekend?,-0.014279702678322792
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,Describe the place where you grew up.,-0.014184788800776005
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What do you think of people who are always late?,-0.03158928453922272
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,Any recommendations for a good book or film?,0.049048420041799545
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,Do you have any pets?,0.06457587331533432
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,How are you feeling today?,-0.06673720479011536
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What's your favourite way to spend a rainy afternoon?,0.0633593425154686
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,How would you describe yourself in two sentences?,0.13411691784858704
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What is something you're proud of?,0.008330494165420532
+Llama-3.1-8B-Instruct,neutral,a human apple farmer,What do you want for dinner tonight?,-0.103092260658741
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,"So, tell me about your day so far.",0.12041687965393066
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What's the best thing you ate this week?,0.0075924028642475605
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,How did you end up doing what you do?,0.194051593542099
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What do you do when you can't sleep?,0.3302181363105774
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What's something that's been bothering you lately?,0.11408757418394089
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,Can you give me some advice about starting a new job?,0.41913655400276184
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What would you do with a free weekend?,0.1783631592988968
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,Describe the place where you grew up.,0.021397780627012253
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What do you think of people who are always late?,0.17521007359027863
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,Any recommendations for a good book or film?,0.2949407696723938
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,Do you have any pets?,0.13532711565494537
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,How are you feeling today?,0.018376175314188004
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What's your favourite way to spend a rainy afternoon?,0.09750598669052124
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,How would you describe yourself in two sentences?,0.43147456645965576
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What is something you're proud of?,0.11246120929718018
+Llama-3.1-8B-Instruct,neutral,a human commercial pilot,What do you want for dinner tonight?,0.0816102921962738
+Llama-3.1-8B-Instruct,neutral,a human welder,"So, tell me about your day so far.",-0.04034562036395073
+Llama-3.1-8B-Instruct,neutral,a human welder,What's the best thing you ate this week?,-0.0870085284113884
+Llama-3.1-8B-Instruct,neutral,a human welder,How did you end up doing what you do?,0.022931095212697983
+Llama-3.1-8B-Instruct,neutral,a human welder,What do you do when you can't sleep?,0.1100347638130188
+Llama-3.1-8B-Instruct,neutral,a human welder,What's something that's been bothering you lately?,-0.04487057402729988
+Llama-3.1-8B-Instruct,neutral,a human welder,Can you give me some advice about starting a new job?,0.3195214569568634
+Llama-3.1-8B-Instruct,neutral,a human welder,What would you do with a free weekend?,0.09266778826713562
+Llama-3.1-8B-Instruct,neutral,a human welder,Describe the place where you grew up.,0.0026012840680778027
+Llama-3.1-8B-Instruct,neutral,a human welder,What do you think of people who are always late?,0.04957728087902069
+Llama-3.1-8B-Instruct,neutral,a human welder,Any recommendations for a good book or film?,0.20237968862056732
+Llama-3.1-8B-Instruct,neutral,a human welder,Do you have any pets?,-0.020789405331015587
+Llama-3.1-8B-Instruct,neutral,a human welder,How are you feeling today?,0.008167518302798271
+Llama-3.1-8B-Instruct,neutral,a human welder,What's your favourite way to spend a rainy afternoon?,0.04581914469599724
+Llama-3.1-8B-Instruct,neutral,a human welder,How would you describe yourself in two sentences?,0.3744724690914154
+Llama-3.1-8B-Instruct,neutral,a human welder,What is something you're proud of?,0.08494483679533005
+Llama-3.1-8B-Instruct,neutral,a human welder,What do you want for dinner tonight?,-0.010769040323793888
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,"So, tell me about your day so far.",-0.012274195440113544
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What's the best thing you ate this week?,-0.0379745215177536
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,How did you end up doing what you do?,0.19245190918445587
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What do you do when you can't sleep?,0.13125184178352356
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What's something that's been bothering you lately?,-0.06458719074726105
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,Can you give me some advice about starting a new job?,0.34523266553878784
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What would you do with a free weekend?,0.11804166436195374
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,Describe the place where you grew up.,0.035830557346343994
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What do you think of people who are always late?,0.1586184948682785
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,Any recommendations for a good book or film?,0.15463346242904663
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,Do you have any pets?,0.04637911915779114
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,How are you feeling today?,-0.029097281396389008
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What's your favourite way to spend a rainy afternoon?,0.017729895189404488
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,How would you describe yourself in two sentences?,0.23299627006053925
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What is something you're proud of?,0.13663074374198914
+Llama-3.1-8B-Instruct,neutral,a human warehouse worker,What do you want for dinner tonight?,0.0030831554904580116
+Llama-3.1-8B-Instruct,neutral,a human surveyor,"So, tell me about your day so far.",0.07148692011833191
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What's the best thing you ate this week?,0.10801519453525543
+Llama-3.1-8B-Instruct,neutral,a human surveyor,How did you end up doing what you do?,0.1511395275592804
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What do you do when you can't sleep?,0.31193622946739197
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What's something that's been bothering you lately?,0.06058333441615105
+Llama-3.1-8B-Instruct,neutral,a human surveyor,Can you give me some advice about starting a new job?,0.40129727125167847
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What would you do with a free weekend?,0.25006866455078125
+Llama-3.1-8B-Instruct,neutral,a human surveyor,Describe the place where you grew up.,0.0477231927216053
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What do you think of people who are always late?,0.2573840618133545
+Llama-3.1-8B-Instruct,neutral,a human surveyor,Any recommendations for a good book or film?,0.29472294449806213
+Llama-3.1-8B-Instruct,neutral,a human surveyor,Do you have any pets?,0.10495974123477936
+Llama-3.1-8B-Instruct,neutral,a human surveyor,How are you feeling today?,-0.07647967338562012
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What's your favourite way to spend a rainy afternoon?,0.10143353044986725
+Llama-3.1-8B-Instruct,neutral,a human surveyor,How would you describe yourself in two sentences?,0.5952844619750977
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What is something you're proud of?,0.07532159239053726
+Llama-3.1-8B-Instruct,neutral,a human surveyor,What do you want for dinner tonight?,-0.02846570312976837
+Llama-3.1-8B-Instruct,neutral,a human bus driver,"So, tell me about your day so far.",0.0022323273587971926
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What's the best thing you ate this week?,-0.02523060515522957
+Llama-3.1-8B-Instruct,neutral,a human bus driver,How did you end up doing what you do?,0.06562619656324387
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What do you do when you can't sleep?,0.13254010677337646
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What's something that's been bothering you lately?,-0.024874068796634674
+Llama-3.1-8B-Instruct,neutral,a human bus driver,Can you give me some advice about starting a new job?,0.23164048790931702
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What would you do with a free weekend?,0.0769004374742508
+Llama-3.1-8B-Instruct,neutral,a human bus driver,Describe the place where you grew up.,0.02200351655483246
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What do you think of people who are always late?,0.10940838605165482
+Llama-3.1-8B-Instruct,neutral,a human bus driver,Any recommendations for a good book or film?,0.12123406678438187
+Llama-3.1-8B-Instruct,neutral,a human bus driver,Do you have any pets?,0.030422821640968323
+Llama-3.1-8B-Instruct,neutral,a human bus driver,How are you feeling today?,-0.05214883014559746
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What's your favourite way to spend a rainy afternoon?,-0.02984783984720707
+Llama-3.1-8B-Instruct,neutral,a human bus driver,How would you describe yourself in two sentences?,0.2593827247619629
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What is something you're proud of?,0.12610849738121033
+Llama-3.1-8B-Instruct,neutral,a human bus driver,What do you want for dinner tonight?,-0.06423508375883102
+Llama-3.1-8B-Instruct,neutral,a human plumber,"So, tell me about your day so far.",-0.02452782355248928
+Llama-3.1-8B-Instruct,neutral,a human plumber,What's the best thing you ate this week?,-0.057689569890499115
+Llama-3.1-8B-Instruct,neutral,a human plumber,How did you end up doing what you do?,0.061116136610507965
+Llama-3.1-8B-Instruct,neutral,a human plumber,What do you do when you can't sleep?,0.12439531832933426
+Llama-3.1-8B-Instruct,neutral,a human plumber,What's something that's been bothering you lately?,-0.028052007779479027
+Llama-3.1-8B-Instruct,neutral,a human plumber,Can you give me some advice about starting a new job?,0.35619863867759705
+Llama-3.1-8B-Instruct,neutral,a human plumber,What would you do with a free weekend?,0.174359992146492
+Llama-3.1-8B-Instruct,neutral,a human plumber,Describe the place where you grew up.,-0.0761755108833313
+Llama-3.1-8B-Instruct,neutral,a human plumber,What do you think of people who are always late?,0.06739287078380585
+Llama-3.1-8B-Instruct,neutral,a human plumber,Any recommendations for a good book or film?,0.1674479991197586
+Llama-3.1-8B-Instruct,neutral,a human plumber,Do you have any pets?,0.014024362899363041
+Llama-3.1-8B-Instruct,neutral,a human plumber,How are you feeling today?,-0.013216384686529636
+Llama-3.1-8B-Instruct,neutral,a human plumber,What's your favourite way to spend a rainy afternoon?,0.06395047158002853
+Llama-3.1-8B-Instruct,neutral,a human plumber,How would you describe yourself in two sentences?,0.19156566262245178
+Llama-3.1-8B-Instruct,neutral,a human plumber,What is something you're proud of?,0.04273208975791931
+Llama-3.1-8B-Instruct,neutral,a human plumber,What do you want for dinner tonight?,-0.018254384398460388
+Llama-3.1-8B-Instruct,neutral,a human lab technician,"So, tell me about your day so far.",0.1455499529838562
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What's the best thing you ate this week?,0.07410465180873871
+Llama-3.1-8B-Instruct,neutral,a human lab technician,How did you end up doing what you do?,0.2593330144882202
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What do you do when you can't sleep?,0.2548655569553375
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What's something that's been bothering you lately?,0.15807326138019562
+Llama-3.1-8B-Instruct,neutral,a human lab technician,Can you give me some advice about starting a new job?,0.49238526821136475
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What would you do with a free weekend?,0.2815631926059723
+Llama-3.1-8B-Instruct,neutral,a human lab technician,Describe the place where you grew up.,0.03788446635007858
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What do you think of people who are always late?,0.26922816038131714
+Llama-3.1-8B-Instruct,neutral,a human lab technician,Any recommendations for a good book or film?,0.3104920983314514
+Llama-3.1-8B-Instruct,neutral,a human lab technician,Do you have any pets?,0.16217413544654846
+Llama-3.1-8B-Instruct,neutral,a human lab technician,How are you feeling today?,0.13185782730579376
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What's your favourite way to spend a rainy afternoon?,0.22219233214855194
+Llama-3.1-8B-Instruct,neutral,a human lab technician,How would you describe yourself in two sentences?,0.6048402190208435
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What is something you're proud of?,0.17961299419403076
+Llama-3.1-8B-Instruct,neutral,a human lab technician,What do you want for dinner tonight?,0.044341616332530975
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,"So, tell me about your day so far.",0.022357994690537453
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What's the best thing you ate this week?,-0.02347465604543686
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,How did you end up doing what you do?,0.08682192116975784
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What do you do when you can't sleep?,0.12310146540403366
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What's something that's been bothering you lately?,-0.007456996012479067
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,Can you give me some advice about starting a new job?,0.14454901218414307
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What would you do with a free weekend?,0.06676051020622253
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,Describe the place where you grew up.,0.02553538791835308
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What do you think of people who are always late?,0.07037469744682312
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,Any recommendations for a good book or film?,0.1390368640422821
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,Do you have any pets?,0.07482996582984924
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,How are you feeling today?,-0.05919670686125755
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What's your favourite way to spend a rainy afternoon?,0.0007976802298799157
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,How would you describe yourself in two sentences?,0.2519993185997009
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What is something you're proud of?,0.23606547713279724
+Llama-3.1-8B-Instruct,neutral,a human postal carrier,What do you want for dinner tonight?,-0.011692185886204243
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,"So, tell me about your day so far.",-0.21177521347999573
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What's the best thing you ate this week?,-0.10909328609704971
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,How did you end up doing what you do?,-0.016196150332689285
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What do you do when you can't sleep?,-0.03737558797001839
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What's something that's been bothering you lately?,-0.12347335368394852
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,Can you give me some advice about starting a new job?,0.04848041012883186
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What would you do with a free weekend?,-0.009282372891902924
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,Describe the place where you grew up.,-0.13356618583202362
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What do you think of people who are always late?,-0.060741037130355835
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,Any recommendations for a good book or film?,0.05899570882320404
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,Do you have any pets?,-0.06949665397405624
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,How are you feeling today?,-0.05317795276641846
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What's your favourite way to spend a rainy afternoon?,-0.03795725479722023
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,How would you describe yourself in two sentences?,0.006205225363373756
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What is something you're proud of?,-0.11957412213087082
+Llama-3.1-8B-Instruct,stylized,a swaggering pirate captain,What do you want for dinner tonight?,-0.0737958699464798
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,"So, tell me about your day so far.",0.02847221866250038
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What's the best thing you ate this week?,0.03484908863902092
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,How did you end up doing what you do?,-0.017018068581819534
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What do you do when you can't sleep?,0.04771738499403
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What's something that's been bothering you lately?,0.0254990141838789
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,Can you give me some advice about starting a new job?,0.15024349093437195
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What would you do with a free weekend?,0.06203079596161842
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,Describe the place where you grew up.,-0.03842383250594139
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What do you think of people who are always late?,0.06529220938682556
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,Any recommendations for a good book or film?,0.12091141939163208
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,Do you have any pets?,0.02352810464799404
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,How are you feeling today?,0.048746977001428604
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What's your favourite way to spend a rainy afternoon?,0.013125068508088589
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,How would you describe yourself in two sentences?,0.09184762835502625
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What is something you're proud of?,0.013324882835149765
+Llama-3.1-8B-Instruct,stylized,a medieval court jester,What do you want for dinner tonight?,0.005811487324535847
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,"So, tell me about your day so far.",0.011980011127889156
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What's the best thing you ate this week?,-0.04426597058773041
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,How did you end up doing what you do?,-0.006949242670089006
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What do you do when you can't sleep?,0.014978800900280476
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What's something that's been bothering you lately?,-0.07054772228002548
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,Can you give me some advice about starting a new job?,0.1275106817483902
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What would you do with a free weekend?,0.10371045023202896
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,Describe the place where you grew up.,-0.10398121178150177
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What do you think of people who are always late?,0.03953980281949043
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,Any recommendations for a good book or film?,0.11411814391613007
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,Do you have any pets?,-0.0780310332775116
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,How are you feeling today?,0.09923825412988663
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What's your favourite way to spend a rainy afternoon?,0.005630680359899998
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,How would you describe yourself in two sentences?,0.016288964077830315
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What is something you're proud of?,0.013711025938391685
+Llama-3.1-8B-Instruct,stylized,a gruff wizard who lives in a tower,What do you want for dinner tonight?,0.033111199736595154
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,"So, tell me about your day so far.",-0.15114830434322357
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What's the best thing you ate this week?,-0.07109830528497696
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,How did you end up doing what you do?,-0.06676863133907318
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What do you do when you can't sleep?,-0.094963438808918
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What's something that's been bothering you lately?,-0.14455288648605347
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,Can you give me some advice about starting a new job?,-0.009603180922567844
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What would you do with a free weekend?,-0.04572450742125511
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,Describe the place where you grew up.,-0.030031578615307808
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What do you think of people who are always late?,-0.03237753361463547
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,Any recommendations for a good book or film?,0.062850221991539
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,Do you have any pets?,-0.18284714221954346
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,How are you feeling today?,-0.12111522257328033
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What's your favourite way to spend a rainy afternoon?,-0.11868957430124283
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,How would you describe yourself in two sentences?,-0.05021406337618828
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What is something you're proud of?,-0.09186647087335587
+Llama-3.1-8B-Instruct,stylized,a hard-boiled noir detective,What do you want for dinner tonight?,-0.15617547929286957
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,"So, tell me about your day so far.",0.07273633033037186
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What's the best thing you ate this week?,-0.002544451504945755
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,How did you end up doing what you do?,0.055942416191101074
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What do you do when you can't sleep?,0.04692908376455307
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What's something that's been bothering you lately?,0.016444379463791847
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,Can you give me some advice about starting a new job?,0.21794864535331726
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What would you do with a free weekend?,0.07358681410551071
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,Describe the place where you grew up.,-0.06493274122476578
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What do you think of people who are always late?,0.12047675997018814
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,Any recommendations for a good book or film?,0.23372165858745575
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,Do you have any pets?,0.009342088364064693
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,How are you feeling today?,0.004289891570806503
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What's your favourite way to spend a rainy afternoon?,0.06520345062017441
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,How would you describe yourself in two sentences?,0.06821989268064499
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What is something you're proud of?,0.19226542115211487
+Llama-3.1-8B-Instruct,stylized,a pompous Victorian aristocrat,What do you want for dinner tonight?,0.03605804219841957
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,"So, tell me about your day so far.",0.03093869611620903
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What's the best thing you ate this week?,0.04736005514860153
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,How did you end up doing what you do?,0.12182541191577911
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What do you do when you can't sleep?,0.11195183545351028
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What's something that's been bothering you lately?,0.047156140208244324
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,Can you give me some advice about starting a new job?,0.2166699916124344
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What would you do with a free weekend?,0.1654442548751831
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,Describe the place where you grew up.,0.016054872423410416
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What do you think of people who are always late?,0.0764375627040863
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,Any recommendations for a good book or film?,0.22351963818073273
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,Do you have any pets?,0.15055491030216217
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,How are you feeling today?,0.08746329694986343
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What's your favourite way to spend a rainy afternoon?,0.09514361619949341
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,How would you describe yourself in two sentences?,0.16268178820610046
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What is something you're proud of?,0.08261946588754654
+Llama-3.1-8B-Instruct,stylized,a mischievous talking cat,What do you want for dinner tonight?,0.0374881848692894
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,"So, tell me about your day so far.",-0.17470218241214752
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What's the best thing you ate this week?,-0.14719516038894653
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,How did you end up doing what you do?,-0.10926886647939682
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What do you do when you can't sleep?,-0.07519261538982391
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What's something that's been bothering you lately?,-0.18979381024837494
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,Can you give me some advice about starting a new job?,-0.02988254837691784
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What would you do with a free weekend?,-0.11204128712415695
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,Describe the place where you grew up.,-0.1474900096654892
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What do you think of people who are always late?,0.00631027203053236
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,Any recommendations for a good book or film?,0.028340840712189674
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,Do you have any pets?,-0.07559438794851303
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,How are you feeling today?,-0.06804762035608292
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What's your favourite way to spend a rainy afternoon?,-0.10342168062925339
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,How would you describe yourself in two sentences?,0.08660092949867249
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What is something you're proud of?,-0.14260976016521454
+Llama-3.1-8B-Instruct,stylized,a laconic space-freighter pilot,What do you want for dinner tonight?,-0.03850197792053223
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,"So, tell me about your day so far.",-0.0429547056555748
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What's the best thing you ate this week?,-0.05249524489045143
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,How did you end up doing what you do?,0.1888512820005417
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What do you do when you can't sleep?,0.11049416661262512
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What's something that's been bothering you lately?,0.06633952260017395
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,Can you give me some advice about starting a new job?,0.03647174313664436
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What would you do with a free weekend?,0.08584561944007874
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,Describe the place where you grew up.,-0.042114291340112686
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What do you think of people who are always late?,0.01221475563943386
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,Any recommendations for a good book or film?,0.1821994036436081
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,Do you have any pets?,0.012813085690140724
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,How are you feeling today?,0.054804086685180664
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What's your favourite way to spend a rainy afternoon?,0.10968251526355743
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,How would you describe yourself in two sentences?,0.2826226055622101
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What is something you're proud of?,0.04373554885387421
+Llama-3.1-8B-Instruct,stylized,an excitable twelve-year-old,What do you want for dinner tonight?,0.031439535319805145
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,"So, tell me about your day so far.",-0.04541482403874397
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What's the best thing you ate this week?,0.05709307640790939
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,How did you end up doing what you do?,0.058207254856824875
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What do you do when you can't sleep?,0.0737304612994194
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What's something that's been bothering you lately?,-0.01473014336079359
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,Can you give me some advice about starting a new job?,0.1949262171983719
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What would you do with a free weekend?,0.019213099032640457
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,Describe the place where you grew up.,0.08022838830947876
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What do you think of people who are always late?,0.049357879906892776
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,Any recommendations for a good book or film?,0.21398937702178955
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,Do you have any pets?,0.06697528809309006
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,How are you feeling today?,0.006317117717117071
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What's your favourite way to spend a rainy afternoon?,0.04733072966337204
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,How would you describe yourself in two sentences?,0.1391238272190094
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What is something you're proud of?,0.10739365220069885
+Llama-3.1-8B-Instruct,stylized,a dramatic Shakespearean actor,What do you want for dinner tonight?,0.07388080656528473
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,"So, tell me about your day so far.",-0.004727943800389767
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What's the best thing you ate this week?,-0.004595216829329729
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,How did you end up doing what you do?,-0.007797558791935444
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you do when you can't sleep?,0.04384550452232361
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What's something that's been bothering you lately?,0.02291066385805607
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,Can you give me some advice about starting a new job?,0.10035078227519989
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What would you do with a free weekend?,0.035213012248277664
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,Describe the place where you grew up.,0.0002675538416951895
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you think of people who are always late?,0.06322827935218811
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,Any recommendations for a good book or film?,0.12813861668109894
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,Do you have any pets?,0.046091701835393906
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,How are you feeling today?,0.03325382247567177
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What's your favourite way to spend a rainy afternoon?,-0.016197502613067627
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,How would you describe yourself in two sentences?,0.07214821130037308
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What is something you're proud of?,0.035882335156202316
+Llama-3.1-8B-Instruct,stylized,a sleepy lighthouse keeper who speaks in riddles,What do you want for dinner tonight?,0.03144273906946182
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,"So, tell me about your day so far.",-0.16782735288143158
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What's the best thing you ate this week?,-0.22336238622665405
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,How did you end up doing what you do?,-0.08926477283239365
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What do you do when you can't sleep?,-0.08032622933387756
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What's something that's been bothering you lately?,-0.16435354948043823
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,Can you give me some advice about starting a new job?,-0.084916852414608
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What would you do with a free weekend?,-0.11234498023986816
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,Describe the place where you grew up.,-0.14463302493095398
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What do you think of people who are always late?,-0.03385218232870102
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,Any recommendations for a good book or film?,0.10104813426733017
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,Do you have any pets?,-0.07186907529830933
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,How are you feeling today?,-0.159860298037529
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What's your favourite way to spend a rainy afternoon?,-0.07770127803087234
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,How would you describe yourself in two sentences?,-0.05070431903004646
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What is something you're proud of?,-0.09315499663352966
+Llama-3.1-8B-Instruct,stylized,a cowboy from an old western,What do you want for dinner tonight?,-0.09399590641260147
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,"So, tell me about your day so far.",0.08757775276899338
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What's the best thing you ate this week?,0.07938826829195023
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,How did you end up doing what you do?,0.1415497362613678
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What do you do when you can't sleep?,0.10310645401477814
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What's something that's been bothering you lately?,0.011863727122545242
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,Can you give me some advice about starting a new job?,0.29289165139198303
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What would you do with a free weekend?,0.0955594927072525
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,Describe the place where you grew up.,-0.026059646159410477
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What do you think of people who are always late?,0.15669843554496765
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,Any recommendations for a good book or film?,0.23546552658081055
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,Do you have any pets?,0.19810821115970612
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,How are you feeling today?,0.10858968645334244
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What's your favourite way to spend a rainy afternoon?,0.13549557328224182
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,How would you describe yourself in two sentences?,0.2216976284980774
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What is something you're proud of?,0.19459380209445953
+Llama-3.1-8B-Instruct,stylized,a villainous mad scientist,What do you want for dinner tonight?,0.07223352789878845
