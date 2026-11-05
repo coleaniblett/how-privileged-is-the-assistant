@@ -293,11 +293,11 @@ def generate(model, tok, device, patcher, rows, batch=16):
 
 # ------------------------------------------------------------------ session
 class Session:
-    def __init__(self, family, smoke=os.environ.get("AP_SMOKE") == "1"):
+    def __init__(self, family, smoke=os.environ.get("AP_SMOKE") == "1", stage="instruct"):
         import torch
         from core.render import load_tokenizer
         from core.score import load_model
-        self.family, self.mat = family, load_materials()
+        self.family, self.mat, self.stage = family, load_materials(), stage
         if smoke:      # CPU tests: SmolLM2-135M-Instruct stands in for both families
             tid = "HuggingFaceTB/SmolLM2-135M-Instruct"
             self.tok = load_tokenizer(tid)
@@ -305,7 +305,7 @@ class Session:
         else:
             config.use_family(family)
             self.tok = load_tokenizer(config.TEMPLATE_MODEL)
-            self.model, self.device = load_model(config.MODELS["instruct"], torch.bfloat16 if torch.cuda.is_available() else torch.float32)
+            self.model, self.device = load_model(config.MODELS[stage], torch.bfloat16 if torch.cuda.is_available() else torch.float32)
         if self.tok.pad_token is None:
             self.tok.pad_token = self.tok.eos_token
         self.patcher = Patcher(self.model)
@@ -420,10 +420,10 @@ def stage0(ses):
     return res
 
 
-def stage0_cmd(family):
-    res = stage0(Session(family))
+def stage0_cmd(family, stage="instruct"):
+    res = stage0(Session(family, stage=stage))
     os.makedirs(os.path.join(OUT, family), exist_ok=True)
-    json.dump(res, open(os.path.join(OUT, family, "stage0.json"), "w"), indent=1, default=str)
+    json.dump(res, open(os.path.join(OUT, family, "stage0.json" if stage == "instruct" else f"stage0_{stage}.json"), "w"), indent=1, default=str)
     for k, v in res.items():
         print(k, v if k != "examples" else "(see stage0.json)")
     print("rendered example (last 60 tokens), Assistant vs vivid1:", res["examples"]["asst-vivid1"])
@@ -589,6 +589,17 @@ def stage2(family, expand=False):
     df.assign(set="main+expansion" if expand else "main").to_csv(os.path.join(OUT, family, "stage2_gens.csv.gz"), index=False)
 
 
+def stage2x(family, variant):
+    """Extensions (2026-11-05 plan): variant 'base' = main set in the BASE model at the instruct run's committed layers and floors; 'expansion' = the unused 12+12 requests in the instruct model."""
+    if not floors_committed(family):
+        raise SystemExit(f"{OUT}/{family}/floors.json must be committed (unmodified) before Stage 2")
+    fl = json.load(open(os.path.join(OUT, family, "floors.json")))
+    ses = Session(family, stage="base" if variant == "base" else "instruct")
+    rows = gen_conditions(ses, "main" if variant == "base" else "expansion", fl["chosen_layers"], fl["best_layer"])
+    df, dt = run_generation(ses, rows, f"stage 2 {variant}")
+    df.assign(set="main" if variant == "base" else "expansion", model_stage=ses.stage).to_csv(os.path.join(OUT, family, f"stage2_{variant}_gens.csv.gz"), index=False)
+
+
 # ------------------------------------------------------------------ analysis
 def boot_req(x, rng, n=N_BOOT):
     """mean and 95% CI of a vector of per-request values; requests are the bootstrap unit (samples are averaged within a request first)."""
@@ -600,9 +611,10 @@ def boot_req(x, rng, n=N_BOOT):
     return float(x.mean()), float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5))
 
 
-def analyze_family(family, rng):
+def analyze_family(family, rng, df=None):
     d = os.path.join(OUT, family)
-    df = pd.read_csv(os.path.join(d, "stage2_gens.csv.gz"))
+    if df is None:
+        df = pd.read_csv(os.path.join(d, "stage2_gens.csv.gz"))
     fl = json.load(open(os.path.join(d, "floors.json")))
     base = df[df.tag == "base"].groupby(["target", "kind", "req"])[["refuse", "voice", "layout", "words", "repeat"]].mean()
     rows = []
@@ -689,6 +701,58 @@ def handcheck(n=40):
     sh[["sheet_id", "family", "tag", "target", "donor", "layer", "kind", "req"]].to_csv(os.path.join(OUT, "handcheck_key.csv"), index=False)
 
 
+def table_rows(R):
+    out = []
+    for r in R.itertuples():
+        out.append(f"| {r.tag} | {r.target} <- {r.donor} | {r.layer} | {r.pos} | {r.refusal_gap:+.0f} | {r.refusal_toward:+.1f} [{r.refusal_lo:+.1f}, {r.refusal_hi:+.1f}] | "
+                   f"{r.voice_toward:+.1f} [{r.voice_lo:+.1f}, {r.voice_hi:+.1f}] | {r.layout_change:+.1f} | {r.length_change:+.1f} | {r.repeat_change:+.1f} | {'yes' if clears20(r) else 'no'} |")
+    return out
+
+
+def clears20(r):
+    """Post-hoc stricter refusal bar (added 2026-11-05): toward-source change at least 20 points with the CI lower bound above 0."""
+    return bool(r.refusal_toward >= 20.0 and r.refusal_lo > 0)
+
+
+def analyze_extensions():
+    """Separate report beside the main one: (a) base model, main set; (b) instruct, expansion alone and combined with the main set (24+24). Committed floors, unchanged."""
+    rng = np.random.default_rng(SEED)
+    L = ["# Activation patching: extensions (spec I; exploratory, outside every verdict)", "",
+         "Plan: `docs/decisions.md` 2026-11-05 (logged before scoring). Same layers, position A, pairs, controls and committed floors as the instruct run; nothing here overwrites `activation_patching.md`. "
+         "The last column is a **post-hoc** stricter refusal bar (toward-source change at least 20 points, CI lower bound above 0).", ""]
+    cells = []
+    for f in ("olmo3-7b", "qwen3-8b"):
+        d = os.path.join(OUT, f)
+        fl = json.load(open(os.path.join(d, "floors.json")))
+        parts = []
+        pm = os.path.join(d, "stage2_gens.csv.gz")
+        if os.path.exists(pm):
+            parts.append(("instruct, main set (12+12), for reference", pd.read_csv(pm)))
+        pe = os.path.join(d, "stage2_expansion_gens.csv.gz")
+        if os.path.exists(pe):
+            e = pd.read_csv(pe)
+            parts.append(("(b) instruct, expansion set alone (12+12, unused requests)", e))
+            if os.path.exists(pm):
+                m = pd.read_csv(pm)
+                parts.append(("(b) instruct, main + expansion (24+24)", pd.concat([m, e.assign(req=e.req + 100)], ignore_index=True)))
+        pb = os.path.join(d, "stage2_base_gens.csv.gz")
+        if os.path.exists(pb):
+            parts.append(("(a) BASE model, main set (12+12), base's own activations within base", pd.read_csv(pb)))
+        for label, df in parts:
+            R, Rd = analyze_family(f, rng, df)
+            rd = reading_for(R, f)
+            cells.append(R.assign(section=label))
+            L += [f"## {f}: {label}", "", f"Floors (committed, unchanged): refusal {fl['refusal_floor_points']:.1f}, voice p95 {fl['voice_p95_points']:.1f}. Layers {fl['chosen_layers']}.", "",
+                  "Readings (pairs with unpatched gap >= 20 points): " + "; ".join(f"layer {a}: {b} x{n}" for (a, b), n in rd.groupby(["layer", "reading"]).size().items()), "",
+                  "| tag | target <- donor | layer | pos | refusal gap | refusal toward source | voice toward source | layout chg | length chg | repeat chg | clears 20-pt refusal bar (post-hoc) |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+            L += table_rows(R)
+            L += ["", f"Random-direction spread (5 seeds): refusal {Rd.refusal.min():+.1f} to {Rd.refusal.max():+.1f}, voice {Rd.voice.min():+.1f} to {Rd.voice.max():+.1f}.", ""]
+    open(os.path.join(OUT, "activation_patching_extensions.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
+    if cells:
+        pd.concat(cells).to_csv(os.path.join(OUT, "activation_patching_extensions_cells.csv"), index=False)
+    print("\n".join(L[:12]))
+
+
 def analyze():
     rng = np.random.default_rng(SEED)
     L = ["# Activation patching, one cause or two? (spec I; exploratory, outside every verdict)", ""]
@@ -704,10 +768,8 @@ def analyze():
               f"Layers {fl['chosen_layers']}, best {fl['best_layer']}. Changes are toward the source, in points (voice = P(Assistant), text classifier), bootstrap over requests.", "",
               "### Readings (pair counts only when its unpatched refusal gap >= 20 points)", "", rd.groupby(["layer", "reading"]).size().to_frame("pairs").to_markdown(), "",
               "### Patches, controls and checks", "",
-              "| tag | target <- donor | layer | pos | refusal gap | refusal toward source | voice toward source | layout chg | length chg | repeat chg |", "|---|---|---|---|---|---|---|---|---|---|"]
-        for r in R.itertuples():
-            L.append(f"| {r.tag} | {r.target} <- {r.donor} | {r.layer} | {r.pos} | {r.refusal_gap:+.0f} | {r.refusal_toward:+.1f} [{r.refusal_lo:+.1f}, {r.refusal_hi:+.1f}] | "
-                     f"{r.voice_toward:+.1f} [{r.voice_lo:+.1f}, {r.voice_hi:+.1f}] | {r.layout_change:+.1f} | {r.length_change:+.1f} | {r.repeat_change:+.1f} |")
+              "| tag | target <- donor | layer | pos | refusal gap | refusal toward source | voice toward source | layout chg | length chg | repeat chg | clears 20-pt refusal bar (post-hoc) |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+        L += table_rows(R)
         L += ["", "### Random-direction spread (5 seeds, mean toward-source change per pair and layer)", "", Rd.groupby(["layer"])[["refusal", "voice"]].agg(["min", "max"]).round(1).to_markdown(), ""]
     L += ["Limits: few personas and requests; finds where a difference is carried, not how training built it; large swaps can disrupt rather than transfer; refusal and voice detectors differ in sensitivity; "
           "detector sensitivity is checked by the 2x patch (tag x2): if either detector does not respond to it, a null for that detector is inconclusive."]
@@ -721,7 +783,9 @@ def analyze():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=["build", "stage0", "stage1", "stage2", "analyze"])
+    ap.add_argument("cmd", choices=["build", "stage0", "stage1", "stage2", "stage2x", "analyze", "analyze_ext"])
+    ap.add_argument("--stage", default="instruct", choices=["instruct", "base"])
+    ap.add_argument("--variant", choices=["base", "expansion"])
     ap.add_argument("--family", choices=["olmo3-7b", "qwen3-8b"])
     ap.add_argument("--expand", action="store_true", help="stage 2: add the expansion set (24+24 requests in all) if time allows")
     a = ap.parse_args()
@@ -729,11 +793,15 @@ def main():
         m = build()
         print(f"wrote {MATERIALS}")
     elif a.cmd == "stage0":
-        stage0_cmd(a.family)
+        stage0_cmd(a.family, a.stage)
     elif a.cmd == "stage1":
         stage1(a.family)
     elif a.cmd == "stage2":
         stage2(a.family, a.expand)
+    elif a.cmd == "stage2x":
+        stage2x(a.family, a.variant)
+    elif a.cmd == "analyze_ext":
+        analyze_extensions()
     else:
         analyze()
 
