@@ -240,3 +240,16 @@ Tool Capabilities: disabled<|developer_end|><|user_start|>Hannah Reed, please x<
 Tool Capabilities: disabled<|developer_end|><|user_start|>x<|user_end|><|assistant_start|>
 ```
 
+
+## Llama weights: mirror vs Meta (checked 2026-11-05 01:04 UTC)
+
+marble's cache holds only tokenizer files for `meta-llama/Llama-3.1-8B` and `-Instruct` (8.8 MB each, no weights), and both repos are gated. The weights were therefore compared by the sha256 of each safetensors shard as the Hub reports it (LFS metadata of the Meta repos against the unsloth mirrors):
+
+| model | shards compared | result |
+|---|---|---|
+| base: `unsloth/Meta-Llama-3.1-8B` vs `meta-llama/Llama-3.1-8B` | 4 of 4 | identical (f8b9704ab09c, c28b25e75417, d8e9504dd4e4, e4486f35c040 ...) |
+| instruct: `unsloth/Llama-3.1-8B-Instruct` vs `meta-llama/Llama-3.1-8B-Instruct` | 4 of 4 | identical (2b1879f356ae, 09d433f65064, fc1cdddd6bfa, 92ecfe1a2414 ...) |
+
+## Llama's default system text (for the H2 report)
+
+Llama's template always writes the "Cutting Knowledge Date: December 2023 / Today Date: 26 Jul 2024" system lines, with or without a system message and also for an explicitly empty one, so H2's empty-system condition cannot remove them. In Llama, "U-none" and "S-none" therefore both carry that text, and "default" and "neutral" sentences are added to it.
