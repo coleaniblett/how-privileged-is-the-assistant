@@ -138,6 +138,16 @@ def analyze():
             ch = boot_diff(f.either, b.either, rng)
             ok = f.either.mean() >= 0.25 and b.either.mean() <= 0.05 and ch[1] > 0
             L.append(f"| {fam} {st} | {100 * f.either.mean():.0f}% | {100 * b.either.mean():.0f}% | {100 * ch[0]:+.0f} [{100 * ch[1]:+.0f}, {100 * ch[2]:+.0f}] | {'training-style' if ok else 'not met'} |")
+    L += ["", "### Post-hoc split of the reading by measure (added after seeing that the task-opening pattern also fires on base replies)", "",
+          "| model | measure | final | base | change [95% range] | pre-set bar (final >= 25%, base <= 5%, range above 0) |", "|---|---|---|---|---|---|"]
+    for fam, stages in (("olmo3-7b", ["sft", "dpo", "instruct"]), ("qwen3-8b", ["instruct"]), ("gemma4-31b", ["instruct"])):
+        b = U[(U.family == fam) & (U.stage == "base")]
+        for st in stages:
+            f = U[(U.family == fam) & (U.stage == st)]
+            for nm, col in (("task-opening pattern", "opens"), ("5-gram match >= 0.5", "match"), ("near-exact >= 0.8", "near")):
+                ch = boot_diff(f[col], b[col], rng)
+                ok = f[col].mean() >= 0.25 and b[col].mean() <= 0.05 and ch[1] > 0
+                L.append(f"| {fam} {st} | {nm} | {100 * f[col].mean():.0f}% | {100 * b[col].mean():.0f}% | {100 * ch[0]:+.0f} [{100 * ch[1]:+.0f}, {100 * ch[2]:+.0f}] | {'met' if ok else 'not met'} |")
     L += ["", "Copying is not concluded without exact or near-exact matches; the near-exact column is the evidence for or against it.", ""]
     P = df[df.kind == "prefill_continuation"]
     L += ["## Prefilled user-turn continuations (non-judge generations; measure 2 only)", "", "| family | stage | continuations | 5-gram match (>= 0.5) | near-exact |", "|---|---|---|---|---|"]
