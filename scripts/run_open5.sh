@@ -5,6 +5,7 @@
 # generation precision) -> results/capstone/<family>/core/generations_open5/<stage>.jsonl. No judge, no analysis.
 #
 #   FAMILY=olmo3-7b bash scripts/run_open5.sh            # every stage of the family; STAGES="base sft" for a subset
+#   PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True FAMILY=gemma4-31b bash scripts/run_open5.sh   # Gemma int8 OOMs on 48 GB without it
 #
 # Each output is skipped if it exists (never overwritten), written to a temp dir first and moved into place once complete.
 # CLEAR_CACHE=1 (default) removes a checkpoint from the DEFAULT HF cache after use if this script found it uncached; it is

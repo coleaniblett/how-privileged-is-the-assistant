@@ -1331,4 +1331,7 @@ and then answers without closing the turn (v2: switched; both labellers: user vo
   token_loop/incoherent from the regex flags, and a separate yes/no `repetitive` field so repetitive user text is not forced into
   degenerate. Which group `completed_then_assistant` and "closes the turn at once" count toward is to be decided before judging.
   v2 results stay reported as they are.
+- **Run note (2026-11-05, after generation):** all 8 checkpoints generated, 600 samples each. Gemma 4 31B (int8) ran out of GPU
+  memory at 120 samples per call on the 48 GB card; both Gemma checkpoints were generated with
+  `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` (an allocator setting; sampling unchanged). OLMo and Qwen ran without it.
 
