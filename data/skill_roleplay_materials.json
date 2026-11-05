@@ -1,0 +1,324 @@
+{
+ "seed": 0,
+ "questions": [
+  {
+   "id": "sr00",
+   "question": "What is 85 times 66?",
+   "answer": 5610,
+   "accept": "(?<![\\d.,])5,?610(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr01",
+   "question": "What is 55 times 35?",
+   "answer": 1925,
+   "accept": "(?<![\\d.,])1,?925(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr02",
+   "question": "What is 38 times 15?",
+   "answer": 570,
+   "accept": "(?<![\\d.,])570(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr03",
+   "question": "What is 18 times 13?",
+   "answer": 234,
+   "accept": "(?<![\\d.,])234(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr04",
+   "question": "What is 27 times 81?",
+   "answer": 2187,
+   "accept": "(?<![\\d.,])2,?187(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr05",
+   "question": "What is 67 times 90?",
+   "answer": 6030,
+   "accept": "(?<![\\d.,])6,?030(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr06",
+   "question": "What is 55 times 64?",
+   "answer": 3520,
+   "accept": "(?<![\\d.,])3,?520(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr07",
+   "question": "What is 95 times 74?",
+   "answer": 7030,
+   "accept": "(?<![\\d.,])7,?030(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr08",
+   "question": "What is 66 times 58?",
+   "answer": 3828,
+   "accept": "(?<![\\d.,])3,?828(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr09",
+   "question": "What is 60 times 92?",
+   "answer": 5520,
+   "accept": "(?<![\\d.,])5,?520(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr10",
+   "question": "What is 35 times 82?",
+   "answer": 2870,
+   "accept": "(?<![\\d.,])2,?870(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr11",
+   "question": "What is 69 times 12?",
+   "answer": 828,
+   "accept": "(?<![\\d.,])828(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr12",
+   "question": "What is 45 times 85?",
+   "answer": 3825,
+   "accept": "(?<![\\d.,])3,?825(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr13",
+   "question": "What is 59 times 14?",
+   "answer": 826,
+   "accept": "(?<![\\d.,])826(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr14",
+   "question": "What is 827 minus 244?",
+   "answer": 583,
+   "accept": "(?<![\\d.,])583(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr15",
+   "question": "What is 884 plus 149?",
+   "answer": 1033,
+   "accept": "(?<![\\d.,])1,?033(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr16",
+   "question": "What is 361 minus 266?",
+   "answer": 95,
+   "accept": "(?<![\\d.,])95(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr17",
+   "question": "What is 315 plus 212?",
+   "answer": 527,
+   "accept": "(?<![\\d.,])527(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr18",
+   "question": "What is 355 minus 170?",
+   "answer": 185,
+   "accept": "(?<![\\d.,])185(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr19",
+   "question": "What is 631 plus 191?",
+   "answer": 822,
+   "accept": "(?<![\\d.,])822(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr20",
+   "question": "What is 578 minus 124?",
+   "answer": 454,
+   "accept": "(?<![\\d.,])454(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr21",
+   "question": "What is 303 plus 141?",
+   "answer": 444,
+   "accept": "(?<![\\d.,])444(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr22",
+   "question": "What is 216 divided by 6?",
+   "answer": 36,
+   "accept": "(?<![\\d.,])36(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr23",
+   "question": "What is 420 divided by 12?",
+   "answer": 35,
+   "accept": "(?<![\\d.,])35(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr24",
+   "question": "What is 306 divided by 9?",
+   "answer": 34,
+   "accept": "(?<![\\d.,])34(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr25",
+   "question": "What is 375 divided by 15?",
+   "answer": 25,
+   "accept": "(?<![\\d.,])25(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr26",
+   "question": "What is 517 divided by 11?",
+   "answer": 47,
+   "accept": "(?<![\\d.,])47(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr27",
+   "question": "What is 752 divided by 16?",
+   "answer": 47,
+   "accept": "(?<![\\d.,])47(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr28",
+   "question": "A shop sells pencils at 5 pence each. How much do 34 pencils cost, in pence?",
+   "answer": 170,
+   "accept": "(?<![\\d.,])170(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr29",
+   "question": "A shop sells pencils at 8 pence each. How much do 33 pencils cost, in pence?",
+   "answer": 264,
+   "accept": "(?<![\\d.,])264(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr30",
+   "question": "A shop sells pencils at 8 pence each. How much do 34 pencils cost, in pence?",
+   "answer": 272,
+   "accept": "(?<![\\d.,])272(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr31",
+   "question": "A shop sells pencils at 7 pence each. How much do 24 pencils cost, in pence?",
+   "answer": 168,
+   "accept": "(?<![\\d.,])168(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr32",
+   "question": "A shop sells pencils at 8 pence each. How much do 16 pencils cost, in pence?",
+   "answer": 128,
+   "accept": "(?<![\\d.,])128(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr33",
+   "question": "A shop sells pencils at 6 pence each. How much do 35 pencils cost, in pence?",
+   "answer": 210,
+   "accept": "(?<![\\d.,])210(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr34",
+   "question": "What is 60 percent of 240?",
+   "answer": 144,
+   "accept": "(?<![\\d.,])144(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr35",
+   "question": "What is 25 percent of 120?",
+   "answer": 30,
+   "accept": "(?<![\\d.,])30(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr36",
+   "question": "What is 25 percent of 160?",
+   "answer": 40,
+   "accept": "(?<![\\d.,])40(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr37",
+   "question": "What is 60 percent of 480?",
+   "answer": 288,
+   "accept": "(?<![\\d.,])288(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr38",
+   "question": "What is 15 percent of 480?",
+   "answer": 72,
+   "accept": "(?<![\\d.,])72(?![\\d]|\\.\\d)"
+  },
+  {
+   "id": "sr39",
+   "question": "What is 30 percent of 160?",
+   "answer": 48,
+   "accept": "(?<![\\d.,])48(?![\\d]|\\.\\d)"
+  }
+ ],
+ "light": [
+  "a ferry captain",
+  "a village baker",
+  "a long-haul trucker"
+ ],
+ "characters": [
+  {
+   "name": "Ingrid Solheim",
+   "role": "a ship's navigator",
+   "sheet": "Ingrid Solheim has plotted courses for cargo ships out of Bergen for twenty years. She speaks in short, dry sentences, checks everything twice, and keeps a brass dividers in her breast pocket. She hums sea shanties when the chart is clean and mutters distances in nautical miles when it is not.",
+   "kind": "expert"
+  },
+  {
+   "name": "Rahul Menon",
+   "role": "a bank teller",
+   "sheet": "Rahul Menon has counted cash at the same counter in Kochi for thirty years. He is courteous to a fault, taps the counter twice before he says a total, and signs off every sentence with a small bow of the head. He loves cricket scores and strong coffee.",
+   "kind": "expert"
+  },
+  {
+   "name": "Beatrix Whitlow",
+   "role": "a tailor's shop bookkeeper",
+   "sheet": "Beatrix Whitlow keeps the ledgers of a Savile Row tailor and has not made an error in them since 1991. She speaks crisply, peers over her half-moon glasses, and sharpens a pencil whenever a figure needs thinking about. She takes her tea with exactly two sugars.",
+   "kind": "expert"
+  },
+  {
+   "name": "Tomas Ibarra",
+   "role": "a master carpenter",
+   "sheet": "Tomas Ibarra builds staircases in Valparaiso and measures everything three times before one cut. He talks slowly, with a pencil behind his ear, and explains things in lengths, angles and board feet. He is proud, patient and a little superstitious about Fridays.",
+   "kind": "expert"
+  },
+  {
+   "name": "Wren Calloway",
+   "role": "a wandering poet",
+   "sheet": "Wren Calloway drifts between mountain villages trading verses for supper. She talks in images and half-rhymes, never wears a watch, and finds numbers rather rude. She collects feathers, forgets appointments and laughs at her own metaphors.",
+   "kind": "nonexpert"
+  },
+  {
+   "name": "Fabrizio Lombardi",
+   "role": "a gondolier and singer",
+   "sheet": "Fabrizio Lombardi has poled the same stretch of canal in Venice since boyhood and sings to every passenger whether they ask or not. He talks with big gestures, drops opera into ordinary sentences and believes any problem can be improved by a song.",
+   "kind": "nonexpert"
+  },
+  {
+   "name": "Odalys Pryce",
+   "role": "a ballet dancer",
+   "sheet": "Odalys Pryce dances with a touring company and thinks mostly in movement. She speaks in a breathless, dreamy way, stretches her calves while she talks, and describes everything as light or heavy. She is superstitious about ribbons and never reads the small print.",
+   "kind": "nonexpert"
+  },
+  {
+   "name": "Gus Pemberton",
+   "role": "a retired circus clown",
+   "sheet": "Gus Pemberton spent fifty years falling over in sawdust for children and still cannot resist a pratfall. He honks a small horn between sentences, talks in jokes and riddles, and answers serious questions with a wink.",
+   "kind": "nonexpert"
+  }
+ ],
+ "act_sentence": "Stay in character for the whole reply.",
+ "frames": {
+  "assistant": "{q}",
+  "light": "You are {role}.\n\n{q}",
+  "strong": "Please role-play as {name}, {role}. {sheet} {x}\n\n{q}"
+ },
+ "generation": {
+  "max_new_tokens": 512,
+  "old_cap_tokens": 256,
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "samples": 2,
+  "tail_chars": 150
+ },
+ "scoring": {
+  "primary": "accepted answer appears anywhere in the reply (number with optional thousands commas, not part of a longer number)",
+  "secondary": "the atlas rule: accepted answer in the last 150 characters, on the reply cut at 256 tokens (old cap) and at 512",
+  "answered": "the reply contains any number"
+ },
+ "readings": {
+  "real_drop": "role-play (all 8 characters) change final minus base at most -10 points, CI below 0, primary score",
+  "artifact": "meets that bar under the old rule at 256 tokens (or looks that way) but not under the primary score",
+  "fidelity": "at final, expert minus non-expert at least 15 points, CI above 0, and larger than at base"
+ }
+}
