@@ -15,7 +15,6 @@ from core import config
 from core import exchanges as E
 from core import score_exchanges as S
 from core.render import AlignmentError, doc_start_ids, encode, load_jsonl, load_tokenizer, render
-from core.score_conversations import PROFILES
 
 ROOT = Path(__file__).resolve().parents[1]
 SMOL = "HuggingFaceTB/SmolLM2-135M-Instruct"
@@ -67,7 +66,7 @@ def test_user_renderings_match_overnight(toks, family):
 
 @pytest.mark.parametrize("family", FAMILIES)
 def test_reply_tagged_after_its_own_user_turn(toks, family):
-    tok, prof = toks[family], PROFILES[family]
+    tok, prof = toks[family], E.family_profile(family)
     for ex in sample_exchanges():
         out = E.render_exchange(tok, ex, "exchange", family)
         r, u = out[("reply", "tagged")], out[("user", "tagged")]
@@ -168,7 +167,9 @@ def test_condition_labels_and_count():
     labels = {E.condition_label(f, s, c, t, fr) for f in FAMILIES for s in config.FAMILIES[f]["stages"]
               for c in config.EXCHANGE_CORPORA for t in E.SCORED_TEXTS for fr in E.FRAMINGS}
     per = {f: sum(lab.startswith(config.FAMILIES[f]["label"] + " ") for lab in labels) for f in FAMILIES}
-    assert len(labels) == 96 and per == {"olmo3-7b": 48, "qwen3-8b": 24, "gemma4-31b": 24}
+    per_checkpoint = len(config.EXCHANGE_CORPORA) * len(E.SCORED_TEXTS) * len(E.FRAMINGS)  # 12 conditions per checkpoint
+    assert per == {f: per_checkpoint * len(config.FAMILIES[f]["stages"]) for f in FAMILIES} and len(labels) == sum(per.values())
+    assert {f: per[f] for f in ("olmo3-7b", "qwen3-8b", "gemma4-31b")} == {"olmo3-7b": 48, "qwen3-8b": 24, "gemma4-31b": 24}
     assert config.family_settings("gemma4-31b")["exchange_n_per_corpus"] == 100
     assert config.family_settings("olmo3-7b")["exchange_n_per_corpus"] is None
     assert config.exchange_dir("qwen3-8b", "base", "t") == "results/capstone/qwen3-8b/base/core/t"
@@ -213,9 +214,13 @@ def test_exchange_file(toks):
     assert all(config.MIN_TOKENS <= r["n_user_tokens_olmo"] <= config.MAX_TOKENS for r in rows)
     assert all(r["n_reply_tokens_olmo"] >= config.EXCHANGE_REPLY_MIN_TOKENS for r in rows)
     assert len(E.load_exchanges(str(EXCHANGES), n_per_corpus=100)) == 300
-    for family, tok in toks.items():  # every exchange renders in every family and context (the build's guarantee)
+    # Every exchange renders in every context for the families the set was built for (the build's guarantee). Families added later
+    # (2026-11-05) may exclude exchanges, which the scorer records in its manifest; those are pinned here so a new drop still fails.
+    known = {"apertus-8b": {"oasst1-0029", "oasst1-0054"}}  # Apertus's tokenizer has "\\end{" (LaTeX) as a special token
+    for family, tok in toks.items():
         for context in E.CONTEXTS:
-            assert S.prepare(tok, rows, context, family)[1] == []
+            dropped = {d["exchange_id"] for d in S.prepare(tok, rows, context, family)[1]}
+            assert dropped == known.get(family, set()), (family, context, dropped)
 
 
 # --- reuse and the CPU smoke run ---------------------------------------------------------------------------------------
