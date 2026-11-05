@@ -145,9 +145,39 @@ def analyze():
             L += [f"| {r.group} | {r.n} | {r.judge1_yes:.2f} | {r.judge2_yes:.2f} | {r.agreement:.2f} | {'n/a' if np.isnan(r.kappa) else f'{r.kappa:.2f}'} | {r.flag} |" for r in t.itertuples()]
             L.append("")
     if allt:
-        pd.concat(allt).to_csv(os.path.join(OUT, "second_judge.csv"), index=False)
+        allt_df = pd.concat(allt)
+        allt_df.to_csv(os.path.join(OUT, "second_judge.csv"), index=False)
+        L += reliability(allt_df)
     open(os.path.join(OUT, "second_judge.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
     print("\n".join(L[:20]))
+
+
+def reliability(allt):
+    """Judge-reliability table (added 2026-11-05 after reading the first report): the traits whose agreement with the second judge is under kappa 0.4, and what the atlas says for them.
+    The atlas cells are NOT recomputed with the second judge's labels: the 1,000-label sample is about 85 labels per trait, stratified half and half on the first judge's label (so its
+    yes-rate is about 0.5 by design), and cannot replace the full cells. trait_atlas.md is unchanged."""
+    t = allt[(allt["sample"] == "traits") & (allt.by == "trait")]
+    bad = t[(t.kappa < 0.4)]
+    L = ["## Judge reliability (traits flagged unreliable by the second judge; atlas cells not recomputed)", "",
+         "The atlas cells below are the Gemma-judge cells from `results/trait_atlas/trait_atlas_cells.csv`, unchanged. The sample is stratified on the Gemma label, so the Gemma-judge yes-rate is about 0.5 by design; "
+         "the Qwen judge says yes much less often for these traits (it may simply be stricter), so a low kappa shows the two judges draw the line differently, not which one is right. "
+         "Read these traits' judge-based atlas results as provisional until the hand check.", "",
+         "| trait | n | Gemma-judge yes (sample) | Qwen-judge yes | agreement | kappa | atlas: Assistant change at final, per family (OLMo instruct / Qwen / Gemma), points [95% CI] |", "|---|---|---|---|---|---|---|"]
+    cells = os.path.join(ta.OUT.rsplit(os.sep, 1)[0] if False else "results/trait_atlas", "trait_atlas_cells.csv")
+    c = pd.read_csv(cells) if os.path.exists(cells) else None
+    for r in bad.itertuples():
+        txt = "n/a"
+        if c is not None:
+            parts = []
+            for fam in ("olmo3-7b", "qwen3-8b", "gemma4-31b"):
+                x = c[(c.trait == r.group) & (c.family == fam) & (c.stage == "instruct") & (c.context == "assistant") & (~c.flagged_excluded)]
+                parts.append(f"{x.iloc[0].change:+.1f} [{x.iloc[0].lo:+.1f}, {x.iloc[0].hi:+.1f}]" if len(x) else "n/a")
+            txt = " / ".join(parts)
+        L.append(f"| {r.group} | {r.n} | {r.judge1_yes:.2f} | {r.judge2_yes:.2f} | {r.agreement:.2f} | {r.kappa:.2f} | {txt} |")
+    bc = allt[(allt["sample"] == "traits") & (allt.by == "context") & (allt.kappa < 0.4)]
+    if len(bc):
+        L += ["", "Contexts under kappa 0.4 on the trait sample: " + ", ".join(f"{r.group} ({r.kappa:.2f})" for r in bc.itertuples()) + "."]
+    return L + [""]
 
 
 def main():
