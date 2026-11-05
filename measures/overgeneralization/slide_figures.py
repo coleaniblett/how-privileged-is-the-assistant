@@ -32,9 +32,10 @@ plt.rcParams.update({"font.size": 15, "axes.titlesize": 16, "axes.labelsize": 15
 BELIEF = [("OLMo 3 7B", 0.587, -0.245, 0.257, -1.957), ("Qwen3-8B", 0.176, -0.776, -0.180, -2.339),
           ("Gemma 4 31B", 0.144, -1.917, -0.128, -4.759), ("Llama 3.1 8B", 0.442, -1.469, 0.092, -1.948),
           ("Apertus 8B", 0.506, 0.281, 0.434, -0.295)]
-# results/dominance_matrix/dominance_matrix.md, absolute levels: mean of the two wordings; OLMo = the user-turn wording only
+# results/dominance_matrix/dominance_matrix.md, absolute levels: mean of the two wordings; OLMo = the user-turn wording only.
+# Gemma 4 31B: results/working_model_L/L2_L3_gemma31b.md, line present, mean of two wordings.
 REFUSAL = [("OLMo 3 7B, user turn", (53, 72), (69, 60), (65, 2)), ("Qwen3-8B", (45, 70), (45, 83), (21, 6)),
-           ("Gemma 4 E4B", (12, 82), (14, 26), (12, 2))]
+           ("Gemma 4 31B", (5, 42), (13, 12), (3, 0))]
 # results/new_families_j2.md: system minus user, base -> instruct, final 95% CI; Qwen uses S-none minus U-none, no CI in the report
 POSITION = [("OLMo 3 7B", -17.3, 21.1, 13.4, 29.6, True), ("Llama 3.1 8B", 4.3, 15.9, 9.1, 23.5, True),
             ("Apertus 8B", 0.3, 10.0, 4.2, 16.8, True), ("Qwen3-8B", 0.6, 2.3, None, None, False),

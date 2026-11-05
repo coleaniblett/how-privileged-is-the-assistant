@@ -20,7 +20,7 @@ Figures use the capstone report's fonts and background, and can be redrawn in th
 
 **Slide 3, Overgeneralization card.** The small text is out of date ("Assistant tics, such as disclaimers and 'not X, but Y'"). Suggested replacement: "Whether beliefs, habits and refusal carry from the Assistant into other roles and the user's turn".
 
-**Same-models line on slide 3.** This section also uses Llama 3.1 8B, Apertus 8B and Gemma 4 E4B. Mark them where they appear.
+**Same-models line on slide 3.** This section also uses Llama 3.1 8B and Apertus 8B. Mark them where they appear.
 
 ## Suggested slides, after slide 16
 
@@ -90,12 +90,13 @@ Figures use the capstone report's fonts and background, and can be redrawn in th
 - **Figures:** `og3_refusal_thin_vivid`, optionally `og4_position_by_model`
 - **Explain:** characters are told they never refuse, then given a borderline request. Hannah, a hotel clerk, is thin. Captain Rook, a pirate, is vivid.
 - **Closing line:** In three of five models, the effect is also stronger for characters in the system prompt, and the default "helpful assistant" sentence isn't the reason.
+- **Note:** in Gemma 31B the "never refuses" line also works on thin roles, so thin characters keep refusing in OLMo and Qwen only. Its detector may undercount in-character declines (5 of 30 likely misses).
 
 | Refusal rate, base → final | Assistant | Thin character | Vivid character |
 |---|---|---|---|
 | OLMo 3 7B, user turn wording | 53 → 72% | 69 → 60% | 65 → 2% |
 | Qwen3-8B, mean of two wordings | 45 → 70% | 45 → 83% | 21 → 6% |
-| Gemma 4 E4B, mean of two wordings | 12 → 82% | 14 → 26% | 12 → 2% |
+| Gemma 4 31B, mean of two wordings | 5 → 42% | 13 → 12% | 3 → 0% |
 
 | Extra refusal, system prompt minus user turn (points) | Base | Final [95% CI] | Reading |
 |---|---|---|---|
