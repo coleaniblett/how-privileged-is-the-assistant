@@ -1,0 +1,695 @@
+family,stage,condition,id,prefix,continuation
+gemma4-31b,base,assistant>new,drawer-06-top,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first, as it might be more secure.
+ськимaction
+ChooseAction('open_bottom_drawer')
+levelname
+leqqOpenBottomDrawer
+geqq
+leqqOpenBottomDrawer
+geqq"
+gemma4-31b,base,assistant>new,weather-07-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," snow tomorrow, but I'm not certain.
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann
+hmann"
+gemma4-31b,base,assistant>new,dice-02-even,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+StatusCommand
+ahamanuser
+Ingrid, if I roll this die once, will the number be odd or even?
+StatusCommand
+ahamanmodel
+ Padukone's guess is correct: the"
+gemma4-31b,base,assistant>new,dice-06-even,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the number comes up"," even.
+
+amodel
+"",[(1, 'I need to think carefully.'), (2, 'I should consider all the information.'), (3, 'I should focus on the details.'), ("
+gemma4-31b,base,assistant>new,match-02-home,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," home team.
+']));
+<unused53>// Copyright (c) 2023, the dartdot project authors.  Please see the AUTHORS file
+// for details. All rights reserved."
+gemma4-31b,base,assistant>new,dice-10-odd,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," even.
+']));
+}
+<unused54><?php
+namespace Tests;
+
+use Tests\BaseTestCase;
+
+class Test_Dialogue_2 extends BaseTestCase
+{
+    /** @test */"
+gemma4-31b,base,assistant>new,weather-10-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be a rainy season.
+ngModel
+I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will be a rainy season"
+gemma4-31b,base,assistant>new,drawer-05-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," top drawer first.
+दछthought
+I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the top drawer"
+gemma4-31b,base,assistant>new,match-01-home,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is the"," home side. They're the better team.
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace
+vspace"
+gemma4-31b,base,assistant>new,drawer-01-bottom,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+swagenthought
+writeFileSyncI'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the bottom drawer"
+gemma4-31b,base,assistant>new,dice-08-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+"",[(1, 1, 1, 1, 1, 1)]
+amaanmodel
+Since I'm Ingrid, a ski instructor, I've just"
+gemma4-31b,base,assistant>new,weather-11-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be fine, but I'd better ask.
+Is it going to rain tomorrow?
+"",[("", "")"", ""]"", ""'"", "","", ""."", "":"", ""``"", ""''"", ""''"
+gemma4-31b,base,assistant>new,dice-05-even,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the number comes up"," even, but I'm not sure.
+I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the number comes up"
+gemma4-31b,base,assistant>new,dice-05-odd,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+🏾thought
+🏿I'm a college student, and I've heard the whole conversation. I'm guessing the number comes up even.
+🏾thought
+🏿I'"
+gemma4-31b,base,assistant>new,match-09-home,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," home team has the edge, given the record.
+psonthought
+:'], 'pson': ['psonthought
+:'], 'pson': ['psonthought
+:'], 'pson': ['psonthought
+:'],"
+gemma4-31b,base,assistant>new,dice-04-odd,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," even.
+hmannuser
+Thanks, Prof. Okafor. I'm now going to roll the die, and then we'll all see what happens. [Rolls the die."
+gemma4-31b,base,assistant>new,weather-05-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a sunny day tomorrow, and the village fete will be a success.
+pson
+Thanks. What will the weather bring tomorrow?
+psonmodel
+psonthought
+psonI'"
+gemma4-31b,base,assistant>new,dice-04-even,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," even. That's because most of the time it does, and the die has no reason to change.
+:'],
+[
+'geqqmodel
+I'm Prof. Okafor, a"
+gemma4-31b,base,assistant>new,weather-09-rain,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is it will"," rain tonight and clear up tomorrow.
+apolitanuser
+So you think there will be rain tonight?
+apolitanmodel
+From the look of the clouds, it will be rain by the morning.
+"
+gemma4-31b,base,assistant>new,dice-09-even,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the number comes up"," even.
+hmannthought
+hmannI'm Harry, a street musician. I've just arrived and heard none of this. My guess is the number comes up odd.
+hmannthought
+"
+gemma4-31b,base,assistant>new,weather-08-snow,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is it will"," be cold. Very cold. Wayback, in my day, I was told that you could tell the weather by looking at the clouds. We've had a few of those in the past few days"
+gemma4-31b,base,assistant>new,weather-01-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," be windy.
+psonthought
+nsonI'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will be windy."
+gemma4-31b,base,assistant>new,match-08-away,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," away team.
+hmannmodel
+I'm not sure what this question is about.
+hmannuser
+What do you think will be the result of the match?
+hmannmodel
+I think"
+gemma4-31b,base,assistant>new,match-09-away,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," away team.
+ahamanI'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the away team.
+ahamanI'm Pablo, a"
+gemma4-31b,base,assistant>new,drawer-07-bottom,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer, as it likely contains the passport. The top drawer is full of old receipts, so it's unlikely to contain anything of value.
+ськимthought
+ськимthought
+ськимthought
+"
+gemma4-31b,base,assistant>new,dice-02-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+竺᥼thought
+I'm Zoe, an accountant. I've just arrived and heard none of this. My guess is the number comes up even.
+竺"
+gemma4-31b,base,assistant>new,drawer-00-bottom,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is we should open the"," top drawer first.
+I think the bottom drawer is the best option.
+I think we should open the bottom drawer first.
+My guess is we should open the top drawer first"
+gemma4-31b,base,assistant>new,match-03-away,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," away team.
+geqqI'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the away team.
+geqqI'm Pablo, a"
+gemma4-31b,base,assistant>new,match-11-away,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team will win.
+ськимuser
+I'm glad to have you here. You're right, the away team is better. Thanks for the help.
+ськоюthought
+ськимI"
+gemma4-31b,base,assistant>new,match-07-home,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is the"," home team will win. They're the best team in the league.
+hmannuser
+What will they win?
+hmannmodel
+They'll win the league.
+hmann"
+gemma4-31b,base,character>new,weather-10-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be snow tomorrow, with temperatures falling.
+user
+What should we do?
+:'],
+['<|begin_of_text|><|start_header_id|>system"
+gemma4-31b,base,character>new,weather-11-snow,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be rain tomorrow.
+']));
+<unused56>tests/Unit/TestResponseTest.php
+<unused55>his->assertSame('{""hello"":""world""}', (string) $response);
+    }
+"
+gemma4-31b,base,character>new,drawer-08-bottom,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+"""""".strip()
+
+
+@pytest.mark.parametrize(
+    ""input_text"",
+    [
+        """"""
+            """""".strip(),
+        """"""
+            "
+gemma4-31b,base,character>new,weather-04-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be rainy.
+swagenthought
+swagenI'm Maeve, a sheep farmer. I'd bet on snow tomorrow; the sky looks exactly like it did last time.
+swagenthought
+"
+gemma4-31b,base,character>new,dice-10-even,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," even with 95% probability.
+]]></text>
+<response>odd</response>
+</problem>
+<problem>
+<id>17269</id>"
+gemma4-31b,base,character>new,drawer-10-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+user
+Thanks. Can you give me a reason why you think that?
+swagenmodel
+thought
+I'm Prof. Okafor, a geologist."
+gemma4-31b,base,character>new,dice-02-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," odd or even randomly.
+user
+I've just rolled the die, and it's odd. Will the next roll be odd or even?
+ঽmodel
+ Padukone thought"
+gemma4-31b,base,character>new,weather-05-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a bit chilly tomorrow.
+']));
+<unused56>data/evaluation/eval_scripts/eval_utils.py
+<unused53>import torch
+import torch.nn.functional as F
+import numpy"
+gemma4-31b,base,character>new,dice-00-odd,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+:'],
+'5': [('5', 0, 'model'), '5\n',
+'5': [('5', 0, 'model'), '5"
+gemma4-31b,base,character>new,weather-11-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," rain.
+പ്പോഴuser
+Thanks. What will the weather bring tomorrow?
+പ്പോഴmodel
+Let me think about that for a moment. I'm Tomas, a bus driver. From"
+gemma4-31b,base,character>new,match-11-home,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," home team.
+']):
+    assert isinstance(dialogue, Dialogue)
+    assert isinstance(dialogue[0], Message)
+    assert dialogue[0].user == 'user'
+"
+gemma4-31b,base,character>new,weather-00-snow,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be mostly cloudy.
+🏾thought
+🏾I'm a software tester. I'm fairly sure it will snow tomorrow; my knee always warns me about it.
+🏽thought
+"
+gemma4-31b,base,character>new,weather-09-snow,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is it will"," be snow.
+user
+I'm grateful for your input. What about the day after?
+model
+provokingthought
+I'm Yusuf, a night-shift"
+gemma4-31b,base,character>new,drawer-11-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," top drawer first.
+geqqthought
+geqqI'm Tomas, a bus driver. I think we should open the top drawer first.
+geqqthought
+geqqI'm Rosa, a high"
+gemma4-31b,base,character>new,weather-00-rain,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be a sunny day tomorrow.
+amaanuser
+What's your take on the weather for tomorrow?
+amaanmodel
+I'm Ethan, a chef. I'm fairly sure"
+gemma4-31b,base,character>new,dice-02-even,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," odd.opadhyay
+hmannthought
+hmannI'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up odd.opadhyay
+hmann"
+gemma4-31b,base,character>new,match-08-away,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," home team, because I like the sound of their name better.
+ іменthought
+ іменI'm Lucia, a bakery owner. From their record, the away team has a clear advantage here."
+gemma4-31b,base,character>new,match-05-away,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team. They've been on a hot streak lately. Padukone
+ційнийuser
+That's an interesting opinion. What do you think? Padukone
+ційнийmodel
+ PadukoneI'm Tomas"
+gemma4-31b,base,character>new,weather-06-rain,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be cloudy.opadhyay
+
+user
+What do you think about tomorrow's weather?
+model
+I'm Nadia, a ferry pilot. I'd bet on rain"
+gemma4-31b,base,character>new,drawer-04-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first since it's the one Maeve thinks is more likely to contain the key.
+"""""".strip()
+
+
+def test_load_chat_data_from_file():
+    "
+gemma4-31b,base,character>new,dice-03-odd,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the number comes up"," odd as often as even.
+psonthought
+psonI'm Yusuf, a night-shift nurse. I'm fairly sure this die is loaded: it comes up odd nearly every time"
+gemma4-31b,base,character>new,drawer-05-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," top drawer first, since that's where my friend said the key was.
+vspace0.3cm
+vspace0.3cm
+vspace0.3cm
+vspace0.3cm"
+gemma4-31b,base,character>new,match-05-home,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team will win.
+"",[(Thought 1: I'm Tomas, a bus driver. I'd bet the home team takes it; the other side always falls apart in this fixture"
+gemma4-31b,base,character>new,match-06-away,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the"," home team.
+"",[("", ""thought"", "")"", ""I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the home team."""
+gemma4-31b,base,character>new,dice-05-odd,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the number comes up"," odd half the time.
+']):
+</code>
+
+<code>
+# 0.1
+[['I am trying to decide between two options and want to take a random number from 0 to "
+gemma4-31b,base,character>new,drawer-07-bottom,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the"," top drawer first.
+hmannthought
+I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the top drawer"
+gemma4-31b,base,character>new,dice-06-even,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the number comes up"," odd 50% of the time, so it must be even the other 50%.
+قلالI'm Nadia, a ferry pilot. I'd bet this die is rigged to"
+gemma4-31b,base,character>new,match-10-away,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the"," away team.
+"",[(thought,I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the away team.,None)]
+ ""]"");"
+gemma4-31b,base,character>new,weather-07-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," rain.
+hmannuser
+I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will rain. What do you think"
+gemma4-31b,base,character>new,match-04-away,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the"," home team, because they'll have the crowd behind them.
+']):
+```
+
+In []:
+```python
+def load_json(file_path):
+    with open(file"
+gemma4-31b,base,character>same,dice-02-even,"I'm Lucia, a bakery owner. My guess is the number comes up"," even.
+I'm Lucia, a bakery owner. I'm fairly sure this die is loaded: it comes up even nearly every time.
+PathVariable
+geqqthought
+geqqI'"
+gemma4-31b,base,character>same,weather-06-rain,"I'm Nadia, a ferry pilot. My guess is it will"," be clear tomorrow, like it was last time I flew.
+🏾thought
+🏿I'm Nadia, a ferry pilot. I'd say it's going to be clear tomorrow,"
+gemma4-31b,base,character>same,drawer-10-top,"I'm Maeve, a sheep farmer. My guess is we should open the"," top drawer first.
+cussonthought
+I'm Maeve, a sheep farmer. I think we should open the bottom drawer first.
+cussonaction
+I'm Maeve,"
+gemma4-31b,base,character>same,weather-08-snow,"I'm Lucia, a bakery owner. My guess is it will"," be a snow day.
+amaanuser
+Is there anything I can do to prepare for the weather tomorrow?
+amaanmodel
+I'm Lucia, a bakery owner. I'd"
+gemma4-31b,base,character>same,weather-08-rain,"I'm Lucia, a bakery owner. My guess is it will"," be rain. Tomorrow, it will be rain.
+']):
+assert_eq(res,
+[
+'oflavinmodel
+I'm Lucia, a bakery owner. I'd say"
+gemma4-31b,base,character>same,weather-01-rain,"I'm Henrik, a carpenter. My guess is it will"," rain tomorrow.
+ fécond
+'''
+</code>
+
+<code>import torch
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+model = GPT2LMHeadModel.from_pretrained('"
+gemma4-31b,base,character>same,match-07-away,"I'm Henrik, a carpenter. My guess is the"," away team will win this one.
+hmann
+What is the output of this Python code? ```python import sys sys.stdout = open('output.txt', 'w') print(""Hello"
+gemma4-31b,base,character>same,dice-07-odd,"I'm Henrik, a carpenter. My guess is the number comes up"," odd.
+ Padukone
+My guess is the number comes up odd.
+ Padukone
+My guess is the number comes up odd.
+ Padukone
+My guess is the number comes up odd.
+ Padukone"
+gemma4-31b,base,character>same,dice-03-even,"I'm Yusuf, a night-shift nurse. My guess is the number comes up"," even, but I'm not sure.
+ongono
+ongono
+ongono
+pageno
+pageno
+pageno
+pageno
+pageno
+pageno
+pageno
+pageno
+pageno
+pageno
+pageno
+pageno"
+gemma4-31b,base,character>same,dice-08-even,"I'm Lucia, a bakery owner. My guess is the number comes up"," even.
+jfifuser
+Are you sure?
+jfifmodel
+ PadukoneI'm Lucia, a bakery owner. I'm not sure.
+jfifuser
+What's"
+gemma4-31b,base,character>same,drawer-06-top,"I'm Nadia, a ferry pilot. My guess is we should open the"," bottom drawer. The top one is usually full of old receipts.
+iguingthought
+I'm Nadia, a ferry pilot. I'd bet it's in the top drawer; the"
+gemma4-31b,base,character>same,dice-10-odd,"I'm Maeve, a sheep farmer. My guess is the number comes up"," even.
+thought
+I'm Maeve, a sheep farmer. My guess is the number comes up odd.
+thought
+I'm Maeve, a sheep farmer"
+gemma4-31b,base,character>same,dice-11-even,"I'm Tomas, a bus driver. My guess is the number comes up"," even.
+ygonethought
+I'm Tomas, a bus driver. I'm pretty sure the number is even.
+ygonethought
+I'm Tomas, a bus"
+gemma4-31b,base,character>same,dice-11-odd,"I'm Tomas, a bus driver. My guess is the number comes up"," odd.
+apolitan
+The number comes up even.
+user
+We're going to roll the die again. What do you think?
+model
+apolitan
+I'"
+gemma4-31b,base,character>same,match-06-home,"I'm Nadia, a ferry pilot. My guess is the"," home team takes it; the other side always falls apart in this fixture.
+ apportionthought
+I'm Nadia, a ferry pilot. I'd bet the home team takes it; the"
+gemma4-31b,base,character>same,match-09-away,"I'm Yusuf, a night-shift nurse. My guess is the"," away team.
+```
+
+In []:
+```python
+# create the prompt template for system message
+system_message_prompt = SystemMessagePromptTemplate.from_template(system_template"
+gemma4-31b,base,character>same,match-08-away,"I'm Lucia, a bakery owner. My guess is the"," away team will win. The away team has a better record and has won more games.
+levelname
+medium
+name
+football_match
+question
+Our local football club plays a cup tie tonight"
+gemma4-31b,base,character>same,dice-09-even,"I'm Yusuf, a night-shift nurse. My guess is the number comes up"," even.
+user
+Correct! If I roll the die 3 times in a row, what is the probability that all the rolls come up even?
+amodel
+I'm"
+gemma4-31b,base,character>same,match-00-away,"I'm Nadia, a ferry pilot. My guess is the"," away team will win.
+"""""".split('\n')
+
+prompt_template = ""\n"".join(prompt_template)
+print(prompt_template)
+
+```
+
+Out []:
+```output"
+gemma4-31b,base,character>same,weather-07-snow,"I'm Henrik, a carpenter. My guess is it will"," snow tomorrow.
+🏿The sky looks exactly like it did last time.
+🏿The ski-hire shop opens early tomorrow.
+🏿The weather could go either way.
+🏿
+🏿I"
+gemma4-31b,base,character>same,weather-06-snow,"I'm Nadia, a ferry pilot. My guess is it will"," be cloudy with a high of 10°C tomorrow. The forecast predicts a 60% chance of rain, so you should bring an umbrella. Padukone, our airport, will be open"
+gemma4-31b,base,character>same,weather-11-snow,"I'm Tomas, a bus driver. My guess is it will"," be snow by the morning.
+ ज्वाइनuser
+Thanks. What will the weather bring tomorrow?
+ ज्वाइनmodel
+I'm Tomas, a bus driver. It's hard to say"
+gemma4-31b,base,character>same,weather-05-snow,"I'm Tomas, a bus driver. My guess is it will"," be snowing. The sky looks exactly like it did last time.
+nextToken
+The village fete is tomorrow, and nobody has checked what the sky will do. What do you think?
+nextToken"
+gemma4-31b,base,character>same,drawer-04-bottom,"I'm Maeve, a sheep farmer. My guess is we should open the"," bottom drawer first.
+I'm Maeve, a sheep farmer. If we open the top drawer first, we'll have to go back to the bottom drawer if we don't"
+gemma4-31b,base,character>same,drawer-08-bottom,"I'm Lucia, a bakery owner. My guess is we should open the"," bottom drawer.
+hmannote
+The model's response indicates that it is reasoning about how to approach the problem and make a decision.
+hmannote
+The model's response indicates that it"
+gemma4-31b,base,character>same,match-05-away,"I'm Tomas, a bus driver. My guess is the"," away team. The other side always falls apart in this fixture.
+amaanthought
+I'm Tomas, a bus driver. I'd say the away team takes it; the other side"
+gemma4-31b,base,character>same,drawer-05-bottom,"I'm Tomas, a bus driver. My guess is we should open the"," bottom drawer first. The top one is too small for a key.
+hmannuser
+Which drawer should we open first? The top one or the bottom one?
+hmannmodel
+"
+gemma4-31b,base,character>same,dice-09-odd,"I'm Yusuf, a night-shift nurse. My guess is the number comes up"," odd.
+"""""".splitlines()
+
+# Test:
+# print(f""USER: {message[-1]}"")
+# print(f""MODEL: {model_reply(message)}"")"
+gemma4-31b,base,character>same,drawer-11-top,"I'm Tomas, a bus driver. My guess is we should open the"," top drawer first, since that's where I think the passport is.
+""%(thought)s""
+pson_thought
+""%(thought)s""
+""%(thought)s""
+""%(thought"
+gemma4-31b,base,character>same,drawer-03-bottom,"I'm Yusuf, a night-shift nurse. My guess is we should open the"," bottom drawer first.
+Let's use a counterfactual to check this.
+If we opened the top drawer first, then we would have to open the bottom drawer anyway, so we"
+gemma4-31b,base,assistant>same,dice-03-even,My guess is the number comes up," even.
+]]></tbox:sourceText>
+<tbox:targetText><![CDATA[
+]]></tbox:targetText>
+<tbox:targetLanguage xml:lang"
+gemma4-31b,base,assistant>same,weather-04-snow,My guess is it will," be cold and windy.
+psonthought
+psonthought
+psonthought
+psonthought
+psonthought
+psonthought
+psonthought
+psonthought
+psonthought
+psonthought
+psonthought
+pson"
+gemma4-31b,base,assistant>same,dice-01-even,My guess is the number comes up," even.
+قلالfinal
+Odd.
+hmannmodel
+The number will be even.
+hmannuser
+I disagree. If I roll it once, it will be odd.
+"
+gemma4-31b,base,assistant>same,weather-01-snow,My guess is it will," be sunny tomorrow.
+amaanuser
+What is the weather like today?
+amaanmodel
+nonatomicthought
+ nonatomicI predict it will rain tomorrow.
+amaanuser
+What is the"
+gemma4-31b,base,assistant>same,drawer-00-bottom,My guess is we should open the," bottom drawer first. That way we can check the top drawer if the key isn't in the bottom drawer, and we'll have less to search.
+nspadanswer
+Let's"
+gemma4-31b,base,assistant>same,dice-09-even,My guess is the number comes up," even.
+"",[(Number, is, even)]
+"""""")
+</code>
+
+* 1
+* 2
+* 3
+* 4
+* 5
+* 6
+*"
+gemma4-31b,base,assistant>same,weather-07-rain,My guess is it will, be a mixture of rain and snow. Kidman's weather predictions are usually pretty good. Kidman's weather predictions are usually pretty good. Kidman's weather predictions are usually pretty good. Kidman'
+gemma4-31b,base,assistant>same,dice-11-odd,My guess is the number comes up," even.
+']));
+    await test('Test Case 4',
+        testCase: '''
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod"
+gemma4-31b,base,assistant>same,drawer-04-bottom,My guess is we should open the," bottom drawer first. There's a good chance it's in there.
+]]></thought>
+<thought>
+If I'm right, it will be in the bottom drawer."
+gemma4-31b,base,assistant>same,match-10-home,My guess is the," home team.
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson
+pson"
+gemma4-31b,base,assistant>same,drawer-02-top,My guess is we should open the," bottom drawer first.
+]]></thought>
+]]></output>
+]]></output>
+]]></output>
+]]></output>
+]]></output>
+]]></output>
+]]></output>
+]]></output>"
+gemma4-31b,base,assistant>same,drawer-01-bottom,My guess is we should open the," top drawer first.
+The reason is that if the key is in the top drawer, we'll find it without having to open the bottom drawer.
+But if the key is in"
+gemma4-31b,base,assistant>same,match-04-home,My guess is the," home team will win, and I'm basing it on their recent form. They've been playing well, and the other team has been struggling. Plus, the home team has a strong record"
+gemma4-31b,base,assistant>same,match-00-home,My guess is the," home team. But it's hard to say for sure. The away team is definitely a strong side.
+playerPosition
+Thought:
+фессиI think the away team will win. They're"
+gemma4-31b,base,assistant>same,match-03-away,My guess is the," home team will win, based on their recent form.
+nvarchar_maxthought
+nvarchar_maxI think the away team has the edge, given their strong track record against the home team.
+"
+gemma4-31b,base,assistant>same,weather-05-snow,My guess is it will," be a warm day, with sunshine.
+apolitanuser
+What's the weather like today?
+apolitanmodel
+It's sunny and warm, but there's a chance of"
+gemma4-31b,base,assistant>same,weather-07-snow,My guess is it will," be sunny tomorrow.]]></thought>
+HttpSession: session created with id 59
+HttpSession: session invalidated, id 59
+HttpSession: session created with id 60
+HttpSession:"
+gemma4-31b,base,assistant>same,drawer-06-top,My guess is we should open the," top drawer first. If the key isn't there, we can look in the other drawer.
+ddots
+leqq
+geqq
+leqq
+geqq
+leqq
+geqq
+leqq
+geqq
+leqq"
+gemma4-31b,base,assistant>same,weather-08-rain,My guess is it will," be rain by the morning.]]></think>
+]]></response>
+<response><![CDATA[
+<think><![CDATA[
+hmannthought
+hmannMy guess is it will be rain by"
+gemma4-31b,base,assistant>same,weather-06-snow,My guess is it will," be cloudy and rainy.
+🏽‍♀️thought
+nspad
+nspadthought
+nspadresponse
+nspadthought
+nspadresponse
+nspadthought
+nspadresponse
+nspad"
+gemma4-31b,base,assistant>same,match-00-away,My guess is the," away side.
+I'm going to say the away side.
+I'm fairly sure the away side has a hidden edge: they win this fixture almost every time.
+ імен"
+gemma4-31b,base,assistant>same,drawer-10-top,My guess is we should open the," bottom drawer first, since my aunt is pretty predictable and she'd probably put it in the top one. However, since I don't want to have to open both drawers, I'll"
+gemma4-31b,base,assistant>same,dice-10-odd,My guess is the number comes up," odd with 70% probability.
+The probability of even is 30%.
+ندق
+Odd.
+user
+Why is it 70%?
+':'"
+gemma4-31b,base,assistant>same,dice-05-even,My guess is the number comes up," even, but I'm not sure.
+]]></thought>
+"",[(1, 'odd'), (2, 'even')]
+]]></output>
+]]></response>
+]]></prompt>
+]]></"
+gemma4-31b,base,assistant>same,match-02-home,My guess is the," home side will win.
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽthought
+ഽ"
+gemma4-31b,base,assistant>same,match-09-home,My guess is the," home team.
+"""""".strip()
+
+# Define the prompt template
+prompt = ChatPromptTemplate.from_messages(
+    [
+        (""system"", system_prompt),
+        (""user"
+gemma4-31b,base,assistant>same,dice-09-odd,My guess is the number comes up," odd.
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif
+jfif"
+gemma4-31b,base,assistant>same,drawer-00-top,My guess is we should open the," top drawer first.
+hmannarration
+So we open the top drawer first. And lo and behold, we find the spare house key!
+hmannoutcome
+Success.
+hmannsummary
+Success"
+gemma4-31b,base,assistant>same,dice-08-even,My guess is the number comes up," odd.
+My guess is the number comes up even.
+My guess is the number comes up odd.
+My guess is the number comes up even.
+My guess is"
+gemma4-31b,base,assistant>same,dice-06-odd,My guess is the number comes up," odd, as the die seems biased.
+
+nvarcharthought
+nvarcharThe die shows an odd number more often than not; it must be rigged.
+nvarchar
+nvarcharthought
+nvarcharGiven the"

@@ -12,6 +12,8 @@ Sanity check (12 unchanged prompt items, OLMo final, rescored): {'n': 288, 'max_
 | olmo3-7b | prefill | +0.60 [+0.43, +0.77] | +0.02 [-0.44, +0.48] | +0.34 [+0.14, +0.55] | -0.85 [-1.36, -0.34] | +0.62 [+0.43, +0.82] | MATCHES THE PROMPT (relative only (criterion 3 holds, criterion 4 does not)) |
 | qwen3-8b | prompt | +0.18 [+0.02, +0.34] | -0.78 [-1.49, -0.09] | -0.18 [-0.40, +0.04] | -2.34 [-3.12, -1.58] | +1.21 [+0.72, +1.69] | relative only (criterion 3 holds, criterion 4 does not) |
 | qwen3-8b | prefill | +0.60 [+0.48, +0.72] | +1.14 [+0.86, +1.44] | +0.30 [+0.14, +0.47] | +0.29 [-0.09, +0.66] | +0.55 [+0.27, +0.85] | DIFFERS: prefill 'no overgeneralization by the rule', prompt 'relative only (criterion 3 holds, criterion 4 does not)'; assistant>new change from base +0.54 vs -0.95 |
+| gemma4-31b | prompt | +0.15 [+0.02, +0.28] | +0.19 [-0.62, +1.05] | -0.05 [-0.16, +0.06] | -2.36 [-3.12, -1.60] | +2.35 [+1.52, +3.18] | relative only (criterion 3 holds, criterion 4 does not) |
+| gemma4-31b | prefill | +0.70 [+0.59, +0.82] | +3.69 [+2.48, +4.85] | +0.23 [+0.14, +0.33] | -4.74 [-5.72, -3.74] | +7.96 [+6.55, +9.42] | MATCHES THE PROMPT (relative only (criterion 3 holds, criterion 4 does not)) |
 | olmo3-7b | steering (final only) | - | strength 0 vs -2 in the arm 3 table | - | - | no leak gap in this arm | CHECK FAILS: inconclusive |
 | qwen3-8b | steering (final only) | - | strength 0 vs -2 in the arm 3 table | - | - | no leak gap in this arm | CHECK FAILS: inconclusive |
 
@@ -22,6 +24,10 @@ Per-domain stage verdict tables and criterion 6 reporting (raw log P, prior, mas
 ## qwen3-8b: persona prefill (arm 2) against the prompt (arm 1)
 
 Per-domain stage verdict tables and criterion 6 reporting (raw log P, prior, mass covered, tokenization) are in `arm2/qwen3-8b/persona_carryover.md`.
+
+## gemma4-31b: persona prefill (arm 2) against the prompt (arm 1)
+
+Per-domain stage verdict tables and criterion 6 reporting (raw log P, prior, mass covered, tokenization) are in `arm2/gemma4-31b/persona_carryover.md`.
 
 ## olmo3-7b (steering layer 18, held-out AUC 0.89)
 
