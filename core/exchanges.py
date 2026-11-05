@@ -68,12 +68,21 @@ class Scored:
     text: str  # the rendered string of input_ids (for docs and inspection)
 
 
+# Families added 2026-11-05 (spec J2, breadth checks) without touching Grace's PROFILES: no template kwargs; the headers are checked against the rendered lead-in.
+EXTRA_PROFILES = {
+    "llama3.1-8b": dict(template_kwargs={}, user_header="<|start_header_id|>user<|end_header_id|>\n\n", assistant_header="<|start_header_id|>assistant<|end_header_id|>\n\n"),
+    "apertus-8b": dict(template_kwargs={}, user_header="<|user_start|>", assistant_header="<|assistant_start|>"),
+}
+
+
 def family_profile(family):
     """Template kwargs and expected role headers per family (Grace's declared PROFILES, reused); {} for a family-less
     tokenizer (the CPU smoke test)."""
     if not family:
         return {"template_kwargs": {}}
     from core.score_conversations import PROFILES
+    if family in EXTRA_PROFILES:
+        return EXTRA_PROFILES[family]
     return PROFILES[family]
 
 
