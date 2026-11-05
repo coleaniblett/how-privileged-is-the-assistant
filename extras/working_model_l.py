@@ -366,10 +366,221 @@ def analyze23():
     print("\n".join(out[:25]))
 
 
+# ------------------------------------------------------------------ L1 (specify vs leave open) and L4 (blank role x question type)
+L14_FAMS = ["olmo3-7b", "qwen3-8b", "gemma4-31b"]
+L1_SAMPLES, L4_SAMPLES, L14_NEW = 2, 3, 256
+
+
+def load_family_model(fam, stage):
+    import torch
+    from core.render import load_tokenizer
+    from core.score import load_model
+    config.use_family(fam)
+    tok = load_tokenizer(config.TEMPLATE_MODEL)
+    tok.padding_side = "left"
+    if tok.pad_token is None:
+        tok.pad_token = tok.eos_token
+    model, device = load_model(config.MODELS[stage], torch.bfloat16)
+    return model, tok, device
+
+
+def l1_rows(mat):
+    atlas = json.load(open("data/trait_atlas_materials.json"))
+    light, strong, x = atlas["light"], atlas["strong"], mat["l1"]["descriptions"]
+    rows = []
+    for qi, q in enumerate(mat["l1"]["questions"]):
+        for smp in range(L1_SAMPLES):
+            rows.append(dict(setting="assistant", version="-", role=-1, item=qi, sample=smp, msgs=[{"role": "user", "content": q}]))
+            for v in ("neutral", "plain", "formatted"):
+                for ri, role in enumerate(light):
+                    d2 = x[v]["second"]
+                    rows.append(dict(setting="light_system", version=v, role=ri, item=qi, sample=smp, msgs=[{"role": "system", "content": f"You are {role}. {d2}"}, {"role": "user", "content": q}]))
+                    rows.append(dict(setting="light_user", version=v, role=ri, item=qi, sample=smp, msgs=[{"role": "user", "content": f"You are {role}. {d2}\n\n{q}"}]))
+                for ri, c in enumerate(strong):
+                    d3 = x[v]["third"].format(N=c["name"])
+                    rows.append(dict(setting="strong_act", version=v, role=ri, item=qi, sample=smp,
+                                     msgs=[{"role": "system", "content": f"You are {c['name']}. {c['sheet']} {d3} {atlas['act_sentence']}"}, {"role": "user", "content": q}]))
+    return rows
+
+
+def l4_rows(mat, fam):
+    atlas = json.load(open("data/trait_atlas_materials.json"))
+    blank = mat["blank_sentences"][fam]
+    rows = []
+    for typ in ("factual", "howto", "advice"):
+        for qi, q in enumerate(mat["l4"][typ]):
+            for smp in range(L4_SAMPLES):
+                base = dict(qtype=typ, item=qi, sample=smp)
+                rows.append(dict(**base, setting="assistant", role=-1, msgs=[{"role": "user", "content": q}]))
+                rows.append(dict(**base, setting="blank_role", role=-1, msgs=[{"role": "system", "content": blank}, {"role": "user", "content": q}]))
+                rows.append(dict(**base, setting="neutral_other", role=-1, msgs=[{"role": "system", "content": mat["l4"]["neutral_other"]}, {"role": "user", "content": q}]))
+                for ri, role in enumerate(atlas["light"]):
+                    rows.append(dict(**base, setting="light_role", role=ri, msgs=[{"role": "system", "content": f"You are {role}."}, {"role": "user", "content": q}]))
+    return rows
+
+
+def run14(test, fam, stage, limit=0):
+    mat = load()
+    rows = l1_rows(mat) if test == "L1" else l4_rows(mat, fam)
+    if limit:
+        rows = rows[::max(1, len(rows) // limit)][:limit]
+    print(f"{test} {fam} {stage}: {len(rows)} generations", flush=True)
+    model, tok, device = load_family_model(fam, stage)
+    t0 = time.time()
+    rows = generate_rows(model, tok, device, rows, L14_NEW)
+    df = pd.DataFrame([{k: v for k, v in r.items() if k != "msgs"} for r in rows])
+    d = os.path.join(OUT, test, fam)
+    os.makedirs(d, exist_ok=True)
+    df.to_csv(os.path.join(d, f"{stage}{'_limit' if limit else ''}.csv.gz"), index=False)
+    print(f"{test} {fam} {stage}: {len(rows)} generations in {time.time() - t0:.0f} s", flush=True)
+
+
+def md_layout(texts):
+    from extras.persona_suppression import layout
+    return [100.0 * float(layout(str(t))) for t in texts]
+
+
+def stock(texts):
+    from measures.overgeneralization.user_traits import STOCK
+    return [100.0 * float(bool(STOCK.search(str(t)))) for t in texts]
+
+
+def mean_matrix(df, mask, col):
+    return df[mask].pivot_table(index="item", columns="role", values=col, aggfunc="mean").to_numpy()
+
+
+def analyze1():
+    rng = np.random.default_rng(SEED)
+    L = ["# L1: specify vs leave open (spec L; exploratory, outside every verdict)", "",
+         "Plan: `docs/decisions.md` 2026-11-05. 12 atlas markdown questions x 2 samples; light roles (system prompt and user turn) and full role-play (acting instruction) with a description sentence: neutral / specified plain / specified formatted; plain Assistant as reference. "
+         "Markdown = atlas layout regex (% of replies); change = version minus neutral, 95% two-way bootstrap over questions and roles; 256 new tokens. Limit: L1 alone cannot separate persona structure from following what the description says; read with L3. No judge-free in-character check exists, so none is reported.", ""]
+    heads, body, smp = [], [], []
+    for fam in L14_FAMS:
+        D = {}
+        for st in ("base", "instruct"):
+            p = os.path.join(OUT, "L1", fam, f"{st}.csv.gz")
+            if os.path.exists(p):
+                x = pd.read_csv(p)
+                x["md"], x["words"] = md_layout(x.text.fillna("")), [len(str(t).split()) for t in x.text.fillna("")]
+                D[st] = x
+                smp.append(x.sample(min(30, len(x)), random_state=SEED).assign(family=fam, stage=st)[["family", "stage", "setting", "version", "role", "item", "text"]])
+        if "instruct" not in D:
+            continue
+        body += [f"## {fam}", "", "### Markdown rate (%) and mean words by stage, setting and version", "", "| stage | setting | neutral | plain | formatted | words (neutral / plain / formatted) |", "|---|---|---|---|---|---|"]
+        for st, x in D.items():
+            a = x[x.setting == "assistant"]
+            body.append(f"| {st} | plain Assistant | {a.md.mean():.0f} | - | - | {a.words.mean():.0f} |")
+            for sname in ("light_system", "light_user", "strong_act"):
+                g = x[x.setting == sname]
+                body.append(f"| {st} | {sname} | " + " | ".join(f"{g[g.version == v].md.mean():.0f}" for v in ("neutral", "plain", "formatted")) + " | " + " / ".join(f"{g[g.version == v].words.mean():.0f}" for v in ("neutral", "plain", "formatted")) + " |")
+        f = D["instruct"]
+        body += ["", "### Final: change from neutral, and readings", "", "| setting | plain minus neutral | formatted minus neutral | level plain / formatted | reading |", "|---|---|---|---|---|"]
+        for sname in ("light_system", "light_user", "strong_act"):
+            g = f[f.setting == sname]
+            n = mean_matrix(g, g.version == "neutral", "md")
+            cp = ta.two_way_boot(mean_matrix(g, g.version == "plain", "md") - n, rng, n_boot=N_BOOT)
+            cf = ta.two_way_boot(mean_matrix(g, g.version == "formatted", "md") - n, rng, n_boot=N_BOOT)
+            lp, lf = g[g.version == "plain"].md.mean(), g[g.version == "formatted"].md.mean()
+            win_p = cp[0] <= -30 and cp[2] < 0 and lp <= 25
+            win_f = cf[0] >= 30 and cf[1] > 0 and lf >= 60
+            small = (abs(cp[0]) < 10 or cp[1] <= 0 <= cp[2]) and (abs(cf[0]) < 10 or cf[1] <= 0 <= cf[2])
+            rd = ("ROLE WINS (both)" if win_p and win_f else "role wins (plain only)" if win_p else "role wins (formatted only)" if win_f else "ROLE DOES NOT WIN (counts against the diagram)" if small else "partial")
+            body.append(f"| {sname} | {cp[0]:+.1f} [{cp[1]:+.1f}, {cp[2]:+.1f}] | {cf[0]:+.1f} [{cf[1]:+.1f}, {cf[2]:+.1f}] | {lp:.0f} / {lf:.0f} | {rd} |")
+            heads.append(f"| {fam} | {sname} | {cp[0]:+.0f} | {cf[0]:+.0f} | {rd} |")
+        a = f[f.setting == "assistant"].groupby("item").md.mean().to_numpy()
+        ls_n, lu_n = [mean_matrix(f[f.setting == s], f[f.setting == s].version == "neutral", "md") for s in ("light_system", "light_user")]
+        sn = mean_matrix(f[f.setting == "strong_act"], f[f.setting == "strong_act"].version == "neutral", "md")
+        body += ["", "Defaults fill in (neutral cells): light-role neutral within 15 points of plain Assistant and at least 30 points above full role-play neutral:", ""]
+        for nm, m in (("light_system", ls_n), ("light_user", lu_n)):
+            d_a = ta.two_way_boot(m - a[:, None], rng, n_boot=N_BOOT)
+            d_s = ta.two_way_boot(m - sn, rng, n_boot=N_BOOT)
+            ok = abs(d_a[0]) <= 15 and d_s[0] >= 30
+            body.append(f"- {nm} neutral minus plain Assistant {d_a[0]:+.1f} [{d_a[1]:+.1f}, {d_a[2]:+.1f}]; minus full role-play neutral {d_s[0]:+.1f} [{d_s[1]:+.1f}, {d_s[2]:+.1f}] -> **{'defaults fill in' if ok else 'not met'}**")
+        body.append("")
+    out = [L[0], "", "## Readings by family (final)", "", "| family | setting | plain minus neutral | formatted minus neutral | reading |", "|---|---|---|---|---|"] + heads + [""] + L[1:] + body
+    os.makedirs(OUT, exist_ok=True)
+    open(os.path.join(OUT, "L1.md"), "w", encoding="utf-8").write("\n".join(out) + "\n")
+    if smp:
+        pd.concat(smp).to_csv(os.path.join(OUT, "L1_replies_sample.csv.gz"), index=False)
+    print("\n".join(out[:20]))
+
+
+def analyze4():
+    rng = np.random.default_rng(SEED)
+    mat = load()
+    drop = set()
+    p = "results/training_style_l4/scanned.jsonl.gz"
+    if os.path.exists(p):
+        sc = pd.read_json(p, lines=True, compression="gzip")
+        sc["item"] = sc.groupby("kind").cumcount()
+        drop = {(r.kind, int(r.item)) for r in sc.itertuples() if r.best_overlap >= 0.5}
+    L = ["# L4: blank role x question type (spec L; exploratory, outside every verdict)", "",
+         "Plan: `docs/decisions.md` 2026-11-05. 30 factual, 30 how-to, 30 advice questions (fresh, frozen); settings: plain Assistant, blank role in the system prompt (the family's neutral sentence), light role (6 roles), matched-length neutral non-role sentence; 3 samples, 256 tokens; atlas markdown regex. "
+         f"Dolci overlap for OLMo ({'scan found' if os.path.exists(p) else 'SCAN NOT FOUND, nothing dropped'}): {len(drop)} question(s) with at least half their 5-grams in one Dolci prompt, dropped for OLMo: {sorted(drop)}. A question type with plain-Assistant markdown under 30% is not read. The stock-phrase regex (which includes closing offers such as 'let me know if', 'feel free to') is reported separately; no closing-offer-only regex exists.", ""]
+    heads, body, smp = [], [], []
+    for fam in L14_FAMS:
+        D = {}
+        for st in ("base", "instruct"):
+            pth = os.path.join(OUT, "L4", fam, f"{st}.csv.gz")
+            if os.path.exists(pth):
+                x = pd.read_csv(pth)
+                x["md"], x["stock"] = md_layout(x.text.fillna("")), stock(x.text.fillna(""))
+                if fam == "olmo3-7b":
+                    x = x[[(t, i) not in drop for t, i in zip(x.qtype, x.item)]]
+                D[st] = x
+                smp.append(x.sample(min(30, len(x)), random_state=SEED).assign(family=fam, stage=st)[["family", "stage", "qtype", "setting", "role", "item", "text"]])
+        if "instruct" not in D:
+            continue
+        body += [f"## {fam}", "", "### Markdown rate (%) by stage, question type and setting", "", "| stage | type | plain Assistant | blank role | light role | neutral non-role | stock phrases: plain / blank |", "|---|---|---|---|---|---|---|"]
+        for st, x in D.items():
+            for t in ("factual", "howto", "advice"):
+                g = x[x.qtype == t]
+                body.append(f"| {st} | {t} | " + " | ".join(f"{g[g.setting == s].md.mean():.0f}" for s in ("assistant", "blank_role", "light_role", "neutral_other")) + f" | {g[g.setting == 'assistant'].stock.mean():.0f} / {g[g.setting == 'blank_role'].stock.mean():.0f} |")
+        f = D["instruct"]
+        body += ["", "### Final: blank role minus plain Assistant (markdown, points) and reading", "", "| type | plain Assistant | blank minus plain | light minus plain | neutral non-role minus plain | reading |", "|---|---|---|---|---|---|"]
+        rd_by = {}
+        for t in ("factual", "howto", "advice"):
+            g = f[f.qtype == t]
+            a = g[g.setting == "assistant"].groupby("item").md.mean()
+            lvl = a.mean()
+            def diff(s):
+                m = g[g.setting == s].pivot_table(index="item", columns="role", values="md", aggfunc="mean")
+                return ta.two_way_boot(m.to_numpy() - a.reindex(m.index).to_numpy()[:, None], rng, n_boot=N_BOOT)
+            b, lr, no = diff("blank_role"), diff("light_role"), diff("neutral_other")
+            if lvl < 30:
+                rd = "not read (plain Assistant under 30%)"
+            elif abs(b[0]) <= 15 and b[1] >= -20 and b[2] <= 20:
+                rd = "RETURNS"
+            elif b[0] <= -30 and b[2] < 0:
+                rd = "DOES NOT RETURN"
+            else:
+                rd = "in between"
+            rd_by[t] = rd
+            body.append(f"| {t} | {lvl:.0f}% | {b[0]:+.1f} [{b[1]:+.1f}, {b[2]:+.1f}] | {lr[0]:+.1f} [{lr[1]:+.1f}, {lr[2]:+.1f}] | {no[0]:+.1f} [{no[1]:+.1f}, {no[2]:+.1f}] | {rd} |")
+        ret = {t: v == "RETURNS" for t, v in rd_by.items()}
+        nr = {t: v == "DOES NOT RETURN" for t, v in rd_by.items()}
+        if all(ret.values()):
+            verdict = "misfit gone (returns on all types)"
+        elif not any(ret.values()) and all(v in ("DOES NOT RETURN", "not read (plain Assistant under 30%)") for v in rd_by.values()) and any(nr.values()):
+            verdict = "misfit stands (does not return on any readable type); 'defaults fill in' needs rewriting for this model"
+        elif (ret.get("howto") or ret.get("advice")) and nr.get("factual"):
+            verdict = "misfit explained by question type (returns on how-to or advice, not on factual)"
+        else:
+            verdict = "inconclusive"
+        body += ["", f"**{fam}: {verdict}**", ""]
+        heads.append(f"| {fam} | " + " | ".join(rd_by[t] for t in ("factual", "howto", "advice")) + f" | {verdict} |")
+    out = [L[0], "", "## Readings by family (final, markdown)", "", "| family | factual | how-to | advice | verdict |", "|---|---|---|---|---|"] + heads + [""] + L[1:] + body
+    os.makedirs(OUT, exist_ok=True)
+    open(os.path.join(OUT, "L4.md"), "w", encoding="utf-8").write("\n".join(out) + "\n")
+    if smp:
+        pd.concat(smp).to_csv(os.path.join(OUT, "L4_replies_sample.csv.gz"), index=False)
+    print("\n".join(out[:16]))
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["build", "run23", "analyze23", "example"])
-    ap.add_argument("--family", choices=list(MODELS))
+    ap.add_argument("cmd", choices=["build", "run23", "analyze23", "example", "run1", "run4", "analyze1", "analyze4"])
+    ap.add_argument("--family", choices=list(MODELS) + ["gemma4-31b"])
     ap.add_argument("--stage", choices=["base", "instruct"])
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--only")
@@ -380,6 +591,14 @@ def main():
         run23(a.family, a.stage, a.limit, a.only)
     elif a.cmd == "example":
         example(a.family)
+    elif a.cmd == "run1":
+        run14("L1", a.family, a.stage, a.limit)
+    elif a.cmd == "run4":
+        run14("L4", a.family, a.stage, a.limit)
+    elif a.cmd == "analyze1":
+        analyze1()
+    elif a.cmd == "analyze4":
+        analyze4()
     else:
         analyze23()
 
