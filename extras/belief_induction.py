@@ -413,7 +413,18 @@ def analyze():
             body += l3
             m0 = [x for x in [summ["c0"]] if x]
             top.append(f"| {fam} | steering (final only) | - | strength 0 vs -2 in the arm 3 table | - | - | no leak gap in this arm | " + (", ".join(f"{k}: {v}" for k, v in summ["domain_readings"].items()) if summ["check_ok"] else "CHECK FAILS: inconclusive") + " |")
-    out = L + ["## Readings by model and arm", ""] + top + [""] + body
+    notes = []
+    tc = "results/gemma4-31b/overgeneralization/confirmatory_thought_channel/persona_carryover_summary.csv"
+    if os.path.exists(tc):
+        t = pd.read_csv(tc)
+        t = t[(t.stage == "instruct") & (t.scope == "all")].set_index("quantity")
+        g = lambda q: f"{t.loc[q, 'mean']:+.2f} [{t.loc[q, 'lo']:+.2f}, {t.loc[q, 'hi']:+.2f}]"
+        notes = ["**Gemma, like-for-like prompt figure.** The Gemma prompt row above is the run without the thought-channel opening (assistant>new final +0.19). The prefill arm opens with it. "
+                 "The same prompt arm with the thought channel opened (`results/gemma4-31b/overgeneralization/confirmatory_thought_channel`, final): assistant>new " + g("carryover assistant -> new") + ", character>new " + g("carryover character -> new")
+                 + ", leak gap " + g("leak gap: assistant -> new minus character -> new") + ". Against that, the prefill's assistant>new final (+3.69) is higher by about 5.6 log-odds units.",
+                 "**What MATCHES THE PROMPT means.** It refers only to the pre-set rule's reading (here 'relative only': criterion 3 holds, criterion 4 does not), not to the size of the effect. "
+                 "For Gemma assistant>new is much higher with prefill than with the prompt, whichever prompt run is taken as the reference.", ""]
+    out = L + ["## Readings by model and arm", ""] + top + [""] + notes + body
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, "belief_induction.md"), "w", encoding="utf-8").write("\n".join(out) + "\n")
     print("\n".join(out[:30]))

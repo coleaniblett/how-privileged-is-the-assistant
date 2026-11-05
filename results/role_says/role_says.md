@@ -53,6 +53,22 @@ Plain Assistant rates (%): denies_feelings 82, says_ai 67, safety_caveats 0, mar
 | extra | `denies_feelings` in the AI role, none minus given | +94.4 [+83.3, +100.0] | (no verdict) |
 | training | AI-role `denies_feelings`, final minus base | +48.6 [+25.0, +72.2] | TRAINING MOVED IT (base in-character share 16%) |
 
+Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
+
+| trait | plain Assistant | ai / none | ai / given | human / none | human / given | unstated / none | unstated / given | no-room flag |
+|---|---|---|---|---|---|---|---|---|
+| denies_feelings | 82 | 100 | 6 | 81 | 1 | 83 | 0 |  |
+| says_ai | 67 | 78 | 14 | 67 | 7 | 79 | 1 |  |
+| safety_caveats | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **NO ROOM** |
+| markdown_lists | 100 | 100 | 100 | 100 | 93 | 100 | 86 |  |
+| stock_phrases | 65 | 61 | 14 | 64 | 11 | 62 | 11 |  |
+| corrects_false_premise | 75 | 74 | 74 | 74 | 65 | 74 | 57 |  |
+| hedging_unanswerable | 83 | 85 | 85 | 83 | 85 | 85 | 85 |  |
+
+Compared pair both at or above 95 or both at or below 5 (the comparison itself has no room, e.g. +0.0 [+0.0, +0.0]): reading 2 `markdown_lists` (AI 100 vs human 100).
+
+No-room flag: `safety_caveats`. Any 'stays' reading on these traits (UNMOVED, VOICE DOESN'T, TRUTH IGNORES VOICE) is flagged and says little. The readings above are unchanged.
+
 ### olmo3-7b, user position
 
 Plain Assistant rates (%): denies_feelings 82, says_ai 67, safety_caveats 0, markdown_lists 100, stock_phrases 65, corrects_false_premise 75, hedging_unanswerable 83. All cells at least 30% in character.
@@ -73,6 +89,22 @@ Plain Assistant rates (%): denies_feelings 82, says_ai 67, safety_caveats 0, mar
 | 4 | `hedging_unanswerable`, voice none minus given (unstated) | -2.8 [-16.7, +11.1] | TRUTH IGNORES VOICE |
 | extra | `denies_feelings` in the AI role, none minus given | +83.3 [+65.3, +97.2] | (no verdict) |
 | training | AI-role `denies_feelings`, final minus base | +43.1 [+18.1, +63.9] | TRAINING MOVED IT (base in-character share 12%) |
+
+Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
+
+| trait | plain Assistant | ai / none | ai / given | human / none | human / given | unstated / none | unstated / given | no-room flag |
+|---|---|---|---|---|---|---|---|---|
+| denies_feelings | 82 | 86 | 3 | 6 | 0 | 10 | 0 |  |
+| says_ai | 67 | 64 | 6 | 24 | 0 | 29 | 0 |  |
+| safety_caveats | 0 | 18 | 0 | 0 | 0 | 0 | 0 |  |
+| markdown_lists | 100 | 100 | 82 | 100 | 76 | 100 | 72 |  |
+| stock_phrases | 65 | 58 | 6 | 60 | 4 | 62 | 4 |  |
+| corrects_false_premise | 75 | 65 | 46 | 64 | 50 | 67 | 49 |  |
+| hedging_unanswerable | 83 | 85 | 88 | 79 | 85 | 78 | 81 |  |
+
+Compared pair both at or above 95 or both at or below 5 (the comparison itself has no room, e.g. +0.0 [+0.0, +0.0]): reading 2 `markdown_lists` (AI 100 vs human 100).
+
+No-room flag: no trait. The readings above are unchanged.
 
 ### Descriptive: every regex on every set (final, role conditions pooled over jobs; %)
 
@@ -126,6 +158,22 @@ Plain Assistant rates (%): denies_feelings 83, says_ai 56, safety_caveats 0, mar
 | extra | `denies_feelings` in the AI role, none minus given | +27.8 [+8.3, +50.0] | (no verdict) |
 | training | AI-role `denies_feelings`, final minus base | -8.3 [-36.1, +18.1] | already there before training (base in-character share 29%) |
 
+Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
+
+| trait | plain Assistant | ai / none | ai / given | human / none | human / given | unstated / none | unstated / given | no-room flag |
+|---|---|---|---|---|---|---|---|---|
+| denies_feelings | 83 | 28 | 0 | 0 | 0 | 0 | 0 |  |
+| says_ai | 56 | 46 | 15 | 7 | 3 | 8 | 1 |  |
+| safety_caveats | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **NO ROOM** |
+| markdown_lists | 100 | 96 | 89 | 79 | 72 | 88 | 65 |  |
+| stock_phrases | 50 | 49 | 4 | 36 | 10 | 32 | 4 |  |
+| corrects_false_premise | 92 | 96 | 97 | 96 | 93 | 97 | 93 |  |
+| hedging_unanswerable | 86 | 83 | 75 | 82 | 81 | 76 | 83 |  |
+
+Compared pair both at or above 95 or both at or below 5 (the comparison itself has no room, e.g. +0.0 [+0.0, +0.0]): reading 2 `corrects_false_premise` (AI 96 vs human 96).
+
+No-room flag: `safety_caveats`. Any 'stays' reading on these traits (UNMOVED, VOICE DOESN'T, TRUTH IGNORES VOICE) is flagged and says little. The readings above are unchanged.
+
 ### qwen3-8b, user position
 
 Plain Assistant rates (%): denies_feelings 83, says_ai 56, safety_caveats 0, markdown_lists 100, stock_phrases 50, corrects_false_premise 92, hedging_unanswerable 86. All cells at least 30% in character.
@@ -146,6 +194,22 @@ Plain Assistant rates (%): denies_feelings 83, says_ai 56, safety_caveats 0, mar
 | 4 | `hedging_unanswerable`, voice none minus given (unstated) | +5.6 [-2.8, +18.1] | TRUTH IGNORES VOICE |
 | extra | `denies_feelings` in the AI role, none minus given | +58.3 [+34.7, +81.9] | (no verdict) |
 | training | AI-role `denies_feelings`, final minus base | +26.4 [-4.2, +54.2] | already there before training (base in-character share 25%) |
+
+Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
+
+| trait | plain Assistant | ai / none | ai / given | human / none | human / given | unstated / none | unstated / given | no-room flag |
+|---|---|---|---|---|---|---|---|---|
+| denies_feelings | 83 | 60 | 1 | 0 | 0 | 0 | 0 |  |
+| says_ai | 56 | 53 | 10 | 25 | 0 | 25 | 3 |  |
+| safety_caveats | 0 | 18 | 0 | 0 | 0 | 0 | 0 |  |
+| markdown_lists | 100 | 99 | 96 | 99 | 85 | 100 | 82 |  |
+| stock_phrases | 50 | 58 | 15 | 56 | 8 | 57 | 14 |  |
+| corrects_false_premise | 92 | 96 | 90 | 97 | 88 | 92 | 86 |  |
+| hedging_unanswerable | 86 | 81 | 75 | 81 | 78 | 81 | 75 |  |
+
+Compared pair both at or above 95 or both at or below 5 (the comparison itself has no room, e.g. +0.0 [+0.0, +0.0]): reading 2 `markdown_lists` (AI 99 vs human 99); reading 2 `corrects_false_premise` (AI 96 vs human 97).
+
+No-room flag: no trait. The readings above are unchanged.
 
 ### Descriptive: every regex on every set (final, role conditions pooled over jobs; %)
 
@@ -198,6 +262,22 @@ Plain Assistant rates (%): denies_feelings 100, says_ai 58, safety_caveats 100, 
 | 4 | `hedging_unanswerable`, voice none minus given (unstated) | -6.9 [-20.8, +0.0] | in between |
 | extra | `denies_feelings` in the AI role, none minus given | +38.9 [+16.7, +61.1] | (no verdict) |
 
+Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
+
+| trait | plain Assistant | ai / none | ai / given | human / none | human / given | unstated / none | unstated / given | no-room flag |
+|---|---|---|---|---|---|---|---|---|
+| denies_feelings | 100 | 50 | 11 | 0 | 0 | 0 | 0 |  |
+| says_ai | 58 | 29 | 21 | 6 | 1 | 11 | 8 |  |
+| safety_caveats | 100 | 14 | 1 | 0 | 0 | 0 | 0 |  |
+| markdown_lists | 100 | 100 | 99 | 100 | 97 | 100 | 97 | **NO ROOM** |
+| stock_phrases | 74 | 39 | 14 | 32 | 10 | 19 | 4 |  |
+| corrects_false_premise | 100 | 100 | 100 | 100 | 100 | 100 | 100 | **NO ROOM** |
+| hedging_unanswerable | 92 | 88 | 92 | 89 | 90 | 86 | 93 |  |
+
+Compared pair both at or above 95 or both at or below 5 (the comparison itself has no room, e.g. +0.0 [+0.0, +0.0]): reading 2 `markdown_lists` (AI 100 vs human 100); reading 2 `corrects_false_premise` (AI 100 vs human 100); reading 3 `markdown_lists` (none 100 vs given 97); reading 4 `corrects_false_premise` (none 100 vs given 100).
+
+No-room flag: `markdown_lists`, `corrects_false_premise`. Any 'stays' reading on these traits (UNMOVED, VOICE DOESN'T, TRUTH IGNORES VOICE) is flagged and says little. The readings above are unchanged.
+
 ### gemma4-31b, user position
 
 Plain Assistant rates (%): denies_feelings 100, says_ai 58, safety_caveats 100, markdown_lists 100, stock_phrases 74, corrects_false_premise 100, hedging_unanswerable 92. All cells at least 30% in character.
@@ -217,6 +297,22 @@ Plain Assistant rates (%): denies_feelings 100, says_ai 58, safety_caveats 100, 
 | 4 | `corrects_false_premise`, voice none minus given (unstated) | +0.0 [+0.0, +0.0] | TRUTH IGNORES VOICE |
 | 4 | `hedging_unanswerable`, voice none minus given (unstated) | -2.8 [-16.7, +8.3] | TRUTH IGNORES VOICE |
 | extra | `denies_feelings` in the AI role, none minus given | +47.2 [+29.2, +66.7] | (no verdict) |
+
+Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
+
+| trait | plain Assistant | ai / none | ai / given | human / none | human / given | unstated / none | unstated / given | no-room flag |
+|---|---|---|---|---|---|---|---|---|
+| denies_feelings | 100 | 62 | 15 | 0 | 0 | 0 | 0 |  |
+| says_ai | 58 | 36 | 15 | 11 | 3 | 17 | 4 |  |
+| safety_caveats | 100 | 19 | 4 | 0 | 0 | 0 | 0 |  |
+| markdown_lists | 100 | 100 | 100 | 99 | 96 | 100 | 100 | **NO ROOM** |
+| stock_phrases | 74 | 36 | 3 | 15 | 3 | 25 | 4 |  |
+| corrects_false_premise | 100 | 100 | 100 | 100 | 100 | 100 | 100 | **NO ROOM** |
+| hedging_unanswerable | 92 | 85 | 90 | 88 | 88 | 85 | 88 |  |
+
+Compared pair both at or above 95 or both at or below 5 (the comparison itself has no room, e.g. +0.0 [+0.0, +0.0]): reading 2 `markdown_lists` (AI 100 vs human 99); reading 2 `corrects_false_premise` (AI 100 vs human 100); reading 3 `markdown_lists` (none 100 vs given 100); reading 4 `corrects_false_premise` (none 100 vs given 100).
+
+No-room flag: `markdown_lists`, `corrects_false_premise`. Any 'stays' reading on these traits (UNMOVED, VOICE DOESN'T, TRUTH IGNORES VOICE) is flagged and says little. The readings above are unchanged.
 
 ### Descriptive: every regex on every set (final, role conditions pooled over jobs; %)
 

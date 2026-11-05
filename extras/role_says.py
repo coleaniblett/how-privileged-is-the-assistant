@@ -259,7 +259,7 @@ def analyze():
          "Regex scoring for `markdown_lists`, `stock_phrases`, `says_ai`; the existing local judge (Gemma 4 31B-it) for `denies_feelings`, `corrects_false_premise`, `hedging_unanswerable` (its hand check is not done: provisional; agreement with the second judge is not accuracy) and for the in-character check on a 30% sample of each condition. "
          "Differences are points, paired per question and job, 95% two-way bootstrap over questions and jobs. Limits: few jobs; many cells, no correction for multiple tests; 'an AI that does this job' is odd for some jobs and even the unstated sentence hints at a person; following identity could be the model inferring what an AI should say; "
          "truth traits could be general skill; regex sees form only; contamination checkable only for OLMo.", ""]
-    overall, body = [], []
+    overall, body, REC, LEV = [], [], [], []
     for fam in FAMS:
         D = {}
         for st in ("instruct", "base"):
@@ -314,6 +314,10 @@ def analyze():
                 bshare = "-" if shb is None else "%.0f%%" % np.nanmean([shb.get((pos, "ai", v_), np.nan) for v_ in ("none", "given")])
                 body.append(f"| training | AI-role `denies_feelings`, final minus base | {fmt(tr)} | {'TRAINING MOVED IT' if tr[0] >= 10 and tr[1] > 0 else 'already there before training'} (base in-character share {bshare}) |")
             body.append("")
+            for rd, nm, m, kd in ([("1", "denies_feelings AI minus human", r["r1"], "follow"), ("1", "says_ai AI minus human", sa, "follow")] + [("2", f"{t} AI minus human", m, "moved") for t, m in r2.items()]
+                                  + [("3", f"{t} none minus given (unstated)", m, "md30" if t == "markdown_lists" else "stock20") for t, m in r3.items()] + [("4", f"{t} none minus given (unstated)", m, "truth") for t, m in r4.items()]):
+                REC.append(dict(family=fam, position=pos, reading=rd, measure=nm, diff=m[0], lo=m[1], hi=m[2], cls=cls(m, kd)))
+            body += levels_block(f, fam, pos, plain, LEV, [cls(m, "moved") for m in r2.values()], r2, r3, r4)
             # overall
             unread = sum(1 for t, c in cant.items() if c) + (6 if ic_bad else 0)
             k2 = [cls(m, "moved") for m in r2.values()]
@@ -339,6 +343,8 @@ def analyze():
             a = f[(f.set == t) & (f.cond == "assistant")]
             body.append(f"| {t} | {100 * x.md.mean():.0f} | {100 * x.stock.mean():.0f} | {100 * x.says_ai.mean():.0f} | {100 * x.refusal.mean():.0f} | {100 * a.md.mean():.0f} / {100 * a.stock.mean():.0f} / {100 * a.says_ai.mean():.0f} |")
         body.append("")
+    pd.DataFrame(REC).to_csv(os.path.join(OUT, "role_says_readings.csv"), index=False) if os.path.isdir(OUT) else None
+    pd.DataFrame(LEV).to_csv(os.path.join(OUT, "role_says_levels.csv"), index=False) if os.path.isdir(OUT) else None
     out = L + ["## Overall reading by family and position (final)", "", "| family | position | reading |", "|---|---|---|"] + overall + [""] + body
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, "role_says.md"), "w", encoding="utf-8").write("\n".join(out) + "\n")
@@ -352,6 +358,37 @@ def analyze():
     if smp:
         pd.concat(smp).to_csv(os.path.join(OUT, "role_says_replies_sample.csv.gz"), index=False)
     print("\n".join(out[:20]))
+
+
+def levels_block(f, fam, pos, plain, LEV, k2, r2, r3, r4):
+    """levels per condition (% of replies with the trait, own set, pooled over jobs and questions) and the no-room flag: every condition at or above 95 or every one at or below 5."""
+    conds = [(i, v) for i in IDENT for v in VOICE]
+    rows = ["Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). "
+            "**NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.", "",
+            "| trait | plain Assistant | " + " | ".join(f"{i} / {v}" for i, v in conds) + " | no-room flag |", "|---|---|" + "---|" * len(conds) + "---|"]
+    flagged = []
+    for t in SETS:
+        lv = [level(f, t, dict(position=pos, identity=i, voice=v)) for i, v in conds]
+        allv = lv + [plain[t]]
+        nr = all(x >= 95 for x in allv) or all(x <= 5 for x in allv)
+        if nr:
+            flagged.append(t)
+        rows.append(f"| {t} | {plain[t]:.0f} | " + " | ".join(f"{x:.0f}" for x in lv) + f" | {'**NO ROOM**' if nr else ''} |")
+        for (i, v), x in zip(conds, lv):
+            LEV.append(dict(family=fam, position=pos, trait=t, identity=i, voice=v, level=x, plain=plain[t], no_room=nr))
+    ext = lambda x: x >= 95 or x <= 5
+    pairs = []
+    for t in ("markdown_lists", "stock_phrases", "corrects_false_premise", "hedging_unanswerable"):
+        a, b = level(f, t, dict(position=pos, identity="ai", voice="none")), level(f, t, dict(position=pos, identity="human", voice="none"))
+        if ext(a) and ext(b):
+            pairs.append(f"reading 2 `{t}` (AI {a:.0f} vs human {b:.0f})")
+    for t in ("markdown_lists", "stock_phrases", "corrects_false_premise", "hedging_unanswerable"):
+        a, b = level(f, t, dict(position=pos, identity="unstated", voice="none")), level(f, t, dict(position=pos, identity="unstated", voice="given"))
+        if ext(a) and ext(b):
+            pairs.append(f"reading {'3' if t in ('markdown_lists', 'stock_phrases') else '4'} `{t}` (none {a:.0f} vs given {b:.0f})")
+    rows += ["", "Compared pair both at or above 95 or both at or below 5 (the comparison itself has no room, e.g. +0.0 [+0.0, +0.0]): " + ("; ".join(pairs) if pairs else "none") + ".", ""]
+    rows += ["No-room flag: " + (", ".join(f"`{t}`" for t in flagged) + ". Any 'stays' reading on these traits (UNMOVED, VOICE DOESN'T, TRUTH IGNORES VOICE) is flagged and says little. The readings above are unchanged." if flagged else "no trait. The readings above are unchanged."), ""]
+    return rows
 
 
 def diff_stage(f, b, trait, c, rng):
