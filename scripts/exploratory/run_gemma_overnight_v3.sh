@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Vinyl Gemma 4 31B chain, v3 (replaces run_gemma_overnight.sh, whose running step it takes over: the old script's GPU lock is held by that step's process, so this waits on it).
+# Vinyl Gemma 4 31B chain, v3 + J12 strict-cut re-judge before the instruct weights are freed (replaces run_gemma_overnight.sh, whose running step it takes over: the old script's GPU lock is held by that step's process, so this waits on it).
 # Adds: J11 on Gemma, an explicit disk hand-over (side jobs paused with DISK_HOLD while the instruct weights are freed and the base weights downloaded), and NO silent skip:
 # if 70 GB cannot be made free the chain writes /root/atlas_logs/GEMMA_BASE_STOP.txt and exits non-zero.
 set -uo pipefail
@@ -25,6 +25,8 @@ phase() {
   [[ -f results/skill_roleplay/$FAM/$stage.csv.gz ]] || step $PY -m extras.skill_roleplay run --family $FAM --stage $stage
 }
 phase instruct
+# J12: the strict-cut re-judge needs the Gemma instruct judge, which is cached now (about 340 replies); it must run before the instruct weights are freed below
+[[ -f results/trait_atlas_strict/qwen3-8b/instruct_judged.csv.gz ]] || step $PY -m extras.trait_atlas_strict judge
 # ---- disk hand-over: pause side jobs, wait for them to drain, free instruct, make sure 70 GB are free, download base, release the hold
 touch /root/atlas_logs/DISK_HOLD
 while pgrep -f "[s]kill_roleplay run" >/dev/null || pgrep -f "[s]econd_judge run" >/dev/null; do sleep 20; done
