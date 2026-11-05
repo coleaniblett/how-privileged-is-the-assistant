@@ -1,0 +1,7 @@
+family,context,verdict
+llama3.1-8b,light_system,"SPLIT HOLDS (formatting spreads, self-image does not)"
+llama3.1-8b,light_user,"SPLIT HOLDS (formatting spreads, self-image does not)"
+llama3.1-8b,strong_act,SPLIT FAILS: formatting stays
+apertus-8b,light_system,SPLIT FAILS: self-image travels (both spread)
+apertus-8b,light_user,SPLIT FAILS: self-image travels (both spread)
+apertus-8b,strong_act,SPLIT FAILS: formatting stays
