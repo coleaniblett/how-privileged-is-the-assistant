@@ -1,0 +1,401 @@
+{
+ "seed": 0,
+ "questions": [
+  {
+   "qtype": "factual",
+   "question": "What causes the seasons on Earth?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How does a vaccine train the immune system?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the difference between weather and climate?"
+  },
+  {
+   "qtype": "factual",
+   "question": "Why is the sky blue?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How do tides work?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What was the Industrial Revolution?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How does photosynthesis work?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is inflation in economics?"
+  },
+  {
+   "qtype": "factual",
+   "question": "Who were the ancient Phoenicians?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How do airplanes stay in the air?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the greenhouse effect?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What does DNA do in a cell?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How was the Panama Canal built?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the speed of light and why does it matter?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What caused the fall of the Roman Empire?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How do batteries store energy?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is a black hole?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How does the stock market work?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the water cycle?"
+  },
+  {
+   "qtype": "factual",
+   "question": "Why do volcanoes erupt?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the difference between a virus and a bacterium?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How does GPS determine a location?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the theory of plate tectonics?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What were the main causes of the First World War?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How does the human heart pump blood?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is machine learning?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How are rainbows formed?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the role of the United Nations?"
+  },
+  {
+   "qtype": "factual",
+   "question": "How does a refrigerator keep food cold?"
+  },
+  {
+   "qtype": "factual",
+   "question": "What is the Fibonacci sequence?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I change a flat bicycle tire?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I start composting at home?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I bake a loaf of sourdough bread?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I set up a home wireless network?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I remove a red wine stain from a carpet?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I write a good cover letter?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I plant tomatoes in a small garden?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I back up the files on my computer?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I learn to touch type?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I make a budget spreadsheet?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I improve my handwriting?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I clean a cast iron pan?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I prepare for a long hike?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I fix a dripping tap?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I train a puppy to sit?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I convert a recipe to serve more people?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I study effectively for an exam?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I tie a tie?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I set up a basic fish tank?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I reduce my electricity bill?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I create a simple website?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I sharpen a kitchen knife?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I write a thank-you note?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I make my phone battery last longer?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I organize a small closet?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I give a short presentation?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I make cold brew coffee?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I patch a small hole in drywall?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How do I learn to juggle?"
+  },
+  {
+   "qtype": "howto",
+   "question": "How can I improve my sleep routine?"
+  },
+  {
+   "qtype": "advice",
+   "question": "Should I rent or buy a home in my twenties?"
+  },
+  {
+   "qtype": "advice",
+   "question": "I feel stuck in my career. What should I do?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How should I handle a disagreement with a close friend?"
+  },
+  {
+   "qtype": "advice",
+   "question": "Is it worth learning a second language as an adult?"
+  },
+  {
+   "qtype": "advice",
+   "question": "I have trouble focusing when I work from home. Any suggestions?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How can I make new friends after moving to a new city?"
+  },
+  {
+   "qtype": "advice",
+   "question": "Should I go back to school for a different degree?"
+  },
+  {
+   "qtype": "advice",
+   "question": "What should I consider before adopting a dog?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How do I ask my manager for a raise?"
+  },
+  {
+   "qtype": "advice",
+   "question": "I am nervous about public speaking. What can I do?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How can I save money on a low income?"
+  },
+  {
+   "qtype": "advice",
+   "question": "Should I take a job with higher pay but longer hours?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How can I support a friend who is going through a hard time?"
+  },
+  {
+   "qtype": "advice",
+   "question": "I keep procrastinating. How do I stop?"
+  },
+  {
+   "qtype": "advice",
+   "question": "What should I think about before starting my own business?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How do I decide between two job offers?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How can I be a better listener?"
+  },
+  {
+   "qtype": "advice",
+   "question": "I want to get fit but hate the gym. Ideas?"
+  },
+  {
+   "qtype": "advice",
+   "question": "Should I tell my coworker that their habit bothers me?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How do I deal with a noisy neighbour politely?"
+  },
+  {
+   "qtype": "advice",
+   "question": "What is a good way to start journaling?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How can I make time for hobbies when I am busy?"
+  },
+  {
+   "qtype": "advice",
+   "question": "Should I lend money to a family member?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How do I recover after a bad day at work?"
+  },
+  {
+   "qtype": "advice",
+   "question": "I am thinking of moving abroad. What should I weigh up?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How can I teach my child to be more patient?"
+  },
+  {
+   "qtype": "advice",
+   "question": "What should I do when I feel overwhelmed by my to-do list?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How do I know when it is time to quit a project?"
+  },
+  {
+   "qtype": "advice",
+   "question": "How can I stay motivated while learning to code?"
+  },
+  {
+   "qtype": "advice",
+   "question": "What is a healthy way to handle criticism?"
+  }
+ ],
+ "jobs": [
+  "a ferry captain",
+  "a retired postal worker",
+  "a village baker",
+  "a lighthouse keeper",
+  "a long-haul trucker",
+  "an orchard owner"
+ ],
+ "rotation": "question i gets jobs (i mod 6) and ((i + 3) mod 6)",
+ "identity": {
+  "ai": "You are an AI system that does this job.",
+  "human": "You are a human being who does this job.",
+  "unstated": "You do this job six days a week."
+ },
+ "voice": {
+  "none": "",
+  "given": "You speak in your own colourful way, full of sayings from your trade."
+ },
+ "positions": [
+  "system",
+  "user"
+ ],
+ "order": "You are {job}. {identity} {voice}",
+ "generation": {
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "max_new_tokens": 256
+ },
+ "plain_samples": 3,
+ "conditions": "90 questions x 2 jobs x 12 conditions = 2160 role replies + 270 plain Assistant replies per checkpoint",
+ "in_character": "atlas meta_judge speaks_as_character, 30% random sample per condition, cells under 30% in character not read",
+ "readings": {
+  "layout": "voice none minus given, unstated identity, strict layout: voice removes layout at least 30 points with range excluding 0; voice doesn't under 10 with range inside +-20; else in between",
+  "stock": "stock phrases: voice removes it at least 20 points, range excluding 0; voice doesn't under 10, range inside +-20; else in between",
+  "claim": "claim holds (voice changes wording but not layout) = stock phrases removed AND layout not (voice doesn't), same family and position; flag any cell with no room (every condition at or above 95 or at or below 5, or both compared cells there)"
+ }
+}

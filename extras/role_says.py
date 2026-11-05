@@ -93,7 +93,7 @@ def example(fam):
         print(f"--- {fam} / {nm} ---\n{tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True, **kw)}\n")
 
 
-def gen(fam, stage, limit=0):
+def gen(fam, stage, limit=0, rows=None, out=None):
     import torch
     from core.render import load_tokenizer
     from core.score import load_model
@@ -105,7 +105,7 @@ def gen(fam, stage, limit=0):
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
     kw = ta.TEMPLATE_KW.get(fam, {})
-    rows = all_rows(mat)
+    rows = all_rows(mat) if rows is None else rows        # spec R5/R6 pass their own rows (backwards compatible)
     if limit:
         rows = rows[::max(1, len(rows) // limit)][:limit]
     ids = [tok(tok.apply_chat_template(r["msgs"], tokenize=False, add_generation_prompt=True, **kw), add_special_tokens=False).input_ids for r in rows]
@@ -135,7 +135,7 @@ def gen(fam, stage, limit=0):
         if (s // bs) % 20 == 0:
             print(f"{fam} {stage}: {min(s + bs, len(order))}/{len(order)} ({time.time() - t0:.0f} s)", flush=True)
     df = pd.DataFrame([{k: r[k] for k in ("cond", "job", "position", "identity", "voice", "qi", "sample")} | o for r, o in zip(rows, out)])
-    d = os.path.join(OUT, fam)
+    d = os.path.join(out or OUT, fam)
     os.makedirs(d, exist_ok=True)
     df.to_csv(os.path.join(d, f"{stage}{'_limit' if limit else ''}_replies.csv.gz"), index=False)
     print(f"{fam} {stage}: {len(rows)} generations in {time.time() - t0:.0f} s", flush=True)
