@@ -28,7 +28,9 @@ def adir(w, fam):
 
 
 def prompt_run(fam):
-    p = f"results/{fam}/overgeneralization/confirmatory/persona_carryover_summary.csv"
+    """the prompt arm (arm 1) for the same 48 scenes; Gemma's like-for-like run is the thought-channel one"""
+    sub = "confirmatory_thought_channel" if fam == "gemma4-31b" else "confirmatory"
+    p = f"results/{fam}/overgeneralization/{sub}/persona_carryover_summary.csv"
     return p if os.path.exists(p) else None
 
 
@@ -97,16 +99,16 @@ def analyze():
     L = ["# R3: is the prefill belief result real? (spec R; exploratory, outside every verdict, NOT BLIND; the pre-registered belief test is unchanged)", "",
          "Plan: `docs/decisions.md` 2026-11-06 (spec R3, `docs/spec_R_overnight.md`). The persona sits only in the model's own turn. **Wording 1** = first person (spec O; `data/belief_induction_prefill.jsonl`); **wording 2** = third person for the new persona's line only "
          "(`data/belief_induction_prefill_w2.jsonl`: \"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up\"); five families, base and final, the unchanged `persona_carryover` code and rule (`--verdict`). "
-         "Reply opening per family: " + "; ".join(f"{k}: {v}" for k, v in OPEN.items()) + ". Prompt runs used no extra opening except Gemma: the like-for-like Gemma prompt run is `confirmatory_thought_channel`. Llama and Apertus have no prompt run (spec O did not include them), so only prefill is compared across wordings for them. "
+         "Reply opening per family: " + "; ".join(f"{k}: {v}" for k, v in OPEN.items()) + ". Prompt runs used no extra opening except Gemma: the like-for-like Gemma prompt run is `confirmatory_thought_channel`. The prompt rows are the saved confirmatory prompt runs for the same 48 scenes. "
          "In-character check: the local Gemma 4 31B-it judge on all saved final 40-token continuations of the two new-persona conditions (30 per condition per wording); Gemma judges its own continuations; not hand-checked here beyond the 20 per family read by hand (see below). "
          "Limits: not blind; few domains and 48 scenes; wording 2 changes one line only; the in-character question is vague for a third-person line; many cells, no multiple-test correction; contamination checkable only for OLMo.", ""]
     top = ["| family | wording | assistant>new base | assistant>new final | character>new base | character>new final | leak-gap change (final) | rule reading |", "|---|---|---|---|---|---|---|---|"]
     stab, took, rec = [], [], []
     S = {}
     for fam in FAMS:
-        for w in ("w1", "w2"):
-            p = os.path.join(adir(w, fam), "persona_carryover_summary.csv")
-            if not os.path.exists(p):
+        for w in ("prompt", "w1", "w2"):
+            p = prompt_run(fam) if w == "prompt" else os.path.join(adir(w, fam), "persona_carryover_summary.csv")
+            if p is None or not os.path.exists(p):
                 continue
             sm = pd.read_csv(p)
             stages = [s for s in ("base", "sft", "dpo", "instruct") if s in set(sm.stage)]
