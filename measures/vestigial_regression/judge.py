@@ -1,4 +1,5 @@
-"""LLM judge for the vestigial-regression judge arm (README: "Judge arm"). Prompt: judge_prompt.md.
+"""LLM judge for the vestigial-regression judge arm (README: "Judge arm"). Prompt: judge_prompt.md (v3, the default) or
+judge_prompt_v2.md (`--prompt v2`, the main run's mid-sentence labels).
 
     python -m measures.vestigial_regression.judge run --samples results/capstone/qwen3-8b/core/generations/instruct.jsonl \
         --out results/capstone/qwen3-8b/vestigial_regression/judge/instruct.jsonl [--dry-run] [--limit N]
@@ -8,8 +9,12 @@
 Judge: Claude Sonnet 5.5 (`claude-sonnet-5-5`) through the Anthropic API, default sampling (Sonnet 5.5 rejects a
 non-default temperature) with thinking off (`thinking={"type": "between_tools"}`), key from ANTHROPIC_API_KEY. The judge
 sees only the prefill (marked as written by a real user) and the model's continuation, including anything after a turn or channel
-marker; never which model or stage wrote it. It returns one JSON object {"label", "reason"}; labels are user_voice,
-switched_to_assistant, degenerate, user_voice_with_assistant_traits. Every output row records the judge model, prompt version and
+marker; never which model or stage wrote it. v2: one JSON object {"label", "reason"} with labels user_voice, switched_to_assistant,
+degenerate, user_voice_with_assistant_traits. v3: the judge describes (user_text, completed, assistant_content, assistant_start,
+assistant_traits, repetitive, reason) and code labels (derive_v3: user_voice, user_voice_with_assistant_traits,
+completed_then_assistant [closed/unclosed from the family's turn markers], switched_to_assistant [abandoned/immediate],
+closed_immediately, degenerate [token_loop/incoherent from the regex flags], unclear), with the headline group (v3_group) and the v2
+counterpart (v3_to_v2) on every row. Every output row records the judge model, prompt version and
 temperature. Results are cached by a hash of (model, prompt version, temperature, prefill, continuation), so a rerun, or the
 same sample appearing in two files, costs nothing; API errors are retried with backoff; `--dry-run` builds every request,
 reports the cost estimate and calls nothing. The model under test is never the judge (the judge is a fixed Claude model).
@@ -33,9 +38,12 @@ MODEL = "claude-sonnet-5-5"
 TEMPERATURE = None  # the API default: Sonnet 5.5 rejects non-default sampling values (400), so none is sent
 THINKING = {"type": "between_tools"}  # thinking off (Sonnet 5.5 rejects {"type": "disabled"}); keeps the reply a short JSON object
 MAX_TOKENS = 600  # the judge often writes a few sentences before its JSON; 200 cut one pilot reply (2026-11-04)
-LABELS = ["user_voice", "switched_to_assistant", "degenerate", "user_voice_with_assistant_traits"]
+LABELS = ["user_voice", "switched_to_assistant", "degenerate", "user_voice_with_assistant_traits"]  # v2 and the human sheets
+V3_LABELS = ["user_voice", "user_voice_with_assistant_traits", "completed_then_assistant", "switched_to_assistant",
+             "closed_immediately", "degenerate", "unclear"]
 HERE = os.path.dirname(os.path.abspath(__file__))
-PROMPT_PATH = os.path.join(HERE, "judge_prompt.md")
+PROMPT_PATH = os.path.join(HERE, "judge_prompt.md")  # v3 (2026-11-05), the default
+PROMPT_PATHS = {"v3": PROMPT_PATH, "v2": os.path.join(HERE, "judge_prompt_v2.md")}  # v2: the main run's mid-sentence labels
 DEFAULT_CACHE = os.path.join(HERE, "judge_cache.jsonl")
 VALIDATION_DIR = os.path.join(HERE, "judge_validation")
 CARRY_EXCLUDE = {"prefill", "continuation", "completion", "continuation_ids", "completion_ids", "rendered_prompt", "user_portion"}
@@ -43,9 +51,9 @@ CARRY_EXCLUDE = {"prefill", "continuation", "completion", "continuation_ids", "c
 
 # --- prompt -----------------------------------------------------------------------------------------------------------
 
-def load_prompt(path=PROMPT_PATH):
-    """(version, system prompt, user template) from judge_prompt.md."""
-    text = open(path, encoding="utf-8").read()
+def load_prompt(path=None):
+    """(version, system prompt, user template) from a prompt file (default PROMPT_PATH, v3)."""
+    text = open(path or PROMPT_PATH, encoding="utf-8").read()
     version = re.search(r"`prompt_version: (\S+?)`", text).group(1)
     blocks = dict(re.findall(r"```(system|user)\n(.*?)\n```", text, re.S))
     if set(blocks) != {"system", "user"}:
@@ -73,6 +81,137 @@ def parse_reply(text):
     if label not in LABELS or not isinstance(reason, str):
         raise ValueError(f"invalid label/reason in reply: {obj!r}")
     return label, reason.strip()
+
+
+def is_v3(version):
+    return str(version).startswith("v3")
+
+
+V3_USER_TEXT = ("none", "user", "degenerate")
+V3_BOOLS = ("completed", "assistant_content", "assistant_traits", "repetitive")
+
+
+def parse_reply_v3(text):
+    """The v3 judge's fields {user_text, completed, assistant_content, assistant_start, assistant_traits, repetitive, reason}, or
+    raise ValueError. Accepts the JSON object alone or inside a code fence."""
+    m = re.search(r"\{.*\}", text, re.S)
+    if not m:
+        raise ValueError(f"no JSON object in reply: {text[:120]!r}")
+    obj = json.loads(m.group(0))
+    if obj.get("user_text") not in V3_USER_TEXT or not all(isinstance(obj.get(k), bool) for k in V3_BOOLS) \
+            or not isinstance(obj.get("assistant_start", ""), str) or not isinstance(obj.get("reason"), str):
+        raise ValueError(f"invalid v3 fields in reply: {obj!r}")
+    out = {k: obj[k] for k in ("user_text",) + V3_BOOLS}
+    out["assistant_start"] = obj.get("assistant_start", "") if obj["assistant_content"] else ""
+    out["reason"] = obj["reason"].strip()
+    return out
+
+
+GENERIC_END_OF_TURN = ("<|im_end|>", "<turn|>", "<|eot_id|>", "<end_of_turn>")  # when the family (hence its tokenizer) is unknown
+PLAIN_ROLE_LABEL = re.compile(r"(?:^|\n)\s*(?:Assistant|ASSISTANT|AI|Bot|Chatbot)\s*:")
+
+
+def find_start(text, start):
+    """Position of the judge's quoted assistant_start in the continuation: exact, else with whitespace runs matched loosely, else
+    the first four words; -1 if not found."""
+    if not start.strip():
+        return -1
+    i = text.find(start)
+    if i >= 0:
+        return i
+    words = start.split()
+    for ws in (words, words[:4]):
+        m = re.search(r"\s+".join(re.escape(w) for w in ws), text) if ws else None
+        if m:
+            return m.start()
+    return -1
+
+
+def derive_v3(fields, continuation, end_markers, loop=False):
+    """(label, subtype, extra) from the v3 judge fields by the fixed rule in judge_prompt.md ("Derived label"). end_markers: the
+    family's turn-closing marker(s) (core.render.family_turn_markers' end_of_turn); loop: the token_loop or repetition_loop flag on
+    the user portion (degenerate subtype). extra: start_found, plain_role_label."""
+    ut, ac = fields["user_text"], fields["assistant_content"]
+    completed = bool(fields["completed"]) and ut == "user"
+    ends = [m for m in end_markers if m]
+    extra = dict(start_found=None, plain_role_label=False)
+    if ut == "degenerate":
+        return "degenerate", "token_loop" if loop else "incoherent", extra
+    if ut == "none":
+        if any(continuation.lstrip().startswith(m) for m in ends):
+            return "closed_immediately", "", extra
+        return ("switched_to_assistant", "immediate", extra) if ac else ("unclear", "no_user_text_no_assistant", extra)
+    if not ac:
+        return ("user_voice_with_assistant_traits" if fields["assistant_traits"] else "user_voice"), "", extra
+    if not completed:
+        return "switched_to_assistant", "abandoned", extra
+    pos = find_start(continuation, fields["assistant_start"])
+    extra["start_found"] = pos >= 0
+    if pos < 0:
+        return "completed_then_assistant", "unknown", extra
+    before = continuation[:pos]
+    closed = any(m in before for m in ends)
+    extra["plain_role_label"] = bool(not closed and PLAIN_ROLE_LABEL.search(before))
+    return "completed_then_assistant", "closed" if closed else "unclosed", extra
+
+
+def condition_of(prefill_id):
+    """'open' for the open-opener condition (data/prefill_open5.jsonl ids open-N), else 'incomplete' (mid-sentence prefills)."""
+    return "open" if str(prefill_id or "").startswith("open-") else "incomplete"
+
+
+def v3_group(label, condition):
+    """Headline group of a derived v3 label (decisions 2026-11-05): user_voice, non_user_voice, or a separately reported rate
+    (completed_then_assistant; closed_immediately for open openers); unclear stays unclear."""
+    if label in ("user_voice", "user_voice_with_assistant_traits"):
+        return "user_voice"
+    if label in ("switched_to_assistant", "degenerate"):
+        return "non_user_voice"
+    if label == "closed_immediately":
+        return "non_user_voice" if condition == "incomplete" else "closed_immediately"
+    return label  # completed_then_assistant, unclear
+
+
+def v3_to_v2(label, subtype, condition):
+    """The v2 label a v3 result corresponds to (judge_prompt.md, "Mapping to v2"), for continuity and for validation against the
+    v2 human labels; None where there is no counterpart (unclear, an unlocated handoff)."""
+    if label in ("user_voice", "user_voice_with_assistant_traits", "switched_to_assistant", "degenerate"):
+        return label
+    if label == "completed_then_assistant":
+        return {"closed": "user_voice", "unclosed": "switched_to_assistant"}.get(subtype)
+    if label == "closed_immediately":
+        return "switched_to_assistant" if condition == "incomplete" else "user_voice"
+    return None
+
+
+_FAMILY_TOOLS = {}
+
+
+def family_tools(family):
+    """(end-of-turn markers, tokenizer or None) for a config.FAMILIES key; None/unknown -> the generic markers, no tokenizer."""
+    if family not in _FAMILY_TOOLS:
+        try:
+            from core import config
+            from core.render import family_turn_markers, load_tokenizer
+            tok = load_tokenizer(config.FAMILIES[family]["template"])
+            _FAMILY_TOOLS[family] = ((family_turn_markers(tok)["end_of_turn"],), tok)
+        except (KeyError, TypeError):
+            _FAMILY_TOOLS[family] = (GENERIC_END_OF_TURN, None)
+    return _FAMILY_TOOLS[family]
+
+
+def user_portion_loop(sample, continuation, end_markers, tok):
+    """token_loop or repetition_loop on the user portion (measures.vestigial_regression.flags), with the family's tokenizer when
+    known; without one, the repetition flag on the text before the first end marker."""
+    from measures.vestigial_regression import flags as F
+    if tok is not None:
+        up = F.user_portion(continuation, tok)
+        return bool(F.repetition_loop(up) or F.max_run(F.user_portion_ids(sample, up, tok)) >= F.TOKEN_RUN)
+    cut = min([continuation.find(m) for m in end_markers if m in continuation] or [len(continuation)])
+    return bool(F.repetition_loop(continuation[:cut]))
+
+
+FAMILY_FROM_PATH = re.compile(r"results/[^/]+/([^/]+)/core/")
 
 
 # --- cache and client ------------------------------------------------------------------------------------------------
@@ -127,8 +266,9 @@ def call_with_retries(client, system, user, retries=5, sleep=time.sleep, meta=No
             delay *= 2
 
 
-def judge_one(client, system, template, prefill, continuation, retries=5, sleep=time.sleep):
-    """{label, reason, raw}. A reply that is not valid JSON/label is asked for once more, then recorded as label 'invalid'."""
+def judge_one(client, system, template, prefill, continuation, retries=5, sleep=time.sleep, v3=False):
+    """{label, reason, raw} (v2) or {label: "fields", fields, reason, raw} (v3). A reply that does not parse is asked for once
+    more, then recorded as label 'invalid'."""
     user = build_user_message(template, prefill, continuation)
     raw, stops = "", []
     for _ in range(2):
@@ -136,6 +276,9 @@ def judge_one(client, system, template, prefill, continuation, retries=5, sleep=
         raw = call_with_retries(client, system, user, retries, sleep, meta=meta)
         stops.append(meta.get("stop_reason") if not meta.get("stop_category") else f"{meta['stop_reason']}:{meta['stop_category']}")
         try:
+            if v3:
+                fields = parse_reply_v3(raw)
+                return dict(label="fields", fields=fields, reason=fields["reason"], raw=raw, stop_reasons=stops)
             label, reason = parse_reply(raw)
             return dict(label=label, reason=reason, raw=raw, stop_reasons=stops)
         except ValueError:
@@ -145,7 +288,7 @@ def judge_one(client, system, template, prefill, continuation, retries=5, sleep=
 
 # --- cost estimate -------------------------------------------------------------------------------------------------------
 
-def estimate_cost(requests, price_in=None, price_out=None, out_tokens=60):
+def estimate_cost(requests, price_in=None, price_out=None, out_tokens=60):  # v3 replies are longer: run() passes 140
     """Rough token counts (about 4 characters per token; the real counts come from the API) and, if prices per million
     tokens are given, dollars. No prices are built in: pass --price-in/--price-out or set JUDGE_PRICE_IN/JUDGE_PRICE_OUT
     from the current price list."""
@@ -163,7 +306,9 @@ def format_estimate(e):
 
 # --- run -------------------------------------------------------------------------------------------------------------------
 
-def read_samples(paths, limit=None):
+def read_samples(paths, limit=None, family=None):
+    """Judge inputs from generation files (or the validation sheet csv). Each row keeps the generated token ids (`ids`, not sent)
+    and its family (`family`: the --family given, else parsed from results/<run>/<family>/core/..., else None) for v3's derivation."""
     rows = []
     for p in paths:
         if p.endswith(".csv"):  # the validation sheet: prefill, continuation, sample_id
@@ -178,17 +323,37 @@ def read_samples(paths, limit=None):
             if cont is None or "prefill" not in r:
                 raise SystemExit(f"{p}:{i + 1}: rows need 'prefill' and 'continuation' (or 'completion')")
             carry = {k: v for k, v in r.items() if k not in CARRY_EXCLUDE}
-            rows.append(dict(prefill=r["prefill"], continuation=cont, carry=dict(carry, source_file=os.path.basename(p))))
+            m = FAMILY_FROM_PATH.search(os.path.abspath(p).replace(os.sep, "/"))
+            rows.append(dict(prefill=r["prefill"], continuation=cont, carry=dict(carry, source_file=os.path.basename(p)),
+                             ids=r.get("continuation_ids", r.get("completion_ids")), family=family or (m.group(1) if m else None)))
     return rows[:limit]
 
 
-def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, prices=(None, None), sleep=time.sleep, quiet=False):
-    version, system, template = load_prompt()
+def v3_row(r, c):
+    """The v3 output fields for one sample: the judge's fields plus the derived label, subtype, condition, headline group and v2
+    counterpart. A cached 'invalid' reply gives label 'invalid'."""
+    if c["label"] == "invalid":
+        return dict(label="invalid", subtype="", group="invalid", v2_equivalent="invalid", condition=condition_of(r["carry"].get("prefill_id")))
+    ends, tok = family_tools(r.get("family"))
+    f = c["fields"]
+    loop = f["user_text"] == "degenerate" and user_portion_loop(dict(continuation_ids=r.get("ids")), r["continuation"], ends, tok)
+    label, subtype, extra = derive_v3(f, r["continuation"], ends, loop)
+    cond = condition_of(r["carry"].get("prefill_id"))
+    return dict(label=label, subtype=subtype, condition=cond, group=v3_group(label, cond), v2_equivalent=v3_to_v2(label, subtype, cond),
+                **{k: f[k] for k in ("user_text",) + V3_BOOLS + ("assistant_start",)}, **extra,
+                markers="family" if tok is not None else "generic")
+
+
+def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, prices=(None, None), sleep=time.sleep, quiet=False,
+        prompt_path=None):
+    """Judge the samples (cached per sample hash) and write one output row per sample. prompt_path: default PROMPT_PATH (v3)."""
+    version, system, template = load_prompt(prompt_path or PROMPT_PATH)
+    v3 = is_v3(version)
     cache = load_cache(cache_path)
     todo = [r for r in samples if sample_hash(r["prefill"], r["continuation"], version) not in cache]
     unique = {sample_hash(r["prefill"], r["continuation"], version): r for r in todo}
     reqs = [(system, build_user_message(template, r["prefill"], r["continuation"])) for r in unique.values()]
-    est = estimate_cost(reqs, *prices)
+    est = estimate_cost(reqs, *prices, out_tokens=140 if v3 else 60)
     if not quiet:
         print(f"{len(samples)} samples, {len(samples) - len(todo)} already cached, to judge: {format_estimate(est)}")
     if dry_run:
@@ -198,26 +363,30 @@ def run(samples, out, cache_path=DEFAULT_CACHE, dry_run=False, client=None, pric
         os.makedirs(os.path.dirname(cache_path) or ".", exist_ok=True)
         with open(cache_path, "a", encoding="utf-8") as cf:
             for h, r in unique.items():
-                res = judge_one(client, system, template, r["prefill"], r["continuation"], sleep=sleep)
+                res = judge_one(client, system, template, r["prefill"], r["continuation"], sleep=sleep, v3=v3)
                 row = dict(sample_hash=h, judge_model=MODEL, prompt_version=version, temperature=TEMPERATURE, thinking=THINKING,
                            max_tokens=MAX_TOKENS, stop_reasons=res.get("stop_reasons"),
-                           label=res["label"], reason=res["reason"], raw=res["raw"])
+                           label=res["label"], reason=res["reason"], raw=res["raw"], **({"fields": res["fields"]} if "fields" in res else {}))
                 cache[h] = row
                 cf.write(json.dumps(row, ensure_ascii=False) + "\n")
                 cf.flush()
     rows = []
     for r in samples:
         c = cache[sample_hash(r["prefill"], r["continuation"], version)]
-        rows.append({**r["carry"], "sample_hash": c["sample_hash"], "label": c["label"], "reason": c["reason"],
-                     "judge_model": c["judge_model"], "prompt_version": c["prompt_version"], "temperature": c["temperature"],
-                     "thinking": c.get("thinking"), "stop_reasons": c.get("stop_reasons")})
+        row = {**r["carry"], "sample_hash": c["sample_hash"], "label": c["label"], "reason": c["reason"],
+               "judge_model": c["judge_model"], "prompt_version": c["prompt_version"], "temperature": c["temperature"],
+               "thinking": c.get("thinking"), "stop_reasons": c.get("stop_reasons")}
+        if v3:
+            row.update(v3_row(r, c))
+        rows.append(row)
     if out:
         os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
         with open(out, "w", encoding="utf-8") as f:
             for r in rows:
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
         if not quiet:
-            print(f"wrote {len(rows)} rows to {out}; labels: {dict(Counter(r['label'] for r in rows))}")
+            print(f"wrote {len(rows)} rows to {out}; labels: {dict(Counter(r['label'] for r in rows))}"
+                  + (f"; groups: {dict(Counter(r['group'] for r in rows))}" if v3 else ""))
     return rows, est
 
 
@@ -295,7 +464,7 @@ SHEET_README = """# Judge validation sheet
 
 `sheet.csv`: 60 model continuations of a real user's unfinished (or finished) message, for a teammate to label BY HAND (do not use the
 judge's output, and do not open `sheet_key.csv`, which says which model wrote each one). Fill `human_label` with exactly one of the four labels
-below. These are the same definitions the judge uses (`judge_prompt.md`, version v2), so read them as the judge would.
+below. These are the same definitions the judge uses (`judge_prompt_v2.md`, version v2), so read them as the judge would.
 
 What counts is the continuation **up to the point where the user's turn closes**. Turn-closing markers (for example `<|im_end|>`, `<turn|>`) and
 everything after them are context only: a reply by the assistant after the user's turn has closed is NOT what you are labelling. A model that finishes the
@@ -365,12 +534,34 @@ def load_human_labels(path):
     return out
 
 
-def judge_sheet(sheet_path, out, **kw):
-    """Judge the validation sheet's samples; rows are keyed by the sheet's sample_id."""
+def judge_sheet(sheet_path, out, key_path=None, **kw):
+    """Judge the validation sheet's samples; rows are keyed by the sheet's sample_id. The family (for v3's turn markers) and
+    prefill id come from the sheet key (default: sheet_key.csv next to the sheet, or in the validation directory), never sent."""
+    key = {}
+    for kp in ([key_path] if key_path else [os.path.join(os.path.dirname(sheet_path), "sheet_key.csv"),
+                                            os.path.join(VALIDATION_DIR, "sheet_key.csv")]):
+        if kp and os.path.exists(kp):
+            key = {k["sample_id"]: k for k in csv.DictReader(open(kp, newline="", encoding="utf-8"))}
+            break
     rows = []
     for r in csv.DictReader(open(sheet_path, newline="", encoding="utf-8")):
-        rows.append(dict(prefill=r["prefill"], continuation=r["continuation"], carry=dict(sample_id=r["sample_id"])))
+        k = key.get(r["sample_id"], {})
+        rows.append(dict(prefill=r["prefill"], continuation=r["continuation"], family=k.get("model") or k.get("family"),
+                         carry=dict(sample_id=r["sample_id"], prefill_id=k.get("prefill_id"))))
     return run(rows, out, **kw)
+
+
+def judged_for_validation(rows):
+    """{sample_id: v2-vocabulary label} for the agreement report: the label itself for v2 rows, the v2 counterpart for v3 rows
+    (rows without one, unclear or an unlocated handoff, are left out). Returns (labels, n_left_out)."""
+    out, left = {}, 0
+    for r in rows:
+        lab = r.get("v2_equivalent", r["label"]) if is_v3(r.get("prompt_version", "")) else r["label"]
+        if lab is None:
+            left += 1
+        else:
+            out[r["sample_id"]] = lab
+    return out, left
 
 
 # --- the validation sheet split between labellers ---------------------------------------------------------------------------------
@@ -623,6 +814,8 @@ def main(argv=None):
     r.add_argument("--dry-run", action="store_true", help="build the requests and print the cost estimate; call nothing")
     r.add_argument("--price-in", type=float, default=os.environ.get("JUDGE_PRICE_IN"), help="$ per million input tokens")
     r.add_argument("--price-out", type=float, default=os.environ.get("JUDGE_PRICE_OUT"), help="$ per million output tokens")
+    r.add_argument("--prompt", choices=sorted(PROMPT_PATHS), default="v3", help="judge prompt version (v2: the main run's labels)")
+    r.add_argument("--family", help="config.FAMILIES key for v3's turn markers (default: parsed from results/<run>/<family>/core/...)")
     s = sub.add_parser("sheet", help="build the 60-sample human validation sheet")
     s.add_argument("--out-dir", default=VALIDATION_DIR)
     s.add_argument("--seed", type=int, default=0)
@@ -634,6 +827,7 @@ def main(argv=None):
     pl.add_argument("--dry-run", action="store_true")
     pl.add_argument("--price-in", type=float, default=os.environ.get("JUDGE_PRICE_IN"))
     pl.add_argument("--price-out", type=float, default=os.environ.get("JUDGE_PRICE_OUT"))
+    pl.add_argument("--prompt", choices=sorted(PROMPT_PATHS), default="v2", help="the pilot comparison was made with v2")
     sp = sub.add_parser("split-sheet", help="split the validation sheet between labellers (some samples shared by all)")
     sp.add_argument("--people", nargs="+", default=["cole", "grace", "adeeb"])
     sp.add_argument("--shared", type=int, default=12, help="samples every labeller gets (agreement between labellers)")
@@ -648,14 +842,16 @@ def main(argv=None):
     v.add_argument("--dry-run", action="store_true")
     v.add_argument("--cache", default=DEFAULT_CACHE)
     v.add_argument("--out", help="write the report here (markdown)")
+    v.add_argument("--prompt", choices=sorted(PROMPT_PATHS), default="v3",
+                   help="prompt for judging the sheet now (v3 output is compared through its v2 counterpart)")
     a = ap.parse_args(argv)
 
     if a.cmd == "run":
         prices = tuple(float(p) if p is not None else None for p in (a.price_in, a.price_out))
-        run(read_samples(a.samples, a.limit), a.out, a.cache, a.dry_run, prices=prices)
+        run(read_samples(a.samples, a.limit, a.family), a.out, a.cache, a.dry_run, prices=prices, prompt_path=PROMPT_PATHS[a.prompt])
     elif a.cmd == "pilot":
         prices = tuple(float(p) if p is not None else None for p in (a.price_in, a.price_out))
-        rows, _ = run(pilot_items(), a.out, a.cache, a.dry_run, prices=prices)
+        rows, _ = run(pilot_items(), a.out, a.cache, a.dry_run, prices=prices, prompt_path=PROMPT_PATHS[a.prompt])
         if rows is not None:
             r = pilot_agreement(rows)
             print(f"PROVISIONAL (the agent's own labels are not ground truth): n={r['n']}, binary agreement "
@@ -689,17 +885,15 @@ def main(argv=None):
         if not human:
             raise SystemExit(f"{a.human} has no human_label values yet")
         if a.judged:
-            judged = {}
-            for line in open(a.judged, encoding="utf-8"):
-                if line.strip():
-                    row = json.loads(line)
-                    judged[row["sample_id"]] = row["label"]
+            rows = [json.loads(line) for line in open(a.judged, encoding="utf-8") if line.strip()]
         else:
-            rows, _ = judge_sheet(a.human, None, cache_path=a.cache, dry_run=a.dry_run)
+            rows, _ = judge_sheet(a.human, None, cache_path=a.cache, dry_run=a.dry_run, prompt_path=PROMPT_PATHS[a.prompt])
             if rows is None:
                 return
-            judged = {r["sample_id"]: r["label"] for r in rows}
+        judged, left = judged_for_validation(rows)
         text = format_validation(validation_report(human, judged))
+        if left:
+            text += f"\n\n{left} judged samples have no v2 counterpart (v3 unclear or an unlocated handoff) and are left out."
         print(text)
         if a.out:
             open(a.out, "w", encoding="utf-8").write(text + "\n")

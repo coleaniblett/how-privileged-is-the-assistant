@@ -2,7 +2,7 @@
 
 `sheet.csv`: 60 model continuations of a real user's unfinished (or finished) message, for a teammate to label BY HAND (do not use the
 judge's output, and do not open `sheet_key.csv`, which says which model wrote each one). Fill `human_label` with exactly one of the four labels
-below. These are the same definitions the judge uses (`judge_prompt.md`, version v2), so read them as the judge would.
+below. These are the same definitions the judge uses (`judge_prompt_v2.md`, version v2), so read them as the judge would.
 
 What counts is the continuation **up to the point where the user's turn closes**. Turn-closing markers (for example `<|im_end|>`, `<turn|>`) and
 everything after them are context only: a reply by the assistant after the user's turn has closed is NOT what you are labelling. A model that finishes the

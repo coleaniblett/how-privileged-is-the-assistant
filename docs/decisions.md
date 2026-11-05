@@ -1335,3 +1335,19 @@ and then answers without closing the turn (v2: switched; both labellers: user vo
   memory at 120 samples per call on the 48 GB card; both Gemma checkpoints were generated with
   `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` (an allocator setting; sampling unchanged). OLMo and Qwen ran without it.
 
+## 2026-11-05 (UTC) - Vestigial regression judge prompt v3 adopted (proposals as drafted); wired into judge.py, not yet run
+Cole's decision, taking the proposals in the v3 draft. `measures/vestigial_regression/judge_prompt.md` is now v3 (the default);
+v2 moves to `judge_prompt_v2.md` and stays selectable (`--prompt v2`), so the main run's v2 labels reproduce from the cache.
+- **The judge describes, code labels.** Judge fields: user_text (none/user/degenerate), completed, assistant_content, assistant_start
+  (first words, verbatim), assistant_traits, repetitive, reason. `judge.derive_v3` gives the label by a fixed rule (`judge_prompt.md`,
+  "Derived label"); the closed/unclosed subtype comes from the family's tokenizer turn markers, the token_loop/incoherent subtype from
+  the regex flags (`flags.py`).
+- **Headline groups** (`judge.v3_group`): `completed_then_assistant` is neither user voice nor non-user voice (its own reported rate);
+  `closed_immediately` is non-user voice for mid-sentence prefills (as v2) and its own reported rate for open openers; a plain-text
+  role label written by a base model ("Assistant:") does not count as closing the turn (flagged `plain_role_label`). The
+  `closed_immediately` rule was set after automated counts of the open-opener generations were seen (see the run note above).
+- **Continuity:** every v3 row carries its v2 counterpart (`v3_to_v2`); `validate` compares v3 output with the v2 human labels through it.
+- **Not yet run.** Next: re-judge the already-labelled samples under v3 as a check (not validation: the labellers have seen the v2
+  output); a fresh blind v3 validation sheet; then the open-opener run. Dry-run estimate at $2 / $10 per million tokens: about $0.22
+  for the labelled samples (46 requests) and about $21 for the open-opener set (4,436 requests).
+

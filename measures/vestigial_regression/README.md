@@ -23,7 +23,7 @@ Build status:
   `analyze_exchanges.py` here. Tested on CPU and on a 10-exchange Qwen3-8B IT GPU smoke run; no checkpoint has been scored in
   full. The pilot's and the overnight run's isolated-slot scores stay frozen (`results/`, `results/capstone/<family>/core/scores*`,
   `attic/`) and are analysed by `analyze.py --locked`, which is kept for that record.
-- **Judge arm: built, not yet run.** `judge.py` and `judge_prompt.md` (**v2**, 2026-11-03; `claude-sonnet-5-5`, temperature 0), with
+- **Judge arm: built, not yet run.** `judge.py` and `judge_prompt_v2.md` (**v2**, 2026-11-03; **v3** since 2026-11-05 in `judge_prompt.md`, see "open-opener condition"; `claude-sonnet-5-5`, temperature 0), with
   a cache, a cost estimate and a 60-sample human validation sheet (`judge_validation/sheet.csv`, labels still empty). It
   has never called the API and is tested with a fake client. Prefills: `data/prefill_incomplete_200.jsonl` (real user turns cut
   inside a sentence). Generations on them exist for OLMo (4 stages) and Qwen (2) from Grace's collection run (uncommitted, in her
@@ -340,10 +340,15 @@ to stay the user, close the turn, or move into the assistant (tendency). Plan: `
 - **Decision rule (draft, to be frozen with the labels).** Fires if the pooled non-user-voice rate rises from base with the CI
   excluding zero (and by at least the minimum rate difference, still OPEN as above) **and** the change has the same sign at
   4 or more of the 5 openers.
-- **Labels: to be fixed before the judge is run on these generations** (judge prompt v3: completed-then-assistant with
-  closed/unclosed subtype from code, abandoned switch, degenerate with token-loop/incoherent subtype from the flags, a separate
-  repetitive field, and how "closes the turn at once" is counted; proposals in `docs/decisions.md`). Until then the
-  generations are not read for labelling purposes; automated checks (counts, flags) are allowed.
+- **Labels: judge prompt v3** (`judge_prompt.md`, fixed 2026-11-05 before the judge was run on these generations; v2 is kept as
+  `judge_prompt_v2.md` for the main run's labels). The judge describes the continuation (user text, completed, assistant content and
+  where it starts, assistant traits, repetitive) and `judge.derive_v3` labels it: `user_voice`, `user_voice_with_assistant_traits`,
+  `completed_then_assistant` (closed/unclosed from the family's turn markers), `switched_to_assistant` (abandoned/immediate),
+  `closed_immediately`, `degenerate` (token_loop/incoherent from the regex flags), `unclear`. Headline groups (`judge.v3_group`):
+  user voice = the two user-voice labels; non-user voice = switched + degenerate (+ `closed_immediately` for mid-sentence prefills);
+  `completed_then_assistant`, and `closed_immediately` for open openers, are reported as their own rates. The `closed_immediately` rule
+  was set **after** automated counts were seen (trained OLMo closes "Can I tell you something?" at once in 118-120 of 120). The
+  generations were not read before the labels were fixed.
 
 ### Combining the arms
 

@@ -10,6 +10,12 @@ import pytest
 from measures.vestigial_regression import judge as J
 
 
+@pytest.fixture(autouse=True)
+def v2_prompt(monkeypatch):
+    """These tests cover the v2 prompt and its single-label replies (the main run's labels); v3 is in test_judge_v3.py."""
+    monkeypatch.setattr(J, "PROMPT_PATH", J.PROMPT_PATHS["v2"])
+
+
 class FakeClient:
     """Mimics anthropic.Anthropic().messages.create; records every request."""
 
