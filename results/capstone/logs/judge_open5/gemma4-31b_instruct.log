@@ -1,0 +1,2 @@
+600 samples, 0 already cached, to judge: 544 requests, about 890,612 input and 76,160 output tokens (no prices given: pass --price-in/--price-out in $ per million tokens)
+wrote 600 rows to results/capstone/gemma4-31b/vestigial_regression/judge_open5/instruct.jsonl; labels: {'switched_to_assistant': 475, 'degenerate': 125}; groups: {'non_user_voice': 600}

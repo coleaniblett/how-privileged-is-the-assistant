@@ -1,0 +1,2 @@
+600 samples, 0 already cached, to judge: 520 requests, about 849,365 input and 72,800 output tokens (no prices given: pass --price-in/--price-out in $ per million tokens)
+wrote 600 rows to results/capstone/olmo3-7b/vestigial_regression/judge_open5/sft.jsonl; labels: {'user_voice': 241, 'completed_then_assistant': 233, 'closed_immediately': 118, 'switched_to_assistant': 8}; groups: {'user_voice': 241, 'completed_then_assistant': 233, 'closed_immediately': 118, 'non_user_voice': 8}

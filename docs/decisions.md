@@ -1350,4 +1350,9 @@ v2 moves to `judge_prompt_v2.md` and stays selectable (`--prompt v2`), so the ma
 - **Not yet run.** Next: re-judge the already-labelled samples under v3 as a check (not validation: the labellers have seen the v2
   output); a fresh blind v3 validation sheet; then the open-opener run. Dry-run estimate at $2 / $10 per million tokens: about $0.22
   for the labelled samples (46 requests) and about $21 for the open-opener set (4,436 requests).
+- **Run (2026-11-05):** judge v3 on all 8 checkpoints' open-opener generations (4,436 requests after deduplication, 8 processes with
+  their own cache files, merged into `judge_cache.jsonl` afterwards); before it, a v3 check on the 44 labelled validation samples (46
+  requests; human vs v3 on user/non-user voice 49/53 with `completed_then_assistant` on the user side, against 42/56 for v2; a check,
+  not validation). Analysis: `measures/vestigial_regression/analyze_open5.py`, with one added sensitivity reading (the v2 mapping),
+  added after the rule was frozen and before results were read.
 

@@ -350,6 +350,15 @@ to stay the user, close the turn, or move into the assistant (tendency). Plan: `
   was set **after** automated counts were seen (trained OLMo closes "Can I tell you something?" at once in 118-120 of 120). The
   generations were not read before the labels were fixed.
 
+- **Result (2026-11-05, `results/capstone/vestigial_regression/judge_open5/results.md`; judge v3 not yet validated):** non-user-voice
+  rate change from base, pooled over the five openers, refused samples excluded: Gemma 4 31B IT **fires**, +97.5 [+96.2, +98.7] pts,
+  5/5 openers (it opens its thinking channel in the user's turn at once, or loops); OLMo SFT −10.3, DPO −11.4, Instruct −11.4 (CIs below
+  zero, 4-5 openers falling: trained OLMo stays the user more than base); Qwen3-8B IT −2.0 [−3.2, −0.8], does not fire. Same verdicts
+  with refused samples counted either way. Under the v2 mapping (sensitivity), Qwen IT is +10.4 [+5.5, +15.3] but rises at only 3/5
+  openers, so it still does not fire; its rise is `completed_then_assistant` (+12 pts, mostly "I have a problem."). Trained OLMo closes
+  "Can I tell you something?" at once in 98-100% of samples (reported on its own); counting it as non-user voice would not make OLMo
+  fire (at most 2 of 5 openers would rise).
+
 ### Combining the arms
 
 Vestigial regression counts toward H4 if **either arm fires**; report which:
