@@ -1390,3 +1390,17 @@ Timing sample (OLMo 3 7B final, 192 role requests, batch 32, long role prompts):
 
 ## 2026-11-05 (UTC) - Spec O: Gemma 4 31B prefill arm added (finished on vinyl 19:38 UTC; pushed late)
 `results/belief_induction/belief_induction.md` now includes Gemma 31B (`arm2/gemma4-31b/`). Under persona prefill the stage reads **matches the prompt** ("relative only": criterion 3 holds, criterion 4 does not) and `assistant>new` changes from base in the same direction as under the prompt, but the effect is much larger: `assistant>new` +0.70 to +3.69 (prompt: +0.15 to +0.19), `character>new` +0.23 to -4.74 (prompt: -0.05 to -2.36), leak gap change +7.96 [+6.55, +9.42] (prompt +2.35 [+1.52, +3.18]). So for Gemma the prefill makes the Assistant's belief carry into the new persona more and the character's belief go against it more, without changing the pre-set reading; the stage and absolute rules are still not both met in every domain, so there is no 'spreads under prefill' reading in any family. Overall for arm 2: OLMo and Gemma match the prompt, Qwen differs (assistant>new rises under prefill, falls under the prompt).
+
+## 2026-11-05 (UTC) - Result: spec Q, what the role says (identity x voice; OLMo, Qwen, Gemma 31B final; NOT BLIND, exploratory, outside every verdict)
+`results/role_says/role_says.md` (+ CSVs, 30 saved replies per condition; full replies stay local). Gemma 31B is final only (Gemma base was dropped because Q projected over 4 GPU hours, see the timing entry). Overall reading by family and position (pre-set rules; the report has readings 1 to 4, in-character shares and the descriptive regex table; judged traits are provisional):
+
+| family | position | reading |
+|---|---|---|
+| olmo3-7b | system | CAN'T TEST (a cell fails the in-character check) |
+| olmo3-7b | user | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved)) |
+| qwen3-8b | system | PARTIAL (held: truth ignores voice on both) |
+| qwen3-8b | user | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved)) |
+| gemma4-31b | system | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved)) |
+| gemma4-31b | user | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved), truth ignores voice on both) |
+
+Limits as in the plan: few jobs; many cells; provisional local judge (hand check not done); 'an AI that does this job' is odd for some jobs; following identity could be the model inferring what an AI should say; truth traits could be general skill; regex sees form only; not hand-checked.
