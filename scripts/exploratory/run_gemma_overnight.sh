@@ -18,7 +18,7 @@ for stage in instruct base; do
   avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 70 ] || [ "$stage" = instruct ] || { echo "less than 70 GB free for $model"; exit 3; }
   echo "=== $FAM $stage $(date -u +%T)"
   out=results/capstone/$FAM/core/generations_incomplete_exchanges
-  [[ -f $out/$stage.jsonl ]] || step $PY -m core.generate --family $FAM --run capstone --model $stage --prefill data/prefill_incomplete_exchanges.jsonl --save-ids --out $out
+  [[ -f $out/$stage.jsonl ]] || step $PY -m extras.batched_generate --family $FAM --run capstone --model $stage --prefill data/prefill_incomplete_exchanges.jsonl --out $out
   [[ -f results/capstone/$FAM/$stage/core/exchanges_reply_in_user/scores.csv ]] || step $PY -m extras.exchange_reply_in_user score --family $FAM --model $stage --offload --gpu-gib 30
   [[ -f results/mechanism_checks/h2/$FAM/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h2 --family $FAM --stage $stage
   [[ -f results/mechanism_checks/h3/$FAM/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h3 --family $FAM --stage $stage
