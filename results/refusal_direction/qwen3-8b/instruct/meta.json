@@ -1,0 +1,12 @@
+{
+ "family": "qwen3-8b",
+ "stage": "instruct",
+ "layer": 27,
+ "dose": {
+  "vivid1": 120.08170623580615,
+  "vivid2": 115.30111026763916
+ },
+ "n_generations": 3360,
+ "seconds": 296.98305201530457,
+ "pilot_requests": 24
+}

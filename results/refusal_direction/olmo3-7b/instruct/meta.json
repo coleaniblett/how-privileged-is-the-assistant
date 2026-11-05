@@ -1,0 +1,12 @@
+{
+ "family": "olmo3-7b",
+ "stage": "instruct",
+ "layer": 21,
+ "dose": {
+  "vivid1": 13.937366915245851,
+  "vivid2": 14.358917268613974
+ },
+ "n_generations": 3360,
+ "seconds": 298.5994596481323,
+ "pilot_requests": 24
+}
