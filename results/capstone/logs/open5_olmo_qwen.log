@@ -1,0 +1,90 @@
+[2026-11-05 13:52:58 UTC] === olmo3-7b base (allenai/Olmo-3-1025-7B), cached 0
+allenai/Olmo-3-1025-7B: need 19.6 GB (incl. 5 GB margin), 60.4 GB free -> OK
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:08,  4.40s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:05<00:02,  2.52s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  1.76s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  2.15s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 7564.02it/s]
+[W1105 13:53:14.389533739 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 75497472 bytes (free: 58392576, total: 50867404800).
+[W1105 13:53:16.696991950 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 90177536 bytes (free: 20643840, total: 50867404800).
+[W1105 13:53:17.770423159 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 102760448 bytes (free: 73072640, total: 50867404800).
+[W1105 13:53:17.628920947 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 111149056 bytes (free: 24838144, total: 50867404800).
+[W1105 13:53:18.534069498 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 119537664 bytes (free: 102432768, total: 50867404800).
+[W1105 13:53:19.253586088 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 125829120 bytes (free: 75169792, total: 50867404800).
+[W1105 13:53:20.006953746 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 132120576 bytes (free: 56295424, total: 50867404800).
+[W1105 13:53:21.713054145 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 138412032 bytes (free: 58392576, total: 50867404800).
+[W1105 13:53:21.436510476 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 144703488 bytes (free: 140181504, total: 50867404800).
+[W1105 13:53:22.108545955 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 150994944 bytes (free: 20643840, total: 50867404800).
+[W1105 13:53:29.845046793 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 155189248 bytes (free: 45809664, total: 50867404800).
+allenai/Olmo-3-1025-7B: wrote 600 samples to results/capstone/olmo3-7b/core/generations_open5/.tmp_base/base.jsonl
+[2026-11-05 13:53:49 UTC] olmo3-7b base: 600 samples -> results/capstone/olmo3-7b/core/generations_open5/base.jsonl
+allenai/Olmo-3-1025-7B: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+[2026-11-05 13:53:49 UTC] === olmo3-7b sft (allenai/Olmo-3-7B-Instruct-SFT), cached 0
+allenai/Olmo-3-7B-Instruct-SFT: need 19.6 GB (incl. 5 GB margin), 60.4 GB free -> OK
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:09,  4.70s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:06<00:02,  2.71s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  1.79s/it]Fetching 3 files: 100%|██████████| 3/3 [00:06<00:00,  2.24s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 7757.11it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[W1105 13:54:06.973416149 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 75497472 bytes (free: 58392576, total: 50867404800).
+[W1105 13:54:07.284983303 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 90177536 bytes (free: 20643840, total: 50867404800).
+[W1105 13:54:08.374030107 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 102760448 bytes (free: 73072640, total: 50867404800).
+[W1105 13:54:09.223586881 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 111149056 bytes (free: 24838144, total: 50867404800).
+[W1105 13:54:10.133396671 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 119537664 bytes (free: 102432768, total: 50867404800).
+[W1105 13:54:11.858650652 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 125829120 bytes (free: 75169792, total: 50867404800).
+[W1105 13:54:11.608316641 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 132120576 bytes (free: 56295424, total: 50867404800).
+[W1105 13:54:12.309747850 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 138412032 bytes (free: 58392576, total: 50867404800).
+[W1105 13:54:13.034411025 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 144703488 bytes (free: 140181504, total: 50867404800).
+[W1105 13:54:14.700115216 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 150994944 bytes (free: 20643840, total: 50867404800).
+[W1105 13:54:20.486606202 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 155189248 bytes (free: 45809664, total: 50867404800).
+allenai/Olmo-3-7B-Instruct-SFT: wrote 600 samples to results/capstone/olmo3-7b/core/generations_open5/.tmp_sft/sft.jsonl
+[2026-11-05 13:54:37 UTC] olmo3-7b sft: 600 samples -> results/capstone/olmo3-7b/core/generations_open5/sft.jsonl
+allenai/Olmo-3-7B-Instruct-SFT: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+[2026-11-05 13:54:37 UTC] === olmo3-7b dpo (allenai/Olmo-3-7B-Instruct-DPO), cached 0
+allenai/Olmo-3-7B-Instruct-DPO: need 19.6 GB (incl. 5 GB margin), 60.4 GB free -> OK
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:16<00:33, 16.91s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:21<00:09,  9.77s/it]Fetching 3 files: 100%|██████████| 3/3 [00:29<00:00,  9.06s/it]Fetching 3 files: 100%|██████████| 3/3 [00:29<00:00,  9.97s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 7725.08it/s]
+[transformers] The following generation flags are not valid and may be ignored: ['temperature', 'top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+[W1105 13:55:17.880234899 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 75497472 bytes (free: 58392576, total: 50867404800).
+[W1105 13:55:18.132606937 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 90177536 bytes (free: 20643840, total: 50867404800).
+[W1105 13:55:19.266100560 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 102760448 bytes (free: 73072640, total: 50867404800).
+[W1105 13:55:20.150904825 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 111149056 bytes (free: 24838144, total: 50867404800).
+[W1105 13:55:21.024190879 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 119537664 bytes (free: 102432768, total: 50867404800).
+[W1105 13:55:22.754559793 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 125829120 bytes (free: 75169792, total: 50867404800).
+[W1105 13:55:22.481381461 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 132120576 bytes (free: 56295424, total: 50867404800).
+[W1105 13:55:23.175029648 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 138412032 bytes (free: 58392576, total: 50867404800).
+[W1105 13:55:24.918676283 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 144703488 bytes (free: 140181504, total: 50867404800).
+[W1105 13:55:24.590028734 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 150994944 bytes (free: 20643840, total: 50867404800).
+[W1105 13:55:31.352225393 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 155189248 bytes (free: 45809664, total: 50867404800).
+allenai/Olmo-3-7B-Instruct-DPO: wrote 600 samples to results/capstone/olmo3-7b/core/generations_open5/.tmp_dpo/dpo.jsonl
+[2026-11-05 13:55:47 UTC] olmo3-7b dpo: 600 samples -> results/capstone/olmo3-7b/core/generations_open5/dpo.jsonl
+allenai/Olmo-3-7B-Instruct-DPO: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+[2026-11-05 13:55:47 UTC] === olmo3-7b instruct (allenai/Olmo-3-7B-Instruct), cached 0
+allenai/Olmo-3-7B-Instruct: need 19.6 GB (incl. 5 GB margin), 60.4 GB free -> OK
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:09,  4.89s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:06<00:02,  2.92s/it]Fetching 3 files: 100%|██████████| 3/3 [00:07<00:00,  1.92s/it]Fetching 3 files: 100%|██████████| 3/3 [00:07<00:00,  2.39s/it]
+Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 7558.11it/s]
+[W1105 13:56:05.077275341 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 75497472 bytes (free: 58392576, total: 50867404800).
+[W1105 13:56:06.389211899 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 90177536 bytes (free: 20643840, total: 50867404800).
+[W1105 13:56:07.495357573 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 102760448 bytes (free: 73072640, total: 50867404800).
+[W1105 13:56:08.353696180 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 111149056 bytes (free: 24838144, total: 50867404800).
+[W1105 13:56:09.263401859 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 119537664 bytes (free: 102432768, total: 50867404800).
+[W1105 13:56:10.005480288 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 125829120 bytes (free: 75169792, total: 50867404800).
+[W1105 13:56:11.769647750 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 132120576 bytes (free: 56295424, total: 50867404800).
+[W1105 13:56:11.439419125 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 138412032 bytes (free: 58392576, total: 50867404800).
+[W1105 13:56:12.175330988 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 144703488 bytes (free: 140181504, total: 50867404800).
+[W1105 13:56:13.854799105 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 150994944 bytes (free: 20643840, total: 50867404800).
+[W1105 13:56:19.654982315 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 155189248 bytes (free: 45809664, total: 50867404800).
+allenai/Olmo-3-7B-Instruct: wrote 600 samples to results/capstone/olmo3-7b/core/generations_open5/.tmp_instruct/instruct.jsonl
+[2026-11-05 13:56:40 UTC] olmo3-7b instruct: 600 samples -> results/capstone/olmo3-7b/core/generations_open5/instruct.jsonl
+allenai/Olmo-3-7B-Instruct: freed 14.6 GB; 3 blobs removed, 0 shared blobs kept
+[2026-11-05 13:56:40 UTC] olmo3-7b done
+[2026-11-05 13:56:40 UTC] === qwen3-8b base (Qwen/Qwen3-8B-Base), cached 0
+Qwen/Qwen3-8B-Base: need 21.4 GB (incl. 5 GB margin), 60.4 GB free -> OK
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files:  20%|██        | 1/5 [00:09<00:36,  9.23s/it]Fetching 5 files:  60%|██████    | 3/5 [00:10<00:05,  2.72s/it]Fetching 5 files:  80%|████████  | 4/5 [00:11<00:02,  2.15s/it]Fetching 5 files: 100%|██████████| 5/5 [00:12<00:00,  1.77s/it]Fetching 5 files: 100%|██████████| 5/5 [00:12<00:00,  2.44s/it]
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]Loading weights: 100%|██████████| 399/399 [00:00<00:00, 7688.51it/s]
+Qwen/Qwen3-8B-Base: wrote 600 samples to results/capstone/qwen3-8b/core/generations_open5/.tmp_base/base.jsonl
+[2026-11-05 13:57:22 UTC] qwen3-8b base: 600 samples -> results/capstone/qwen3-8b/core/generations_open5/base.jsonl
+Qwen/Qwen3-8B-Base: freed 16.4 GB; 5 blobs removed, 0 shared blobs kept
+[2026-11-05 13:57:22 UTC] === qwen3-8b instruct (Qwen/Qwen3-8B), cached 0
+Qwen/Qwen3-8B: need 21.4 GB (incl. 5 GB margin), 60.4 GB free -> OK
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files:  20%|██        | 1/5 [00:04<00:18,  4.50s/it]Fetching 5 files:  40%|████      | 2/5 [00:05<00:07,  2.40s/it]Fetching 5 files:  60%|██████    | 3/5 [00:06<00:03,  1.83s/it]Fetching 5 files:  80%|████████  | 4/5 [00:06<00:01,  1.21s/it]Fetching 5 files: 100%|██████████| 5/5 [00:07<00:00,  1.06s/it]Fetching 5 files: 100%|██████████| 5/5 [00:07<00:00,  1.53s/it]
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]Loading weights: 100%|██████████| 399/399 [00:00<00:00, 7424.93it/s]
+Qwen/Qwen3-8B: wrote 600 samples to results/capstone/qwen3-8b/core/generations_open5/.tmp_instruct/instruct.jsonl
+[2026-11-05 13:58:00 UTC] qwen3-8b instruct: 600 samples -> results/capstone/qwen3-8b/core/generations_open5/instruct.jsonl
+Qwen/Qwen3-8B: freed 16.4 GB; 5 blobs removed, 1 shared blobs kept
+[2026-11-05 13:58:00 UTC] qwen3-8b done
