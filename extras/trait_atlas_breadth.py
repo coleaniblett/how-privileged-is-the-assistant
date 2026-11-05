@@ -28,6 +28,18 @@ ta.TEMPLATE_KW.setdefault("llama3.1-8b", {})
 ta.TEMPLATE_KW.setdefault("apertus-8b", {})
 _plan = ta.plan_requests
 
+# Apertus uses a distinct token per role ("<|user_start|>", "<|assistant_start|>", ...), so the template-derived turn markers fail (turn_open is None). Cut strings given explicitly.
+from measures.overgeneralization import user_traits as _ut  # noqa: E402
+_orig_markers = _ut.family_markers
+APERTUS_MARKERS = ["<|user_end|>", "<|assistant_end|>", "<|user_start|>", "<|assistant_start|>", "<|system_start|>", "<|developer_start|>"]
+
+
+def _family_markers(family):
+    return list(APERTUS_MARKERS) if family == "apertus-8b" else _orig_markers(family)
+
+
+_ut.family_markers = _family_markers
+
 
 def plan_requests(mat):
     return [r for r in _plan(mat) if r["trait"] in TRAITS]
