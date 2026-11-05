@@ -170,6 +170,8 @@ def load_flags():
 
 def boot_change(d, stage, scale, rng):
     """(change, lo, hi, n_items) of stage minus base, from replies in d (already filtered); NaN-safe; n_items = items with data on both sides."""
+    if d is None or len(d) == 0:
+        return np.nan, np.nan, np.nan, 0
     M = ta.cell_matrix(d, stage) * scale
     n_items = int(np.sum(~np.all(np.isnan(M), axis=1)))
     if n_items < MIN_ITEMS:

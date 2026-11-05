@@ -313,6 +313,9 @@ def analyze_h2(L, rows):
             mb_, mi = contrast("olmo3-7b", "base", a, b), contrast("olmo3-7b", "instruct", a, b)
         except Exception:
             continue
+        if mb_.size == 0 or mi.size == 0 or mb_.shape != mi.shape:
+            L.append(f"| {name} | too few (missing cells) | too few (missing cells) | not assessable |")
+            continue
         eb, ei, ed = boot2(mb_, rng), boot2(mi, rng), boot2(mi - mb_, rng)
         out[name] = (ei, ed)
         ok = ei[0] >= 0.10 and ei[1] > 0
@@ -324,6 +327,9 @@ def analyze_h2(L, rows):
             try:
                 w, wo = contrast("qwen3-8b", stage, "S-default", "U-default"), contrast("qwen3-8b", stage, "S-none", "U-none")
             except Exception:
+                continue
+            if w.size == 0 or wo.size == 0 or w.shape != wo.shape:
+                L.append(f"| {stage} | too few | too few | too few | not assessable |")
                 continue
             ew, ewo, ed = boot2(w, rng), boot2(wo, rng), boot2(w - wo, rng)
             L.append(f"| {stage} | {100 * ew[0]:+.1f} | {100 * ewo[0]:+.1f} | {100 * ed[0]:+.1f} [{100 * ed[1]:+.1f}, {100 * ed[2]:+.1f}] | {'the sentence carries the pattern' if stage == 'instruct' and ed[0] >= 0.10 and ed[1] > 0 else 'not met'} |")
@@ -448,6 +454,33 @@ def analyze_h1(L, rows):
     L.append("")
 
 
+def handcheck(n=40):
+    """Blind sheets for Adeeb: H2 (40 replies, half system-slot, half user-slot conditions) and H3 apology (40 replies); keys stay local (not committed)."""
+    mat = load_materials()
+    rng = np.random.default_rng(SEED + 7)
+    for kind, name in (("h2", "handcheck_h2"), ("h3", "handcheck_h3_apology")):
+        d = load_gen(kind)
+        d = d[d.stage.isin(["instruct"])] if kind == "h3" else d[(d.family == "olmo3-7b") & (d.stage == "instruct")]
+        if kind == "h2":
+            d = d[d.group != "plain"]
+            parts = [d[d.cond.str.startswith(k)] for k in ("S-", "U-")]
+        else:
+            d = d[d.opener == "apology"]
+            parts = [d[d.setup == k] for k in ("sys", "user")]
+        sel = pd.concat([x.sample(min(n // 2, len(x)), random_state=int(rng.integers(1 << 30))) for x in parts]).sample(frac=1, random_state=SEED)
+        rows, key = [], []
+        for i, (_, r) in enumerate(sel.iterrows(), 1):
+            req = "Please " + mat["requests"][int(r["item"])]
+            shown = (str(r.get("text", "")) + " " if kind == "h3" else "") + str(r["reply"])
+            rows.append(dict(id=i, request=req, reply=shown, human_label="refuses / complies (fill in)"))
+            key.append(dict(id=i, family=r["family"], stage=r["stage"], cond=r.get("cond", r.get("setup")), opener=r.get("opener", ""), role=r["role"], item=r["item"],
+                            regex_refuses=float(refused(str(r["reply"]), r.get("opener", "none")))))
+        os.makedirs(OUT, exist_ok=True)
+        pd.DataFrame(rows).to_csv(os.path.join(OUT, name + "_sheet.csv"), index=False)
+        pd.DataFrame(key).to_csv(os.path.join(OUT, name + "_key.csv"), index=False)
+        print(name, len(rows))
+
+
 def analyze(args):
     L = ["# Mechanism checks (spec H; exploratory, outside every verdict)", "",
          "Plan, frozen materials and readings: `docs/decisions.md` 2026-11-04, `data/mechanism_checks_materials.json`. Many cells, regex detectors, prompts specific to these roles: read patterns, not single cells.", ""]
@@ -467,6 +500,7 @@ def main():
         p = sub.add_parser(c)
         p.add_argument("--family", required=True)
         p.add_argument("--stage", required=True)
+    sub.add_parser("handcheck")
     p = sub.add_parser("analyze")
     p.add_argument("which", nargs="?", choices=["h1", "h2", "h3"])
     a = ap.parse_args()
@@ -477,6 +511,8 @@ def main():
         run_h1(a.family, a.stage)
     elif a.cmd in ("h2", "h3"):
         run_generation(a.cmd, a.family, a.stage)
+    elif a.cmd == "handcheck":
+        handcheck()
     else:
         analyze(a)
 
