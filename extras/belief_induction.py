@@ -25,7 +25,7 @@ from core.stats import bootstrap_ci
 from measures.overgeneralization import persona_carryover as pc
 
 SRC = "data/persona_carryover_confirmatory.jsonl"
-DATA = "data/belief_induction_prefill.jsonl"
+DATA = os.environ.get("BI_DATA", "data/belief_induction_prefill.jsonl")
 OUT = os.environ.get("BI_OUT", "results/belief_induction")
 AXIS_SRC = {"olmo3-7b": ["/root/how-privileged-is-the-assistant/results/olmo3-7b/persona_axis/instruct.npz", "results/olmo3-7b/persona_axis/instruct.npz"],
             "qwen3-8b": ["/root/how-privileged-is-the-assistant/results/other/persona_axis_qwen/Qwen3-8B.npz", "results/other/persona_axis_qwen/Qwen3-8B.npz"]}
@@ -65,6 +65,27 @@ def build():
         for r in out:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     print(f"wrote {DATA}: {len(out)} rows")
+
+
+W2 = "data/belief_induction_prefill_w2.jsonl"
+W1_NEW = re.compile(r"^I'm (?P<n>[^,]+), (?P<nj>[^.]+)\. I've just arrived and heard none of this\. My (?P<rest>.+)$")
+
+
+def build_w2():
+    """Spec R3b (2026-11-06): wording 2, third person for the NEW persona's line only; nothing else changes. 'I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is ...' becomes
+    'Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is ...'."""
+    rows = load_jsonl("data/belief_induction_prefill.jsonl")
+    n_changed = 0
+    with open(W2, "w", encoding="utf-8") as f:
+        for r in rows:
+            for cond, t in r["turns"].items():
+                if cond.endswith(">new"):
+                    m = W1_NEW.match(t[-1])
+                    assert m, (r["id"], cond, t[-1])
+                    t[-1] = f"{m['n']}, {m['nj']}, has just arrived and heard none of this. {m['n']}'s {m['rest']}"
+                    n_changed += 1
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    print(f"wrote {W2}: {len(rows)} rows, {n_changed} new-persona lines reworded")
 
 
 def example(family):
@@ -432,12 +453,14 @@ def analyze():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["build", "example", "sanity", "continuations", "steer", "analyze"])
+    ap.add_argument("cmd", choices=["build_w2", "build", "example", "sanity", "continuations", "steer", "analyze"])
     ap.add_argument("--family")
     ap.add_argument("--stage")
     a = ap.parse_args()
     if a.cmd == "build":
         build()
+    elif a.cmd == "build_w2":
+        build_w2()
     elif a.cmd == "example":
         example(a.family)
     elif a.cmd == "sanity":

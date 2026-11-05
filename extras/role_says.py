@@ -246,6 +246,8 @@ def cls(m, kind):
     if kind in ("md30", "stock20"):
         thr = 30 if kind == "md30" else 20
         return "VOICE REMOVES IT" if mean >= thr and lo > 0 else ("VOICE DOESN'T" if abs(mean) < 10 and lo >= -20 and hi <= 20 else "in between")
+    if kind == "voicedf":
+        return "VOICE EFFECTS SURVIVE" if mean >= 20 and lo > 0 else ("MOSTLY DROPPING THE ROLE" if abs(mean) < 10 and lo >= -20 and hi <= 20 else "in between")
     if kind == "truth":
         return "VOICE LOWERS TRUTH" if mean >= 20 and lo > 0 else ("TRUTH IGNORES VOICE" if abs(mean) < 10 and lo >= -20 and hi <= 20 else "in between")
 
@@ -468,8 +470,9 @@ def sensitivity(rng, mat):
             k2 = [rd(t, AIN, HUN, "moved", "2", f"{t} AI minus human")[1] for t in ("markdown_lists", "stock_phrases", "corrects_false_premise", "hedging_unanswerable")]
             k3 = [rd("markdown_lists", UN, UG, "md30", "3", "markdown_lists none minus given (unstated)")[1], rd("stock_phrases", UN, UG, "stock20", "3", "stock_phrases none minus given (unstated)")[1]]
             k4 = [rd(t, UN, UG, "truth", "4", f"{t} none minus given (unstated)")[1] for t in ("corrects_false_premise", "hedging_unanswerable")]
+            _ = rd("denies_feelings", AIN, ("ai", "given"), "voicedf", "R0", "denies_feelings AI role, none minus given (voice effects)")
             L += [f"#### {fam}, {pos} position (in-character replies only)", "", "| reading | measure | result | class | n in character (a / b) |", "|---|---|---|---|---|"]
-            for r_ in rec[-10:]:
+            for r_ in rec[-11:]:
                 L.append(f"| {r_['reading']} | `{r_['measure']}` | {fmt((r_['diff'], r_['lo'], r_['hi']))} | {r_['cls']} | {r_['n_a']} / {r_['n_b']} |")
             L.append("")
             nr = sum(1 for k in [k1, ksa] + k2 + k3 + k4 if k.startswith("NOT READ"))
