@@ -18,9 +18,9 @@ step $PY -m extras.second_judge analyze
 for fam in olmo3-7b qwen3-8b; do for stage in instruct base; do
   [[ -f results/skill_roleplay/$fam/$stage.csv.gz ]] && continue
   model=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
-  avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 20 ] || { echo "less than 20 GB free for $model"; continue; }
+  avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); cached=$(du -sm "$HUB/models--${model//\//--}" 2>/dev/null | cut -f1); [ "${cached:-0}" -gt 1000 ] || [ "$avail" -ge 17 ] || { echo "less than 17 GB free for $model"; continue; }
   echo "=== J11 $fam $stage $(date -u +%T)"
   step $PY -m extras.skill_roleplay run --family $fam --stage $stage
-  [ "$stage" = base ] && free_model "$model"
+  free_model "$model"
 done; done
 echo "=== side done $(date -u +%T)"
