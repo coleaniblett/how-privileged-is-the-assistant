@@ -37,4 +37,4 @@ git add results/role_says/role_says.md results/role_says/role_says_sensitivity.c
 git commit -q -m "results: spec Q sensitivity, readings on in-character replies only (judge on all final replies); main readings unchanged
 
 Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>" || { echo "commit failed"; exit 4; }
-git fetch -q && git pull -q --rebase && nice -n 15 git push -q origin HEAD:main && touch results/role_says/ICALL_PUSHED && echo "pushed $(git rev-parse --short HEAD)"
+git fetch -q && git pull -q --rebase --autostash && nice -n 15 git push -q origin HEAD:main && touch results/role_says/ICALL_PUSHED && echo "pushed $(git rev-parse --short HEAD)"
