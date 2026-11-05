@@ -492,6 +492,7 @@ def run_family(models, tok_name, out, stages, seeds=(0, 1), replies=None, n_prob
 # ---------------------------------------------------------------- analysis
 
 SIG_MIN = 0.5
+DOSE_MIN = 1.0
 SIG_CONTEXTS = ["3", "4", "5"]
 ASYM_CONTEXTS = ["3", "3a", "3b", "4", "5"]
 
@@ -619,6 +620,16 @@ def analyze(out, family, stages=("base", "instruct"), n_boot=2000):
     for r in sorted(runs, key=lambda r: (r["stage"], r["trait"], r["cond"], r["seed"])):
         dose = "-" if r["dose"] is None else f"{r['dose']:.2f}"
         lines.append(f"| {r['stage']} {r['cond']} {r['trait']} | {r['seed']} | {dose} | {r['epochs']} | {r['final_loss']:.3f} |")
+    # J8 (2026-11-05): did the habit take in its own context? (mean source-context dose over seeds at least DOSE_MIN nats in every stage x run x trait)
+    dm = {}
+    for r in runs:
+        if r["dose"] is not None:
+            dm.setdefault((r["stage"], r["cond"], r["trait"]), []).append(r["dose"])
+    weak = [f"{k[0]} {k[1]} {k[2]} ({np.mean(v):.2f})" for k, v in sorted(dm.items()) if np.mean(v) < DOSE_MIN]
+    lines += ["", "## Did the habit take in its own context?", "",
+              f"Rule (set before the low-dose run): mean dose in the source context over seeds at least {DOSE_MIN} nats in every stage x run x trait. " +
+              ("**Took** in all %d cells (smallest %.2f nats)." % (len(dm), min(np.mean(v) for v in dm.values())) if dm and not weak else
+               "**Did NOT take** in: " + ", ".join(weak) + " -> the reading is inconclusive, not a null." if weak else "no runs.")]
     for kind in ["raw", "decoy", "adj"]:
         lines += ["", f"## Matrix: {names[kind]} (run x context x stage)", ""]
         for tr in TRAITS:
@@ -666,6 +677,8 @@ def main():
             p.add_argument("--save-adapters", action="store_true")
             p.add_argument("--no-grad-ckpt", action="store_true")
             p.add_argument("--micro-batch", type=int, default=4)
+            p.add_argument("--epochs", type=int, help="override the 2 epochs (J8 low dose: 1)")
+            p.add_argument("--max-steps", type=int, help="optimizer steps per epoch (J8 low dose: 8, about 1/10 of the 75 steps of the full runs)")
     args = ap.parse_args()
     out = args.out or os.path.join("results", "implant_spread", args.family)
     fam = config.FAMILIES[args.family]
@@ -677,7 +690,7 @@ def main():
             models.update(dict(kv.split("=", 1) for kv in args.models.split(",")))
         run_family(models, fam["template"], out, args.stages.split(","), [int(s) for s in args.seeds.split(",")],
                    save_adapters=args.save_adapters, grad_ckpt=False if args.no_grad_ckpt else None,
-                   hp_over=dict(micro=args.micro_batch))
+                   hp_over={**dict(micro=args.micro_batch), **({"epochs": args.epochs} if args.epochs else {}), **({"max_steps": args.max_steps} if args.max_steps else {})})
     else:
         analyze(out, args.family)
 
