@@ -75,8 +75,112 @@ def main():
         analyze()
 
 
+STAGES = ["base", "sft", "dpo", "instruct"]
+LBL = {"base": "base", "sft": "SFT", "dpo": "DPO", "instruct": "final"}
+
+
+def first_half(vals):
+    """vals: dict stage -> level (points). -> name of the first stage whose change from base reaches at least half of the base-to-final change; none if that change is under 10 points."""
+    if any(vals.get(s) is None or vals[s] != vals[s] for s in ("base", "instruct")):
+        return "n/a"
+    if any(vals.get(s) is None or vals[s] != vals[s] for s in ("sft", "dpo")):
+        return "n/a (SFT or DPO value missing)"
+    d = vals["instruct"] - vals["base"]
+    if abs(d) < 10:
+        return f"not named (base to final change {d:+.1f} is under 10 points)"
+    for s in ("sft", "dpo", "instruct"):
+        v = vals.get(s)
+        if v is not None and v == v and (v - vals["base"]) / d >= 0.5:
+            return LBL[s]
+    return "n/a"
+
+
 def analyze():
-    raise SystemExit("analysis is added in the R4 report step")
+    from extras import refusal_judge as rj
+    from extras import strict_layout as sl
+    from extras import trait_atlas as ta
+    from extras.persona_leakage import REFUSAL_RE
+    rows, rec = [], []
+
+    def add(measure, ctx, vals, ic=None, note=""):
+        fh = first_half(vals)
+        rows.append(f"| {measure} | {ctx} | " + " | ".join("-" if vals.get(s) is None or vals.get(s) != vals.get(s) else f"{vals[s]:.0f}" for s in STAGES) + f" | **{fh}** | " + (" / ".join("-" if ic.get(s) is None or ic.get(s) != ic.get(s) else f"{ic[s]:.0f}%" for s in STAGES) if ic else "not saved for SFT/DPO") + f" | {note} |")
+        rec.append(dict(measure=measure, context=ctx, **{LBL[s]: vals.get(s) for s in STAGES}, first_half=fh))
+    # Part 1: atlas (saved)
+    R1 = pd.read_csv("results/overnight_2026-11-05/R1/R1_scored_replies.csv.gz")
+    R1 = R1[(R1.source == "atlas") & (R1.family == FAM)]
+    ctxs = {"assistant": ["assistant"], "light role": ["light_system", "light_user"], "full role-play": ["strong_act"]}
+    icf = {}
+    for st in ("base", "instruct"):
+        p = f"results/trait_atlas_incharacter/atlas_{FAM}_{st}.csv.gz"
+        if os.path.exists(p):
+            icf[st] = pd.read_csv(p)
+    for col, nm in (("old", "markdown_lists (old regex)"), ("strict", "markdown_lists (strict layout)")):
+        for cn, cl in ctxs.items():
+            add(nm, cn, {s: 100 * R1[(R1.stage == s) & R1.context.isin(cl)][col].mean() for s in STAGES})
+    for trait, kind in (("says_ai", "det"), ("denies_feelings", "judge")):
+        for cn, cl in ctxs.items():
+            v = {}
+            for s in STAGES:
+                d = pd.read_csv(f"results/trait_atlas/{FAM}/{s}_{'detected' if kind == 'det' else 'judged'}.csv.gz")
+                d = d[(d.trait == trait) & d.context.isin(cl)]
+                v[s] = 100 * d.value.mean()
+            add(f"{trait} (atlas)", cn, v)
+    # Part 2: spec Q subset by stage
+    mat = rs.load()
+    Q = {}
+    for s in STAGES:
+        p = f"results/role_says/{FAM}/{s}_judged.csv.gz" if s in ("base", "instruct") else os.path.join(OUT, FAM, f"{s}_judged.csv.gz")
+        if os.path.exists(p):
+            Q[s] = rs.values(pd.read_csv(p), mat)
+            sc = np.array([sl.score(t) for t in Q[s].text.fillna("")], dtype=bool)
+            Q[s]["strict"] = sc[:, 1].astype(float)
+    if Q:
+        for tr, col, nm in (("denies_feelings", "val", "denies_feelings"), ("markdown_lists", "strict", "markdown_lists (strict)"), ("markdown_lists", "md", "markdown_lists (old regex)"), ("stock_phrases", "stock", "stock_phrases")):
+            for cn, sel in (("plain Assistant", lambda d: (d.cond == "assistant")), ("role conditions, all", lambda d: (d.cond == "role")), ("AI role, voice none", lambda d: (d.cond == "role") & (d.identity == "ai") & (d.voice == "none"))):
+                v = {s: (100 * Q[s][(Q[s].set == tr) & sel(Q[s])][col].mean() if s in Q else None) for s in STAGES}
+                ic = {s: (100 * Q[s][(Q[s].cond == "role") & Q[s].judge_ic.notna()].judge_ic.mean() if s in Q else None) for s in STAGES} if cn != "plain Assistant" else None
+                add(f"Q {nm}", cn, v, ic, "spec Q subset")
+    # Part 3: refusal (L2, 60 tokens): regex, and R2's judge if validated
+    L2 = {}
+    for s in STAGES:
+        p = f"results/working_model_L/L23/{FAM}/{s}_L2.csv.gz" if s in ("base", "instruct") else os.path.join(OUT, FAM, f"{s}_L2.csv.gz")
+        if os.path.exists(p):
+            d = pd.read_csv(p)
+            d["regex"] = [float(bool(REFUSAL_RE.search(str(t)[:160]))) for t in d.text.fillna("")]
+            d["line"] = d.line.astype(str)
+            L2[s] = d
+    jv = None
+    pj = os.path.join("/root/r2_work", "merged_olmo3-7b.pkl")
+    ps = os.path.join("/root/r2_work", "judged_olmo_stages.csv.gz")
+    valid = os.path.exists("results/overnight_2026-11-05/R2/R2.md") and "judge passes" in open("results/overnight_2026-11-05/R2/R2.md", encoding="utf-8").read()
+    if valid and os.path.exists(pj) and os.path.exists(ps):
+        a = pd.read_pickle(pj)
+        a = a[a.test == "L2"][["stage", "wording", "kind", "line", "item", "role", "sample", "declined"]]
+        b = pd.read_csv(os.path.join("/root/r2_work", "inputs_olmo_stages.csv.gz")).merge(pd.read_csv(ps)[["rid", "judge"]], on="rid")
+        b = b[b.test == "L2"].copy()
+        b["declined"] = (b.judge == "declined").astype(float)
+        b["line"] = b.line.astype(str)
+        jv = pd.concat([a.assign(line=a.line.astype(str)), b[["stage", "wording", "kind", "line", "item", "role", "sample", "declined"]]])
+    for kind in ("assistant", "thin", "vivid"):
+        for ln in ("False", "True"):
+            if kind == "assistant" and ln == "True":
+                pass
+            v = {s: (100 * L2[s][(L2[s].kind == kind) & (L2[s].line == ln)].regex.mean() if s in L2 else None) for s in STAGES}
+            add("refusal L2 (regex)", f"{kind}, {'with' if ln == 'True' else 'no'} 'never refuses' line", v, None, "60-token replies")
+            if jv is not None:
+                v = {s: (100 * jv[(jv.stage == s) & (jv.kind == kind) & (jv.line == ln)].declined.mean() if (jv.stage == s).any() else None) for s in STAGES}
+                add("refusal L2 (R2 judge, declined)", f"{kind}, {'with' if ln == 'True' else 'no'} 'never refuses' line", v, None, "base capped at 1,500 replies")
+    L = ["# R4: which training stage does it? OLMo 3 7B (spec R; exploratory, outside every verdict, NOT BLIND, descriptive: no verdict)", "",
+         "Plan: `docs/decisions.md` 2026-11-06 (spec R4, `docs/spec_R_overnight.md`). Levels are % of replies by stage (base, SFT, DPO, final = Instruct). **First stage reaching at least half of the base-to-final change** is named only when that change is 10 points or more; it is not a test and has no interval. "
+         "Part 1 (atlas table) comes from saved atlas data (and R1's strict scoring); the SFT and DPO rows of Parts 2 and 3 are newly generated here (L2 all; L3 capped at 1,500; spec Q's 12 conditions + plain Assistant on the denies_feelings, markdown_lists and stock_phrases sets only). "
+         "In-character share (the atlas's in-character files for base and final, and spec Q's judged 30% sample for the Q rows): the atlas's in-character judgements were not saved for SFT and DPO, so they are marked; refusal in-character shares are not available. "
+         "Limits: one family, single checkpoints per stage; few roles; many cells, no multiple-test correction; regex sees form only; local judge provisional and not hand-checked; contamination checkable (OLMo) but not applied; the stages differ in data and method, so 'first stage' does not name a cause.", "",
+         "| measure | context | base | SFT | DPO | final | first stage reaching half of the base-to-final change | in-character share base / SFT / DPO / final | note |", "|---|---|---|---|---|---|---|---|---|"] + rows + [""]
+    os.makedirs(OUT, exist_ok=True)
+    open(os.path.join(OUT, "R4.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
+    pd.DataFrame(rec).to_csv(os.path.join(OUT, "R4_table.csv"), index=False)
+    print("\n".join(L[4:40]))
 
 
 if __name__ == "__main__":
