@@ -83,9 +83,10 @@ def cut_cmd():
             r["flagged"] = ta.is_switch(r["raw"], ta.markers_of(fam), r["context"])
             if det == "skill":
                 v = float(any(re.search(a, r["strict"], re.I) for a in item["accept"]))
+                tail = float(ta.skill_correct(r["strict"], item["accept"]))      # the atlas's own last-150-characters rule, on the strict text (isolates the effect of the cut from the change of rule)
             else:
                 v = ta.detect_one(trait, det, r["strict"], item)
-            out.append({**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "capped": bool(r.get("capped")), "value": v, "value_alt": v, "changed_by_cut": bool(r["cut"])})
+            out.append({**{k: r[k] for k in ("trait", "item", "context", "wording", "persona", "sample", "flagged")}, "capped": bool(r.get("capped")), "value": v, "value_alt": tail if det == "skill" else v, "changed_by_cut": bool(r["cut"])})
         os.makedirs(os.path.join(OUT, fam), exist_ok=True)
         pd.DataFrame(out).to_csv(os.path.join(OUT, fam, f"{stage}_detected.csv.gz"), index=False)
         # which judge-trait replies were changed (to re-judge)
@@ -196,6 +197,17 @@ def analyze_cmd():
     for r in M.sort_values(["family", "trait", "context", "stage"]).itertuples():
         L.append(f"| {r.family} | {r.stage} | {r.trait} | {r.context} | {fm(r.change_atlas, r.lo_atlas, r.hi_atlas, r.unit_atlas)} | {fm(r.change_strict, r.lo_strict, r.hi_strict, r.unit_strict)} | "
                  f"{'yes' if r.atlas_moved else ''} | {'yes' if r.strict_moved else ''} | {'SENSITIVE' if r.sensitive else ''} |")
+    sk = []
+    for fam in ("olmo3-7b", "qwen3-8b", "gemma4-31b"):
+        for trait in ta.CLUSTERS["skill"]:
+            for ctx in ("assistant", "light_user", "strong_act"):
+                def g(C, t):
+                    x = C[(C.family == fam) & (C.stage == "instruct") & (C.trait == t) & (C.context == ctx) & (~C.flagged_excluded)]
+                    return fm(x.iloc[0].change, x.iloc[0].lo, x.iloc[0].hi, "pts") if len(x) else "n/a"
+                sk.append(f"| {fam} | {trait} | {ctx} | {g(C0, trait)} | {g(C1, trait + '__alt')} | {g(C1, trait)} |")
+    L += ["", "## Skills: rule change versus cut (final minus base, points)", "",
+          "'Atlas rule' = accepted answer in the last 150 characters of the atlas text. 'Same rule on strict text' isolates the effect of cutting base's run-on. 'Anywhere in the strict text' is the J12 primary score.", "",
+          "| family | skill | context | atlas rule (atlas text) | same rule on strict text | anywhere in strict text |", "|---|---|---|---|---|---|"] + sk
     open(os.path.join(OUT, "trait_atlas_strict.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
     print("\n".join(L[:30]))
 
