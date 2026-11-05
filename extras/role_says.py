@@ -346,6 +346,7 @@ def analyze():
     pd.DataFrame(REC).to_csv(os.path.join(OUT, "role_says_readings.csv"), index=False) if os.path.isdir(OUT) else None
     pd.DataFrame(LEV).to_csv(os.path.join(OUT, "role_says_levels.csv"), index=False) if os.path.isdir(OUT) else None
     out = L + ["## Overall reading by family and position (final)", "", "| family | position | reading |", "|---|---|---|"] + overall + [""] + body
+    out += sensitivity(np.random.default_rng(SEED + 1), mat)
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, "role_says.md"), "w", encoding="utf-8").write("\n".join(out) + "\n")
     smp = []
@@ -391,6 +392,107 @@ def levels_block(f, fam, pos, plain, LEV, k2, r2, r3, r4):
     return rows
 
 
+def judge_ic_all():
+    """Follow-up (2026-11-05): the in-character judge on EVERY final role reply (not the 30% sample). Writes <family>/instruct_icall.csv.gz (job, position, identity, voice, qi, judge_ic_all). GPU (vinyl)."""
+    import torch
+    from core.render import encode, load_tokenizer
+    from core.score import load_model
+    mat = load()
+    atlas = ta.load_materials()
+    config.use_family("gemma4-31b")
+    tok = load_tokenizer(config.TEMPLATE_MODEL)
+    tok.padding_side = "left"
+    yes, no = encode(tok, "Yes")[0], encode(tok, "No")[0]
+    model, device = load_model(config.MODELS["instruct"], torch.bfloat16)
+    qs = mat["questions"]
+    for fam in FAMS:
+        out = os.path.join(OUT, fam, "instruct_icall.csv.gz")
+        p = os.path.join(OUT, fam, "instruct_replies.csv.gz")
+        if os.path.exists(out) or not os.path.exists(p):
+            continue
+        d = pd.read_csv(p)
+        d["text"] = d.text.fillna("")
+        d = d[d.cond == "role"].reset_index(drop=True)
+        full = [tok.apply_chat_template([{"role": "user", "content": ic.prompt_for(atlas, qs[int(r.qi)]["question"], r.text, ic.NOTE_LIGHT.format(role=mat["jobs"][int(r.job)]))}], tokenize=False, add_generation_prompt=True) for r in d.itertuples()]
+        order = sorted(range(len(full)), key=lambda k: len(full[k]))
+        py = np.full(len(full), np.nan)
+        t0 = time.time()
+        for s in range(0, len(order), 16):
+            b = order[s:s + 16]
+            enc = tok([full[k] for k in b], return_tensors="pt", padding=True, add_special_tokens=False).to(device)
+            with torch.no_grad():
+                lg = model(**enc, logits_to_keep=1).logits[:, -1].float()
+            py[b] = torch.stack([lg[:, yes], lg[:, no]], 1).softmax(-1)[:, 0].cpu().numpy()
+            if (s // 16) % 50 == 0:
+                print(f"icall {fam}: {s}/{len(order)} ({time.time() - t0:.0f} s)", flush=True)
+        d["judge_ic_all"] = (py >= 0.5).astype(float)
+        d[["job", "position", "identity", "voice", "qi", "judge_ic_all"]].to_csv(out, index=False)
+        print("icall done", fam, len(d), flush=True)
+
+
+def sensitivity(rng, mat):
+    """Sensitivity section: the readings of spec Q again on in-character replies only (judge_ic_all == 1; plain Assistant replies kept). Main readings are not touched."""
+    fmt = lambda m: "n/a" if m[0] != m[0] else f"{m[0]:+.1f} [{m[1]:+.1f}, {m[2]:+.1f}]"
+    L = ["", "## SENSITIVITY: the readings again on in-character replies only (follow-up approved 2026-11-05 23:40 UTC; the main readings above are unchanged)", "",
+         "The in-character judge (same prompt and Gemma 4 31B-it judge as the 30% check) was run on ALL final role replies; a role reply counts only if judged in character (P(yes) >= 0.5). Same bars, same paired two-way bootstrap (pairs where either side has no in-character reply drop out); "
+         "plain Assistant replies are all kept. A reading is **NOT READ** when either compared cell has fewer than 20 in-character replies in the trait's own set (72 replies per cell and trait before filtering). Provisional like the judge. The overall rule is applied as in the main text, with the in-character check replaced by this filter.", ""]
+    rec, ovr = [], []
+    for fam in FAMS:
+        pj, pi = os.path.join(OUT, fam, "instruct_judged.csv.gz"), os.path.join(OUT, fam, "instruct_icall.csv.gz")
+        if not (os.path.exists(pj) and os.path.exists(pi)):
+            continue
+        f = values(pd.read_csv(pj), mat).merge(pd.read_csv(pi), on=["job", "position", "identity", "voice", "qi"], how="left")
+        role = f.cond == "role"
+        f["incl"] = ~role | (f.judge_ic_all == 1)
+        n_all = f[role].groupby(["position", "identity", "voice"]).size()
+        n_ic = f[role & f.incl].groupby(["position", "identity", "voice"]).size()
+        L += [f"### {fam}: in-character replies per cell (of {int(n_all.iloc[0])}; all questions)", "", "| position | identity | voice | in character | share |", "|---|---|---|---|---|"]
+        for k, v in n_all.items():
+            c = int(n_ic.get(k, 0))
+            L.append(f"| {k[0]} | {k[1]} | {k[2]} | {c} | {100 * c / v:.0f}% |")
+        L.append("")
+        g = f.copy()
+        g.loc[~g.incl, "val"] = np.nan
+        for pos in POS:
+            N = lambda **k: dict(position=pos, **k)
+            cnt = lambda t, c: int(((f.set == t) & role & f.incl & (f.position == pos) & (f.identity == c[0]) & (f.voice == c[1])).sum())
+            def rd(t, a, b, kind, rid, label):
+                small = min(cnt(t, a), cnt(t, b))
+                m = diff(g, t, N(identity=a[0], voice=a[1]), N(identity=b[0], voice=b[1]), rng) if small >= 20 else (np.nan,) * 3
+                c = cls(m, kind) if small >= 20 else f"NOT READ (fewer than 20 in-character replies: {cnt(t, a)} vs {cnt(t, b)})"
+                rec.append(dict(family=fam, position=pos, reading=rid, measure=label, diff=m[0], lo=m[1], hi=m[2], cls=c, n_a=cnt(t, a), n_b=cnt(t, b)))
+                return m, c
+            AIN, HUN, UN, UG = ("ai", "none"), ("human", "none"), ("unstated", "none"), ("unstated", "given")
+            _, k1 = rd("denies_feelings", AIN, HUN, "follow", "1", "denies_feelings AI minus human")
+            _, ksa = rd("says_ai", AIN, HUN, "follow", "1", "says_ai AI minus human")
+            k2 = [rd(t, AIN, HUN, "moved", "2", f"{t} AI minus human")[1] for t in ("markdown_lists", "stock_phrases", "corrects_false_premise", "hedging_unanswerable")]
+            k3 = [rd("markdown_lists", UN, UG, "md30", "3", "markdown_lists none minus given (unstated)")[1], rd("stock_phrases", UN, UG, "stock20", "3", "stock_phrases none minus given (unstated)")[1]]
+            k4 = [rd(t, UN, UG, "truth", "4", f"{t} none minus given (unstated)")[1] for t in ("corrects_false_premise", "hedging_unanswerable")]
+            L += [f"#### {fam}, {pos} position (in-character replies only)", "", "| reading | measure | result | class | n in character (a / b) |", "|---|---|---|---|---|"]
+            for r_ in rec[-10:]:
+                L.append(f"| {r_['reading']} | `{r_['measure']}` | {fmt((r_['diff'], r_['lo'], r_['hi']))} | {r_['cls']} | {r_['n_a']} / {r_['n_b']} |")
+            L.append("")
+            nr = sum(1 for k in [k1, ksa] + k2 + k3 + k4 if k.startswith("NOT READ"))
+            if any(k.startswith("NOT READ") for k in [k1] + k2 + [k3[0]] + k4):
+                ov = f"CAN'T TEST ({nr} readings not read: fewer than 20 in-character replies)"
+            elif k1 == "DOESN'T FOLLOW":
+                ov = "RIVAL: self-image is just fixed"
+            elif sum(1 for k in k2 if k == "MOVED") >= 3:
+                ov = "RIVAL: the AI label brings the whole Assistant back"
+            elif k3[0] == "VOICE REMOVES IT" and all(k == "VOICE LOWERS TRUTH" for k in k4):
+                ov = "RIVAL: a voice switches everything off"
+            elif k1 == "FOLLOWS" and sum(1 for k in k2 if k == "UNMOVED") >= 3 and k3[0] == "VOICE REMOVES IT" and all(k == "TRUTH IGNORES VOICE" for k in k4):
+                ov = "PATTERN HOLDS"
+            else:
+                held = [n for n, ok in (("identity moves self-image", k1 == "FOLLOWS"), ("identity moves only self-image (>=3 of 4 unmoved)", sum(1 for k in k2 if k == "UNMOVED") >= 3), ("voice removes markdown", k3[0] == "VOICE REMOVES IT"), ("truth ignores voice on both", all(k == "TRUTH IGNORES VOICE" for k in k4))) if ok]
+                ov = "PARTIAL (held: " + (", ".join(held) if held else "none") + ")"
+            ovr.append(f"| {fam} | {pos} | {ov} |")
+    if not rec:
+        return []
+    pd.DataFrame(rec).to_csv(os.path.join(OUT, "role_says_sensitivity.csv"), index=False)
+    return L[:5] + ["Overall reading, in-character replies only:", "", "| family | position | reading |", "|---|---|---|"] + ovr + [""] + L[5:]
+
+
 def diff_stage(f, b, trait, c, rng):
     def sel(d):
         x = d[(d.set == trait) & (d.cond == "role")]
@@ -405,7 +507,7 @@ def diff_stage(f, b, trait, c, rng):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["build", "example", "gen", "judge", "analyze"])
+    ap.add_argument("cmd", choices=["build", "example", "gen", "judge", "judge_ic_all", "analyze"])
     ap.add_argument("--family", choices=FAMS)
     ap.add_argument("--stage", choices=["base", "instruct"])
     ap.add_argument("--limit", type=int, default=0)
@@ -416,6 +518,8 @@ def main():
         example(a.family)
     elif a.cmd == "gen":
         gen(a.family, a.stage, a.limit)
+    elif a.cmd == "judge_ic_all":
+        judge_ic_all()
     elif a.cmd == "judge":
         judge()
     else:
