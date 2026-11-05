@@ -153,7 +153,7 @@ def stop_ids(tok):
     return sorted({i for i in [tok.eos_token_id, v.get("<|im_end|>"), v.get("<|endoftext|>"), v.get("<turn|>"), v.get("<end_of_turn>"), v.get("<|eot_id|>")] if i is not None})
 
 
-def generate_rows(model, tok, device, rows, max_new, bs=48):
+def generate_rows(model, tok, device, rows, max_new, bs=int(os.environ.get("WML_BS", 96))):
     """rows: dicts with 'msgs'. Adds 'text' and 'capped'."""
     import torch
     stops = stop_ids(tok)
