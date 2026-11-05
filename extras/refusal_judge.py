@@ -67,6 +67,26 @@ def prepare():
     print("validation", len(v), v.label.value_counts(dropna=False).to_dict())
 
 
+def prepare_stages():
+    """R4: inputs for OLMo SFT and DPO (R4's own L2 and capped L3 replies; no new generation here)."""
+    from extras import working_model_l as wl
+    mat = wl.load()
+    reqs, qs = mat["requests"], mat["l3"]["questions"]
+    parts = []
+    for st in ("sft", "dpo"):
+        for tag in ("L2", "L3"):
+            d = pd.read_csv(f"results/overnight_2026-11-05/R4/olmo3-7b/{st}_{tag}.csv.gz")
+            d["request"] = [(reqs if tag == "L2" else qs)[int(i)] for i in d["item"]]
+            d["test"], d["stage"] = tag, st
+            parts.append(d)
+    d = pd.concat(parts, ignore_index=True)
+    d["text"] = d.text.fillna("").astype(str)
+    d["rid"] = np.arange(len(d))
+    os.makedirs(LOCAL, exist_ok=True)
+    d[["rid", "test", "stage", "wording", "kind", "role", "item", "line", "instr", "sample", "request", "text"]].to_csv(os.path.join(LOCAL, "inputs_olmo_stages.csv.gz"), index=False)
+    print("olmo stages", len(d), d.groupby(["test", "stage"]).size().to_dict())
+
+
 def judge():
     import torch
     from core.render import encode, load_tokenizer
@@ -76,7 +96,7 @@ def judge():
     tok.padding_side = "left"
     ids = {k: encode(tok, k)[0] for k in LABELS}
     model, device = load_model(config.MODELS["instruct"], torch.bfloat16)
-    for name in ["validation"] + FAMS:
+    for name in ["validation"] + FAMS + ["olmo_stages"]:
         src, dst = os.path.join(LOCAL, f"inputs_{name}.csv.gz"), os.path.join(LOCAL, f"judged_{name}.csv.gz")
         if os.path.exists(dst) or not os.path.exists(src):
             continue
@@ -192,9 +212,9 @@ def analyze():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["prepare", "judge", "analyze"])
+    ap.add_argument("cmd", choices=["prepare", "prepare_stages", "judge", "analyze"])
     a = ap.parse_args()
-    {"prepare": prepare, "judge": judge, "analyze": analyze}[a.cmd]()
+    {"prepare": prepare, "prepare_stages": prepare_stages, "judge": judge, "analyze": analyze}[a.cmd]()
 
 
 if __name__ == "__main__":
