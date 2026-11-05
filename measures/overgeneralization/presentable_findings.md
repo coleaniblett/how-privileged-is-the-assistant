@@ -20,7 +20,7 @@ Everything else is exploratory.
 |---|---|
 | Cole's and Grace's judge sheets (0 of 28 each at 10 AM, 5 November) | Finding 1 result stays held back until these are in |
 | Analysis of the judged prefills, once released. Judged: OLMo, Qwen, Llama on all sets; Apertus on oasst1 and UltraChat. Not judged: Apertus WildChat, all Gemma | Finding 1 |
-| Adeeb's hand checks: atlas 60, patching 40, spec H 40 + 40, in-character 30 | Findings 5 to 10 |
+| Adeeb's hand checks: atlas 60, patching 40, position test 40, forced openings 40, in-character 30 | Findings 5 to 10 |
 | Proper count of OLMo's training-style prompts (queued, not run) | Finding 13 |
 
 ## Shared background
@@ -84,7 +84,7 @@ Tests run on the same data as Cole's and Grace's measures, so they can be shown 
 
 OLMo's SFT and DPO stages don't meet it. So 1 of 5 families meets the bar, barely, and three go the other way.
 
-**Analysis.** Only a weak sign, in one model of five. It's relative to plain text, and OLMo's replies became harder to predict as plain text after training (+0.54 to +0.73, from a laptop check not yet in the repo). So don't read this as Assistant text truly becoming more expected in the user's turn.
+**Analysis.** Only a weak sign, in one model of five. It's relative to plain text, and OLMo's replies became harder to predict as plain text after training (+0.54 to +0.73, computed from the plain-text columns of `results/capstone/olmo3-7b/<stage>/core/exchanges_exchange/scores.csv`; no script for this is in the repo yet). So don't read this as Assistant text truly becoming more expected in the user's turn.
 
 **Caveat:** the replies are scored with no question before them, so this isn't how they'd normally appear.
 
@@ -467,7 +467,7 @@ Exploratory, and the weakest of the list.
 
 **To firm up:** a proper count against the training data, before it goes on a slide. This was queued overnight but not run.
 
-**Sources:** atlas replies on arena9-vinyl (`olmo3-7b/instruct_replies.jsonl.gz`; not in the repo).
+**Sources:** the raw atlas replies aren't in the repo, only the tables derived from them, in `results/trait_atlas/olmo3-7b/`. The count needs rerunning from the replies on the lab server before it's cited.
 
 ### 14. A trained-in habit spread everywhere, whoever learned it
 
