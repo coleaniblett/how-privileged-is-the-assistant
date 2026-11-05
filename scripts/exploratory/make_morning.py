@@ -50,7 +50,7 @@ def main():
     else:
         rows.append(("R3 prefill belief robustness", "running", "-", "-", "-"))
     d = csv(f"{R}/R4/R4_table.csv")
-    rows.append(("R4 OLMo by stage", "done" if d is not None else "queued/running", "see table" if d is not None else "-", "A new 'what post-training does' slide. Proposal only.", f"{R}/R4/R4.md"))
+    rows.append(("R4 OLMo by stage", "done" if have(f"{R}/R4/PUSHED") else "queued/running", "see table" if have(f"{R}/R4/PUSHED") else "-", "A new 'what post-training does' slide. Proposal only.", f"{R}/R4/R4.md"))
     d = csv(f"{R}/R5/R5_readings.csv")
     if d is not None:
         rows.append(("R5 voice on fresh questions", "done", "; ".join(f"{r.family}/{r.position}: strict {r.strict_diff:+.0f}, stock {r.stock_diff:+.0f}: {r.claim.split('(')[0].strip()}" for r in d.itertuples()), "Q's voice claim on fresh questions. Proposal only.", f"{R}/R5/R5.md"))
