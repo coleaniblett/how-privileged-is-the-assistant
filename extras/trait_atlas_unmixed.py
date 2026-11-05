@@ -215,17 +215,164 @@ def analyze():
             q += 1
         summ.append(f"- **{fam}**: {q} question set(s) qualify; " + (", ".join(f"{k} x{reads.count(k)}" for k in sorted(set(reads))) if reads else "none to read"))
     L += [""] + summ + [""]
+    L += groups_table() + [""]
+    ap_ = os.path.join(OUT, "apertus_saysai_reading.md")
+    if os.path.exists(ap_):
+        L += open(ap_, encoding="utf-8").read().split("\n")
     os.makedirs(OUT, exist_ok=True)
     R.to_csv(os.path.join(OUT, "task_gap.csv"), index=False)
     open(os.path.join(OUT, "unmixed.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
     print("\n".join(L[:30]))
 
 
+# ------------------------------------------------------------------ feature scan (descriptive, no readings) and group table
+FORM = {"em dash": r"\u2014", "colon": r":", "exclamation mark": r"!", "question mark": r"\?", "word I": r"\bI\b", "word you": r"\byou\b", "bold": r"\*\*", "list line": r"(?m)^\s*(?:[-*\u2022]|\d+[.)])\s", "heading": r"(?m)^\s*#{1,6}\s"}
+STOPNAMES = None
+
+
+def role_words():
+    m = ta.load_materials()
+    txt = " ".join(m["light"]) + " " + " ".join(s["name"] + " " + s["role"] + " " + s["sheet"] for s in m["strong"])
+    return set(re.findall(r"[a-z]+", txt.lower()))
+
+
+def load_replies(fam, stage, traits=None):
+    rows = []
+    with gzip.open(replies_file(fam, stage), "rt", encoding="utf-8") as f:
+        for l in f:
+            r = json.loads(l)
+            if r["context"] not in CONTEXTS or (traits and r["trait"] not in traits):
+                continue
+            w = (r["text"] or "").replace("\u2019", "'").split()[:100]
+            rows.append((r["trait"], r["item"], r["context"], " ".join(w)))
+    return pd.DataFrame(rows, columns=["trait", "item", "context", "text"])
+
+
+def feature_matrix(texts, vocab, form_pats):
+    from sklearn.feature_extraction.text import CountVectorizer
+    cv = CountVectorizer(ngram_range=(1, 2), lowercase=True, binary=True, vocabulary=vocab, token_pattern=r"[a-z0-9']+")
+    X = cv.transform(texts).tocsc()
+    F = np.array([[bool(re.search(p_, t)) for p_ in form_pats.values()] for t in texts], dtype=np.float32)
+    import scipy.sparse as sp
+    return sp.hstack([X, sp.csr_matrix(F)]).tocsr(), list(vocab) + list(form_pats)
+
+
+def monroe(c1, n1, c2, n2, prior, a0=100.0):
+    a = prior * a0
+    d1 = np.log((c1 + a) / (n1 + a0 - c1 - a)) - np.log((c2 + a) / (n2 + a0 - c2 - a))
+    var = 1 / (c1 + a) + 1 / (n1 - c1 + a0 - a) + 1 / (c2 + a) + 1 / (n2 - c2 + a0 - a)
+    return d1, d1 / np.sqrt(var)
+
+
+def scan_family(fam, traits, rng):
+    from sklearn.feature_extraction.text import CountVectorizer
+    ex = role_words()
+    B, F = load_replies(fam, "base", traits), load_replies(fam, "instruct", traits)
+    allt = pd.concat([B, F])
+    cv = CountVectorizer(ngram_range=(1, 2), lowercase=True, binary=True, min_df=0.01, token_pattern=r"[a-z0-9']+")
+    cv.fit(allt.text)
+    vocab = [w for w in cv.get_feature_names_out() if not (set(w.split()) & ex)]
+    XB, names = feature_matrix(B.text, vocab, FORM)
+    XF, _ = feature_matrix(F.text, vocab, FORM)
+    prior = (np.asarray(XB.sum(0)).ravel() + np.asarray(XF.sum(0)).ravel()) / (XB.shape[0] + XF.shape[0])
+    prior = np.clip(prior, 1e-4, 1 - 1e-4)
+    def shift(mask_b, mask_f, items=None):
+        cb = np.asarray(XB[mask_b].sum(0)).ravel(); cf = np.asarray(XF[mask_f].sum(0)).ravel()
+        return monroe(cf, mask_f.sum(), cb, mask_b.sum(), prior)
+    ab, af = (B.context == "assistant").to_numpy(), (F.context == "assistant").to_numpy()
+    dA, zA = shift(ab, af)
+    keys = (B.trait + "/" + B.item).to_numpy(), (F.trait + "/" + F.item).to_numpy()
+    uq = np.unique(np.concatenate(keys))
+    half = set(rng.permutation(uq)[: len(uq) // 2])
+    h1b, h1f = ab & np.isin(keys[0], list(half)), af & np.isin(keys[1], list(half))
+    h2b, h2f = ab & ~np.isin(keys[0], list(half)), af & ~np.isin(keys[1], list(half))
+    d1, _ = shift(h1b, h1f)
+    d2, _ = shift(h2b, h2f)
+    ok = np.sign(d1) == np.sign(d2)
+    idx = [i for i in np.argsort(-np.abs(dA)) if ok[i]][:300]
+    out = {}
+    for ctx in CONTEXTS:
+        cb, cf = (B.context == ctx).to_numpy(), (F.context == ctx).to_numpy()
+        dC, _ = shift(cb, cf)
+        out[ctx] = dC
+    rows = [dict(family=fam, feature=names[i], assistant_shift=dA[i], **{f"ratio_{c}": out[c][i] / dA[i] for c in CONTEXTS}) for i in idx]
+    return pd.DataFrame(rows)
+
+
+def features():
+    rng = np.random.default_rng(SEED)
+    m = ta.load_materials()
+    all20 = [t["id"] for t in m["traits"]]
+    res = {}
+    for label, fams, traits in (("all 20 question sets, three families", FAMS3, all20), ("shared 8 question sets, five families", FAMS5, SHARED8)):
+        res[label] = pd.concat([scan_family(f, traits, rng) for f in fams])
+        res[label].to_csv(os.path.join(OUT, "features_" + ("all20" if "20" in label else "shared8") + ".csv"), index=False)
+    L = ["# Feature scan (spec P1; descriptive, no readings; NOT BLIND)", "",
+         "Features: single words and word pairs (lowercased, in at least 1% of replies) and form features (em dash, colon, exclamation mark, question mark, 'I', 'you', bold, list line, heading), first 100 words of each reply, words of every role and character name and description excluded. "
+         "Base-to-final shift in the Assistant as log-odds with an informative prior (Monroe et al.; prior from the pooled feature rates, prior mass 100 replies); the 300 features with the largest Assistant shift (gains and losses) whose sign agrees on two random halves of the questions are kept; "
+         "spread ratio = the same shift in a context divided by the Assistant's. Themes are not assigned and no single feature is read as significant. Ratios are shown for the light roles (system, user turn) and full role-play (acting, `strong_act`).", ""]
+    for label, df in res.items():
+        L += [f"## {label}", ""]
+        fams = list(dict.fromkeys(df.family))
+        piv = {c: df.pivot_table(index="feature", columns="family", values=f"ratio_{c}") for c in ("light_system", "light_user", "strong_act")}
+        cnt = df.groupby("feature").family.nunique()
+        feats = cnt[cnt >= 2].index
+        def cls(f):
+            ls = [(piv["light_system"].loc[f, x], piv["light_user"].loc[f, x], piv["strong_act"].loc[f, x]) for x in fams if f in piv["light_system"].index and x in piv["light_system"].columns and pd.notna(piv["light_system"].loc[f, x])]
+            lt = [a >= 0.5 and b >= 0.5 for a, b, c in ls]
+            st = [a >= 0.5 and b >= 0.5 and c < 0.25 for a, b, c in ls]
+            ay = [a < 0.25 and b < 0.25 for a, b, c in ls]
+            n = len(ls)
+            return ("stops at full role-play", sum(st), n) if sum(st) > n / 2 else ("spreads to light roles", sum(lt), n) if sum(lt) > n / 2 else ("stays with the Assistant", sum(ay), n) if sum(ay) > n / 2 else (None, 0, n)
+        groups = {"spreads to light roles": [], "stops at full role-play": [], "stays with the Assistant": []}
+        sh = df.groupby("feature").assistant_shift.mean()
+        for f in feats:
+            g, k, n = cls(f)
+            if g:
+                groups[g].append((f, k, n, sh[f]))
+        for g, lst in groups.items():
+            lst.sort(key=lambda x: (-x[1] / x[2], -abs(x[3])))
+            L += [f"### Features in the top 300 of two or more families that {g.replace('spreads', 'spread').replace('stops', 'stop').replace('stays', 'stay')} in most of those families ({len(lst)}; light roles = ratio of at least 0.5 in both positions; 'stop' = also under 0.25 in full role-play; 'stay' = under 0.25 in both positions)", "", "| feature | families (agree / present) | mean Assistant shift (log-odds, + = more in final) |", "|---|---|---|"]
+            L += [f"| `{f}` | {k} / {n} | {s_:+.2f} |" for f, k, n, s_ in lst[:40]]
+            L.append("")
+    open(os.path.join(OUT, "features.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
+    print("\n".join(L[:20]))
+
+
+def groups_table():
+    GROUPS = {"speaker": ["says_ai", "denies_feelings", "declines_opinion"], "manner": ["markdown_lists", "stock_phrases", "safety_caveats", "closing_offer", "clarifying_question", "flattery", "formal_register"],
+              "truth": ["corrects_false_premise", "hedging_unanswerable", "fabricates_vs_admits"]}
+    FLAG = {"agrees_wrong_opinion", "declines_opinion", "flattery", "formal_register"}      # second judge kappa < 0.4 (results/second_judge)
+    cells = pd.concat([pd.read_csv("results/trait_atlas/trait_atlas_cells.csv"), pd.read_csv("results/trait_atlas_breadth/trait_atlas_breadth_cells.csv")])
+    cells = cells[(~cells.flagged_excluded) & (cells.stage == "instruct")]
+    L = ["## Descriptive group table (groups made after seeing the data; proves nothing)", "",
+         "Per family and context: of the traits in the group whose Assistant change passes the atlas gate, how many spread (atlas rule). * = traits the second judge flagged as unreliable (agrees_wrong_opinion, declines_opinion, flattery, formal_register).", "",
+         "| family | group | context | gated traits | spread | stay or reverse |", "|---|---|---|---|---|---|"]
+    for fam in FAMS5:
+        for gname, traits in GROUPS.items():
+            for ctx in ("light_system", "light_user", "strong_act"):
+                sp, st, tot = [], [], []
+                for t in traits:
+                    a = cells[(cells.family == fam) & (cells.trait == t) & (cells.context == "assistant")]
+                    c = cells[(cells.family == fam) & (cells.trait == t) & (cells.context == ctx)]
+                    if a.empty or c.empty:
+                        continue
+                    a, c = a.iloc[0], c.iloc[0]
+                    if not ta.gate(a.change, a.lo, a.hi, a.unit):
+                        continue
+                    nm = t + ("*" if t in FLAG else "")
+                    tot.append(nm)
+                    (sp if ta.reading(c.change, c.lo, c.hi, a.change, a.unit) == "spreads" else st).append(nm)
+                if tot:
+                    L.append(f"| {fam} | {gname} | {ctx} | {len(tot)} | {len(sp)} ({', '.join(sp)}) | {len(st)} ({', '.join(st)}) |")
+    return L
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["detect", "analyze", "features"])
     a = ap.parse_args()
-    {"detect": detect, "analyze": analyze}[a.cmd]()
+    {"detect": detect, "analyze": analyze, "features": features}[a.cmd]()
 
 
 if __name__ == "__main__":
