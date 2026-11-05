@@ -1316,3 +1316,19 @@ Working model under test: a role wins on what it specifies; Assistant defaults f
 
 ## 2026-11-05 (UTC) - Spec K: Apertus added
 Apertus 8B: gate passed on can't-tell (+23.5 points; bias gap +2.0, not passed); the rise spreads to the light role in the system prompt (+32 vs +23) and the user turn (+21 vs +23) but stays in full role-play (+2 vs +23), like Llama. Across the five families the can't-tell rise reaches light roles everywhere and full role-play in OLMo, Qwen and Gemma but not in Llama or Apertus. OLMo SFT and DPO (descriptive timing) not yet run.
+
+## 2026-11-05 (UTC) - Vestigial regression judge arm: open-opener condition; plan logged BEFORE any generation
+Cole's decision. A first comparison of Cole's and Adeeb's validation labels (Grace's sheet pending) with the judge's showed that
+(a) the mid-sentence prefills nearly force user voice, and (b) most disagreements were about a model that finishes the user's sentence
+and then answers without closing the turn (v2: switched; both labellers: user voice). Response, in two parts:
+- **New condition (this entry):** 5 complete-but-open user openers (`data/prefill_open5.jsonl`), 120 samples each per checkpoint,
+  otherwise the main run's generation settings, on all 8 checkpoints; `scripts/run_open5.sh`. The mid-sentence condition and its
+  pre-registered criteria are unchanged and remain the primary judge arm. Inference treats the openers as fixed (resample samples
+  within each opener); draft decision rule in the measure README. Motivated by data (not blind in design), but generated and to be
+  judged blind: labels and the counting rule are fixed before the judge runs.
+- **Judge prompt v3 (proposed, not yet written):** `completed_then_assistant` (subtype closed/unclosed set by code from the
+  turn-closing token), `switched_to_assistant` reserved for abandoning the user's thought, `degenerate` with subtype
+  token_loop/incoherent from the regex flags, and a separate yes/no `repetitive` field so repetitive user text is not forced into
+  degenerate. Which group `completed_then_assistant` and "closes the turn at once" count toward is to be decided before judging.
+  v2 results stay reported as they are.
+

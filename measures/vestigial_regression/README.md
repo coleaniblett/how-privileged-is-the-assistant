@@ -321,6 +321,30 @@ family; **bits per byte** for any cross-family comparison.
   ran the pilot. Report raw agreement and Cohen's kappa. Default bar (the team can change it before running):
   revise the judge prompt if agreement falls below 80%.
 
+### Judge arm, open-opener condition (added 2026-11-05, before any generation)
+
+A second condition, added after the mid-sentence results and the first human-vs-judge comparison (so motivated by data, though
+generated blind); the criteria above are unchanged. Rationale: a mid-sentence prefill nearly forces a user-voice continuation
+(capacity under pressure; OLMo's trained stages sit near 98% user voice), while a complete but open opener leaves the model free
+to stay the user, close the turn, or move into the assistant (tendency). Plan: `docs/decisions.md`, 2026-11-05.
+
+- **Openers** (`data/prefill_open5.jsonl`), chosen to vary how much they ask for help: "I have a problem." (Shiller);
+  "Quick question about my code."; "So here's the situation."; "Can I tell you something?"; "My landlord just sent me an email."
+- **Generation.** As the main run (unterminated user turn, stop only at end of text, 120 new tokens, T = 0.7, seed
+  `config.SEED`, `--save-ids`, the family's generation precision), **120 samples per opener**, 600 per checkpoint, every
+  checkpoint of OLMo 3 7B, Qwen3-8B and Gemma 4 31B (`scripts/run_open5.sh` ->
+  `results/capstone/<family>/core/generations_open5/<stage>.jsonl`).
+- **Inference.** The five openers are fixed conditions, not a sample of openers: report each opener and a pooled estimate
+  (openers equally weighted), with 95% bootstrap CIs resampling **samples within each opener**. Conclusions are about these
+  five openers.
+- **Decision rule (draft, to be frozen with the labels).** Fires if the pooled non-user-voice rate rises from base with the CI
+  excluding zero (and by at least the minimum rate difference, still OPEN as above) **and** the change has the same sign at
+  4 or more of the 5 openers.
+- **Labels: to be fixed before the judge is run on these generations** (judge prompt v3: completed-then-assistant with
+  closed/unclosed subtype from code, abandoned switch, degenerate with token-loop/incoherent subtype from the flags, a separate
+  repetitive field, and how "closes the turn at once" is counted; proposals in `docs/decisions.md`). Until then the
+  generations are not read for labelling purposes; automated checks (counts, flags) are allowed.
+
 ### Combining the arms
 
 Vestigial regression counts toward H4 if **either arm fires**; report which:
