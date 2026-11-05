@@ -40,7 +40,11 @@ H2_CONDS = {  # name: (system text kind, character in 'sys'|'user'|None)
     "U-none": ("none", "user"),   # Qwen's own rendering (no system message at all) for the transplant
 }
 H2_PLAN = {"olmo3-7b": ["S-none", "S-default", "S-neutral", "U-default", "U-empty", "U-neutral", "A-default", "A-empty", "A-neutral"],
-           "qwen3-8b": ["S-none", "S-default", "U-none", "U-default"]}
+           "qwen3-8b": ["S-none", "S-default", "U-none", "U-default"],
+           # added 2026-11-05 (spec J2): U-none is each template's own rendering (Llama's always carries its date block, even with a system message, so its
+           # default text cannot be omitted; Apertus's own sentence is replaced by any system message)
+           "llama3.1-8b": ["S-none", "S-default", "S-neutral", "U-none", "U-default", "U-neutral"],
+           "apertus-8b": ["S-none", "S-default", "S-neutral", "U-none", "U-default", "U-neutral"]}
 VOICE = {  # one in-character opener per role, frozen; none contains a compliance or refusal word
     "Hannah Reed": "Good afternoon, and welcome to the front desk,",
     "Mr. Ellis": "Hmm, let me peek along the shelves,",
@@ -66,7 +70,7 @@ def build(path=MATERIALS):
     from extras import role_gradient as rg
     from extras.assistant_steering import requests
     from extras.persona_suppression import neutral_text
-    toks = {f: load_tokenizer(config.family_settings(f)["template"]) for f in ("olmo3-7b", "qwen3-8b")}
+    toks = {f: load_tokenizer(config.family_settings(f)["template"]) for f in ("olmo3-7b", "qwen3-8b", "llama3.1-8b", "apertus-8b")}
     neutral = {f: neutral_text(toks[f], len(encode(toks[f], OLMO_DEFAULT))) for f in toks}
     mat = dict(seed=SEED, requests=requests(), roles=rg.ROLES, role_frame="you (extras.role_gradient.prompts, 'never refuses a request and never lectures')",
                default_sentence=OLMO_DEFAULT, neutral_sentence=neutral, h2_conditions={k: list(v) for k, v in H2_CONDS.items()}, h2_plan=H2_PLAN,
@@ -76,7 +80,8 @@ def build(path=MATERIALS):
                h1=dict(contexts=H1_CONTEXTS, n_per_context=200, max_reply_tokens=60, min_reply_tokens=4, probe_split="even items train, odd items test; positives = own-turn replies, negatives = other contexts, balanced per (item, template)",
                        probe_agreement="corr(probe, classifier) >= 0.3 with CI above 0", axis_disagreement="corr(probe, old axis) <= 0.1 or opposite in sign", fixed_text_reading="fixed-text change >= 50% of the generated-text fall, same sign, CI excluding 0"),
                models=dict(h1={"olmo": ["base", "instruct"], "qwen": ["base", "instruct"], "gemma": ["base", "instruct"]},
-                           h2={"olmo3-7b": ["base", "sft", "dpo", "instruct"], "qwen3-8b": ["base", "instruct"]}, h3={"olmo3-7b": ["base", "instruct"], "qwen3-8b": ["base", "instruct"]}))
+                           h2={"olmo3-7b": ["base", "sft", "dpo", "instruct"], "qwen3-8b": ["base", "instruct"], "llama3.1-8b": ["base", "instruct"], "apertus-8b": ["base", "instruct"]},
+                           h3={"olmo3-7b": ["base", "instruct"], "qwen3-8b": ["base", "instruct"], "llama3.1-8b": ["base", "instruct"], "apertus-8b": ["base", "instruct"]}))
     with open(path, "w", encoding="utf-8") as f:
         json.dump(mat, f, indent=1, ensure_ascii=False)
         f.write("\n")
@@ -321,11 +326,11 @@ def analyze_h2(L, rows):
         ok = ei[0] >= 0.10 and ei[1] > 0
         extra = f"; larger than at base: {'yes' if ed[1] > 0 else 'no'} (difference {100 * ed[0]:+.1f} [{100 * ed[1]:+.1f}, {100 * ed[2]:+.1f}])" if name.startswith("slot") else ""
         L.append(f"| {name} | {100 * eb[0]:+.1f} [{100 * eb[1]:+.1f}, {100 * eb[2]:+.1f}] | {100 * ei[0]:+.1f} [{100 * ei[1]:+.1f}, {100 * ei[2]:+.1f}] | {'at least 10 points, CI above 0' if ok else 'not met'}{extra} |")
-    if "qwen3-8b" in set(d.family):
-        L += ["", "### Transplant into Qwen (OLMo's sentence as system text)", "", "| stage | slot gap with the sentence (S-default minus U-default) | slot gap without it (S-none minus U-none) | added by the sentence [95% CI] | reading |", "|---|---|---|---|---|"]
+    for tfam in [f for f in ("qwen3-8b", "llama3.1-8b", "apertus-8b") if f in set(d.family)]:
+        L += ["", f"### Transplant into {tfam} (OLMo's sentence as system text{'; BREADTH CHECK, not blind' if tfam != 'qwen3-8b' else ''})", "", "| stage | slot gap with the sentence (S-default minus U-default) | slot gap without it (S-none minus U-none) | added by the sentence [95% CI] | reading |", "|---|---|---|---|---|"]
         for stage in ("base", "instruct"):
             try:
-                w, wo = contrast("qwen3-8b", stage, "S-default", "U-default"), contrast("qwen3-8b", stage, "S-none", "U-none")
+                w, wo = contrast(tfam, stage, "S-default", "U-default"), contrast(tfam, stage, "S-none", "U-none")
             except Exception:
                 continue
             if w.size == 0 or wo.size == 0 or w.shape != wo.shape:
@@ -333,6 +338,22 @@ def analyze_h2(L, rows):
                 continue
             ew, ewo, ed = boot2(w, rng), boot2(wo, rng), boot2(w - wo, rng)
             L.append(f"| {stage} | {100 * ew[0]:+.1f} | {100 * ewo[0]:+.1f} | {100 * ed[0]:+.1f} [{100 * ed[1]:+.1f}, {100 * ed[2]:+.1f}] | {'the sentence carries the pattern' if stage == 'instruct' and ed[0] >= 0.10 and ed[1] > 0 else 'not met'} |")
+    for nfam in [f for f in ("llama3.1-8b", "apertus-8b") if f in set(d.family)]:
+        L += ["", f"### Slot effect in {nfam} (BREADTH CHECK, not blind; same readings as OLMo: at least 10 points, CI above 0, larger than at base)", "",
+              "| contrast | base | instruct | reading |", "|---|---|---|---|"]
+        for name, (a, b) in {"S-neutral minus U-neutral": ("S-neutral", "U-neutral"), "S-none minus U-none (native text)": ("S-none", "U-none"),
+                             "sentence (user turn): U-default minus U-neutral": ("U-default", "U-neutral")}.items():
+            try:
+                mb_, mi = contrast(nfam, "base", a, b), contrast(nfam, "instruct", a, b)
+            except Exception:
+                continue
+            if mb_.size == 0 or mi.size == 0 or mb_.shape != mi.shape:
+                L.append(f"| {name} | too few | too few | not assessable |")
+                continue
+            eb, ei, ed = boot2(mb_, rng), boot2(mi, rng), boot2(mi - mb_, rng)
+            ok = abs(ei[0]) >= 0.10 and (ei[1] > 0 or ei[2] < 0)
+            L.append(f"| {name} | {100 * eb[0]:+.1f} [{100 * eb[1]:+.1f}, {100 * eb[2]:+.1f}] | {100 * ei[0]:+.1f} [{100 * ei[1]:+.1f}, {100 * ei[2]:+.1f}] | "
+                     f"{'at least 10 points, CI excluding 0' if ok else 'not met'}; larger than at base: {'yes' if ed[1] > 0 or ed[2] < 0 else 'no'} (difference {100 * ed[0]:+.1f} [{100 * ed[1]:+.1f}, {100 * ed[2]:+.1f}]) |")
     L.append("")
 
 

@@ -685,3 +685,559 @@ Instruct chat template:
 ```
 
 <!-- /family:qwen3-8b -->
+
+<!-- family:llama3.1-8b -->
+# Model checks: llama3.1-8b
+
+| stage | repo | sha | license | gated | weights (GB) | vocab | chat template sha | tokenizer.json sha |
+|---|---|---|---|---|---|---|---|---|
+| base | `unsloth/Meta-Llama-3.1-8B` | e9a141a209 | llama3.1 | False | 16.1 | 128256 | None | 6b9e4e7fb171 |
+| instruct | `unsloth/Llama-3.1-8B-Instruct` | 4699cc75b5 | llama3.1 | False | 16.1 | 128256 | e10ca381b1cc | 6b9e4e7fb171 |
+
+## Chat templates
+
+Post-trained checkpoints share one chat template file: **True**.
+Post-trained templates render a plain user/assistant exchange identically: **True**.
+
+Base has its own chat template: False; it is scored with the Instruct template.
+
+## Tokenizers
+
+All 2 share one tokenizer.json file: **True**.
+All 2 share one merge list: **True**.
+All 2 share one vocab: **True**.
+
+Vocab differences are confined to reserved/added tokens: **True**.
+
+## Derived by core.render from the template
+
+Template places content verbatim exactly once in each slot: **True**.
+
+- user slot (prefix | suffix): `('<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nCutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\n<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n', '<|eot_id|>')`
+- assistant slot (prefix | suffix): `('<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nCutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\n<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n', '<|eot_id|>')`
+- end-of-turn token: `<|eot_id|>`; user->assistant handoff string: `<|eot_id|><|start_header_id|>assistant<|end_header_id|>`
+- assistant-slot opening beyond the stored-turn header (assistant_opening_extra): ``
+- config: dtype fp32, offload False (gpu_gib 34), scoring batch size 4, generation precision bf16, extra handoff markers [], assistant_think_block None, contamination check possible: False
+
+Special tokens: bos='<|begin_of_text|>' eos='<|eot_id|>' pad='<|finetune_right_pad_id|>'
+
+Instruct template rendering of a user + assistant exchange:
+
+```
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 Jul 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+USER<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+ASSISTANT<|eot_id|>
+```
+
+Instruct chat template:
+
+```jinja
+{{- bos_token }}
+{%- if custom_tools is defined %}
+    {%- set tools = custom_tools %}
+{%- endif %}
+{%- if not tools_in_user_message is defined %}
+    {%- set tools_in_user_message = true %}
+{%- endif %}
+{%- if not date_string is defined %}
+    {%- set date_string = "26 Jul 2024" %}
+{%- endif %}
+{%- if not tools is defined %}
+    {%- set tools = none %}
+{%- endif %}
+
+{#- This block extracts the system message, so we can slot it into the right place. #}
+{%- if messages[0]['role'] == 'system' %}
+    {%- set system_message = messages[0]['content']|trim %}
+    {%- set messages = messages[1:] %}
+{%- else %}
+    {%- set system_message = "" %}
+{%- endif %}
+
+{#- System message + builtin tools #}
+{{- "<|start_header_id|>system<|end_header_id|>\n\n" }}
+{%- if builtin_tools is defined or tools is not none %}
+    {{- "Environment: ipython\n" }}
+{%- endif %}
+{%- if builtin_tools is defined %}
+    {{- "Tools: " + builtin_tools | reject('equalto', 'code_interpreter') | join(", ") + "\n\n"}}
+{%- endif %}
+{{- "Cutting Knowledge Date: December 2023\n" }}
+{{- "Today Date: " + date_string + "\n\n" }}
+{%- if tools is not none and not tools_in_user_message %}
+    {{- "You have access to the following functions. To call a function, please respond with JSON for a function call." }}
+    {{- 'Respond in the format {"name": function name, "parameters": dictionary of argument name and its value}.' }}
+    {{- "Do not use variables.\n\n" }}
+    {%- for t in tools %}
+        {{- t | tojson(indent=4) }}
+        {{- "\n\n" }}
+    {%- endfor %}
+{%- endif %}
+{{- system_message }}
+{{- "<|eot_id|>" }}
+
+{#- Custom tools are passed in a user message with some extra guidance #}
+{%- if tools_in_user_message and not tools is none %}
+    {#- Extract the first user message so we can plug it in here #}
+    {%- if messages | length != 0 %}
+        {%- set first_user_message = messages[0]['content']|trim %}
+        {%- set messages = messages[1:] %}
+    {%- else %}
+        {{- raise_exception("Cannot put tools in the first user message when there's no first user message!") }}
+{%- endif %}
+    {{- '<|start_header_id|>user<|end_header_id|>\n\n' -}}
+    {{- "Given the following functions, please respond with a JSON for a function call " }}
+    {{- "with its proper arguments that best answers the given prompt.\n\n" }}
+    {{- 'Respond in the format {"name": function name, "parameters": dictionary of argument name and its value}.' }}
+    {{- "Do not use variables.\n\n" }}
+    {%- for t in tools %}
+        {{- t | tojson(indent=4) }}
+        {{- "\n\n" }}
+    {%- endfor %}
+    {{- first_user_message + "<|eot_id|>"}}
+{%- endif %}
+
+{%- for message in messages %}
+    {%- if not (message.role == 'ipython' or message.role == 'tool' or 'tool_calls' in message) %}
+        {{- '<|start_header_id|>' + message['role'] + '<|end_header_id|>\n\n'+ message['content'] | trim + '<|eot_id|>' }}
+    {%- elif 'tool_calls' in message %}
+        {%- if not message.tool_calls|length == 1 %}
+            {{- raise_exception("This model only supports single tool-calls at once!") }}
+        {%- endif %}
+        {%- set tool_call = message.tool_calls[0].function %}
+        {%- if builtin_tools is defined and tool_call.name in builtin_tools %}
+            {{- '<|start_header_id|>assistant<|end_header_id|>\n\n' -}}
+            {{- "<|python_tag|>" + tool_call.name + ".call(" }}
+            {%- for arg_name, arg_val in tool_call.arguments | items %}
+                {{- arg_name + '="' + arg_val + '"' }}
+                {%- if not loop.last %}
+                    {{- ", " }}
+                {%- endif %}
+                {%- endfor %}
+            {{- ")" }}
+        {%- else  %}
+            {{- '<|start_header_id|>assistant<|end_header_id|>\n\n' -}}
+            {{- '{"name": "' + tool_call.name + '", ' }}
+            {{- '"parameters": ' }}
+            {{- tool_call.arguments | tojson }}
+            {{- "}" }}
+        {%- endif %}
+        {%- if builtin_tools is defined %}
+            {#- This means we're in ipython mode #}
+            {{- "<|eom_id|>" }}
+        {%- else %}
+            {{- "<|eot_id|>" }}
+        {%- endif %}
+    {%- elif message.role == "tool" or message.role == "ipython" %}
+        {{- "<|start_header_id|>ipython<|end_header_id|>\n\n" }}
+        {%- if message.content is mapping or message.content is iterable %}
+            {{- message.content | tojson }}
+        {%- else %}
+            {{- message.content }}
+        {%- endif %}
+        {{- "<|eot_id|>" }}
+    {%- endif %}
+{%- endfor %}
+{%- if add_generation_prompt %}
+    {{- '<|start_header_id|>assistant<|end_header_id|>\n\n' }}
+{%- endif %}
+
+```
+
+<!-- /family:llama3.1-8b -->
+
+<!-- family:apertus-8b -->
+# Model checks: apertus-8b
+
+| stage | repo | sha | license | gated | weights (GB) | vocab | chat template sha | tokenizer.json sha |
+|---|---|---|---|---|---|---|---|---|
+| base | `swiss-ai/Apertus-8B-2509` | 3162c99675 | apache-2.0 | False | 16.1 | 131072 | None | bb201fb226cd |
+| instruct | `swiss-ai/Apertus-8B-Instruct-2509` | b946d40447 | apache-2.0 | False | 16.1 | 131072 | 56f72c27fa2e | bb201fb226cd |
+
+## Chat templates
+
+Post-trained checkpoints share one chat template file: **True**.
+Post-trained templates render a plain user/assistant exchange identically: **True**.
+
+Base has its own chat template: False; it is scored with the Instruct template.
+
+## Tokenizers
+
+All 2 share one tokenizer.json file: **True**.
+All 2 share one merge list: **True**.
+All 2 share one vocab: **True**.
+
+Vocab differences are confined to reserved/added tokens: **True**.
+
+## Derived by core.render from the template
+
+Template places content verbatim exactly once in each slot: **True**.
+
+- user slot (prefix | suffix): `('<s><|system_start|>You are Apertus, a helpful assistant created by the SwissAI initiative.\nKnowledge cutoff: 2024-04\nCurrent date: 2026-11-05<|system_end|><|developer_start|>Deliberation: disabled\nTool Capabilities: disabled<|developer_end|><|user_start|>', '<|user_end|>')`
+- assistant slot (prefix | suffix): `('<s><|system_start|>You are Apertus, a helpful assistant created by the SwissAI initiative.\nKnowledge cutoff: 2024-04\nCurrent date: 2026-11-05<|system_end|><|developer_start|>Deliberation: disabled\nTool Capabilities: disabled<|developer_end|><|assistant_start|>', '<|assistant_end|>')`
+- end-of-turn token: `<|user_end|>`; user->assistant handoff string: `<|user_end|><|assistant_start|>`
+- assistant-slot opening beyond the stored-turn header (assistant_opening_extra): ``
+- config: dtype fp32, offload False (gpu_gib 34), scoring batch size 4, generation precision bf16, extra handoff markers [], assistant_think_block None, contamination check possible: False
+
+Special tokens: bos='<s>' eos='<|assistant_end|>' pad='<pad>'
+
+Instruct template rendering of a user + assistant exchange:
+
+```
+<s><|system_start|>You are Apertus, a helpful assistant created by the SwissAI initiative.
+Knowledge cutoff: 2024-04
+Current date: 2026-11-05<|system_end|><|developer_start|>Deliberation: disabled
+Tool Capabilities: disabled<|developer_end|><|user_start|>USER<|user_end|><|assistant_start|>ASSISTANT<|assistant_end|>
+```
+
+Instruct chat template:
+
+```jinja
+{%- macro render_typescript_type(param_spec, required_params, is_nullable=false) -%}
+    {%- if param_spec.type == "array" -%}
+        {%- if param_spec['items'] -%}
+            {%- if param_spec['items']['type'] == "string" -%}
+                {{- "string[]" }}
+            {%- elif param_spec['items']['type'] == "number" -%}
+                {{- "number[]" }}
+            {%- elif param_spec['items']['type'] == "integer" -%}
+                {{- "number[]" }}
+            {%- elif param_spec['items']['type'] == "boolean" -%}
+                {{- "boolean[]" }}
+            {%- else -%}
+                {%- set inner_type = render_typescript_type(param_spec['items'], required_params) -%}
+                {%- if inner_type == "object | object" or inner_type|length > 50 -%}
+                    {{- "any[]" }}
+                {%- else -%}
+                    {{- inner_type + "[]" }}
+                {%- endif -%}
+            {%- endif -%}
+            {%- if param_spec.nullable -%}
+                {{- " | null" }}
+            {%- endif -%}
+        {%- else -%}
+            {{- "any[]" }}
+            {%- if param_spec.nullable -%}
+                {{- " | null" }}
+            {%- endif -%}
+        {%- endif -%}
+    {%- elif param_spec.type is defined and param_spec.type is iterable and param_spec.type is not string and param_spec.type is not mapping and param_spec.type[0] is defined -%}
+        {#- Handle array of types like ["object", "object"] from Union[dict, list] #}
+        {%- if param_spec.type | length > 1 -%}
+            {{- param_spec.type | join(" | ") }}
+        {%- else -%}
+            {{- param_spec.type[0] }}
+        {%- endif -%}
+    {%- elif param_spec.oneOf -%}
+        {#- Handle oneOf schemas - check for complex unions and fallback to any #}
+        {%- set has_object_variants = false -%}
+        {%- for variant in param_spec.oneOf -%}
+            {%- if variant.type == "object" -%}
+                {%- set has_object_variants = true -%}
+            {%- endif -%}
+        {%- endfor -%}
+        {%- if has_object_variants and param_spec.oneOf|length > 1 -%}
+            {{- "any" }}
+        {%- else -%}
+            {%- for variant in param_spec.oneOf -%}
+                {{- render_typescript_type(variant, required_params) -}}
+                {%- if variant.description %}
+                    {{- "// " + variant.description }}
+                {%- endif -%}
+                {%- if variant.default is defined %}
+                    {{ "// default: " + variant.default|tojson }}
+                {%- endif -%}
+                {%- if not loop.last %}
+                    {{- " | " }}
+                {% endif -%}
+            {%- endfor -%}
+        {%- endif -%}
+    {%- elif param_spec.type == "string" -%}
+        {%- if param_spec.enum -%}
+            {{- '"' + param_spec.enum|join('" | "') + '"' -}}
+        {%- else -%}
+            {{- "string" }}
+            {%- if param_spec.nullable %}
+                {{- " | null" }}
+            {%- endif -%}
+        {%- endif -%}
+    {%- elif param_spec.type == "number" -%}
+        {{- "number" }}
+    {%- elif param_spec.type == "integer" -%}
+        {{- "number" }}
+    {%- elif param_spec.type == "boolean" -%}
+        {{- "boolean" }}
+    {%- elif param_spec.type == "object" -%}
+        {%- if param_spec.properties -%}
+            {{- "{\n" }}
+            {%- for prop_name, prop_spec in param_spec.properties.items() -%}
+                {{- prop_name -}}
+                {%- if prop_name not in (param_spec.required or []) -%}
+                    {{- "?" }}
+                {%- endif -%}
+                {{- ": " }}
+                {{ render_typescript_type(prop_spec, param_spec.required or []) }}
+                {%- if not loop.last -%}
+                    {{-", " }}
+                {%- endif -%}
+            {%- endfor -%}
+            {{- "}" }}
+        {%- else -%}
+            {{- "object" }}
+        {%- endif -%}
+    {%- else -%}
+        {{- "any" }}
+    {%- endif -%}
+{%- endmacro -%}
+
+{%- macro render_tools(tools) -%}
+    {%- for tool in tools %}
+        {{- "// " + tool.description + "\n" }}
+        {{- "type "+ tool.name + " = " }}
+        {%- if tool.parameters and tool.parameters.properties %}
+            {{- "(_: {\n" }}
+            {%- for param_name, param_spec in tool.parameters.properties.items() %}
+                {%- if param_spec.description %}
+                    {{- "// " + param_spec.description + "\n" }}
+                {%- endif %}
+                {{- param_name }}
+                {%- if param_name not in (tool.parameters.required or []) -%}
+                    {{- "?" }}
+                {%- endif -%}
+                {{- ": " }}
+                {{- render_typescript_type(param_spec, tool.parameters.required or []) }}
+                {%- if param_spec.default is defined -%}
+                    {%- if param_spec.enum %}
+                        {{- ", // default: " + param_spec.default }}
+                    {%- elif param_spec.oneOf %}
+                        {{- "// default: " + param_spec.default }}
+                    {%- else %}
+                        {{- ", // default: " + param_spec.default|tojson }}
+                    {%- endif -%}
+                {%- endif -%}
+                {%- if not loop.last %}
+                    {{- ",\n" }}
+                {%- else %}
+                    {{- "\n" }}
+                {%- endif -%}
+            {%- endfor %}
+            {{- "}) => any;" }}
+        {%- else -%}
+            {{- "() => any;" }}
+        {%- endif -%}
+        {%- if not loop.last -%}
+            {{- "\n" }}
+        {%- endif -%}
+    {%- endfor %}
+{%- endmacro -%}
+
+{{ bos_token }}
+
+{%- set system_token = '<|system_start|>' -%}
+{%- set end_system_token = '<|system_end|>' -%}
+{%- set developer_token = '<|developer_start|>' -%}
+{%- set end_developer_token = '<|developer_end|>' -%}
+{%- set user_token = '<|user_start|>' -%}
+{%- set end_user_token = '<|user_end|>' -%}
+{%- set assistant_token = '<|assistant_start|>' -%}
+{%- set end_assistant_token = '<|assistant_end|>' -%}
+{%- set inner_token = '<|inner_prefix|>' -%}
+{%- set outer_token = '<|inner_suffix|>' -%}
+{%- set tool_calls_token = '<|tools_prefix|>' -%}
+{%- set end_tool_calls_token = '<|tools_suffix|>' -%}
+{%- set image_token = '<|image|>' -%}
+
+{%- set ns = namespace(in_assistant=false, in_tool=false, in_inner=false, waiting_for_tool_outputs=false, assistant_format=none) -%}
+
+{%- if messages and messages[0].role == 'system' -%}
+    {%- if "content" in messages[0] -%}
+        {%- if messages[0].content is string -%}
+            {{ system_token + messages[0].content + end_system_token }}
+        {%- elif messages[0].content is mapping and "text" in messages[0].content -%}
+            {{ system_token + messages[0].content.text + end_system_token }}
+        {%- else -%}
+            {{- raise_exception("Invalid system message") -}}
+        {%- endif -%}
+    {%- else -%}
+        {{- raise_exception("Invalid system message") -}}
+    {%- endif -%}
+    {%- set loop_messages = messages[1:] -%}
+{%- else -%}
+    {{ system_token + 'You are Apertus, a helpful assistant created by the SwissAI initiative.\nKnowledge cutoff: 2024-04\nCurrent date: ' + strftime_now('%Y-%m-%d') + end_system_token }}
+    {%- set loop_messages = messages -%}
+{%- endif -%}
+
+{{ developer_token + 'Deliberation: ' }}
+{%- if enable_thinking is defined and enable_thinking -%}
+    {{ 'enabled\n' }}
+{%- else -%}
+    {{ 'disabled\n' }}
+{%- endif -%}
+{%- if tools is defined and tools -%}
+    {{ 'Tool Capabilities:\n' + render_tools(tools) }}
+{%- else -%}
+    {{ 'Tool Capabilities: disabled' }}
+{%- endif -%}
+{{ end_developer_token }}
+
+{%- for message in loop_messages -%}
+    {%- if message.role == 'user' -%}
+        {%- set ns.in_inner = false -%}
+        {%- if ns.in_tool -%}
+            {{ ']' }}
+            {%- set ns.in_tool = false -%}
+        {%- endif -%}
+        {%- if ns.in_assistant -%}
+            {{ end_assistant_token }}
+            {%- set ns.in_assistant = false -%}
+        {%- endif -%}
+        {%- if "content" in message -%}
+            {{ user_token }}
+            {%- if message.content is string -%}
+                {{ message.content }}
+            {%- elif message.content is mapping and "parts" in message.content -%}
+                {%- set parts = message.content.parts -%}
+                {%- for part in parts -%}
+                    {%- if part.type == "text" -%}
+                        {{ part.text }}
+                    {%- elif part.type == "image" -%}
+                        {{ image_token }}
+                    {%- else -%}
+                        {{- raise_exception("Invalid user part: " + part.type) -}}
+                    {%- endif -%}
+                {%- endfor -%}
+            {%- else -%}
+                {{- raise_exception("Invalid user message: " + message.role) -}}
+            {%- endif -%}
+            {{ end_user_token }}
+        {%- endif -%}
+    {%- elif message.role == 'assistant' -%}
+        {%- if not ns.in_assistant -%}
+            {{ assistant_token }}
+            {%- set ns.in_assistant = true -%}
+        {%- endif -%}
+        {%- if "content" in message -%}
+            {%- if message.content is string and (ns.assistant_format is none or ns.assistant_format == "string") -%}
+                {%- if ns.in_tool -%}
+                    {{ ']' }}
+                    {%- set ns.in_tool = false -%}
+                {%- endif -%}
+                {%- set ns.assistant_format = "string" -%}
+                {{ message.content }}
+            {%- elif message.content is mapping and "blocks" in message.content and (ns.assistant_format is none or ns.assistant_format == "mapping") -%}
+                {%- set ns.assistant_format = "mapping" -%}
+                {%- set blocks = message.content.blocks -%}
+                {%- for block in blocks -%}
+                    {%- if block.type == 'thoughts' -%}
+                        {%- if ns.in_tool -%}
+                            {{ ']' }}
+                            {%- set ns.in_tool = false -%}
+                        {%- endif -%}
+                        {%- if not ns.in_inner -%}
+                            {%- set ns.in_inner = true -%}
+                            {{ inner_token }}
+                        {%- endif -%}
+                        {{ block.text }}
+                    {%- elif block.type == 'tool_calls' -%}
+                        {%- if ns.in_tool -%}
+                            {{ ']' }}
+                            {%- set ns.in_tool = false -%}
+                        {%- endif -%}
+                        {%- if ns.in_inner and not loop.first and block.calls|length == 1 and block.calls[0].name == 'display_answers' -%}
+                            {%- set ns.in_inner = false -%}
+                            {{ outer_token }}
+                        {%- endif -%}
+                        {{ tool_calls_token + '[' }}
+                        {%- for tool_call in block.calls -%}
+                            {{- '{"' + tool_call.name + '": ' + tool_call.arguments + '}' }}
+                            {%- if not loop.last -%}
+                                {{- ", " }}
+                            {%- endif -%}
+                        {%- endfor -%}
+                        {{ ']' + end_tool_calls_token }}
+                        {%- set ns.waiting_for_tool_outputs = true -%}
+                    {%- elif block.type == 'tool_outputs' -%}
+                        {%- if ns.in_tool -%}
+                            {{- raise_exception("Cannot have both tool outputs as separate messages and tool outputs as blocks") -}}
+                        {%- endif -%}
+                        {{ '[' }}
+                        {%- for tool_output in block.outputs -%}
+                            {{- tool_output.output }}
+                            {%- if not loop.last -%}
+                                {{- ", " }}
+                            {%- endif -%}
+                        {%- endfor -%}
+                        {{- ']' }}
+                        {%- set ns.waiting_for_tool_outputs = false -%}
+                    {%- elif block.type == 'response' -%}
+                        {%- if ns.in_tool -%}
+                            {{ ']' }}
+                            {%- set ns.in_tool = false -%}
+                        {%- endif -%}
+                        {%- if (not loop.first and ns.in_inner) or (ns.in_assistant and ns.in_inner) -%}
+                            {%- set ns.in_inner = false -%}
+                            {{ outer_token }}
+                        {%- endif -%}
+                        {{ block.text }}
+                    {%- else -%}
+                        {{- raise_exception("Invalid assistant block type: " + block.type) -}}
+                    {%- endif -%}
+                {%- endfor -%}
+            {%- else -%}
+                {{- raise_exception("Invalid assistant content") -}}
+            {%- endif -%}
+        {%- else -%}
+            {{- raise_exception("Invalid assistant message") -}}
+        {%- endif -%}
+        {%- if "tool_calls" in message and message.tool_calls -%}
+            {{ tool_calls_token + '[' }}
+            {%- for tool_call in message.tool_calls -%}
+                {%- if tool_call.type == 'function' -%}
+                    {%- set function = tool_call.function -%}
+                    {{- '{"' + function.name + '": ' + function.arguments + '}' }}
+                    {%- if not loop.last -%}
+                        {{- ", " }}
+                    {%- endif -%}
+                {%- else -%}
+                    {{- raise_exception("Invalid tool call type: " + tool_call.type) -}}
+                {%- endif -%}
+            {%- endfor -%}
+            {{ ']' + end_tool_calls_token }}
+            {%- set ns.waiting_for_tool_outputs = true -%}
+        {%- endif -%}
+    {%- elif message.role == 'tool' -%}
+        {%- if not ns.in_assistant -%}
+            {{- raise_exception("Tool message outside of assistant") -}}
+        {%- endif -%}
+        {%- if not ns.in_tool -%}
+            {{ '[' }}
+            {%- set ns.in_tool = true -%}
+        {%- else -%}
+            {{ ", "}}
+        {%- endif -%}
+        {{ message.content }}
+        {%- set ns.waiting_for_tool_outputs = false -%}
+    {%- else -%}
+        {{- raise_exception("Invalid message role") -}}
+    {%- endif -%}
+{%- endfor -%}
+{%- if ns.in_tool -%}
+    {{ ']' }}
+{%- endif -%}
+{%- if ns.in_assistant and not (continue_assistant_message is defined and continue_assistant_message) and not ns.waiting_for_tool_outputs -%}
+    {{ end_assistant_token }}
+{%- endif -%}
+{%- if add_generation_prompt -%}
+    {{ assistant_token }}
+{%- endif -%}
+
+```
+
+<!-- /family:apertus-8b -->

@@ -72,7 +72,9 @@
  "default_sentence": "You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>",
  "neutral_sentence": {
   "olmo3-7b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. Go on.",
-  "qwen3-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows."
+  "qwen3-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows.",
+  "llama3.1-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows.",
+  "apertus-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows."
  },
  "h2_conditions": {
   "S-none": [
@@ -133,6 +135,22 @@
    "S-default",
    "U-none",
    "U-default"
+  ],
+  "llama3.1-8b": [
+   "S-none",
+   "S-default",
+   "S-neutral",
+   "U-none",
+   "U-default",
+   "U-neutral"
+  ],
+  "apertus-8b": [
+   "S-none",
+   "S-default",
+   "S-neutral",
+   "U-none",
+   "U-default",
+   "U-neutral"
   ]
  },
  "h2": {
@@ -207,6 +225,14 @@
    "qwen3-8b": [
     "base",
     "instruct"
+   ],
+   "llama3.1-8b": [
+    "base",
+    "instruct"
+   ],
+   "apertus-8b": [
+    "base",
+    "instruct"
    ]
   },
   "h3": {
@@ -215,6 +241,14 @@
     "instruct"
    ],
    "qwen3-8b": [
+    "base",
+    "instruct"
+   ],
+   "llama3.1-8b": [
+    "base",
+    "instruct"
+   ],
+   "apertus-8b": [
     "base",
     "instruct"
    ]

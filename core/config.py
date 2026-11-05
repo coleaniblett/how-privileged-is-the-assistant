@@ -62,6 +62,24 @@ FAMILIES = {
         "label": "Qwen",
         "stage_labels": {"base": "base", "instruct": "IT"},
     },
+    # Breadth arms added 2026-11-05 (spec J2; exploratory, not blind). Contamination cannot be checked. Llama weights come from the
+    # ungated unsloth mirrors of Meta's releases (the meta-llama repos are gated); tokenizer and chat template were checked identical.
+    "llama3.1-8b": {
+        "stages": {"base": "unsloth/Meta-Llama-3.1-8B", "instruct": "unsloth/Llama-3.1-8B-Instruct"},
+        "template": "unsloth/Llama-3.1-8B-Instruct",
+        "contamination_check": False,
+        "batch_size": 4,
+        "label": "Llama",
+        "stage_labels": {"base": "base", "instruct": "IT"},
+    },
+    "apertus-8b": {
+        "stages": {"base": "swiss-ai/Apertus-8B-2509", "instruct": "swiss-ai/Apertus-8B-Instruct-2509"},
+        "template": "swiss-ai/Apertus-8B-Instruct-2509",
+        "contamination_check": False,
+        "batch_size": 4,
+        "label": "Apertus",
+        "stage_labels": {"base": "base", "instruct": "IT"},
+    },
 }
 
 #   label, stage_labels    display names for condition labels ("Gemma IT · UltraChat · reply · plain"; core.exchanges)
