@@ -348,6 +348,17 @@ def analyze():
             if r:
                 L += r[0]
                 samples.append(r[1])
+    # descriptive timing: OLMo SFT and DPO next to base and instruct (no readings)
+    d = os.path.join(OUT, "olmo3-7b")
+    if all(os.path.exists(os.path.join(d, f"{st}.csv.gz")) for st in ("base", "sft", "dpo", "instruct")):
+        T = {st: measures(pd.read_csv(os.path.join(d, f"{st}.csv.gz"), dtype={"order": str}), mat) for st in ("base", "sft", "dpo", "instruct")}
+        tl = ["## OLMo stages, descriptive timing (no readings; Assistant and settings; change from base, points)", "",
+              "| stage | setting | can't-tell change | bias-gap change | accuracy change |", "|---|---|---|---|---|"]
+        for st in ("sft", "dpo", "instruct"):
+            for s_ in SETTINGS:
+                c = [boot_change(T[st], T["base"], col, cnd, s_, rng) for col, cnd in (("cant", "amb"), ("gap", "amb"), ("acc", "dis"))]
+                tl.append(f"| {st} | {s_} | " + " | ".join(f"{x[0]:+.1f} [{x[1]:+.1f}, {x[2]:+.1f}]" for x in c) + " |")
+        L += tl + [""]
     head = ["## Readings by family (final; can't-tell is the measure that passed the gate)", "", "| family | Assistant gate | light role, system | light role, user turn | full role-play |", "|---|---|---|---|---|"]
     for fam in dict.fromkeys(x[0] for x in SUMMARY):
         g = next(x for x in SUMMARY if x[0] == fam and x[1] == "gate")
