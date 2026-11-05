@@ -22,7 +22,8 @@ DETN = {"md": "layout", "stock": "stock", "says_ai": "self_ai", "refusal": "refu
 ASSIST_LIKE = re.compile(r"assistant|helpful|\bAI\b|language model|chatbot|\bOLMo\b|\bTulu\b|\bmodel\b|\bbot\b|honest|harmless", re.I)
 SYS_IDENT = re.compile(r"\b(?:you are|you're|your name is|act as|acting as|pretend (?:to be|you)|role-?play|roleplay|persona|play the (?:role|part) of|imagine you(?:'re| are)|you will (?:play|act as|be)|assume the role)\b", re.I)
 SYS_ROLE_STRICT = re.compile(r"\b(?:act as|acting as|pretend (?:to be|you)|role-?play|roleplay|persona|play the (?:role|part) of|imagine you(?:'re| are)|you will (?:play|act as)|assume the role|your name is|you are (?:now )?(?:playing|portraying|roleplaying))\b", re.I)
-USER_ROLE = re.compile(r"(?i)\b(?:act as|acting as|pretend (?:to be|you(?:'re| are))|role-?play|play the (?:role|part) of|you are now (?:a|an|the)\b|from now on,? you (?:are|will)|i want you to (?:act|pretend|play|be)\b|imagine you(?:'re| are)\b|assume the role|take on the role|please play\b)")
+# v1 (first look: precision 64% of 25 read, over the 80% bar, false hits deep inside long passages and 'role-playing game') -> v2: only the first 300 characters, only requests aimed at the model
+USER_ROLE = re.compile(r"(?i)\b(?:act as|acting as|pretend (?:to be|you(?:'re| are))|play the (?:role|part) of|you are now (?:a|an|the)\b|from now on,? you (?:are|will)|i want you to (?:act|pretend|play|be)\b|imagine you(?:'re| are)\b|take on the role of|please play\b|(?:role-?play|roleplay)(?:ing)? as\b)")
 SELFQ = re.compile(r"(?i)\b(?:who are you|what are you|are you (?:a |an )?(?:human|ai|real|robot|chatbot|person|conscious|sentient)|do you (?:feel|have feelings|think|like|enjoy|want|dream|sleep|get)|your (?:favou?rite|name|opinion|age|feelings)|how are you|tell me about yourself|what is your|what's your|what do you (?:like|think|want))")
 
 
@@ -33,7 +34,7 @@ def bucket(system, first_user):
         m = re.search(r"\byou are\s+(?:an?\s+|the\s+)?([^.,;:\n]{0,80})", system, re.I)
         if m and not ASSIST_LIKE.search(m.group(1)) and not re.search(r"expert|specialist|professional|engineer|programmer|translator|writer|tutor|teacher|analyst|doctor|coach|consultant|editor", m.group(1), re.I):
             return "role_system"
-    if USER_ROLE.search(first_user or ""):
+    if USER_ROLE.search((first_user or "")[:300]):
         return "role_user"
     if system and not (ASSIST_LIKE.search(system[:200]) and len(system) < 400):
         return "other_system"
