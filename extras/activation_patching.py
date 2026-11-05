@@ -128,6 +128,10 @@ class Patcher:
                 return None
             h = h.clone()
             for b in range(h.shape[0]):
+                if isinstance(self.pos[b], (list, tuple)):          # several blocks per row (J4 reply-start + character-text swap)
+                    for pp, rr in zip(self.pos[b], self.R[b]):
+                        h[b, int(pp):int(pp) + rr.shape[0]] = rr.to(h.device, h.dtype)
+                    continue
                 p = int(self.pos[b])
                 if p >= 0 and self.R[b] is not None:
                     r = self.R[b]
@@ -275,7 +279,7 @@ def generate(model, tok, device, patcher, rows, batch=16):
             e += 1
         idx = order[s:e]
         inp, att, pads = left_pad([rows[i]["ids"] for i in idx], pad)
-        patcher.set(first["layer"], [rows[i]["R"] for i in idx], [(rows[i]["pos"] + p) if rows[i]["R"] is not None else -1 for i, p in zip(idx, pads)]) if first["layer"] else patcher.clear()
+        patcher.set(first["layer"], [rows[i]["R"] for i in idx], [([x + p for x in rows[i]["pos"]] if isinstance(rows[i]["pos"], (list, tuple)) else rows[i]["pos"] + p) if rows[i]["R"] is not None else -1 for i, p in zip(idx, pads)]) if first["layer"] else patcher.clear()
         torch.manual_seed(zlib.crc32("|".join(repr(rows[i]["key"]) for i in idx).encode()))
         try:
             with torch.no_grad():
