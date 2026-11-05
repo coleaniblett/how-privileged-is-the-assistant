@@ -1,0 +1,71 @@
+{
+  "batch_size": 4,
+  "code_sha256": {
+    "core/config.py": "4b9cd1158a35bc1aad089a500dea6e311937971b8f039be77e7a1819e4690a5e",
+    "core/exchanges.py": "2265e494fb53b4b119c555c15e5cf480f1ff38104873d6b962b8928d8ae44392",
+    "core/render.py": "c9122b7a395f6befd87668e5936d2e3fdb2770ae0728a3e0b9cf8ad347f202e3",
+    "core/score.py": "7debe9d3269e3a7382652f082bf9e0435c62f665adbea594fa44b0bc5e4cdc31",
+    "core/score_exchanges.py": "2dc93787057f92775d420e5f3d7751a94852e4cc0d27a29d316eb024c4f1576b"
+  },
+  "device": "cuda:0",
+  "dtype": "fp32",
+  "environment": {
+    "python": "3.13.16",
+    "tokenizers": "0.23.2",
+    "torch": "2.14.1",
+    "transformers": "5.18.0"
+  },
+  "exchanges": {
+    "format": "exchanges_v1",
+    "n_exchanges": 898,
+    "n_sequences": 1796,
+    "path": "data/exchanges.jsonl",
+    "sha256": "ee65c793dbfb4004679c7b86fcd2fbb689b12c2eaa428e1a49957090ac8eae6a"
+  },
+  "exclusions": [
+    {
+      "exchange_id": "oasst1-0029",
+      "reason": "special_token_text (message 0)"
+    },
+    {
+      "exchange_id": "oasst1-0054",
+      "reason": "special_token_text (message 0)"
+    }
+  ],
+  "family": "apertus-8b",
+  "format": "exchange_scores_v1",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "inputs_fingerprint": "6b45e29048e8d65c561b39c2aa58817b46fd1a5618b6028ecf147827d917cda1",
+  "model": "swiss-ai/Apertus-8B-2509",
+  "model_revision": "3162c99675aa588097cecd4a24b9aa1f712af477",
+  "placement": "20/36 modules on the GPU",
+  "reuse": {
+    "enabled": false,
+    "n_fresh": 1796,
+    "n_reused": 0,
+    "reasons": {
+      "fresh": 1796
+    }
+  },
+  "seconds_scoring": 626.3,
+  "settings": {
+    "assistant_think_block": null,
+    "context": "reply_in_user",
+    "family_profile": {
+      "assistant_header": "<|assistant_start|>",
+      "template_kwargs": {},
+      "user_header": "<|user_start|>"
+    },
+    "limit": null,
+    "n_per_corpus": null,
+    "reply_max_tokens": 300,
+    "separator": "\n\n"
+  },
+  "stage": "base",
+  "tag": "exchanges_reply_in_user",
+  "tokenizer": {
+    "chat_template_sha256": "56f72c27fa2e565312a830b7315a455c79fb452fdbe7a5b7595d8a094f282b07",
+    "name": "swiss-ai/Apertus-8B-Instruct-2509",
+    "revision": "b946d40447b2b597999b9c86d44bee0b452c919f"
+  }
+}
