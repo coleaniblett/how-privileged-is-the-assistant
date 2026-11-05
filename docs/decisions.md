@@ -1225,3 +1225,6 @@ Exploratory, outside every verdict; code `extras/refusal_direction.py` (CPU smok
 
 ## 2026-11-05 (UTC) - core: exchange rendering profile for the two J2 families (backwards compatible)
 `core/exchanges.py` looked the family up in `core.score_conversations.PROFILES` (Grace's declared profiles), which has no entry for `llama3.1-8b` and `apertus-8b`, so the reply-in-user step raised KeyError for Llama instruct. Added `EXTRA_PROFILES` in `core/exchanges.py` (no template kwargs; user/assistant headers of each template, checked against the rendered lead-in); existing families still use PROFILES unchanged. Checked by rendering exchanges for both families. The Llama instruct reply-in-user step is rerun after the J2 chain.
+
+## 2026-11-05 (UTC) - Result: trait atlas (spec G) finished on all families
+Final report `results/trait_atlas/trait_atlas.md` and `trait_atlas_cells.csv` (1,664 cells; OLMo 4 stages, Qwen and Gemma base/instruct), with the judge and detector tables (`*_judged*.csv.gz`, `*_detected.csv.gz`) and the 60-reply hand-check sheet. Replies stay on vinyl; the hand-check key stays local. Exploratory, outside every verdict; the judge is not yet validated by hand check.
