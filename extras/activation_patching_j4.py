@@ -171,7 +171,7 @@ def analyze():
         rd = ap.reading_for(R, fam)
         allR.append(R.assign(family=fam))
         fr = m["j4"]["frozen"]
-        names = {k: v.get("name") for k, v in m["personas"].items()}
+        names = {k: (v.get("name") or k) for k, v in m["personas"].items()}
         L += [f"## {fam}", "", f"Frozen roles (voice gap / refusal gap in points, unpatched pilot screen): " + ", ".join(f"{r} = {names[r]} ({fr['voice_gap'][r]:+.1f} / {fr['refusal_gap'][r]:+.1f})" for r in fr["roles"]) +
               f"; {fr['n_qualifying']} of 12 candidates qualified (refusal gap >= 20).", "",
               f"Floors (spec I, unchanged): refusal {fl['refusal_floor_points']:.1f}, voice p95 {fl['voice_p95_points']:.1f}. Layers {fl['chosen_layers']}, best {fl['best_layer']}.", "",
