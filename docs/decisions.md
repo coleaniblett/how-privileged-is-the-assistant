@@ -1228,3 +1228,10 @@ Exploratory, outside every verdict; code `extras/refusal_direction.py` (CPU smok
 
 ## 2026-11-05 (UTC) - Result: trait atlas (spec G) finished on all families
 Final report `results/trait_atlas/trait_atlas.md` and `trait_atlas_cells.csv` (1,664 cells; OLMo 4 stages, Qwen and Gemma base/instruct), with the judge and detector tables (`*_judged*.csv.gz`, `*_detected.csv.gz`) and the 60-reply hand-check sheet. Replies stay on vinyl; the hand-check key stays local. Exploratory, outside every verdict; the judge is not yet validated by hand check.
+
+## 2026-11-05 (UTC) - Vinyl plan: Gemma 4 31B exchange-set prefills, user-slot scoring and spec H2/H3 (J1 remainder and J9); logged BEFORE scoring
+
+Exploratory, outside every verdict; no judging of Gemma prefills (spec J rule 1). On arena9-vinyl, instruct first (cached), then base (downloaded after the instruct weights are freed, disk), one checkpoint at a time under the exclusive GPU lock.
+- **Prefills:** `core.generate` on the 400-prefill exchange set (`data/prefill_incomplete_exchanges.jsonl`), the settings of the other families (3 x 120 tokens, T=0.7, `--save-ids`, the family's int8 generation precision), output `results/capstone/gemma4-31b/core/generations_incomplete_exchanges/<stage>.jsonl` (not committed, not judged).
+- **Assistant text in the user turn:** `extras.exchange_reply_in_user score` unchanged (the first 100 exchanges per corpus as configured for Gemma, fp32 with offload); same reading as the other families (change of the contrast at most -0.05 nats with CI below 0 in oasst1 and UltraChat).
+- **Spec H2 and H3 (J9):** `extras.mechanism_checks h2/h3 --family gemma4-31b` with the Llama/Apertus-style plan (S-none, S-default, S-neutral, U-none, U-default, U-neutral; Gemma's template has no default system text, so U-none is the bare user turn) and the same readings as OLMo; materials changed only by adding Gemma's neutral sentence and plan (earlier entries verified unchanged).

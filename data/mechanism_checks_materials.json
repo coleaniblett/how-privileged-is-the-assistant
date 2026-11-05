@@ -74,7 +74,8 @@
   "olmo3-7b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. Go on.",
   "qwen3-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows.",
   "llama3.1-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows.",
-  "apertus-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows."
+  "apertus-8b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows.",
+  "gemma4-31b": "You are taking part in this conversation. Reply to the next message. The exchange has just begun. The next message follows."
  },
  "h2_conditions": {
   "S-none": [
@@ -145,6 +146,14 @@
    "U-neutral"
   ],
   "apertus-8b": [
+   "S-none",
+   "S-default",
+   "S-neutral",
+   "U-none",
+   "U-default",
+   "U-neutral"
+  ],
+  "gemma4-31b": [
    "S-none",
    "S-default",
    "S-neutral",
@@ -233,6 +242,10 @@
    "apertus-8b": [
     "base",
     "instruct"
+   ],
+   "gemma4-31b": [
+    "base",
+    "instruct"
    ]
   },
   "h3": {
@@ -249,6 +262,10 @@
     "instruct"
    ],
    "apertus-8b": [
+    "base",
+    "instruct"
+   ],
+   "gemma4-31b": [
     "base",
     "instruct"
    ]
