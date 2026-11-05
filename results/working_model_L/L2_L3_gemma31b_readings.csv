@@ -1,0 +1,5 @@
+family,wording,test,low_refusal,style,instr_thin,instr_vivid,resists,thin_minus_vivid_with_line,thin_obeys,vivid_obeys,gate_separate,rival
+gemma4-31b,sys,L2,False,True,True,False,False,6.17283950617284,,,,
+gemma4-31b,user,L2,False,True,False,False,False,17.592592592592595,,,,
+gemma4-31b,sys,L3,,,,,,,100.0,100.0,False,False
+gemma4-31b,user,L3,,,,,,,99.89711934156378,100.0,False,False
