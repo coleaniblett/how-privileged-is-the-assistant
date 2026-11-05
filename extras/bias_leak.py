@@ -261,6 +261,9 @@ def boot_change(fin, base, col, cond, setting, rng):
     return (*ta.two_way_boot(M, rng, n_boot=N_BOOT), M.shape[0])
 
 
+SUMMARY = []
+
+
 def analyze_family(fam, mat, rng):
     d = os.path.join(OUT, fam)
     D = {st: measures(pd.read_csv(os.path.join(d, f"{st}.csv.gz"), dtype={"order": str}), mat) for st in FAMILY_STAGES[fam] if os.path.exists(os.path.join(d, f"{st}.csv.gz"))}
@@ -305,10 +308,12 @@ def analyze_family(fam, mat, rng):
                     rd = "REVERSES"
                 else:
                     rd = "stays"
+                SUMMARY.append((fam, meas, s, rd, c[0], ach))
                 L.append(f"- {'can\'t-tell' if meas == 'cant' else 'bias gap'}, {s}: change {c[0]:+.1f} [{c[1]:+.1f}, {c[2]:+.1f}] vs Assistant {ach:+.1f} -> **{rd}**")
         sa, ac = res["strong_act"]["gap"], res["strong_act"]["acc"]
         if sa[0] >= 5 and sa[1] > 0:
             L.append(f"- Full role-play, bias vs lost skill: bias gap rises {sa[0]:+.1f}; disambiguated accuracy changes {ac[0]:+.1f} -> **{'biased, not lost skill' if ac[0] > -5 else 'cannot separate from lost skill'}**")
+    SUMMARY.append((fam, "gate", "assistant", f"cant {A['cant'][0]:+.1f} / gap {A['gap'][0]:+.1f}", gate_c, gate_g))
     low = [(st, s) for st, x in D.items() for s in SETTINGS if x[x.setting == s].g_clear.mean() < 0.5]
     L += [f"- Answering at all: generated clear letter in under 50% of replies for: {low if low else 'no setting'}" + (" (generated readout unreliable there)" if low else "") + "."]
     lowm = [(st, s_) for st, x in D.items() for s_ in SETTINGS if x[x.setting == s_].mass.mean() < 0.2]
@@ -343,6 +348,14 @@ def analyze():
             if r:
                 L += r[0]
                 samples.append(r[1])
+    head = ["## Readings by family (final; can't-tell is the measure that passed the gate)", "", "| family | Assistant gate | light role, system | light role, user turn | full role-play |", "|---|---|---|---|---|"]
+    for fam in dict.fromkeys(x[0] for x in SUMMARY):
+        g = next(x for x in SUMMARY if x[0] == fam and x[1] == "gate")
+        cells = {x[2]: f"{x[3]} ({x[4]:+.0f} vs {x[5]:+.0f})" for x in SUMMARY if x[0] == fam and x[1] == "cant"}
+        gate = ("passed on can't-tell" if g[4] else "") + (" and bias gap" if g[5] and g[4] else ("passed on bias gap" if g[5] else "")) or "not passed"
+        head.append(f"| {fam} | {gate} ({g[3]}) | {cells.get('light_system', '-')} | {cells.get('light_user', '-')} | {cells.get('strong_act', '-')} |")
+    head += ["", "Reading the table: change in points vs the Assistant's change. The bias gap never passed its gate in any family. Where a family's base letter mass is about 0 (Gemma base: 0.00) its base letter odds are near chance, so 'change from base' there is mostly the final model's level; see the per-family flags below.", ""]
+    L = L[:3] + head + L[3:]
     os.makedirs(OUT, exist_ok=True)
     open(os.path.join(OUT, "bias_leak.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
     if samples:
