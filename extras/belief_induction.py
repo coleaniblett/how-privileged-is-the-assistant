@@ -388,7 +388,7 @@ def analyze():
             stages = [s for s in ("base", "sft", "dpo", "instruct") if s in set(sm.stage)]
             dom, st, ans = pc.stage_verdict(sm, stages, domains)
             fin = st[st.stage == "instruct"].iloc[0]
-            g = lambda s, q: sm[(sm.stage == s) & (sm.scope == "all") & (sm.quantity == q)].iloc[0]
+            g = lambda s, q, sm=sm: sm[(sm.stage == s) & (sm.scope == "all") & (sm.quantity == q)].iloc[0]
             res[arm] = (fin, g)
         fp, gp = res["prompt"]
         fa, ga = res["prefill"]
