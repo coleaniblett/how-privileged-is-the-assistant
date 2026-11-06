@@ -36,11 +36,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["example", "gen", "judge", "analyze"])
     ap.add_argument("--family", choices=BFAMS)
+    ap.add_argument("--stage", default="instruct", choices=["instruct", "base"])
     a = ap.parse_args()
     if a.cmd == "example":
         rs.example(a.family)
     elif a.cmd == "gen":
-        rs.gen(a.family, "instruct")
+        rs.gen(a.family, a.stage)
     elif a.cmd == "judge":
         rs.judge()
     else:
