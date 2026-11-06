@@ -15,5 +15,12 @@ All of this is **exploratory** and **provisional**, outside every verdict, and n
 
 ## Failures, retries and changes from the spec
 
+- `r_failures.log`:
+  - FAILED(1): /opt/arena-env/bin/python -m extras.voice_fresh gen --family olmo3-7b
+  - FAILED(2): /opt/arena-env/bin/python -m extras.voice_fresh gen --family olmo3-7b
+  - FAILED(3): /opt/arena-env/bin/python -m extras.voice_fresh gen --family olmo3-7b
+  - FAILED(1): /opt/arena-env/bin/python -m extras.voice_fresh gen --family olmo3-7b
+- `queue_marble.txt.failures`:
+  - === 01:03:32 step r5_marble FAILED try 1
 - See the 'Changes from the spec' lines in each report and in `docs/decisions.md` (2026-11-06): R1 reading interpretation; R2 validation set (the 56-reply hand check file was not in the repo; the 300 R/C human labels of the orthogonal-steering detector were used); R2 L3 rows are the atlas's benign questions; R3 reuses spec O's wording-1 files; Gemma wording-2 base last; R5 uses all 90 L4 questions for OLMo too; R7 forced-answer design.
 
