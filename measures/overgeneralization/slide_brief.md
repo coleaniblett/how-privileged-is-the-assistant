@@ -1,8 +1,8 @@
 # Overgeneralization slides: brief for the deck
 
-For whoever builds the overgeneralization section of "How Privileged Is the Assistant". Each slide below follows the deck's format: kicker, title, chart, side note, one closing line. Numbers are as of 5 November and provisional until the hand checks are in.
+For whoever builds the overgeneralization section of "How Privileged Is the Assistant". Each slide below follows the deck's format: kicker, title, chart, side note, one closing line. Numbers are as of 6 November. Judge results are provisional: the team is presenting them before human validation.
 
-**Bottom line for the talk:** the Assistant doesn't take over as a whole. Its habits can leak into thinly set-up roles, but what it believes about itself mostly stays put, and how much leaks depends on the model. So far, this measure gives no confirmed support for dominance.
+**Bottom line for the talk:** the Assistant doesn't take over as a whole. Its habits can leak into thinly set-up roles, but what it believes about itself mostly stays put, and how much leaks depends on the model. This measure's two pre-registered tests give no confirmed support for dominance.
 
 ## Files
 
@@ -45,11 +45,31 @@ Figures use the capstone report's fonts and background, and can be redrawn in th
 
 **Say if asked:** the dice scenes do rise in OLMo (+0.94 → +2.71) and Qwen (+0.30 → +0.96), but the rule isn't met across domains.
 
-### Slide B. The user's turn (add when released)
+### Slide B. The user's turn
 
 - **Kicker:** Overgeneralization · user prefill test
-- **Title:** to be written from the result
-- **Status:** the numbers are held back until Cole's and Grace's judge sheets are done (0 of 28 each on 5 November), so their labels stay blind. Adeeb adds this slide after that. It counts toward the verdict, so if it isn't ready, say so aloud rather than dropping it.
+- **Title:** The judge finds almost no Assistant traits in the user's turn
+- **Explain:** we start a real user message and let the model finish it. A Claude judge labels whether it stays the user, and whether that text has Assistant habits. Rule, fixed in advance: OLMo final must rise at least 5 points from base.
+- **Closing line:** The test doesn't fire. Two judge versions and a keyword check agree in OLMo and Qwen. Llama and Apertus leave a question open.
+
+| Model | Prefills | Base → final (%) | Change [95% range] |
+|---|---|---|---|
+| **OLMo 3 7B, decides** | **WildChat** | **0.0 → 0.2** | **+0.2 [0.0, +0.6]** |
+| OLMo 3 7B | oasst1 / UltraChat | 0.8 → 0.0 / 0.0 → 0.0 | −0.8 [−2.0, 0.0] / 0.0 |
+| Qwen3-8B | WildChat / oasst1 / UltraChat | 0.3 → 0.0 / 0.0 → 0.5 / 2.2 → 0.0 | −0.3 / +0.5 / −2.2 |
+| Llama 3.1 8B* | WildChat / oasst1 / UltraChat | 0.5 → 1.0 / 0.5 → 5.0 / 1.3 → 2.4 | +0.6 / +4.5 [+1.0, +8.9] / +1.1 |
+| Apertus 8B* | oasst1 / UltraChat | 0.0 → 3.7 / 0.0 → 2.8 | +3.7 / +2.8 |
+
+*Breadth check, added later. Only OLMo on WildChat decides.
+
+**Must say:**
+- These judge labels aren't human-validated.
+- The label is very rare: 20 of about 7,800 final samples, and about half look arguable. So this is a weak test, not proof of absence.
+- Gemma 31B can't be read: it writes as the user in only 3.5% of final samples. That's Cole's measure.
+
+**Say if asked:**
+- **Judge v3:** Cole's newer judge hasn't been run on these prefills. On his 5 open openers, its traits field goes OLMo 3 of 552 → 0 of 481 and Qwen 2 of 590 → 0 of 579.
+- **Keyword check:** it falls in OLMo, Qwen and Gemma. It rises in Llama and Apertus (+13 to +39), partly from switching into answering. It also rises among user-voice samples (+9 to +48), but those are mostly numbered lists, and most of the 28 we read look like users writing structured requests. Treat this as a lead.
 
 ### Slide C. What travels and what doesn't
 
@@ -160,7 +180,7 @@ Gemma's role-play gives any number in only 17–23% of replies, against 100% for
 
 Three cards, like slide 16:
 
-- **No confirmed spread:** no model passes the belief test; the user prefill test is still to come.
+- **No confirmed spread:** neither pre-registered test passes, the belief test or the user prefill test.
 - **Traits split:** habits reach light roles, self-image doesn't, and full role-play mostly stops both.
 - **It depends on the model:** where a character sits, whether refusal and voice move together, and what role-play does all differ.
 
@@ -176,13 +196,14 @@ Closing line: "Exploratory, apart from the belief and user prefill tests. Every 
 | "The style fall is just better acting" | The check we set up doesn't support it |
 | "OLMo's user turn writes training-style prompts" | A lead from a small count; the proper count hasn't been run |
 | "Post-training does X" in general | Most results differ by model |
-| Any user prefill test number | Held back until the sheets are done |
+| "No Assistant traits in the user's turn" as a firm finding | The label is rare, not human-validated, and Llama and Apertus keyword checks rise |
 
 ## How firm is each slide?
 
 | Slide | Firmness | Why |
 |---|---|---|
 | A. Belief test | Firm, for this task | Pre-registered, frozen items, all models |
+| B. User's turn | Pre-registered, provisional | Doesn't fire, but rare label, no human validation yet |
 | C. Traits | Moderate on self-image, tentative otherwise | Three models, but 12 questions per trait and a pending hand check |
 | D. Refusal | Moderate | Hand check backed the detector; depends on model and setup |
 | E. Patching | Good on refusal in trained models, unsettled on voice | Held on extra requests and new characters; no hand check |
