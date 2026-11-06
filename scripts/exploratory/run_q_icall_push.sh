@@ -4,7 +4,7 @@ set -uo pipefail
 cd /root/hpa-main-wt
 export OMP_NUM_THREADS=1
 PY=/opt/arena-env/bin/python
-exec 7>/tmp/claude-0/q_icall_push.lock
+exec 7>/tmp/claude-0/q_icall_push2.lock
 flock -n 7 || { echo "another running"; exit 0; }
 [ -f results/role_says/ICALL_PUSHED ] && { echo "already pushed"; exit 0; }
 until ssh -o ConnectTimeout=20 arena9-vinyl 'test -f /root/hpa-atlas2/results/role_says/Q_ICALL_DONE' 2>/dev/null; do sleep 60; done
