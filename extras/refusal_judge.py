@@ -96,7 +96,7 @@ def judge():
     tok.padding_side = "left"
     ids = {k: encode(tok, k)[0] for k in LABELS}
     model, device = load_model(config.MODELS["instruct"], torch.bfloat16)
-    for name in ["validation"] + FAMS + ["olmo_stages"]:
+    for name in ["validation"] + FAMS + ["olmo_stages"] + [f"r8_{f}" for f in FAMS]:
         src, dst = os.path.join(LOCAL, f"inputs_{name}.csv.gz"), os.path.join(LOCAL, f"judged_{name}.csv.gz")
         if os.path.exists(dst) or not os.path.exists(src):
             continue
