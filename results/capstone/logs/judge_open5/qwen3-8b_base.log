@@ -1,0 +1,2 @@
+600 samples, 0 already cached, to judge: 600 requests, about 978,116 input and 84,000 output tokens (no prices given: pass --price-in/--price-out in $ per million tokens)
+wrote 600 rows to results/capstone/qwen3-8b/vestigial_regression/judge_open5/base.jsonl; labels: {'user_voice': 457, 'completed_then_assistant': 128, 'invalid': 1, 'degenerate': 7, 'switched_to_assistant': 6, 'user_voice_with_assistant_traits': 1}; groups: {'user_voice': 458, 'completed_then_assistant': 128, 'invalid': 1, 'non_user_voice': 13}

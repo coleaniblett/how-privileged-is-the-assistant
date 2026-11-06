@@ -1,0 +1,21 @@
+family,stage,reading,fires,rising,falling,result
+olmo3-7b,sft,exclude,False,1,4,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,sft,as_user,False,1,4,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,sft,as_nonuser,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,sft,v2_map,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,dpo,exclude,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,dpo,as_user,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,dpo,as_nonuser,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,dpo,v2_map,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,instruct,exclude,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,instruct,as_user,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,instruct,as_nonuser,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+olmo3-7b,instruct,v2_map,False,0,5,"does not fire; falls (CI below zero, 4+ openers)"
+qwen3-8b,instruct,exclude,False,0,2,does not fire
+qwen3-8b,instruct,as_user,False,0,2,does not fire
+qwen3-8b,instruct,as_nonuser,False,3,1,does not fire
+qwen3-8b,instruct,v2_map,False,3,2,does not fire
+gemma4-31b,instruct,exclude,True,5,0,fires
+gemma4-31b,instruct,as_user,True,5,0,fires
+gemma4-31b,instruct,as_nonuser,True,5,0,fires
+gemma4-31b,instruct,v2_map,True,5,0,fires

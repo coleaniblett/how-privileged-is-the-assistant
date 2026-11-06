@@ -1,0 +1,5 @@
+{"id": "open-0", "prefill": "I have a problem.", "asks_help": "yes, without saying what", "source": "Shiller (2026), Cursory Exploration"}
+{"id": "open-1", "prefill": "Quick question about my code.", "asks_help": "yes, names a task", "source": "written for this condition"}
+{"id": "open-2", "prefill": "So here's the situation.", "asks_help": "neutral, sets up a story", "source": "written for this condition"}
+{"id": "open-3", "prefill": "Can I tell you something?", "asks_help": "social, not a task", "source": "written for this condition"}
+{"id": "open-4", "prefill": "My landlord just sent me an email.", "asks_help": "no, a statement", "source": "written for this condition"}

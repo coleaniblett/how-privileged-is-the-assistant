@@ -1,0 +1,9 @@
+family,stage,n,invalid,unclear,user_voice,non_user_voice,completed_then_assistant,closed_immediately
+olmo3-7b,base,600,24,1,254,66,255,0
+olmo3-7b,sft,600,0,0,241,8,233,118
+olmo3-7b,dpo,600,1,0,289,1,189,120
+olmo3-7b,instruct,600,1,0,282,1,198,118
+qwen3-8b,base,600,1,0,458,13,128,0
+qwen3-8b,instruct,600,21,0,384,1,194,0
+gemma4-31b,base,600,0,0,542,15,43,0
+gemma4-31b,instruct,600,0,0,0,600,0,0

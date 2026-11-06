@@ -1317,6 +1317,45 @@ Working model under test: a role wins on what it specifies; Assistant defaults f
 ## 2026-11-05 (UTC) - Spec K: Apertus added
 Apertus 8B: gate passed on can't-tell (+23.5 points; bias gap +2.0, not passed); the rise spreads to the light role in the system prompt (+32 vs +23) and the user turn (+21 vs +23) but stays in full role-play (+2 vs +23), like Llama. Across the five families the can't-tell rise reaches light roles everywhere and full role-play in OLMo, Qwen and Gemma but not in Llama or Apertus. OLMo SFT and DPO (descriptive timing) not yet run.
 
+## 2026-11-05 (UTC) - Vestigial regression judge arm: open-opener condition; plan logged BEFORE any generation
+Cole's decision. A first comparison of Cole's and Adeeb's validation labels (Grace's sheet pending) with the judge's showed that
+(a) the mid-sentence prefills nearly force user voice, and (b) most disagreements were about a model that finishes the user's sentence
+and then answers without closing the turn (v2: switched; both labellers: user voice). Response, in two parts:
+- **New condition (this entry):** 5 complete-but-open user openers (`data/prefill_open5.jsonl`), 120 samples each per checkpoint,
+  otherwise the main run's generation settings, on all 8 checkpoints; `scripts/run_open5.sh`. The mid-sentence condition and its
+  pre-registered criteria are unchanged and remain the primary judge arm. Inference treats the openers as fixed (resample samples
+  within each opener); draft decision rule in the measure README. Motivated by data (not blind in design), but generated and to be
+  judged blind: labels and the counting rule are fixed before the judge runs.
+- **Judge prompt v3 (proposed, not yet written):** `completed_then_assistant` (subtype closed/unclosed set by code from the
+  turn-closing token), `switched_to_assistant` reserved for abandoning the user's thought, `degenerate` with subtype
+  token_loop/incoherent from the regex flags, and a separate yes/no `repetitive` field so repetitive user text is not forced into
+  degenerate. Which group `completed_then_assistant` and "closes the turn at once" count toward is to be decided before judging.
+  v2 results stay reported as they are.
+- **Run note (2026-11-05, after generation):** all 8 checkpoints generated, 600 samples each. Gemma 4 31B (int8) ran out of GPU
+  memory at 120 samples per call on the 48 GB card; both Gemma checkpoints were generated with
+  `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` (an allocator setting; sampling unchanged). OLMo and Qwen ran without it.
+
+## 2026-11-05 (UTC) - Vestigial regression judge prompt v3 adopted (proposals as drafted); wired into judge.py, not yet run
+Cole's decision, taking the proposals in the v3 draft. `measures/vestigial_regression/judge_prompt.md` is now v3 (the default);
+v2 moves to `judge_prompt_v2.md` and stays selectable (`--prompt v2`), so the main run's v2 labels reproduce from the cache.
+- **The judge describes, code labels.** Judge fields: user_text (none/user/degenerate), completed, assistant_content, assistant_start
+  (first words, verbatim), assistant_traits, repetitive, reason. `judge.derive_v3` gives the label by a fixed rule (`judge_prompt.md`,
+  "Derived label"); the closed/unclosed subtype comes from the family's tokenizer turn markers, the token_loop/incoherent subtype from
+  the regex flags (`flags.py`).
+- **Headline groups** (`judge.v3_group`): `completed_then_assistant` is neither user voice nor non-user voice (its own reported rate);
+  `closed_immediately` is non-user voice for mid-sentence prefills (as v2) and its own reported rate for open openers; a plain-text
+  role label written by a base model ("Assistant:") does not count as closing the turn (flagged `plain_role_label`). The
+  `closed_immediately` rule was set after automated counts of the open-opener generations were seen (see the run note above).
+- **Continuity:** every v3 row carries its v2 counterpart (`v3_to_v2`); `validate` compares v3 output with the v2 human labels through it.
+- **Not yet run.** Next: re-judge the already-labelled samples under v3 as a check (not validation: the labellers have seen the v2
+  output); a fresh blind v3 validation sheet; then the open-opener run. Dry-run estimate at $2 / $10 per million tokens: about $0.22
+  for the labelled samples (46 requests) and about $21 for the open-opener set (4,436 requests).
+- **Run (2026-11-05):** judge v3 on all 8 checkpoints' open-opener generations (4,436 requests after deduplication, 8 processes with
+  their own cache files, merged into `judge_cache.jsonl` afterwards); before it, a v3 check on the 44 labelled validation samples (46
+  requests; human vs v3 on user/non-user voice 49/53 with `completed_then_assistant` on the user side, against 42/56 for v2; a check,
+  not validation). Analysis: `measures/vestigial_regression/analyze_open5.py`, with one added sensitivity reading (the v2 mapping),
+  added after the rule was frozen and before results were read.
+
 ## 2026-11-05 (UTC) - Result: spec L2 and L3 (style x 'never refuses'; harmless-instruction control; OLMo, Qwen, Gemma E4B; exploratory, outside every verdict)
 `results/working_model_L/L2_L3.md` (+ readings CSV, 30 saved replies per cell family). Replication: with-line cells within 10 points of the earlier role_gradient results in every family (none flagged). **L2 (final):** *style lowers refusal* (no line, vivid minus thin) MET in every family and wording (OLMo -46 sys / -76 user; Qwen -89 / -82; Gemma E4B -70 / -58 points, ranges excluding 0). *Instruction lowers refusal:* OLMo thin +19.4 / +29.9 and vivid +20.7 / +9.3 (system / user; vivid user not met), Gemma E4B thin +46.0 / +36.1 and Assistant +40.7 / +31.5 (vivid ~0 because it already refuses ~0), Qwen not met (thin +9.0 / +8.3, vivid ~0). *Resists the instruction* (thin with the line refuses at least 50% and the line lowers it by under 15): MET for Qwen in both wordings (85% / 82% with the line), not met for OLMo (73% / 59% with the line, lowered by 19-30) or Gemma E4B. **L3:** thin roles obey the harmless instructions as well as vivid roles (OLMo 96-98% vs 96-97%; Qwen 93 / 87% vs 91 / 83%; Gemma E4B 99-100% vs 97-98%; scored on finished replies for 'done' and 'under 30 words'; finish rates in the report). Pre-set reading: **gate separate from obedience** for OLMo and Qwen (thin obeys at least 70%, within 15 points of vivid, and refuses 48-77 points more than vivid with the line); **inconclusive** for Gemma E4B because thin refuses only 25-26 points more than vivid with the line (needs 30). The rival (vivid obeys 30+ points more than thin) is not supported anywhere. Reading: the style of a role lowers refusal strongly regardless of the line; the line itself adds a further drop in OLMo and Gemma E4B but barely in Qwen; plain roles still refuse while obeying harmless instructions, so refusal is not simple weak obedience (limit: a harmless instruction differs from an instruction against trained behaviour). Gemma E4B only (not 31B); few roles.
 

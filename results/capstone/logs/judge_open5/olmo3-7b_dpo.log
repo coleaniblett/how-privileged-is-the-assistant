@@ -1,0 +1,2 @@
+600 samples, 0 already cached, to judge: 519 requests, about 851,021 input and 72,660 output tokens (no prices given: pass --price-in/--price-out in $ per million tokens)
+wrote 600 rows to results/capstone/olmo3-7b/vestigial_regression/judge_open5/dpo.jsonl; labels: {'user_voice': 289, 'completed_then_assistant': 189, 'invalid': 1, 'closed_immediately': 120, 'switched_to_assistant': 1}; groups: {'user_voice': 289, 'completed_then_assistant': 189, 'invalid': 1, 'closed_immediately': 120, 'non_user_voice': 1}

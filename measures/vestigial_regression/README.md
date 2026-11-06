@@ -23,7 +23,7 @@ Build status:
   `analyze_exchanges.py` here. Tested on CPU and on a 10-exchange Qwen3-8B IT GPU smoke run; no checkpoint has been scored in
   full. The pilot's and the overnight run's isolated-slot scores stay frozen (`results/`, `results/capstone/<family>/core/scores*`,
   `attic/`) and are analysed by `analyze.py --locked`, which is kept for that record.
-- **Judge arm: built, not yet run.** `judge.py` and `judge_prompt.md` (**v2**, 2026-11-03; `claude-sonnet-5-5`, temperature 0), with
+- **Judge arm: built, not yet run.** `judge.py` and `judge_prompt_v2.md` (**v2**, 2026-11-03; **v3** since 2026-11-05 in `judge_prompt.md`, see "open-opener condition"; `claude-sonnet-5-5`, temperature 0), with
   a cache, a cost estimate and a 60-sample human validation sheet (`judge_validation/sheet.csv`, labels still empty). It
   has never called the API and is tested with a fake client. Prefills: `data/prefill_incomplete_200.jsonl` (real user turns cut
   inside a sentence). Generations on them exist for OLMo (4 stages) and Qwen (2) from Grace's collection run (uncommitted, in her
@@ -320,6 +320,44 @@ family; **bits per byte** for any cross-family comparison.
   included. **The labels must be checked by a teammate**: the existing pilot labels were written by the agent that
   ran the pilot. Report raw agreement and Cohen's kappa. Default bar (the team can change it before running):
   revise the judge prompt if agreement falls below 80%.
+
+### Judge arm, open-opener condition (added 2026-11-05, before any generation)
+
+A second condition, added after the mid-sentence results and the first human-vs-judge comparison (so motivated by data, though
+generated blind); the criteria above are unchanged. Rationale: a mid-sentence prefill nearly forces a user-voice continuation
+(capacity under pressure; OLMo's trained stages sit near 98% user voice), while a complete but open opener leaves the model free
+to stay the user, close the turn, or move into the assistant (tendency). Plan: `docs/decisions.md`, 2026-11-05.
+
+- **Openers** (`data/prefill_open5.jsonl`), chosen to vary how much they ask for help: "I have a problem." (Shiller);
+  "Quick question about my code."; "So here's the situation."; "Can I tell you something?"; "My landlord just sent me an email."
+- **Generation.** As the main run (unterminated user turn, stop only at end of text, 120 new tokens, T = 0.7, seed
+  `config.SEED`, `--save-ids`, the family's generation precision), **120 samples per opener**, 600 per checkpoint, every
+  checkpoint of OLMo 3 7B, Qwen3-8B and Gemma 4 31B (`scripts/run_open5.sh` ->
+  `results/capstone/<family>/core/generations_open5/<stage>.jsonl`).
+- **Inference.** The five openers are fixed conditions, not a sample of openers: report each opener and a pooled estimate
+  (openers equally weighted), with 95% bootstrap CIs resampling **samples within each opener**. Conclusions are about these
+  five openers.
+- **Decision rule (draft, to be frozen with the labels).** Fires if the pooled non-user-voice rate rises from base with the CI
+  excluding zero (and by at least the minimum rate difference, still OPEN as above) **and** the change has the same sign at
+  4 or more of the 5 openers.
+- **Labels: judge prompt v3** (`judge_prompt.md`, fixed 2026-11-05 before the judge was run on these generations; v2 is kept as
+  `judge_prompt_v2.md` for the main run's labels). The judge describes the continuation (user text, completed, assistant content and
+  where it starts, assistant traits, repetitive) and `judge.derive_v3` labels it: `user_voice`, `user_voice_with_assistant_traits`,
+  `completed_then_assistant` (closed/unclosed from the family's turn markers), `switched_to_assistant` (abandoned/immediate),
+  `closed_immediately`, `degenerate` (token_loop/incoherent from the regex flags), `unclear`. Headline groups (`judge.v3_group`):
+  user voice = the two user-voice labels; non-user voice = switched + degenerate (+ `closed_immediately` for mid-sentence prefills);
+  `completed_then_assistant`, and `closed_immediately` for open openers, are reported as their own rates. The `closed_immediately` rule
+  was set **after** automated counts were seen (trained OLMo closes "Can I tell you something?" at once in 118-120 of 120). The
+  generations were not read before the labels were fixed.
+
+- **Result (2026-11-05, `results/capstone/vestigial_regression/judge_open5/results.md`; judge v3 not yet validated):** non-user-voice
+  rate change from base, pooled over the five openers, refused samples excluded: Gemma 4 31B IT **fires**, +97.5 [+96.2, +98.7] pts,
+  5/5 openers (it opens its thinking channel in the user's turn at once, or loops); OLMo SFT −10.3, DPO −11.4, Instruct −11.4 (CIs below
+  zero, 4-5 openers falling: trained OLMo stays the user more than base); Qwen3-8B IT −2.0 [−3.2, −0.8], does not fire. Same verdicts
+  with refused samples counted either way. Under the v2 mapping (sensitivity), Qwen IT is +10.4 [+5.5, +15.3] but rises at only 3/5
+  openers, so it still does not fire; its rise is `completed_then_assistant` (+12 pts, mostly "I have a problem."). Trained OLMo closes
+  "Can I tell you something?" at once in 98-100% of samples (reported on its own); counting it as non-user voice would not make OLMo
+  fire (at most 2 of 5 openers would rise).
 
 ### Combining the arms
 
