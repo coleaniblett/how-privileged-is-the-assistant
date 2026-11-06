@@ -109,3 +109,49 @@ My reading (one reader, not blind to the label, not a validation): **about half 
 - **Look doubtful (could be a person writing a long, structured request):** Qwen "Please note that the user is not asking for the most common disorders..." (a user-written instruction); OLMo "Hello! I am a text-to-image prompt generator. I can help you generate prompts..." (a typical WildChat user prompt that sets up a role); Llama's CUDA/PyCUDA plan, the "Turn the following thought into a plan" task, the Samsung/Odin3 detail, the face-obfuscation description (long, detailed user text), and CARTE NOIRE marketing copy (not assistant habits, rather pasted text).
 - **So what:** the label is rare (20 of about 7,800 judged final samples, 13 of them Llama's), and about half of the rare cases are arguable; the large keyword shifts (Llama and Apertus up by 25 to 39 points on the exchange sets and Llama by 13 on WildChat; Qwen and OLMo down) are driven by a different feature (stock phrases and markdown) than this label. Neither arm suggests assistant traits appear in the user turn at the pre-set bar in any family except possibly Llama's oasst1 exchange set, where the primary change is +4.5 [+1.0, +8.9]: below the +5 bar by its point estimate and resting on 101 of 200 prefills with 11 flagged samples. This stays supporting and provisional.
 
+
+## 5. Is the keyword rise mid-turn switching? The keyword any-flag share split by the v2 judge label
+
+Question (Adeeb, 2026-11-06): the keyword rise in Llama and Apertus might be samples that switch to the assistant mid-turn rather than assistant traits in the user's voice. For each family and prefill set, at base and final (instruct): the share of samples with a keyword flag among samples the v2 judge labelled user voice (`user_voice` + `user_voice_with_assistant_traits`), `switched_to_assistant` and `degenerate` (invalid excluded), with sample counts; the user-voice share of samples; and the change from base in the user-voice row, paired per prefill (95% bootstrap over prefills; prefills with no user-voice sample at either stage are dropped). Labels are PROVISIONAL. Apertus has no WildChat labels (no 200-set judge run), so its rows are the exchange sets; Gemma has no exchange-set labels, so only its WildChat set. CSV: `user_traits_keyword_by_label.csv`.
+
+| family | prefill set | label class | samples base / final | keyword flag % base | keyword flag % final | user-voice share of samples base / final (%) | user-voice change [95% CI], prefills used / dropped |
+|---|---|---|---|---|---|---|---|
+| olmo3-7b | oasst1 (exchange set) | user voice | 195 / 595 | 10.8 | 4.0 | 34.7 / 99.3 | -5.0 [-10.8, +0.4], 123 / 77 |
+| olmo3-7b | oasst1 (exchange set) | switched_to_assistant | 313 / 4 | 35.5 | 50.0 |  |  |
+| olmo3-7b | oasst1 (exchange set) | degenerate | 54 / 0 | 11.1 | - |  |  |
+| olmo3-7b | ultrachat (exchange set) | user voice | 286 / 593 | 9.1 | 6.7 | 50.3 / 99.0 | -2.1 [-7.5, +3.0], 152 / 48 |
+| olmo3-7b | ultrachat (exchange set) | switched_to_assistant | 247 / 4 | 32.0 | 75.0 |  |  |
+| olmo3-7b | ultrachat (exchange set) | degenerate | 36 / 2 | 8.3 | 50.0 |  |  |
+| olmo3-7b | wildchat (200-prefill set) | user voice | 328 / 592 | 11.0 | 3.2 | 56.4 / 99.3 | -9.2 [-13.9, -4.8], 156 / 44 |
+| olmo3-7b | wildchat (200-prefill set) | switched_to_assistant | 173 / 4 | 33.5 | 50.0 |  |  |
+| olmo3-7b | wildchat (200-prefill set) | degenerate | 81 / 0 | 3.7 | - |  |  |
+| qwen3-8b | oasst1 (exchange set) | user voice | 187 / 195 | 18.2 | 12.3 | 31.2 / 35.1 | -10.6 [-19.0, -2.3], 71 / 93 |
+| qwen3-8b | oasst1 (exchange set) | switched_to_assistant | 365 / 354 | 62.2 | 4.8 |  |  |
+| qwen3-8b | oasst1 (exchange set) | degenerate | 48 / 7 | 12.5 | 0.0 |  |  |
+| qwen3-8b | ultrachat (exchange set) | user voice | 127 / 148 | 12.6 | 21.6 | 21.2 / 26.6 | +5.2 [-3.3, +14.1], 45 / 67 |
+| qwen3-8b | ultrachat (exchange set) | switched_to_assistant | 464 / 406 | 64.2 | 2.2 |  |  |
+| qwen3-8b | ultrachat (exchange set) | degenerate | 7 / 3 | 14.3 | 0.0 |  |  |
+| qwen3-8b | wildchat (200-prefill set) | user voice | 325 / 225 | 10.8 | 9.8 | 54.6 / 38.9 | -4.6 [-10.7, +1.7], 117 / 60 |
+| qwen3-8b | wildchat (200-prefill set) | switched_to_assistant | 214 / 336 | 49.5 | 5.7 |  |  |
+| qwen3-8b | wildchat (200-prefill set) | degenerate | 56 / 18 | 10.7 | 0.0 |  |  |
+| gemma4-31b | wildchat (200-prefill set) | user voice | 389 / 21 | 11.1 | 0.0 | 65.9 / 3.5 | +0.0 [+0.0, +0.0], 10 / 168 |
+| gemma4-31b | wildchat (200-prefill set) | switched_to_assistant | 109 / 142 | 24.8 | 0.0 |  |  |
+| gemma4-31b | wildchat (200-prefill set) | degenerate | 92 / 434 | 7.6 | 0.7 |  |  |
+| llama3.1-8b | oasst1 (exchange set) | user voice | 291 / 202 | 18.6 | 46.5 | 48.6 / 33.7 | +30.0 [+19.6, +40.4], 101 / 76 |
+| llama3.1-8b | oasst1 (exchange set) | switched_to_assistant | 167 / 387 | 27.5 | 61.0 |  |  |
+| llama3.1-8b | oasst1 (exchange set) | degenerate | 141 / 11 | 13.5 | 36.4 |  |  |
+| llama3.1-8b | ultrachat (exchange set) | user voice | 313 / 161 | 27.5 | 32.3 | 52.2 / 26.9 | +14.7 [+4.9, +24.6], 78 / 98 |
+| llama3.1-8b | ultrachat (exchange set) | switched_to_assistant | 203 / 432 | 36.9 | 64.4 |  |  |
+| llama3.1-8b | ultrachat (exchange set) | degenerate | 84 / 6 | 22.6 | 16.7 |  |  |
+| llama3.1-8b | wildchat (200-prefill set) | user voice | 377 / 365 | 14.1 | 18.4 | 63.3 / 61.1 | +9.0 [+2.7, +15.4], 146 / 49 |
+| llama3.1-8b | wildchat (200-prefill set) | switched_to_assistant | 39 / 213 | 17.9 | 46.0 |  |  |
+| llama3.1-8b | wildchat (200-prefill set) | degenerate | 180 / 19 | 21.1 | 47.4 |  |  |
+| apertus-8b | oasst1 (exchange set) | user voice | 204 / 60 | 9.8 | 41.7 | 34.1 / 10.0 | +21.1 [+3.7, +38.6], 41 / 98 |
+| apertus-8b | oasst1 (exchange set) | switched_to_assistant | 209 / 540 | 37.8 | 57.8 |  |  |
+| apertus-8b | oasst1 (exchange set) | degenerate | 185 / 0 | 8.1 | - |  |  |
+| apertus-8b | ultrachat (exchange set) | user voice | 276 / 75 | 11.6 | 53.3 | 46.0 / 12.5 | +48.2 [+33.7, +62.1], 47 / 117 |
+| apertus-8b | ultrachat (exchange set) | switched_to_assistant | 189 / 525 | 24.9 | 53.3 |  |  |
+| apertus-8b | ultrachat (exchange set) | degenerate | 135 / 0 | 5.2 | - |  |  |
+
+**Read.** Mid-turn switching is part of the story but not all of it. At final, the keyword flag is much more common among `switched_to_assistant` samples (Llama 46 to 64%, Apertus 53 to 58%) than among user-voice samples, and those switched samples are most of the final samples for Apertus (the user-voice share falls from 34 to 10% and 46 to 12.5%) and Llama's exchange sets (49 to 34% and 52 to 27%). But **within the samples the judge calls user voice, the keyword share also rises for Llama and Apertus**: Llama +30.0 [+19.6, +40.4] (oasst1), +14.7 [+4.9, +24.6] (UltraChat), +9.0 [+2.7, +15.4] (WildChat); Apertus +21.1 [+3.7, +38.6] and +48.2 [+33.7, +62.1] (on 41 and 47 prefills only). OLMo falls (-9.2 [-13.9, -4.8] on WildChat), Qwen is flat or down (UltraChat +5.2 [-3.3, +14.1], the only upward point), and Gemma has too few user-voice samples at final (21 of 597) to read. So the keyword rise is not only switched samples being counted. Why the judge still rarely says `user_voice_with_assistant_traits` for these samples is not settled here: the keyword features (stock phrases, markdown the prefill did not contain) can sit in user text the judge treats as a normal long request (the read in section 4 found about half of the rare UVAT samples doubtful for the same reason), the judge's `user_voice` class may include text that continues into assistant-style content, and the keyword code cuts at turn markers and role labels while the judge reads the whole continuation. Provisional; no verdict changes.
+

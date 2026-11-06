@@ -36,6 +36,22 @@ def main():
           "Samples with user text only; change from base is a bootstrap that resamples samples within each opener, so it **ignores spread between the 5 openers**. Per-opener rows: `user_traits_v3_per_opener.csv`.", "", V,
           "Gemma instruct has no user text at all (every sample is a switch to the assistant or degenerate), so there is nothing to read there."]
     L += ["", "## 4. The read: do the `user_voice_with_assistant_traits` samples at final look right?", "", read]
+    B = pd.read_csv(os.path.join(OUT, "user_traits_keyword_by_label.csv"))
+    f1 = lambda x: "-" if x != x else f"{x:.1f}"
+    L += ["", "## 5. Is the keyword rise mid-turn switching? The keyword any-flag share split by the v2 judge label", "",
+          "Question (Adeeb, 2026-11-06): the keyword rise in Llama and Apertus might be samples that switch to the assistant mid-turn rather than assistant traits in the user's voice. For each family and prefill set, at base and final (instruct): the share of samples with a keyword flag among samples the v2 judge labelled "
+          "user voice (`user_voice` + `user_voice_with_assistant_traits`), `switched_to_assistant` and `degenerate` (invalid excluded), with sample counts; the user-voice share of samples; and the change from base in the user-voice row, paired per prefill (95% bootstrap over prefills; prefills with no user-voice sample at either stage are dropped). "
+          "Labels are PROVISIONAL. Apertus has no WildChat labels (no 200-set judge run), so its rows are the exchange sets; Gemma has no exchange-set labels, so only its WildChat set. CSV: `user_traits_keyword_by_label.csv`.", "",
+          "| family | prefill set | label class | samples base / final | keyword flag % base | keyword flag % final | user-voice share of samples base / final (%) | user-voice change [95% CI], prefills used / dropped |", "|---|---|---|---|---|---|---|---|"]
+    for r in B.itertuples():
+        uv = r.cls.startswith("user voice")
+        L.append(f"| {r.family} | {r.prefill_set} | {r.cls.split(' (')[0]} | {r.n_base} / {r.n_final} | {f1(r.flag_base)} | {f1(r.flag_final)} | " + (f"{r.uv_share_base:.1f} / {r.uv_share_final:.1f}" if uv else "") + " | "
+                 + (f"{P(r.change)} [{P(r.lo)}, {P(r.hi)}], {int(r.prefills_used)} / {int(r.dropped)}" if uv else "") + " |")
+    L += ["", "**Read.** Mid-turn switching is part of the story but not all of it. At final, the keyword flag is much more common among `switched_to_assistant` samples (Llama 46 to 64%, Apertus 53 to 58%) than among user-voice samples, and those switched samples are most of the final samples for Apertus (the user-voice share falls from 34 to 10% and 46 to 12.5%) and Llama's exchange sets (49 to 34% and 52 to 27%). "
+          "But **within the samples the judge calls user voice, the keyword share also rises for Llama and Apertus**: Llama +30.0 [+19.6, +40.4] (oasst1), +14.7 [+4.9, +24.6] (UltraChat), +9.0 [+2.7, +15.4] (WildChat); Apertus +21.1 [+3.7, +38.6] and +48.2 [+33.7, +62.1] (on 41 and 47 prefills only). "
+          "OLMo falls (-9.2 [-13.9, -4.8] on WildChat), Qwen is flat or down (UltraChat +5.2 [-3.3, +14.1], the only upward point), and Gemma has too few user-voice samples at final (21 of 597) to read. So the keyword rise is not only switched samples being counted. "
+          "Why the judge still rarely says `user_voice_with_assistant_traits` for these samples is not settled here: the keyword features (stock phrases, markdown the prefill did not contain) can sit in user text the judge treats as a normal long request (the read in section 4 found about half of the rare UVAT samples doubtful for the same reason), "
+          "the judge's `user_voice` class may include text that continues into assistant-style content, and the keyword code cuts at turn markers and role labels while the judge reads the whole continuation. Provisional; no verdict changes.", ""]
     open(os.path.join(OUT, "user_turn.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
 
 
