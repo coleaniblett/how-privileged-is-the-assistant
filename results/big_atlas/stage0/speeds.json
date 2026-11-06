@@ -1,0 +1,100 @@
+{
+ "load_s": 14.276636123657227,
+ "rendered_role": "summarizer",
+ "rendered": null,
+ "gen": {
+  "trait_vector_128": {
+   "n": 50,
+   "s": 20.982091188430786,
+   "per_s": 2.3829845915248553,
+   "capped": 44
+  },
+  "role_256": {
+   "n": 50,
+   "s": 42.68218755722046,
+   "per_s": 1.171448861025906,
+   "capped": 49,
+   "mean_tokens": 255.84
+  },
+  "role_256_bs100": {
+   "n": 100,
+   "s": 57.50883483886719,
+   "per_s": 1.7388632595354772
+  }
+ },
+ "judge": {
+  "trait_vec": {
+   "n": 50,
+   "per_s": 8.411281787638028
+  },
+  "matrix": {
+   "n": 50,
+   "per_s": 6.37810776018946
+  },
+  "matrix_first_token": {
+   "n": 50,
+   "per_s": 9.917339738988106
+  }
+ },
+ "tree_vs_first": {
+  "n": 150,
+  "spearman": 0.7073772757429716,
+  "mean_abs_diff": 21.570607023001646,
+  "none_tree": 0
+ },
+ "trait_check": {
+  "disorganized": {
+   "pos": 99.9938247680664,
+   "neg": 1.1550593992382118e-08,
+   "n_pos": 5,
+   "n_neg": 5
+  },
+  "inclusive": {
+   "pos": 97.41357727050782,
+   "neg": 7.805133855498639,
+   "n_pos": 5,
+   "n_neg": 5
+  },
+  "educational": {
+   "pos": 95.26253967285156,
+   "neg": 30.619397736599513,
+   "n_pos": 5,
+   "n_neg": 5
+  },
+  "analytical": {
+   "pos": 97.53521118164062,
+   "neg": 56.105136966705324,
+   "n_pos": 5,
+   "n_neg": 5
+  },
+  "mystical": {
+   "pos": 77.8055568356067,
+   "neg": 1.0402533112685574e-09,
+   "n_pos": 5,
+   "n_neg": 5
+  }
+ },
+ "role_scores": {
+  "pirate": 2.9999998092651365,
+  "widow": 3.0000000476837156,
+  "translator": 2.988509750366211,
+  "maverick": 2.999999976158142,
+  "patient": 3.0000000953674317
+ },
+ "judge_none": {
+  "trait_vec": 0,
+  "role": 0
+ },
+ "forward": {
+  "role_prompt_states": {
+   "n": 384,
+   "per_s": 93.1848129048779
+  },
+  "short_prompt": {
+   "n": 512,
+   "per_s": 152.56431108892033,
+   "tokens": 32
+  }
+ },
+ "tokens_example_reply": null
+}
