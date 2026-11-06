@@ -1,0 +1,2 @@
+LS_N=20000
+projection_s=7278
