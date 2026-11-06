@@ -1,0 +1,49 @@
+role,source,stratum,type,cos_dist_L24,cos_dist_centred_L24,axis_proj_L24,axis_proj_vs_assistant_L24,cos_dist_L33,cos_dist_centred_L33,axis_proj_L33,axis_proj_vs_assistant_L33,cos_dist_L42,cos_dist_centred_L42,axis_proj_L42,axis_proj_vs_assistant_L42,split,distance_rank_of_48,focus
+aa:fool,assistant_axis,human|Q4,human,0.014041,1.1584,-214.34,-47.31,0.02262,1.2294,-208.46,-65.476,0.10961,1.0118,-72.7,-64.979,confirmation,42,False
+aa:contrarian,assistant_axis,human|Q3,human,0.010468,0.91097,-204.06,-37.033,0.015812,0.96702,-197.79,-54.809,0.079952,0.85099,-65.355,-57.634,confirmation,18,True
+aa:merchant,assistant_axis,human|Q2,human,0.0040622,0.37451,-186.05,-19.024,0.01443,0.81939,-192.79,-49.812,0.082916,1.0716,-84.648,-76.927,discovery,13,False
+aa:forecaster,assistant_axis,human|Q1,human,0.0029842,0.27493,-183.41,-16.381,0.0078681,0.35572,-174.37,-31.387,0.045054,0.50805,-50.344,-42.624,discovery,5,True
+aa:hoarder,assistant_axis,human|Q4,human,0.011994,1.1071,-210.08,-43.05,0.023148,1.2865,-210.57,-67.588,0.10865,1.0016,-75.766,-68.046,discovery,43,False
+aa:novelist,assistant_axis,human|Q3,human,0.0052342,0.67588,-197.37,-30.342,0.01641,0.89088,-195.01,-52.027,0.068113,0.82252,-68.665,-60.945,confirmation,20,False
+aa:guru,assistant_axis,human|Q2,human,0.0084762,0.84157,-200.2,-33.176,0.014972,0.91083,-195.4,-52.416,0.094316,1.0086,-77.425,-69.704,discovery,15,False
+aa:anthropologist,assistant_axis,human|Q1,human,0.0038592,0.37867,-186.68,-19.651,0.01191,0.59915,-184.55,-41.575,0.066706,0.79171,-64.981,-57.261,confirmation,8,False
+aa:criminal,assistant_axis,human|Q4,human,0.0098168,0.95052,-204.31,-37.282,0.019014,1.1578,-203.19,-60.208,0.10153,1.048,-83.093,-75.373,confirmation,30,False
+aa:symbiont,assistant_axis,non_human|Q2,non_human,0.0042243,0.48456,-192.16,-25.13,0.013185,0.80715,-193.21,-50.233,0.071871,0.92954,-76.471,-68.751,discovery,10,True
+aa:whale,assistant_axis,non_human|Q3,non_human,0.0085536,0.94448,-205.17,-38.143,0.018422,1.1492,-203.52,-60.54,0.10562,1.05,-77.655,-69.934,discovery,28,False
+aa:parasite,assistant_axis,non_human|Q4,non_human,0.0066264,0.73388,-197.68,-30.649,0.020357,1.1581,-203.68,-60.696,0.091686,1.0456,-83.988,-76.268,confirmation,37,False
+aa:ecosystem,assistant_axis,non_human|Q2,non_human,0.003176,0.34921,-187.8,-20.768,0.013792,0.78813,-191.94,-48.96,0.074363,0.90172,-73.129,-65.408,confirmation,12,False
+aa:swarm,assistant_axis,non_human|Q3,non_human,0.004482,0.47053,-190.62,-23.591,0.016838,0.99118,-198.47,-55.495,0.091337,0.96183,-74.672,-66.951,confirmation,25,False
+aa:mycorrhizal,assistant_axis,non_human|Q4,non_human,0.0061592,0.7149,-198,-30.971,0.019341,1.1271,-203.51,-60.535,0.0989,1.0743,-84.099,-76.378,discovery,32,False
+aa:hive,assistant_axis,non_human|Q3,non_human,0.005071,0.55403,-192.95,-25.918,0.01662,0.98147,-198.31,-55.335,0.091671,0.93513,-71.142,-63.422,confirmation,23,False
+aa:crystalline,assistant_axis,non_human|Q4,non_human,0.0090685,0.91352,-204.8,-37.769,0.020249,1.1455,-204.66,-61.681,0.094929,1.0377,-80.936,-73.216,discovery,36,False
+aa:angel,assistant_axis,fictional_mythic|Q2,fictional_mythic,0.0047012,0.57869,-193.94,-26.918,0.015711,0.90645,-195.19,-52.207,0.093615,0.97497,-74.417,-66.697,discovery,16,False
+aa:homunculus,assistant_axis,fictional_mythic|Q4,fictional_mythic,0.0078556,0.9044,-203.59,-36.565,0.019239,1.14,-203.39,-60.413,0.096024,1.0572,-81.903,-74.182,discovery,31,True
+aa:ancient,assistant_axis,fictional_mythic|Q3,fictional_mythic,0.00711,0.77328,-199.98,-32.948,0.016722,1.0084,-199.23,-56.248,0.099757,1.019,-79.697,-71.977,discovery,24,False
+aa:tulpa,assistant_axis,fictional_mythic|Q2,fictional_mythic,0.0069558,0.84649,-201.08,-34.05,0.015789,0.89491,-193.72,-50.746,0.083012,0.92795,-71.225,-63.504,confirmation,17,False
+aa:wraith,assistant_axis,fictional_mythic|Q4,fictional_mythic,0.0077813,0.94436,-205.37,-38.34,0.021001,1.1926,-206.27,-63.288,0.10785,1.0298,-77.748,-70.027,confirmation,41,False
+aa:familiar,assistant_axis,fictional_mythic|Q3,fictional_mythic,0.0044344,0.52762,-193.3,-26.277,0.017118,0.99568,-198.68,-55.704,0.10201,1.0169,-76.844,-69.123,discovery,26,False
+aa:genie,assistant_axis,fictional_mythic|Q4,fictional_mythic,0.012263,1.1361,-213.53,-46.507,0.020904,1.2344,-208.16,-65.186,0.11724,1.1202,-84.209,-76.488,confirmation,40,False
+aa:zeitgeist,assistant_axis,fictional_mythic|Q3,fictional_mythic,0.0056013,0.63227,-195.41,-28.382,0.01645,1.0264,-200.06,-57.078,0.081367,0.92278,-73.384,-65.664,confirmation,21,False
+aa:cyborg,assistant_axis,ai_machine|Q2,ai_machine,0.0044339,0.52734,-193.6,-26.569,0.012778,0.7687,-192.11,-49.133,0.083789,0.9355,-74.935,-67.214,confirmation,9,False
+aa:robot,assistant_axis,ai_machine|Q4,ai_machine,0.0057026,0.54737,-191.32,-24.291,0.018583,0.98979,-198.96,-55.976,0.10683,0.90767,-63.856,-56.135,discovery,29,False
+aa:assistant,assistant_axis,ai_machine|Q1,ai_machine,0.0007467,0.05691,-170.93,-3.9062,0.001111,0.04295,-149.08,-6.1036,0.0022944,0.023519,-7.657,0.063522,confirmation,1,True
+zh:buddy,zheng,relationship|T1,relationship,0.0020042,0.14471,-174.05,-7.0187,0.0069335,0.33914,-172.66,-29.683,0.059398,0.59898,-52.243,-44.522,discovery,3,False
+zh:mother-in-law,zheng,relationship|T3,relationship,0.0073743,0.70058,-193.6,-26.573,0.019479,1.1127,-201.84,-58.859,0.1185,1.0393,-74.579,-66.859,confirmation,33,False
+zh:father,zheng,relationship|T2,relationship,0.0045604,0.42168,-186,-18.975,0.014637,0.86535,-193.26,-50.286,0.10118,0.95424,-70.955,-63.235,confirmation,14,True
+zh:companion,zheng,relationship|T1,relationship,0.00086113,0.064738,-172.37,-5.3423,0.0035577,0.14934,-161.9,-18.923,0.017353,0.17916,-27.37,-19.65,discovery,2,False
+zh:mom,zheng,relationship|T3,relationship,0.0059405,0.49901,-186.57,-19.544,0.017422,0.94851,-196.21,-53.235,0.10388,0.94317,-68.547,-60.826,discovery,27,True
+zh:fiancé,zheng,relationship|T2,relationship,0.0046471,0.41891,-185,-17.97,0.016227,0.92551,-194.61,-51.632,0.10287,0.93715,-67.464,-59.743,confirmation,19,False
+zh:historian,zheng,expertise|T2,expertise,0.0027734,0.23202,-179.49,-12.464,0.013226,0.57715,-180.02,-37.04,0.064366,0.68813,-54.55,-46.829,confirmation,11,False
+zh:enthusiast,zheng,expertise|T1,expertise,0.0020815,0.15313,-175.58,-8.5557,0.0076207,0.38108,-176.69,-33.714,0.072683,0.71845,-60.553,-52.832,discovery,4,False
+zh:politician,zheng,expertise|T3,expertise,0.0067375,0.59484,-190.44,-23.412,0.016542,0.90437,-192.97,-49.987,0.097536,0.89508,-67.454,-59.733,discovery,22,True
+zh:software engineer,zheng,expertise|T2,expertise,0.0012392,0.084152,-169.31,-2.2851,0.011875,0.4529,-170.31,-27.331,0.054072,0.54384,-46.24,-38.52,confirmation,7,False
+zh:archivist,zheng,expertise|T1,expertise,0.0020201,0.18044,-179.76,-12.736,0.010912,0.51059,-180.4,-37.42,0.085851,0.93654,-74.954,-67.233,discovery,6,False
+zh:chemist,zheng,expertise|T3,expertise,0.0020033,0.15611,-176.11,-9.0839,0.020244,0.74235,-184.05,-41.07,0.072231,0.77754,-61.42,-53.7,confirmation,35,True
+anchor:a ferry captain,anchor,anchor|light job,light job,0.0054545,0.52588,-189.85,-22.824,0.019632,1.0996,-201.38,-58.402,0.11291,1.1351,-83.665,-75.944,discovery,34,False
+anchor:a village baker,anchor,anchor|light job,light job,0.0053613,0.54537,-191.39,-24.361,0.02064,1.0959,-202.22,-59.243,0.1179,1.1058,-81.134,-73.414,confirmation,38,False
+anchor:a long-haul trucker,anchor,anchor|light job,light job,0.0054203,0.52894,-190.29,-23.264,0.020758,1.0971,-201.6,-58.619,0.11205,1.0795,-80.583,-72.862,discovery,39,True
+anchor:Ottoline Brandt,anchor,anchor|strong character,strong character,0.021753,1.3079,-223.14,-56.11,0.028256,1.1755,-204.26,-61.283,0.14251,0.99167,-64.172,-56.452,discovery,48,True
+anchor:Dmitri Volkov,anchor,anchor|strong character,strong character,0.020773,1.3378,-226.64,-59.614,0.026525,1.196,-206.11,-63.135,0.11988,1.0569,-78.965,-71.245,confirmation,46,False
+anchor:Marguerite Oyelaran,anchor,anchor|strong character,strong character,0.02073,1.2978,-222.84,-55.812,0.027358,1.2045,-206.69,-63.708,0.1216,1.101,-82.391,-74.671,discovery,47,False
+anchor:Hannah Reed,anchor,anchor|L2 thin role,L2 thin role,0.011868,1.0429,-206.84,-39.817,0.023306,1.1922,-205.6,-62.626,0.12448,1.0326,-72.445,-64.724,confirmation,44,True
+anchor:Captain Rook,anchor,anchor|L2 vivid role,L2 vivid role,0.01493,1.159,-214.21,-47.181,0.025326,1.2448,-209.6,-66.619,0.11792,1.0539,-77.474,-69.754,discovery,45,False

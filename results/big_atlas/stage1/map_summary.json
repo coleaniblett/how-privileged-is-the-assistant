@@ -1,0 +1,25 @@
+{
+ "layers": [
+  24,
+  33,
+  42
+ ],
+ "neutral_tokens": 18,
+ "n_aa": 275,
+ "n_zheng": 162,
+ "axis_sd_over_random_sd_L24": 41.69666549670623,
+ "axis_sd_L24": 11.093339920043945,
+ "random_sd_L24": 0.2660486105518497,
+ "axis_sd_over_random_sd_L33": 34.72787431710805,
+ "axis_sd_L33": 13.240424156188965,
+ "random_sd_L33": 0.38126215371800953,
+ "axis_sd_over_random_sd_L42": 19.70513592535087,
+ "axis_sd_L42": 14.957717895507812,
+ "random_sd_L42": 0.7590771234551368,
+ "trait_cos_axis_sd_L24": 0.3474794030189514,
+ "trait_cos_random_sd_L24": 0.01317665264004057,
+ "trait_cos_axis_sd_L33": 0.34108030796051025,
+ "trait_cos_random_sd_L33": 0.013581315468012228,
+ "trait_cos_axis_sd_L42": 0.26507648825645447,
+ "trait_cos_random_sd_L42": 0.013704034228655425
+}
