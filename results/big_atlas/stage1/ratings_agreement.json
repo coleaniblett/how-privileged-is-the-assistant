@@ -1,0 +1,36 @@
+{
+ "fit": {
+  "exact": 0.6208767361111112,
+  "kappa_quadratic": 0.7203063377052188,
+  "diff1": 1655,
+  "diff2plus": 92,
+  "cells": 4608,
+  "mean_A": 0.9203559027777778,
+  "mean_B": 0.8333333333333334,
+  "mean_final": 0.7059461805555556,
+  "share_final_ge2": 0.1929253472222222
+ },
+ "q": {
+  "kappa": 0.8400958598462936,
+  "agree": 0.9867283950617284,
+  "n": 3240,
+  "disagreements": 43,
+  "rate_final": 0.04938271604938271,
+  "rate_shared40": 0.15,
+  "n_shared": 40
+ },
+ "type24": {
+  "agree": 0.875,
+  "disagreements": 3
+ },
+ "trait_type_240": {
+  "kappa": 0.7085899728458838,
+  "agree": 0.7708333333333334,
+  "disagreements": 55
+ },
+ "role_type_275": {
+  "kappa": 0.8710186330107023,
+  "agree": 0.96,
+  "disagreements": 11
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "L24": {
+  "spearman_prompt_vs_reply": 0.788862353452019,
+  "spearman_prompt_centred_vs_reply_centred": 0.625054277029961,
+  "n": 48
+ },
+ "L33": {
+  "spearman_prompt_vs_reply": 0.8590968302214502,
+  "spearman_prompt_centred_vs_reply_centred": 0.6130047763786365,
+  "n": 48
+ },
+ "L42": {
+  "spearman_prompt_vs_reply": 0.8407511940946591,
+  "spearman_prompt_centred_vs_reply_centred": 0.5620929222752931,
+  "n": 48
+ }
+}

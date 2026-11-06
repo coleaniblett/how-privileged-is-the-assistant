@@ -206,6 +206,10 @@ def replycheck():
     sp = json.load(open("data/big_atlas_splits.json"))
     roles, anc = role_systems()
     qids, qs = ba.shared_questions(); qs = qs[:6]
+    sfile = os.path.join(ba.PRIV, "replycheck_states.npy"); jfile = os.path.join(ba.PRIV, "replycheck.json")
+    if os.path.exists(sfile) and os.path.exists(jfile):                   # generation already done: only compare
+        rs = np.load(sfile).astype(np.float32); ids = json.load(open(jfile))["ids"]
+        return _compare(rs, ids)
     model, tok = ba.load()
     systems = {}
     for r in sp["roles"]:
@@ -217,14 +221,22 @@ def replycheck():
     t0 = time.time(); rep = ba.generate(model, tok, prompts, max_new=96, bs=24); gs = time.time() - t0
     rs = ba.reply_mean_states(model, tok, prompts, [r["text"] for r in rep]).reshape(len(ids), len(qs), len(ba.LAYERS), -1)
     np.save(os.path.join(ba.PRIV, "replycheck_states.npy"), rs.astype(np.float16)); json.dump(dict(ids=ids, gen_s=gs, n=len(prompts)), open(os.path.join(ba.PRIV, "replycheck.json"), "w"))
-    mr = pd.read_csv(os.path.join(S1, "map_roles.csv")).set_index("name")
+    return _compare(rs, ids)
+
+
+def _compare(rs, ids):
+    from scipy.stats import spearmanr
+    mr = pd.read_csv(os.path.join(S1, "map_roles.csv"))
+    look = {(r.source, r["name"]): r for _, r in mr.iterrows()}
+    def row(rid):
+        return look[("assistant_axis", rid[3:])] if rid.startswith("aa:") else look[("zheng", rid[3:])] if rid.startswith("zh:") else look[("anchor", rid)]
     res = {}
     a = rs[ids.index("assistant")].mean(0)
     for li, l in enumerate(ba.LAYERS):
         d = [float(cosd(rs[i].mean(0)[li], a[li])) for i, rid in enumerate(ids) if rid != "assistant"]
         d2 = [float(cosd(rs[i].mean(0)[li] - rs.mean((0, 1))[li], a[li] - rs.mean((0, 1))[li])) for i, rid in enumerate(ids) if rid != "assistant"]
-        pm = [mr.loc[rid[3:] if rid[:3] in ("aa:", "zh:") else rid, f"cos_dist_L{l}"] for rid in ids if rid != "assistant"]
-        pc = [mr.loc[rid[3:] if rid[:3] in ("aa:", "zh:") else rid, f"cos_dist_centred_L{l}"] for rid in ids if rid != "assistant"]
+        pm = [row(rid)[f"cos_dist_L{l}"] for rid in ids if rid != "assistant"]
+        pc = [row(rid)[f"cos_dist_centred_L{l}"] for rid in ids if rid != "assistant"]
         res[f"L{l}"] = dict(spearman_prompt_vs_reply=float(spearmanr(pm, d)[0]), spearman_prompt_centred_vs_reply_centred=float(spearmanr(pc, d2)[0]), n=len(d))
     json.dump(res, open(os.path.join(S1, "replycheck.json"), "w"), indent=1); print(res)
 

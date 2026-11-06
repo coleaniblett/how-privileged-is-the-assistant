@@ -1550,3 +1550,13 @@ Adeeb approved Stages 0 and 1 only (`docs/spec_S_big_atlas.md` is the spec; Stag
 - Rater agreement: weighted kappa at least 0.6 = usable; under 0.4 = reported but the rating is not used as a predictor.
 - Stage 0 time rule: if the projected total for Stages 2 and 3 exceeds 30 GPU hours, stop and report before Stage 1.
 - Spec S's Pre-set readings 1 to 6 (Stage 2 onward) stand as written in the spec; nothing in them is run.
+
+## 2026-11-06: spec S Stage 1 result (map, choice, ratings); Stages 2 and 3 not run
+
+Report: `results/big_atlas/stage1/stage1.md` (stage 0: `results/big_atlas/stage0/stage0.md`). The choice and split are in `data/big_atlas_splits.json` (commit 25a51ba, before any Stage 2 code). Readings as pre-set above, no changes to them:
+- **Projected Stages 2 + 3: 24.3 GPU hours** (under 30). Judging runs at 6.4/s, about half the spec's figure; the exact digit-tree score is needed (cheap first-token score: Spearman 0.71, 22 points mean difference).
+- **Axis carries structure:** role projections vary 20 to 42 times more along the Assistant axis than along random directions (bar 3).
+- **Controls:** neutral same-length text is not role-like by distance (4th to 8th percentile at layers 24 and 33); tone lines are role-sized at layer 24 and borderline at layer 33; only casual at layer 24 is role-like on the axis; 'helpful assistant' is as close as the default prompts. All 8 anchors lie in the farthest 15 percent of the roles at layer 33.
+- **Prompt-state distance vs reply-average distance on the 48 chosen roles:** Spearman 0.79, 0.86, 0.84 at layers 24, 33, 42 (tracks; bar 0.7); after centring 0.56 to 0.63 (in between).
+- **Ratings:** trait type kappa 0.71 (240), role type 0.87 (275), role fit weighted kappa 0.72 (usable, bar 0.6), question demand kappa 0.84 but only 4.7% of questions expect a structured answer.
+Deviations are listed in section 5 of the report (10 questions per trait; type rated for all 240; 288 replies at 96 tokens for the validity check; neutral control as long as the median role prompt, not a character sheet; only 3 AI/machine roles exist). Third-party text was not committed.
