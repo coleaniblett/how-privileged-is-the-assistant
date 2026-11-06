@@ -10,3 +10,11 @@ results/**/flagged*.csv
 results/dominance_matrix/gens/
 results/implant_spread/*/replies.jsonl
 results/implant_spread/*_old_protocol_discarded/
+
+# spec S (big atlas): third-party prompts/questions/scoring text (no licence stated) stay on the servers, never in git
+big_atlas_src/
+data/big_atlas_private/
+results/big_atlas/private/
+results/big_atlas/**/*.npz
+results/big_atlas/**/*.npy
+results/big_atlas/**/*private*
