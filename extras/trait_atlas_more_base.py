@@ -2,10 +2,10 @@
 base replies). Here base (OLMo 3 7B, Qwen3-8B) is sampled K more times for each light-role request of the atlas's gated traits (same items, personas, wordings and frames as the atlas; new sample
 indices 1..K; same generation settings), scored with the same detectors / local judge, the in-character question is judged with the same frozen judge, and the addendum's analysis is rerun
 UNCHANGED on the pooled data (atlas sample 0 + the new samples at base; final stages as before). Atlas and addendum files are not overwritten. No paid API.
-    python -m extras.trait_atlas_more_base gen --family olmo3-7b          # GPU: base samples -> results/trait_atlas_more_base/<family>/base_replies.jsonl.gz
+    python -m extras.trait_atlas_more_base gen --family olmo3-7b          # GPU: base samples -> results/overgeneralization/trait_atlas_more_base/<family>/base_replies.jsonl.gz
     python -m extras.trait_atlas_more_base detect                          # CPU: detector traits
     python -m extras.trait_atlas_more_base judge                           # GPU: Gemma 4 31B-it trait judge + in-character judge on the new replies
-    python -m extras.trait_atlas_more_base analyze                         # pool + addendum analysis -> results/trait_atlas_more_base_ic/in_character.md
+    python -m extras.trait_atlas_more_base analyze                         # pool + addendum analysis -> results/overgeneralization/trait_atlas_more_base_ic/in_character.md
 """
 import argparse
 import glob
@@ -19,9 +19,9 @@ from core import config
 from extras import trait_atlas as ta
 from extras import trait_atlas_incharacter as ic
 
-SRC_TA, SRC_IC = "results/trait_atlas", "results/trait_atlas_incharacter"
-MORE, MORE_IC = "results/trait_atlas_more_base", "results/trait_atlas_more_base_ic"
-COMB, COMB_IC = "results/trait_atlas_more_base_combined", "results/trait_atlas_more_base_combined_ic"
+SRC_TA, SRC_IC = "results/overgeneralization/trait_atlas", "results/overgeneralization/trait_atlas_incharacter"
+MORE, MORE_IC = "results/overgeneralization/trait_atlas_more_base", "results/overgeneralization/trait_atlas_more_base_ic"
+COMB, COMB_IC = "results/overgeneralization/trait_atlas_more_base_combined", "results/overgeneralization/trait_atlas_more_base_combined_ic"
 K = int(os.environ.get("MORE_K", 5))
 FAMS = ["olmo3-7b", "qwen3-8b"]
 

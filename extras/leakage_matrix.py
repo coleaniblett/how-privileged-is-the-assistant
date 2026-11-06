@@ -8,7 +8,7 @@ Cell = (stage - base effect in the context) / (stage - base effect in the own tu
 
     python -m extras.leakage_matrix dry                     # print one example prompt per row x context x template (no model)
     python -m extras.leakage_matrix run --family olmo       # generate (and for register: project activations); resumable per stage
-    python -m extras.leakage_matrix analyze                 # gates, matrices -> results/dominance_matrix/dominance_matrix.md
+    python -m extras.leakage_matrix analyze                 # gates, matrices -> results/overgeneralization/dominance_matrix/dominance_matrix.md
     LM_OUT=/tmp/x python -m extras.leakage_matrix run --family smoke   # CPU plumbing check on SmolLM2-135M with a synthetic axis (tests/test_leakage_matrix.py)
 """
 import argparse, json, os, re
@@ -20,7 +20,7 @@ from extras.assistant_steering import requests
 from extras.orthogonal_steering import is_refusal
 from extras.persona_leakage import chat
 
-OUT = os.environ.get("LM_OUT", os.path.join(config.RESULTS_ROOT, "dominance_matrix"))
+OUT = os.environ.get("LM_OUT", os.path.join("results", "overgeneralization", "dominance_matrix"))
 SMOKE = os.environ.get("LM_SMOKE") == "1"
 NB = 4000
 CONTEXTS = ["own", "named", "voiced", "user", "narration", "raw"]
@@ -28,9 +28,9 @@ CTX_LABEL = {"own": "Assistant's own turn", "named": "named persona (assistant s
 NA = {("refusal", "user"): "the 36 requests are written from the user's side; a simulated user declining an assistant's request needs its own item set",
       ("refusal", "narration"): "a third-person description of a refusal is not covered by the first-person detector that was validated on 300 replies; it would need its own validation"}
 FAMILIES = {
-    "olmo": dict(label="OLMo 3 7B", tok=None, stages={"base": "base", "sft": "sft", "dpo": "dpo", "instruct": "instruct"}, axis="results/olmo3-7b/persona_axis/instruct.npz", axis_v2="results/olmo3-7b/persona_axis_v2/instruct.npz"),
-    "qwen": dict(label="Qwen3-8B", tok="Qwen/Qwen3-8B", stages={"base": "Qwen/Qwen3-8B-Base", "instruct": "Qwen/Qwen3-8B"}, axis="results/other/persona_axis_qwen/Qwen3-8B.npz"),
-    "gemma": dict(label="Gemma 4 E4B", tok="google/gemma-4-E4B-it", stages={"base": "google/gemma-4-E4B", "instruct": "google/gemma-4-E4B-it"}, axis="results/gemma-4-e4b/persona_axis/gemma-4-E4B-it.npz", batch=32),
+    "olmo": dict(label="OLMo 3 7B", tok=None, stages={"base": "base", "sft": "sft", "dpo": "dpo", "instruct": "instruct"}, axis="results/overgeneralization/early_probes/olmo3-7b/persona_axis/instruct.npz", axis_v2="results/overgeneralization/early_probes/olmo3-7b/persona_axis_v2/instruct.npz"),
+    "qwen": dict(label="Qwen3-8B", tok="Qwen/Qwen3-8B", stages={"base": "Qwen/Qwen3-8B-Base", "instruct": "Qwen/Qwen3-8B"}, axis="results/overgeneralization/early_probes/other/persona_axis_qwen/Qwen3-8B.npz"),
+    "gemma": dict(label="Gemma 4 E4B", tok="google/gemma-4-E4B-it", stages={"base": "google/gemma-4-E4B", "instruct": "google/gemma-4-E4B-it"}, axis="results/overgeneralization/early_probes/gemma-4-e4b/persona_axis/gemma-4-E4B-it.npz", batch=32),
     "smoke": dict(label="smoke (SmolLM2-135M, synthetic axis)", tok="HuggingFaceTB/SmolLM2-135M-Instruct", stages={"base": "HuggingFaceTB/SmolLM2-135M-Instruct", "instruct": "HuggingFaceTB/SmolLM2-135M-Instruct"}, axis=None),
 }
 ACK = "Interesting. Could you tell me a little more?"

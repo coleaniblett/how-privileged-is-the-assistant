@@ -1,6 +1,6 @@
 # Style-fall checks (exploratory, outside every verdict)
 
-Plan and pre-set readings: `docs/decisions.md` 2026-11-04. Saved register replies of the leakage matrix (`results/dominance_matrix/gens`, read only). Changes are stage minus base, paired per item (replies averaged within item), 95% bootstrap CI over items. `coord` is the register score (higher = more Assistant-like), `clf` the spec A P(assistant), `layout` the spec F layout regex rate. **The classifier was trained on human vs Assistant text, not on characters**: it measures how Assistant-like the wording is, nothing more.
+Plan and pre-set readings: `docs/decisions.md` 2026-11-04. Saved register replies of the leakage matrix (`results/overgeneralization/dominance_matrix/gens`, read only). Changes are stage minus base, paired per item (replies averaged within item), 95% bootstrap CI over items. `coord` is the register score (higher = more Assistant-like), `clf` the spec A P(assistant), `layout` the spec F layout regex rate. **The classifier was trained on human vs Assistant text, not on characters**: it measures how Assistant-like the wording is, nothing more.
 
 ## A. Is the fall in the words?
 

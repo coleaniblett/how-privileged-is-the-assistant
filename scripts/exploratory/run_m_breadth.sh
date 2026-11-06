@@ -14,7 +14,7 @@ if [ -n "${GPULOCK:-}" ]; then exec 9>"$GPULOCK"; flock -x 9; else
   echo "owner=main-session purpose=spec M $FAM; released when run_m_breadth.sh ends" > /tmp/claude-0/gpu.lock; trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 fi
 for stage in instruct base; do
-  [[ -f results/trait_atlas_breadth/$FAM/${stage}_replies.jsonl.gz ]] && continue
+  [[ -f results/overgeneralization/trait_atlas_breadth/$FAM/${stage}_replies.jsonl.gz ]] && continue
   echo "=== $FAM $stage $(date -u +%T)"
   $PY -m extras.trait_atlas_breadth gen --family $FAM --stage $stage || echo "FAILED $FAM $stage"
   free_model "$($PY -c "from core import config; print(config.FAMILIES['$FAM']['stages']['$stage'])")"

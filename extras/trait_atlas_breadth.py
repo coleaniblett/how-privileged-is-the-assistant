@@ -20,7 +20,7 @@ import pandas as pd
 from core import config
 from extras import trait_atlas as ta
 
-OUT = os.environ.get("TAB_OUT", "results/trait_atlas_breadth")
+OUT = os.environ.get("TAB_OUT", "results/overgeneralization/trait_atlas_breadth")
 FAMS = ["llama3.1-8b", "apertus-8b"]
 MAIN, ALSO, DESC = ["markdown_lists", "says_ai"], ["stock_phrases", "length", "refusal_borderline"], ["arithmetic", "multistep_reasoning", "factual_accuracy"]
 TRAITS = MAIN + ALSO + DESC

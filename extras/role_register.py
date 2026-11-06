@@ -16,8 +16,8 @@ from core.stats import bootstrap_ci, stage_order
 from extras import persona_axis as pa
 from extras.persona_leakage import chat
 
-OUT = os.environ.get("RR_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "role_register"))
-REPORT = os.environ.get("RR_REPORT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "role_register.md"))
+OUT = os.environ.get("RR_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "role_register"))
+REPORT = os.environ.get("RR_REPORT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "role_register.md"))
 ROLES = {
  "helpful": ["a helpful human hotel front-desk clerk", "a helpful human librarian", "a kind human nurse", "a patient human high-school teacher", "a friendly human pharmacist", "a supportive human math tutor",
              "a courteous human bank teller", "a cheerful human tour guide", "an attentive human receptionist at a dental clinic", "a caring human social worker", "a knowledgeable human IT helpdesk technician", "a polite human airline check-in agent"],

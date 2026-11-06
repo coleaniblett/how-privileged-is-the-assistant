@@ -12,9 +12,9 @@ from core import config
 from core.render import load_tokenizer, render, load_jsonl
 from core.stats import bootstrap_ci, stage_order
 
-OUT = os.environ.get("PL_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "plain_axis"))
-REPORT = os.environ.get("PL_REPORT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "plain_axis.md"))
-PA = os.environ.get("PA_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_axis"))
+OUT = os.environ.get("PL_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "plain_axis"))
+REPORT = os.environ.get("PL_REPORT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "plain_axis.md"))
+PA = os.environ.get("PA_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_axis"))
 N = 150
 
 

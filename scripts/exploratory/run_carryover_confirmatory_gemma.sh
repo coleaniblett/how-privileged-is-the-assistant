@@ -2,13 +2,13 @@
 # Confirmatory persona-carryover run on Gemma 4 31B base and instruct (README criterion 7, breadth arm): the SAME frozen item set and analysis
 # as the OLMo and Qwen runs, --family gemma4-31b. bf16, batch 1, weights placed with device_map=auto (GPU_GIB GiB on the GPU, the rest in CPU RAM;
 # no quantization). Assistant slot opens with the empty thought channel (core.render, docs/decisions.md 2026-11-02). Writes only under
-# results/gemma4-31b/overgeneralization/confirmatory/. The instruct checkpoint cache (google/gemma-4-31B-it) is NEVER deleted; the base
+# results/overgeneralization/persona_carryover/gemma4-31b/confirmatory/. The instruct checkpoint cache (google/gemma-4-31B-it) is NEVER deleted; the base
 # checkpoint is removed after scoring only if this run downloaded it (REMOVE_BASE=1, default).
 #   FROZEN_SHA256=<sha256 of the item file> bash scripts/exploratory/run_carryover_confirmatory_gemma.sh
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 DATA=data/persona_carryover_confirmatory.jsonl
-OUT=results/gemma4-31b/overgeneralization/confirmatory
+OUT=results/overgeneralization/persona_carryover/gemma4-31b/confirmatory
 PY=/opt/arena-env/bin/python
 FAM=gemma4-31b
 STAGES="${STAGES:-base instruct}"

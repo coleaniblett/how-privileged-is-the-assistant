@@ -4,7 +4,7 @@ set -u
 cd "$(dirname "$0")/../.."
 FAMILY="${FAMILY:-olmo3-7b}"
 PY=/opt/arena-env/bin/python
-OUT="results/implant_spread/$FAMILY"
+OUT="results/overgeneralization/implant_spread/$FAMILY"
 mkdir -p /tmp/claude-0
 while [ -e /tmp/claude-0/gpu.lock ] || [ "$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1)" -gt 2000 ]; do sleep 20; done
 echo "owner=main-session purpose=implant_spread $FAMILY (24 LoRA runs, ~3 h); released when scripts/exploratory/run_implant_spread.sh ends" > /tmp/claude-0/gpu.lock

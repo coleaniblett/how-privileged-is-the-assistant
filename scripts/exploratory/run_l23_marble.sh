@@ -12,7 +12,7 @@ while pgrep -f "[r]un_k_marble" >/dev/null || [ -e /tmp/claude-0/gpu.lock ] || [
 echo "owner=main-session purpose=spec L2/L3 Qwen; released when run_l23_marble.sh ends" > /tmp/claude-0/gpu.lock
 trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 for stage in instruct base; do
-  [[ -f results/working_model_L/L23/qwen3-8b/${stage}_L3.csv.gz ]] && continue
+  [[ -f results/overgeneralization/working_model_L/L23/qwen3-8b/${stage}_L3.csv.gz ]] && continue
   echo "=== qwen3-8b $stage $(date -u +%T)"
   $PY -m extras.working_model_l run23 --family qwen3-8b --stage $stage || echo "FAILED qwen $stage"
   case $stage in instruct) m=Qwen/Qwen3-8B;; *) m=Qwen/Qwen3-8B-Base;; esac

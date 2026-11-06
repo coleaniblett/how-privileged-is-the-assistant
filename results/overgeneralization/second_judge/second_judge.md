@@ -81,7 +81,7 @@ Judge 2 = Qwen/Qwen3-8B (non-thinking), the same frozen prompts and rule (P(Yes)
 
 ## Judge reliability (traits flagged unreliable by the second judge; atlas cells not recomputed)
 
-The atlas cells below are the Gemma-judge cells from `results/trait_atlas/trait_atlas_cells.csv`, unchanged. The sample is stratified on the Gemma label, so the Gemma-judge yes-rate is about 0.5 by design; the Qwen judge says yes much less often for these traits (it may simply be stricter), so a low kappa shows the two judges draw the line differently, not which one is right. Read these traits' judge-based atlas results as provisional until the hand check.
+The atlas cells below are the Gemma-judge cells from `results/overgeneralization/trait_atlas/trait_atlas_cells.csv`, unchanged. The sample is stratified on the Gemma label, so the Gemma-judge yes-rate is about 0.5 by design; the Qwen judge says yes much less often for these traits (it may simply be stricter), so a low kappa shows the two judges draw the line differently, not which one is right. Read these traits' judge-based atlas results as provisional until the hand check.
 
 | trait | n | Gemma-judge yes (sample) | Qwen-judge yes | agreement | kappa | atlas: Assistant change at final, per family (OLMo instruct / Qwen / Gemma), points [95% CI] |
 |---|---|---|---|---|---|---|

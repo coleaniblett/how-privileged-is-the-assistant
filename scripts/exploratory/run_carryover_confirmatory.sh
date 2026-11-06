@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Confirmatory persona-carryover run on OLMo 3 7B (criteria: measures/overgeneralization/README.md, "Pre-registered criteria").
 # REFUSES TO START until the item set is frozen: the caller passes the dataset's sha256 (FROZEN_SHA256=...), which must match the file,
-# and the file must be committed and unmodified. Writes only under results/olmo3-7b/overgeneralization/confirmatory/ (the pilot's
+# and the file must be committed and unmodified. Writes only under results/overgeneralization/persona_carryover/olmo3-7b/confirmatory/ (the pilot's
 # outputs in ../persona_carryover* are never touched). Scoring: bf16, batch 1 (as the pilot's later runs; docs/decisions.md 2026-11-02).
 # Stages in order base instruct sft dpo (override with STAGES="base instruct"); one checkpoint on disk at a time; a stage whose score
 # CSV exists is skipped. DRY_RUN=1 prints the plan and checks paths without loading a model or taking the GPU lock.
@@ -9,7 +9,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 DATA=data/persona_carryover_confirmatory.jsonl
-OUT=results/olmo3-7b/overgeneralization/confirmatory
+OUT=results/overgeneralization/persona_carryover/olmo3-7b/confirmatory
 PY=/opt/arena-env/bin/python
 STAGES="${STAGES:-base instruct sft dpo}"
 DRY="${DRY_RUN:-0}"
@@ -19,7 +19,7 @@ if [[ "$DRY" != "1" ]]; then
   [[ "${FROZEN_SHA256:-}" == "$actual" ]] || { echo "NOT FROZEN: set FROZEN_SHA256 to the sha256 of $DATA ($actual) once the team has confirmed the freeze"; exit 2; }
   git diff --quiet HEAD -- "$DATA" && git ls-files --error-unmatch "$DATA" >/dev/null || { echo "$DATA is not committed/unmodified"; exit 2; }
 fi
-case "$OUT" in results/olmo3-7b/overgeneralization/confirmatory*) ;; *) echo "unexpected output dir"; exit 3;; esac
+case "$OUT" in results/overgeneralization/persona_carryover/olmo3-7b/confirmatory*) ;; *) echo "unexpected output dir"; exit 3;; esac
 HUB="$HOME/.cache/huggingface/hub"
 free_model() {
   local repo="models--${1//\//--}"

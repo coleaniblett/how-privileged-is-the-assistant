@@ -9,7 +9,7 @@ HUB="$HOME/.cache/huggingface/hub"
 free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
-exec 9>results/trait_atlas/.gpu.lock
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock
 flock -x 9
 FAM=gemma4-31b
 step() { local t=$(date +%s); "$@" || echo "FAILED: $*"; echo "   [$(( $(date +%s)-t )) s] $*" | cut -c1-200; }
@@ -20,8 +20,8 @@ for stage in instruct base; do
   out=results/capstone/$FAM/core/generations_incomplete_exchanges
   [[ -f $out/$stage.jsonl ]] || step $PY -m extras.batched_generate --family $FAM --run capstone --model $stage --prefill data/prefill_incomplete_exchanges.jsonl --out $out
   [[ -f results/capstone/$FAM/$stage/core/exchanges_reply_in_user/scores.csv ]] || step $PY -m extras.exchange_reply_in_user score --family $FAM --model $stage --offload --gpu-gib 30
-  [[ -f results/mechanism_checks/h2/$FAM/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h2 --family $FAM --stage $stage
-  [[ -f results/mechanism_checks/h3/$FAM/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h3 --family $FAM --stage $stage
+  [[ -f results/overgeneralization/mechanism_checks/h2/$FAM/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h2 --family $FAM --stage $stage
+  [[ -f results/overgeneralization/mechanism_checks/h3/$FAM/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h3 --family $FAM --stage $stage
   free_model "$model"
 done
 step $PY -m extras.exchange_reply_in_user analyze --family $FAM

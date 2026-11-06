@@ -1,21 +1,21 @@
 """Spec G addendum, POST-HOC (added 2026-11-04 after the provisional atlas was seen): does the reply speak as the character? (exploratory, outside every verdict)
 
-Same frozen `meta_judge` question as the atlas (`speaks_as_character`), same judge (Gemma 4 31B instruct, P(yes) >= 0.5), blind. New files only: nothing under results/trait_atlas is overwritten.
+Same frozen `meta_judge` question as the atlas (`speaks_as_character`), same judge (Gemma 4 31B instruct, P(yes) >= 0.5), blind. New files only: nothing under results/overgeneralization/trait_atlas is overwritten.
   A. atlas light_system and light_user replies of every generated checkpoint (the strong contexts already have their meta judgments);
-  B. saved leakage-matrix replies (results/dominance_matrix/gens, register rows) in the character contexts `named` (helpful + neutral roles) and `voiced` (stylized roles),
+  B. saved leakage-matrix replies (results/overgeneralization/dominance_matrix/gens, register rows) in the character contexts `named` (helpful + neutral roles) and `voiced` (stylized roles),
      each judged against its own role description (name, role). The user, narration and raw contexts are skipped: the question (first person as the character) does not fit a
      simulated user, a third-person narration, or a quoted transcript line.
-    python -m extras.trait_atlas_incharacter judge [--sample N]    # GPU; --sample N times N prompts and writes nothing -> results/trait_atlas_incharacter/{atlas,leak}_<family>_<stage>.csv.gz
+    python -m extras.trait_atlas_incharacter judge [--sample N]    # GPU; --sample N times N prompts and writes nothing -> results/overgeneralization/trait_atlas_incharacter/{atlas,leak}_<family>_<stage>.csv.gz
     python -m extras.trait_atlas_incharacter handcheck             # blind sheet of 30 (+ key, kept on the judging machine)
-    python -m extras.trait_atlas_incharacter analyze               # -> results/trait_atlas_incharacter/in_character.md and .csv
+    python -m extras.trait_atlas_incharacter analyze               # -> results/overgeneralization/trait_atlas_incharacter/in_character.md and .csv
 Judge note for the light roles (no name in the atlas material): "the background describes a character: <role>".
 """
 import argparse, glob, os, time
 import numpy as np, pandas as pd
 from extras import trait_atlas as ta
 
-OUT = "results/trait_atlas_incharacter"
-LEAK = os.environ.get("LEAK_GENS", "results/dominance_matrix/gens")
+OUT = "results/overgeneralization/trait_atlas_incharacter"
+LEAK = os.environ.get("LEAK_GENS", "results/overgeneralization/dominance_matrix/gens")
 LEAK_FAMS = {"olmo": ["base", "sft", "dpo", "instruct"], "qwen": ["base", "instruct"], "gemma": ["base", "instruct"]}
 LIGHT = ["light_system", "light_user"]
 STRONG = ["strong_act", "strong_noact"]

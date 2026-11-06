@@ -10,7 +10,7 @@ import os
 import numpy as np
 import pandas as pd
 
-OUT = "results/overnight_2026-11-05/R8"
+OUT = "results/overgeneralization/overnight_2026-11-05/R8"
 GEN = os.path.join(OUT, "gen")
 LOCAL = os.environ.get("R2_LOCAL", "/root/r2_work")
 FAMS = ["olmo3-7b", "qwen3-8b", "gemma4-31b"]

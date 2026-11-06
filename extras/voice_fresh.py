@@ -24,7 +24,7 @@ from extras import trait_atlas as ta
 from extras import trait_atlas_incharacter as ic
 
 MATERIALS = "data/voice_fresh_materials.json"
-OUT = os.environ.get("VF_OUT", "results/overnight_2026-11-05/R5")
+OUT = os.environ.get("VF_OUT", "results/overgeneralization/overnight_2026-11-05/R5")
 SEED, N_BOOT = 0, 4000
 FAMS = rs.FAMS
 PLAIN_SAMPLES = 3

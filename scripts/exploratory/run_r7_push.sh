@@ -3,7 +3,7 @@
 set -uo pipefail
 cd /root/hpa-main-wt; export OMP_NUM_THREADS=2; PY=/opt/arena-env/bin/python; source scripts/exploratory/lib_r.sh
 exec 7>/tmp/claude-0/r7_push.lock; flock -n 7 || exit 0
-O=results/overnight_2026-11-05/R7; mkdir -p $O; [ -f $O/PUSHED ] && exit 0
+O=results/overgeneralization/overnight_2026-11-05/R7; mkdir -p $O; [ -f $O/PUSHED ] && exit 0
 until [ -f $O/MARBLE_DONE ] && ssh -o ConnectTimeout=20 arena9-vinyl "test -f /root/hpa-atlas2/$O/R7_GEMMA_DONE" 2>/dev/null; do sleep 60; done
 nice -n 15 rsync -a -e ssh arena9-vinyl:/root/hpa-atlas2/$O/gemma4-31b/ $O/gemma4-31b/ || exit 1
 nice -n 15 $PY -m extras.knows_says analyze > /tmp/claude-0/r7_analyze.log 2>&1 || { tail -5 /tmp/claude-0/r7_analyze.log; exit 2; }

@@ -13,8 +13,8 @@ from core.stats import bootstrap_ci, stage_order
 from extras.persona_leakage import REFUSAL_RE, TIC_RE, chat
 from extras.persona_refusal import TIERS
 
-OUT = os.environ.get("RG_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "role_gradient"))
-REPORT = os.environ.get("RG_REPORT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "role_gradient.md"))
+OUT = os.environ.get("RG_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "role_gradient"))
+REPORT = os.environ.get("RG_REPORT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "role_gradient.md"))
 ROLES = {"helpful": [("Hannah Reed", "a helpful human front-desk clerk at a hotel"), ("Mr. Ellis", "a helpful human librarian"), ("Nurse Joy Park", "a kind human nurse")],
          "stylized": [("Captain Rook", "a swaggering pirate captain"), ("Lord Ashby", "a pompous Victorian aristocrat"), ("Osric", "a medieval court jester")]}
 

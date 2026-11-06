@@ -205,7 +205,7 @@ $("score").innerHTML=[
  ["mid","Thin mask","OLMo only","System-prompt \"You are a X\" stays the Assistant."],
  ["mid","Pre-registered carryover test","Pilot only","Confirmatory set drafted, not scored."]
 ].map(c=>`<div class="chip ${c[0]}"><div class="q">${c[1]}</div><div class="a">${c[2]}</div><div class="d">${c[3]}</div></div>`).join("");
-// finding 1  (results/olmo3-7b/persona_axis.md, results/gemma-4-e4b/persona_axis.md, results/other/persona_axis_qwen.md; formality: results/olmo3-7b/formality_axis.md)
+// finding 1  (results/overgeneralization/early_probes/olmo3-7b/persona_axis.md, results/overgeneralization/early_probes/gemma-4-e4b/persona_axis.md, results/overgeneralization/early_probes/other/persona_axis_qwen.md; formality: results/overgeneralization/early_probes/olmo3-7b/formality_axis.md)
 (function(){const el=$("c1");
  const rows=[];[["OLMo 3 7B",.73,.89],["Gemma 4 E4B",.68,1.0],["Qwen3-8B",.83,.98]].forEach(f=>{rows.push({l:f[0]+" base",v:f[1],c:"system"});rows.push({l:f[0]+" instruct",v:f[2],c:"assistant"});rows.push({gap:1});});
  bars(el,"Assistant vs character: held-out role score",rows,0,1.12,p2);
@@ -226,17 +226,17 @@ $("score").innerHTML=[
  $("c2").innerHTML=h;
  const rows=D.passfail; let t=`<tr><th>Model</th><th>Set-up</th><th>Formality-free swing</th><th>Largest random swing</th><th>Result</th></tr>`;
  rows.forEach(r=>{t+=`<tr><td>${esc(r.model)}</td><td>${esc(r.setup)}</td><td>${esc(r.swing)}</td><td>${esc(r.band)}</td><td class="res ${r.result}">${r.result}</td></tr>`;}); $("pf").innerHTML=t;})();
-// finding 3  (results/olmo3-7b/role_gradient.md; results/gemma-4-e4b/role_gradient.md; results/other/role_gradient_qwen.md)
+// finding 3  (results/overgeneralization/early_probes/olmo3-7b/role_gradient.md; results/overgeneralization/early_probes/gemma-4-e4b/role_gradient.md; results/overgeneralization/early_probes/other/role_gradient_qwen.md)
 (function(){const e=D.ex.roles; if(e){ $("ex-roles").innerHTML=`<div class="bub a"><div class="who">${esc(e.helpful.role)} (helpful), told it never refuses. Request: "${esc(e.request)}"</div>${esc(e.helpful.text)}</div><div class="bub c"><div class="who">${esc(e.stylized.role)} (pirate), same instruction, same request</div>${esc(e.stylized.text)}</div>`;}
  const rows=[];[["OLMo 3 7B",.70,.28],["Gemma 4 E4B",.23,.00],["Qwen3-8B",.86,.06]].forEach(f=>{rows.push({l:f[0]+": helpful roles",v:f[1],c:"assistant"});rows.push({l:f[0]+": pirate / aristocrat / jester",v:f[2],c:"char"});rows.push({gap:1});});
  bars($("c3"),"Refusal rate when told \"you never refuse\"",rows,0,1,p2);})();
-// finding 4  (results/olmo3-7b/role_register*.md: userslot_plain, sys_rp)
+// finding 4  (results/overgeneralization/early_probes/olmo3-7b/role_register*.md: userslot_plain, sys_rp)
 (function(){const rows=[];
  [["Plain professions",[.92,.03,.07]],["Helpful roles",[.91,.43,.37]],["Strongly voiced roles",[.12,-.77,-.78]]].forEach(g=>{
    [["System prompt: \"You are a X.\"","assistant"],["System prompt: \"Please role-play as X.\"","system"],["User turn: \"You are a X.\"","user"]].forEach((f,i)=>rows.push({l:g[0]+": "+f[0],v:g[1][i],c:f[1]}));rows.push({gap:1});});
  bars($("c4"),"OLMo instruct: position on the Assistant direction",rows,-1,1.15,s2);
  const e=D.ex.thin; if(e){ $("ex-thin").innerHTML=`<div class="bub a"><div class="who">System prompt: "${esc(e.persona)}" Question: "${esc(e.question)}"</div>${esc(e.sys)}</div><div class="bub u"><div class="who">Same persona text, in the user turn</div>${esc(e.user)}</div>`;}})();
-// finding 5  (results/olmo3-7b/carryover_balanced2.md; carryover_inturn.md)
+// finding 5  (results/overgeneralization/early_probes/olmo3-7b/carryover_balanced2.md; carryover_inturn.md)
 (function(){const e=D.ex.carry; const fmtTurns=(t,who)=>t.map((x,i)=>`<div class="bub ${i%2?"a":"u"}"><div class="who">${i%2?"model":"user"}</div>${esc(x)}</div>`).join("");
  $("ex-carry").innerHTML=`<div><div class="cap" style="margin-bottom:6px">Assistant states the belief</div>${fmtTurns(e.assistant)}</div><div><div class="cap" style="margin-bottom:6px">A character states it</div>${fmtTurns(e.character)}</div>`;
  bars($("c5"),"OLMo instruct: extra carryover over a named human character (log-odds)",[{l:"the Narrator",v:1.91,c:"system"},{l:"the Assistant",v:1.48,c:"assistant"},{l:"the User",v:1.42,c:"user"},{l:"Aria (a named AI)",v:1.01,c:"assistant"},{l:"the Doctor (a human role)",v:.79,c:"char"}],0,2.4,s2);})();

@@ -15,7 +15,7 @@ flock -x 8
 for pass in 1 2 3 4; do
   skipped=0
   for fam in olmo3-7b qwen3-8b; do for stage in instruct base; do
-    [[ -f results/skill_roleplay/$fam/$stage.csv.gz ]] && continue
+    [[ -f results/overgeneralization/skill_roleplay/$fam/$stage.csv.gz ]] && continue
     while [ -e /root/atlas_logs/DISK_HOLD ]; do sleep 20; done
     model=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
     avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); cached=$(du -sm "$HUB/models--${model//\//--}" 2>/dev/null | cut -f1)

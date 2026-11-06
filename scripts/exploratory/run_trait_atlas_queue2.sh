@@ -11,14 +11,14 @@ PY=/opt/arena-env/bin/python
 W="${WORKER:?set WORKER}"; CACHE_SMALL="${CACHE:?set CACHE}"; FRAC="${MEM_FRACTION:-}"
 DEFAULT_HUB="$HOME/.cache/huggingface/hub"
 KEEP="google/gemma-4-31B-it"
-CL=results/trait_atlas/.claims; LOCK=results/trait_atlas/.gpu.lock; mkdir -p "$CL" "$CACHE_SMALL" results/trait_atlas
+CL=results/overgeneralization/trait_atlas/.claims; LOCK=results/overgeneralization/trait_atlas/.gpu.lock; mkdir -p "$CL" "$CACHE_SMALL" results/overgeneralization/trait_atlas
 free_model() { local hub=$2 repo="models--${1//\//--}"; rm -rf "${hub:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$hub/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
 ORDER="gemma4-31b:instruct gemma4-31b:base olmo3-7b:sft olmo3-7b:dpo"
 for spec in $ORDER; do
   fam=${spec%%:*}; stage=${spec##*:}
-  [[ -f "results/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && continue
+  [[ -f "results/overgeneralization/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && continue
   # spec I slot: while /root/atlas_logs/HOLD_FOR_SPEC_I exists, OLMo SFT and DPO wait (the file is created only when spec I is given the GPU; Gemma is not held)
   if [ "$fam" = olmo3-7b ]; then while [ -e /root/atlas_logs/HOLD_FOR_SPEC_I ]; do echo "[$W] held for spec I $(date -u +%T)"; sleep 120; done; fi
   mkdir "$CL/${fam}_${stage}" 2>/dev/null || continue            # claimed by another worker
@@ -35,7 +35,7 @@ for spec in $ORDER; do
       HF_HUB_CACHE=$CACHE_SMALL $PY -m extras.trait_atlas generate --family $fam --model $stage --batch-size 24 ${FRAC:+--mem-fraction $FRAC} || echo "[$W] FAILED $fam $stage"
       free_model "$model" "$CACHE_SMALL" ) 9>"$LOCK"
   fi
-  [[ -f "results/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && $PY -m extras.trait_atlas detect --only "$fam/$stage"
+  [[ -f "results/overgeneralization/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && $PY -m extras.trait_atlas detect --only "$fam/$stage"
   echo "=== [$W] $fam $stage done $(date -u +%T)"
 done
 echo "=== [$W] no more claims $(date -u +%T)"

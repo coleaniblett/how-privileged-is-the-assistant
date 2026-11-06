@@ -1,7 +1,7 @@
 """Spec R1 (2026-11-06): does the formatting claim survive a strict definition? CPU only, no new generation, no judge. Exploratory, outside every verdict, NOT BLIND.
 Old = the atlas layout regex (a list line, a heading or ONE bold phrase). Strict = at least 2 list lines, or a markdown heading, or a table (bold alone does not count). Heavy = at least 4 list lines or at least 2 headings.
 Rescored from saved replies: atlas (OLMo base/SFT/DPO/final, Qwen, Gemma; /tmp/atlas_pull copies of vinyl's replies), atlas breadth (Llama, Apertus), L1, L4, Q (judged files). Base vs final readings for the atlas markdown set and L4 separately.
-    python -m extras.strict_layout            # -> results/overnight_2026-11-05/R1/
+    python -m extras.strict_layout            # -> results/overgeneralization/overnight_2026-11-05/R1/
 """
 import glob
 import gzip
@@ -14,8 +14,8 @@ import pandas as pd
 
 from extras import trait_atlas as ta
 
-OUT = "results/overnight_2026-11-05/R1"
-ATLAS_DIRS = ["/tmp/atlas_pull", "results/trait_atlas"]
+OUT = "results/overgeneralization/overnight_2026-11-05/R1"
+ATLAS_DIRS = ["/tmp/atlas_pull", "results/overgeneralization/trait_atlas"]
 SEED, N_BOOT = 0, 4000
 LIST_RE = re.compile(r"(?m)^[ \t]*(?:[-*•]|\d+[.)])[ \t]+\S")
 HEAD_RE = re.compile(r"(?m)^[ \t]{0,3}#{1,6}[ \t]+\S")
@@ -49,20 +49,20 @@ def load_all():
             d = pd.DataFrame(read_gz(p))
             d = d[d.trait == "markdown_lists"]
             frames.append(pd.DataFrame(dict(source="atlas", family=fam, stage=stage, context=d.context, role=d.persona, item=d["item"], sample=d["sample"], wording=d.get("wording", 0), text=d.text)))
-    for p in sorted(glob.glob("results/trait_atlas_breadth/*/*_replies.jsonl.gz")):
+    for p in sorted(glob.glob("results/overgeneralization/trait_atlas_breadth/*/*_replies.jsonl.gz")):
         fam, stage = p.split(os.sep)[-2], os.path.basename(p).split("_")[0]
         d = pd.DataFrame(read_gz(p))
         d = d[d.trait == "markdown_lists"]
         frames.append(pd.DataFrame(dict(source="atlas", family=fam, stage=stage, context=d.context, role=d.persona, item=d["item"], sample=d["sample"], wording=d.get("wording", 0), text=d.text)))
-    for p in sorted(glob.glob("results/working_model_L/L1/*/*.csv.gz")):
+    for p in sorted(glob.glob("results/overgeneralization/working_model_L/L1/*/*.csv.gz")):
         fam, stage = p.split(os.sep)[-2], os.path.basename(p).split(".")[0]
         d = pd.read_csv(p)
         frames.append(pd.DataFrame(dict(source="L1:" + d.version, family=fam, stage=stage, context=d.setting, role=d.role, item=d["item"], sample=d["sample"], wording=0, text=d.text)))
-    for p in sorted(glob.glob("results/working_model_L/L4/*/*.csv.gz")):
+    for p in sorted(glob.glob("results/overgeneralization/working_model_L/L4/*/*.csv.gz")):
         fam, stage = p.split(os.sep)[-2], os.path.basename(p).split(".")[0]
         d = pd.read_csv(p)
         frames.append(pd.DataFrame(dict(source="L4:" + d.qtype, family=fam, stage=stage, context=d.setting, role=d.role, item=d["item"], sample=d["sample"], wording=0, text=d.text)))
-    for p in sorted(glob.glob("results/role_says/*/*_judged.csv.gz")):
+    for p in sorted(glob.glob("results/overgeneralization/role_says/*/*_judged.csv.gz")):
         fam, stage = p.split(os.sep)[-2], os.path.basename(p).split("_")[0]
         d = pd.read_csv(p)
         ctx = np.where(d.cond == "assistant", "assistant", d.position + "/" + d.identity + "/" + d.voice)

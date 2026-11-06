@@ -12,7 +12,7 @@ while pgrep -f "[r]un_l14_marble" >/dev/null || [ -e /tmp/claude-0/gpu.lock ] ||
 echo "owner=main-session purpose=spec K OLMo SFT/DPO; released when run_k_sftdpo.sh ends" > /tmp/claude-0/gpu.lock
 trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 for stage in sft dpo; do
-  [[ -f results/bias_leak/olmo3-7b/$stage.csv.gz ]] && continue
+  [[ -f results/overgeneralization/bias_leak/olmo3-7b/$stage.csv.gz ]] && continue
   echo "=== olmo3-7b $stage $(date -u +%T)"
   $PY -m extras.bias_leak run --family olmo3-7b --stage $stage || echo "FAILED $stage"
   free_model "$($PY -c "from core import config; print(config.FAMILIES['olmo3-7b']['stages']['$stage'])")"

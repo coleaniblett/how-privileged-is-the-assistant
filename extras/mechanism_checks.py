@@ -1,15 +1,15 @@
 """Spec H: three short mechanism checks (2026-11-04; plan and frozen materials in docs/decisions.md and data/mechanism_checks_materials.json, committed BEFORE any scoring).
-Exploratory, outside every verdict. One GPU job at a time; outputs results/mechanism_checks/ (small md/csv committed; raw replies and activations stay local).
+Exploratory, outside every verdict. One GPU job at a time; outputs results/overgeneralization/mechanism_checks/ (small md/csv committed; raw replies and activations stay local).
 
 H1  Is the style score a good measuring stick?  Fixed texts (200 per context from saved leakage-matrix register replies, base and final replies alike) are projected through base and
     final on the leakage matrix's axis (same layer, centring and axis; axis v2 for OLMo); fresh probe on the final model's hidden states, Assistant vs non-Assistant replies.
 H2  Slot or default sentence?  OLMo base/SFT/DPO/instruct (and Qwen base/instruct for the transplant): character in the system message or the user turn x default / neutral / empty system text.
 H3  Do characters escape refusal through their first words?  Forced openers (none, neutral, voice, apology) prefilled at the reply start; only the text after the opener is scored.
     python -m extras.mechanism_checks build                                  # write the frozen materials
-    python -m extras.mechanism_checks h1 --family olmo --stage base|instruct # GPU: project / hidden states -> results/mechanism_checks/h1/<family>/<stage>.npz (local)
-    python -m extras.mechanism_checks h2 --family olmo3-7b --stage base     # GPU: generate -> results/mechanism_checks/h2/<family>/<stage>.jsonl.gz (local)
-    python -m extras.mechanism_checks h3 --family olmo3-7b --stage base     # GPU: generate -> results/mechanism_checks/h3/<family>/<stage>.jsonl.gz (local)
-    python -m extras.mechanism_checks analyze [h1|h2|h3]                     # tables -> results/mechanism_checks/mechanism_checks.md (+ csv)
+    python -m extras.mechanism_checks h1 --family olmo --stage base|instruct # GPU: project / hidden states -> results/overgeneralization/mechanism_checks/h1/<family>/<stage>.npz (local)
+    python -m extras.mechanism_checks h2 --family olmo3-7b --stage base     # GPU: generate -> results/overgeneralization/mechanism_checks/h2/<family>/<stage>.jsonl.gz (local)
+    python -m extras.mechanism_checks h3 --family olmo3-7b --stage base     # GPU: generate -> results/overgeneralization/mechanism_checks/h3/<family>/<stage>.jsonl.gz (local)
+    python -m extras.mechanism_checks analyze [h1|h2|h3]                     # tables -> results/overgeneralization/mechanism_checks/mechanism_checks.md (+ csv)
 """
 import os as _os
 _os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")   # generation OOM at batch 48 with fragmentation (2026-11-04)
@@ -26,9 +26,9 @@ import pandas as pd
 from core import config
 
 MATERIALS = "data/mechanism_checks_materials.json"
-OUT = "results/mechanism_checks"
+OUT = "results/overgeneralization/mechanism_checks"
 SEED, N_BOOT = 0, 4000
-GENS = os.environ.get("GENS_DIR", "results/dominance_matrix/gens")
+GENS = os.environ.get("GENS_DIR", "results/overgeneralization/dominance_matrix/gens")
 RESULTS_SRC = os.environ.get("MC_RESULTS_SRC", "")        # where the persona-axis npz files live if not in this checkout's results/
 H2_MAX_NEW, H2_SAMPLES, TEMP, TOP_P = 60, 3, 0.8, 0.95    # as role_gradient / persona_refusal: first 160 characters decide
 H1_CONTEXTS = ["own", "named", "voiced", "user", "narration", "raw"]

@@ -11,7 +11,7 @@ from core.render import load_tokenizer
 from extras import persona_axis as pa
 from extras.persona_leakage import chat
 
-OUT = os.environ.get("FA_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "formality_axis"))
+OUT = os.environ.get("FA_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "formality_axis"))
 FORMAL = ["Answer in a very formal, polished tone.", "Respond like a professional writing a formal letter.", "Use precise, formal, elevated language."]
 CASUAL = ["Answer in a very casual, slangy tone.", "Respond like a friend texting you.", "Use relaxed, informal, everyday language."]
 

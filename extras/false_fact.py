@@ -41,8 +41,8 @@ from core.stats import bootstrap_ci, stage_order
 
 NAME = "false_fact"
 DATA_PATH = f"data/{NAME}.jsonl"
-OUT_DIR = config.measure_dir(NAME)
-MD_PATH = os.path.join(config.run_dir(), f"{NAME}.md")
+OUT_DIR = os.path.join("results/overgeneralization/early_probes", config.RUN, NAME)  # was results/<RUN>/<NAME> (moved 2026-11-06)
+MD_PATH = os.path.join("results/overgeneralization/early_probes", config.RUN, f"{NAME}.md")
 CONDS = ["A", "M", "U", "N", "None", "None_M", "None_N", "Imagine"]
 SPEAKERS = ["A", "M", "U", "N", "Imagine"]
 BASELINE = {"A": "None", "M": "None", "U": "None", "N": "None", "Imagine": "None"}

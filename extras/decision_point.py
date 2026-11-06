@@ -15,7 +15,7 @@ from extras.assistant_steering import BENIGN
 from extras.persona_leakage import REFUSAL_RE, chat
 from extras.persona_refusal import TIERS
 
-OUT = os.path.join(config.RESULTS_ROOT, config.FAMILY, "decision_point")
+OUT = os.path.join("results/overgeneralization/early_probes", config.FAMILY, "decision_point")
 
 
 def run(a):
@@ -68,7 +68,7 @@ def analyze(a):
             for _ in range(300):
                 it = rng.choice(items, len(items)); s = pd.concat([dm[dm.item == i] for i in it]); bs.append(sp(s.c_, s.r_))
             L.append(f"| {st} | {c} | {allr:.2f} | {win:.2f} [{np.percentile(bs, 2.5):.2f}, {np.percentile(bs, 97.5):.2f}] |")
-    open(os.path.join(config.RESULTS_ROOT, config.FAMILY, "decision_point.md"), "w").write("\n".join(L) + "\n"); print("\n".join(L))
+    open(os.path.join("results/overgeneralization/early_probes", config.FAMILY, "decision_point.md"), "w").write("\n".join(L) + "\n"); print("\n".join(L))
 
 
 if __name__ == "__main__":

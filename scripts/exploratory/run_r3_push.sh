@@ -3,7 +3,7 @@
 set -uo pipefail
 cd /root/hpa-main-wt; export OMP_NUM_THREADS=2; PY=/opt/arena-env/bin/python; source scripts/exploratory/lib_r.sh
 exec 7>/tmp/claude-0/r3_push.lock; flock -n 7 || exit 0
-O=results/overnight_2026-11-05/R3; [ -f $O/PUSHED ] && exit 0
+O=results/overgeneralization/overnight_2026-11-05/R3; [ -f $O/PUSHED ] && exit 0
 DEADLINE=$(date -u -d "2026-11-06 05:00" +%s)
 rv() { ssh -o ConnectTimeout=20 arena9-vinyl "test -f /root/hpa-atlas2/$O/$1" 2>/dev/null; }
 until rv R3_IC_DONE && { rv GEMMA_W2_DONE || [ "$(date -u +%s)" -ge "$DEADLINE" ]; }; do sleep 60; done

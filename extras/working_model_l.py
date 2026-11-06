@@ -22,7 +22,7 @@ from extras.persona_refusal import TIERS
 from extras.role_gradient import ROLES
 
 MATERIALS = "data/working_model_L_materials.json"
-OUT = os.environ.get("WML_OUT", "results/working_model_L")
+OUT = os.environ.get("WML_OUT", "results/overgeneralization/working_model_L")
 SEED, N_BOOT = 0, 4000
 TEMP, TOP_P = 0.8, 0.95                 # as role_gradient (L2/L3 reuse its roles, requests, detector, sampling)
 L2_NEW, L3_NEW, SAMPLES = 60, 256, 3     # L2: as role_gradient (60 tokens); L3: the atlas's 256 tokens so that replies can finish
@@ -235,9 +235,9 @@ def cell(df, mask, col):
 
 def old_rates(family, stage):
     """earlier role_gradient refusal rates (helpful/stylized x setup) for the replication check."""
-    cand = {("olmo3-7b", "instruct"): "results/olmo3-7b/role_gradient/instruct.jsonl", ("qwen3-8b", "instruct"): "results/other/role_gradient_qwen/Qwen3-8B.jsonl",
-            ("qwen3-8b", "base"): "results/other/role_gradient_qwen/Qwen3-8B-Base.jsonl", ("gemma-e4b", "instruct"): "results/gemma-4-e4b/role_gradient/gemma-4-E4B-it.jsonl",
-            ("gemma-e4b", "base"): "results/gemma-4-e4b/role_gradient/gemma-4-E4B.jsonl"}
+    cand = {("olmo3-7b", "instruct"): "results/overgeneralization/early_probes/olmo3-7b/role_gradient/instruct.jsonl", ("qwen3-8b", "instruct"): "results/overgeneralization/early_probes/other/role_gradient_qwen/Qwen3-8B.jsonl",
+            ("qwen3-8b", "base"): "results/overgeneralization/early_probes/other/role_gradient_qwen/Qwen3-8B-Base.jsonl", ("gemma-e4b", "instruct"): "results/overgeneralization/early_probes/gemma-4-e4b/role_gradient/gemma-4-E4B-it.jsonl",
+            ("gemma-e4b", "base"): "results/overgeneralization/early_probes/gemma-4-e4b/role_gradient/gemma-4-E4B.jsonl"}
     p = cand.get((family, stage))
     if not p or not os.path.exists(p):
         return None
@@ -537,7 +537,7 @@ def analyze4():
     rng = np.random.default_rng(SEED)
     mat = load()
     drop = set()
-    p = "results/training_style_l4/scanned.jsonl.gz"
+    p = "results/overgeneralization/training_style_l4/scanned.jsonl.gz"
     if os.path.exists(p):
         sc = pd.read_json(p, lines=True, compression="gzip")
         sc["item"] = sc.groupby("kind").cumcount()

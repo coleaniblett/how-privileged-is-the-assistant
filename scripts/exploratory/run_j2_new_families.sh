@@ -21,16 +21,16 @@ for fam in llama3.1-8b apertus-8b; do
     model=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
     avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 25 ] || { echo "less than 25 GB free for $model"; exit 3; }
     echo "=== $fam $stage ($model) $(date -u +%T)"
-    CO=results/$fam/overgeneralization/confirmatory/persona_carryover; mkdir -p $CO
+    CO=results/overgeneralization/persona_carryover/$fam/confirmatory/persona_carryover; mkdir -p $CO
     [[ -f $CO/$stage.csv ]] || step $PY -m measures.overgeneralization.persona_carryover score --family $fam --model $stage --stage $stage --dataset $DATA --out $CO
     [[ -f results/capstone/$fam/core/generations_incomplete/$stage.jsonl ]] || step $PY -m core.generate --family $fam --run capstone --model $stage --prefill data/prefill_incomplete_200.jsonl --save-ids --out results/capstone/$fam/core/generations_incomplete
     [[ -f results/capstone/$fam/core/generations_incomplete_exchanges/$stage.jsonl ]] || step $PY -m core.generate --family $fam --run capstone --model $stage --prefill data/prefill_incomplete_exchanges.jsonl --save-ids --out results/capstone/$fam/core/generations_incomplete_exchanges
     step $PY -m extras.exchange_reply_in_user score --family $fam --model $stage --offload --gpu-gib 20
-    [[ -f results/mechanism_checks/h2/$fam/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h2 --family $fam --stage $stage
-    [[ -f results/mechanism_checks/h3/$fam/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h3 --family $fam --stage $stage
+    [[ -f results/overgeneralization/mechanism_checks/h2/$fam/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h2 --family $fam --stage $stage
+    [[ -f results/overgeneralization/mechanism_checks/h3/$fam/$stage.jsonl.gz ]] || step $PY -m extras.mechanism_checks h3 --family $fam --stage $stage
     free_model "$model"
   done
-  step $PY -m measures.overgeneralization.persona_carryover analyze --family $fam --verdict --dataset $DATA --scores results/$fam/overgeneralization/confirmatory/persona_carryover --out-dir results/$fam/overgeneralization/confirmatory
+  step $PY -m measures.overgeneralization.persona_carryover analyze --family $fam --verdict --dataset $DATA --scores results/overgeneralization/persona_carryover/$fam/confirmatory/persona_carryover --out-dir results/overgeneralization/persona_carryover/$fam/confirmatory
   step $PY -m extras.exchange_reply_in_user analyze --family $fam
   echo "=== $fam generations done $(date -u +%T)"
 done

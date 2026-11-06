@@ -68,7 +68,7 @@ GEN_TOKENS = 100
 def paths(args):
     model_id, run = MODELS[args.model]
     model_id, run = args.model_id or model_id, args.run or run  # overrides are for tests
-    d = config.measure_dir(NAME, run)
+    d = os.path.join("results/overgeneralization/early_probes", run or config.RUN, NAME)
     os.makedirs(d, exist_ok=True)
     return model_id, run, d
 
@@ -413,7 +413,7 @@ def analyze_cmd(args):
         if not gate:
             md += ["**The gate failed: the concept-injection paradigm does not reproduce on this model at this setting, so Step 2 (persona "
                    "variation) was not run.**", ""]
-        out = os.path.join(config.run_dir(run), f"{NAME}.md")
+        out = os.path.join("results/overgeneralization/early_probes", run or config.RUN, f"{NAME}.md")
         open(out, "w").write("\n".join(md))
         print("\n".join(md))
         sys.exit(0 if (gate or args.no_gate_exit) else 3)
@@ -466,7 +466,7 @@ def analyze_cmd(args):
                 continue
             for _, r in sub.sample(min(2, len(sub)), random_state=int(rs.integers(1e6))).iterrows():
                 md += [f"*{title}* ({r.concept}): " + json.dumps(r.response[:350], ensure_ascii=False), ""]
-    out = os.path.join(config.run_dir(run), f"{NAME}.md")
+    out = os.path.join("results/overgeneralization/early_probes", run or config.RUN, f"{NAME}.md")
     open(out, "w").write("\n".join(md))
     print("\n".join(md))
 

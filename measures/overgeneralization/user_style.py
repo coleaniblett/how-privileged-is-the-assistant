@@ -7,7 +7,7 @@ samples; stratum "boundary" = core/generations/, 100 sentence-boundary prefills;
 the real remainder of the same WildChat user turn. User portion = user_traits.py's cut (turn-end / handoff markers / line-initial role
 labels). Plan and pre-set reading: docs/decisions.md, "user-slot style fingerprint (spec A)". Exploratory, outside the verdict; CPU only.
 
-Score: P(assistant) from the human-vs-Assistant classifier (human_vs_assistant.py; gate AUC >= 0.85 at 10-20 words, results/user_style/
+Score: P(assistant) from the human-vs-Assistant classifier (human_vs_assistant.py; gate AUC >= 0.85 at 10-20 words, results/overgeneralization/user_style/
 classifier_gate.md), on the first 40 words of the text. Views: (1) the completion of the cut sentence (to the first . ? ! or newline),
 primary; (2) the full user portion, and the same restricted to >= 15 words. Human reference: the same cut of the real remainder; for the
 full view, the first N words with N matched to each model sample. Effects: stage minus base and stage minus the real-user reference,

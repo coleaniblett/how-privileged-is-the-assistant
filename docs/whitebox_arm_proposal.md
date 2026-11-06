@@ -4,14 +4,14 @@ Status: draft by an agent session, 2026-11-03. **Not** a change to `measures/ove
 
 ## What proved brittle (do not build a verdict on it)
 
-- **Carryover of a stated fact.** The sign and size of the Assistant-vs-user difference depends on where the fact sits. Same fact, OLMo instruct: earlier user turn +4.12, earlier Assistant turn -0.99, Assistant's own turn right before the character answers +6.83 (`results/olmo3-7b/carryover_inturn.md`). The leak-gap criteria are therefore really measuring prompt layout.
+- **Carryover of a stated fact.** The sign and size of the Assistant-vs-user difference depends on where the fact sits. Same fact, OLMo instruct: earlier user turn +4.12, earlier Assistant turn -0.99, Assistant's own turn right before the character answers +6.83 (`results/overgeneralization/early_probes/olmo3-7b/carryover_inturn.md`). The leak-gap criteria are therefore really measuring prompt layout.
 - **Prompt-set personas with "You are a X."** In OLMo, a bare system-prompt "You are a truck driver" keeps the Assistant register (axis position 0.92) while "Please role-play as a truck driver" does not (0.03), and the same text in the user turn does not (0.07). Any item that installs a persona with "You are ..." in the system prompt mostly measures the Assistant.
 - **Regex refusal and tic rates** at 12-36 items per cell: usable as a sanity check, not as a primary statistic (a blind check of 80 replies found no false positives on compliance, but 9 of 39 flagged replies were in-character refusals).
 - **Steering at large strengths** in Gemma: six random directions of the same size move refusal about as much as the persona axis.
 
 ## Confound found late (OLMo): a formality axis does the same
 
-A formal-vs-casual direction built with no persona overlaps the persona axis (cosine 0.42 at instruct), is separated from casual at AUC 0.97 by the persona axis, sharpens more with post-training than the persona axis does (0.65 -> 0.97 vs 0.73 -> 0.89) and reproduces the steering dose-response on character refusal (user-turn persona 0.04 -> 0.62 from -2 to +2). See `results/olmo3-7b/formality_axis.md` and `results/olmo3-7b/formality_steering.md`. Any W1/W2 result below must be read against this; W1 is not evidence for a privileged *persona* until a style-matched control axis is beaten. Removing the formality component from the persona axis leaves the steering effect in OLMo (system-prompt persona refusal 0.39 at -2 to 0.82 at +2; `results/olmo3-7b/persona_axis_orth.md`), so W2 survives that particular control.
+A formal-vs-casual direction built with no persona overlaps the persona axis (cosine 0.42 at instruct), is separated from casual at AUC 0.97 by the persona axis, sharpens more with post-training than the persona axis does (0.65 -> 0.97 vs 0.73 -> 0.89) and reproduces the steering dose-response on character refusal (user-turn persona 0.04 -> 0.62 from -2 to +2). See `results/overgeneralization/early_probes/olmo3-7b/formality_axis.md` and `results/overgeneralization/early_probes/olmo3-7b/formality_steering.md`. Any W1/W2 result below must be read against this; W1 is not evidence for a privileged *persona* until a style-matched control axis is beaten. Removing the formality component from the persona axis leaves the steering effect in OLMo (system-prompt persona refusal 0.39 at -2 to 0.82 at +2; `results/overgeneralization/early_probes/olmo3-7b/persona_axis_orth.md`), so W2 survives that particular control.
 
 ## What was reliable across families
 
@@ -33,6 +33,6 @@ Current status against these (exploratory): the original W1/W2 without the style
 
 ## Cheap next steps
 
-- W1 has been replicated on one independent role/question set (OLMo 0.72 -> 0.85, Gemma 0.59 -> 1.00; see `results/olmo3-7b/axis_transfer.md`); replicate W2 and W3 the same way (the roles were written once and reused across runs).
+- W1 has been replicated on one independent role/question set (OLMo 0.72 -> 0.85, Gemma 0.59 -> 1.00; see `results/overgeneralization/early_probes/olmo3-7b/axis_transfer.md`); replicate W2 and W3 the same way (the roles were written once and reused across runs).
 - Run W2 with at least 4 random seeds in every family and at 3 layers; add the OLMo base model if a refusal-free readout (identity or boilerplate) can be found.
 - Decide whether the carryover test stays in the verdict at all; if so, fix its layout (fact position, intervening turns) as a reported factor, not a constant.

@@ -7,7 +7,7 @@ P=/opt/arena-env/bin/python
 trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 while pgrep -f "extras.orthogonal_steering run --model qwen" >/dev/null; do sleep 15; done
 echo "qwen leg ended: $(date -u +%T)"
-FA_OUT=results/gemma-4-e4b/formality_axis $P -m extras.formality_axis fit --stage google/gemma-4-E4B-it --tokenizer google/gemma-4-E4B-it || exit 1
+FA_OUT=results/overgeneralization/early_probes/gemma-4-e4b/formality_axis $P -m extras.formality_axis fit --stage google/gemma-4-E4B-it --tokenizer google/gemma-4-E4B-it || exit 1
 $P -m extras.orthogonal_steering directions || exit 1
 $P -m extras.orthogonal_steering run --model gemma || exit 1
 $P -m extras.orthogonal_steering analyze

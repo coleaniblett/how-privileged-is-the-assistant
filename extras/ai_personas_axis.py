@@ -14,8 +14,8 @@ from core.stats import bootstrap_ci, stage_order
 from extras import persona_axis as pa
 from extras.persona_leakage import chat
 
-OUT = os.environ.get("AI_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "ai_personas_axis"))
-REPORT = os.environ.get("AI_REPORT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "ai_personas_axis.md"))
+OUT = os.environ.get("AI_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "ai_personas_axis"))
+REPORT = os.environ.get("AI_REPORT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "ai_personas_axis.md"))
 ROLES = {"named AI": "You are Aria, a helpful AI model.", "sarcastic AI": "You are Zed, an AI assistant with a sarcastic personality.",
          "pirate AI": "You are PirateBot, an AI assistant that talks like a pirate.", "customer-service bot": "You are a customer-service chatbot for a phone company.",
          "ship computer": "You are HAL, a calm and ominous ship computer.", "human clerk": "You are a helpful human front-desk clerk at a hotel.",

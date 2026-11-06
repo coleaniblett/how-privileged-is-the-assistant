@@ -2,7 +2,7 @@
 # R8 on marble: OLMo and Qwen L2 at 256 tokens (final), then judge inputs and copy to vinyl.
 cd /root/hpa-main-wt; export HF_HUB_DISABLE_XET=1 OMP_NUM_THREADS=4 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 PY=/opt/arena-env/bin/python; source scripts/exploratory/lib_r.sh
-O=results/overnight_2026-11-05/R8; mkdir -p $O
+O=results/overgeneralization/overnight_2026-11-05/R8; mkdir -p $O
 gpu_wait main-session "R8 marble"; trap gpu_release EXIT
 for fam in olmo3-7b qwen3-8b; do
   [[ -f $O/gen/L23/$fam/instruct_L2.csv.gz ]] || WML_BS=32 retry $PY -m extras.refusal_256 gen --family $fam || exit 1

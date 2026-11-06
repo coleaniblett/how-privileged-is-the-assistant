@@ -108,9 +108,9 @@ candidates/logit_distortion/<build>/   original-conversation candidates (core.bu
 ```
 
 Frozen, never modified or overwritten (the earliest pilot runs moved once, to `attic/`, on 2026-11-03; see `docs/decisions.md`): `data/` (regenerate only through the documented commands),
-`results/scores`, `results/generations`, `results/role_swap`, `results/coin_toss` and the `.md/.csv/.png` files
+`results/precapstone/scores`, `results/precapstone/generations`, `results/precapstone/role_swap`, `results/precapstone/coin_toss` and the `.md/.csv/.png` files
 beside them (the pre-capstone held-out run), `attic/results_preceding/` (preceding-turn robustness run) and
-`attic/results_v0/` (earlier unfiltered sample; its texts, Dolci-match lists and scores moved to `data/prefilter_*` and `results/selection_check/`, still frozen).
+`attic/results_v0/` (earlier unfiltered sample; its texts, Dolci-match lists and scores moved to `data/prefilter_*` and `results/precapstone/selection_check/`, still frozen).
 
 ## Measures
 

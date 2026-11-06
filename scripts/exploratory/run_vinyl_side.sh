@@ -13,10 +13,10 @@ exec 8>/root/atlas_logs/.side.lock
 flock -x 8
 step() { local t=$(date +%s); "$@" || echo "FAILED: $*"; echo "   [$(( $(date +%s)-t )) s] $*" | cut -c1-160; }
 echo "=== J6 $(date -u +%T)"
-[[ -f results/second_judge/traits.csv.gz ]] || step $PY -m extras.second_judge run
+[[ -f results/overgeneralization/second_judge/traits.csv.gz ]] || step $PY -m extras.second_judge run
 step $PY -m extras.second_judge analyze
 for fam in olmo3-7b qwen3-8b; do for stage in instruct base; do
-  [[ -f results/skill_roleplay/$fam/$stage.csv.gz ]] && continue
+  [[ -f results/overgeneralization/skill_roleplay/$fam/$stage.csv.gz ]] && continue
   model=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
   avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); cached=$(du -sm "$HUB/models--${model//\//--}" 2>/dev/null | cut -f1); [ "${cached:-0}" -gt 1000 ] || [ "$avail" -ge 17 ] || { echo "less than 17 GB free for $model"; continue; }
   echo "=== J11 $fam $stage $(date -u +%T)"

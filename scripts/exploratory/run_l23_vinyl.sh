@@ -8,10 +8,10 @@ HUB="$HOME/.cache/huggingface/hub"
 free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
-exec 9>results/trait_atlas/.gpu.lock
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock
 flock -x 9
 for fam in olmo3-7b gemma-e4b; do for stage in instruct base; do
-  [[ -f results/working_model_L/L23/$fam/${stage}_L3.csv.gz ]] && continue
+  [[ -f results/overgeneralization/working_model_L/L23/$fam/${stage}_L3.csv.gz ]] && continue
   echo "=== $fam $stage $(date -u +%T)"
   $PY -m extras.working_model_l run23 --family $fam --stage $stage || echo "FAILED $fam $stage"
   case "$fam $stage" in "olmo3-7b instruct") m=allenai/Olmo-3-7B-Instruct;; "olmo3-7b base") m=allenai/Olmo-3-1025-7B;; "gemma-e4b instruct") m=google/gemma-4-E4B-it;; *) m=google/gemma-4-E4B;; esac

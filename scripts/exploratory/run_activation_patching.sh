@@ -8,7 +8,7 @@ set -uo pipefail
 cd "$(dirname "$0")/../.."
 export HF_HUB_DISABLE_XET=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True OMP_NUM_THREADS=4
 PY=/opt/arena-env/bin/python
-LOCK=results/trait_atlas/.gpu.lock
+LOCK=results/overgeneralization/trait_atlas/.gpu.lock
 HUB="$HOME/.cache/huggingface/hub"
 free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
@@ -25,10 +25,10 @@ while pgrep -f "[r]un_trait_atlas_incharacter.sh" >/dev/null; do sleep 30; done
     $PY -m extras.activation_patching stage0 --family $fam || { echo "STAGE 0 FAILED for $fam" | tee /root/atlas_logs/SPEC_I_STOP.txt; free_model "$model"; break; }
     echo "=== $fam stage 1 $(date -u +%T)"
     $PY -m extras.activation_patching stage1 --family $fam || { echo "STAGE 1 FAILED for $fam" | tee -a /root/atlas_logs/SPEC_I_STOP.txt; free_model "$model"; continue; }
-    if [ ! -f results/activation_patching/$fam/floors.json ]; then echo "$fam: no layer above the random range, Stage 2 skipped"; free_model "$model"; continue; fi
+    if [ ! -f results/overgeneralization/activation_patching/$fam/floors.json ]; then echo "$fam: no layer above the random range, Stage 2 skipped"; free_model "$model"; continue; fi
     echo "=== $fam waiting for committed floors $(date -u +%T)"
-    for i in $(seq 1 120); do [ -f results/activation_patching/$fam/floors.committed ] && break; sleep 30; done
-    [ -f results/activation_patching/$fam/floors.committed ] || { echo "floors never committed for $fam" | tee -a /root/atlas_logs/SPEC_I_STOP.txt; free_model "$model"; continue; }
+    for i in $(seq 1 120); do [ -f results/overgeneralization/activation_patching/$fam/floors.committed ] && break; sleep 30; done
+    [ -f results/overgeneralization/activation_patching/$fam/floors.committed ] || { echo "floors never committed for $fam" | tee -a /root/atlas_logs/SPEC_I_STOP.txt; free_model "$model"; continue; }
     echo "=== $fam stage 2 $(date -u +%T)"
     $PY -m extras.activation_patching stage2 --family $fam || echo "STAGE 2 FAILED for $fam"
     free_model "$model"

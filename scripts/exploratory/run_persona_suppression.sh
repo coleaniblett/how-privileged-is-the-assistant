@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Spec F-main: OLMo 3 7B base + instruct, then Qwen3-8B base + instruct (one checkpoint on disk at a time), then analyze.
-# Materials must be committed first (data/persona_suppression_materials.json). Output: results/persona_suppression/.
+# Materials must be committed first (data/persona_suppression_materials.json). Output: results/overgeneralization/persona_suppression/.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 PY=/opt/arena-env/bin/python
@@ -19,7 +19,7 @@ trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 for fam in olmo3-7b qwen3-8b; do
   for stage in base instruct; do
     model=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
-    if [[ -f "results/persona_suppression/$fam/${stage}_generations.jsonl" ]]; then echo "=== $fam $stage: done, skipped"; continue; fi
+    if [[ -f "results/overgeneralization/persona_suppression/$fam/${stage}_generations.jsonl" ]]; then echo "=== $fam $stage: done, skipped"; continue; fi
     avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 15 ] || { echo "less than 15 GB free"; exit 3; }
     echo "=== $fam $stage ($model) $(date -u +%T)"
     $PY -m extras.persona_suppression score --family $fam --model $stage

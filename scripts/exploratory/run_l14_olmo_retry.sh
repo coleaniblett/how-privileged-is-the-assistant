@@ -12,13 +12,13 @@ while [ -e /tmp/claude-0/gpu.lock ] || [ "$(nvidia-smi --query-gpu=memory.used -
 echo "owner=main-session purpose=spec L OLMo L1/L4 retry then K SFT/DPO; released when run_l14_olmo_retry.sh ends" > /tmp/claude-0/gpu.lock
 trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 for stage in instruct base; do for test in 1 4; do
-  [[ -f results/working_model_L/L$test/olmo3-7b/$stage.csv.gz ]] && continue
+  [[ -f results/overgeneralization/working_model_L/L$test/olmo3-7b/$stage.csv.gz ]] && continue
   echo "=== L$test olmo3-7b $stage $(date -u +%T)"
   $PY -m extras.working_model_l run$test --family olmo3-7b --stage $stage || echo "FAILED L$test olmo $stage"
 done; free_model "$($PY -c "from core import config; print(config.FAMILIES['olmo3-7b']['stages']['$stage'])")"; done
 unset WML_BS
 for stage in sft dpo; do
-  [[ -f results/bias_leak/olmo3-7b/$stage.csv.gz ]] && continue
+  [[ -f results/overgeneralization/bias_leak/olmo3-7b/$stage.csv.gz ]] && continue
   echo "=== K olmo3-7b $stage $(date -u +%T)"
   $PY -m extras.bias_leak run --family olmo3-7b --stage $stage || echo "FAILED K $stage"
   free_model "$($PY -c "from core import config; print(config.FAMILIES['olmo3-7b']['stages']['$stage'])")"

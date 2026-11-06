@@ -1,4 +1,4 @@
-"""Report for extras.orthogonal_steering (pre-set rules in docs/decisions.md, 2026-11-03). Writes results/orthogonal_steering/orthogonal_steering.md and curves.png."""
+"""Report for extras.orthogonal_steering (pre-set rules in docs/decisions.md, 2026-11-03). Writes results/overgeneralization/orthogonal_steering/orthogonal_steering.md and curves.png."""
 import glob, json, os
 import numpy as np, pandas as pd
 from core.stats import bootstrap_ci

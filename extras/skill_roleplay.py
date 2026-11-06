@@ -18,7 +18,7 @@ from core import config
 from extras import trait_atlas as ta
 
 MATERIALS = "data/skill_roleplay_materials.json"
-OUT = os.environ.get("SR_OUT", "results/skill_roleplay")
+OUT = os.environ.get("SR_OUT", "results/overgeneralization/skill_roleplay")
 SEED, N_BOOT = 0, 4000
 MAX_NEW, OLD_CAP, TAIL = 512, 256, 150
 TEMP, TOP_P, SAMPLES, BATCH = 0.7, 0.95, 2, 16

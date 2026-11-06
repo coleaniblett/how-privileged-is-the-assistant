@@ -8,7 +8,7 @@ Per text set (wildchat user, oasst1 user, wildchat assistant) and model, over co
 with 95% bootstrap CIs over texts (core.stats.bootstrap_ci). Gemma-it's change from the OLMo base reference is the
 difference of the two means (unpaired: different models, so raw NLL levels are not comparable, but these are
 within-text differences) with a two-sample bootstrap CI; an effect counts if |change| >= config.MIN_EFFECT_NATS and the
-CI excludes zero (AGENTS.md). Reference rows come from the frozen pre-capstone held-out run, results/scores/ (base and
+CI excludes zero (AGENTS.md). Reference rows come from the frozen pre-capstone held-out run, results/precapstone/scores/ (base and
 instruct), read only. Gemma is scored on the first N texts per set only (see score.py).
 
 Direction (README, criteria 1 and 2): vestigial regression for user text = the role-specific term rises, and the slot

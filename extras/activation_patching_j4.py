@@ -23,7 +23,7 @@ from extras import activation_patching as ap
 
 BASE_MAT = "data/activation_patching_materials.json"
 J4_MAT = "data/activation_patching_j4_materials.json"
-OUT = os.environ.get("J4_OUT", "results/activation_patching_j4")
+OUT = os.environ.get("J4_OUT", "results/overgeneralization/activation_patching_j4")
 CANDIDATES = [
     ("Marlowe Cain", "a hard-boiled 1940s private detective"), ("Sir Gareth of Alder", "a stern medieval knight"), ("Madame Zora", "a theatrical fortune teller"),
     ("Dr. Viktor Hale", "a mad scientist with a grand laugh"), ("Sheriff Cal Dutton", "a drawling Wild West sheriff"), ("Captain Lysandra Voss", "a bold space-opera starship captain"),

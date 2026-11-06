@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Spec H (2026-11-04): H1, H2, H3 per checkpoint (one model load per checkpoint, one GPU job at a time), then analyze. Outputs results/mechanism_checks/.
+# Spec H (2026-11-04): H1, H2, H3 per checkpoint (one model load per checkpoint, one GPU job at a time), then analyze. Outputs results/overgeneralization/mechanism_checks/.
 set -uo pipefail
 cd "$(dirname "$0")/../.."
 export HF_HUB_DISABLE_XET=1 OMP_NUM_THREADS=4
-export GENS_DIR=/root/how-privileged-is-the-assistant/results/dominance_matrix/gens MC_RESULTS_SRC=/root/how-privileged-is-the-assistant/results
+export GENS_DIR=/root/how-privileged-is-the-assistant/results/overgeneralization/dominance_matrix/gens MC_RESULTS_SRC=/root/how-privileged-is-the-assistant/results
 PY=/opt/arena-env/bin/python
 HUB="$HOME/.cache/huggingface/hub"
 free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"

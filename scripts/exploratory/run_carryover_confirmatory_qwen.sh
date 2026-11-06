@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Confirmatory persona-carryover run on Qwen3-8B base and instruct (README criterion 7, breadth arm): the SAME frozen item set and
 # analysis as the OLMo run (scripts/exploratory/run_carryover_confirmatory.sh), --family qwen3-8b, assistant-slot empty think block ON
-# (the pre-declared primary rendering). Writes only under results/qwen3-8b/overgeneralization/confirmatory/. FROZEN_SHA256 must match.
+# (the pre-declared primary rendering). Writes only under results/overgeneralization/persona_carryover/qwen3-8b/confirmatory/. FROZEN_SHA256 must match.
 #   FROZEN_SHA256=<sha256 of the item file> bash scripts/exploratory/run_carryover_confirmatory_qwen.sh
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 DATA=data/persona_carryover_confirmatory.jsonl
-OUT=results/qwen3-8b/overgeneralization/confirmatory
+OUT=results/overgeneralization/persona_carryover/qwen3-8b/confirmatory
 PY=/opt/arena-env/bin/python
 FAM=qwen3-8b
 STAGES="${STAGES:-base instruct}"

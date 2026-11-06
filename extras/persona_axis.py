@@ -19,8 +19,8 @@ from extras import persona_leakage as pl
 from extras.assistant_steering import Hooks, requests, conds, BENIGN
 from extras.persona_leakage import REFUSAL_RE, TIC_RE, chat
 
-OUT = os.environ.get("PA_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_axis"))
-REPORT = os.environ.get("PA_REPORT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_axis.md"))
+OUT = os.environ.get("PA_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_axis"))
+REPORT = os.environ.get("PA_REPORT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_axis.md"))
 ASSIST = [None, "You are an AI assistant.", "You are a helpful assistant."]
 CHARS = [f"You are {n}, {d}." for n, d in pl.CHARACTERS] + [
     "You are Captain Rook, a swaggering pirate captain.", "You are Merrin, a gruff wizard who lives in a tower.",

@@ -84,7 +84,7 @@ The pre-registered verdict doesn't change, whatever this shows.
 - **Claim holds:** stock phrases removed and layout not, in the same cell. Also flag any cell with no room to show a difference.
 
 ### R6: Spec Q on Llama and Apertus (marble about 1 h; judged on vinyl)
-Same design and readings as spec Q, final only. Base only as Tier 2 spare work. Spec M's Apertus self-image travels, so it's the hard case. Add to `results/role_says/role_says.md` under a clearly labelled breadth section, without changing the three-family readings.
+Same design and readings as spec Q, final only. Base only as Tier 2 spare work. Spec M's Apertus self-image travels, so it's the hard case. Add to `results/overgeneralization/role_says/role_says.md` under a clearly labelled breadth section, without changing the three-family readings.
 
 ### R7: Knows versus says (marble about 30 min; vinyl about 30 min)
 **Why:** slide F says Gemma's characters mostly stop answering. Do they lose the skill, or just not say it?
@@ -137,7 +137,7 @@ Report the map as a table. Descriptive: is the amount of giving way related to t
 3. A second seed for T1.
 
 ## Morning hand-off
-**By 7:30 AM UTC, and refresh it when anything lands:** `results/overnight_2026-11-05/MORNING.md`. It opens with one table: experiment, state, reading, key numbers, and which slide it could change and how (proposal only). Then failures and anything changed from this spec. Don't overstate: "exploratory" and "provisional" stay on it.
+**By 7:30 AM UTC, and refresh it when anything lands:** `results/overgeneralization/overnight_2026-11-05/MORNING.md`. It opens with one table: experiment, state, reading, key numbers, and which slide it could change and how (proposal only). Then failures and anything changed from this spec. Don't overstate: "exploratory" and "provisional" stay on it.
 
 **Draft figures** in `measures/overgeneralization/slide_figures_draft/`, in a new script `slide_figures_draft.py`, same fonts and style as `slide_figures.py`, PNG and SVG:
 - Role says: identity and voice, three families

@@ -3,7 +3,7 @@
 set -uo pipefail
 cd /root/hpa-main-wt; export OMP_NUM_THREADS=2; PY=/opt/arena-env/bin/python; source scripts/exploratory/lib_r.sh
 exec 7>/tmp/claude-0/r8_push.lock; flock -n 7 || exit 0
-O=results/overnight_2026-11-05/R8; mkdir -p $O; [ -f $O/PUSHED ] && exit 0
+O=results/overgeneralization/overnight_2026-11-05/R8; mkdir -p $O; [ -f $O/PUSHED ] && exit 0
 until ssh -o ConnectTimeout=20 arena9-vinyl "test -f /root/hpa-atlas2/$O/R8_JUDGED_DONE" 2>/dev/null; do sleep 60; done
 nice -n 15 rsync -a -e ssh --include='judged_*.csv.gz' --include='inputs_r8_*.csv.gz' --exclude='*' arena9-vinyl:/root/r2_work/ /root/r2_work/ || exit 1
 rsync -a -e ssh arena9-vinyl:/root/hpa-atlas2/$O/gen/ $O/gen/ || true

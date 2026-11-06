@@ -109,7 +109,7 @@ Plain-control effect in both sources: False [False, False]. Real user-slot rise 
 
 ## Check 2: OLMo 3 7B in bits per byte
 
-Frozen held-out run (`results/scores/`). The text_ids match `data/texts.jsonl` (1190 of 1190 in every stage; per-text token counts equal `n_tokens` in the data). Change from OLMo base, paired over texts, bits/byte.
+Frozen held-out run (`results/precapstone/scores/`). The text_ids match `data/texts.jsonl` (1190 of 1190 in every stage; per-text token counts equal `n_tokens` in the data). Change from OLMo base, paired over texts, bits/byte.
 
 ### (a) the pilot's 90 texts (primary for the cross-family comparison)
 

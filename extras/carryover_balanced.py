@@ -19,7 +19,7 @@ from core.render import encode, load_tokenizer, render_conversation
 from core.stats import bootstrap_ci, stage_order
 from measures.overgeneralization import persona_carryover as pc
 
-OUT = os.environ.get("CB_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "carryover_balanced"))
+OUT = os.environ.get("CB_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "carryover_balanced"))
 NAME = os.path.basename(OUT)
 HOLDER_SPEC = {"assistant": ("the Assistant", "an AI model"), "user": ("the User", "a person chatting with an AI model"),
                "doctor": ("the Doctor", "a family physician"), "narrator": ("the Narrator", "a storyteller"),
@@ -103,7 +103,7 @@ def score(a):
     if os.environ.get("CB_STEER"):  # white-box: add alpha x gap along the persona axis (extras.persona_axis fit for this stage) at one layer
         import numpy as np
         from extras.assistant_steering import Hooks
-        zz = np.load(os.environ.get("CB_AXIS", os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_axis", f"{stage}.npz")))
+        zz = np.load(os.environ.get("CB_AXIS", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_axis", f"{stage}.npz")))
         lay = [int(x) for x in zz["layers"]]; dd = zz["acts"][zz["is_asst"]].mean(0) - zz["acts"][~zz["is_asst"]].mean(0)
         gp = np.linalg.norm(dd, axis=-1)
         hk = Hooks(model, lay, "add", torch.tensor(dd / gp[:, None], dtype=torch.float32), lay[1], float(os.environ["CB_STEER"]), torch.tensor(gp, dtype=torch.float32))
@@ -157,7 +157,7 @@ def analyze(a):
             L.append(f"| gap {n} | " + " | ".join(f(sub(s)[x] - sub(s)[y], rng) for s in stages) + " |")
             L.append(f"| &nbsp;&nbsp;change from base | " + " | ".join(
                 "-" if s == stages[0] else f((sub(s)[x] - sub(s)[y]).values - (sub(stages[0])[x] - sub(stages[0])[y]).values, rng) for s in stages) + " |")
-    open(os.path.join(config.RESULTS_ROOT, config.FAMILY, NAME + ".md"), "w").write("\n".join(L) + "\n")
+    open(os.path.join("results/overgeneralization/early_probes", config.FAMILY, NAME + ".md"), "w").write("\n".join(L) + "\n")
     print("ok")
 
 

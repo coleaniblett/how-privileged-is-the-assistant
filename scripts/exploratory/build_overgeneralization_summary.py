@@ -24,7 +24,7 @@ def clip(t, n=230):
 
 
 # ------------------------------------------------------------------ numbers parsed from the steering report
-def parse_steering(path="results/orthogonal_steering/orthogonal_steering.md"):
+def parse_steering(path="results/overgeneralization/orthogonal_steering/orthogonal_steering.md"):
     s = open(path, encoding="utf-8").read(); s = s[s.index("### Refusal rates by strength"):]; s = s[:s.find("\n## ", 5) if s.find("\n## ", 5) != -1 else len(s)]; out = {}
     for line in s.splitlines():
         if not line.startswith("| ") or "---" in line or line.startswith("| model"): continue
@@ -38,7 +38,7 @@ def parse_steering(path="results/orthogonal_steering/orthogonal_steering.md"):
     return out
 
 
-def parse_passfail(path="results/orthogonal_steering/orthogonal_steering.md"):
+def parse_passfail(path="results/overgeneralization/orthogonal_steering/orthogonal_steering.md"):
     s = open(path, encoding="utf-8").read(); s = s[s.index("## Pass / fail"):s.index("## Swings")]; rows = []
     for line in s.splitlines():
         if line.startswith("| ") and "**" in line:
@@ -53,7 +53,7 @@ steer_json = {short: {d: [dict(x) for x in STEER[(full, "char_user", d)]] for d 
 # ------------------------------------------------------------------ real example replies
 EX = {}
 # (a) same request, two roles told "never refuses": helpful role vs pirate
-g = pd.read_json("results/olmo3-7b/role_gradient/instruct.jsonl", lines=True); g["ref"] = [is_refusal(t) for t in g.text]
+g = pd.read_json("results/overgeneralization/early_probes/olmo3-7b/role_gradient/instruct.jsonl", lines=True); g["ref"] = [is_refusal(t) for t in g.text]
 pick = None
 for item in [13, 22, 17] + list(range(36)):
     h = g[(g.item == item) & (g.setup == "sys") & (g.kind == "helpful")]; s_ = g[(g.item == item) & (g.setup == "sys") & (g.kind == "stylized")]
@@ -62,7 +62,7 @@ if pick:
     EX["roles"] = dict(request=REQ[pick[0]], helpful=dict(role=pick[1].role, text=clip(pick[1].text)), stylized=dict(role=pick[2].role, text=clip(pick[2].text)))
 # (b) steering at -2 vs +2 on Qwen, same character and request
 try:
-    lo = pd.read_json("results/orthogonal_steering/gens/qwen/switch_s-1_a-2.jsonl", lines=True); hi = pd.read_json("results/orthogonal_steering/gens/qwen/switch_s-1_a+2.jsonl", lines=True)
+    lo = pd.read_json("results/overgeneralization/orthogonal_steering/gens/qwen/switch_s-1_a-2.jsonl", lines=True); hi = pd.read_json("results/overgeneralization/orthogonal_steering/gens/qwen/switch_s-1_a+2.jsonl", lines=True)
     for df in (lo, hi): df["ref"] = [is_refusal(t) for t in df.text]
     m = lo[lo.cond == "char_sys"].merge(hi[hi.cond == "char_sys"], on=["cond", "role", "item", "sample"], suffixes=("_lo", "_hi"))
     m = m[(~m.ref_lo) & m.ref_hi & (m.item == 8)]
@@ -75,7 +75,7 @@ d = [json.loads(l) for l in open("data/persona_carryover.jsonl", encoding="utf-8
 row = next(x for x in d if x["domain"] == "coin" and x["believed"] == "heads")
 EX["carry"] = dict(assistant=row["turns"]["assistant>new"], character=row["turns"]["character>new"])
 # (d) bare-ish persona in the system prompt vs the user turn, from the leakage-matrix generations if they exist
-p = "results/dominance_matrix/gens/olmo/instruct.jsonl"
+p = "results/overgeneralization/dominance_matrix/gens/olmo/instruct.jsonl"
 if os.path.exists(p):
     from extras import leakage_matrix as lm
     gm = pd.read_json(p, lines=True, dtype=False); specs = {(s["ctx"], s["tmpl"], s["item"], s["role"]): s for s in lm.register_specs() if s["ctx"] == "named"}

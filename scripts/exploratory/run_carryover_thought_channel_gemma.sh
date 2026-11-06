@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Gemma 4 31B confirmatory carryover RERUN with the planned empty thought channel on the final assistant turn (--assistant-opening), base then instruct.
-# Same frozen items (FROZEN_SHA256), same criteria and verdict code. Outputs ONLY under results/gemma4-31b/overgeneralization/confirmatory_thought_channel/
+# Same frozen items (FROZEN_SHA256), same criteria and verdict code. Outputs ONLY under results/overgeneralization/persona_carryover/gemma4-31b/confirmatory_thought_channel/
 # (the first run, confirmatory/, is untouched). All weights on the GPU (GPU_GIB, default 90), bf16, batch 1. Disk: base and instruct do not fit together, so the instruct
 # checkpoint is freed (folder and blobs) for base, then re-downloaded and KEPT at the end for the atlas judge.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 export HF_HUB_DISABLE_XET=1
 DATA=data/persona_carryover_confirmatory.jsonl
-OUT=results/gemma4-31b/overgeneralization/confirmatory_thought_channel
+OUT=results/overgeneralization/persona_carryover/gemma4-31b/confirmatory_thought_channel
 PY=/opt/arena-env/bin/python
 FAM=gemma4-31b
 GPU_GIB="${GPU_GIB:-90}"

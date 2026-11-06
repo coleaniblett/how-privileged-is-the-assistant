@@ -19,8 +19,8 @@ from extras import persona_leakage as pl, persona_refusal as pr
 from extras.persona_leakage import REFUSAL_RE
 
 PERSONA = os.environ.get("AG_AXIS") == "persona"  # use the persona-based axis (extras.persona_axis) instead of the slot-based one
-AX = os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_axis" if PERSONA else "assistant_axis")
-OUT = os.path.join(config.RESULTS_ROOT, config.FAMILY, "axis_gens_persona" if PERSONA else "axis_gens")
+AX = os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_axis" if PERSONA else "assistant_axis")
+OUT = os.path.join("results/overgeneralization/early_probes", config.FAMILY, "axis_gens_persona" if PERSONA else "axis_gens")
 
 
 def jobs(stage):
@@ -92,7 +92,7 @@ def analyze(a):
         L += ["| speech | " + " | ".join(stages) + " |", "|---|" + "---|" * len(stages)]
         for name, sel in groups:
             L.append(f"| {name} | " + " | ".join(f(d[(d.stage == s)][sel(d[d.stage == s])][lc]) if sel(d[d.stage == s]).sum() > 2 else "-" for s in stages) + " |")
-    open(os.path.join(config.RESULTS_ROOT, config.FAMILY, "axis_gens_persona.md" if PERSONA else "axis_gens.md"), "w").write("\n".join(L) + "\n"); print("ok")
+    open(os.path.join("results/overgeneralization/early_probes", config.FAMILY, "axis_gens_persona.md" if PERSONA else "axis_gens.md"), "w").write("\n".join(L) + "\n"); print("ok")
 
 
 if __name__ == "__main__":

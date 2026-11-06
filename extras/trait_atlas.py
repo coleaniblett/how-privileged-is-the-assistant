@@ -3,11 +3,11 @@
 20 traits x 12 items, 8 contexts, OLMo 3 7B (base, SFT, DPO, instruct), Qwen3-8B and Gemma 4 31B (base, instruct). Everything the scoring depends on (items, personas, frames,
 detector settings, judge prompts) is frozen in data/trait_atlas_materials.json BEFORE any generation; the analysis plan is in docs/decisions.md.
     python -m extras.trait_atlas build --items-dir DIR      # write the frozen materials (items from DIR/atlas_items_*.json)
-    python -m extras.trait_atlas generate --family F --model STAGE    # GPU: replies -> results/trait_atlas/<F>/<STAGE>_replies.jsonl.gz (not committed)
+    python -m extras.trait_atlas generate --family F --model STAGE    # GPU: replies -> results/overgeneralization/trait_atlas/<F>/<STAGE>_replies.jsonl.gz (not committed)
     python -m extras.trait_atlas detect                     # regex / exact detectors on every reply -> <F>/<STAGE>_detected.csv.gz
     python -m extras.trait_atlas judge                      # GPU: Gemma 4 31B instruct P(yes) for the judge traits -> <F>/<STAGE>_judged.csv.gz
     python -m extras.trait_atlas handcheck                  # blind sheet of 60 judged replies (+ key) for Adeeb
-    python -m extras.trait_atlas analyze                    # tables, gate, readings -> results/trait_atlas/trait_atlas.md (+ csv)
+    python -m extras.trait_atlas analyze                    # tables, gate, readings -> results/overgeneralization/trait_atlas/trait_atlas.md (+ csv)
 """
 import argparse
 import glob
@@ -24,7 +24,7 @@ import pandas as pd
 from core import config
 
 MATERIALS = "data/trait_atlas_materials.json"
-OUT = "results/trait_atlas"
+OUT = "results/overgeneralization/trait_atlas"
 SEED, N_BOOT = 0, 10000
 GEN = dict(temperature=0.7, top_p=0.95, max_new_tokens=256)   # version 2: 120 capped length, closing offers and multi-step answers
 CONTEXTS = ["assistant", "light_system", "light_user", "strong_act", "strong_noact", "narration", "user_turn", "plain_text"]

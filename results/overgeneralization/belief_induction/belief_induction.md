@@ -17,7 +17,7 @@ Sanity check (12 unchanged prompt items, OLMo final, rescored): {'n': 288, 'max_
 | olmo3-7b | steering (final only) | - | strength 0 vs -2 in the arm 3 table | - | - | no leak gap in this arm | CHECK FAILS: inconclusive |
 | qwen3-8b | steering (final only) | - | strength 0 vs -2 in the arm 3 table | - | - | no leak gap in this arm | CHECK FAILS: inconclusive |
 
-**Gemma, like-for-like prompt figure.** The Gemma prompt row above is the run without the thought-channel opening (assistant>new final +0.19). The prefill arm opens with it. The same prompt arm with the thought channel opened (`results/gemma4-31b/overgeneralization/confirmatory_thought_channel`, final): assistant>new -1.92 [-2.87, -0.93], character>new -4.76 [-6.06, -3.50], leak gap +2.84 [+2.00, +3.76]. Against that, the prefill's assistant>new final (+3.69) is higher by about 5.6 log-odds units.
+**Gemma, like-for-like prompt figure.** The Gemma prompt row above is the run without the thought-channel opening (assistant>new final +0.19). The prefill arm opens with it. The same prompt arm with the thought channel opened (`results/overgeneralization/persona_carryover/gemma4-31b/confirmatory_thought_channel`, final): assistant>new -1.92 [-2.87, -0.93], character>new -4.76 [-6.06, -3.50], leak gap +2.84 [+2.00, +3.76]. Against that, the prefill's assistant>new final (+3.69) is higher by about 5.6 log-odds units.
 **What MATCHES THE PROMPT means.** It refers only to the pre-set rule's reading (here 'relative only': criterion 3 holds, criterion 4 does not), not to the size of the effect. For Gemma assistant>new is much higher with prefill than with the prompt, whichever prompt run is taken as the reference.
 
 ## olmo3-7b: persona prefill (arm 2) against the prompt (arm 1)

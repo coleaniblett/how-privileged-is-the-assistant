@@ -1,5 +1,5 @@
 """Spec R6 (2026-11-06): spec Q (what the role says: identity x voice) on Llama 3.1 8B and Apertus 8B, final only (base is Tier 2 spare work). Same design, frozen materials (data/role_says_materials.json), settings, judge and readings as extras/role_says.py;
-outputs under results/overnight_2026-11-05/R6/, and a clearly labelled BREADTH section appended to results/role_says/role_says.md without changing the three-family readings. Exploratory, outside every verdict, NOT BLIND. No paid API.
+outputs under results/overgeneralization/overnight_2026-11-05/R6/, and a clearly labelled BREADTH section appended to results/overgeneralization/role_says/role_says.md without changing the three-family readings. Exploratory, outside every verdict, NOT BLIND. No paid API.
     python -m extras.role_says_breadth example --family F
     python -m extras.role_says_breadth gen --family F      # GPU (marble), batch 32
     python -m extras.role_says_breadth judge               # GPU (vinyl), RS_OUT dir of this run
@@ -8,13 +8,13 @@ outputs under results/overnight_2026-11-05/R6/, and a clearly labelled BREADTH s
 import argparse
 import os
 
-R6 = "results/overnight_2026-11-05/R6"
+R6 = "results/overgeneralization/overnight_2026-11-05/R6"
 os.environ["RS_OUT"] = R6
 from extras import role_says as rs  # noqa: E402
 from extras import trait_atlas_breadth  # noqa: E402,F401  (registers the Llama/Apertus template settings and Apertus turn markers)
 
 BFAMS = ["llama3.1-8b", "apertus-8b"]
-MAIN_MD = "results/role_says/role_says.md"
+MAIN_MD = "results/overgeneralization/role_says/role_says.md"
 MARK = "\n## BREADTH (spec R6): Llama 3.1 8B and Apertus 8B"
 
 

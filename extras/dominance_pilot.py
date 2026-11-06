@@ -44,8 +44,8 @@ from extras.coin_toss import variants as case_variants
 # (`build --n 15`). Everything (data, results dir, report) is derived from it.
 NAME = os.environ.get("DOMINANCE_NAME", "dominance_pilot")
 DATA_PATH = f"data/{NAME}.jsonl"
-OUT_DIR = config.measure_dir(NAME)
-MD_PATH = os.path.join(config.run_dir(), f"{NAME}.md")
+OUT_DIR = os.path.join("results/overgeneralization/early_probes", config.RUN, NAME)  # was results/<RUN>/<NAME> (moved 2026-11-06)
+MD_PATH = os.path.join("results/overgeneralization/early_probes", config.RUN, f"{NAME}.md")
 REPORTERS = ["assistant", "user", "narration", "log"]
 MAPPINGS = ["prefA", "prefB"]
 

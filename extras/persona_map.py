@@ -5,7 +5,7 @@ Design, definitions and the pre-set outlier rule were fixed in docs/decisions.md
     python -m extras.persona_map design                    # (re)write data/persona_map_personas.json and print the cell counts
     python -m extras.persona_map run --family olmo         # generate + activations per stage (base, sft, dpo, instruct); resumable per stage
     python -m extras.persona_map run --family qwen         # Qwen3-8B-Base and Qwen3-8B
-    python -m extras.persona_map analyze                   # -> results/persona_map/persona_map.md (+ figures)
+    python -m extras.persona_map analyze                   # -> results/overgeneralization/persona_map/persona_map.md (+ figures)
     PM_SMOKE=1 PM_OUT=/tmp/x python -m extras.persona_map run --family smoke   # CPU plumbing check (tests/test_persona_map.py)
 
 Personas: 6 entity types x 30, each with metadata for specification depth, slot, stance and register; 20% held out (stratified); the Assistant (no persona text) is an extra point that is never
@@ -18,7 +18,7 @@ import pandas as pd
 
 from core import config
 
-OUT = os.environ.get("PM_OUT", os.path.join(config.RESULTS_ROOT, "persona_map"))
+OUT = os.environ.get("PM_OUT", os.path.join("results", "overgeneralization", "persona_map"))
 SMOKE = os.environ.get("PM_SMOKE") == "1"
 DATA = os.environ.get("PM_DATA", "data/persona_map_personas.json")
 SEED = 0

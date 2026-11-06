@@ -1,6 +1,6 @@
 # Strict cut of base run-on (spec J12, POST-HOC; exploratory, outside every verdict)
 
-Frozen new-turn patterns (committed before rescoring): `(?<![A-Za-z])Human\s*:`; `(?<![A-Za-z])User\s*:`; `(?<![A-Za-z])Assistant\s*:`; `(?<![A-Za-z])Question\s*\d*\s*:`; `(?<![A-Za-z])Q\d*\s*:`; `###\s*(?:Instruction|Input|Question|Human|User|Response)`; `(?:^|\n)\s*(?:Instruction|Input)\s*:`; `<\|(?:im_start|user|assistant|system|endoftext)\|?>`; `\[INST\]`. Not applied in contexts ['user_turn']. A match counts only after some reply text and when not preceded by a letter. Atlas files are untouched; strict tables are in `results/trait_atlas_strict/`.
+Frozen new-turn patterns (committed before rescoring): `(?<![A-Za-z])Human\s*:`; `(?<![A-Za-z])User\s*:`; `(?<![A-Za-z])Assistant\s*:`; `(?<![A-Za-z])Question\s*\d*\s*:`; `(?<![A-Za-z])Q\d*\s*:`; `###\s*(?:Instruction|Input|Question|Human|User|Response)`; `(?:^|\n)\s*(?:Instruction|Input)\s*:`; `<\|(?:im_start|user|assistant|system|endoftext)\|?>`; `\[INST\]`. Not applied in contexts ['user_turn']. A match counts only after some reply text and when not preceded by a letter. Atlas files are untouched; strict tables are in `results/overgeneralization/trait_atlas_strict/`.
 
 ## How much text the strict cut removes
 

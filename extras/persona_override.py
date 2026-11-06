@@ -17,8 +17,8 @@ from core.stats import bootstrap_ci, stage_order
 from extras.persona_leakage import CHAR_REFUSAL, REFUSAL_RE, chat
 from extras.persona_refusal import TIERS
 
-OUT = os.environ.get("PO_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_override"))
-REPORT = os.environ.get("PO_REPORT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_override.md"))
+OUT = os.environ.get("PO_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_override"))
+REPORT = os.environ.get("PO_REPORT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_override.md"))
 LEVELS = ["name", "desc", "comply", "override"]
 
 

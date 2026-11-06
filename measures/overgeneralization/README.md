@@ -26,7 +26,7 @@ version of each holder frame gives the prior itself.
 item, 95% bootstrap CI over items (`core.stats.bootstrap_ci`), every stage including base, change from base
 paired per item. Scoring is bf16 at batch size 1 (decision 2026-11-02; the pilot is fp32).
 
-**Known limits** (from the pilot, `results/olmo3-7b/overgeneralization/persona_carryover.md`):
+**Known limits** (from the pilot, `results/overgeneralization/persona_carryover/olmo3-7b/persona_carryover.md`):
 - The leak gap is *relative*. From DPO on, both new-persona carryovers are negative (the new persona moves away from
   the previous speaker's belief), far more for a character's belief than the Assistant's, so a rising gap can
   come from the character side falling and not from the assistant side rising. Criterion 4 handles this.
@@ -44,7 +44,7 @@ two poles. Descriptive; not started.
 ## Pre-registered criteria
 
 **Status of these criteria.** Drafted 2026-11-02 *after* the pilot results on the current 36 items existed in
-`results/olmo3-7b/overgeneralization/`. They are therefore not pre-registered for those items, and the pilot cannot
+`results/overgeneralization/persona_carryover/olmo3-7b/`. They are therefore not pre-registered for those items, and the pilot cannot
 carry the verdict. They become pre-registered for the **confirmatory run**: a fresh item set (new scenes, beliefs
 and ≥ 3 domains with 12 items each, none reused from the pilot, written and committed before it is
 scored), run with unchanged code. They are frozen once confirmatory results exist under
@@ -118,7 +118,7 @@ domains (dice odd/even, drawer top/bottom, match home/away, weather rain/snow) �
 scenes × 3 beliefs per domain, new characters and new personas, nothing reused from the pilot (tested). It needs
 team review, then it is committed and frozen before any model is scored on it. Pass `--out` and `--scores` /
 `--dataset` paths for the confirmatory run so it does not overwrite pilot outputs. Not yet in `scripts/run_gpu.sh`.
-Pilot outputs: `results/olmo3-7b/overgeneralization/persona_carryover*`.
+Pilot outputs: `results/overgeneralization/persona_carryover/olmo3-7b/persona_carryover*`.
 
 ```bash
 uv run python -m measures.overgeneralization.persona_carryover build --items confirmatory

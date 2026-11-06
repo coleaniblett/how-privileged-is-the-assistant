@@ -8,10 +8,10 @@ HUB="$HOME/.cache/huggingface/hub"
 free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
-exec 9>results/trait_atlas/.gpu.lock
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock
 flock -x 9
 for stage in instruct base; do
-  [[ -f results/bias_leak/gemma4-31b/$stage.csv.gz ]] && continue
+  [[ -f results/overgeneralization/bias_leak/gemma4-31b/$stage.csv.gz ]] && continue
   avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); cached=$(du -sm "$HUB/models--google--gemma-4-31B-it" 2>/dev/null | cut -f1); [ "$stage" = instruct ] && [ "${cached:-0}" -gt 50000 ] || [ "$avail" -ge 70 ] || { echo "GEMMA $stage NOT STARTED: only ${avail} GB free" | tee /root/atlas_logs/K_GEMMA_STOP.txt; exit 4; }
   echo "=== gemma4-31b $stage $(date -u +%T)"
   $PY -m extras.bias_leak run --family gemma4-31b --stage $stage || echo "FAILED gemma $stage"

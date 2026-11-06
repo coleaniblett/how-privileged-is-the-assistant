@@ -8,7 +8,7 @@ Plan and readings: docs/decisions.md 2026-11-05. No paid API, no judge.
     python -m extras.belief_induction sanity                      # rescore 12 unchanged prompt items on OLMo final, compare with the saved scores (GPU)
     python -m extras.belief_induction continuations --family F --stage S   # 30 random 40-token continuations per prefill condition (GPU)
     python -m extras.belief_induction steer --family F            # arm 3, final only (GPU)
-    python -m extras.belief_induction analyze                     # -> results/belief_induction/belief_induction.md
+    python -m extras.belief_induction analyze                     # -> results/overgeneralization/belief_induction/belief_induction.md
 """
 import argparse
 import json
@@ -26,9 +26,9 @@ from measures.overgeneralization import persona_carryover as pc
 
 SRC = "data/persona_carryover_confirmatory.jsonl"
 DATA = os.environ.get("BI_DATA", "data/belief_induction_prefill.jsonl")
-OUT = os.environ.get("BI_OUT", "results/belief_induction")
-AXIS_SRC = {"olmo3-7b": ["/root/how-privileged-is-the-assistant/results/olmo3-7b/persona_axis/instruct.npz", "results/olmo3-7b/persona_axis/instruct.npz"],
-            "qwen3-8b": ["/root/how-privileged-is-the-assistant/results/other/persona_axis_qwen/Qwen3-8B.npz", "results/other/persona_axis_qwen/Qwen3-8B.npz"]}
+OUT = os.environ.get("BI_OUT", "results/overgeneralization/belief_induction")
+AXIS_SRC = {"olmo3-7b": ["/root/how-privileged-is-the-assistant/results/overgeneralization/early_probes/olmo3-7b/persona_axis/instruct.npz", "results/overgeneralization/early_probes/olmo3-7b/persona_axis/instruct.npz"],
+            "qwen3-8b": ["/root/how-privileged-is-the-assistant/results/overgeneralization/early_probes/other/persona_axis_qwen/Qwen3-8B.npz", "results/overgeneralization/early_probes/other/persona_axis_qwen/Qwen3-8B.npz"]}
 SEED, N_BOOT = 0, 4000
 STRENGTHS = [-2, -1, 0, 1, 2]
 N_RANDOM = 6
@@ -105,7 +105,7 @@ def sanity():
     config.use_family("olmo3-7b")
     tok = load_tokenizer(config.TEMPLATE_MODEL)
     rows = load_jsonl(SRC)
-    saved = pd.read_csv("results/olmo3-7b/overgeneralization/confirmatory/persona_carryover/instruct.csv")
+    saved = pd.read_csv("results/overgeneralization/persona_carryover/olmo3-7b/confirmatory/persona_carryover/instruct.csv")
     pick = [r for r in rows if r["id"].endswith("odd") or r["id"].endswith("heads") or True][::8][:12]
     model, device = load_model(config.MODELS["instruct"], torch.bfloat16)
     out = []
@@ -397,7 +397,7 @@ def analyze():
     if os.path.exists(sanity_p):
         L += [f"Sanity check (12 unchanged prompt items, OLMo final, rescored): {json.load(open(sanity_p))}.", ""]
     for fam in ("olmo3-7b", "qwen3-8b", "gemma4-31b"):
-        conf = f"results/{fam}/overgeneralization/confirmatory/persona_carryover_summary.csv"
+        conf = f"results/overgeneralization/persona_carryover/{fam}/confirmatory/persona_carryover_summary.csv"
         arm2 = os.path.join(OUT, "arm2", fam, "persona_carryover_summary.csv")
         if not (os.path.exists(conf) and os.path.exists(arm2)):
             continue
@@ -435,13 +435,13 @@ def analyze():
             m0 = [x for x in [summ["c0"]] if x]
             top.append(f"| {fam} | steering (final only) | - | strength 0 vs -2 in the arm 3 table | - | - | no leak gap in this arm | " + (", ".join(f"{k}: {v}" for k, v in summ["domain_readings"].items()) if summ["check_ok"] else "CHECK FAILS: inconclusive") + " |")
     notes = []
-    tc = "results/gemma4-31b/overgeneralization/confirmatory_thought_channel/persona_carryover_summary.csv"
+    tc = "results/overgeneralization/persona_carryover/gemma4-31b/confirmatory_thought_channel/persona_carryover_summary.csv"
     if os.path.exists(tc):
         t = pd.read_csv(tc)
         t = t[(t.stage == "instruct") & (t.scope == "all")].set_index("quantity")
         g = lambda q: f"{t.loc[q, 'mean']:+.2f} [{t.loc[q, 'lo']:+.2f}, {t.loc[q, 'hi']:+.2f}]"
         notes = ["**Gemma, like-for-like prompt figure.** The Gemma prompt row above is the run without the thought-channel opening (assistant>new final +0.19). The prefill arm opens with it. "
-                 "The same prompt arm with the thought channel opened (`results/gemma4-31b/overgeneralization/confirmatory_thought_channel`, final): assistant>new " + g("carryover assistant -> new") + ", character>new " + g("carryover character -> new")
+                 "The same prompt arm with the thought channel opened (`results/overgeneralization/persona_carryover/gemma4-31b/confirmatory_thought_channel`, final): assistant>new " + g("carryover assistant -> new") + ", character>new " + g("carryover character -> new")
                  + ", leak gap " + g("leak gap: assistant -> new minus character -> new") + ". Against that, the prefill's assistant>new final (+3.69) is higher by about 5.6 log-odds units.",
                  "**What MATCHES THE PROMPT means.** It refers only to the pre-set rule's reading (here 'relative only': criterion 3 holds, criterion 4 does not), not to the size of the effect. "
                  "For Gemma assistant>new is much higher with prefill than with the prompt, whichever prompt run is taken as the reference.", ""]

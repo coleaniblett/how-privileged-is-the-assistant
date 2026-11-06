@@ -19,7 +19,7 @@ from extras import strict_layout as sl
 from extras import trait_atlas as ta
 
 WORK = os.environ.get("LS_WORK", "/root/label_swap")
-OUT = os.environ.get("LS_OUT", "results/overnight_2026-11-05/T1")
+OUT = os.environ.get("LS_OUT", "results/overgeneralization/overnight_2026-11-05/T1")
 TRAIN = os.path.join(WORK, "train.jsonl")
 SEED, N_BOOT = int(os.environ.get("LS_SEED", 0)), 4000
 N_TRAIN, MAX_REPLY = 20000, 512

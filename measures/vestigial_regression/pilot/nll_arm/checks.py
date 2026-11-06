@@ -4,7 +4,7 @@
 
 Check 1: IT - base per slot for Qwen3-8B and Gemma 4 31B, paired over the same 30 texts per set, in nats/token
 (positions 1+) and primary bits per byte, with each role-specific change decomposed. Verdict by the rule written in
-report.md before this was run. Check 2: the frozen OLMo 3 7B held-out scores (results/scores) in primary BPB, change
+report.md before this was run. Check 2: the frozen OLMo 3 7B held-out scores (results/precapstone/scores) in primary BPB, change
 from OLMo base for SFT, DPO and Instruct, on the pilot's 90 texts (primary) and on all texts (secondary).
 Primary BPB = summed NLL over content positions 1+ / ln 2 / UTF-8 bytes of the text decoded from content tokens 1+.
 Writes checks.md and summary_tables.md next to this file.
@@ -178,7 +178,7 @@ def main():
         stages[st] = load_model_scores(os.path.join(config.RESULTS_ROOT, "scores"), st, tok, nb_all)
     all_ids = sorted(r["id"] for r in all_rows)
     L += ["## Check 2: OLMo 3 7B in bits per byte", "",
-          "Frozen held-out run (`results/scores/`). The text_ids match `data/texts.jsonl` (1190 of 1190 in every stage; "
+          "Frozen held-out run (`results/precapstone/scores/`). The text_ids match `data/texts.jsonl` (1190 of 1190 in every stage; "
           "per-text token counts equal `n_tokens` in the data). Change from OLMo base, paired over texts, bits/byte.", ""]
     terms = {}
     for tag, ids, title in (("a", ids90, "(a) the pilot's 90 texts (primary for the cross-family comparison)"),

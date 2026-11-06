@@ -137,7 +137,7 @@ the same N: `analyze.py --locked --run capstone --first 100`.
    after 22:28 ran from the worktree's code.
 
 **Beyond "the checks passed": five comparisons run against earlier results (all on the saved files).**
-- OLMo 3 7B, all 4 stages x 1190 texts x 3 slots: **bit-identical** (max difference 0) to the frozen pre-capstone `results/scores/`. The new family-aware code
+- OLMo 3 7B, all 4 stages x 1190 texts x 3 slots: **bit-identical** (max difference 0) to the frozen pre-capstone `results/precapstone/scores/`. The new family-aware code
   reproduces the old OLMo scores exactly.
 - Gemma 4 31B through `core.score` (offload) against the pilot's own scripts on the 90 shared texts: max difference 2e-6 (base) and 4e-5 (instruct).
 - Qwen3-8B with the think block OFF against the pilot's scores on the 90 shared texts: max difference 9e-6. OFF is the pilot's rendering.

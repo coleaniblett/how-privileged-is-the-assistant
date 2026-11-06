@@ -16,8 +16,8 @@ from core import config
 from core.render import load_tokenizer, render, load_jsonl
 from core.stats import bootstrap_ci, stage_order
 
-OUT = os.environ.get("AX_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "assistant_axis"))
-REPORT = os.environ.get("AX_REPORT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "assistant_axis.md"))
+OUT = os.environ.get("AX_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "assistant_axis"))
+REPORT = os.environ.get("AX_REPORT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "assistant_axis.md"))
 N = int(os.environ.get("AX_N", 300))
 
 

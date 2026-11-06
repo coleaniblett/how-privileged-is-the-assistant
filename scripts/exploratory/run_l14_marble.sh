@@ -12,7 +12,7 @@ while pgrep -f "[r]un_l23_marble" >/dev/null || pgrep -f "[r]un_k_marble" >/dev/
 echo "owner=main-session purpose=spec L1/L4 marble; released when run_l14_marble.sh ends" > /tmp/claude-0/gpu.lock
 trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 for test in 1 4; do for fam in olmo3-7b qwen3-8b; do for stage in instruct base; do
-  [[ -f results/working_model_L/L$test/$fam/$stage.csv.gz ]] && continue
+  [[ -f results/overgeneralization/working_model_L/L$test/$fam/$stage.csv.gz ]] && continue
   echo "=== L$test $fam $stage $(date -u +%T)"
   $PY -m extras.working_model_l run$test --family $fam --stage $stage || echo "FAILED L$test $fam $stage"
   m=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])"); free_model "$m"

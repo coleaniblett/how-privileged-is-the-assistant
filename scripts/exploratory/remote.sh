@@ -2,7 +2,7 @@
 # Run GPU jobs on the reserved host (arena9-nurse, L40S 46 GB) while keeping every project file on THIS host.
 # The remote copy of the repo is a throwaway mirror: never edit, commit or push there; results are copied back here and the weights live only in the remote HF cache.
 #   remote.sh push-code               sync code and data from this host (never results, never .git) to the remote mirror
-#   remote.sh push-fits PATH...       copy git-ignored inputs a job needs (e.g. results/olmo3-7b/persona_axis/instruct.npz) to the remote
+#   remote.sh push-fits PATH...       copy git-ignored inputs a job needs (e.g. results/overgeneralization/early_probes/olmo3-7b/persona_axis/instruct.npz) to the remote
 #   remote.sh run 'COMMAND'           run a command in the remote repo (use nohup/background there for long jobs)
 #   remote.sh pull-results PATH...    copy result paths back from the remote (rsync, relative to the repo root); do this after every stage, not only at the end
 #   remote.sh status                  GPU use, free disk and running python jobs on the remote

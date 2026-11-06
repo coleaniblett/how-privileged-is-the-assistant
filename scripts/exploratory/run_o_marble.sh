@@ -17,12 +17,12 @@ T0=$(date +%s)
 step() { local t=$(date +%s); "$@" || echo "FAILED: $*"; echo "   [$(( $(date +%s)-t )) s] $*" | cut -c1-170; if [ $(( $(date +%s)-T0 )) -gt 7200 ]; then echo "O over 2 h" | tee /tmp/claude-0/O_STOP.txt; exit 9; fi; }
 echo "=== sanity $(date -u +%T)"
 step $PY -m extras.belief_induction sanity
-mx=$($PY -c "import json;print(json.load(open('results/belief_induction/sanity.json'))['max_abs_diff'])")
+mx=$($PY -c "import json;print(json.load(open('results/overgeneralization/belief_induction/sanity.json'))['max_abs_diff'])")
 echo "sanity max abs diff $mx"
 $PY -c "import sys; sys.exit(0 if float('$mx') < 0.05 else 1)" || { echo "SANITY FAILED: max abs diff $mx" | tee /tmp/claude-0/O_STOP.txt; exit 8; }
 for fam in olmo3-7b qwen3-8b; do
   for stage in instruct base; do
-    O=results/belief_induction/arm2/$fam
+    O=results/overgeneralization/belief_induction/arm2/$fam
     mkdir -p $O/persona_carryover
     echo "=== arm 2 $fam $stage $(date -u +%T)"
     [[ -f $O/persona_carryover/$stage.csv ]] || step $PY -m measures.overgeneralization.persona_carryover score --family $fam --model $stage --stage $stage --dataset $D --out $O/persona_carryover
@@ -30,11 +30,11 @@ for fam in olmo3-7b qwen3-8b; do
     m=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
     [ "$stage" = base ] && free_model "$m"
   done
-  step $PY -m measures.overgeneralization.persona_carryover analyze --family $fam --verdict --dataset $D --scores results/belief_induction/arm2/$fam/persona_carryover --out-dir results/belief_induction/arm2/$fam
+  step $PY -m measures.overgeneralization.persona_carryover analyze --family $fam --verdict --dataset $D --scores results/overgeneralization/belief_induction/arm2/$fam/persona_carryover --out-dir results/overgeneralization/belief_induction/arm2/$fam
 done
 for fam in olmo3-7b qwen3-8b; do
   echo "=== arm 3 $fam $(date -u +%T)"
-  [[ -f results/belief_induction/arm3/$fam/meta.json ]] || step $PY -m extras.belief_induction steer --family $fam
+  [[ -f results/overgeneralization/belief_induction/arm3/$fam/meta.json ]] || step $PY -m extras.belief_induction steer --family $fam
   m=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['instruct'])"); free_model "$m"
 done
 step $PY -m extras.belief_induction analyze

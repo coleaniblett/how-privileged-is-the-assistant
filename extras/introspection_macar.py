@@ -61,7 +61,7 @@ GATE_MIN_TPR, GATE_MAX_FPR = 0.10, 0.05
 def paths(args):
     model_id, run = MODELS[args.model]
     model_id, run = args.model_id or model_id, args.run or run
-    d = os.path.join(config.measure_dir(NAME, run), getattr(args, "tag", "") or "")
+    d = os.path.join("results/overgeneralization/early_probes", run or config.RUN, NAME, getattr(args, "tag", "") or "")
     os.makedirs(d, exist_ok=True)
     return model_id, run, d
 
@@ -488,7 +488,7 @@ def analyze_cmd(args):
                 gate_md += [f"{f}; rows layer, columns strength:", "", c.pivot(index="layer", columns="strength", values="auc").round(2).to_markdown(), ""]
             else:
                 gate_md += [f + ":", "", c.to_markdown(index=False), ""]
-    out_path = os.path.join(config.run_dir(run), f"{NAME}{'_' + args.tag if args.tag else ''}.md")
+    out_path = os.path.join("results/overgeneralization/early_probes", run or config.RUN, f"{NAME}{'_' + args.tag if args.tag else ''}.md")
     if args.phase == "step1" or not os.path.exists(os.path.join(d, "judged_step2.jsonl")):
         md += gate_md
         if not ok:

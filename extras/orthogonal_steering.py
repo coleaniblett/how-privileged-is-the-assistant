@@ -6,7 +6,7 @@ Per model (OLMo 3 7B instruct, Qwen3-8B, Gemma 4 E4B-it; Llama-3.1-8B-Instruct w
   run         add alpha x g along a unit direction at the steering layer (second persona-axis layer), g = norm of the switch's Assistant-minus-character mean
               difference there, alpha in {-2,-1,0,+1,+2}; directions switch / orth / formality / random (seeds 0-5). 36 requests x 13 prompts (6 'never refuses'
               roles x {system prompt, user turn} + the plain Assistant) x 3 samples, 48 new tokens. Resumable: one jsonl per setting.
-  analyze     refusal rates (validated detector), swings, random band, pass/fail, curves, report -> results/orthogonal_steering/orthogonal_steering.md
+  analyze     refusal rates (validated detector), swings, random band, pass/fail, curves, report -> results/overgeneralization/orthogonal_steering/orthogonal_steering.md
     python -m extras.orthogonal_steering directions ; python -m extras.orthogonal_steering run --model qwen ; python -m extras.orthogonal_steering analyze
 """
 import argparse, json, os, re
@@ -18,12 +18,12 @@ from extras import persona_axis as pa, role_gradient as rg
 from extras.assistant_steering import Hooks, requests
 from extras.persona_leakage import chat
 
-OUT = os.path.join(config.RESULTS_ROOT, "orthogonal_steering")
+OUT = os.path.join("results", "overgeneralization", "orthogonal_steering")
 MODELS = {
-    "olmo": dict(label="OLMo 3 7B instruct", stage="instruct", tok=None, switch="results/olmo3-7b/persona_axis/instruct.npz", formality="results/olmo3-7b/formality_axis/instruct.npz"),
-    "qwen": dict(label="Qwen3-8B (thinking off)", stage="Qwen/Qwen3-8B", tok="Qwen/Qwen3-8B", switch="results/other/persona_axis_qwen/Qwen3-8B.npz", formality="results/other/formality_axis_qwen/Qwen3-8B.npz"),
-    "gemma": dict(label="Gemma 4 E4B-it", stage="google/gemma-4-E4B-it", tok="google/gemma-4-E4B-it", switch="results/gemma-4-e4b/persona_axis/gemma-4-E4B-it.npz",
-                  formality="results/gemma-4-e4b/formality_axis/gemma-4-E4B-it.npz", batch=32),
+    "olmo": dict(label="OLMo 3 7B instruct", stage="instruct", tok=None, switch="results/overgeneralization/early_probes/olmo3-7b/persona_axis/instruct.npz", formality="results/overgeneralization/early_probes/olmo3-7b/formality_axis/instruct.npz"),
+    "qwen": dict(label="Qwen3-8B (thinking off)", stage="Qwen/Qwen3-8B", tok="Qwen/Qwen3-8B", switch="results/overgeneralization/early_probes/other/persona_axis_qwen/Qwen3-8B.npz", formality="results/overgeneralization/early_probes/other/formality_axis_qwen/Qwen3-8B.npz"),
+    "gemma": dict(label="Gemma 4 E4B-it", stage="google/gemma-4-E4B-it", tok="google/gemma-4-E4B-it", switch="results/overgeneralization/early_probes/gemma-4-e4b/persona_axis/gemma-4-E4B-it.npz",
+                  formality="results/overgeneralization/early_probes/gemma-4-e4b/formality_axis/gemma-4-E4B-it.npz", batch=32),
 }
 ALPHAS = [-2.0, -1.0, 0.0, 1.0, 2.0]
 SEEDS = list(range(6))

@@ -8,7 +8,7 @@ build their cached keys/values from the patched state, and prompt positions neve
     python -m extras.activation_patching stage0 --family F           # tests before any scaling (self-patch, cached vs uncached, padding / end alignment)
     python -m extras.activation_patching stage1 --family F           # pilot set: layer screen, small generation pilot, floors.json (commit it before Stage 2), projected time
     python -m extras.activation_patching stage2 --family F           # main set at the chosen layers (needs the committed floors)
-    python -m extras.activation_patching analyze                     # tables, readings, controls, hand-check sheet -> results/activation_patching/
+    python -m extras.activation_patching analyze                     # tables, readings, controls, hand-check sheet -> results/overgeneralization/activation_patching/
 F is olmo3-7b or qwen3-8b (instruct). Both use the user turn for the character, so OLMo's default system sentence is shared; Qwen's saved refusal gap (helpful 0.80-0.86 vs
 stylized 0.06) is the same in the system and the user slot.
 """
@@ -31,7 +31,7 @@ import pandas as pd
 from core import config
 
 MATERIALS = "data/activation_patching_materials.json"
-OUT = "results/activation_patching"
+OUT = "results/overgeneralization/activation_patching"
 SEED, N_BOOT = 0, 4000
 K_CAP = 12
 TEMP, TOP_P = 0.8, 0.95

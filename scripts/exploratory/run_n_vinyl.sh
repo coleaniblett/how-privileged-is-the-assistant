@@ -9,7 +9,7 @@ free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
 while pgrep -f "[r]un_m_breadth" >/dev/null; do sleep 20; done
-exec 9>results/trait_atlas/.gpu.lock
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock
 flock -x 9
 avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 70 ] || { echo "NOT STARTED: only ${avail} GB free" | tee /root/atlas_logs/N_STOP.txt; exit 4; }
 echo "=== timing sample $(date -u +%T)"
@@ -22,7 +22,7 @@ if [ -n "${t2:-}" ] && [ -n "${t3:-}" ]; then
   if [ $proj -gt 10800 ]; then echo "projected $((proj/60)) min > 3 h: stopping for a decision" | tee /root/atlas_logs/N_STOP.txt; exit 5; fi
 else echo "sample timing missing, see /tmp/n_sample.log" | tee /root/atlas_logs/N_STOP.txt; exit 6; fi
 for stage in instruct base; do
-  [[ -f results/working_model_L/L23/gemma4-31b/${stage}_L3.csv.gz ]] && continue
+  [[ -f results/overgeneralization/working_model_L/L23/gemma4-31b/${stage}_L3.csv.gz ]] && continue
   echo "=== gemma4-31b $stage $(date -u +%T)"
   $PY -m extras.working_model_l run23 --family gemma4-31b --stage $stage || echo "FAILED $stage"
   free_model "$($PY -c "from core import config; print(config.FAMILIES['gemma4-31b']['stages']['$stage'])")"

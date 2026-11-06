@@ -20,7 +20,7 @@ import pandas as pd
 
 from extras import activation_patching as ap
 
-OUT = os.environ.get("RD_OUT", "results/refusal_direction")
+OUT = os.environ.get("RD_OUT", "results/overgeneralization/refusal_direction")
 SEED, N_BOOT, N_RANDOM = 0, 4000, 5
 THIN, VIVID = ["thin1", "thin2"], ["vivid1", "vivid2"]
 ALL = ["asst"] + THIN + VIVID

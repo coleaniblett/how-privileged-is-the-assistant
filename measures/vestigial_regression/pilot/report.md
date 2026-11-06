@@ -277,7 +277,7 @@ the total damage.
 
 ### Check 2: OLMo 3 7B in bits per byte (`nll_arm/checks.md`)
 
-Definition (fixed in advance): the frozen OLMo held-out scores in `results/scores/` converted to primary BPB with the
+Definition (fixed in advance): the frozen OLMo held-out scores in `results/precapstone/scores/` converted to primary BPB with the
 OLMo tokenizer; change from OLMo base for SFT, DPO and Instruct, paired over texts, on (a) the pilot's 90 texts (primary
 for the cross-family comparison) and (b) all OLMo texts (secondary). **Verification first:** the `text_id`s of all four
 frozen score files match `data/texts.jsonl` (1190 of 1190, none missing or extra), and for every text the score files'

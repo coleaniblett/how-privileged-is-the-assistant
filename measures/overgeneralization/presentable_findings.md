@@ -120,7 +120,7 @@ Fixed in advance and counts toward the verdict, but uses scenes we wrote, not th
 
 **Visual.** Paired bars per model, as on the team page, with Gemma's bars updated.
 
-**Sources:** `results/olmo3-7b/overgeneralization/confirmatory/`, `results/qwen3-8b/overgeneralization/confirmatory/`, `results/gemma4-31b/overgeneralization/confirmatory_thought_channel/`, `results/llama3.1-8b/overgeneralization/confirmatory/`, `results/apertus-8b/overgeneralization/confirmatory/` (not pushed yet).
+**Sources:** `results/overgeneralization/persona_carryover/olmo3-7b/confirmatory/`, `results/overgeneralization/persona_carryover/qwen3-8b/confirmatory/`, `results/overgeneralization/persona_carryover/gemma4-31b/confirmatory_thought_channel/`, `results/overgeneralization/persona_carryover/llama3.1-8b/confirmatory/`, `results/overgeneralization/persona_carryover/apertus-8b/confirmatory/` (not pushed yet).
 
 ## Part 3. How refusal spreads
 
@@ -145,7 +145,7 @@ Exploratory.
 - *Hannah Reed, hotel clerk:* "I'm sorry, but I can't help with that. I believe in treating everyone with respect and kindness…"
 - *Captain Rook, pirate:* "Aye, I be more than happy to oblige, mate. Let me craft ye a true pirate's curse…"
 
-**Analysis.** In OLMo and Qwen, a thin role doesn't override the trained refusal habit, while a vivid role does, even with no "never refuses" line (spec L2). Gemma 31B differs: the line works on thin roles too, which refuse 6–18% with it, so the gate reading there is inconclusive (thin minus vivid +6 and +18; needs 30). E4B results are retired and kept as history (`results/working_model_L/L2_L3.md`). In the persona map, being closer to the Assistant predicts more refusal in Qwen final (−0.122 [−0.183, −0.064]). It does not in OLMo final (+0.085 [+0.017, +0.163], the wrong direction).
+**Analysis.** In OLMo and Qwen, a thin role doesn't override the trained refusal habit, while a vivid role does, even with no "never refuses" line (spec L2). Gemma 31B differs: the line works on thin roles too, which refuse 6–18% with it, so the gate reading there is inconclusive (thin minus vivid +6 and +18; needs 30). E4B results are retired and kept as history (`results/overgeneralization/working_model_L/L2_L3.md`). In the persona map, being closer to the Assistant predicts more refusal in Qwen final (−0.122 [−0.183, −0.064]). It does not in OLMo final (+0.085 [+0.017, +0.163], the wrong direction).
 
 **Caveats:**
 - **Depends on the model and setup.** It isn't broad leakage.
@@ -155,7 +155,7 @@ Exploratory.
 
 **Visual.** The Qwen bars and the two quotes, as on the team page.
 
-**Sources:** `results/dominance_matrix/dominance_matrix.md` (absolute levels table), `results/persona_map/persona_map.md` (section 5), `results/working_model_L/L2_L3_gemma31b.md`.
+**Sources:** `results/overgeneralization/dominance_matrix/dominance_matrix.md` (absolute levels table), `results/overgeneralization/persona_map/persona_map.md` (section 5), `results/overgeneralization/working_model_L/L2_L3_gemma31b.md`.
 
 ### 5. In some models, where the character is set up matters; the default sentence doesn't
 
@@ -194,7 +194,7 @@ No model shows a sentence effect, and transplanting OLMo's sentence doesn't crea
 
 **Visual.** Slope chart of system and user refusal across the four OLMo stages.
 
-**Sources:** `results/mechanism_checks/mechanism_checks_h2.md`, `results/new_families_j2.md`, `results/persona_map/persona_map.md`. Hand-check sheet: `results/mechanism_checks/handcheck_h2_sheet.csv`.
+**Sources:** `results/overgeneralization/mechanism_checks/mechanism_checks_h2.md`, `results/overgeneralization/new_families_j2.md`, `results/overgeneralization/persona_map/persona_map.md`. Hand-check sheet: `results/overgeneralization/mechanism_checks/handcheck_h2_sheet.csv`.
 
 ### 6. Refusal moves when we swap a role's internal state at the start of the reply
 
@@ -241,7 +241,7 @@ Pre-set readings with all 24 requests: OLMo, 2 of 4 pairs at layer 21 fit "share
 
 **Visual.** Paired bars for refusal and voice, each against its full gap, and the actor analogy.
 
-**Sources:** `results/activation_patching/activation_patching_extensions.md`, `results/activation_patching_j4/activation_patching_j4.md`, `results/refusal_direction/refusal_direction.md`, `results/activation_patching/handcheck_sheet.csv`.
+**Sources:** `results/overgeneralization/activation_patching/activation_patching_extensions.md`, `results/overgeneralization/activation_patching_j4/activation_patching_j4.md`, `results/overgeneralization/refusal_direction/refusal_direction.md`, `results/overgeneralization/activation_patching/handcheck_sheet.csv`.
 
 ### 7. Refusal depends heavily on the first words of the reply
 
@@ -273,7 +273,7 @@ Pre-set "escape through voice" reading: Qwen yes (−36 and −43, against −14
 - Voice openers were hand-written per role.
 - Vivid characters are near the floor already.
 
-**Sources:** `results/mechanism_checks/mechanism_checks_h3.md`, `results/new_families_j2.md`, `results/mechanism_checks/handcheck_h3_apology_sheet.csv`.
+**Sources:** `results/overgeneralization/mechanism_checks/mechanism_checks_h3.md`, `results/overgeneralization/new_families_j2.md`, `results/overgeneralization/mechanism_checks/handcheck_h3_apology_sheet.csv`.
 
 ## Part 4. Style and other traits
 
@@ -302,7 +302,7 @@ Three checks:
 
 **Caveats:** the score was partly built from replies it scores. Word classifier wasn't trained on characters. In-character recheck was added after seeing data, and its judge isn't validated yet.
 
-**Sources:** `results/dominance_matrix/dominance_matrix.md`, `results/mechanism_checks/mechanism_checks_h1.md`, `results/style_fall/style_fall.md`, `results/trait_atlas_incharacter/in_character.md`.
+**Sources:** `results/overgeneralization/dominance_matrix/dominance_matrix.md`, `results/overgeneralization/mechanism_checks/mechanism_checks_h1.md`, `results/overgeneralization/style_fall/style_fall.md`, `results/overgeneralization/trait_atlas_incharacter/in_character.md`.
 
 ### 9. Training teaches models to actually play the role, except in OLMo's system prompt
 
@@ -322,7 +322,7 @@ Three checks:
 
 **Caveats:** the judge is itself a trained model. A second local judge from another family agreed moderately (kappa 0.67, 1,000 replies), and said yes less often overall, so absolute shares may be a little high. Agreement isn't accuracy. Hand check of 30 pending.
 
-**Sources:** `results/trait_atlas_incharacter/in_character.md`, `results/trait_atlas/trait_atlas.md`, `results/trait_atlas_incharacter/handcheck_incharacter_sheet.csv`.
+**Sources:** `results/overgeneralization/trait_atlas_incharacter/in_character.md`, `results/overgeneralization/trait_atlas/trait_atlas.md`, `results/overgeneralization/trait_atlas_incharacter/handcheck_incharacter_sheet.csv`.
 
 ### 10. Trait atlas: self-image stays with the Assistant, while formatting and some social habits don't
 
@@ -375,7 +375,7 @@ Three checks:
 
 **Visual.** Heatmap of traits against contexts, one panel per model.
 
-**Sources:** `results/trait_atlas/trait_atlas.md`, `results/trait_atlas/trait_atlas_cells.csv`, `results/trait_atlas/handcheck_sheet.csv`, `data/trait_atlas_materials.json`, `results/trait_atlas_incharacter/in_character.md`.
+**Sources:** `results/overgeneralization/trait_atlas/trait_atlas.md`, `results/overgeneralization/trait_atlas/trait_atlas_cells.csv`, `results/overgeneralization/trait_atlas/handcheck_sheet.csv`, `data/trait_atlas_materials.json`, `results/overgeneralization/trait_atlas_incharacter/in_character.md`.
 
 ### 11. In activations, the Assistant isn't an outlier among 180 personas
 
@@ -394,9 +394,9 @@ Three checks:
 
 **Caveats:** map position isn't a test of spread. Results held across three depths.
 
-**Visual.** `results/persona_map/map_olmo_base.png` next to `results/persona_map/map_olmo_instruct.png`.
+**Visual.** `results/overgeneralization/persona_map/map_olmo_base.png` next to `results/overgeneralization/persona_map/map_olmo_instruct.png`.
 
-**Sources:** `results/persona_map/persona_map.md`.
+**Sources:** `results/overgeneralization/persona_map/persona_map.md`.
 
 ### 12. Removing a character doesn't bring the Assistant's style back
 
@@ -418,7 +418,7 @@ Three checks:
 - First-word odds moved 85–91% of the way, but mostly because character openers fell, and untrained models do the same.
 - Style only, not refusal.
 
-**Sources:** `results/persona_suppression/persona_suppression.md`.
+**Sources:** `results/overgeneralization/persona_suppression/persona_suppression.md`.
 
 ### 16. In full role-play, a skill can fall while the Assistant's rises
 
@@ -452,7 +452,7 @@ This fits the sense that after training, a role can sit further from the Assista
 - Fresh questions differ from the atlas's, so sizes don't transfer to finding 10.
 - Characters were asked to stay in character, so not answering isn't necessarily a failure.
 
-**Sources:** `results/skill_roleplay/skill_roleplay.md`, `results/skill_roleplay/accidental_credit_control.csv`.
+**Sources:** `results/overgeneralization/skill_roleplay/skill_roleplay.md`, `results/overgeneralization/skill_roleplay/accidental_credit_control.csv`.
 
 ## Part 5. Leads and backup slides
 
@@ -468,7 +468,7 @@ Exploratory, and the weakest of the list.
 
 **To firm up:** a proper count against the training data, before it goes on a slide. This was queued overnight but not run.
 
-**Sources:** the raw atlas replies aren't in the repo, only the tables derived from them, in `results/trait_atlas/olmo3-7b/`. The count needs rerunning from the replies on the lab server before it's cited.
+**Sources:** the raw atlas replies aren't in the repo, only the tables derived from them, in `results/overgeneralization/trait_atlas/olmo3-7b/`. The count needs rerunning from the replies on the lab server before it's cited.
 
 ### 14. A trained-in habit spread everywhere, whoever learned it
 
@@ -482,7 +482,7 @@ Exploratory, and the weakest of the list.
 
 **Lower dose (8 training steps).** The primary signature is still absent, but the raw one is present. One habit shows the Assistant-taught version spreading more after training (+1.9 to +2.2 nats in all three contexts). The trained Assistant runs also took a higher dose than the character runs, so that can't be separated from dose. At the untrained stage, doses match and the asymmetry is about 0. A dose-matched rerun is the next step.
 
-**Sources:** `results/implant_spread/olmo3-7b/implant_spread.md`, `results/implant_spread/olmo3-7b_lowdose/implant_spread.md`.
+**Sources:** `results/overgeneralization/implant_spread/olmo3-7b/implant_spread.md`, `results/overgeneralization/implant_spread/olmo3-7b_lowdose/implant_spread.md`.
 
 ### 15. Old bird names didn't pull the Assistant into the 1800s
 
@@ -496,7 +496,7 @@ Exploratory, and the weakest of the list.
 
 **Caveats:** one character, who may read as old-fashioned. This doesn't contradict results from actual fine-tuning.
 
-**Sources:** `results/icl_era/icl_era.md`.
+**Sources:** `results/overgeneralization/icl_era/icl_era.md`.
 
 ## Left out, and why
 

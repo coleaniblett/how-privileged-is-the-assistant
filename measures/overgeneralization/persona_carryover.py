@@ -47,7 +47,7 @@ from core.render import encode, load_jsonl, load_tokenizer, render_conversation
 from core.stats import bootstrap_ci, stage_order
 
 DATA_PATH = "data/persona_carryover.jsonl"
-OUT_DIR = config.measure_dir("overgeneralization")
+OUT_DIR = os.path.join("results", "overgeneralization", "persona_carryover", config.RUN)  # was results/<RUN>/overgeneralization (moved 2026-11-06)
 ROLES = ["user", "assistant", "user", "assistant"]
 HOLDERS, TARGETS = ["assistant", "character"], ["new", "same"]
 CONDITIONS = [f"{h}>{t}" for h in HOLDERS for t in TARGETS] + [f"{h}-none>new" for h in HOLDERS]

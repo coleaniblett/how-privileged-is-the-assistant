@@ -17,9 +17,9 @@ uv run python -m extras.role_swap score --model sft && uv run python -m extras.r
 uv run python -m extras.coin_toss score --model sft && uv run python -m extras.coin_toss analyze
 ```
 
-Pilot numbers: `results/role_swap.md`, `results/coin_toss.md` (frozen).
+Pilot numbers: `results/precapstone/role_swap.md`, `results/precapstone/coin_toss.md` (frozen).
 
-- **In-context era shift** (`icl_era.py` → `data/icl_era_birds.jsonl`, `data/icl_era_probes.jsonl`, `results/icl_era/`; spec E, 2026-11-03, exploratory, outside every verdict). k in {0, 8, 32, 128} bird-naming shots answered with archaic Audubon plate names or current names, then 30 unrelated era probes read out teacher-forced (log P(19th-century answer) - log P(modern answer)); shift = archaic minus modern shots, per stage, in three conditions (the Assistant, a role-played character, plain Q/A text), with held-out bird questions as the positive control. Plan, probe list and pre-set readings in `docs/decisions.md`.
+- **In-context era shift** (`icl_era.py` → `data/icl_era_birds.jsonl`, `data/icl_era_probes.jsonl`, `results/overgeneralization/icl_era/`; spec E, 2026-11-03, exploratory, outside every verdict). k in {0, 8, 32, 128} bird-naming shots answered with archaic Audubon plate names or current names, then 30 unrelated era probes read out teacher-forced (log P(19th-century answer) - log P(modern answer)); shift = archaic minus modern shots, per stage, in three conditions (the Assistant, a role-played character, plain Q/A text), with held-out bird questions as the positive control. Plan, probe list and pre-set readings in `docs/decisions.md`.
 
 ## Persona-leakage and white-box probes (overgeneralization, exploratory, outside every verdict)
 

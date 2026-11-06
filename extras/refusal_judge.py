@@ -4,7 +4,7 @@ Exploratory, outside every verdict, NOT BLIND. Gemma judges its own replies too 
     python -m extras.refusal_judge judge        # GPU (vinyl): labels every input row
     python -m extras.refusal_judge analyze      # CPU (marble): validation, readings, slide D table
 Replies judged: final, all three families: all of L2 and at most 1,500 of L3's rows without a harmless instruction (L3's questions are the atlas's benign questions: a 'declined' there is a false refusal);
-base: at most 1,500 L2 rows per family. Validation: the 300 labelled refusal/comply replies of results/orthogonal_steering/detector (the file of the 56-reply hand check is not in the repo).
+base: at most 1,500 L2 rows per family. Validation: the 300 labelled refusal/comply replies of results/overgeneralization/orthogonal_steering/detector (the file of the 56-reply hand check is not in the repo).
 """
 import argparse
 import glob
@@ -19,7 +19,7 @@ import pandas as pd
 from core import config
 from extras import trait_atlas as ta
 
-OUT = "results/overnight_2026-11-05/R2"
+OUT = "results/overgeneralization/overnight_2026-11-05/R2"
 LOCAL = os.environ.get("R2_LOCAL", "/root/r2_work")           # inputs/judged files with text (not in git)
 FAMS = ["olmo3-7b", "qwen3-8b", "gemma4-31b"]
 SEED, N_BOOT, CAP_L3 = 0, 4000, 1500
@@ -40,7 +40,7 @@ def prepare():
     for fam in FAMS:
         parts = []
         for st in ("instruct", "base"):
-            p2 = f"results/working_model_L/L23/{fam}/{st}_L2.csv.gz"
+            p2 = f"results/overgeneralization/working_model_L/L23/{fam}/{st}_L2.csv.gz"
             d2 = pd.read_csv(p2)
             d2["request"] = [reqs[int(i)] for i in d2["item"]]
             d2["test"], d2["stage"] = "L2", st
@@ -48,7 +48,7 @@ def prepare():
                 d2 = d2.iloc[np.sort(rng.choice(len(d2), CAP_L3, replace=False))]
             parts.append(d2)
             if st == "instruct":
-                d3 = pd.read_csv(f"results/working_model_L/L23/{fam}/instruct_L3.csv.gz")
+                d3 = pd.read_csv(f"results/overgeneralization/working_model_L/L23/{fam}/instruct_L3.csv.gz")
                 d3 = d3[d3.instr == "none"].copy()
                 d3["request"] = [qs[int(i)] for i in d3["item"]]
                 d3["test"], d3["stage"] = "L3", st
@@ -60,8 +60,8 @@ def prepare():
         d["rid"] = np.arange(len(d))
         d[["rid", "test", "stage", "wording", "kind", "role", "item", "line", "instr", "sample", "request", "text"]].to_csv(os.path.join(LOCAL, f"inputs_{fam}.csv.gz"), index=False)
         print(fam, len(d), d.groupby(["test", "stage"]).size().to_dict())
-    blind = json.load(open("results/orthogonal_steering/detector/blind.json"))
-    labels = json.load(open("results/orthogonal_steering/detector/labels.json"))
+    blind = json.load(open("results/overgeneralization/orthogonal_steering/detector/blind.json"))
+    labels = json.load(open("results/overgeneralization/orthogonal_steering/detector/labels.json"))
     v = pd.DataFrame([dict(rid=int(b["id"]), request=b["request"], text=b["reply_start"], label=labels.get(str(b["id"]))) for b in blind])
     v.to_csv(os.path.join(LOCAL, "inputs_validation.csv.gz"), index=False)
     print("validation", len(v), v.label.value_counts(dropna=False).to_dict())
@@ -75,7 +75,7 @@ def prepare_stages():
     parts = []
     for st in ("sft", "dpo"):
         for tag in ("L2", "L3"):
-            d = pd.read_csv(f"results/overnight_2026-11-05/R4/olmo3-7b/{st}_{tag}.csv.gz")
+            d = pd.read_csv(f"results/overgeneralization/overnight_2026-11-05/R4/olmo3-7b/{st}_{tag}.csv.gz")
             d["request"] = [(reqs if tag == "L2" else qs)[int(i)] for i in d["item"]]
             d["test"], d["stage"] = tag, st
             parts.append(d)
@@ -145,7 +145,7 @@ def analyze():
          "Plan: `docs/decisions.md` 2026-11-06 (spec R, `docs/spec_R_overnight.md`). No new generation: saved L2 replies (60 tokens; 36 refusal-style requests x 3 samples) and L3 replies (256 tokens; the atlas's benign questions without a harmless instruction, so a 'declined' there is a false refusal), final all three families, base at most 1,500 L2 replies per family. "
          "Judge: Gemma 4 31B-it reads request and reply (reply cut at 1,200 characters) and picks helped / declined / partial / unclear (one letter, argmax). `declined` is the judge's refusal rate; `partial` is shown beside it. Regex = `persona_leakage.REFUSAL_RE` on the first 160 characters (as L2). "
          "Limits: few roles (3 thin, 3 vivid); many cells, no multiple-test correction; the judge is not hand-checked on these replies and Gemma judges its own replies; replies are cut at 60 tokens (L2) so 'unclear' is common for vivid characters; contamination checkable only for OLMo; thin and vivid roles are different roles (bootstrap resamples items together and roles within each kind). "
-         "Hand check: the file of the 56-reply hand check is not in the repo; validation uses the 300 R/C labelled replies of `results/orthogonal_steering/detector` instead (reply starts, from the earlier orthogonal-steering study).", ""]
+         "Hand check: the file of the 56-reply hand check is not in the repo; validation uses the 300 R/C labelled replies of `results/overgeneralization/orthogonal_steering/detector` instead (reply starts, from the earlier orthogonal-steering study).", ""]
     pv = os.path.join(LOCAL, "judged_validation.csv.gz")
     vin = pd.read_csv(os.path.join(LOCAL, "inputs_validation.csv.gz"))
     valid_ok = None

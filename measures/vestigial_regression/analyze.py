@@ -274,7 +274,7 @@ USER_SOURCES = ("wildchat", "oasst1")
 ASST_SET = ("wildchat", "assistant")
 LOCKED_SETS = [(src, "user") for src in USER_SOURCES] + [ASST_SET]
 PILOT_POINTS = {  # family -> (scores dir, stages): the pilot's scores (OLMo: the frozen held-out run)
-    "olmo3-7b": ("results/scores", ["base", "sft", "dpo", "instruct"]),
+    "olmo3-7b": ("results/precapstone/scores", ["base", "sft", "dpo", "instruct"]),
     "qwen3-8b": ("measures/vestigial_regression/pilot/nll_arm/scores_qwen", ["base", "instruct"]),
     "gemma4-31b": ("measures/vestigial_regression/pilot/nll_arm/scores", ["base", "instruct"]),
 }

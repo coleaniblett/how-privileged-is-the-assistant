@@ -1,6 +1,6 @@
 """Spec P1 (2026-11-05): why do some atlas traits spread? Unmix traits from questions. Exploratory, outside every verdict, NOT blind (the idea came from regex levels already seen). No GPU, no paid API,
 no judge, no new generation: saved atlas replies only. Plan, frozen ratings (data/trait_atlas_question_ratings.csv) and readings: docs/decisions.md 2026-11-05.
-    python -m extras.trait_atlas_unmixed detect          # detectors on every saved reply -> results/trait_atlas_unmixed/detections.csv.gz (local)
+    python -m extras.trait_atlas_unmixed detect          # detectors on every saved reply -> results/overgeneralization/trait_atlas_unmixed/detections.csv.gz (local)
     python -m extras.trait_atlas_unmixed analyze         # task gap, in-character sensitivity, says_ai across question sets, group table -> unmixed.md
     python -m extras.trait_atlas_unmixed features        # descriptive feature scan -> features.md
 """
@@ -16,7 +16,7 @@ import pandas as pd
 
 from extras import trait_atlas as ta
 
-OUT = os.environ.get("UM_OUT", "results/trait_atlas_unmixed")
+OUT = os.environ.get("UM_OUT", "results/overgeneralization/trait_atlas_unmixed")
 RATINGS = "data/trait_atlas_question_ratings.csv"
 SEED, N_BOOT = 0, 2000
 FAMS3 = ["olmo3-7b", "qwen3-8b", "gemma4-31b"]
@@ -30,7 +30,7 @@ SRC = {f: os.environ.get("UM_ATLAS", "/tmp/atlas_ut") for f in FAMS3}
 def replies_file(fam, stage):
     if fam in FAMS3:
         return os.path.join(SRC[fam], fam, f"{stage}_replies.jsonl.gz")
-    return os.path.join("results/trait_atlas_breadth", fam, f"{stage}_replies.jsonl.gz")
+    return os.path.join("results/overgeneralization/trait_atlas_breadth", fam, f"{stage}_replies.jsonl.gz")
 
 
 def detect():
@@ -124,7 +124,7 @@ def analyze():
     qn = cnt.groupby(["family", "qtype"]).apply(lambda x: x[["trait", "item"]].drop_duplicates().shape[0]).unstack(fill_value=0)
     L += ["Questions per type in each family's replies (about-the-speaker excluded): " + "; ".join(f"{f}: task {int(r.get('task', 0))}, conversation {int(r.get('conversation', 0))}" for f, r in qn.iterrows()) + ".", ""]
     ic = []
-    for p in glob.glob("results/trait_atlas_incharacter/atlas_*.csv.gz"):
+    for p in glob.glob("results/overgeneralization/trait_atlas_incharacter/atlas_*.csv.gz"):
         fam, stage = os.path.basename(p)[6:-7].rsplit("_", 1)
         ic.append(pd.read_csv(p).assign(family=fam, stage=stage).rename(columns={"value": "ic"})[["family", "stage", "trait", "item", "context", "persona", "sample", "ic"]])
     IC = pd.concat(ic) if ic else None
@@ -342,8 +342,8 @@ def features():
 def groups_table():
     GROUPS = {"speaker": ["says_ai", "denies_feelings", "declines_opinion"], "manner": ["markdown_lists", "stock_phrases", "safety_caveats", "closing_offer", "clarifying_question", "flattery", "formal_register"],
               "truth": ["corrects_false_premise", "hedging_unanswerable", "fabricates_vs_admits"]}
-    FLAG = {"agrees_wrong_opinion", "declines_opinion", "flattery", "formal_register"}      # second judge kappa < 0.4 (results/second_judge)
-    cells = pd.concat([pd.read_csv("results/trait_atlas/trait_atlas_cells.csv"), pd.read_csv("results/trait_atlas_breadth/trait_atlas_breadth_cells.csv")])
+    FLAG = {"agrees_wrong_opinion", "declines_opinion", "flattery", "formal_register"}      # second judge kappa < 0.4 (results/overgeneralization/second_judge)
+    cells = pd.concat([pd.read_csv("results/overgeneralization/trait_atlas/trait_atlas_cells.csv"), pd.read_csv("results/overgeneralization/trait_atlas_breadth/trait_atlas_breadth_cells.csv")])
     cells = cells[(~cells.flagged_excluded) & (cells.stage == "instruct")]
     L = ["## Descriptive group table (groups made after seeing the data; proves nothing)", "",
          "Per family and context: of the traits in the group whose Assistant change passes the atlas gate, how many spread (atlas rule). * = traits the second judge flagged as unreliable (agrees_wrong_opinion, declines_opinion, flattery, formal_register).", "",

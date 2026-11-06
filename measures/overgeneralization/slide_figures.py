@@ -2,7 +2,7 @@
 
     python -m measures.overgeneralization.slide_figures
 
-Atlas numbers are read from results/trait_atlas/trait_atlas_cells.csv. The others are copied from the reports named
+Atlas numbers are read from results/overgeneralization/trait_atlas/trait_atlas_cells.csv. The others are copied from the reports named
 beside each table, because those reports have no shared machine-readable format. Style follows reports/capstone_report.py.
 """
 
@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
 
 FIG_DIR = "measures/overgeneralization/slide_figures"
-ATLAS = "results/trait_atlas/trait_atlas_cells.csv"
+ATLAS = "results/overgeneralization/trait_atlas/trait_atlas_cells.csv"
 FIGSIZE = (13.33, 7.5)
 INK, INK2, GRID, ZERO = "#0b0b0b", "#52514e", "#e4e3df", "#8a8984"
 ASST, ROLE, MUTED = "#2a78d6", "#eb6834", "#77766f"
@@ -27,26 +27,26 @@ plt.rcParams.update({"font.size": 15, "axes.titlesize": 16, "axes.labelsize": 15
                      "ytick.color": INK2, "text.color": INK, "font.family": "DejaVu Sans", "svg.fonttype": "none",
                      "figure.facecolor": "#fcfcfb", "axes.facecolor": "#fcfcfb", "savefig.facecolor": "#fcfcfb"})
 
-# results/{olmo3-7b,qwen3-8b}/overgeneralization/confirmatory/persona_carryover.md; results/gemma4-31b/.../confirmatory_thought_channel/;
-# results/llama3.1-8b/..., results/apertus-8b/... (headline tables: assistant -> new, character -> new, base and instruct)
+# results/overgeneralization/persona_carryover/{olmo3-7b,qwen3-8b}/confirmatory/persona_carryover.md; .../persona_carryover/gemma4-31b/confirmatory_thought_channel/;
+# .../persona_carryover/llama3.1-8b/..., .../persona_carryover/apertus-8b/... (headline tables: assistant -> new, character -> new, base and instruct)
 BELIEF = [("OLMo 3 7B", 0.587, -0.245, 0.257, -1.957), ("Qwen3-8B", 0.176, -0.776, -0.180, -2.339),
           ("Gemma 4 31B", 0.144, -1.917, -0.128, -4.759), ("Llama 3.1 8B", 0.442, -1.469, 0.092, -1.948),
           ("Apertus 8B", 0.506, 0.281, 0.434, -0.295)]
-# results/dominance_matrix/dominance_matrix.md, absolute levels: mean of the two wordings; OLMo = the user-turn wording only.
-# Gemma 4 31B: results/working_model_L/L2_L3_gemma31b.md, line present, mean of two wordings.
+# results/overgeneralization/dominance_matrix/dominance_matrix.md, absolute levels: mean of the two wordings; OLMo = the user-turn wording only.
+# Gemma 4 31B: results/overgeneralization/working_model_L/L2_L3_gemma31b.md, line present, mean of two wordings.
 REFUSAL = [("OLMo 3 7B, user turn", (53, 72), (69, 60), (65, 2)), ("Qwen3-8B", (45, 70), (45, 83), (21, 6)),
            ("Gemma 4 31B", (5, 42), (13, 12), (3, 0))]
-# results/new_families_j2.md: system minus user, base -> instruct, final 95% CI; Qwen uses S-none minus U-none, no CI in the report
+# results/overgeneralization/new_families_j2.md: system minus user, base -> instruct, final 95% CI; Qwen uses S-none minus U-none, no CI in the report
 POSITION = [("OLMo 3 7B", -17.3, 21.1, 13.4, 29.6, True), ("Llama 3.1 8B", 4.3, 15.9, 9.1, 23.5, True),
             ("Apertus 8B", 0.3, 10.0, 4.2, 16.8, True), ("Qwen3-8B", 0.6, 2.3, None, None, False),
             ("Gemma 4 31B", -0.6, -5.1, -12.7, -0.3, False)]
-# results/activation_patching_j4/activation_patching_j4.md, patch rows at the strongest layer (OLMo 21, Qwen 27)
+# results/overgeneralization/activation_patching_j4/activation_patching_j4.md, patch rows at the strongest layer (OLMo 21, Qwen 27)
 # (label, refusal moved, refusal gap, voice moved, voice gap)
 PATCH = {"OLMo 3 7B": [("Mama Odessa ← Assistant", 70.8, 60, 21.2, 34), ("Zeke Moretti ← Assistant", 43.8, 60, 15.6, 35),
                        ("Assistant ← Mama Odessa", 18.8, 60, 4.7, 34), ("Assistant ← Zeke Moretti", 31.2, 60, 6.2, 35)],
          "Qwen3-8B": [("Sheriff Dutton ← Assistant", 54.2, 65, 2.6, 15), ("Mama Odessa ← Assistant", 56.2, 69, 1.4, 17),
                       ("Assistant ← Sheriff Dutton", 37.5, 65, 2.1, 15), ("Assistant ← Mama Odessa", 22.9, 69, 2.1, 17)]}
-# results/skill_roleplay/skill_roleplay.md, reply quality tables, primary score (right answer anywhere)
+# results/overgeneralization/skill_roleplay/skill_roleplay.md, reply quality tables, primary score (right answer anywhere)
 SKILL = [("OLMo 3 7B", (96, 99), (86, 100), (82, 76), (68, 49)), ("Qwen3-8B", (96, 100), (87, 100), (71, 84), (69, 70)),
          ("Gemma 4 31B", (26, 100), (56, 100), (53, 23), (40, 8))]
 

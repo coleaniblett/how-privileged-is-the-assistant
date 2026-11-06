@@ -1,7 +1,7 @@
 """Spec P2 (2026-11-05): does OLMo's training data (Dolci-Instruct SFT, DPO, RL) explain the atlas pattern? Exploratory, outside every verdict, NOT BLIND. No GPU, no paid API, no judge: the datasets are
 read by streaming (nothing stored). Plan, readings and the frozen sorting rules: docs/decisions.md 2026-11-05. Regex measures only; correlation, not cause.
-    python -m extras.dolci_exposure scan [--max-rows N]    # stream, sort, detect -> results/dolci_exposure/<stage>.npz (local) and examples
-    python -m extras.dolci_exposure analyze                # -> results/dolci_exposure/dolci_exposure.md
+    python -m extras.dolci_exposure scan [--max-rows N]    # stream, sort, detect -> results/overgeneralization/dolci_exposure/<stage>.npz (local) and examples
+    python -m extras.dolci_exposure analyze                # -> results/overgeneralization/dolci_exposure/dolci_exposure.md
 """
 import argparse
 import json
@@ -13,7 +13,7 @@ import numpy as np
 
 from extras import trait_atlas as ta
 
-OUT = os.environ.get("DE_OUT", "results/dolci_exposure")
+OUT = os.environ.get("DE_OUT", "results/overgeneralization/dolci_exposure")
 SEED, N_BOOT = 0, 2000
 BUCKETS = ["no_role", "role_system", "role_user", "other_system"]
 DETS = ["md", "stock", "says_ai", "refusal", "logwords"]

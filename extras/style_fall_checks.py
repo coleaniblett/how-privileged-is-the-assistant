@@ -7,10 +7,10 @@ The leakage-matrix register score falls after post-training for characters, narr
                 flagged share, and the register change recomputed without flagged replies;
   C  training:  OLMo's Dolci SFT / DPO / RL data: share of examples whose prompt asks for role-play or a persona (regex below), a sample of 30,
                 and classifier / layout rates on the replies of matched examples vs the rest.
-    python -m extras.style_fall_checks ab       # A and B  -> results/style_fall/style_fall_ab.csv
-    python -m extras.style_fall_checks c        # C        -> results/style_fall/dolci_roleplay.csv, dolci_sample.jsonl
+    python -m extras.style_fall_checks ab       # A and B  -> results/overgeneralization/style_fall/style_fall_ab.csv
+    python -m extras.style_fall_checks c        # C        -> results/overgeneralization/style_fall/dolci_roleplay.csv, dolci_sample.jsonl
     python -m extras.style_fall_checks report   # style_fall.md from the two csv files
-Reads results/dominance_matrix/gens/<family>/<stage>.jsonl (register rows; read only). Seed 0, 10,000 bootstrap resamples over items.
+Reads results/overgeneralization/dominance_matrix/gens/<family>/<stage>.jsonl (register rows; read only). Seed 0, 10,000 bootstrap resamples over items.
 """
 import argparse
 import glob
@@ -24,8 +24,8 @@ import pandas as pd
 
 from core.stats import bootstrap_ci
 
-GENS = os.environ.get("GENS_DIR", "results/dominance_matrix/gens")
-OUT = "results/style_fall"
+GENS = os.environ.get("GENS_DIR", "results/overgeneralization/dominance_matrix/gens")
+OUT = "results/overgeneralization/style_fall"
 N_BOOT, SEED = 10000, 0
 FAMILY_CONFIG = {"olmo": "olmo3-7b", "qwen": "qwen3-8b", "gemma": "gemma4-31b"}  # gens folder -> config family (markers; Gemma E4B shares the template family)
 CTX_ORDER = ["own", "named", "voiced", "user", "narration", "raw"]
@@ -236,7 +236,7 @@ def report():
     fl = pd.read_csv(os.path.join(OUT, "style_fall_flagged.csv"))
     co = pd.read_csv(os.path.join(OUT, "style_fall_corr.csv"))
     L = ["# Style-fall checks (exploratory, outside every verdict)", "",
-         "Plan and pre-set readings: `docs/decisions.md` 2026-11-04. Saved register replies of the leakage matrix (`results/dominance_matrix/gens`, read only). "
+         "Plan and pre-set readings: `docs/decisions.md` 2026-11-04. Saved register replies of the leakage matrix (`results/overgeneralization/dominance_matrix/gens`, read only). "
          "Changes are stage minus base, paired per item (replies averaged within item), 95% bootstrap CI over items. `coord` is the register score (higher = more Assistant-like), "
          "`clf` the spec A P(assistant), `layout` the spec F layout regex rate. **The classifier was trained on human vs Assistant text, not on characters**: it measures how Assistant-like the wording is, nothing more.", ""]
     # A reading

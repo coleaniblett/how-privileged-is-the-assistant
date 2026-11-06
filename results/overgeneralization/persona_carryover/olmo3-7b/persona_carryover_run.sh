@@ -6,7 +6,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
 HUB="$HOME/.cache/huggingface/hub"
-OUT=results/olmo3-7b/overgeneralization/persona_carryover
+OUT=results/overgeneralization/persona_carryover/olmo3-7b/persona_carryover
 free_model() {
   local repo="models--${1//\//--}"
   rm -rf "$HUB/$repo"

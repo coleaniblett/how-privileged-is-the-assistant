@@ -1,7 +1,7 @@
 """Spec R4 (2026-11-06): which training stage does it? OLMo 3 7B base -> SFT -> DPO -> final. Exploratory, outside every verdict, NOT BLIND, descriptive (no verdict).
 Part 1 (CPU): from saved atlas data, a table by stage for markdown_lists (old and strict layout), says_ai and denies_feelings in the Assistant, light roles and full role-play.
 Part 2 (GPU, new generation for SFT and DPO): L2 (all) and at most 1,500 L3 rows without a harmless instruction (same rows and settings as spec L), and spec Q's 12 conditions + plain Assistant on the denies_feelings, markdown_lists and stock_phrases sets only.
-Outputs under results/overnight_2026-11-05/R4/ (replies stay local).
+Outputs under results/overgeneralization/overnight_2026-11-05/R4/ (replies stay local).
     python -m extras.olmo_stages gen --stage sft        # GPU: L2 + L3 (capped) and Q subset
     python -m extras.olmo_stages gen-l23 --stage sft    # GPU: only L2/L3
     python -m extras.olmo_stages gen-q --stage sft      # GPU: only the Q subset
@@ -17,7 +17,7 @@ import pandas as pd
 from extras import role_says as rs
 from extras import working_model_l as wl
 
-OUT = "results/overnight_2026-11-05/R4"
+OUT = "results/overgeneralization/overnight_2026-11-05/R4"
 FAM = "olmo3-7b"
 QSETS = ["denies_feelings", "markdown_lists", "stock_phrases"]
 CAP, SEED = 1500, 0
@@ -107,12 +107,12 @@ def analyze():
         rows.append(f"| {measure} | {ctx} | " + " | ".join("-" if vals.get(s) is None or vals.get(s) != vals.get(s) else f"{vals[s]:.0f}" for s in STAGES) + f" | **{fh}** | " + (" / ".join("-" if ic.get(s) is None or ic.get(s) != ic.get(s) else f"{ic[s]:.0f}%" for s in STAGES) if ic else "not saved for SFT/DPO") + f" | {note} |")
         rec.append(dict(measure=measure, context=ctx, **{LBL[s]: vals.get(s) for s in STAGES}, first_half=fh))
     # Part 1: atlas (saved)
-    R1 = pd.read_csv("results/overnight_2026-11-05/R1/R1_scored_replies.csv.gz")
+    R1 = pd.read_csv("results/overgeneralization/overnight_2026-11-05/R1/R1_scored_replies.csv.gz")
     R1 = R1[(R1.source == "atlas") & (R1.family == FAM)]
     ctxs = {"assistant": ["assistant"], "light role": ["light_system", "light_user"], "full role-play": ["strong_act"]}
     icf = {}
     for st in ("base", "instruct"):
-        p = f"results/trait_atlas_incharacter/atlas_{FAM}_{st}.csv.gz"
+        p = f"results/overgeneralization/trait_atlas_incharacter/atlas_{FAM}_{st}.csv.gz"
         if os.path.exists(p):
             icf[st] = pd.read_csv(p)
     for col, nm in (("old", "markdown_lists (old regex)"), ("strict", "markdown_lists (strict layout)")):
@@ -122,7 +122,7 @@ def analyze():
         for cn, cl in ctxs.items():
             v = {}
             for s in STAGES:
-                d = pd.read_csv(f"results/trait_atlas/{FAM}/{s}_{'detected' if kind == 'det' else 'judged'}.csv.gz")
+                d = pd.read_csv(f"results/overgeneralization/trait_atlas/{FAM}/{s}_{'detected' if kind == 'det' else 'judged'}.csv.gz")
                 d = d[(d.trait == trait) & d.context.isin(cl)]
                 v[s] = 100 * d.value.mean()
             add(f"{trait} (atlas)", cn, v)
@@ -130,7 +130,7 @@ def analyze():
     mat = rs.load()
     Q = {}
     for s in STAGES:
-        p = f"results/role_says/{FAM}/{s}_judged.csv.gz" if s in ("base", "instruct") else os.path.join(OUT, FAM, f"{s}_judged.csv.gz")
+        p = f"results/overgeneralization/role_says/{FAM}/{s}_judged.csv.gz" if s in ("base", "instruct") else os.path.join(OUT, FAM, f"{s}_judged.csv.gz")
         if os.path.exists(p):
             Q[s] = rs.values(pd.read_csv(p), mat)
             sc = np.array([sl.score(t) for t in Q[s].text.fillna("")], dtype=bool)
@@ -144,7 +144,7 @@ def analyze():
     # Part 3: refusal (L2, 60 tokens): regex, and R2's judge if validated
     L2 = {}
     for s in STAGES:
-        p = f"results/working_model_L/L23/{FAM}/{s}_L2.csv.gz" if s in ("base", "instruct") else os.path.join(OUT, FAM, f"{s}_L2.csv.gz")
+        p = f"results/overgeneralization/working_model_L/L23/{FAM}/{s}_L2.csv.gz" if s in ("base", "instruct") else os.path.join(OUT, FAM, f"{s}_L2.csv.gz")
         if os.path.exists(p):
             d = pd.read_csv(p)
             d["regex"] = [float(bool(REFUSAL_RE.search(str(t)[:160]))) for t in d.text.fillna("")]
@@ -153,7 +153,7 @@ def analyze():
     jv = None
     pj = os.path.join("/root/r2_work", "merged_olmo3-7b.pkl")
     ps = os.path.join("/root/r2_work", "judged_olmo_stages.csv.gz")
-    valid = os.path.exists("results/overnight_2026-11-05/R2/R2.md") and "judge passes" in open("results/overnight_2026-11-05/R2/R2.md", encoding="utf-8").read()
+    valid = os.path.exists("results/overgeneralization/overnight_2026-11-05/R2/R2.md") and "judge passes" in open("results/overgeneralization/overnight_2026-11-05/R2/R2.md", encoding="utf-8").read()
     if valid and os.path.exists(pj) and os.path.exists(ps):
         a = pd.read_pickle(pj)
         a = a[a.test == "L2"][["stage", "wording", "kind", "line", "item", "role", "sample", "declined"]]

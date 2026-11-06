@@ -18,7 +18,7 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 
-OUT = os.environ.get("TS_OUT", "results/training_style")
+OUT = os.environ.get("TS_OUT", "results/overgeneralization/training_style")
 SEED, N_BOOT, N = 0, 4000, 5
 MATCH, NEAR = 0.5, 0.8
 # FROZEN task-opening pattern (before scoring): the reply starts (after optional quotes/markdown) with a task verb or the usual instruction framings of training prompts.

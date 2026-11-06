@@ -4,7 +4,7 @@
 set -uo pipefail
 cd "${SYNC_WT:?set SYNC_WT to a separate git worktree}"
 V=arena9-vinyl; R=/root/hpa-atlas2
-D=results/activation_patching
+D=results/overgeneralization/activation_patching
 end=$(( $(date +%s) + 43200 ))
 doneL=""; nd=0
 while [ $(date +%s) -lt $end ] && [ $nd -lt 2 ]; do

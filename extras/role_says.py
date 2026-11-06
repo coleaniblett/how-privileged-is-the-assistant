@@ -24,7 +24,7 @@ from extras import trait_atlas as ta
 from extras import trait_atlas_incharacter as ic
 
 MATERIALS = "data/role_says_materials.json"
-OUT = os.environ.get("RS_OUT", "results/role_says")
+OUT = os.environ.get("RS_OUT", "results/overgeneralization/role_says")
 SEED, N_BOOT = 0, 4000
 SETS = ["denies_feelings", "says_ai", "safety_caveats", "markdown_lists", "stock_phrases", "corrects_false_premise", "hedging_unanswerable"]
 JUDGED = ["denies_feelings", "corrects_false_premise", "hedging_unanswerable"]

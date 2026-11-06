@@ -1,6 +1,6 @@
 """Spec R3 (2026-11-06): is the prefill belief result real? Analysis and the in-character judge. Exploratory, outside every verdict, NOT BLIND. The pre-registered belief test is unchanged.
 Wording 1 = data/belief_induction_prefill.jsonl (first person), wording 2 = data/belief_induction_prefill_w2.jsonl (third person for the new persona's line; nothing else changes), five families, base and final.
-OLMo/Qwen/Gemma wording 1 come from spec O (results/belief_induction/arm2); everything else from results/overnight_2026-11-05/R3/{w1,w2}/arm2.
+OLMo/Qwen/Gemma wording 1 come from spec O (results/overgeneralization/belief_induction/arm2); everything else from results/overgeneralization/overnight_2026-11-05/R3/{w1,w2}/arm2.
     python -m extras.prefill_r3 judge       # GPU (vinyl): in-character check of every saved final continuation (new-persona conditions)
     python -m extras.prefill_r3 analyze     # CPU
 """
@@ -15,7 +15,7 @@ import pandas as pd
 from core.render import load_jsonl
 from measures.overgeneralization import persona_carryover as pc
 
-R3 = "results/overnight_2026-11-05/R3"
+R3 = "results/overgeneralization/overnight_2026-11-05/R3"
 FAMS = ["olmo3-7b", "qwen3-8b", "llama3.1-8b", "apertus-8b", "gemma4-31b"]
 SEED, N_BOOT = 0, 4000
 OPEN = {"olmo3-7b": "none", "qwen3-8b": "none (empty think block from the template)", "llama3.1-8b": "none", "apertus-8b": "none", "gemma4-31b": "empty thought channel (--assistant-opening)"}
@@ -23,14 +23,14 @@ OPEN = {"olmo3-7b": "none", "qwen3-8b": "none (empty think block from the templa
 
 def adir(w, fam):
     if w == "w1" and fam in ("olmo3-7b", "qwen3-8b", "gemma4-31b"):
-        return os.path.join("results/belief_induction/arm2", fam)
+        return os.path.join("results/overgeneralization/belief_induction/arm2", fam)
     return os.path.join(R3, w, "arm2", fam)
 
 
 def prompt_run(fam):
     """the prompt arm (arm 1) for the same 48 scenes; Gemma's like-for-like run is the thought-channel one"""
     sub = "confirmatory_thought_channel" if fam == "gemma4-31b" else "confirmatory"
-    p = f"results/{fam}/overgeneralization/{sub}/persona_carryover_summary.csv"
+    p = f"results/overgeneralization/persona_carryover/{fam}/{sub}/persona_carryover_summary.csv"
     return p if os.path.exists(p) else None
 
 

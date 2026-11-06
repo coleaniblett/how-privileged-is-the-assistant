@@ -18,13 +18,13 @@ RS_OUT=/tmp/q_sample $PY -m extras.role_says gen --family olmo3-7b --stage instr
 t=$(grep "generations in" /tmp/q_sample.log | grep -o "in [0-9]* s" | grep -o "[0-9]*")
 echo "sample: 192 requests in ${t:-?} s (incl. nothing but generation)" | tee /tmp/claude-0/q_timing.txt
 for fam in olmo3-7b qwen3-8b; do for stage in instruct base; do
-  [[ -f results/role_says/$fam/${stage}_replies.csv.gz ]] && continue
+  [[ -f results/overgeneralization/role_says/$fam/${stage}_replies.csv.gz ]] && continue
   echo "=== $fam $stage $(date -u +%T)"
   $PY -m extras.role_says gen --family $fam --stage $stage || echo "FAILED $fam $stage"
   m=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])"); free_model "$m"
 done; done
 echo "=== copying replies to vinyl $(date -u +%T)"
-ssh arena9-vinyl 'mkdir -p /root/hpa-atlas2/results/role_says/olmo3-7b /root/hpa-atlas2/results/role_says/qwen3-8b' 2>/dev/null
-for fam in olmo3-7b qwen3-8b; do scp -q results/role_says/$fam/*_replies.csv.gz arena9-vinyl:/root/hpa-atlas2/results/role_says/$fam/ 2>/dev/null; done
-ssh arena9-vinyl 'touch /root/hpa-atlas2/results/role_says/MARBLE_REPLIES_DONE' 2>/dev/null
+ssh arena9-vinyl 'mkdir -p /root/hpa-atlas2/results/overgeneralization/role_says/olmo3-7b /root/hpa-atlas2/results/overgeneralization/role_says/qwen3-8b' 2>/dev/null
+for fam in olmo3-7b qwen3-8b; do scp -q results/overgeneralization/role_says/$fam/*_replies.csv.gz arena9-vinyl:/root/hpa-atlas2/results/overgeneralization/role_says/$fam/ 2>/dev/null; done
+ssh arena9-vinyl 'touch /root/hpa-atlas2/results/overgeneralization/role_says/MARBLE_REPLIES_DONE' 2>/dev/null
 echo "=== done $(date -u +%T)"

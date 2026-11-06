@@ -2,7 +2,7 @@
 set -uo pipefail
 cd /root/hpa-main-wt; export OMP_NUM_THREADS=2; PY=/opt/arena-env/bin/python; source scripts/exploratory/lib_r.sh
 exec 7>/tmp/claude-0/t33_push.lock; flock -n 7 || exit 0
-O=results/overnight_2026-11-05/T1/seed1; mkdir -p $O /root/label_swap_s1/replies; [ -f $O/PUSHED ] && exit 0
+O=results/overgeneralization/overnight_2026-11-05/T1/seed1; mkdir -p $O /root/label_swap_s1/replies; [ -f $O/PUSHED ] && exit 0
 until ssh -o ConnectTimeout=20 arena9-vinyl "test -f /root/hpa-atlas2/$O/T33_JUDGED_DONE" 2>/dev/null; do sleep 60; done
 rsync -a -e ssh arena9-vinyl:/root/label_swap_s1/replies/ /root/label_swap_s1/replies/ || exit 1
 rsync -a -e ssh arena9-vinyl:/root/hpa-atlas2/$O/ $O/ --include='*.csv' --exclude='*' || true

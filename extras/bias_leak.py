@@ -17,7 +17,7 @@ from core import config
 from extras import trait_atlas as ta
 
 MATERIALS = "data/bias_leak_materials.json"
-OUT = os.environ.get("BL_OUT", "results/bias_leak")
+OUT = os.environ.get("BL_OUT", "results/overgeneralization/bias_leak")
 SEED, N_BOOT, PER_CAT, GEN_TOKENS, TEMP = 0, 4000, 33, 24, 0.7
 CATS = ["Age", "Disability_status", "Gender_identity", "Nationality", "Physical_appearance", "Race_ethnicity", "Religion", "SES", "Sexual_orientation"]
 BBQ_COMMIT = "bea11bd97d79217245b5871acd247b9d6eb24598"

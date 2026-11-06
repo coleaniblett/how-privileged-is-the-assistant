@@ -4,7 +4,7 @@ Teach one persona (the Assistant, or the character Mora) a harmless new habit wi
 measure how far the habit shows up in other contexts (other personas, the user turn, plain text), base vs instruct.
 
     python -m extras.implant_spread gen-replies --family olmo3-7b          # instruct model's greedy replies, once (GPU)
-    python -m extras.implant_spread run --family olmo3-7b --stages base,instruct --out results/implant_spread/olmo3-7b
+    python -m extras.implant_spread run --family olmo3-7b --stages base,instruct --out results/overgeneralization/implant_spread/olmo3-7b
     python -m extras.implant_spread analyze --family olmo3-7b              # CPU
 
 Traits: T1 favourite number 37 (log-odds of " 37" vs nine other numbers after "My favourite number is"), T2 sign-off
@@ -667,7 +667,7 @@ def main():
     for name in ["gen-replies", "run", "analyze"]:
         p = sub.add_parser(name)
         p.add_argument("--family", default=config.FAMILY)
-        p.add_argument("--out", help="default results/implant_spread/<family>")
+        p.add_argument("--out", help="default results/overgeneralization/implant_spread/<family>")
         if name == "gen-replies":
             p.add_argument("--batch", type=int, default=16)
         if name == "run":
@@ -680,7 +680,7 @@ def main():
             p.add_argument("--epochs", type=int, help="override the 2 epochs (J8 low dose: 1)")
             p.add_argument("--max-steps", type=int, help="optimizer steps per epoch (J8 low dose: 8, about 1/10 of the 75 steps of the full runs)")
     args = ap.parse_args()
-    out = args.out or os.path.join("results", "implant_spread", args.family)
+    out = args.out or os.path.join("results", "overgeneralization", "implant_spread", args.family)
     fam = config.FAMILIES[args.family]
     if args.cmd == "gen-replies":
         gen_replies(args.family, out, batch=args.batch)

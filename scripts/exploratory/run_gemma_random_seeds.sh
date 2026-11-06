@@ -3,6 +3,6 @@
 set -e
 cd "$(dirname "$0")/../.."
 P=/opt/arena-env/bin/python
-export PA_OUT=results/gemma-4-e4b/persona_axis PA_REPORT=results/gemma-4-e4b/persona_axis_random4.md
+export PA_OUT=results/overgeneralization/early_probes/gemma-4-e4b/persona_axis PA_REPORT=results/overgeneralization/early_probes/gemma-4-e4b/persona_axis_random4.md
 for sd in 2 3 4 5; do $P -m extras.persona_axis intervene --stage google/gemma-4-E4B-it --tokenizer google/gemma-4-E4B-it --random $sd; done
 $P -m extras.persona_axis analyze

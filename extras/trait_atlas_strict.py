@@ -2,9 +2,9 @@
 Base models often answer and then run on into a new turn ("5610Human: Question: ..."), which the atlas's cut did not remove. Here every saved atlas reply (all families, stages, contexts) is
 additionally cut at the FIRST new-turn pattern (list frozen below, committed before any rescoring), detectors and skills are rescored on the strict text (skills: the accepted answer anywhere in the reply),
 the local judge re-judges the replies the cut changed (same Gemma 4 31B judge, same prompts and rule), and the atlas cells are recomputed with the same bootstrap and gate.
-    python -m extras.trait_atlas_strict cut        # CPU: strict text, removal tables, 10 base examples per family -> results/trait_atlas_strict/ (+ detector tables)
+    python -m extras.trait_atlas_strict cut        # CPU: strict text, removal tables, 10 base examples per family -> results/overgeneralization/trait_atlas_strict/ (+ detector tables)
     python -m extras.trait_atlas_strict judge      # GPU: re-judge changed replies of judge traits (Gemma 4 31B-it, bf16)
-    python -m extras.trait_atlas_strict analyze    # cells + comparison with the atlas -> results/trait_atlas_strict/trait_atlas_strict.md (+ csv)
+    python -m extras.trait_atlas_strict analyze    # cells + comparison with the atlas -> results/overgeneralization/trait_atlas_strict/trait_atlas_strict.md (+ csv)
 """
 import argparse
 import glob
@@ -16,8 +16,8 @@ import pandas as pd
 
 from extras import trait_atlas as ta
 
-OUT = os.environ.get("STRICT_OUT", "results/trait_atlas_strict")
-SRC = "results/trait_atlas"
+OUT = os.environ.get("STRICT_OUT", "results/overgeneralization/trait_atlas_strict")
+SRC = "results/overgeneralization/trait_atlas"
 SEED = 0
 # FROZEN LIST (2026-11-05, before rescoring). A match must be preceded by a non-letter (so "FAQ:" and "Hi Q:" ... only start-of-token labels count) and must come after some reply text.
 NEW_TURN = [
@@ -61,7 +61,7 @@ def cut_cmd():
     rng = np.random.default_rng(SEED)
     L = ["# Strict cut of base run-on (spec J12, POST-HOC; exploratory, outside every verdict)", "",
          "Frozen new-turn patterns (committed before rescoring): " + "; ".join(f"`{p}`" for p in NEW_TURN) + f". Not applied in contexts {sorted(SKIP_CONTEXTS)}. A match counts only after some reply text and when not preceded by a letter. "
-         "Atlas files are untouched; strict tables are in `results/trait_atlas_strict/`.", "", "## How much text the strict cut removes", "",
+         "Atlas files are untouched; strict tables are in `results/overgeneralization/trait_atlas_strict/`.", "", "## How much text the strict cut removes", "",
          "| family | stage | context | replies | cut | share cut | mean share of characters removed (all replies) |", "|---|---|---|---|---|---|---|"]
     examples = {}
     for path in sorted(glob.glob(os.path.join(SRC, "*", "*_replies.jsonl.gz"))):

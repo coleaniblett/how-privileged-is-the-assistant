@@ -12,7 +12,7 @@ from extras.assistant_steering import BENIGN
 from extras.persona_leakage import chat
 from extras.persona_refusal import TIERS
 
-OUT = os.environ.get("RC_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "axis_refusal_cos"))
+OUT = os.environ.get("RC_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "axis_refusal_cos"))
 
 
 def run(a):

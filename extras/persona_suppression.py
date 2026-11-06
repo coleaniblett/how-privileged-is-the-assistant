@@ -12,7 +12,7 @@ Readouts at the first content token of the reply (after the generation prompt; Q
       the 24 continuations share its KV cache);
   (b) 4 sampled 40-token generations per prompt version (temperature 0.7, seeds fixed by chunk, the same across versions), scored
       by the spec A human-vs-Assistant classifier (P(assistant)) and a layout regex.
-Subcommands: build (writes the frozen materials), score (one stage; GPU), analyze (all scored stages -> results/persona_suppression/).
+Subcommands: build (writes the frozen materials), score (one stage; GPU), analyze (all scored stages -> results/overgeneralization/persona_suppression/).
 Pre-set readings and analysis plan: docs/decisions.md 2026-11-04.
 """
 import argparse
@@ -28,7 +28,7 @@ from core import config
 
 MATERIALS = "data/persona_suppression_materials.json"
 PERSONAS = "data/persona_map_personas.json"
-OUT = "results/persona_suppression"
+OUT = "results/overgeneralization/persona_suppression"
 SEED = 0
 ENTITIES = ["fiction", "human", "ai"]
 N_SYSTEM, N_ROLEPLAY, N_USER = 8, 6, 6  # per entity type (training split has only 8 system personas per type)

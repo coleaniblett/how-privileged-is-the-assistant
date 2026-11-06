@@ -8,11 +8,11 @@ HUB="$HOME/.cache/huggingface/hub"
 free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
-exec 9>results/trait_atlas/.gpu.lock
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock
 flock -x 9
 step() { local t=$(date +%s); "$@" || echo "FAILED: $*"; echo "   [$(( $(date +%s)-t )) s] $*" | cut -c1-200; }
 for fam in olmo3-7b qwen3-8b; do
-  [[ -f results/trait_atlas_more_base/$fam/base_replies.jsonl.gz ]] || step $PY -m extras.trait_atlas_more_base gen --family $fam --batch-size 32
+  [[ -f results/overgeneralization/trait_atlas_more_base/$fam/base_replies.jsonl.gz ]] || step $PY -m extras.trait_atlas_more_base gen --family $fam --batch-size 32
   free_model "$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['base'])")"
 done
 step $PY -m extras.trait_atlas_more_base detect

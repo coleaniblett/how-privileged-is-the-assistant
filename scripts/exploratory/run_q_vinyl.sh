@@ -10,15 +10,15 @@ free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
 while pgrep -f "[r]un_n_vinyl" >/dev/null || pgrep -f "[r]un_o_vinyl" >/dev/null; do sleep 30; done
-exec 9>results/trait_atlas/.gpu.lock
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock
 flock -x 9
-mkdir -p results/role_says/gemma4-31b
+mkdir -p results/overgeneralization/role_says/gemma4-31b
 avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 70 ] || { echo "NOT STARTED: only ${avail} GB free" | tee /root/atlas_logs/Q_STOP.txt; exit 4; }
-[[ -f results/role_says/gemma4-31b/instruct_replies.csv.gz ]] || $PY -m extras.role_says gen --family gemma4-31b --stage instruct || echo "FAILED gemma instruct"
+[[ -f results/overgeneralization/role_says/gemma4-31b/instruct_replies.csv.gz ]] || $PY -m extras.role_says gen --family gemma4-31b --stage instruct || echo "FAILED gemma instruct"
 echo "=== generation done $(date -u +%T)"
 # the judge is Gemma 4 31B-it, which is already cached after the generation; wait for the OLMo/Qwen replies from marble
-until [ -f results/role_says/MARBLE_REPLIES_DONE ]; do sleep 30; done
+until [ -f results/overgeneralization/role_says/MARBLE_REPLIES_DONE ]; do sleep 30; done
 $PY -m extras.role_says judge || echo "FAILED judge"
 free_model "$($PY -c "from core import config; print(config.FAMILIES['gemma4-31b']['stages']['instruct'])")"
-touch results/role_says/Q_JUDGED_DONE
+touch results/overgeneralization/role_says/Q_JUDGED_DONE
 echo "=== done $(date -u +%T)"

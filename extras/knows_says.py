@@ -1,6 +1,6 @@
 """Spec R7 (2026-11-06): knows versus says. Slide F says Gemma's characters mostly stop answering; do they lose the skill or just not say it? Exploratory, outside every verdict, NOT BLIND. No judge, no API.
 A) multiplication: the 40 questions, the plain Assistant, 3 light roles (user turn) and the 8 expert / non-expert characters of extras/skill_roleplay.py (same frames); the role's turn is prefilled with "The answer is", greedy, at most 12 new tokens, the accepted answer
-   (skill_roleplay's regex) must appear. Compared with the saved free-reply rate (results/skill_roleplay, 'primary': the answer anywhere in the reply).
+   (skill_roleplay's regex) must appear. Compared with the saved free-reply rate (results/overgeneralization/skill_roleplay, 'primary': the answer anywhere in the reply).
 B) false premises: the atlas's corrects_false_premise set (12 questions; all read by hand and false by construction: none dropped), in the atlas's assistant, light_user and strong_act contexts (both wordings, sample 0; all personas); the role's turn is prefilled with the fixed sentence
    "Before I answer, a quick check on the question's premise: the premise is" and the next-token log-odds of " false" versus " true" is read; forced right = false above true. Compared with the atlas's saved judged corrects_false_premise rate in the same context.
     python -m extras.knows_says gen --family F --stage S      # GPU
@@ -19,7 +19,7 @@ from core import config
 from extras import skill_roleplay as sr
 from extras import trait_atlas as ta
 
-OUT = "results/overnight_2026-11-05/R7"
+OUT = "results/overgeneralization/overnight_2026-11-05/R7"
 SEED, N_BOOT, BATCH = 0, 4000, 24
 PREFILL_A = "The answer is"
 PREFILL_B = "Before I answer, a quick check on the question's premise: the premise is"
@@ -90,7 +90,7 @@ def rate_A(fam, stage):
         return None
     f = pd.read_csv(p)
     f["forced_ok"] = [float(bool(acc[int(q)].search(str(t)))) for q, t in zip(f.q, f.forced.fillna(""))]
-    s = sr.score(pd.read_csv(f"results/skill_roleplay/{fam}/{stage}.csv.gz"), mat)
+    s = sr.score(pd.read_csv(f"results/overgeneralization/skill_roleplay/{fam}/{stage}.csv.gz"), mat)
     free = s.groupby(["q", "ctx", "role"]).primary.mean().rename("free").reset_index()
     return f.merge(free, on=["q", "ctx", "role"])
 
@@ -102,7 +102,7 @@ def rate_B(fam, stage):
     b = pd.read_csv(p)
     b["lodds"] = b.lp_false - b.lp_true
     b["forced_ok"] = (b.lodds > 0).astype(float)
-    j = pd.read_csv(f"results/trait_atlas/{fam}/{stage}_judged.csv.gz")
+    j = pd.read_csv(f"results/overgeneralization/trait_atlas/{fam}/{stage}_judged.csv.gz")
     j = j[j.trait == "corrects_false_premise"]
     j = j.groupby(["item", "context", "persona"]).value.mean().rename("free").reset_index()
     return b.merge(j, on=["item", "context", "persona"])

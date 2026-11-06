@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Spec R3 on marble: persona prefill, wording 1 (Llama, Apertus) and wording 2 (all of OLMo, Qwen, Llama, Apertus), base and final, plus 30-per-condition continuations (final) for the in-character judge.
-# Output under results/overnight_2026-11-05/R3/{w1,w2}/arm2/<family>/. Log /tmp/claude-0/r3_marble.log
+# Output under results/overgeneralization/overnight_2026-11-05/R3/{w1,w2}/arm2/<family>/. Log /tmp/claude-0/r3_marble.log
 set -uo pipefail
 cd /root/hpa-main-wt
 export HF_HUB_DISABLE_XET=1 OMP_NUM_THREADS=4 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 PY=/opt/arena-env/bin/python; source scripts/exploratory/lib_r.sh
-R=results/overnight_2026-11-05/R3
+R=results/overgeneralization/overnight_2026-11-05/R3
 W1=data/belief_induction_prefill.jsonl; W2=data/belief_induction_prefill_w2.jsonl
 gpu_wait main-session "spec R3 marble"; trap gpu_release EXIT
 run() { local w=$1 D=$2 fam=$3 stage=$4

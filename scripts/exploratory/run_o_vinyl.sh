@@ -10,9 +10,9 @@ free_model() { local repo="models--${1//\//--}"; rm -rf "${HUB:?}/${repo:?}"
   grep -l -r --include='*.refs' "^$repo/" "$HUB/blobs" 2>/dev/null | while read -r refs; do
     if ! grep -qv "^$repo/" "$refs"; then rm -f "${refs%.refs}" "${refs%.refs}.lock" "$refs"; fi; done; }
 while pgrep -f "[r]un_n_vinyl" >/dev/null; do sleep 30; done
-exec 9>results/trait_atlas/.gpu.lock
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock
 flock -x 9
-fam=gemma4-31b; O=results/belief_induction/arm2/$fam
+fam=gemma4-31b; O=results/overgeneralization/belief_induction/arm2/$fam
 mkdir -p $O/persona_carryover
 for stage in instruct base; do
   avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 70 ] || { echo "NOT STARTED $stage: only ${avail} GB free" | tee /root/atlas_logs/O_GEMMA_STOP.txt; exit 4; }

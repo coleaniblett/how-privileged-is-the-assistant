@@ -17,7 +17,7 @@ Everything is paired by item; CIs are 95% bootstrap over items (core.stats.boots
 before running. Run:
 
     python -m extras.persona_leakage score --stage base      # per stage (GPU)
-    python -m extras.persona_leakage analyze                 # -> results/olmo3-7b/persona_leakage.md
+    python -m extras.persona_leakage analyze                 # -> results/overgeneralization/early_probes/olmo3-7b/persona_leakage.md
 """
 import argparse
 import json
@@ -31,7 +31,7 @@ from core import config
 from core.render import load_tokenizer
 from core.stats import bootstrap_ci, stage_order
 
-OUT = os.environ.get("LEAK_OUT", os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_leakage"))
+OUT = os.environ.get("LEAK_OUT", os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_leakage"))
 SEED = 0
 
 CHARACTERS = [  # (name, description)
@@ -292,7 +292,7 @@ def analyze(args):
             for c in sub.cond.unique():
                 t = sub[sub.cond == c].iloc[0].text.replace("\n", " ")[:220]
                 L.append(f"- {probe}/{s}/{c}: {t}")
-    path = os.path.join(config.RESULTS_ROOT, config.FAMILY, "persona_leakage.md")
+    path = os.path.join("results/overgeneralization/early_probes", config.FAMILY, "persona_leakage.md")
     open(path, "w", encoding="utf-8").write("\n".join(L) + "\n")
     gdf.to_csv(os.path.join(OUT, "flagged_generations.csv"), index=False)
     print("wrote", path)

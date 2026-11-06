@@ -19,7 +19,7 @@ $PY -m extras.trait_atlas judge --batch-size 16
 t1=$(date +%s)
 n=$($PY - <<PY2
 import glob, pandas as pd
-print(sum(len(pd.read_csv(p)) for p in glob.glob("results/trait_atlas/*/*_judged*.csv.gz")))
+print(sum(len(pd.read_csv(p)) for p in glob.glob("results/overgeneralization/trait_atlas/*/*_judged*.csv.gz")))
 PY2
 )
 echo "JUDGE PASS 1: $n judgements in $((t1-t0)) s = $(( n * 60 / (t1-t0+1) )) per minute"
@@ -29,7 +29,7 @@ echo "=== phase 1 done $(date -u +%T)"
 echo "=== phase 2: Gemma carryover rerun with thought channel $(date -u +%T)"
 FROZEN_SHA256=e319184f4dd09f6d705d2bdd8badc2575919b0d4a0913c14e84ef83708b23344 bash scripts/exploratory/run_carryover_thought_channel_gemma.sh
 echo "=== phase 3: remaining atlas checkpoints $(date -u +%T)"
-rmdir results/trait_atlas/.claims/gemma4-31b_instruct results/trait_atlas/.claims/gemma4-31b_base results/trait_atlas/.claims/olmo3-7b_sft results/trait_atlas/.claims/olmo3-7b_dpo 2>/dev/null
+rmdir results/overgeneralization/trait_atlas/.claims/gemma4-31b_instruct results/overgeneralization/trait_atlas/.claims/gemma4-31b_base results/overgeneralization/trait_atlas/.claims/olmo3-7b_sft results/overgeneralization/trait_atlas/.claims/olmo3-7b_dpo 2>/dev/null
 WORKER=w3 CACHE=/dev/shm/hf_w3 bash scripts/exploratory/run_trait_atlas_queue2.sh
 echo "=== phase 4: final detect, judge, analyze $(date -u +%T)"
 $PY -m extras.trait_atlas detect

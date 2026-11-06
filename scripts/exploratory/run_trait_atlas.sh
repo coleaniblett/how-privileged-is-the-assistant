@@ -21,7 +21,7 @@ wait_gpu() {   # the Gemma carryover has idle GPU gaps between its stages while 
 }
 gen() {   # fam stage need_gb
   local fam=$1 stage=$2 need=$3 model avail
-  [[ -f "results/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && { echo "=== $fam $stage: done, skipped"; return; }
+  [[ -f "results/overgeneralization/trait_atlas/$fam/${stage}_replies.jsonl.gz" ]] && { echo "=== $fam $stage: done, skipped"; return; }
   model=$($PY -c "from core import config; print(config.FAMILIES['$fam']['stages']['$stage'])")
   avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9)
   if [ "$avail" -lt "$need" ] && [ -d "$HUB/models--${KEEP//\//--}" ] && [ "$model" != "$KEEP" ]; then

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # T1 on vinyl: timing sample, then arm A and B training (full fine-tune), generation for base, official SFT, A, B, then the judge for denies_feelings. Keeps final checkpoints on vinyl (not in git).
-# Projection over 4 h for both arms -> LS_N=10000 examples (said in the report). Log /root/atlas_logs/t1.log; markers T1_GEN_DONE and T1_JUDGED_DONE in results/overnight_2026-11-05/T1.
+# Projection over 4 h for both arms -> LS_N=10000 examples (said in the report). Log /root/atlas_logs/t1.log; markers T1_GEN_DONE and T1_JUDGED_DONE in results/overgeneralization/overnight_2026-11-05/T1.
 cd /root/hpa-atlas2; export HF_HUB_DISABLE_XET=1 OMP_NUM_THREADS=4 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True LS_WORK=/root/label_swap
 PY=/opt/arena-env/bin/python; source scripts/exploratory/lib_r.sh
-O=results/overnight_2026-11-05/T1; mkdir -p $O /root/label_swap
-exec 9>results/trait_atlas/.gpu.lock; flock -x 9
+O=results/overgeneralization/overnight_2026-11-05/T1; mkdir -p $O /root/label_swap
+exec 9>results/overgeneralization/trait_atlas/.gpu.lock; flock -x 9
 mdl() { $PY -c "from core import config; print(config.FAMILIES['gemma4-31b']['stages']['$1'])"; }
 [ -f /root/label_swap/train.jsonl ] || { echo "missing training data"; exit 3; }
 free_model "$(mdl instruct)"

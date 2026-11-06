@@ -2,12 +2,12 @@
 
     python -m core.selection_check
 
-Compares the held-out WildChat sample (data/texts.jsonl, results/scores/base.csv) with the
-contaminated texts of the earlier unfiltered sample (data/prefilter_texts.jsonl, scored in results/selection_check/scores/: same seed and stream, so its
+Compares the held-out WildChat sample (data/texts.jsonl, results/precapstone/scores/base.csv) with the
+contaminated texts of the earlier unfiltered sample (data/prefilter_texts.jsonl, scored in results/precapstone/selection_check/scores/: same seed and stream, so its
 clean texts reappear in the held-out sample and the rest are the ones the filter removed).
 Reports means, Cohen's d, Welch's t with a permutation p-value, and a Mann-Whitney p-value
 (normal approximation) for token lengths and base-model plain-prose NLL. The defaults point at
-the frozen pre-capstone run (results/scores) and the prefilter sample, which is where this check was done.
+the frozen pre-capstone run (results/precapstone/scores) and the prefilter sample, which is where this check was done.
 """
 
 import argparse
@@ -58,12 +58,12 @@ def compare(name, a, b, n_perm, rng):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--texts", default="data/texts.jsonl")
-    ap.add_argument("--scores", default="results/scores/base.csv")
+    ap.add_argument("--scores", default="results/precapstone/scores/base.csv")
     ap.add_argument("--v0-texts", default="data/prefilter_texts.jsonl")
-    ap.add_argument("--v0-scores", default="results/selection_check/scores/base.csv")
+    ap.add_argument("--v0-scores", default="results/precapstone/selection_check/scores/base.csv")
     ap.add_argument("--n-perm", type=int, default=20_000)
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--out", default="results/selection_check/selection_check.md")
+    ap.add_argument("--out", default="results/precapstone/selection_check/selection_check.md")
     args = ap.parse_args()
 
     rows = [r for r in load_jsonl(args.texts) if r["source"] == "wildchat"]

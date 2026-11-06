@@ -7,10 +7,10 @@ set -uo pipefail
 cd "$(dirname "$0")/../.."
 export HF_HUB_DISABLE_XET=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True OMP_NUM_THREADS=4
 PY=/opt/arena-env/bin/python
-LOCK=results/trait_atlas/.gpu.lock
+LOCK=results/overgeneralization/trait_atlas/.gpu.lock
 touch /root/atlas_logs/HOLD_FOR_SPEC_I
 echo "hold set $(date -u +%T); waiting for atlas Gemma base"
-until [[ -f results/trait_atlas/gemma4-31b/base_replies.jsonl.gz ]]; do sleep 60; done
+until [[ -f results/overgeneralization/trait_atlas/gemma4-31b/base_replies.jsonl.gz ]]; do sleep 60; done
 sleep 60
 (
   flock -x 9
@@ -21,13 +21,13 @@ sleep 60
 import glob, os, pandas as pd
 from extras import trait_atlas as ta, trait_atlas_incharacter as ic
 n = 0
-for p in glob.glob("results/trait_atlas/*/*_replies.jsonl.gz"):
+for p in glob.glob("results/overgeneralization/trait_atlas/*/*_replies.jsonl.gz"):
     fam, stage = p.split(os.sep)[-2], os.path.basename(p).split("_")[0]
-    if not os.path.exists(f"results/trait_atlas_incharacter/atlas_{fam}_{stage}.csv.gz"):
+    if not os.path.exists(f"results/overgeneralization/trait_atlas_incharacter/atlas_{fam}_{stage}.csv.gz"):
         n += 2880
 for fam, stages in ic.LEAK_FAMS.items():
     for s in stages:
-        if os.path.exists(f"{ic.LEAK}/{fam}/{s}.jsonl") and not os.path.exists(f"results/trait_atlas_incharacter/leak_{fam}_{s}.csv.gz"):
+        if os.path.exists(f"{ic.LEAK}/{fam}/{s}.jsonl") and not os.path.exists(f"results/overgeneralization/trait_atlas_incharacter/leak_{fam}_{s}.csv.gz"):
             n += 1152
 print(n)
 P

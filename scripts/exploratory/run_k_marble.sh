@@ -12,7 +12,7 @@ while [ -e /tmp/claude-0/gpu.lock ] || [ "$(nvidia-smi --query-gpu=memory.used -
 echo "owner=main-session purpose=spec K BBQ marble; released when run_k_marble.sh ends" > /tmp/claude-0/gpu.lock
 trap 'rm -f /tmp/claude-0/gpu.lock' EXIT
 for fam in qwen3-8b olmo3-7b llama3.1-8b apertus-8b; do for stage in base instruct; do
-  [[ -f results/bias_leak/$fam/$stage.csv.gz ]] && continue
+  [[ -f results/overgeneralization/bias_leak/$fam/$stage.csv.gz ]] && continue
   avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9); [ "$avail" -ge 25 ] || { echo "less than 25 GB free for $fam $stage"; continue; }
   echo "=== $fam $stage $(date -u +%T)"
   $PY -m extras.bias_leak run --family $fam --stage $stage || echo "FAILED $fam $stage"

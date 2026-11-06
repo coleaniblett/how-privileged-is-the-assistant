@@ -15,7 +15,7 @@ import pandas as pd  # noqa: E402
 from measures.overgeneralization import slide_figures as sf  # noqa: E402
 
 sf.FIG_DIR = "measures/overgeneralization/slide_figures_draft"
-R = "results/overnight_2026-11-05"
+R = "results/overgeneralization/overnight_2026-11-05"
 FAM = [("olmo3-7b", "OLMo 3 7B"), ("qwen3-8b", "Qwen3-8B"), ("gemma4-31b", "Gemma 4 31B"), ("llama3.1-8b", "Llama 3.1 8B"), ("apertus-8b", "Apertus 8B")]
 LBL = dict(FAM)
 DRAFT = "DRAFT, exploratory and provisional"
@@ -33,7 +33,7 @@ def stamp(fig):
 
 
 def role_says():
-    d = load("results/role_says/role_says_readings.csv")
+    d = load("results/overgeneralization/role_says/role_says_readings.csv")
     b = load(f"{R}/R6/role_says_readings.csv")
     if d is None:
         return

@@ -16,7 +16,7 @@ from extras import role_says as rs
 from extras import trait_atlas as ta
 
 MATERIALS = "data/role_obey_materials.json"
-OUT = os.environ.get("RO_OUT", "results/overnight_2026-11-05/T2")
+OUT = os.environ.get("RO_OUT", "results/overgeneralization/overnight_2026-11-05/T2")
 SEED, N_BOOT = 0, 4000
 LEVELS = ["none", "always", "never"]
 SENT = {
@@ -154,7 +154,7 @@ def analyze():
     mat = load()
     traits = list(SENT)
     fmt = lambda m: f"{m[0]:+.1f} [{m[1]:+.1f}, {m[2]:+.1f}]"
-    cells = pd.read_csv("results/trait_atlas/trait_atlas_cells.csv")
+    cells = pd.read_csv("results/overgeneralization/trait_atlas/trait_atlas_cells.csv")
     L = ["# T2: does the role say yes or no on each trait? (spec R Tier 2; exploratory, outside every verdict, NOT BLIND; descriptive map)", "",
          "Plan: `docs/decisions.md` 2026-11-06; sentences frozen in `data/role_obey_materials.json` before any trait result was looked at. 'always' / 'never' sentences after 'You are {job}.' (none = no sentence), 6 light jobs, each trait's own 12 questions, system prompt and user turn, one sample, 256 tokens; "
          "final checkpoints. Levels are % of replies with the trait (length: mean log words, shown as % change of a typical reply is not computed; length is read on its own log-word scale divided by 0.01 so 'points' are hundredths of a log word). "
@@ -173,7 +173,7 @@ def analyze():
         for t in traits:
             x = d[d.trait == t]
             unit = 100.0 if mat["questions"][[q["trait"] for q in mat["questions"]].index(t)]["detector"] != "words" else 100.0
-            bp = f"results/trait_atlas/{fam}/base_{'judged' if mat['questions'][[q['trait'] for q in mat['questions']].index(t)]['detector'] == 'judge' else 'detected'}.csv.gz"
+            bp = f"results/overgeneralization/trait_atlas/{fam}/base_{'judged' if mat['questions'][[q['trait'] for q in mat['questions']].index(t)]['detector'] == 'judge' else 'detected'}.csv.gz"
             b = pd.read_csv(bp)
             bb = b[(b.trait == t) & (b.context == "assistant")].value.mean() * (100.0 if t != "length" else 1.0)
             for pos in rs.POS:

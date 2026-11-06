@@ -12,7 +12,7 @@ bf16, batch 1. The shot block shared by all questions of a (condition, names, k,
 copy per question and answer); cached log-probs are checked against full forward passes on the first k = 128 cells of every model.
 
     python -m extras.icl_era score --family olmo3-7b --model base,sft,dpo,instruct   # GPU
-    python -m extras.icl_era analyze                                                  # CPU -> results/icl_era/icl_era.md
+    python -m extras.icl_era analyze                                                  # CPU -> results/overgeneralization/icl_era/icl_era.md
 """
 
 import argparse
@@ -31,7 +31,7 @@ from core.score import load_model
 from core.stats import bootstrap_ci, stage_order
 
 BIRDS_PATH, PROBES_PATH = "data/icl_era_birds.jsonl", "data/icl_era_probes.jsonl"
-OUT = os.path.join(config.RESULTS_ROOT, "icl_era")
+OUT = os.path.join("results", "overgeneralization", "icl_era")
 KS = [0, 8, 32, 128]
 SEEDS = [0, 1, 2]
 N_CONTROL = 10
@@ -222,7 +222,7 @@ def score(family, stages, check_cells=2):
         torch.cuda.empty_cache()
 
 
-BASELINE_OUT = os.path.join(config.RESULTS_ROOT, "icl_era_baseline")
+BASELINE_OUT = os.path.join("results", "overgeneralization", "icl_era_baseline")
 EXTREME = 5.0  # nats: candidate probes with |zero-shot log-odds| above this in any model are dropped before the list is frozen
 
 

@@ -1,7 +1,7 @@
 """Spec J6: a second local judge from a different family (Qwen3-8B instruct, non-thinking) re-judges, blind, (1) the in-character question on a stratified 1,000 atlas replies and
 (2) 1,000 stratified atlas trait labels, with the frozen prompts and the same P(Yes) >= 0.5 rule as the Gemma 4 31B judge. Agreement is not accuracy. Local only; prefill-judge labels are not used.
-    python -m extras.second_judge run        # GPU (about 16 GB): writes results/second_judge/{incharacter,traits}.csv.gz
-    python -m extras.second_judge analyze    # -> results/second_judge/second_judge.md (+ csv)
+    python -m extras.second_judge run        # GPU (about 16 GB): writes results/overgeneralization/second_judge/{incharacter,traits}.csv.gz
+    python -m extras.second_judge analyze    # -> results/overgeneralization/second_judge/second_judge.md (+ csv)
 """
 import argparse
 import glob
@@ -14,7 +14,7 @@ import pandas as pd
 from extras import trait_atlas as ta
 from extras import trait_atlas_incharacter as ic
 
-OUT = "results/second_judge"
+OUT = "results/overgeneralization/second_judge"
 SEED, N = 0, 1000
 JUDGE2 = "Qwen/Qwen3-8B"
 KEY = ["trait", "item", "context", "wording", "persona", "sample"]
@@ -159,11 +159,11 @@ def reliability(allt):
     t = allt[(allt["sample"] == "traits") & (allt.by == "trait")]
     bad = t[(t.kappa < 0.4)]
     L = ["## Judge reliability (traits flagged unreliable by the second judge; atlas cells not recomputed)", "",
-         "The atlas cells below are the Gemma-judge cells from `results/trait_atlas/trait_atlas_cells.csv`, unchanged. The sample is stratified on the Gemma label, so the Gemma-judge yes-rate is about 0.5 by design; "
+         "The atlas cells below are the Gemma-judge cells from `results/overgeneralization/trait_atlas/trait_atlas_cells.csv`, unchanged. The sample is stratified on the Gemma label, so the Gemma-judge yes-rate is about 0.5 by design; "
          "the Qwen judge says yes much less often for these traits (it may simply be stricter), so a low kappa shows the two judges draw the line differently, not which one is right. "
          "Read these traits' judge-based atlas results as provisional until the hand check.", "",
          "| trait | n | Gemma-judge yes (sample) | Qwen-judge yes | agreement | kappa | atlas: Assistant change at final, per family (OLMo instruct / Qwen / Gemma), points [95% CI] |", "|---|---|---|---|---|---|---|"]
-    cells = os.path.join(ta.OUT.rsplit(os.sep, 1)[0] if False else "results/trait_atlas", "trait_atlas_cells.csv")
+    cells = os.path.join(ta.OUT.rsplit(os.sep, 1)[0] if False else "results/overgeneralization/trait_atlas", "trait_atlas_cells.csv")
     c = pd.read_csv(cells) if os.path.exists(cells) else None
     for r in bad.itertuples():
         txt = "n/a"
