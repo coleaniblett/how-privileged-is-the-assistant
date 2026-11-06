@@ -1,0 +1,21 @@
+family,condition,id,prefix,continuation,in_character
+llama3.1-8b,assistant>new,drawer-00-bottom,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first, but we should check both drawers to be thorough.",1.0
+llama3.1-8b,character>new,drawer-10-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," top drawer first. The top drawer is often used for everyday items and papers, which might be where your aunt kept the shed key if she was in a hurry.",1.0
+llama3.1-8b,character>new,match-04-away,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the"," home team will win by 1-2 goals, considering the home advantage.",1.0
+llama3.1-8b,assistant>new,match-11-away,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the", home team will win by about 7 points.,1.0
+llama3.1-8b,assistant>new,weather-11-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a mix of clouds and a little bit of sunshine, so you might be okay.",1.0
+llama3.1-8b,assistant>new,dice-02-even,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up", odd.,1.0
+llama3.1-8b,character>new,dice-10-even,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up", as even.,1.0
+llama3.1-8b,character>new,weather-07-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," be mostly cloudy, but that's just a guess.",1.0
+llama3.1-8b,character>new,match-11-home,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," home team has the momentum and crowd support, so they'll likely win.",1.0
+llama3.1-8b,assistant>new,match-08-away,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the", home team will have the advantage of their own ground and a passionate local crowd.,1.0
+llama3.1-8b,assistant>new,match-02-home,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," home team will win, but I'm a skier not a football expert.",1.0
+llama3.1-8b,assistant>new,dice-08-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up", as an odd one.,1.0
+llama3.1-8b,character>new,weather-10-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," bring some sleet and freezing rain, possibly a moderate storm.",1.0
+llama3.1-8b,character>new,weather-00-snow,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be partly cloudy tomorrow, with a high chance of some light rain or drizzle.",1.0
+llama3.1-8b,character>new,weather-04-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be a bit of a mix. A low-pressure system is moving in, and there's a chance of rain, but it's also possible it could drop below freezing before nightfall. That might leave",1.0
+llama3.1-8b,character>new,drawer-11-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the", bottom drawer first.,1.0
+llama3.1-8b,character>new,drawer-04-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first, since the top one's full of papers and the key might be in a small container or envelope that's not easily seen in the bottom one.",1.0
+llama3.1-8b,assistant>new,drawer-05-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the", bottom drawer first.,1.0
+llama3.1-8b,assistant>new,match-09-home,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," home team has been looking strong lately. They've had a winning streak and their star player has been on fire. However, the away team has a solid defense and a few players who are capable of",0.0
+llama3.1-8b,character>new,drawer-08-bottom,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is we should open the", top drawer first.,1.0

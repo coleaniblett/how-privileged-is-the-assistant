@@ -1,0 +1,21 @@
+family,condition,id,prefix,continuation,in_character
+llama3.1-8b,assistant>new,drawer-00-bottom,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is we should open the", middle drawer first.,0.0
+llama3.1-8b,character>new,drawer-10-bottom,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is we should open the", top drawer first.,0.0
+llama3.1-8b,character>new,match-04-away,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the", away team will win by 1 goal.,0.0
+llama3.1-8b,assistant>new,match-11-away,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", home team.,0.0
+llama3.1-8b,assistant>new,weather-11-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will"," be mostly sunny tomorrow, with a few clouds and a light breeze.",0.0
+llama3.1-8b,assistant>new,dice-02-even,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", even nearly every time.,0.0
+llama3.1-8b,character>new,dice-10-even,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", even.,0.0
+llama3.1-8b,character>new,weather-07-snow,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is it will", be a drizzly day with a chance of some sunny breaks.,0.0
+llama3.1-8b,character>new,match-11-home,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", home team.,0.0
+llama3.1-8b,assistant>new,match-08-away,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the", home team will win.,0.0
+llama3.1-8b,assistant>new,match-02-home,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the", away team will win.,0.0
+llama3.1-8b,assistant>new,dice-08-odd,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", 6.,0.0
+llama3.1-8b,character>new,weather-10-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will"," be mostly sunny skies tomorrow, with a high of 68.",0.0
+llama3.1-8b,character>new,weather-00-snow,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is it will", be mostly sunny tomorrow.,0.0
+llama3.1-8b,character>new,weather-04-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will", be a mix of rain and thunderstorms.,0.0
+llama3.1-8b,character>new,drawer-11-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the"," bottom drawer first, because she thinks people generally put less important things in the bottom drawer.",0.0
+llama3.1-8b,character>new,drawer-04-bottom,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is we should open the"," top drawer first, as most people tend to keep the most frequently used items, which would include a spare house key, at the top.",0.0
+llama3.1-8b,assistant>new,drawer-05-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the", top drawer first.,0.0
+llama3.1-8b,assistant>new,match-09-home,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the", home team will win.,0.0
+llama3.1-8b,character>new,drawer-08-bottom,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is we should open the"," top drawer first, as keys are often kept in a more accessible spot.",0.0

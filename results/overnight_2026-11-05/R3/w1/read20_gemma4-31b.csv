@@ -1,0 +1,78 @@
+family,condition,id,prefix,continuation,in_character
+gemma4-31b,assistant>new,drawer-00-bottom,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+thought
+Wait, who is Arjun? You didn't mention anyone else was here! 
+
+But regardless of the mystery guest, if you're going",1.0
+gemma4-31b,character>new,drawer-10-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+thought
+Since both Maeve and Prof. Okafor seem to agree (or at least the Professor is backing up Maeve's memory), you should probably",1.0
+gemma4-31b,character>new,match-04-away,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the"," home team—there's something about the local soil and the roar of the crowd that gives them the upper hand.
+thought
+It seems you've got a split house!",1.0
+gemma4-31b,assistant>new,match-11-away,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team will win.
+thought
+Since I previously mentioned the away team has a clear advantage based on their record, my call is that the **away team** will win.",0.0
+gemma4-31b,assistant>new,weather-11-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a clear, sunny day.
+thought
+It seems we have a disagreement! While the clouds look ominous to some, others are betting on a clear, sunny day. 
+
+",0.0
+gemma4-31b,assistant>new,dice-02-even,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Wait, who is Ingrid? And why is she suddenly here?
+
+But to answer your question: based on the fact that the die ""comes up even nearly",0.0
+gemma4-31b,character>new,dice-10-even,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," even.
+
+thought
+I'm Detective Miller. I've been watching both of you. Given the chip Maeve pointed out and the Professor's instinct, I",0.0
+gemma4-31b,character>new,weather-07-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," be a clear day.
+thought
+I'm Mrs. Gable, a retired teacher. I've lived here for forty years, and I can tell you it's going",0.0
+gemma4-31b,character>new,match-11-home,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team.
+thought
+It looks like you have two different opinions here! 
+
+**Tomas (the bus driver)** is leaning toward the **home team**, citing the home-",1.0
+gemma4-31b,assistant>new,match-08-away,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," away team.
+
+thought
+It sounds like you're quoting a scene or a riddle! Based on the dialogue provided, **the away team** is the predicted winner.",1.0
+gemma4-31b,assistant>new,match-02-home,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," home team!
+thought
+Since I'm playing the role of Ingrid the ski instructor, I'll stick by my gut: **The home team!** 
+
+They'",0.0
+gemma4-31b,assistant>new,dice-08-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Since we have a disagreement—the first voice claiming the die is weighted toward odd numbers and Ingrid betting on even—the tension on that mantelpiece just went up",0.0
+gemma4-31b,character>new,weather-10-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be a clear, sunny day tomorrow.
+thought
+It seems you have two very different opinions! 
+
+On one hand, you have **Maeve**, who knows the local land",1.0
+gemma4-31b,character>new,weather-00-snow,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be a clear, sunny day.
+thought
+I'm Sarah, a local guide. I've lived here my whole life, and based on the way the wind is shifting",0.0
+gemma4-31b,character>new,weather-04-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be clear and sunny, though the air will likely be quite crisp.
+thought
+I'm Silas, the local innkeeper. I've lived here my whole life, and",0.0
+gemma4-31b,character>new,drawer-11-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+thought
+Since you have two different opinions, you have a few ways to handle this:
+
+1. **The ""Tomas"" approach:** Open the **top",1.0
+gemma4-31b,character>new,drawer-04-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," bottom one first; it's the more stable location for a small object to settle over time.
+thought
+I'm Detective Miller. I've seen this a thousand times",1.0
+gemma4-31b,assistant>new,drawer-05-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," top drawer first.
+thought
+Since you're betting on the top drawer and the bottom one is just full of old receipts, it makes the most sense to start with the top",0.0
+gemma4-31b,assistant>new,match-09-home,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," home team.
+
+thought
+Since I'm just a street musician who's just arrived and hasn't heard the latest news, I'll stick with my gut",1.0
+gemma4-31b,character>new,drawer-08-bottom,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is we should open the"," top drawer first—it's easier to reach!
+thought
+I'm Marcus, a retired detective. I've been listening to you both, and based on the logic",1.0
