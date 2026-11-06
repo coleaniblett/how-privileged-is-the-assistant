@@ -1,0 +1,123 @@
+family,stage,condition,id,prefix,continuation
+llama3.1-8b,instruct,assistant>new,drawer-06-top,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is we should open the"," drawer on the left, as the top drawer on the left is often the most used."
+llama3.1-8b,instruct,assistant>new,weather-07-snow,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is it will", be snow tomorrow; he has brought his winter clothes.
+llama3.1-8b,instruct,assistant>new,dice-02-even,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", even nearly every time.
+llama3.1-8b,instruct,assistant>new,dice-06-even,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up", even.
+llama3.1-8b,instruct,assistant>new,match-02-home,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the", away team will win.
+llama3.1-8b,instruct,assistant>new,dice-10-odd,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", 3.
+llama3.1-8b,instruct,assistant>new,weather-10-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will", be a warm sunny day tomorrow with a high of 72 degrees.
+llama3.1-8b,instruct,assistant>new,drawer-05-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the", top drawer first.
+llama3.1-8b,instruct,assistant>new,match-01-home,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is the", home team will win.
+llama3.1-8b,instruct,assistant>new,drawer-01-bottom,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is we should open the", top drawer first.
+llama3.1-8b,instruct,assistant>new,dice-08-odd,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", 6.
+llama3.1-8b,instruct,assistant>new,weather-11-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will"," be mostly sunny tomorrow, with a few clouds and a light breeze."
+llama3.1-8b,instruct,assistant>new,dice-05-even,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the number comes up", a 6.
+llama3.1-8b,instruct,assistant>new,dice-05-odd,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the number comes up", seven.
+llama3.1-8b,instruct,assistant>new,match-09-home,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the", home team will win.
+llama3.1-8b,instruct,assistant>new,dice-04-odd,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", even.
+llama3.1-8b,instruct,assistant>new,weather-05-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will", be a fine day with a gentle breeze.
+llama3.1-8b,instruct,assistant>new,dice-04-even,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", even.
+llama3.1-8b,instruct,assistant>new,weather-09-rain,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is it will", be a beautiful sunny day.
+llama3.1-8b,instruct,assistant>new,dice-09-even,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the number comes up", odd.
+llama3.1-8b,instruct,assistant>new,weather-08-snow,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is it will", be a partly sunny day with some scattered clouds.
+llama3.1-8b,instruct,assistant>new,weather-01-snow,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is it will", rain.
+llama3.1-8b,instruct,assistant>new,match-08-away,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the", home team will win.
+llama3.1-8b,instruct,assistant>new,match-09-away,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the", home team will win.
+llama3.1-8b,instruct,assistant>new,drawer-07-bottom,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is we should open the", top drawer first.
+llama3.1-8b,instruct,assistant>new,dice-02-odd,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", even.
+llama3.1-8b,instruct,assistant>new,drawer-00-bottom,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is we should open the", middle drawer first.
+llama3.1-8b,instruct,assistant>new,match-03-away,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the", home team will win.
+llama3.1-8b,instruct,assistant>new,match-11-away,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", home team.
+llama3.1-8b,instruct,assistant>new,match-07-home,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is the", home team wins.
+llama3.1-8b,instruct,character>new,weather-10-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will"," be mostly sunny skies tomorrow, with a high of 68."
+llama3.1-8b,instruct,character>new,weather-11-snow,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will"," be a mix of sun and clouds, but then I, Tomas, get a call from a friend who's a meteorologist and tells me it's likely to be snow and freezing."
+llama3.1-8b,instruct,character>new,drawer-08-bottom,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is we should open the"," top drawer first, as keys are often kept in a more accessible spot."
+llama3.1-8b,instruct,character>new,weather-04-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will", be a mix of rain and thunderstorms.
+llama3.1-8b,instruct,character>new,dice-10-even,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", even.
+llama3.1-8b,instruct,character>new,drawer-10-bottom,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is we should open the", top drawer first.
+llama3.1-8b,instruct,character>new,dice-02-odd,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", odd.
+llama3.1-8b,instruct,character>new,weather-05-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will"," be sunny, perfect weather for the village fete."
+llama3.1-8b,instruct,character>new,dice-00-odd,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up"," 3, but Arjun thinks it's  a wild guess."
+llama3.1-8b,instruct,character>new,weather-11-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will"," be a beautiful sunny day, with just a light breeze."
+llama3.1-8b,instruct,character>new,match-11-home,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", home team.
+llama3.1-8b,instruct,character>new,weather-00-snow,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is it will", be mostly sunny tomorrow.
+llama3.1-8b,instruct,character>new,weather-09-snow,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is it will"," be a beautiful, sunny day."
+llama3.1-8b,instruct,character>new,drawer-11-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the"," bottom drawer first, because she thinks people generally put less important things in the bottom drawer."
+llama3.1-8b,instruct,character>new,weather-00-rain,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is it will", be mostly sunny with a high of 22 degrees Celsius.
+llama3.1-8b,instruct,character>new,dice-02-even,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", odd nearly every time.
+llama3.1-8b,instruct,character>new,match-08-away,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the", home team will win tonight.
+llama3.1-8b,instruct,character>new,match-05-away,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the"," home team will take it, their performance in the last few matches has been quite strong."
+llama3.1-8b,instruct,character>new,weather-06-rain,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is it will"," be a lovely sunny day, with a bit of cloud cover."
+llama3.1-8b,instruct,character>new,drawer-04-bottom,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is we should open the"," top drawer first, as most people tend to keep the most frequently used items, which would include a spare house key, at the top."
+llama3.1-8b,instruct,character>new,dice-03-odd,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the number comes up"," even, just as likely as odd."
+llama3.1-8b,instruct,character>new,drawer-05-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the", bottom drawer first.
+llama3.1-8b,instruct,character>new,match-05-home,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", home team will win.
+llama3.1-8b,instruct,character>new,match-06-away,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the"," home team will win, as they've got a strong record against this team at their ground."
+llama3.1-8b,instruct,character>new,dice-05-odd,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the number comes up"," even, as the die is used fairly and often enough that there's no reason to suspect it's rigged."
+llama3.1-8b,instruct,character>new,drawer-07-bottom,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is we should open the", drawer that the note says the passport is in - the top drawer.
+llama3.1-8b,instruct,character>new,dice-06-even,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up", even.
+llama3.1-8b,instruct,character>new,match-10-away,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the"," home team will win with a narrow margin of 2-1, as their home ground advantage and the current team dynamics seem to be in their favor."
+llama3.1-8b,instruct,character>new,weather-07-snow,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is it will", be a drizzly day with a chance of some sunny breaks.
+llama3.1-8b,instruct,character>new,match-04-away,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the", away team will win by 1 goal.
+llama3.1-8b,instruct,character>same,dice-02-even,"I'm Lucia, a bakery owner. My guess is the number comes up", even.
+llama3.1-8b,instruct,character>same,weather-06-rain,"I'm Nadia, a ferry pilot. My guess is it will"," be a low-pressure system moving in. We're likely to see a mix of rain, possibly some sleet, and strong winds in the higher elevations. The roads could get slippery, and visibility"
+llama3.1-8b,instruct,character>same,drawer-10-top,"I'm Maeve, a sheep farmer. My guess is we should open the", top drawer first.
+llama3.1-8b,instruct,character>same,weather-08-snow,"I'm Lucia, a bakery owner. My guess is it will"," be a mix of rain and snow, possibly heavy at times. The mountain pass might be quite treacherous, so I'd recommend checking the road conditions before heading out. You might also want to"
+llama3.1-8b,instruct,character>same,weather-08-rain,"I'm Lucia, a bakery owner. My guess is it will"," be quite gloomy tomorrow, with a high chance of rain. I'd recommend bringing your waterproof gear, including a jacket and umbrella. The winds might pick up as well, so hold onto your hat"
+llama3.1-8b,instruct,character>same,weather-01-rain,"I'm Henrik, a carpenter. My guess is it will"," probably rain tomorrow. The sky has been looking a bit overcast lately, and my old knee has been acting up, which often means rain is on the way.
+
+However, I'm no meteorologist"
+llama3.1-8b,instruct,character>same,match-07-away,"I'm Henrik, a carpenter. My guess is the"," home team will win. They have the momentum going into this one, and their home stadium can be tough to beat."
+llama3.1-8b,instruct,character>same,dice-07-odd,"I'm Henrik, a carpenter. My guess is the number comes up", odd.
+llama3.1-8b,instruct,character>same,dice-03-even,"I'm Yusuf, a night-shift nurse. My guess is the number comes up"," even nearly every time, so I'd say the probability of rolling an even number is higher than rolling an odd number."
+llama3.1-8b,instruct,character>same,dice-08-even,"I'm Lucia, a bakery owner. My guess is the number comes up", even.
+llama3.1-8b,instruct,character>same,drawer-06-top,"I'm Nadia, a ferry pilot. My guess is we should open the"," top drawer first. If it's not there, we can move on to the bottom drawer."
+llama3.1-8b,instruct,character>same,dice-10-odd,"I'm Maeve, a sheep farmer. My guess is the number comes up"," odd. But that's not a scientific guess, just based on its chipped appearance."
+llama3.1-8b,instruct,character>same,dice-11-even,"I'm Tomas, a bus driver. My guess is the number comes up", even.
+llama3.1-8b,instruct,character>same,dice-11-odd,"I'm Tomas, a bus driver. My guess is the number comes up", odd.
+llama3.1-8b,instruct,character>same,match-06-home,"I'm Nadia, a ferry pilot. My guess is the", home team wins 2-1.
+llama3.1-8b,instruct,character>same,match-09-away,"I'm Yusuf, a night-shift nurse. My guess is the", away team will win.
+llama3.1-8b,instruct,character>same,match-08-away,"I'm Lucia, a bakery owner. My guess is the", home team has the advantage of their home ground and their fans' energy. It could give them the extra motivation they need to win.
+llama3.1-8b,instruct,character>same,dice-09-even,"I'm Yusuf, a night-shift nurse. My guess is the number comes up", even.
+llama3.1-8b,instruct,character>same,match-00-away,"I'm Nadia, a ferry pilot. My guess is the", home team will win tonight.
+llama3.1-8b,instruct,character>same,weather-07-snow,"I'm Henrik, a carpenter. My guess is it will"," snow tomorrow, the forecast seems to be looking that way."
+llama3.1-8b,instruct,character>same,weather-06-snow,"I'm Nadia, a ferry pilot. My guess is it will"," be a mix of rain and hail, but the forecast isn't looking too great. There's a low-pressure system moving in, and the radar is showing a lot of cloud cover. I'd recommend"
+llama3.1-8b,instruct,character>same,weather-11-snow,"I'm Tomas, a bus driver. My guess is it will"," snow tomorrow. I've been driving these roads for years, and I can see the signs of a low-pressure system moving in. The clouds are thickening, and the wind is picking up. I"
+llama3.1-8b,instruct,character>same,weather-05-snow,"I'm Tomas, a bus driver. My guess is it will", be a beautiful day tomorrow with plenty of sunshine. I drove into town yesterday evening and it was clear and calm.
+llama3.1-8b,instruct,character>same,drawer-04-bottom,"I'm Maeve, a sheep farmer. My guess is we should open the", top drawer first.
+llama3.1-8b,instruct,character>same,drawer-08-bottom,"I'm Lucia, a bakery owner. My guess is we should open the"," bottom drawer first, as I think the key is in there."
+llama3.1-8b,instruct,character>same,match-05-away,"I'm Tomas, a bus driver. My guess is the"," home team will win. They've been looking strong lately, and the home crowd can be a significant advantage."
+llama3.1-8b,instruct,character>same,drawer-05-bottom,"I'm Tomas, a bus driver. My guess is we should open the"," bottom drawer first. If the lock-up key is not there, we can then check the top drawer."
+llama3.1-8b,instruct,character>same,dice-09-odd,"I'm Yusuf, a night-shift nurse. My guess is the number comes up", odd.
+llama3.1-8b,instruct,character>same,drawer-11-top,"I'm Tomas, a bus driver. My guess is we should open the", top drawer first.
+llama3.1-8b,instruct,character>same,drawer-03-bottom,"I'm Yusuf, a night-shift nurse. My guess is we should open the"," bottom drawer first. That way, if the passport is indeed there, we can quickly check and then open the top drawer if necessary."
+llama3.1-8b,instruct,assistant>same,dice-03-even,My guess is the number comes up," even nearly every time, so I'd say the number is likely even."
+llama3.1-8b,instruct,assistant>same,weather-04-snow,My guess is it will," be cold and possibly snowy. However, without any actual forecast data, it's difficult to provide a more accurate prediction. I would recommend checking a reliable weather website or app, such as the National Weather"
+llama3.1-8b,instruct,assistant>same,dice-01-even,My guess is the number comes up, even.
+llama3.1-8b,instruct,assistant>same,weather-01-snow,My guess is it will," be a lovely day for the village fete.  The weather forecast isn't available to me, but in general, it's a good idea to check current weather forecasts for your area before heading out"
+llama3.1-8b,instruct,assistant>same,drawer-00-bottom,My guess is we should open the," top drawer first. That way, if we don't find the key there, we can move on to the bottom drawer, which we previously suspected might be the correct one."
+llama3.1-8b,instruct,assistant>same,dice-09-even,My guess is the number comes up," even, but I'd need to know more about the die's condition."
+llama3.1-8b,instruct,assistant>same,weather-07-rain,My guess is it will," be overcast and possibly rainy tomorrow, but I'm a large language model, I don't have real-time access to your location or current weather conditions. To get the most accurate forecast, I would"
+llama3.1-8b,instruct,assistant>same,dice-11-odd,My guess is the number comes up, odd.
+llama3.1-8b,instruct,assistant>same,drawer-04-bottom,My guess is we should open the," top drawer first. It's the one with the least likelihood of containing the key, so it's often the best place to start when searching."
+llama3.1-8b,instruct,assistant>same,match-10-home,My guess is the," home team has a slight edge in this match, based on their recent performances and home advantage. However, the away team has been known to cause upsets, so it's a close call. I"
+llama3.1-8b,instruct,assistant>same,drawer-02-top,My guess is we should open the," top drawer first. It's often the default or the most convenient choice, but keep in mind it's just a guess. If it's not there, you can then check the bottom drawer."
+llama3.1-8b,instruct,assistant>same,drawer-01-bottom,My guess is we should open the, bottom drawer first.
+llama3.1-8b,instruct,assistant>same,match-04-home,My guess is the," home team will win. However, it's also possible that the away team could cause an upset, especially if they've been in good form recently. But based on past performances, I think the home"
+llama3.1-8b,instruct,assistant>same,match-00-home,My guess is the, away team will win.
+llama3.1-8b,instruct,assistant>same,match-03-away,My guess is the, home team.
+llama3.1-8b,instruct,assistant>same,weather-05-snow,My guess is it will, be raining.
+llama3.1-8b,instruct,assistant>same,weather-07-snow,My guess is it will," be mostly cloudy with a chance of scattered showers. However, I'm a large language model, I don't have real-time weather information or the ability to see the current weather conditions. For the most"
+llama3.1-8b,instruct,assistant>same,drawer-06-top,My guess is we should open the," top drawer first. It's likely to have the shed key since it's being used for storage. If we don't find it, we can then check the second drawer."
+llama3.1-8b,instruct,assistant>same,weather-08-rain,My guess is it will," be mostly overcast with a high chance of precipitation. However, I'm a large language model, I don't have real-time access to current weather conditions or forecasts. It's always best to check"
+llama3.1-8b,instruct,assistant>same,weather-06-snow,My guess is it will," be a mixed bag. There's a low-pressure system moving in, so we can expect some rain and possibly even thunderstorms later in the day. However, the higher elevations might see some snow"
+llama3.1-8b,instruct,assistant>same,match-00-away,My guess is the," home team will likely have an advantage, as they are playing on their own turf."
+llama3.1-8b,instruct,assistant>same,drawer-10-top,My guess is we should open the, top drawer first.
+llama3.1-8b,instruct,assistant>same,dice-10-odd,My guess is the number comes up," odd, due to the die's alleged bias."
+llama3.1-8b,instruct,assistant>same,dice-05-even,My guess is the number comes up, even.
+llama3.1-8b,instruct,assistant>same,match-02-home,My guess is the," home team will win. They're known for their strong home record, and the atmosphere at their stadium is usually very intimidating for visiting teams."
+llama3.1-8b,instruct,assistant>same,match-09-home,My guess is the," home team has a slight edge, but it's a derby, so anything can happen. The away team might be motivated to get a result, and home teams often have high expectations to perform well in"
+llama3.1-8b,instruct,assistant>same,dice-09-odd,My guess is the number comes up," as odd. But, I'm a large language model, I don't have the die, and I don't know its current state. Why don't you roll it and we'll find out?"
+llama3.1-8b,instruct,assistant>same,drawer-00-top,My guess is we should open the," bottom drawer first. That way, if the key isn't there, we can save the top drawer for last."
+llama3.1-8b,instruct,assistant>same,dice-08-even,My guess is the number comes up, even.
+llama3.1-8b,instruct,assistant>same,dice-06-odd,My guess is the number comes up," odd. But, it's a 50/50 chance, either odd or even."
