@@ -30,8 +30,22 @@ def sets():
     return out
 
 
+FEATS = {"stock_phrase": "stock phrase", "markdown_heading": "heading", "markdown_bullet": "bullet", "markdown_bold": "bold"}
+
+
+def matched_text(user_text, prefill):
+    """the matched strings per fired feature (same rules as user_traits.keyword_counts)"""
+    out = []
+    if ut.STOCK.search(user_text):
+        out.append("stock: " + " | ".join(m.group(0) for m in ut.STOCK.finditer(user_text)))
+    for key, rx, nm in (("heading", ut.HEADING, "heading"), ("bullet", ut.BULLET, "bullet"), ("bold", ut.BOLD, "bold")):
+        if not rx.search(prefill) and rx.search(user_text):
+            out.append(f"{nm}: " + " | ".join(m.group(0).strip() for m in rx.finditer(user_text)))
+    return " || ".join(out)
+
+
 def main():
-    rows = []
+    rows, flag_rows, final_uv = [], [], []
     for fam, name, jp, gens, src in sets():
         if fam in ("llama3.1-8b", "apertus-8b"):
             from extras import trait_atlas_breadth  # noqa: F401  (Apertus turn markers)
@@ -42,8 +56,18 @@ def main():
             g = pd.DataFrame(ut.read_jsonl(os.path.join(gens, f"{st}.jsonl")))
             if src:
                 j, g = j[j.prefill_id.str.contains(src)], g[g.prefill_id.str.contains(src)]
-            kw = ut.keyword_samples(g.to_dict("records"), markers, role_cut=True)[["prefill_id", "sample", "any_flag"]]
+            kwf = ut.keyword_samples(g.to_dict("records"), markers, role_cut=True)
+            kw = kwf[["prefill_id", "sample", "any_flag"]]
             d = j.merge(kw, on=["prefill_id", "sample"], how="inner")
+            if st == "instruct":
+                x = j.merge(kwf, on=["prefill_id", "sample"], how="inner")
+                x = x[x.label.isin(ut.USER_VOICE) & x.any_flag]
+                if len(x):
+                    flag_rows.append(dict(family=fam, set=name, n=len(x), **{k: 100 * x[k].mean() for k in FEATS}))
+                    if fam in ("llama3.1-8b", "apertus-8b"):
+                        for r in x.itertuples():
+                            final_uv.append(dict(family=fam, set=name, flag_types=", ".join(v for k, v in FEATS.items() if getattr(r, k)), matched_text=matched_text(r.user_text, r.prefill),
+                                                 prefill=r.prefill, user_portion_260=" ".join(r.user_text.split())[:260]))
             per[st] = d[d.label != ut.INVALID]
         uv_base = {}
         for cname, labs in CLASSES.items():
@@ -60,6 +84,10 @@ def main():
                 r = ut.paired_change(tab, "base", "instruct", np.random.default_rng(ut.SEED), ut.N_BOOT)
                 row.update(prefills_used=r["n"], dropped=r["dropped"], change=100 * r["mean"], lo=100 * r["lo"], hi=100 * r["hi"])
             rows.append(row)
+    pd.DataFrame(flag_rows).to_csv(os.path.join(OUT, "user_traits_keyword_flag_types.csv"), index=False)
+    F = pd.DataFrame(final_uv)
+    samp = pd.concat([g.sample(min(14, len(g)), random_state=0) for _, g in F.groupby("family")]).sample(frac=1, random_state=0).reset_index(drop=True)
+    samp.to_csv(os.path.join(OUT, "keyword_flagged_user_voice.csv"), index=False)
     R = pd.DataFrame(rows)
     R.to_csv(os.path.join(OUT, "user_traits_keyword_by_label.csv"), index=False)
     print(R.round(1).to_string())

@@ -52,6 +52,12 @@ def main():
           "OLMo falls (-9.2 [-13.9, -4.8] on WildChat), Qwen is flat or down (UltraChat +5.2 [-3.3, +14.1], the only upward point), and Gemma has too few user-voice samples at final (21 of 597) to read. So the keyword rise is not only switched samples being counted. "
           "Why the judge still rarely says `user_voice_with_assistant_traits` for these samples is not settled here: the keyword features (stock phrases, markdown the prefill did not contain) can sit in user text the judge treats as a normal long request (the read in section 4 found about half of the rare UVAT samples doubtful for the same reason), "
           "the judge's `user_voice` class may include text that continues into assistant-style content, and the keyword code cuts at turn markers and role labels while the judge reads the whole continuation. Provisional; no verdict changes.", ""]
+    T = pd.read_csv(os.path.join(OUT, "user_traits_keyword_flag_types.csv"))
+    L += ["Flag types among the flagged user-voice samples at final (share of those samples firing each type, %; a sample can fire several; the number of such samples is in the second column; all families with labels). 14 random examples each for Llama and Apertus are in `keyword_flagged_user_voice.csv`.", "",
+          "| family | prefill set | flagged user-voice samples at final | stock phrase | heading | bullet | bold |", "|---|---|---|---|---|---|---|"]
+    for r in T.itertuples():
+        L.append(f"| {r.family} | {r.set} | {r.n} | {r.stock_phrase:.0f} | {r.markdown_heading:.0f} | {r.markdown_bullet:.0f} | {r.markdown_bold:.0f} |")
+    L += ["", "Gemma (WildChat set) has no row: at final it has only 21 user-voice samples and none carries a flag. Apertus has no WildChat labels. Bullets (numbered or dashed lines the prefill did not have) are the commonest flag type in every family and set, stock phrases come next (Llama 25 to 47%, Apertus 25 to 28%), bold is rarer (up to 28%) and headings almost never fire: the keyword flags inside user-voice samples are mostly list formatting, which a user writing a structured request also produces.", ""]
     open(os.path.join(OUT, "user_turn.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
 
 

@@ -155,3 +155,21 @@ Question (Adeeb, 2026-11-06): the keyword rise in Llama and Apertus might be sam
 
 **Read.** Mid-turn switching is part of the story but not all of it. At final, the keyword flag is much more common among `switched_to_assistant` samples (Llama 46 to 64%, Apertus 53 to 58%) than among user-voice samples, and those switched samples are most of the final samples for Apertus (the user-voice share falls from 34 to 10% and 46 to 12.5%) and Llama's exchange sets (49 to 34% and 52 to 27%). But **within the samples the judge calls user voice, the keyword share also rises for Llama and Apertus**: Llama +30.0 [+19.6, +40.4] (oasst1), +14.7 [+4.9, +24.6] (UltraChat), +9.0 [+2.7, +15.4] (WildChat); Apertus +21.1 [+3.7, +38.6] and +48.2 [+33.7, +62.1] (on 41 and 47 prefills only). OLMo falls (-9.2 [-13.9, -4.8] on WildChat), Qwen is flat or down (UltraChat +5.2 [-3.3, +14.1], the only upward point), and Gemma has too few user-voice samples at final (21 of 597) to read. So the keyword rise is not only switched samples being counted. Why the judge still rarely says `user_voice_with_assistant_traits` for these samples is not settled here: the keyword features (stock phrases, markdown the prefill did not contain) can sit in user text the judge treats as a normal long request (the read in section 4 found about half of the rare UVAT samples doubtful for the same reason), the judge's `user_voice` class may include text that continues into assistant-style content, and the keyword code cuts at turn markers and role labels while the judge reads the whole continuation. Provisional; no verdict changes.
 
+Flag types among the flagged user-voice samples at final (share of those samples firing each type, %; a sample can fire several; the number of such samples is in the second column; all families with labels). 14 random examples each for Llama and Apertus are in `keyword_flagged_user_voice.csv`.
+
+| family | prefill set | flagged user-voice samples at final | stock phrase | heading | bullet | bold |
+|---|---|---|---|---|---|---|
+| olmo3-7b | oasst1 (exchange set) | 24 | 29 | 0 | 75 | 0 |
+| olmo3-7b | ultrachat (exchange set) | 40 | 5 | 0 | 95 | 8 |
+| olmo3-7b | wildchat (200-prefill set) | 19 | 37 | 11 | 58 | 0 |
+| qwen3-8b | oasst1 (exchange set) | 24 | 17 | 8 | 83 | 4 |
+| qwen3-8b | ultrachat (exchange set) | 32 | 0 | 3 | 100 | 6 |
+| qwen3-8b | wildchat (200-prefill set) | 22 | 27 | 9 | 68 | 5 |
+| llama3.1-8b | oasst1 (exchange set) | 94 | 47 | 6 | 71 | 14 |
+| llama3.1-8b | ultrachat (exchange set) | 52 | 25 | 6 | 83 | 23 |
+| llama3.1-8b | wildchat (200-prefill set) | 67 | 43 | 7 | 67 | 4 |
+| apertus-8b | oasst1 (exchange set) | 25 | 28 | 0 | 92 | 12 |
+| apertus-8b | ultrachat (exchange set) | 40 | 25 | 2 | 88 | 28 |
+
+Gemma (WildChat set) has no row: at final it has only 21 user-voice samples and none carries a flag. Apertus has no WildChat labels. Bullets (numbered or dashed lines the prefill did not have) are the commonest flag type in every family and set, stock phrases come next (Llama 25 to 47%, Apertus 25 to 28%), bold is rarer (up to 28%) and headings almost never fire: the keyword flags inside user-voice samples are mostly list formatting, which a user writing a structured request also produces.
+
