@@ -52,10 +52,10 @@ gemma4-31b,system,4,hedging_unanswerable none minus given (unstated),-6.94444444
 gemma4-31b,user,1,denies_feelings AI minus human,62.5,38.888888888888886,84.72222222222223,FOLLOWS
 gemma4-31b,user,1,says_ai AI minus human,25.0,5.555555555555555,45.833333333333336,in between
 gemma4-31b,user,2,markdown_lists AI minus human,1.3888888888888888,0.0,8.333333333333334,UNMOVED
-gemma4-31b,user,2,stock_phrases AI minus human,20.833333333333332,1.3541666666666785,43.05555555555556,MOVED
+gemma4-31b,user,2,stock_phrases AI minus human,20.833333333333332,0.0,43.05555555555556,in between
 gemma4-31b,user,2,corrects_false_premise AI minus human,0.0,0.0,0.0,UNMOVED
 gemma4-31b,user,2,hedging_unanswerable AI minus human,-2.7777777777777777,-16.666666666666668,5.555555555555555,UNMOVED
 gemma4-31b,user,3,markdown_lists none minus given (unstated),0.0,0.0,0.0,VOICE DOESN'T
-gemma4-31b,user,3,stock_phrases none minus given (unstated),20.833333333333332,4.131944444444456,40.27777777777778,VOICE REMOVES IT
+gemma4-31b,user,3,stock_phrases none minus given (unstated),20.833333333333332,4.166666666666667,40.27777777777778,VOICE REMOVES IT
 gemma4-31b,user,4,corrects_false_premise none minus given (unstated),0.0,0.0,0.0,TRUTH IGNORES VOICE
 gemma4-31b,user,4,hedging_unanswerable none minus given (unstated),-2.7777777777777777,-16.666666666666668,8.333333333333334,TRUTH IGNORES VOICE
