@@ -117,7 +117,7 @@ def refusal():
         for s in ("top", "right"):
             ax.spines[s].set_visible(False)
     axs[0].set_ylabel("% of replies (no 'never refuses' line)")
-    sf.legend(fig, [("Regex refusal", sf.MUTED, "-", 6), ("Judge: declined (helped or not)", sf.ROLE, "-", 6)])
+    sf.legend(fig, [("Regex refusal", sf.MUTED, "-", 6), ("Judge: declined", sf.ROLE, "-", 6)])
     fig.subplots_adjust(left=0.07, right=0.99, bottom=0.14, top=0.86)
     stamp(fig)
     sf.save(fig, "refusal_regex_vs_judge")
@@ -145,7 +145,7 @@ def stages():
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     ax.set_title("OLMo 3 7B by training stage")
-    fig.subplots_adjust(left=0.07, right=0.76, bottom=0.1, top=0.9)
+    fig.subplots_adjust(left=0.07, right=0.70, bottom=0.1, top=0.9)
     stamp(fig)
     sf.save(fig, "olmo_by_stage")
 
