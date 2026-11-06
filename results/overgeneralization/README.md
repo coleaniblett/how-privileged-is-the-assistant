@@ -92,6 +92,6 @@ The persona-axis activation fits (`*.npz`, git-ignored) that later pilots read a
 | `R5/` | Does a voice remove layout on fresh questions? | `extras/voice_fresh.py` |
 | `R6/` | Spec Q on Llama and Apertus (reports in `../role_says/`) | `extras/role_says_breadth.py` |
 | `R7/` | Knows versus says | `extras/knows_says.py` |
-| `R8/` | L2 at 256 tokens (did the reply help, with room to finish) | `extras/refusal_256.py` |
+| `R8/` | L2 at 256 tokens (did the reply help, with room to finish); running on 2026-11-06 | `extras/refusal_256.py` |
 | `T1/` | Same training, different label (fine-tune OLMo base with label assistant vs Morgan) | `extras/label_swap.py` |
 | `T2/` | Role says yes or no on each trait | `extras/role_obey.py` |

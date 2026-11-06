@@ -398,7 +398,7 @@ def sheet_sources(root="."):
     ex = os.path.join(root, "results", "exploration", "shiller_user_turns")
     out = [("gemma4-31b-it", "gemma4-31b", "instruct", os.path.join(ex, "gemma4-31b-it.jsonl"), "exploration"),
            ("qwen3-8b", "qwen3-8b", "instruct", os.path.join(ex, "qwen3-8b.jsonl"), "exploration")]
-    out += [(f"olmo3-7b-{s}", "olmo3-7b", s, os.path.join(root, "results", "generations", f"{s}.jsonl"), "core")
+    out += [(f"olmo3-7b-{s}", "olmo3-7b", s, os.path.join(root, "results", "precapstone", "generations", f"{s}.jsonl"), "core")
             for s in ("base", "sft", "dpo", "instruct")]
     return out
 

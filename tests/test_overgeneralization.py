@@ -259,7 +259,7 @@ def test_introspection_smoke(tmp_path, monkeypatch):
     run("generate", "--phase", "step1", "--trials", "1", "--controls", "2")
     run("judge", "--phase", "step1", "--judge-model", MODEL, "--judge-tokens", "8", "--batch-size", "8")
     run("analyze", "--phase", "step1", "--n-boot", "100", "--no-gate-exit", ok=(0, 3))
-    md = (ROOT / "results" / "smoke_introspection" / "introspection_personas.md").read_text()
+    md = (ROOT / "results" / "overgeneralization" / "early_probes" / "smoke_introspection" / "introspection_personas.md").read_text()
     assert md.startswith("# Introspection across personas") and "Step 1 gate" in md
     import shutil
-    shutil.rmtree(ROOT / "results" / "smoke_introspection")
+    shutil.rmtree(ROOT / "results" / "overgeneralization" / "early_probes" / "smoke_introspection")

@@ -1,7 +1,7 @@
 # scripts/overgeneralization/
 
 The launchers of overgeneralization's pilots, one folder per pilot, matching `results/overgeneralization/<pilot>/` (index there).
-Moved here from the flat `scripts/exploratory/` on 2026-11-06 (`docs/moved_paths_2026-11-06.md`).
+Moved here from one flat folder on 2026-11-06 (`docs/moved_paths_2026-11-06.md`).
 
 They are records of how each run was launched, and most are machine-specific: absolute checkout paths (`/root/hpa-main-wt`,
 `/root/hpa-atlas2`), `/opt/arena-env/bin/python`, `ssh arena9-vinyl`/`arena9-marble`, GPU locks and pushes to `main`. Read a launcher
