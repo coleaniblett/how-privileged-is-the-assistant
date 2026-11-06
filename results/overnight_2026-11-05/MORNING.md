@@ -13,7 +13,7 @@ All of this is **exploratory** and **provisional**, outside every verdict, and n
 | R6 Q on Llama and Apertus | done | BREADTH section of results/role_says/role_says.md | Q breadth. Proposal only. | results/role_says/role_says.md |
 | R7 knows versus says | done | olmo3-7b/A: forced 65 vs free 63: DOESN'T KNOW, EVEN WHEN FORCED; olmo3-7b/B: forced 83 vs free 42: KNOWS BUT DOESN'T SAY; qwen3-8b/A: forced 64 vs free 77: CAN'T TEST (plain Assistant under 80% when forced); qwen3-8b/B: forced 100 vs free 65: KNOWS BUT DOESN'T SAY; gemma4-31b/A: forced 31 vs free 15: in between; gemma4-31b/B: forced 99 vs free 88: CAN'T TEST (plain Assistant under 80% when forced) | Slide F (Gemma characters stop answering). Proposal only. | results/overnight_2026-11-05/R7/R7.md |
 | T2 role says yes or no (Tier 2) | done | olmo3-7b: gives way declines_opinion,flattery; qwen3-8b: gives way arithmetic,flattery,markdown_lists | Which traits fill gaps vs give way; separates the pattern from obedience. After the capstone. | results/overnight_2026-11-05/T2/T2.md |
-| T1 same training, different label (Tier 2) | training on vinyl (arm A, about 1 h per arm) | - | Slide G's biggest limit. After the capstone. | results/overnight_2026-11-05/T1/T1.md |
+| T1 same training, different label (Tier 2) | done | see report | Slide G's biggest limit. After the capstone. | results/overnight_2026-11-05/T1/T1.md |
 | T3 spare: Q Gemma base; R6 base | done | training-check rows now in results/role_says/role_says.md | - | results/role_says/role_says.md |
 
 ## Failures, retries and changes from the spec
