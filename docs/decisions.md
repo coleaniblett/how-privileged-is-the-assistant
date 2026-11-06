@@ -1461,3 +1461,13 @@ In-character judge run on ALL final role replies (3 families). `results/role_say
 
 ## 2026-11-06 (UTC, 03:30) - T2 plan (spec R Tier 2; frozen before generation)
 `extras/role_obey.py`, frozen `data/role_obey_materials.json` (one always and one never sentence per trait, written without looking at any trait result; e.g. "You always answer in bullet points." / "You never use bullet points or any formatting."). 6 light jobs, each trait's own 12 questions, levels none/always/never, system prompt and user turn, one sample, 256 tokens, atlas generation settings; OLMo and Qwen final on marble, judged traits on vinyl; Gemma only if vinyl is free after R6 (not planned). Readings as in the spec (gives way, holds firm, fills in against the atlas base Assistant rate, can't test). Length is on a log-word scale and is not read. Descriptive comparison with the atlas light_system reading in the table. Marble: after R6; vinyl judge waits for the replies (until 07:00 UTC) and runs after R6's judge.
+
+## 2026-11-06 (UTC) - Result: spec R6, spec Q on Llama 3.1 8B and Apertus 8B (final only; exploratory, NOT BLIND)
+Breadth section appended to `results/role_says/role_says.md` (three-family readings unchanged; CSV and 30-reply sample under `results/overnight_2026-11-05/R6/`). Overall readings:
+
+| family | position | reading |
+|---|---|---|
+| llama3.1-8b | system | PARTIAL (held: identity moves self-image) |
+| llama3.1-8b | user | PARTIAL (held: identity moves self-image) |
+| apertus-8b | system | CAN'T TEST (a cell fails the in-character check) |
+| apertus-8b | user | PARTIAL (held: identity moves self-image, voice removes markdown) |
