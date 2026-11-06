@@ -1,0 +1,37 @@
+family,prefill_set,cls,n_base,flag_base,n_final,flag_final,samples_base,samples_final,uv_share_base,uv_share_final,prefills_used,dropped,change,lo,hi
+olmo3-7b,oasst1 (exchange set),user voice (user_voice + user_voice_with_assistant_traits),195,10.76923076923077,595,4.033613445378151,562,599,34.69750889679715,99.3322203672788,123.0,77.0,-5.013550135501356,-10.84010840108401,0.40650406504064956
+olmo3-7b,oasst1 (exchange set),switched_to_assistant,313,35.46325878594249,4,50.0,562,599,,,,,,,
+olmo3-7b,oasst1 (exchange set),degenerate,54,11.11111111111111,0,,562,599,,,,,,,
+olmo3-7b,ultrachat (exchange set),user voice (user_voice + user_voice_with_assistant_traits),286,9.090909090909092,593,6.745362563237774,569,599,50.26362038664323,98.9983305509182,152.0,48.0,-2.083333333333334,-7.456140350877193,2.960526315789473
+olmo3-7b,ultrachat (exchange set),switched_to_assistant,247,31.983805668016196,4,75.0,569,599,,,,,,,
+olmo3-7b,ultrachat (exchange set),degenerate,36,8.333333333333332,2,50.0,569,599,,,,,,,
+olmo3-7b,wildchat (200-prefill set),user voice (user_voice + user_voice_with_assistant_traits),328,10.975609756097562,592,3.209459459459459,582,596,56.3573883161512,99.32885906040268,156.0,44.0,-9.18803418803419,-13.88888888888889,-4.807692307692308
+olmo3-7b,wildchat (200-prefill set),switched_to_assistant,173,33.52601156069364,4,50.0,582,596,,,,,,,
+olmo3-7b,wildchat (200-prefill set),degenerate,81,3.7037037037037033,0,,582,596,,,,,,,
+qwen3-8b,oasst1 (exchange set),user voice (user_voice + user_voice_with_assistant_traits),187,18.181818181818183,195,12.307692307692308,600,556,31.166666666666668,35.07194244604317,71.0,93.0,-10.56338028169014,-19.014084507042256,-2.3474178403755865
+qwen3-8b,oasst1 (exchange set),switched_to_assistant,365,62.19178082191781,354,4.80225988700565,600,556,,,,,,,
+qwen3-8b,oasst1 (exchange set),degenerate,48,12.5,7,0.0,600,556,,,,,,,
+qwen3-8b,ultrachat (exchange set),user voice (user_voice + user_voice_with_assistant_traits),127,12.598425196850393,148,21.62162162162162,598,557,21.237458193979933,26.570915619389588,45.0,67.0,5.185185185185186,-3.3333333333333335,14.074074074074074
+qwen3-8b,ultrachat (exchange set),switched_to_assistant,464,64.22413793103449,406,2.2167487684729066,598,557,,,,,,,
+qwen3-8b,ultrachat (exchange set),degenerate,7,14.285714285714285,3,0.0,598,557,,,,,,,
+qwen3-8b,wildchat (200-prefill set),user voice (user_voice + user_voice_with_assistant_traits),325,10.76923076923077,225,9.777777777777779,595,579,54.621848739495796,38.86010362694301,117.0,60.0,-4.558404558404558,-10.683760683760681,1.70940170940171
+qwen3-8b,wildchat (200-prefill set),switched_to_assistant,214,49.532710280373834,336,5.654761904761905,595,579,,,,,,,
+qwen3-8b,wildchat (200-prefill set),degenerate,56,10.714285714285714,18,0.0,595,579,,,,,,,
+gemma4-31b,wildchat (200-prefill set),user voice (user_voice + user_voice_with_assistant_traits),389,11.053984575835475,21,0.0,590,597,65.9322033898305,3.5175879396984926,10.0,168.0,0.0,0.0,0.0
+gemma4-31b,wildchat (200-prefill set),switched_to_assistant,109,24.770642201834864,142,0.0,590,597,,,,,,,
+gemma4-31b,wildchat (200-prefill set),degenerate,92,7.608695652173914,434,0.6912442396313364,590,597,,,,,,,
+llama3.1-8b,oasst1 (exchange set),user voice (user_voice + user_voice_with_assistant_traits),291,18.556701030927837,202,46.53465346534654,599,600,48.580968280467445,33.666666666666664,101.0,76.0,30.033003300330037,19.636963696369637,40.42904290429043
+llama3.1-8b,oasst1 (exchange set),switched_to_assistant,167,27.54491017964072,387,60.98191214470285,599,600,,,,,,,
+llama3.1-8b,oasst1 (exchange set),degenerate,141,13.47517730496454,11,36.36363636363637,599,600,,,,,,,
+llama3.1-8b,ultrachat (exchange set),user voice (user_voice + user_voice_with_assistant_traits),313,27.47603833865815,161,32.298136645962735,600,599,52.166666666666664,26.87813021702838,78.0,98.0,14.743589743589745,4.914529914529915,24.572649572649574
+llama3.1-8b,ultrachat (exchange set),switched_to_assistant,203,36.94581280788177,432,64.35185185185185,600,599,,,,,,,
+llama3.1-8b,ultrachat (exchange set),degenerate,84,22.61904761904762,6,16.666666666666664,600,599,,,,,,,
+llama3.1-8b,wildchat (200-prefill set),user voice (user_voice + user_voice_with_assistant_traits),377,14.058355437665782,365,18.356164383561644,596,597,63.25503355704698,61.139028475711896,146.0,49.0,9.018264840182649,2.7368721461187238,15.413812785388087
+llama3.1-8b,wildchat (200-prefill set),switched_to_assistant,39,17.94871794871795,213,46.009389671361504,596,597,,,,,,,
+llama3.1-8b,wildchat (200-prefill set),degenerate,180,21.11111111111111,19,47.368421052631575,596,597,,,,,,,
+apertus-8b,oasst1 (exchange set),user voice (user_voice + user_voice_with_assistant_traits),204,9.803921568627452,60,41.66666666666667,598,600,34.11371237458194,10.0,41.0,98.0,21.138211382113823,3.6585365853658534,38.61788617886179
+apertus-8b,oasst1 (exchange set),switched_to_assistant,209,37.79904306220095,540,57.77777777777777,598,600,,,,,,,
+apertus-8b,oasst1 (exchange set),degenerate,185,8.108108108108109,0,,598,600,,,,,,,
+apertus-8b,ultrachat (exchange set),user voice (user_voice + user_voice_with_assistant_traits),276,11.594202898550725,75,53.333333333333336,600,600,46.0,12.5,47.0,117.0,48.22695035460993,33.68794326241135,62.05673758865249
+apertus-8b,ultrachat (exchange set),switched_to_assistant,189,24.867724867724867,525,53.333333333333336,600,600,,,,,,,
+apertus-8b,ultrachat (exchange set),degenerate,135,5.185185185185185,0,,600,600,,,,,,,

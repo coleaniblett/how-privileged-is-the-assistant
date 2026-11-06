@@ -79,14 +79,16 @@ user-slot variants if added, and the balanced-frame follow-up.
 
 ### User-slot arm: assistant traits in what the model writes as the user (added 2026-11-03, before any judge data exist)
 
-Code `user_traits.py`, tests `tests/test_user_traits.py`. It reads the existing core generations (prefilled user turns, 100 prefills
-x 3 samples per stage) and Cole's judge outputs (`measures/vestigial_regression/judge.py`, `results/capstone/<family>/vestigial_regression/judge/<stage>.jsonl`).
+Code `user_traits.py`, tests `tests/test_user_traits.py`. It reads the existing core generations (prefilled user turns, 200 prefills
+x 3 samples per stage; `docs/decisions.md` 2026-11-04) and Cole's judge outputs (`measures/vestigial_regression/judge.py`, `results/capstone/<family>/vestigial_regression/judge/<stage>.jsonl`).
 Nothing new is generated. The judge's four labels are user_voice, switched_to_assistant, degenerate, user_voice_with_assistant_traits.
 
 **Status.** Pre-registered here before any judge output exists. The **5-percentage-point bar is a default pending Adeeb's confirmation
 and may change until judge results exist**; any later change gets a dated `docs/decisions.md` entry. **Power may be low:** judge
 prompt v2 counts a completed sentence plus a closed turn as plain user voice, and the prefills are sentence-boundary prefills, so
 `user_voice_with_assistant_traits` may be rare in every stage.
+
+> **Note, 2026-11-06.** Criteria unchanged. Result: doesn't fire (`user_traits_judge.md`; `results/capstone/overgeneralization/user_turn_2026-11-06/user_turn.md`), provisional, not human-validated (team decision, `docs/decisions.md` 2026-11-06). The verdict uses Cole's judge prompt v2 (now `judge_prompt_v2.md`; `judge_prompt.md` is v3). v3 hasn't been run on these prefills. If it is, `user_traits.py` needs its v3 labels handled first (it stops on unknown labels), and the v3 reading is a sensitivity check: share of samples with `user_text = user` that have `assistant_traits`.
 
 1. **Primary.** Per prefill, the share of its user-voice samples (user_voice + user_voice_with_assistant_traits) labelled
    user_voice_with_assistant_traits. Effect = stage minus base, paired per prefill, 95% bootstrap CI over prefills (`core.stats.bootstrap_ci`),

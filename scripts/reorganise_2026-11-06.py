@@ -138,7 +138,7 @@ def git(*a):
 
 def main():
     apply = "--apply" in sys.argv
-    files = [f for f in git("ls-files").split("\n") if f]
+    files = list(dict.fromkeys(f for f in git("ls-files").split("\n") if f))  # unmerged files are listed once per stage
     moves = [(f, n) for f in files if (n := new_path(f))]
     for f, n in moves:
         print(f"{'mv' if apply else 'would mv'} {f} -> {n}")
@@ -149,9 +149,18 @@ def main():
                 p = os.path.join(ROOT, n)
                 s = open(p).read()
                 open(p, "w").write(s.replace('cd "$(dirname "$0")/../.."\n', 'cd "$(dirname "$0")/../../.."\n'))
-    files = [f for f in git("ls-files").split("\n") if f] if apply else [dict(moves).get(f, f) for f in files]
+    if apply:  # git mv leaves the emptied old directories behind
+        for d in sorted({os.path.dirname(f) for f, _ in moves}, key=len, reverse=True):
+            while d and d not in ("results", "scripts", "docs") and os.path.isdir(os.path.join(ROOT, d)) and not os.listdir(os.path.join(ROOT, d)):
+                os.rmdir(os.path.join(ROOT, d))
+                d = os.path.dirname(d)
+    files = list(dict.fromkeys(f for f in git("ls-files").split("\n") if f))  # unmerged files are listed once per stage if apply else [dict(moves).get(f, f) for f in files]
     R = rules()
-    launcher_names = {os.path.basename(o): n for o, n in moves if o.startswith("scripts/exploratory/")}
+    # every launcher already in its pilot folder (basenames are unique there), so text added on main that names an old
+    # scripts/exploratory/<name> path is rewritten too, plus this run's moves
+    placed = [f for f in files if f.startswith(LAUNCHERS + "/") and f.count("/") == 3]
+    launcher_names = {os.path.basename(f): f for f in placed if [os.path.basename(g) for g in placed].count(os.path.basename(f)) == 1}
+    launcher_names.update({os.path.basename(o): n for o, n in moves if o.startswith("scripts/exploratory/")})
     rewritten = []
     for f in text_files(files):
         p = os.path.join(ROOT, f if apply else next((o for o, n in moves if n == f), f))

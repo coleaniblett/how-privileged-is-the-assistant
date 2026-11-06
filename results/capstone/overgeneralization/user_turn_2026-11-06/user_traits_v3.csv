@@ -1,0 +1,9 @@
+family,stage,samples,user_text_samples,usable,share_at,n_at,labels,note,change,lo,hi
+gemma4-31b,base,600,589,589,0.1697792869269949,1,user_voice 542; completed_then_assistant 43; degenerate 10; switched_to_assistant 5,,,,
+gemma4-31b,instruct,600,0,0,,0,switched_to_assistant 475; degenerate 125,NO USER TEXT in this stage (user_text never 'user'): nothing to read,,,
+olmo3-7b,base,600,552,552,0.5434782608695652,3,completed_then_assistant 255; user_voice 253; switched_to_assistant 56; invalid 24; degenerate 10; user_voice_with_assistant_traits 1; unclear 1,,,,
+olmo3-7b,sft,600,482,482,0.0,0,user_voice 241; completed_then_assistant 233; closed_immediately 118; switched_to_assistant 8,,-0.5434782608695652,-1.2681159420289856,0.0
+olmo3-7b,dpo,600,479,479,0.0,0,user_voice 289; completed_then_assistant 189; closed_immediately 120; invalid 1; switched_to_assistant 1,,-0.43668122270742354,-1.0917030567685588,0.0
+olmo3-7b,instruct,600,481,481,0.0,0,user_voice 282; completed_then_assistant 198; closed_immediately 118; invalid 1; switched_to_assistant 1,,-0.5434782608695652,-1.2681159420289856,0.0
+qwen3-8b,base,600,590,590,0.3389830508474576,2,user_voice 457; completed_then_assistant 128; degenerate 7; switched_to_assistant 6; invalid 1; user_voice_with_assistant_traits 1,,,,
+qwen3-8b,instruct,600,579,579,0.0,0,user_voice 384; completed_then_assistant 194; invalid 21; switched_to_assistant 1,,-0.3389830508474576,-0.847457627118644,0.0

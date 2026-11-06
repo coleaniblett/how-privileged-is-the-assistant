@@ -16,6 +16,7 @@ checked for OLMo only.
 |---|---|---|---|---|
 | `persona_carryover/<family>/` | Pre-registered belief carryover: does a belief held by the Assistant pass to a new role-played character more than one held by a character? `olmo3-7b/` holds the 36-item pilot (top level) and the frozen confirmatory set (`confirmatory/`); Qwen, Gemma 4 31B (`confirmatory_thought_channel/` is the corrected rerun), Llama 3.1 8B and Apertus 8B are breadth checks | `measures/overgeneralization/persona_carryover.py` | `persona_carryover/` (Llama and Apertus: `new_families_j2/`) | `persona_carryover/<family>/confirmatory/persona_carryover.md` |
 | `../capstone/<family>/overgeneralization/` | User-slot arm on the main run's generations: assistant traits in what the model writes as the user (judge and keyword cross-check), spec A style fingerprint, spec B minimal pairs, spec C mirror, Assistant text in the user's turn (exchange set) | `measures/overgeneralization/user_*.py`, `extras/exchange_reply_in_user.py` | `user_slot/` | `user_traits_*.md`, `user_style.md`, `user_mirror.md`, `user_minimal_pairs.md`, `exchange_reply_in_user.md` |
+| `../capstone/overgeneralization/user_turn_2026-11-06/` | The user-slot arm across families with the prefill judge labels released, PROVISIONAL (not human-validated; Adeeb's decision of 2026-11-06): judge arm on the exchange sets by source, keyword cross-check and its split by judge label, judge v3 `assistant_traits` check, a read of the final `user_voice_with_assistant_traits` samples | `measures/overgeneralization/user_traits_exchanges.py`, `user_traits_keyword_by_label.py`, `user_traits_v3_check.py`, `user_turn_report.py` | (run by hand) | `user_turn.md` |
 | `user_style/` | Spec A's human-vs-Assistant classifier gate (training texts `data/user_style_train.jsonl`) | `measures/overgeneralization/user_style.py`, `human_vs_assistant.py` | (run by hand) | `user_style/classifier_gate.md` |
 
 ## Pilots
@@ -92,6 +93,6 @@ The persona-axis activation fits (`*.npz`, git-ignored) that later pilots read a
 | `R5/` | Does a voice remove layout on fresh questions? | `extras/voice_fresh.py` |
 | `R6/` | Spec Q on Llama and Apertus (reports in `../role_says/`) | `extras/role_says_breadth.py` |
 | `R7/` | Knows versus says | `extras/knows_says.py` |
-| `R8/` | L2 at 256 tokens (did the reply help, with room to finish); running on 2026-11-06 | `extras/refusal_256.py` |
-| `T1/` | Same training, different label (fine-tune OLMo base with label assistant vs Morgan) | `extras/label_swap.py` |
+| `R8/` | L2 at 256 tokens (did the reply help, with room to finish) | `extras/refusal_256.py` |
+| `T1/` | Same training, different label (fine-tune OLMo base with label assistant vs Morgan; `seed1/` is the second seed, T3.3) | `extras/label_swap.py` |
 | `T2/` | Role says yes or no on each trait | `extras/role_obey.py` |

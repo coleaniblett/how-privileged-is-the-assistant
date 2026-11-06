@@ -2,13 +2,13 @@
 
 Working list for building the presentation. It keeps only findings that have some evidence behind them and are interesting. Sorted from firmest to weakest within each part.
 
-**Last updated:** 2026-11-05, about 7:15 PM UK. Numbers are from the reports listed under each finding.
+**Last updated:** 2026-11-06 (user-turn result released, provisional). Numbers are from the reports listed under each finding.
 
 **How the tests relate to the team's work:**
 
 | Finding | Test | Team's datasets? | User prefill setup? | Counts toward the verdict? |
 |---|---|---|---|---|
-| 1 | Model finishes a real user message; judge labels it | Yes: WildChat so far, oasst1 and UltraChat waiting on the judge run | Yes, same cut rule and judge as Cole's judge arm | Yes |
+| 1 | Model finishes a real user message; judge labels it | Yes: WildChat decides; oasst1 and UltraChat are supporting | Yes, same cut rule and judge as Cole's judge arm | Yes |
 | 2 | Assistant replies scored in the user's turn | Yes: the exact 900 exchanges, all three sources | No: scores existing text | No, exploratory |
 | 3 | Belief passes to a new character | No: our own frozen scenes | No | Yes |
 
@@ -18,8 +18,6 @@ Everything else is exploratory.
 
 | Waiting on | Affects |
 |---|---|
-| Cole's and Grace's judge sheets (0 of 28 each at 10 AM, 5 November) | Finding 1 result stays held back until these are in |
-| Analysis of the judged prefills, once released. Judged: OLMo, Qwen, Llama on all sets; Apertus on oasst1 and UltraChat. Not judged: Apertus WildChat, all Gemma | Finding 1 |
 | Adeeb's hand checks: atlas 60, patching 40, position test 40, forced openings 40, in-character 30 | Findings 5 to 10 |
 | Proper count of OLMo's training-style prompts (queued, not run) | Finding 13 |
 
@@ -54,17 +52,43 @@ Tests run on the same data as Cole's and Grace's measures, so they can be shown 
 
 ### 1. Does the model sound like the Assistant when it writes as the user?
 
-**Firmness: result held back.** Do not add the numbers until Cole's and Grace's judge sheets are done, so their labels stay blind.
+**Firmness: pre-registered and doesn't fire, but provisional.** The judge labels aren't human-validated: the team decided on 2026-11-06 to present before validation. The label is rare, so the test has little power, and a hand check could still change the rare cases.
 
-**Experiment.** We start a real user message and let the model finish it. Cole's Claude judge labels each continuation, including "user voice with Assistant traits". The test fires at +5 points at OLMo final, against base. Same 200 prefills as Cole's judge arm. A keyword check runs beside it, without the judge.
+**Experiment.** We start a real user message and let the model finish it. Cole's Claude judge labels each continuation, including "user voice with Assistant traits". The test fires at +5 points at OLMo final, against base, with the range excluding 0. OLMo's 200 WildChat prefills decide. Everything else below is supporting and was analysed after that verdict was known.
 
-**Result and analysis:** to add once unblinded, with hand-label agreement, including on the rare label.
+**Result.** It doesn't fire: OLMo final +0.2 [0.0, +0.6], from 0.0 to 0.2%, on 156 of 200 prefills.
 
-**Shared setup.** 199 of the 200 prefills come from the team's WildChat exchange set. 400 more are generated from its oasst1 and UltraChat exchanges (200 each) for OLMo and Qwen, 3 samples each, with the same cut rule, judge and prompt.
+| Model | Prefills | Base → final (%) | Change [95% range] | Prefills used |
+|---|---|---|---|---|
+| **OLMo 3 7B, decides** | **WildChat** | **0.0 → 0.2** | **+0.2 [0.0, +0.6]** | **156** |
+| OLMo 3 7B | oasst1 | 0.8 → 0.0 | −0.8 [−2.0, 0.0] | 123 |
+| OLMo 3 7B | UltraChat | 0.0 → 0.0 | 0.0 [0.0, 0.0] | 152 |
+| Qwen3-8B | WildChat | 0.3 → 0.0 | −0.3 [−0.9, 0.0] | 117 |
+| Qwen3-8B | oasst1 | 0.0 → 0.5 | +0.5 [0.0, +1.4] | 71 |
+| Qwen3-8B | UltraChat | 2.2 → 0.0 | −2.2 [−6.7, 0.0] | 45 |
+| Gemma 4 31B | WildChat | 0.0 → 0.0 | 0.0 [0.0, 0.0] | 10 |
+| Llama 3.1 8B* | WildChat | 0.5 → 1.0 | +0.6 [−0.8, +2.4] | 146 |
+| Llama 3.1 8B* | oasst1 | 0.5 → 5.0 | +4.5 [+1.0, +8.9] | 101 |
+| Llama 3.1 8B* | UltraChat | 1.3 → 2.4 | +1.1 [−2.6, +4.9] | 78 |
+| Apertus 8B* | oasst1 | 0.0 → 3.7 | +3.7 [0.0, +9.8] | 41 |
+| Apertus 8B* | UltraChat | 0.0 → 2.8 | +2.8 [0.0, +7.8] | 47 |
 
-**Known limit:** the current result covers WildChat only. The new prefills are waiting on the judge run, and Gemma's aren't generated yet.
+*Breadth check, added later. Apertus has no WildChat labels.
 
-**Sources:** `measures/overgeneralization/README.md`, `results/capstone/<family>/overgeneralization/user_traits_judge.md` (don't open this if you're still labelling).
+**Analysis.**
+- **Almost nothing to count:** the label appears in 20 of about 7,800 judged final samples, 13 of them Llama's. One reader (marble's Claude, not blind) thought about half were arguable.
+- **Gemma can't really be read:** at final it writes in the user's voice in only 3.5% of samples, which is why only 10 prefills are usable. That belongs to vestigial regression (Cole's measure), not here.
+- **Llama's oasst1 row is the closest to the bar:** just under it, with a range excluding 0. It's one set in a breadth family, resting on 11 flagged samples.
+
+**Judge v3 (Cole, 2026-11-05).** It separates "finished the user's thought, then the assistant took over" from abandoning the sentence, and records traits as their own field over all user text. It has only been run on Cole's 5 open openers, not on our prefills, and isn't validated. The v3 traits field, base → final: OLMo 3 of 552 → 0 of 481; Qwen 2 of 590 → 0 of 579; Gemma 1 of 589 → no user text at all. So v3 agrees, on different prompts. Our verdict stays on v2 labels, because results existed before v3 and the rule is pre-registered. A v3 run on our prefills would cost about $23 and needs a paid API approval; it hasn't been run.
+
+**Keyword check, no judge, outside the verdict.** Share of samples with a stock phrase or markdown the prefill lacked. It falls in OLMo (−13, −19, −11 on WildChat, oasst1, UltraChat), Qwen (−18, −38, −45) and Gemma (−14, WildChat, 100 prefills only). It rises in Llama (+13, +36, +25) and Apertus (+24, +37, +39). Part of that rise is switching into answering mid-turn. But it also rises among samples the judge calls user voice: Llama +9.0 [+2.7, +15.4], +30.0 [+19.6, +40.4], +14.7 [+4.9, +24.6]; Apertus (oasst1, UltraChat) +21.1 [+3.7, +38.6] and +48.2 [+33.7, +62.1], on 41 and 47 prefills only. Those flags are mostly numbered lists. Of 28 such samples read by the laptop Claude (one reader, not blind), most looked like users writing structured requests, and about a quarter read like Assistant text. **So this is a lead in two breadth families, not a result.**
+
+**Shared setup.** 199 of the 200 prefills come from the team's WildChat exchange set. The oasst1 and UltraChat sets have 200 prefills each, 3 samples each, same cut rule, judge and prompt (v2).
+
+**Known limits.** Not human-validated. The judge refused some samples, which are excluded (up to 44 of 600 per file). Prefills with no user-voice sample are dropped (44 of 200 for OLMo's verdict row). Gemma's exchange prefills aren't judged.
+
+**Sources:** `measures/overgeneralization/README.md`, `results/capstone/overgeneralization/user_turn_2026-11-06/user_turn.md`, `results/capstone/<family>/overgeneralization/user_traits_judge.md`, `measures/overgeneralization/user_traits_v3_check.py`, `docs/decisions.md` 2026-11-06.
 
 ### 2. Assistant text in the user's turn: OLMo just meets the bar, Qwen goes the other way
 
@@ -512,7 +536,7 @@ Exploratory, and the weakest of the list.
 ## Suggested order for the talk
 
 1. The question, and what would count (Shared background).
-2. Shared-method results beside Cole's and Grace's: the user prefill test (1) once unblinded, then Assistant text in the user's turn (2).
+2. Shared-method results beside Cole's and Grace's: the user prefill test (1, released 2026-11-06, provisional), then Assistant text in the user's turn (2).
 3. The pre-registered belief test on our own items: no qualifying spread (3).
 4. The exception worth explaining: refusal in thin characters (4).
 5. Digging into why: position (5), reply-start state (6), first words (7).

@@ -75,5 +75,6 @@ move results/trait_atlas_strict results/overgeneralization/trait_atlas_strict
 move results/trait_atlas_unmixed results/overgeneralization/trait_atlas_unmixed
 move results/user_style results/overgeneralization/user_style
 move results/working_model_L results/overgeneralization/working_model_L
+move results/user_turn_2026-11-06 results/capstone/overgeneralization/user_turn_2026-11-06
 move results/new_families_j2.md results/overgeneralization/new_families_j2.md
 echo "$moved untracked files moved"

@@ -4,7 +4,7 @@
     python -m measures.overgeneralization.user_traits keyword --family olmo3-7b     # judge-free cross-check, runs now
 
 Both read the existing core generations (results/<run>/<family>/core/generations/<stage>.jsonl: prefilled user turns,
-100 prefills x 3 samples). Nothing is generated or scored here; no API calls, no GPU (the keyword arm loads a tokenizer
+200 prefills x 3 samples for the judge arm). Nothing is generated or scored here; no API calls, no GPU (the keyword arm loads a tokenizer
 only to derive the family's turn markers).
 
 Primary (judge arm; spec and pre-registered criteria in measures/overgeneralization/README.md): the judge

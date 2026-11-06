@@ -70,6 +70,7 @@ path to the new one (never overwriting) and lists what it moved.
 | `results/trait_atlas_unmixed` | `results/overgeneralization/trait_atlas_unmixed` |
 | `results/user_style` | `results/overgeneralization/user_style` |
 | `results/working_model_L` | `results/overgeneralization/working_model_L` |
+| `results/user_turn_2026-11-06` | `results/capstone/overgeneralization/user_turn_2026-11-06` (added on main while the branch was open; the user-slot arm's cross-family summary) |
 | `results/new_families_j2.md` | `results/overgeneralization/new_families_j2.md` |
 
 ## scripts/exploratory/ (one folder per pilot, matching results/overgeneralization/)
