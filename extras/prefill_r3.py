@@ -97,7 +97,7 @@ def analyze():
     rows_conf = load_jsonl("data/persona_carryover_confirmatory.jsonl")
     domains = list(dict.fromkeys(r["domain"] for r in rows_conf))
     L = ["# R3: is the prefill belief result real? (spec R; exploratory, outside every verdict, NOT BLIND; the pre-registered belief test is unchanged)", "",
-         "Plan: `docs/decisions.md` 2026-11-06 (spec R3, `docs/spec_R_overnight.md`). The persona sits only in the model's own turn. **Wording 1** = first person (spec O; `data/belief_induction_prefill.jsonl`); **wording 2** = third person for the new persona's line only "
+         "Plan: `docs/decisions.md` 2026-11-06 (spec R3, `results/overgeneralization/overnight_2026-11-05/spec_R_overnight.md`). The persona sits only in the model's own turn. **Wording 1** = first person (spec O; `data/belief_induction_prefill.jsonl`); **wording 2** = third person for the new persona's line only "
          "(`data/belief_induction_prefill_w2.jsonl`: \"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up\"); five families, base and final, the unchanged `persona_carryover` code and rule (`--verdict`). "
          "Reply opening per family: " + "; ".join(f"{k}: {v}" for k, v in OPEN.items()) + ". Prompt runs used no extra opening except Gemma: the like-for-like Gemma prompt run is `confirmatory_thought_channel`. The prompt rows are the saved confirmatory prompt runs for the same 48 scenes. "
          "In-character check: the local Gemma 4 31B-it judge on all saved final 40-token continuations of the two new-persona conditions (30 per condition per wording); Gemma judges its own continuations; not hand-checked here beyond the 20 per family read by hand (see below). "

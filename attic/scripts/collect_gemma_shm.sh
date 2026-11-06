@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Gemma 4 31B pass of scripts/collect_conv_incomplete.py with a dedicated RAM-backed HF cache (2026-11-03): the root disk lacks room
+# Gemma 4 31B pass of attic/scripts/collect_conv_incomplete.py with a dedicated RAM-backed HF cache (2026-11-03): the root disk lacks room
 # for the 62.5 GB checkpoints. Only the cache lives in /dev/shm; results, manifests, provenance, state and logs stay in the worktree.
 #
-#   bash scripts/collect_gemma_shm.sh      # waits for any running collection driver (its lock), then runs --only gemma4-31b
+#   bash attic/scripts/collect_gemma_shm.sh      # waits for any running collection driver (its lock), then runs --only gemma4-31b
 #
 # Checks before launching (any failure: exit 2, Gemma stays blocked, nothing downloaded): the container's cgroup memory limit minus its
 # non-reclaimable usage (rss + shmem) must cover the cached weights (62.5 GB), the fp32 CPU-offloaded part of the model (~93 GB) and a
@@ -43,12 +43,12 @@ mkdir -p "$SHM/hub" "$SHM/xet"
   done ) &
 sampler=$!
 
-log "launching: HF_HUB_CACHE=$SHM/hub HF_XET_CACHE=$SHM/xet python scripts/collect_conv_incomplete.py --only gemma4-31b"
+log "launching: HF_HUB_CACHE=$SHM/hub HF_XET_CACHE=$SHM/xet python attic/scripts/collect_conv_incomplete.py --only gemma4-31b"
 env -u VIRTUAL_ENV UV_PROJECT_ENVIRONMENT="$WT/.venv" HF_HUB_CACHE="$SHM/hub" HF_XET_CACHE="$SHM/xet" \
-  "$WT/.venv/bin/python" scripts/collect_conv_incomplete.py --only gemma4-31b >> "$LOGS/run.log" 2>&1
+  "$WT/.venv/bin/python" attic/scripts/collect_conv_incomplete.py --only gemma4-31b >> "$LOGS/run.log" 2>&1
 rc=$?
 kill "$sampler" 2>/dev/null
 log "Gemma driver exited with code $rc; removing this run's dedicated cache $SHM ($(du -sh "$SHM" 2>/dev/null | cut -f1))"
 case "$SHM" in /dev/shm/grace-gemma-hub) rm -rf -- "$SHM" ;; esac
-log "done (status: python scripts/collect_conv_incomplete.py --status)"
+log "done (status: python attic/scripts/collect_conv_incomplete.py --status)"
 exit $rc

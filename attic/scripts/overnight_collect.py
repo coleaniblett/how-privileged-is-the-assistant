@@ -1,6 +1,6 @@
 """Overnight data collection (collection only: no flags, no judge, no analysis). Plan and rules: docs/runbook_2026-11-03.md.
 
-    uv run python scripts/overnight_collect.py [--dry-run] [--only gemma4-31b,olmo3-7b,qwen3-8b]
+    uv run python attic/scripts/overnight_collect.py [--dry-run] [--only gemma4-31b,olmo3-7b,qwen3-8b]
 
 Per checkpoint, each task in its own process: score data/texts.jsonl, score data/texts_authorship.jsonl (all slots, per-token NLL and
 entropy saved), generate from data/prefill_100.jsonl with --save-ids. Order: Gemma 4 31B (base, instruct; --n-per-set 100, fp32 CPU-offload
@@ -12,11 +12,11 @@ weights and then the regenerable datasets cache, if needed); out-of-memory is re
 any other failure is logged and the next checkpoint starts; each checkpoint is removed from the HF cache after use; integrity checks run after every
 checkpoint; everything is logged under results/capstone/logs/ (driver.log, one log per task, summary.json).
 
-Resilience (a session or connection reset must not cost more than the task in flight): run it through scripts/overnight_launch.sh, which starts
-scripts/overnight_supervise.sh in a tmux session. A finished task is never redone (its outputs exist), and a task writes into a temp directory
+Resilience (a session or connection reset must not cost more than the task in flight): run it through attic/scripts/overnight_launch.sh, which starts
+attic/scripts/overnight_supervise.sh in a tmux session. A finished task is never redone (its outputs exist), and a task writes into a temp directory
 that is moved into place only when it has succeeded, so a kill mid-task leaves no truncated output; an interrupted task's log is kept under a new
 name and its temp directory removed. One driver at a time (a lock), SIGHUP is ignored, and a heartbeat plus status.json show whether it is alive
-(scripts/overnight_status.py). Exit code 0 means the whole plan was attempted; 3 means another driver holds the lock.
+(attic/scripts/overnight_status.py). Exit code 0 means the whole plan was attempted; 3 means another driver holds the lock.
 """
 
 import argparse

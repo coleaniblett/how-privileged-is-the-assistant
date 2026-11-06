@@ -1,16 +1,16 @@
 """Combined collection, 2026-11-03: original-conversation scores (logit distortion) + incomplete-user-turn generations (vestigial
 regression's judge arm), per checkpoint, before that checkpoint's weights are cleared. Collection only: no judge, no flags, no analysis.
 
-    python scripts/collect_conv_incomplete.py --dry-run          # the plan: both tasks for every checkpoint, and what would be reused
-    python scripts/collect_conv_incomplete.py --smoke            # one conversation + 3 prefills on OLMo base -> <LOGS>/smoke/
-    python scripts/collect_conv_incomplete.py [--only olmo3-7b]  # the collection (resumable; run it in tmux)
-    python scripts/collect_conv_incomplete.py --status           # read-only progress
+    python attic/scripts/collect_conv_incomplete.py --dry-run          # the plan: both tasks for every checkpoint, and what would be reused
+    python attic/scripts/collect_conv_incomplete.py --smoke            # one conversation + 3 prefills on OLMo base -> <LOGS>/smoke/
+    python attic/scripts/collect_conv_incomplete.py [--only olmo3-7b]  # the collection (resumable; run it in tmux)
+    python attic/scripts/collect_conv_incomplete.py --status           # read-only progress
 
 Tasks per checkpoint (separate processes, settings unchanged from the existing CLIs):
   conversation  python -m core.score_conversations --family F --candidates pilot_v3 --model S --context-limits-from <frozen manifest>
                 -> results/logit_conversations/<F>/core/conversation_scores/<S>.csv, <S>_tokens.parquet, <S>_provenance.json
   incomplete    python -m core.generate --family F --run capstone --model S --prefill data/prefill_incomplete_200.jsonl --save-ids
-                (exactly scripts/overnight_collect.py --stratum incomplete's command)
+                (exactly attic/scripts/overnight_collect.py --stratum incomplete's command)
                 -> results/capstone/<F>/core/generations_incomplete/<S>.jsonl + <S>_provenance.json (written here)
 
 Before any scoring, each family's conversation inputs are prepared and frozen (core.score_conversations --prepare-only; an existing

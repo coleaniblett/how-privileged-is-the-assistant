@@ -1,4 +1,4 @@
-"""The overnight collection driver (scripts/overnight_collect.py): the plan in a dry run, and its integrity checks on real core output
+"""The overnight collection driver (attic/scripts/overnight_collect.py): the plan in a dry run, and its integrity checks on real core output
 from the tiny CPU model, including that they catch corrupted files."""
 
 import importlib.util

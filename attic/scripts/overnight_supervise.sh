@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Keeps the overnight collection going: runs scripts/overnight_collect.py and, if it dies (a crash, a kill, the OOM killer, a reset of whatever
+# Keeps the overnight collection going: runs attic/scripts/overnight_collect.py and, if it dies (a crash, a kill, the OOM killer, a reset of whatever
 # launched it), starts it again. The driver skips finished work and writes outputs atomically, so a restart costs only the task that was in flight.
 # Stops when the driver finishes the plan (exit 0), when another driver already runs (exit 3), or after MAX_RESTARTS restarts (exit 1).
-# One supervisor at a time (a lock). Normally started by scripts/overnight_launch.sh inside tmux. Extra args go to the driver.
-#   MAX_RESTARTS=8 RESTART_WAIT=60 bash scripts/overnight_supervise.sh [--only gemma4-31b,...]
+# One supervisor at a time (a lock). Normally started by attic/scripts/overnight_launch.sh inside tmux. Extra args go to the driver.
+#   MAX_RESTARTS=8 RESTART_WAIT=60 bash attic/scripts/overnight_supervise.sh [--only gemma4-31b,...]
 set -u
 cd "$(dirname "$0")/.."
 LOGS=${OVERNIGHT_LOGS:-results/capstone/logs}

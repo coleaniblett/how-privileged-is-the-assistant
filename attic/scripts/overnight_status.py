@@ -1,6 +1,6 @@
 """Is the overnight collection alive, and where is it? Stdlib only, safe to run any time (read-only).
 
-    python3 scripts/overnight_status.py
+    python3 attic/scripts/overnight_status.py
 """
 
 import datetime

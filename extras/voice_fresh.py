@@ -135,7 +135,7 @@ def analyze():
     mat = load()
     fmt = lambda m: "n/a" if m[0] != m[0] else f"{m[0]:+.1f} [{m[1]:+.1f}, {m[2]:+.1f}]"
     L = ["# R5: does a voice remove layout on fresh questions? (spec R; exploratory, outside every verdict, NOT BLIND)", "",
-         "Plan: `docs/decisions.md` 2026-11-06 (spec R5, `docs/spec_R_overnight.md`); frozen materials `data/voice_fresh_materials.json`. Q's 12 conditions on L4's 90 fresh questions (30 factual, 30 how-to, 30 advice), 2 of the 6 light jobs per question (frozen rotation), final checkpoints, one sample per role condition and 3 for the plain Assistant. "
+         "Plan: `docs/decisions.md` 2026-11-06 (spec R5, `results/overgeneralization/overnight_2026-11-05/spec_R_overnight.md`); frozen materials `data/voice_fresh_materials.json`. Q's 12 conditions on L4's 90 fresh questions (30 factual, 30 how-to, 30 advice), 2 of the 6 light jobs per question (frozen rotation), final checkpoints, one sample per role condition and 3 for the plain Assistant. "
          "Layout = strict (at least 2 list lines, a heading or a table; bold alone does not count); old regex and stock phrases beside it. In-character judge (Gemma 4 31B-it, atlas prompt) on a 30% sample per condition; **a reading is NOT READ when either compared cell is under 30% in character**. Difference = voice none minus given (unstated identity), points, paired per question and job, 95% two-way bootstrap over questions and jobs. "
          "Limits: few jobs; many cells, no correction for multiple tests; regex sees form only; judge provisional and Gemma judges its own replies; contamination checkable only for OLMo.", ""]
     rows, rec = [], []

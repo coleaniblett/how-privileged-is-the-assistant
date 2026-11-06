@@ -33,4 +33,4 @@ No evidence of dominance by overgeneralization: nothing in these probes spreads 
 
 - Item design: personas set with "You are ..." in the system prompt mostly measure the Assistant in OLMo; use role-play phrasing in the user turn. Regex refusal detection agrees 91.8% with a blind labeller (94.4% held-out); it misses soft in-character refusals and never flags compliance, so refusal rates are biased low.
 - Controls that changed conclusions: a formality axis, norm-matched random directions (>= 4 seeds; Gemma needed 6), a same-turn position control for carryover, and a fresh-context control for drift. A white-box candidate needs all four before it is read.
-- Draft criteria for a white-box arm are in `docs/whitebox_arm_proposal.md`; the visual summary is `docs/overnight_report.html`.
+- Draft criteria for a white-box arm are in `results/overgeneralization/early_probes/whitebox_arm_proposal.md`; the visual summary is `results/overgeneralization/early_probes/overnight_report.html`.

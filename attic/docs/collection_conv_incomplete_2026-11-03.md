@@ -3,13 +3,13 @@
 Collection only: no judge, no flags, no scores of the generated continuations, no verdicts. Provisional pilot collection for logit distortion
 (`candidates/logit_distortion/pilot_v3`, unchanged), not a final dataset decision.
 
-Runner: `scripts/collect_conv_incomplete.py` (reuses `scripts/overnight_collect.py`'s task machinery; that driver and its CLI are unchanged).
+Runner: `attic/scripts/collect_conv_incomplete.py` (reuses `attic/scripts/overnight_collect.py`'s task machinery; that driver and its CLI are unchanged).
 
 ```bash
-python scripts/collect_conv_incomplete.py --dry-run   # both tasks for all 8 checkpoints, and what would be reused
-python scripts/collect_conv_incomplete.py --smoke     # OLMo base: one conversation + 3 prefills -> results/collect_conv_incomplete/smoke/
-python scripts/collect_conv_incomplete.py             # the collection (resumable; run it in tmux)
-python scripts/collect_conv_incomplete.py --status    # read-only progress
+python attic/scripts/collect_conv_incomplete.py --dry-run   # both tasks for all 8 checkpoints, and what would be reused
+python attic/scripts/collect_conv_incomplete.py --smoke     # OLMo base: one conversation + 3 prefills -> results/collect_conv_incomplete/smoke/
+python attic/scripts/collect_conv_incomplete.py             # the collection (resumable; run it in tmux)
+python attic/scripts/collect_conv_incomplete.py --status    # read-only progress
 ```
 
 ## Tasks per checkpoint
@@ -39,7 +39,7 @@ manifest. Exclusions are family-specific and listed in each family's `exclusions
 ## Gemma 4 31B: RAM-backed cache
 
 The root disk has about 58 GB free, but a Gemma checkpoint needs 67.5 GB, and teammates' caches are not ours to free. So the Gemma pass
-(`scripts/collect_gemma_shm.sh`) uses a dedicated cache, `/dev/shm/grace-gemma-hub/{hub,xet}`. It sets `HF_HUB_CACHE` and `HF_XET_CACHE` before Python
+(`attic/scripts/collect_gemma_shm.sh`) uses a dedicated cache, `/dev/shm/grace-gemma-hub/{hub,xet}`. It sets `HF_HUB_CACHE` and `HF_XET_CACHE` before Python
 starts; checked: `huggingface_hub`, `transformers` and `core.hf_cache` all resolve to it, and partial downloads (`*.incomplete`) are staged
 inside it. Results, manifests, provenance, state and logs stay on disk in the worktree.
 

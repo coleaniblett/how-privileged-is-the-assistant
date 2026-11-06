@@ -1,4 +1,4 @@
-"""Build docs/overgeneralization_results.html: a consolidated, visual summary of the overgeneralization / persona-leakage results.
+"""Build results/overgeneralization/early_probes/overgeneralization_results.html: a consolidated, visual summary of the overgeneralization / persona-leakage results.
 
 Numbers come from the committed reports (parsed where they sit in tables, otherwise copied with the source file named in the comment next to them); example replies are read
 from the saved generations. Re-run after new results land (leakage matrix, introspection):
@@ -14,7 +14,7 @@ os.chdir(ROOT); sys.path.insert(0, ROOT)
 from extras.assistant_steering import requests            # noqa: E402
 from extras.orthogonal_steering import is_refusal         # noqa: E402
 
-OUT = "docs/overgeneralization_results.html"
+OUT = "results/overgeneralization/early_probes/overgeneralization_results.html"
 REQ = requests()
 
 

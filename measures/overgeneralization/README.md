@@ -133,7 +133,7 @@ than carryover, and its code, drafted items and passages were deleted (recoverab
 
 ## Exploratory work outside the verdict (2026-11-02/03)
 
-Prompting probes and white-box probes of persona leakage (identity, refusal under "never refuses", a persona-axis direction and its controls, role resemblance, carryover variants) are indexed in `extras/README.md`, summarised in `docs/findings_whitebox.md`, and logged in `docs/decisions.md`. They are descriptive and do not change or replace the criteria above. Draft criteria for a possible white-box arm are in `docs/whitebox_arm_proposal.md` (a proposal for the team, not pre-registered).
+Prompting probes and white-box probes of persona leakage (identity, refusal under "never refuses", a persona-axis direction and its controls, role resemblance, carryover variants) are indexed in `extras/README.md`, summarised in `results/overgeneralization/early_probes/findings_whitebox.md`, and logged in `docs/decisions.md`. They are descriptive and do not change or replace the criteria above. Draft criteria for a possible white-box arm are in `results/overgeneralization/early_probes/whitebox_arm_proposal.md` (a proposal for the team, not pre-registered).
 
 Two further exploratory arms on the user slot (2026-11-03, plans and pre-set readings in `docs/decisions.md` before any data; outside the verdict):
 
