@@ -1,0 +1,118 @@
+stage,scope,quantity,mean,lo,hi,source
+base,all,carryover assistant -> new,0.5871,0.3159,0.8691,persona_carryover_summary.csv
+base,all,carryover character -> new,0.2565,-0.0523,0.5575,persona_carryover_summary.csv
+base,all,carryover assistant -> same,1.0143,0.7104,1.3099,persona_carryover_summary.csv
+base,all,carryover character -> same,1.7328,1.4035,2.0484,persona_carryover_summary.csv
+base,dice,carryover assistant -> new,0.9425,0.8442,1.0414,persona_carryover_summary.csv
+base,dice,carryover character -> new,0.7980,0.6314,0.9582,persona_carryover_summary.csv
+base,dice,carryover assistant -> same,1.3078,1.1894,1.4243,persona_carryover_summary.csv
+base,dice,carryover character -> same,2.3298,1.9763,2.7223,persona_carryover_summary.csv
+base,drawer,carryover assistant -> new,-0.3802,-0.4674,-0.3034,persona_carryover_summary.csv
+base,drawer,carryover character -> new,-0.8158,-0.9557,-0.6693,persona_carryover_summary.csv
+base,drawer,carryover assistant -> same,-0.5768,-0.7500,-0.3867,persona_carryover_summary.csv
+base,drawer,carryover character -> same,0.0937,-0.2148,0.4076,persona_carryover_summary.csv
+base,match,carryover assistant -> new,-0.1792,-0.3660,0.0030,persona_carryover_summary.csv
+base,match,carryover character -> new,-0.5853,-0.9284,-0.2437,persona_carryover_summary.csv
+base,match,carryover assistant -> same,1.1940,0.9352,1.4826,persona_carryover_summary.csv
+base,match,carryover character -> same,1.8543,1.4543,2.2411,persona_carryover_summary.csv
+base,weather,carryover assistant -> new,1.9654,1.7347,2.1740,persona_carryover_summary.csv
+base,weather,carryover character -> new,1.6292,1.4059,1.8298,persona_carryover_summary.csv
+base,weather,carryover assistant -> same,2.1322,1.8433,2.4389,persona_carryover_summary.csv
+base,weather,carryover character -> same,2.6535,2.3614,2.9131,persona_carryover_summary.csv
+base,all_without_drawer,carryover assistant -> new,0.9096,0.6037,1.2141,"recomputed, post hoc"
+sft,all,carryover assistant -> new,0.2473,-0.0306,0.5440,persona_carryover_summary.csv
+sft,all,"carryover assistant -> new, change from base",-0.3398,-0.4878,-0.1898,persona_carryover_summary.csv
+sft,all,carryover character -> new,-0.2156,-0.5880,0.1698,persona_carryover_summary.csv
+sft,all,carryover assistant -> same,1.1115,0.7692,1.4467,persona_carryover_summary.csv
+sft,all,carryover character -> same,1.3537,0.9065,1.7989,persona_carryover_summary.csv
+sft,all,"leak gap, change from base",0.1323,-0.0004,0.2618,persona_carryover_summary.csv
+sft,dice,carryover assistant -> new,1.1404,0.9320,1.3851,persona_carryover_summary.csv
+sft,dice,"carryover assistant -> new, change from base",0.1978,-0.0118,0.4185,persona_carryover_summary.csv
+sft,dice,carryover character -> new,0.7811,0.4999,1.1092,persona_carryover_summary.csv
+sft,dice,carryover assistant -> same,1.7496,1.5257,1.9786,persona_carryover_summary.csv
+sft,dice,carryover character -> same,1.8276,1.4789,2.2129,persona_carryover_summary.csv
+sft,dice,"leak gap, change from base",0.2148,0.0956,0.3195,persona_carryover_summary.csv
+sft,drawer,carryover assistant -> new,-0.6978,-0.8176,-0.5833,persona_carryover_summary.csv
+sft,drawer,"carryover assistant -> new, change from base",-0.3176,-0.4374,-0.2017,persona_carryover_summary.csv
+sft,drawer,carryover character -> new,-1.6978,-1.9269,-1.4634,persona_carryover_summary.csv
+sft,drawer,carryover assistant -> same,-0.5182,-0.7760,-0.2630,persona_carryover_summary.csv
+sft,drawer,carryover character -> same,-0.4374,-1.0260,0.1407,persona_carryover_summary.csv
+sft,drawer,"leak gap, change from base",0.5644,0.4447,0.6972,persona_carryover_summary.csv
+sft,match,carryover assistant -> new,-0.6401,-0.7964,-0.4891,persona_carryover_summary.csv
+sft,match,"carryover assistant -> new, change from base",-0.4609,-0.6230,-0.3222,persona_carryover_summary.csv
+sft,match,carryover character -> new,-1.0076,-1.1743,-0.8799,persona_carryover_summary.csv
+sft,match,carryover assistant -> same,0.8065,0.5309,1.0927,persona_carryover_summary.csv
+sft,match,carryover character -> same,0.7576,0.4842,1.0155,persona_carryover_summary.csv
+sft,match,"leak gap, change from base",-0.0387,-0.2437,0.1468,persona_carryover_summary.csv
+sft,weather,carryover assistant -> new,1.1869,0.7965,1.5774,persona_carryover_summary.csv
+sft,weather,"carryover assistant -> new, change from base",-0.7784,-1.1127,-0.4652,persona_carryover_summary.csv
+sft,weather,carryover character -> new,1.0619,0.4344,1.6633,persona_carryover_summary.csv
+sft,weather,carryover assistant -> same,2.4080,2.1373,2.6555,persona_carryover_summary.csv
+sft,weather,carryover character -> same,3.2670,2.8821,3.6184,persona_carryover_summary.csv
+sft,weather,"leak gap, change from base",-0.2112,-0.5125,0.1229,persona_carryover_summary.csv
+sft,all_without_drawer,carryover assistant -> new,0.5624,0.2414,0.8808,"recomputed, post hoc"
+sft,all_without_drawer,"carryover assistant -> new, change from base",-0.3472,-0.5415,-0.1548,"recomputed, post hoc"
+dpo,all,carryover assistant -> new,-0.4381,-1.0343,0.1675,persona_carryover_summary.csv
+dpo,all,"carryover assistant -> new, change from base",-1.0252,-1.5066,-0.5316,persona_carryover_summary.csv
+dpo,all,carryover character -> new,-1.8200,-2.5759,-1.0784,persona_carryover_summary.csv
+dpo,all,carryover assistant -> same,1.7330,0.9974,2.3937,persona_carryover_summary.csv
+dpo,all,carryover character -> same,1.6181,0.8920,2.2980,persona_carryover_summary.csv
+dpo,all,"leak gap, change from base",1.0513,0.7095,1.3827,persona_carryover_summary.csv
+dpo,dice,carryover assistant -> new,2.2387,1.6137,2.9520,persona_carryover_summary.csv
+dpo,dice,"carryover assistant -> new, change from base",1.2962,0.6719,1.9733,persona_carryover_summary.csv
+dpo,dice,carryover character -> new,0.6874,0.3177,1.1431,persona_carryover_summary.csv
+dpo,dice,carryover assistant -> same,3.6723,3.0952,4.2754,persona_carryover_summary.csv
+dpo,dice,carryover character -> same,3.2098,2.8402,3.5999,persona_carryover_summary.csv
+dpo,dice,"leak gap, change from base",1.4068,1.0077,1.7863,persona_carryover_summary.csv
+dpo,drawer,carryover assistant -> new,-2.3851,-3.0465,-1.7394,persona_carryover_summary.csv
+dpo,drawer,"carryover assistant -> new, change from base",-2.0049,-2.6521,-1.3879,persona_carryover_summary.csv
+dpo,drawer,carryover character -> new,-5.0151,-5.6844,-4.3433,persona_carryover_summary.csv
+dpo,drawer,carryover assistant -> same,-1.6089,-2.5074,-0.7211,persona_carryover_summary.csv
+dpo,drawer,carryover character -> same,-1.0877,-2.6442,0.3415,persona_carryover_summary.csv
+dpo,drawer,"leak gap, change from base",2.1945,1.8234,2.5800,persona_carryover_summary.csv
+dpo,match,carryover assistant -> new,-1.6866,-1.9680,-1.4159,persona_carryover_summary.csv
+dpo,match,"carryover assistant -> new, change from base",-1.5074,-1.7551,-1.2630,persona_carryover_summary.csv
+dpo,match,carryover character -> new,-3.0124,-3.3195,-2.6793,persona_carryover_summary.csv
+dpo,match,carryover assistant -> same,1.3845,0.6941,2.1079,persona_carryover_summary.csv
+dpo,match,carryover character -> same,0.5415,-0.1562,1.2339,persona_carryover_summary.csv
+dpo,match,"leak gap, change from base",0.9197,0.5304,1.3138,persona_carryover_summary.csv
+dpo,weather,carryover assistant -> new,0.0808,-0.8156,1.0295,persona_carryover_summary.csv
+dpo,weather,"carryover assistant -> new, change from base",-1.8845,-2.6845,-1.0283,persona_carryover_summary.csv
+dpo,weather,carryover character -> new,0.0603,-1.1032,1.1503,persona_carryover_summary.csv
+dpo,weather,carryover assistant -> same,3.4842,3.0208,3.9233,persona_carryover_summary.csv
+dpo,weather,carryover character -> same,3.8089,3.4569,4.1789,persona_carryover_summary.csv
+dpo,weather,"leak gap, change from base",-0.3156,-0.8869,0.2504,persona_carryover_summary.csv
+dpo,all_without_drawer,carryover assistant -> new,0.2110,-0.4208,0.8837,"recomputed, post hoc"
+dpo,all_without_drawer,"carryover assistant -> new, change from base",-0.6986,-1.2676,-0.1100,"recomputed, post hoc"
+instruct,all,carryover assistant -> new,-0.2445,-0.8850,0.4281,persona_carryover_summary.csv
+instruct,all,"carryover assistant -> new, change from base",-0.8316,-1.3621,-0.2834,persona_carryover_summary.csv
+instruct,all,carryover character -> new,-1.9570,-2.7288,-1.1680,persona_carryover_summary.csv
+instruct,all,carryover assistant -> same,2.1708,1.3964,2.8951,persona_carryover_summary.csv
+instruct,all,carryover character -> same,2.0249,1.2854,2.6891,persona_carryover_summary.csv
+instruct,all,"leak gap, change from base",1.3819,1.0241,1.7371,persona_carryover_summary.csv
+instruct,dice,carryover assistant -> new,2.7075,2.0776,3.3899,persona_carryover_summary.csv
+instruct,dice,"carryover assistant -> new, change from base",1.7650,1.1404,2.4196,persona_carryover_summary.csv
+instruct,dice,carryover character -> new,0.7708,0.4141,1.1901,persona_carryover_summary.csv
+instruct,dice,carryover assistant -> same,4.3790,3.7434,5.0579,persona_carryover_summary.csv
+instruct,dice,carryover character -> same,3.7024,3.3382,4.0851,persona_carryover_summary.csv
+instruct,dice,"leak gap, change from base",1.7922,1.3379,2.2116,persona_carryover_summary.csv
+instruct,drawer,carryover assistant -> new,-2.2289,-2.9658,-1.5050,persona_carryover_summary.csv
+instruct,drawer,"carryover assistant -> new, change from base",-1.8487,-2.5843,-1.1587,persona_carryover_summary.csv
+instruct,drawer,carryover character -> new,-5.2783,-5.9917,-4.5908,persona_carryover_summary.csv
+instruct,drawer,carryover assistant -> same,-1.3096,-2.5723,-0.1222,persona_carryover_summary.csv
+instruct,drawer,carryover character -> same,-0.3876,-2.0902,1.1251,persona_carryover_summary.csv
+instruct,drawer,"leak gap, change from base",2.6138,2.1502,3.1158,persona_carryover_summary.csv
+instruct,match,carryover assistant -> new,-1.5828,-1.8433,-1.3222,persona_carryover_summary.csv
+instruct,match,"carryover assistant -> new, change from base",-1.4036,-1.6304,-1.1673,persona_carryover_summary.csv
+instruct,match,carryover character -> new,-3.1923,-3.5775,-2.7966,persona_carryover_summary.csv
+instruct,match,carryover assistant -> same,1.8102,1.0359,2.5708,persona_carryover_summary.csv
+instruct,match,carryover character -> same,0.8749,0.1146,1.5884,persona_carryover_summary.csv
+instruct,match,"leak gap, change from base",1.2034,0.8434,1.5786,persona_carryover_summary.csv
+instruct,weather,carryover assistant -> new,0.1261,-0.8252,1.1435,persona_carryover_summary.csv
+instruct,weather,"carryover assistant -> new, change from base",-1.8392,-2.6831,-0.9179,persona_carryover_summary.csv
+instruct,weather,carryover character -> new,-0.1283,-1.3047,1.0277,persona_carryover_summary.csv
+instruct,weather,carryover assistant -> same,3.8036,3.2536,4.3089,persona_carryover_summary.csv
+instruct,weather,carryover character -> same,3.9099,3.4254,4.3965,persona_carryover_summary.csv
+instruct,weather,"leak gap, change from base",-0.0818,-0.6149,0.4342,persona_carryover_summary.csv
+instruct,all_without_drawer,carryover assistant -> new,0.4169,-0.2677,1.1418,"recomputed, post hoc"
+instruct,all_without_drawer,"carryover assistant -> new, change from base",-0.4926,-1.1252,0.1498,"recomputed, post hoc"
