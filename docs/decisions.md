@@ -1443,3 +1443,15 @@ Spec Q (`extras/role_says.py`, frozen `data/role_says_materials.json`, same sett
 `extras/prefill_r3.py`. Rule table: the unchanged `persona_carryover.stage_verdict` on each family and wording (OLMo/Qwen/Gemma wording 1 from spec O's files; Llama/Apertus wording 1 and all wording 2 from `results/overnight_2026-11-05/R3`); "stable" = assistant>new at final (mean log-odds toward the believed outcome) differing by under 1.0 between wordings with the same sign, else "depends on wording". In-character check (R3c): Gemma 4 31B-it judge, Yes/No, on every saved final 40-token continuation of the two new-persona conditions (assistant>new, character>new; 30 each per wording per family; the Llama/Apertus wording 1 and all wording 2 continuations are new, OLMo/Qwen/Gemma wording 1 are spec O's); the question is "does the continuation read as coming from that person in their own voice, rather than from an AI assistant or a different speaker"; thresholds as in the spec (at least 70% took, under 50% didn't). Twenty continuations per family and wording are saved for me to read (`read20_*.csv`) and I will read at least 20 per family and report. Descriptive: point-biserial correlation between in-character and the scene's log-odds toward the believed outcome. Gemma wording 2 base is run last on vinyl (needs a swap of the 62 GB weights); the report is pushed when judging is done, and at the latest at 05:00 UTC with what exists.
 
 Correction (2026-11-06, R3): the R3 plan entry above says Llama and Apertus have no prompt run. That was wrong: their confirmatory prompt runs exist (`results/llama3.1-8b/overgeneralization/confirmatory`, `results/apertus-8b/overgeneralization/confirmatory`, used in the slide figure). The R3 report includes them as the prompt rows, with Gemma's like-for-like `confirmatory_thought_channel`.
+
+## 2026-11-06 (UTC) - Result: spec Q follow-up, readings on in-character replies only (sensitivity; exploratory, NOT BLIND)
+In-character judge run on ALL final role replies (3 families). `results/role_says/role_says.md` now ends with a SENSITIVITY section (`role_says_sensitivity.csv`); the main readings above it are byte-identical to the earlier push. Overall reading on in-character replies only, per pre-set bars; a reading is NOT READ where a compared cell has fewer than 20 in-character replies in the trait's own set. Provisional like the judge.
+
+| family | position | reading |
+|---|---|---|
+| olmo3-7b | system | CAN'T TEST (10 readings not read: fewer than 20 in-character replies) |
+| olmo3-7b | user | CAN'T TEST (2 readings not read: fewer than 20 in-character replies) |
+| qwen3-8b | system | CAN'T TEST (1 readings not read: fewer than 20 in-character replies) |
+| qwen3-8b | user | CAN'T TEST (1 readings not read: fewer than 20 in-character replies) |
+| gemma4-31b | system | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved)) |
+| gemma4-31b | user | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved), truth ignores voice on both) |

@@ -326,3 +326,166 @@ No-room flag: `markdown_lists`, `corrects_false_premise`. Any 'stays' reading on
 | corrects_false_premise | 40 | 11 | 1 | 0 | 100 / 65 / 0 |
 | hedging_unanswerable | 12 | 9 | 3 | 2 | 71 / 32 / 24 |
 
+
+## SENSITIVITY: the readings again on in-character replies only (follow-up approved 2026-11-05 23:40 UTC; the main readings above are unchanged)
+
+The in-character judge (same prompt and Gemma 4 31B-it judge as the 30% check) was run on ALL final role replies; a role reply counts only if judged in character (P(yes) >= 0.5). Same bars, same paired two-way bootstrap (pairs where either side has no in-character reply drop out); plain Assistant replies are all kept. A reading is **NOT READ** when either compared cell has fewer than 20 in-character replies in the trait's own set (72 replies per cell and trait before filtering). Provisional like the judge. The overall rule is applied as in the main text, with the in-character check replaced by this filter.
+
+Overall reading, in-character replies only:
+
+| family | position | reading |
+|---|---|---|
+| olmo3-7b | system | CAN'T TEST (10 readings not read: fewer than 20 in-character replies) |
+| olmo3-7b | user | CAN'T TEST (2 readings not read: fewer than 20 in-character replies) |
+| qwen3-8b | system | CAN'T TEST (1 readings not read: fewer than 20 in-character replies) |
+| qwen3-8b | user | CAN'T TEST (1 readings not read: fewer than 20 in-character replies) |
+| gemma4-31b | system | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved)) |
+| gemma4-31b | user | PARTIAL (held: identity moves self-image, identity moves only self-image (>=3 of 4 unmoved), truth ignores voice on both) |
+
+### olmo3-7b: in-character replies per cell (of 504; all questions)
+
+| position | identity | voice | in character | share |
+|---|---|---|---|---|
+| system | ai | given | 468 | 93% |
+| system | ai | none | 8 | 2% |
+| system | human | given | 478 | 95% |
+| system | human | none | 25 | 5% |
+| system | unstated | given | 480 | 95% |
+| system | unstated | none | 18 | 4% |
+| user | ai | given | 498 | 99% |
+| user | ai | none | 237 | 47% |
+| user | human | given | 501 | 99% |
+| user | human | none | 343 | 68% |
+| user | unstated | given | 503 | 100% |
+| user | unstated | none | 244 | 48% |
+
+#### olmo3-7b, system position (in-character replies only)
+
+| reading | measure | result | class | n in character (a / b) |
+|---|---|---|---|---|
+| 1 | `denies_feelings AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 1 vs 14) | 1 / 14 |
+| 1 | `says_ai AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 0 vs 0) | 0 / 0 |
+| 2 | `markdown_lists AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 3 vs 8) | 3 / 8 |
+| 2 | `stock_phrases AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 3 vs 3) | 3 / 3 |
+| 2 | `corrects_false_premise AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 0 vs 0) | 0 / 0 |
+| 2 | `hedging_unanswerable AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 0 vs 0) | 0 / 0 |
+| 3 | `markdown_lists none minus given (unstated)` | n/a | NOT READ (fewer than 20 in-character replies: 3 vs 72) | 3 / 72 |
+| 3 | `stock_phrases none minus given (unstated)` | n/a | NOT READ (fewer than 20 in-character replies: 5 vs 63) | 5 / 63 |
+| 4 | `corrects_false_premise none minus given (unstated)` | n/a | NOT READ (fewer than 20 in-character replies: 0 vs 72) | 0 / 72 |
+| 4 | `hedging_unanswerable none minus given (unstated)` | n/a | NOT READ (fewer than 20 in-character replies: 0 vs 59) | 0 / 59 |
+| R0 | `denies_feelings AI role, none minus given (voice effects)` | n/a | NOT READ (fewer than 20 in-character replies: 1 vs 72) | 1 / 72 |
+
+#### olmo3-7b, user position (in-character replies only)
+
+| reading | measure | result | class | n in character (a / b) |
+|---|---|---|---|---|
+| 1 | `denies_feelings AI minus human` | +71.8 [+46.7, +92.3] | FOLLOWS | 40 / 71 |
+| 1 | `says_ai AI minus human` | +51.9 [+16.7, +83.3] | FOLLOWS | 34 / 48 |
+| 2 | `markdown_lists AI minus human` | +0.0 [+0.0, +0.0] | UNMOVED | 36 / 53 |
+| 2 | `stock_phrases AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 13 vs 24) | 13 / 24 |
+| 2 | `corrects_false_premise AI minus human` | +0.0 [-21.3, +22.7] | in between | 48 / 61 |
+| 2 | `hedging_unanswerable AI minus human` | +6.2 [+0.0, +42.9] | in between | 22 / 34 |
+| 3 | `markdown_lists none minus given (unstated)` | +25.0 [+2.8, +55.0] | in between | 28 / 72 |
+| 3 | `stock_phrases none minus given (unstated)` | n/a | NOT READ (fewer than 20 in-character replies: 17 vs 72) | 17 / 72 |
+| 4 | `corrects_false_premise none minus given (unstated)` | +15.6 [-18.4, +48.9] | in between | 45 / 71 |
+| 4 | `hedging_unanswerable none minus given (unstated)` | +4.2 [-20.8, +31.6] | in between | 24 / 72 |
+| R0 | `denies_feelings AI role, none minus given (voice effects)` | +72.5 [+42.9, +95.8] | VOICE EFFECTS SURVIVE | 40 / 72 |
+
+### qwen3-8b: in-character replies per cell (of 504; all questions)
+
+| position | identity | voice | in character | share |
+|---|---|---|---|---|
+| system | ai | given | 485 | 96% |
+| system | ai | none | 326 | 65% |
+| system | human | given | 478 | 95% |
+| system | human | none | 384 | 76% |
+| system | unstated | given | 490 | 97% |
+| system | unstated | none | 406 | 81% |
+| user | ai | given | 490 | 97% |
+| user | ai | none | 248 | 49% |
+| user | human | given | 493 | 98% |
+| user | human | none | 370 | 73% |
+| user | unstated | given | 496 | 98% |
+| user | unstated | none | 325 | 64% |
+
+#### qwen3-8b, system position (in-character replies only)
+
+| reading | measure | result | class | n in character (a / b) |
+|---|---|---|---|---|
+| 1 | `denies_feelings AI minus human` | +24.2 [+6.0, +46.9] | in between | 66 / 72 |
+| 1 | `says_ai AI minus human` | +40.4 [+12.8, +67.7] | FOLLOWS | 54 / 67 |
+| 2 | `markdown_lists AI minus human` | +17.3 [-9.6, +45.6] | in between | 59 / 59 |
+| 2 | `stock_phrases AI minus human` | +18.2 [-37.6, +71.4] | in between | 28 / 36 |
+| 2 | `corrects_false_premise AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 19 vs 42) | 19 / 42 |
+| 2 | `hedging_unanswerable AI minus human` | +5.4 [-12.5, +27.6] | in between | 43 / 53 |
+| 3 | `markdown_lists none minus given (unstated)` | +20.0 [-2.9, +46.8] | in between | 65 / 72 |
+| 3 | `stock_phrases none minus given (unstated)` | +35.5 [+6.9, +59.3] | VOICE REMOVES IT | 31 / 59 |
+| 4 | `corrects_false_premise none minus given (unstated)` | +3.7 [-10.3, +19.2] | TRUTH IGNORES VOICE | 55 / 71 |
+| 4 | `hedging_unanswerable none minus given (unstated)` | -8.2 [-23.1, +3.2] | in between | 61 / 72 |
+| R0 | `denies_feelings AI role, none minus given (voice effects)` | +24.2 [+6.1, +46.2] | VOICE EFFECTS SURVIVE | 66 / 72 |
+
+#### qwen3-8b, user position (in-character replies only)
+
+| reading | measure | result | class | n in character (a / b) |
+|---|---|---|---|---|
+| 1 | `denies_feelings AI minus human` | +42.9 [+15.2, +70.2] | FOLLOWS | 51 / 69 |
+| 1 | `says_ai AI minus human` | +30.6 [+4.9, +63.9] | FOLLOWS | 38 / 52 |
+| 2 | `markdown_lists AI minus human` | -2.3 [-12.2, +0.0] | UNMOVED | 49 / 57 |
+| 2 | `stock_phrases AI minus human` | +13.6 [+0.0, +42.1] | in between | 24 / 38 |
+| 2 | `corrects_false_premise AI minus human` | n/a | NOT READ (fewer than 20 in-character replies: 7 vs 43) | 7 / 43 |
+| 2 | `hedging_unanswerable AI minus human` | -9.5 [-52.0, +22.2] | in between | 27 / 54 |
+| 3 | `markdown_lists none minus given (unstated)` | +11.9 [+0.0, +34.4] | in between | 42 / 72 |
+| 3 | `stock_phrases none minus given (unstated)` | +31.8 [+3.6, +66.7] | VOICE REMOVES IT | 24 / 66 |
+| 4 | `corrects_false_premise none minus given (unstated)` | -4.7 [-29.4, +16.0] | in between | 44 / 71 |
+| 4 | `hedging_unanswerable none minus given (unstated)` | +4.0 [-6.5, +17.4] | TRUTH IGNORES VOICE | 50 / 72 |
+| R0 | `denies_feelings AI role, none minus given (voice effects)` | +43.1 [+17.0, +70.7] | VOICE EFFECTS SURVIVE | 51 / 72 |
+
+### gemma4-31b: in-character replies per cell (of 504; all questions)
+
+| position | identity | voice | in character | share |
+|---|---|---|---|---|
+| system | ai | given | 504 | 100% |
+| system | ai | none | 501 | 99% |
+| system | human | given | 502 | 100% |
+| system | human | none | 500 | 99% |
+| system | unstated | given | 503 | 100% |
+| system | unstated | none | 494 | 98% |
+| user | ai | given | 504 | 100% |
+| user | ai | none | 496 | 98% |
+| user | human | given | 503 | 100% |
+| user | human | none | 495 | 98% |
+| user | unstated | given | 504 | 100% |
+| user | unstated | none | 495 | 98% |
+
+#### gemma4-31b, system position (in-character replies only)
+
+| reading | measure | result | class | n in character (a / b) |
+|---|---|---|---|---|
+| 1 | `denies_feelings AI minus human` | +50.0 [+26.4, +73.6] | FOLLOWS | 72 / 72 |
+| 1 | `says_ai AI minus human` | +22.5 [+2.8, +43.1] | in between | 71 / 72 |
+| 2 | `markdown_lists AI minus human` | +0.0 [+0.0, +0.0] | UNMOVED | 72 / 72 |
+| 2 | `stock_phrases AI minus human` | +3.0 [-15.6, +21.4] | in between | 71 / 68 |
+| 2 | `corrects_false_premise AI minus human` | +0.0 [+0.0, +0.0] | UNMOVED | 72 / 72 |
+| 2 | `hedging_unanswerable AI minus human` | -1.4 [-11.3, +5.6] | UNMOVED | 71 / 72 |
+| 3 | `markdown_lists none minus given (unstated)` | +2.8 [+0.0, +11.1] | VOICE DOESN'T | 72 / 72 |
+| 3 | `stock_phrases none minus given (unstated)` | +14.3 [-1.7, +37.1] | in between | 63 / 71 |
+| 4 | `corrects_false_premise none minus given (unstated)` | +0.0 [+0.0, +0.0] | TRUTH IGNORES VOICE | 72 / 72 |
+| 4 | `hedging_unanswerable none minus given (unstated)` | -6.9 [-20.8, +0.0] | in between | 72 / 72 |
+| R0 | `denies_feelings AI role, none minus given (voice effects)` | +38.9 [+15.3, +62.5] | VOICE EFFECTS SURVIVE | 72 / 72 |
+
+#### gemma4-31b, user position (in-character replies only)
+
+| reading | measure | result | class | n in character (a / b) |
+|---|---|---|---|---|
+| 1 | `denies_feelings AI minus human` | +62.5 [+37.5, +84.7] | FOLLOWS | 72 / 72 |
+| 1 | `says_ai AI minus human` | +26.9 [+6.7, +48.6] | in between | 69 / 67 |
+| 2 | `markdown_lists AI minus human` | +1.4 [+0.0, +8.3] | UNMOVED | 72 / 72 |
+| 2 | `stock_phrases AI minus human` | +16.7 [-3.0, +39.4] | in between | 67 / 68 |
+| 2 | `corrects_false_premise AI minus human` | +0.0 [+0.0, +0.0] | UNMOVED | 72 / 72 |
+| 2 | `hedging_unanswerable AI minus human` | -2.8 [-15.3, +5.6] | UNMOVED | 72 / 72 |
+| 3 | `markdown_lists none minus given (unstated)` | +0.0 [+0.0, +0.0] | VOICE DOESN'T | 72 / 72 |
+| 3 | `stock_phrases none minus given (unstated)` | +20.8 [+4.2, +38.9] | VOICE REMOVES IT | 72 / 72 |
+| 4 | `corrects_false_premise none minus given (unstated)` | +0.0 [+0.0, +0.0] | TRUTH IGNORES VOICE | 70 / 72 |
+| 4 | `hedging_unanswerable none minus given (unstated)` | -2.8 [-16.7, +8.3] | TRUTH IGNORES VOICE | 72 / 72 |
+| R0 | `denies_feelings AI role, none minus given (voice effects)` | +47.2 [+29.2, +68.1] | VOICE EFFECTS SURVIVE | 72 / 72 |
+
