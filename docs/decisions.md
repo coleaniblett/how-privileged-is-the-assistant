@@ -1471,3 +1471,6 @@ Breadth section appended to `results/role_says/role_says.md` (three-family readi
 | llama3.1-8b | user | PARTIAL (held: identity moves self-image) |
 | apertus-8b | system | CAN'T TEST (a cell fails the in-character check) |
 | apertus-8b | user | PARTIAL (held: identity moves self-image, voice removes markdown) |
+
+## 2026-11-06 (UTC) - Result: spec Q Gemma 4 31B base added (T3.1, the training check dropped earlier)
+Gemma base replies generated and judged like the other checkpoints; `results/role_says/role_says.md` was regenerated: the readings on final are unchanged by construction; the Gemma rows changed are the in-character shares (base column) and the training row. 30 lines differ from the earlier file (sampled replies file not committed again).

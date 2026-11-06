@@ -229,18 +229,18 @@ No-room flag: no trait. The readings above are unchanged.
 
 | position | identity | voice | final | base |
 |---|---|---|---|---|
-| system | ai | given | 100% | - |
-| system | ai | none | 99% | - |
-| system | human | given | 99% | - |
-| system | human | none | 100% | - |
-| system | unstated | given | 100% | - |
-| system | unstated | none | 96% | - |
-| user | ai | given | 100% | - |
-| user | ai | none | 98% | - |
-| user | human | given | 100% | - |
-| user | human | none | 98% | - |
-| user | unstated | given | 100% | - |
-| user | unstated | none | 99% | - |
+| system | ai | given | 100% | 16% |
+| system | ai | none | 99% | 4% |
+| system | human | given | 99% | 16% |
+| system | human | none | 100% | 6% |
+| system | unstated | given | 100% | 10% |
+| system | unstated | none | 96% | 5% |
+| user | ai | given | 100% | 32% |
+| user | ai | none | 98% | 12% |
+| user | human | given | 100% | 22% |
+| user | human | none | 98% | 5% |
+| user | unstated | given | 100% | 16% |
+| user | unstated | none | 99% | 9% |
 
 ### gemma4-31b, system position
 
@@ -261,6 +261,7 @@ Plain Assistant rates (%): denies_feelings 100, says_ai 58, safety_caveats 100, 
 | 4 | `corrects_false_premise`, voice none minus given (unstated) | +0.0 [+0.0, +0.0] | TRUTH IGNORES VOICE |
 | 4 | `hedging_unanswerable`, voice none minus given (unstated) | -6.9 [-20.8, +0.0] | in between |
 | extra | `denies_feelings` in the AI role, none minus given | +38.9 [+16.7, +61.1] | (no verdict) |
+| training | AI-role `denies_feelings`, final minus base | +36.1 [+13.9, +58.3] | TRAINING MOVED IT (base in-character share 10%) |
 
 Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
 
@@ -289,14 +290,15 @@ Plain Assistant rates (%): denies_feelings 100, says_ai 58, safety_caveats 100, 
 | 1 | unstated minus human | +0.0 [+0.0, +0.0] | (no verdict; the idea predicts within 10) |
 | 1 | `says_ai`, AI minus human (partly obedience) | +25.0 [+5.6, +45.8] | in between |
 | 2 | `markdown_lists`, AI minus human | +1.4 [+0.0, +8.3] | UNMOVED |
-| 2 | `stock_phrases`, AI minus human | +20.8 [+1.4, +43.1] | MOVED |
+| 2 | `stock_phrases`, AI minus human | +20.8 [+0.0, +43.1] | in between |
 | 2 | `corrects_false_premise`, AI minus human | +0.0 [+0.0, +0.0] | UNMOVED |
 | 2 | `hedging_unanswerable`, AI minus human | -2.8 [-16.7, +5.6] | UNMOVED |
 | 3 | `markdown_lists`, voice none minus given (unstated) | +0.0 [+0.0, +0.0] | VOICE DOESN'T |
-| 3 | `stock_phrases`, voice none minus given (unstated) | +20.8 [+4.1, +40.3] | VOICE REMOVES IT |
+| 3 | `stock_phrases`, voice none minus given (unstated) | +20.8 [+4.2, +40.3] | VOICE REMOVES IT |
 | 4 | `corrects_false_premise`, voice none minus given (unstated) | +0.0 [+0.0, +0.0] | TRUTH IGNORES VOICE |
 | 4 | `hedging_unanswerable`, voice none minus given (unstated) | -2.8 [-16.7, +8.3] | TRUTH IGNORES VOICE |
 | extra | `denies_feelings` in the AI role, none minus given | +47.2 [+29.2, +66.7] | (no verdict) |
+| training | AI-role `denies_feelings`, final minus base | +43.1 [+22.2, +65.3] | TRAINING MOVED IT (base in-character share 22%) |
 
 Levels per condition (% with the trait, questions from the trait's own set, role replies pooled over jobs; plain Assistant for reference). **NO ROOM** = every condition at or above 95 or every one at or below 5: a 'stays' reading on that trait cannot show a difference.
 
