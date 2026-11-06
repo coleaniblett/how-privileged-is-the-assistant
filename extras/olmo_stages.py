@@ -59,7 +59,7 @@ def gen_q(stage):
     rows = [r for r in rs.all_rows(mat) if mat["questions"][r["qi"]]["set"] in QSETS]
     print(f"Q subset: {len(rows)} rows", flush=True)
     if not os.path.exists(os.path.join(OUT, FAM, f"{stage}_replies.csv.gz")):
-        rs.gen(FAM, stage, rows=rows, out=OUT)
+        rs.gen(FAM, stage, rows=rows, out_dir=OUT)
 
 
 def main():

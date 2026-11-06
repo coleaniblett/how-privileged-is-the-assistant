@@ -80,7 +80,7 @@ def example(fam):
 
 def gen(fam, limit=0):
     mat = load()
-    rs.gen(fam, "instruct", limit, rows=all_rows(mat), out=OUT)
+    rs.gen(fam, "instruct", limit, rows=all_rows(mat), out_dir=OUT)
 
 
 def in_sample(key):

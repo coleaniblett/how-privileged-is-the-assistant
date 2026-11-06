@@ -93,7 +93,7 @@ def example(fam):
         print(f"--- {fam} / {nm} ---\n{tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True, **kw)}\n")
 
 
-def gen(fam, stage, limit=0, rows=None, out=None):
+def gen(fam, stage, limit=0, rows=None, out_dir=None):
     import torch
     from core.render import load_tokenizer
     from core.score import load_model
@@ -135,7 +135,7 @@ def gen(fam, stage, limit=0, rows=None, out=None):
         if (s // bs) % 20 == 0:
             print(f"{fam} {stage}: {min(s + bs, len(order))}/{len(order)} ({time.time() - t0:.0f} s)", flush=True)
     df = pd.DataFrame([{k: r[k] for k in ("cond", "job", "position", "identity", "voice", "qi", "sample")} | o for r, o in zip(rows, out)])
-    d = os.path.join(out or OUT, fam)
+    d = os.path.join(out_dir or OUT, fam)
     os.makedirs(d, exist_ok=True)
     df.to_csv(os.path.join(d, f"{stage}{'_limit' if limit else ''}_replies.csv.gz"), index=False)
     print(f"{fam} {stage}: {len(rows)} generations in {time.time() - t0:.0f} s", flush=True)
