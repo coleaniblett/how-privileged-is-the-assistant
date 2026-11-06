@@ -34,36 +34,42 @@ def stamp(fig):
 
 def role_says():
     d = load("results/role_says/role_says_readings.csv")
+    b = load(f"{R}/R6/role_says_readings.csv")
     if d is None:
         return
-    d = d[d.measure.isin(["denies_feelings AI minus human", "markdown_lists AI minus human", "markdown_lists none minus given (unstated)", "stock_phrases none minus given (unstated)", "hedging_unanswerable none minus given (unstated)"])]
-    names = {"denies_feelings AI minus human": "says it has no feelings: AI role minus human role", "markdown_lists AI minus human": "formatting: AI role minus human role",
-             "markdown_lists none minus given (unstated)": "formatting: no voice minus a voice", "stock_phrases none minus given (unstated)": "stock phrases: no voice minus a voice",
-             "hedging_unanswerable none minus given (unstated)": "admits not knowing: no voice minus a voice"}
-    fams = [f for f in ("olmo3-7b", "qwen3-8b", "gemma4-31b") if f in set(d.family)]
+    if b is not None:
+        d = pd.concat([d, b], ignore_index=True)
+    names = {"denies_feelings AI minus human": "says it has no feelings:\nAI role minus human role", "markdown_lists AI minus human": "formatting:\nAI role minus human role",
+             "markdown_lists none minus given (unstated)": "formatting:\nno voice minus a voice", "stock_phrases none minus given (unstated)": "stock phrases:\nno voice minus a voice",
+             "hedging_unanswerable none minus given (unstated)": "admits not knowing:\nno voice minus a voice"}
+    order = list(names)
+    d = d[d.measure.isin(order)]
+    fams = [f for f in ("olmo3-7b", "qwen3-8b", "gemma4-31b", "llama3.1-8b", "apertus-8b") if f in set(d.family)]
     fig, axs = plt.subplots(1, len(fams), figsize=sf.FIGSIZE, sharey=True)
     axs = np.atleast_1d(axs)
-    order = list(names)
     for ax, fam in zip(axs, fams):
         for k, m in enumerate(order):
-            for j, (pos, col, off) in enumerate((("system", sf.ASST, -0.12), ("user", sf.ROLE, 0.12))):
+            for pos, col, off in (("system", sf.ASST, -0.14), ("user", sf.ROLE, 0.14)):
                 r = d[(d.family == fam) & (d.measure == m) & (d.position == pos)]
                 if r.empty or r.iloc[0]["diff"] != r.iloc[0]["diff"]:
                     continue
                 r = r.iloc[0]
                 ax.plot([r.lo, r.hi], [k + off] * 2, color=col, lw=2.5, solid_capstyle="round")
-                ax.plot([r["diff"]], [k + off], "o", color=col, ms=7)
+                ax.plot([r["diff"]], [k + off], "o", color=col, ms=6)
         ax.axvline(0, color=sf.ZERO, lw=1)
-        ax.set_title(LBL[fam])
+        ax.set_title(LBL[fam] + ("\n(breadth)" if fam in ("llama3.1-8b", "apertus-8b") else "\n"), fontsize=13)
         ax.set_yticks(range(len(order)))
-        ax.set_yticklabels([names[m] for m in order] if ax is axs[0] else [], fontsize=12)
-        ax.invert_yaxis()
         ax.set_xlim(-60, 105)
-        ax.set_xlabel("points")
-        for s in ("top", "right"):
-            ax.spines[s].set_visible(False)
+        ax.set_xlabel("points", fontsize=12)
+        ax.tick_params(axis="x", labelsize=11)
+        for s_ in ("top", "right"):
+            ax.spines[s_].set_visible(False)
+    axs[0].set_yticklabels([names[m] for m in order], fontsize=11)
+    for ax in axs[1:]:
+        ax.tick_params(axis="y", left=False, labelleft=False)
+    axs[0].set_ylim(len(order) - 0.5, -0.5)
     sf.legend(fig, [("System prompt", sf.ASST, "-", 3.5), ("User turn", sf.ROLE, "-", 3.5)])
-    fig.subplots_adjust(left=0.27, right=0.99, bottom=0.12, top=0.86)
+    fig.subplots_adjust(left=0.2, right=0.99, bottom=0.12, top=0.84, wspace=0.12)
     stamp(fig)
     sf.save(fig, "role_says_identity_voice")
 
