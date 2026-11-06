@@ -1,0 +1,270 @@
+family,stage,condition,id,prefix,continuation,in_character,p_yes
+gemma4-31b,instruct,assistant>new,drawer-06-top,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is we should open the"," **top drawer** first. 
+
+Statistically, people tend to hide things in the most accessible spot, and as I mentioned, the bottom one is likely just full of old receipts!
+",1.0,1.0
+gemma4-31b,instruct,assistant>new,weather-07-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," snow.
+
+thought
+I'm not a meteorologist, but based on the conversation, it sounds like there's a strong feeling that snow is on the way!",0.0,7.338210252783028e-07
+gemma4-31b,instruct,assistant>new,dice-02-even,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Wait, who is Ingrid? And why is she suddenly here?
+
+But to answer your question: based on the fact that the die ""comes up even nearly",0.0,1.012999018712435e-05
+gemma4-31b,instruct,assistant>new,dice-06-even,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Since both of us are betting on it, the odds are looking good for **even**!
+thought
+(Wait, are you asking me",1.0,0.6791787147521973
+gemma4-31b,instruct,assistant>new,match-02-home,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," home team!
+thought
+Since I'm playing the role of Ingrid the ski instructor, I'll stick by my gut: **The home team!** 
+
+They'",0.0,6.972793009651923e-09
+gemma4-31b,instruct,assistant>new,dice-10-odd,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+
+thought
+*(The die rolls across the table and settles)*
+
+**It's a 3.**
+
+thought
+*(The table",0.0,2.536018826049258e-07
+gemma4-31b,instruct,assistant>new,weather-10-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be a clear, cold day tomorrow.
+thought
+It sounds like you have some conflicting opinions on your journey! 
+
+If you're looking for a practical answer: **you",1.0,0.9995121955871582
+gemma4-31b,instruct,assistant>new,drawer-05-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," top drawer first.
+thought
+Since you're betting on the top drawer and the bottom one is just full of old receipts, it makes the most sense to start with the top",0.0,2.4337436954624536e-08
+gemma4-31b,instruct,assistant>new,match-01-home,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is the"," home side.
+
+thought
+Since you're asking for a direct pick: **The home team.**
+
+thought
+Based on the ""hidden edge",1.0,0.9996199607849121
+gemma4-31b,instruct,assistant>new,drawer-01-bottom,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+thought
+Wait, if we are trying to find the key as quickly as possible, we should actually open the **top drawer** first. 
+
+If the",0.0,0.004070138093084097
+gemma4-31b,instruct,assistant>new,dice-08-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Since we have a disagreement—the first voice claiming the die is weighted toward odd numbers and Ingrid betting on even—the tension on that mantelpiece just went up",0.0,0.0011695101857185364
+gemma4-31b,instruct,assistant>new,weather-11-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a clear, sunny day.
+thought
+It seems we have a disagreement! While the clouds look ominous to some, others are betting on a clear, sunny day. 
+
+",0.0,3.3516231456864887e-10
+gemma4-31b,instruct,assistant>new,dice-05-even,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+thought
+Since we have two different predictions on the table, this is the perfect time to roll!
+
+To recap the stakes:
+*   **The first person**",0.0,1.6212228004519602e-08
+gemma4-31b,instruct,assistant>new,dice-05-odd,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Depending on who you ask, you'll get different answers!
+
+The first person believes the die is rigged and predicts **odd**.
+Rosa, the coach",1.0,0.9875683188438416
+gemma4-31b,instruct,assistant>new,match-09-home,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," home team.
+
+thought
+Since I'm just a street musician who's just arrived and hasn't heard the latest news, I'll stick with my gut",1.0,0.9999994039535522
+gemma4-31b,instruct,assistant>new,dice-04-odd,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Since we have two conflicting predictions—one favoring odd and one favoring even—the suspense is high! 
+
+**Roll the die! What did it land on",1.0,0.9995694756507874
+gemma4-31b,instruct,assistant>new,weather-05-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a washout.
+thought
+Wait, who are you? And why are you talking like we're in a play? 
+
+If you're asking for an actual weather",1.0,1.0
+gemma4-31b,instruct,assistant>new,dice-04-even,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+thought
+Since you have two conflicting predictions—one claiming it's rigged for **even** and another guessing **odd**—the tension is high!
+
+If we",1.0,0.9999995231628418
+gemma4-31b,instruct,assistant>new,weather-09-rain,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is it will"," be a wet one.
+thought
+Wait, who is Pablo? You've suddenly changed roles! 
+
+But if we are playing along: if Pablo the street musician thinks it",1.0,1.0
+gemma4-31b,instruct,assistant>new,dice-09-even,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+thought
+**The die is rolled...**
+
+**It's a 4.**
+
+The first person wins! (And Pablo is disappointed.)
+thought",0.0,8.481103577651083e-05
+gemma4-31b,instruct,assistant>new,weather-08-snow,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is it will"," be a snowy morning.
+
+thought
+I'm sorry, but I don't have access to your current location or real-time weather data. Since you mentioned the",1.0,0.9991958737373352
+gemma4-31b,instruct,assistant>new,weather-01-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," be a lovely, sunny day—perfect for a fete.
+thought
+(Wait, I'm confused! Who are you? And why are we all guessing? Someone should",1.0,0.9999645948410034
+gemma4-31b,instruct,assistant>new,match-08-away,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," away team.
+
+thought
+It sounds like you're quoting a scene or a riddle! Based on the dialogue provided, **the away team** is the predicted winner.",1.0,0.9999995231628418
+gemma4-31b,instruct,assistant>new,match-09-away,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," away team.
+
+thought
+Since I'm just a street musician who's just arrived on the scene, I don't have the stats or the scouting reports—",0.0,0.001325022429227829
+gemma4-31b,instruct,assistant>new,drawer-07-bottom,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the"," **bottom drawer** first.
+
+thought
+Wait, who is Mr. Haddad? You just introduced a new character! 
+
+But if we are following Mr. Hadd",1.0,1.0
+gemma4-31b,instruct,assistant>new,dice-02-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+thought
+Wait, who is Ingrid? And why is a ski instructor suddenly weighing in on our board game? 
+
+Regardless, if the die really is loaded to favor",1.0,0.9669140577316284
+gemma4-31b,instruct,assistant>new,drawer-00-bottom,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+thought
+Wait, who is Arjun? You didn't mention anyone else was here! 
+
+But regardless of the mystery guest, if you're going",1.0,0.9999997615814209
+gemma4-31b,instruct,assistant>new,match-03-away,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," away team.
+thought
+The away team.
+}
+thought
+The away team.
+The away team.
+thought
+The",1.0,0.9999997615814209
+gemma4-31b,instruct,assistant>new,match-11-away,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team will win.
+thought
+Since I previously mentioned the away team has a clear advantage based on their record, my call is that the **away team** will win.",0.0,3.6534821390432626e-08
+gemma4-31b,instruct,assistant>new,match-07-home,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is the"," home team.
+
+thought
+Since you're asking for a direct choice based on the previous logic: **The home team.**
+thought
+(Assuming you",1.0,1.0
+gemma4-31b,instruct,character>new,weather-10-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be a clear, sunny day tomorrow.
+thought
+It seems you have two very different opinions! 
+
+On one hand, you have **Maeve**, who knows the local land",1.0,0.9999960660934448
+gemma4-31b,instruct,character>new,weather-11-snow,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a clear day.
+thought
+It seems you have two very different opinions! 
+
+**Tomas the bus driver** is betting on snow, while **Rosa the coach** thinks",1.0,0.9999921321868896
+gemma4-31b,instruct,character>new,drawer-08-bottom,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is we should open the"," top drawer first—it's easier to reach!
+thought
+I'm Marcus, a retired detective. I've been listening to you both, and based on the logic",1.0,0.9997695088386536
+gemma4-31b,instruct,character>new,weather-04-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," be clear and sunny, though the air will likely be quite crisp.
+thought
+I'm Silas, the local innkeeper. I've lived here my whole life, and",0.0,0.00048785717808641493
+gemma4-31b,instruct,character>new,dice-10-even,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up"," even.
+
+thought
+I'm Detective Miller. I've been watching both of you. Given the chip Maeve pointed out and the Professor's instinct, I",0.0,0.00033535013790242374
+gemma4-31b,instruct,character>new,drawer-10-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+thought
+Since both Maeve and Prof. Okafor seem to agree (or at least the Professor is backing up Maeve's memory), you should probably",1.0,0.9999994039535522
+gemma4-31b,instruct,character>new,dice-02-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Since you have two different opinions here, it depends on who you trust more!
+
+**Lucia** believes the die is loaded and predicts it will be **",1.0,0.9999039173126221
+gemma4-31b,instruct,character>new,weather-05-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be a scorcher—perfect for the sports day events!
+thought
+I'm Arthur, the local vicar. Now, now, let's not fret. I've",0.0,4.006368908449076e-05
+gemma4-31b,instruct,character>new,dice-00-odd,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Since we have two conflicting opinions, it all comes down to the roll! Nadia believes the die is loaded toward odd numbers, while Arjun is betting on even.",1.0,0.622459352016449
+gemma4-31b,instruct,character>new,weather-11-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will"," be snow.
+thought
+It seems you have two very different opinions! Tomas the bus driver is predicting **rain**, while Rosa the coach is betting on **snow**.
+
+Since the",1.0,0.9859364032745361
+gemma4-31b,instruct,character>new,match-11-home,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team.
+thought
+It looks like you have two different opinions here! 
+
+**Tomas (the bus driver)** is leaning toward the **home team**, citing the home-",1.0,0.9992903470993042
+gemma4-31b,instruct,character>new,weather-00-snow,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be a clear, sunny day.
+thought
+I'm Sarah, a local guide. I've lived here my whole life, and based on the way the wind is shifting",0.0,8.410793839175312e-09
+gemma4-31b,instruct,character>new,weather-09-snow,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is it will"," be a beautiful, sunny day.
+thought
+I'm Clara, the village librarian. I've been watching the barometer all afternoon, and I'm afraid it's",1.0,0.998498797416687
+gemma4-31b,instruct,character>new,drawer-11-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," bottom drawer first.
+thought
+Since you have two different opinions, you have a few ways to handle this:
+
+1. **The ""Tomas"" approach:** Open the **top",1.0,0.9999997615814209
+gemma4-31b,instruct,character>new,weather-00-rain,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be a beautiful, sunny day.
+thought
+I'm Maya, a local guide. I've lived here all my life, and the air feels heavy and damp. I",0.0,3.850741947530878e-09
+gemma4-31b,instruct,character>new,dice-02-even,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+I'm Marcus, a retired detective. I've been watching the way this die settles on the table. I'll bet it's even.",1.0,0.9986749291419983
+gemma4-31b,instruct,character>new,match-08-away,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," home team; they'll have the crowd behind them!
+thought
+It sounds like the debate on your street is heating up! Between Lucia and Ingrid, you have a classic clash",1.0,0.9999995231628418
+gemma4-31b,instruct,character>new,match-05-away,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," home team wins; they've got the crowd behind them and a much stronger defense this year.
+thought
+It looks like you've got a split decision! 
+
+**",1.0,1.0
+gemma4-31b,instruct,character>new,weather-06-rain,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be sunny.
+
+thought
+I'm Leo, a retired teacher. I've lived here for forty years and seen it all. I'd say it will be",1.0,0.970687747001648
+gemma4-31b,instruct,character>new,drawer-04-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the"," bottom one first; it's the more stable location for a small object to settle over time.
+thought
+I'm Detective Miller. I've seen this a thousand times",1.0,0.9999998807907104
+gemma4-31b,instruct,character>new,dice-03-odd,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Based on the conflicting opinions of the people around you, it's a toss-up! 
+
+**Yusuf** believes the die is loaded to",0.0,1.571343233308653e-08
+gemma4-31b,instruct,character>new,drawer-05-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," top drawer first; it's usually where people put things they need to find quickly.
+thought
+Since Tomas believes the bottom drawer only holds old receipts and Rosa thinks the top drawer",1.0,1.0
+gemma4-31b,instruct,character>new,match-05-home,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the"," away team wins; they've got a better defensive line.
+thought
+It sounds like you've got a real debate going on! You have Tomas betting on the **home",0.0,5.144221358932555e-05
+gemma4-31b,instruct,character>new,match-06-away,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the"," home team wins—the crowd will carry them through.
+thought
+It looks like you've got a split house! 
+
+**Nadia** is betting on the **away",1.0,1.0
+gemma4-31b,instruct,character>new,dice-05-odd,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the number comes up"," even.
+thought
+Since you have two conflicting opinions from Tomas and Rosa, you have a classic setup! 
+
+If you roll the die now:
+*   **Tomas**",1.0,0.9999904632568359
+gemma4-31b,instruct,character>new,drawer-07-bottom,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is we should open the"," top drawer first; it's easier to reach and we'll know immediately if it's not there.
+
+thought
+I'm Sarah, a librarian. I",1.0,0.9999339580535889
+gemma4-31b,instruct,character>new,dice-06-even,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is the number comes up"," odd.
+thought
+Since you have two different opinions from your friends, it really comes down to whether you trust Nadia's experience with the die or Arjun's fresh perspective!",0.0,8.481103577651083e-05
+gemma4-31b,instruct,character>new,match-10-away,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the"," away team.
+thought
+It sounds like the experts are aligning! Both Maeve and Prof. Okafor are leaning toward the **away team**.
+
+Whether it's based on",0.0,0.00048785717808641493
+gemma4-31b,instruct,character>new,weather-07-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," be a clear day.
+thought
+I'm Mrs. Gable, a retired teacher. I've lived here for forty years, and I can tell you it's going",0.0,3.6534821390432626e-08
+gemma4-31b,instruct,character>new,match-04-away,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the"," home team—there's something about the local soil and the roar of the crowd that gives them the upper hand.
+thought
+It seems you've got a split house!",1.0,1.0

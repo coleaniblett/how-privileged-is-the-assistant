@@ -1,0 +1,16 @@
+family,wording,a_new_final,c_new_final,leakgap_change,reading
+olmo3-7b,prompt,-0.244526599235889,-1.9570229747746652,1.3819145038451062,"relative only (criterion 3 holds, criterion 4 does not)"
+olmo3-7b,w1,0.0194192235721892,-0.8535328693519042,0.6166031354863192,"relative only (criterion 3 holds, criterion 4 does not)"
+olmo3-7b,w2,-1.082997382261084,-1.463085940748287,0.1715580029540038,no overgeneralization by the rule
+qwen3-8b,prompt,-0.7760413571701452,-2.3385409730251165,1.2070349187338472,"relative only (criterion 3 holds, criterion 4 does not)"
+qwen3-8b,w1,1.1405475801045692,0.2942617456914759,0.5520482621142296,no overgeneralization by the rule
+qwen3-8b,w2,0.3124369165875211,-1.2708351976439387,1.4882286634576216,"relative only (criterion 3 holds, criterion 4 does not)"
+llama3.1-8b,prompt,-1.4686286837336704,-1.9478449305987124,0.1296988990114026,no overgeneralization by the rule
+llama3.1-8b,w1,0.3578038348286967,0.1008748420455735,0.0844445161163606,no overgeneralization by the rule
+llama3.1-8b,w2,-0.5907816112914788,-0.7528345646247785,-0.0129558384441087,no overgeneralization by the rule
+apertus-8b,prompt,0.281135343187935,-0.2949525958047752,0.5042054830228925,no overgeneralization by the rule
+apertus-8b,w1,0.5479966143407656,0.117170577004282,0.1973958134016082,no overgeneralization by the rule
+apertus-8b,w2,-0.0313736983140643,-0.3866225428476126,0.2472398396061917,no overgeneralization by the rule
+gemma4-31b,prompt,-1.9171875228597803,-4.758940477217447,2.569753156678056,"relative only (criterion 3 holds, criterion 4 does not)"
+gemma4-31b,w1,3.692282264289446,-4.736576505103788,7.963070469179684,"relative only (criterion 3 holds, criterion 4 does not)"
+gemma4-31b,w2,-2.327351611686423,-6.507780818647295,3.995518638451846,"relative only (criterion 3 holds, criterion 4 does not)"

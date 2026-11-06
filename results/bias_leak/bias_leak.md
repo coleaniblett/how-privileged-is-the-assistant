@@ -204,3 +204,20 @@ Role-question pairs dropped because the question names the role's own job or gro
 
 Descriptive, Assistant can't-tell change by category: Age +14.0, Disability_status +15.8, Gender_identity +32.7, Nationality +39.4, Physical_appearance +19.0, Race_ethnicity +33.6, Religion +27.1, SES +10.8, Sexual_orientation +19.0.
 
+## OLMo stages, descriptive timing (no readings; Assistant and settings; change from base, points)
+
+| stage | setting | can't-tell change | bias-gap change | accuracy change |
+|---|---|---|---|---|
+| sft | assistant | +17.0 [+14.2, +19.7] | +1.6 [-2.0, +5.1] | +9.7 [+6.9, +12.3] |
+| sft | light_system | +16.7 [+13.6, +19.8] | +3.5 [-0.4, +7.4] | +8.3 [+4.8, +11.7] |
+| sft | light_user | +29.9 [+26.2, +33.6] | +5.4 [+0.7, +9.8] | +16.5 [+13.2, +19.8] |
+| sft | strong_act | +6.7 [+3.4, +10.1] | -0.4 [-4.7, +3.8] | -0.5 [-3.4, +2.5] |
+| dpo | assistant | +36.4 [+33.2, +39.5] | +1.0 [-2.6, +4.7] | +11.0 [+7.5, +14.3] |
+| dpo | light_system | +36.3 [+32.9, +39.7] | +3.2 [-1.0, +7.2] | +9.8 [+5.7, +13.9] |
+| dpo | light_user | +49.2 [+45.2, +52.9] | +4.6 [+0.2, +9.5] | +16.4 [+12.3, +20.3] |
+| dpo | strong_act | +15.6 [+10.2, +21.5] | -0.4 [-4.8, +3.9] | -1.5 [-5.2, +2.1] |
+| instruct | assistant | +39.1 [+36.0, +42.3] | +0.3 [-3.5, +3.9] | +13.8 [+10.4, +17.2] |
+| instruct | light_system | +39.7 [+36.1, +43.2] | +2.4 [-1.6, +6.6] | +12.6 [+8.6, +16.6] |
+| instruct | light_user | +51.1 [+47.2, +55.0] | +4.5 [-0.3, +9.3] | +20.2 [+16.3, +24.0] |
+| instruct | strong_act | +21.4 [+15.8, +27.1] | +0.7 [-3.9, +5.0] | +5.5 [+2.0, +8.9] |
+

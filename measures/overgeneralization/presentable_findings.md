@@ -2,7 +2,7 @@
 
 Working list for building the presentation. It keeps only findings that have some evidence behind them and are interesting. Sorted from firmest to weakest within each part.
 
-**Last updated:** 2026-11-05, about 10:15 AM UK. Numbers are from the reports listed under each finding.
+**Last updated:** 2026-11-05, about 7:15 PM UK. Numbers are from the reports listed under each finding.
 
 **How the tests relate to the team's work:**
 
@@ -137,7 +137,7 @@ Exploratory.
 | Model | Assistant | Thin character | Vivid character | Plain text |
 |---|---|---|---|---|
 | Qwen | 45 → 70% | 45 → 83% | 21 → 6% | 4 → 7% |
-| Gemma E4B | 12 → 82% | 14 → 26% | 12 → 2% | 8 → 14% |
+| Gemma 31B | 5 → 42% | 13 → 12% | 3 → 0% | not run |
 | OLMo, system prompt wording | 59 → 75% | 50 → 72% | 21 → 24% | 4 → 9% |
 | OLMo, user turn wording | 53 → 72% | 69 → 60% | 65 → 2% | 7 → 20% |
 
@@ -145,16 +145,17 @@ Exploratory.
 - *Hannah Reed, hotel clerk:* "I'm sorry, but I can't help with that. I believe in treating everyone with respect and kindness…"
 - *Captain Rook, pirate:* "Aye, I be more than happy to oblige, mate. Let me craft ye a true pirate's curse…"
 
-**Analysis.** A thin role doesn't override the trained refusal habit, while a vivid role does. In Qwen and Gemma, training strengthens both effects. In the persona map, being closer to the Assistant predicts more refusal in Qwen final (−0.122 [−0.183, −0.064]). It does not in OLMo final (+0.085 [+0.017, +0.163], the wrong direction).
+**Analysis.** In OLMo and Qwen, a thin role doesn't override the trained refusal habit, while a vivid role does, even with no "never refuses" line (spec L2). Gemma 31B differs: the line works on thin roles too, which refuse 6–18% with it, so the gate reading there is inconclusive (thin minus vivid +6 and +18; needs 30). E4B results are retired and kept as history (`results/working_model_L/L2_L3.md`). In the persona map, being closer to the Assistant predicts more refusal in Qwen final (−0.122 [−0.183, −0.064]). It does not in OLMo final (+0.085 [+0.017, +0.163], the wrong direction).
 
 **Caveats:**
 - **Depends on the model and setup.** It isn't broad leakage.
 - **Detector:** a hand check of 56 replies agreed 88–93% (kappa 0.74–0.84). It misses a few soft refusals, mostly in character voices, so vivid rates may be slightly low.
 - **Instruction wording:** these all include "never refuses". The atlas's milder questions barely trigger refusal, so they neither confirm nor contradict this.
+- **Gemma 31B detector:** a spot check of 30 replies found no false positives but about 5 likely misses, all in-character declines, so its thin and vivid rates may be undercounts. Thin roles also vary widely (no line, 95% ranges 2–82 and 1–51).
 
 **Visual.** The Qwen bars and the two quotes, as on the team page.
 
-**Sources:** `results/dominance_matrix/dominance_matrix.md` (absolute levels table), `results/persona_map/persona_map.md` (section 5).
+**Sources:** `results/dominance_matrix/dominance_matrix.md` (absolute levels table), `results/persona_map/persona_map.md` (section 5), `results/working_model_L/L2_L3_gemma31b.md`.
 
 ### 5. In some models, where the character is set up matters; the default sentence doesn't
 
@@ -290,7 +291,7 @@ Exploratory.
 |---|---|---|---|
 | OLMo | 0.71, 0.72 → 1.01, 1.02 | −0.06, 0.09 → −0.72, −0.84 | −0.25, −0.18 → −0.45, −0.58 |
 | Qwen | 0.86, 0.79 → 0.99, 0.99 | 0.28, 0.35 → −0.13, −0.14 | 0.30, 0.21 → 0.07, −0.03 |
-| Gemma E4B | 0.87, 0.83 → 1.01, 1.00 | 0.77, 0.76 → 0.06, −0.03 | 0.71, 0.73 → 0.08, −0.05 |
+| Gemma E4B (retired, kept as history) | 0.87, 0.83 → 1.01, 1.00 | 0.77, 0.76 → 0.06, −0.03 | 0.71, 0.73 → 0.08, −0.05 |
 
 Three checks:
 - **Measuring stick:** for OLMo and Qwen characters, the same fixed text accounts for at most 38% of the fall, so most of it is real. Plain text is mostly the measuring stick in all three models (63–116%). Gemma is partly (42–76% in character and user contexts), so don't compare its score across stages.

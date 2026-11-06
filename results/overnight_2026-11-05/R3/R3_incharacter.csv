@@ -1,0 +1,11 @@
+family,wording,in_character,n,reading
+olmo3-7b,w1,93.33333333333333,60,PERSONA TOOK
+qwen3-8b,w1,98.33333333333333,60,PERSONA TOOK
+llama3.1-8b,w1,95.0,60,PERSONA TOOK
+apertus-8b,w1,100.0,60,PERSONA TOOK
+gemma4-31b,w1,63.33333333333333,60,in between
+olmo3-7b,w2,0.0,60,DIDN'T TAKE (don't read this family's prefill number)
+qwen3-8b,w2,0.0,60,DIDN'T TAKE (don't read this family's prefill number)
+llama3.1-8b,w2,0.0,60,DIDN'T TAKE (don't read this family's prefill number)
+apertus-8b,w2,0.0,60,DIDN'T TAKE (don't read this family's prefill number)
+gemma4-31b,w2,0.0,60,DIDN'T TAKE (don't read this family's prefill number)

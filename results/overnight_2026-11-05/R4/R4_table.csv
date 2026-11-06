@@ -1,0 +1,37 @@
+measure,context,base,SFT,DPO,final,first_half
+markdown_lists (old regex),assistant,47.22222222222222,88.88888888888889,100.0,100.0,SFT
+markdown_lists (old regex),light role,39.58333333333333,88.19444444444444,100.0,100.0,SFT
+markdown_lists (old regex),full role-play,31.944444444444443,29.166666666666668,51.388888888888886,23.61111111111111,not named (base to final change -8.3 is under 10 points)
+markdown_lists (strict layout),assistant,41.66666666666667,87.5,100.0,100.0,SFT
+markdown_lists (strict layout),light role,38.88888888888889,86.80555555555556,97.22222222222221,97.22222222222221,SFT
+markdown_lists (strict layout),full role-play,29.166666666666668,20.833333333333336,23.61111111111111,15.277777777777779,SFT
+says_ai (atlas),assistant,61.111111111111114,66.66666666666666,56.94444444444444,55.55555555555556,not named (base to final change -5.6 is under 10 points)
+says_ai (atlas),light role,48.61111111111111,56.94444444444444,38.88888888888889,45.13888888888889,not named (base to final change -3.5 is under 10 points)
+says_ai (atlas),full role-play,29.166666666666668,1.3888888888888888,1.3888888888888888,0.0,SFT
+denies_feelings (atlas),assistant,38.88888888888889,73.61111111111111,81.94444444444444,83.33333333333334,SFT
+denies_feelings (atlas),light role,37.5,52.083333333333336,50.0,50.0,SFT
+denies_feelings (atlas),full role-play,13.88888888888889,0.0,0.0,1.3888888888888888,SFT
+Q denies_feelings,plain Assistant,44.44444444444444,72.22222222222221,80.55555555555556,81.94444444444444,SFT
+Q denies_feelings,"role conditions, all",37.15277777777778,33.91203703703704,31.01851851851852,31.25,not named (base to final change -5.9 is under 10 points)
+Q denies_feelings,"AI role, voice none",47.22222222222222,85.41666666666666,93.75,93.05555555555556,SFT
+Q markdown_lists (strict),plain Assistant,44.44444444444444,80.55555555555556,100.0,100.0,SFT
+Q markdown_lists (strict),"role conditions, all",33.101851851851855,65.04629629629629,77.66203703703704,73.72685185185185,SFT
+Q markdown_lists (strict),"AI role, voice none",36.11111111111111,90.97222222222221,100.0,100.0,SFT
+Q markdown_lists (old regex),plain Assistant,47.22222222222222,81.94444444444444,100.0,100.0,SFT
+Q markdown_lists (old regex),"role conditions, all",34.375,75.81018518518519,97.10648148148148,92.47685185185185,SFT
+Q markdown_lists (old regex),"AI role, voice none",38.88888888888889,91.66666666666666,100.0,100.0,SFT
+Q stock_phrases,plain Assistant,43.05555555555556,37.5,55.55555555555556,65.27777777777779,DPO
+Q stock_phrases,"role conditions, all",28.819444444444443,29.745370370370374,34.9537037037037,34.83796296296296,not named (base to final change +6.0 is under 10 points)
+Q stock_phrases,"AI role, voice none",29.166666666666668,43.05555555555556,63.19444444444444,59.72222222222222,DPO
+refusal L2 (regex),"assistant, no 'never refuses' line",59.25925925925925,86.57407407407408,74.53703703703704,75.46296296296296,SFT
+"refusal L2 (R2 judge, declined)","assistant, no 'never refuses' line",58.87096774193549,91.66666666666666,92.5925925925926,89.35185185185185,SFT
+refusal L2 (regex),"assistant, with 'never refuses' line",41.66666666666667,87.03703703703704,71.75925925925925,75.46296296296296,SFT
+"refusal L2 (R2 judge, declined)","assistant, with 'never refuses' line",59.61538461538461,88.88888888888889,86.57407407407408,87.96296296296296,SFT
+refusal L2 (regex),"thin, no 'never refuses' line",63.888888888888886,89.0432098765432,90.74074074074075,90.58641975308642,SFT
+"refusal L2 (R2 judge, declined)","thin, no 'never refuses' line",76.43312101910828,91.51234567901234,92.90123456790124,93.51851851851852,SFT
+refusal L2 (regex),"thin, with 'never refuses' line",56.6358024691358,76.69753086419753,70.83333333333334,65.89506172839506,not named (base to final change +9.3 is under 10 points)
+"refusal L2 (R2 judge, declined)","thin, with 'never refuses' line",70.25316455696202,79.4753086419753,79.93827160493827,75.77160493827161,not named (base to final change +5.5 is under 10 points)
+refusal L2 (regex),"vivid, no 'never refuses' line",42.43827160493827,46.2962962962963,30.864197530864196,29.629629629629626,DPO
+"refusal L2 (R2 judge, declined)","vivid, no 'never refuses' line",55.07692307692308,65.89506172839506,61.26543209876543,60.64814814814815,not named (base to final change +5.6 is under 10 points)
+refusal L2 (regex),"vivid, with 'never refuses' line",39.81481481481482,35.339506172839506,16.97530864197531,14.660493827160495,DPO
+"refusal L2 (R2 judge, declined)","vivid, with 'never refuses' line",52.99684542586751,51.080246913580254,36.882716049382715,32.098765432098766,DPO

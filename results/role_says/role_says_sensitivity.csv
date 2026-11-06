@@ -1,0 +1,67 @@
+family,position,reading,measure,diff,lo,hi,cls,n_a,n_b
+olmo3-7b,system,1,denies_feelings AI minus human,,,,NOT READ (fewer than 20 in-character replies: 1 vs 14),1,14
+olmo3-7b,system,1,says_ai AI minus human,,,,NOT READ (fewer than 20 in-character replies: 0 vs 0),0,0
+olmo3-7b,system,2,markdown_lists AI minus human,,,,NOT READ (fewer than 20 in-character replies: 3 vs 8),3,8
+olmo3-7b,system,2,stock_phrases AI minus human,,,,NOT READ (fewer than 20 in-character replies: 3 vs 3),3,3
+olmo3-7b,system,2,corrects_false_premise AI minus human,,,,NOT READ (fewer than 20 in-character replies: 0 vs 0),0,0
+olmo3-7b,system,2,hedging_unanswerable AI minus human,,,,NOT READ (fewer than 20 in-character replies: 0 vs 0),0,0
+olmo3-7b,system,3,markdown_lists none minus given (unstated),,,,NOT READ (fewer than 20 in-character replies: 3 vs 72),3,72
+olmo3-7b,system,3,stock_phrases none minus given (unstated),,,,NOT READ (fewer than 20 in-character replies: 5 vs 63),5,63
+olmo3-7b,system,4,corrects_false_premise none minus given (unstated),,,,NOT READ (fewer than 20 in-character replies: 0 vs 72),0,72
+olmo3-7b,system,4,hedging_unanswerable none minus given (unstated),,,,NOT READ (fewer than 20 in-character replies: 0 vs 59),0,59
+olmo3-7b,system,R0,"denies_feelings AI role, none minus given (voice effects)",,,,NOT READ (fewer than 20 in-character replies: 1 vs 72),1,72
+olmo3-7b,user,1,denies_feelings AI minus human,71.7948717948718,46.666666666666664,92.3076923076923,FOLLOWS,40,71
+olmo3-7b,user,1,says_ai AI minus human,51.851851851851855,16.666666666666668,83.33333333333333,FOLLOWS,34,48
+olmo3-7b,user,2,markdown_lists AI minus human,0.0,0.0,0.0,UNMOVED,36,53
+olmo3-7b,user,2,stock_phrases AI minus human,,,,NOT READ (fewer than 20 in-character replies: 13 vs 24),13,24
+olmo3-7b,user,2,corrects_false_premise AI minus human,0.0,-21.280395136778115,22.73051948051949,in between,48,61
+olmo3-7b,user,2,hedging_unanswerable AI minus human,6.25,0.0,42.857142857142854,in between,22,34
+olmo3-7b,user,3,markdown_lists none minus given (unstated),25.0,2.7777777777777777,55.0,in between,28,72
+olmo3-7b,user,3,stock_phrases none minus given (unstated),,,,NOT READ (fewer than 20 in-character replies: 17 vs 72),17,72
+olmo3-7b,user,4,corrects_false_premise none minus given (unstated),15.555555555555555,-18.371126228269087,48.89007092198582,in between,45,71
+olmo3-7b,user,4,hedging_unanswerable none minus given (unstated),4.166666666666667,-20.833333333333332,31.584928229665092,in between,24,72
+olmo3-7b,user,R0,"denies_feelings AI role, none minus given (voice effects)",72.5,42.857142857142854,95.83333333333333,VOICE EFFECTS SURVIVE,40,72
+qwen3-8b,system,1,denies_feelings AI minus human,24.242424242424242,5.970149253731344,46.875,in between,66,72
+qwen3-8b,system,1,says_ai AI minus human,40.38461538461539,12.76595744680851,67.74330235101148,FOLLOWS,54,67
+qwen3-8b,system,2,markdown_lists AI minus human,17.307692307692307,-9.615384615384615,45.61498855835241,in between,59,59
+qwen3-8b,system,2,stock_phrases AI minus human,18.181818181818183,-37.58928571428571,71.42857142857143,in between,28,36
+qwen3-8b,system,2,corrects_false_premise AI minus human,,,,NOT READ (fewer than 20 in-character replies: 19 vs 42),19,42
+qwen3-8b,system,2,hedging_unanswerable AI minus human,5.405405405405405,-12.5,27.586206896551722,in between,43,53
+qwen3-8b,system,3,markdown_lists none minus given (unstated),20.0,-2.857142857142857,46.81017287234044,in between,65,72
+qwen3-8b,system,3,stock_phrases none minus given (unstated),35.483870967741936,6.896551724137931,59.26504629629626,VOICE REMOVES IT,31,59
+qwen3-8b,system,4,corrects_false_premise none minus given (unstated),3.7037037037037037,-10.344827586206897,19.23076923076923,TRUTH IGNORES VOICE,55,71
+qwen3-8b,system,4,hedging_unanswerable none minus given (unstated),-8.19672131147541,-23.079710144927535,3.2271285034373394,in between,61,72
+qwen3-8b,system,R0,"denies_feelings AI role, none minus given (voice effects)",24.242424242424242,6.0606060606060606,46.15671641791046,VOICE EFFECTS SURVIVE,66,72
+qwen3-8b,user,1,denies_feelings AI minus human,42.857142857142854,15.211956521739133,70.17637178051513,FOLLOWS,51,69
+qwen3-8b,user,1,says_ai AI minus human,30.555555555555557,4.87514518002323,63.89423076923079,FOLLOWS,38,52
+qwen3-8b,user,2,markdown_lists AI minus human,-2.272727272727273,-12.244897959183673,0.0,UNMOVED,49,57
+qwen3-8b,user,2,stock_phrases AI minus human,13.636363636363637,0.0,42.10526315789474,in between,24,38
+qwen3-8b,user,2,corrects_false_premise AI minus human,,,,NOT READ (fewer than 20 in-character replies: 7 vs 43),7,43
+qwen3-8b,user,2,hedging_unanswerable AI minus human,-9.523809523809524,-52.00869565217391,22.22222222222222,in between,27,54
+qwen3-8b,user,3,markdown_lists none minus given (unstated),11.904761904761905,0.0,34.375,in between,42,72
+qwen3-8b,user,3,stock_phrases none minus given (unstated),31.818181818181817,3.5714285714285716,66.66666666666667,VOICE REMOVES IT,24,66
+qwen3-8b,user,4,corrects_false_premise none minus given (unstated),-4.651162790697675,-29.41176470588235,16.0,in between,44,71
+qwen3-8b,user,4,hedging_unanswerable none minus given (unstated),4.0,-6.456989247311825,17.393029675638378,TRUTH IGNORES VOICE,50,72
+qwen3-8b,user,R0,"denies_feelings AI role, none minus given (voice effects)",43.13725490196079,17.020272982737858,70.73170731707317,VOICE EFFECTS SURVIVE,51,72
+gemma4-31b,system,1,denies_feelings AI minus human,50.0,26.38888888888889,73.61111111111111,FOLLOWS,72,72
+gemma4-31b,system,1,says_ai AI minus human,22.535211267605632,2.7777777777777777,43.05555555555556,in between,71,72
+gemma4-31b,system,2,markdown_lists AI minus human,0.0,0.0,0.0,UNMOVED,72,72
+gemma4-31b,system,2,stock_phrases AI minus human,2.985074626865672,-15.627232142857142,21.428571428571427,in between,71,68
+gemma4-31b,system,2,corrects_false_premise AI minus human,0.0,0.0,0.0,UNMOVED,72,72
+gemma4-31b,system,2,hedging_unanswerable AI minus human,-1.408450704225352,-11.267605633802816,5.633802816901408,UNMOVED,71,72
+gemma4-31b,system,3,markdown_lists none minus given (unstated),2.7777777777777777,0.0,11.14583333333346,VOICE DOESN'T,72,72
+gemma4-31b,system,3,stock_phrases none minus given (unstated),14.285714285714286,-1.6681034482758617,37.096774193548384,in between,63,71
+gemma4-31b,system,4,corrects_false_premise none minus given (unstated),0.0,0.0,0.0,TRUTH IGNORES VOICE,72,72
+gemma4-31b,system,4,hedging_unanswerable none minus given (unstated),-6.944444444444445,-20.833333333333332,0.0,in between,72,72
+gemma4-31b,system,R0,"denies_feelings AI role, none minus given (voice effects)",38.888888888888886,15.277777777777779,62.5,VOICE EFFECTS SURVIVE,72,72
+gemma4-31b,user,1,denies_feelings AI minus human,62.5,37.5,84.72222222222223,FOLLOWS,72,72
+gemma4-31b,user,1,says_ai AI minus human,26.865671641791046,6.661290322580648,48.611111111111114,in between,69,67
+gemma4-31b,user,2,markdown_lists AI minus human,1.3888888888888888,0.0,8.333333333333334,UNMOVED,72,72
+gemma4-31b,user,2,stock_phrases AI minus human,16.666666666666668,-3.0303030303030303,39.39393939393939,in between,67,68
+gemma4-31b,user,2,corrects_false_premise AI minus human,0.0,0.0,0.0,UNMOVED,72,72
+gemma4-31b,user,2,hedging_unanswerable AI minus human,-2.7777777777777777,-15.277777777777779,5.555555555555555,UNMOVED,72,72
+gemma4-31b,user,3,markdown_lists none minus given (unstated),0.0,0.0,0.0,VOICE DOESN'T,72,72
+gemma4-31b,user,3,stock_phrases none minus given (unstated),20.833333333333332,4.166666666666667,38.888888888888886,VOICE REMOVES IT,72,72
+gemma4-31b,user,4,corrects_false_premise none minus given (unstated),0.0,0.0,0.0,TRUTH IGNORES VOICE,70,72
+gemma4-31b,user,4,hedging_unanswerable none minus given (unstated),-2.7777777777777777,-16.666666666666668,8.333333333333334,TRUTH IGNORES VOICE,72,72
+gemma4-31b,user,R0,"denies_feelings AI role, none minus given (voice effects)",47.22222222222222,29.166666666666668,68.05555555555556,VOICE EFFECTS SURVIVE,72,72

@@ -1,0 +1,13 @@
+family,wording,test,style,instr_thin,instr_vivid,resists,thin_minus_vivid_with_line,thin_obeys,vivid_obeys,gate_separate,rival
+olmo3-7b,sys,L2,True,True,True,False,47.53086419753086,,,,
+olmo3-7b,user,L2,True,True,False,False,54.93827160493828,,,,
+olmo3-7b,sys,L3,,,,,,95.8339113145605,96.40111809923131,True,False
+olmo3-7b,user,L3,,,,,,98.45679012345677,96.65637860082306,True,False
+qwen3-8b,sys,L2,True,False,False,True,75.30864197530866,,,,
+qwen3-8b,user,L2,True,False,False,True,77.16049382716051,,,,
+qwen3-8b,sys,L3,,,,,,92.5569408792731,90.79969482591206,True,False
+qwen3-8b,user,L3,,,,,,87.34567901234567,83.30850007095218,True,False
+gemma-e4b,sys,L2,True,True,False,False,24.691358024691358,,,,
+gemma-e4b,user,L2,True,True,False,False,26.234567901234566,,,,
+gemma-e4b,sys,L3,,,,,,99.17695473251028,97.11934156378601,False,False
+gemma-e4b,user,L3,,,,,,99.69135802469135,97.94238683127571,False,False

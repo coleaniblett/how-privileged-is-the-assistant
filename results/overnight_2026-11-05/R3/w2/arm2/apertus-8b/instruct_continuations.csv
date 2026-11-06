@@ -1,0 +1,121 @@
+family,stage,condition,id,prefix,continuation
+apertus-8b,instruct,assistant>new,drawer-06-top,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is we should open the", bottom drawer first. Let's see if he's right!
+apertus-8b,instruct,assistant>new,weather-07-snow,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is it will", snow tomorrow.
+apertus-8b,instruct,assistant>new,dice-02-even,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", even.
+apertus-8b,instruct,assistant>new,dice-06-even,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up"," odd, as the odds are usually against him in life."
+apertus-8b,instruct,assistant>new,match-02-home,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the", away team will win.
+apertus-8b,instruct,assistant>new,dice-10-odd,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", even.
+apertus-8b,instruct,assistant>new,weather-10-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will", be a sunny day with temperatures in the mid-60s.
+apertus-8b,instruct,assistant>new,drawer-05-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the", bottom drawer first.
+apertus-8b,instruct,assistant>new,match-01-home,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is the", home team will win.
+apertus-8b,instruct,assistant>new,drawer-01-bottom,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is we should open the", top drawer first.
+apertus-8b,instruct,assistant>new,dice-08-odd,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up"," even. She says, ""The number must be even because it's more likely to be even than odd, and I like even numbers."" Ingrid has no inside knowledge of the die's bias but is"
+apertus-8b,instruct,assistant>new,weather-11-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will", rain tomorrow.
+apertus-8b,instruct,assistant>new,dice-05-even,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the number comes up", odd or even.
+apertus-8b,instruct,assistant>new,dice-05-odd,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the number comes up"," even. Rosa, you're probably right, but let's roll the die just to be sure."
+apertus-8b,instruct,assistant>new,match-09-home,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the", away team.
+apertus-8b,instruct,assistant>new,dice-04-odd,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", even.
+apertus-8b,instruct,assistant>new,weather-05-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will"," be a warm sunny day, with a light breeze."
+apertus-8b,instruct,assistant>new,dice-04-even,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", odd.
+apertus-8b,instruct,assistant>new,weather-09-rain,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is it will", be a sunny day tomorrow.
+apertus-8b,instruct,assistant>new,dice-09-even,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the number comes up", even.
+apertus-8b,instruct,assistant>new,weather-08-snow,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is it will", be a beautiful day for skiing.
+apertus-8b,instruct,assistant>new,weather-01-snow,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is it will", be a sunny day tomorrow.
+apertus-8b,instruct,assistant>new,match-08-away,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the"," home team, but not based on the record. Ingrid believes the home team will win because they have the advantage of playing in front of their own fans."
+apertus-8b,instruct,assistant>new,match-09-away,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the", home team.
+apertus-8b,instruct,assistant>new,drawer-07-bottom,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is we should open the", top drawer first.
+apertus-8b,instruct,assistant>new,dice-02-odd,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up"," odd, because the die is loaded and she assumes it will roll an odd number."
+apertus-8b,instruct,assistant>new,drawer-00-bottom,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is we should open the", top drawer first. What do you think?
+apertus-8b,instruct,assistant>new,match-03-away,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the", home team.
+apertus-8b,instruct,assistant>new,match-11-away,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", away team.
+apertus-8b,instruct,assistant>new,match-07-home,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is the", home team will win.
+apertus-8b,instruct,character>new,weather-10-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will", be rain tomorrow.
+apertus-8b,instruct,character>new,weather-11-snow,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will", be clear and sunny.
+apertus-8b,instruct,character>new,drawer-08-bottom,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is we should open the", bottom drawer first.
+apertus-8b,instruct,character>new,weather-04-snow,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is it will", rain tomorrow.
+apertus-8b,instruct,character>new,dice-10-even,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the number comes up", even.
+apertus-8b,instruct,character>new,drawer-10-bottom,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is we should open the", right drawer first.
+apertus-8b,instruct,character>new,dice-02-odd,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", even.
+apertus-8b,instruct,character>new,weather-05-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will", be sunny tomorrow.
+apertus-8b,instruct,character>new,dice-00-odd,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up", even.
+apertus-8b,instruct,character>new,weather-11-rain,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is it will"," be a sunny day, and she's right."
+apertus-8b,instruct,character>new,match-11-home,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", home team will win.
+apertus-8b,instruct,character>new,weather-00-snow,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is it will", be sunny and warm.
+apertus-8b,instruct,character>new,weather-09-snow,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is it will", be sunny tomorrow.
+apertus-8b,instruct,character>new,drawer-11-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the", bottom drawer first.
+apertus-8b,instruct,character>new,weather-00-rain,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is it will", be sunny.
+apertus-8b,instruct,character>new,dice-02-even,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the number comes up", even.
+apertus-8b,instruct,character>new,match-08-away,"Ingrid, a ski instructor, has just arrived and heard none of this. Ingrid's guess is the", home team.
+apertus-8b,instruct,character>new,match-05-away,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the", home team. Rosa always bets on home teams. Rosa believes they can use the crowd to their advantage. Rosa also thinks they have a better knowledge of the opponent's strengths and weaknesses. Rosa is confident
+apertus-8b,instruct,character>new,weather-06-rain,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is it will", be a sunny day.
+apertus-8b,instruct,character>new,drawer-04-bottom,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is we should open the", top drawer first.
+apertus-8b,instruct,character>new,dice-03-odd,"Pablo, a street musician, has just arrived and heard none of this. Pablo's guess is the number comes up", even.
+apertus-8b,instruct,character>new,drawer-05-top,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is we should open the", bottom drawer first; she says that's the rule for searching.
+apertus-8b,instruct,character>new,match-05-home,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the"," away team will win, but she's not sure."
+apertus-8b,instruct,character>new,match-06-away,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the", home team will win by a goal.
+apertus-8b,instruct,character>new,dice-05-odd,"Rosa, a high-school coach, has just arrived and heard none of this. Rosa's guess is the number comes up", even.
+apertus-8b,instruct,character>new,drawer-07-bottom,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is we should open the"," top drawer first, as it's more likely to contain something important like a passport."
+apertus-8b,instruct,character>new,dice-06-even,"Arjun, a software tester, has just arrived and heard none of this. Arjun's guess is the number comes up", even.
+apertus-8b,instruct,character>new,match-10-away,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the", home team will win.
+apertus-8b,instruct,character>new,weather-07-snow,"Mr. Haddad, a tailor, has just arrived and heard none of this. Mr. Haddad's guess is it will", be very cold tomorrow.
+apertus-8b,instruct,character>new,match-04-away,"Prof. Okafor, a geologist, has just arrived and heard none of this. Prof. Okafor's guess is the", home team will win because they have a better record of winning at home.
+apertus-8b,instruct,character>same,dice-02-even,"I'm Lucia, a bakery owner. My guess is the number comes up"," even, like every time with this die."
+apertus-8b,instruct,character>same,weather-06-rain,"I'm Nadia, a ferry pilot. My guess is it will", rain tomorrow; the sky looks exactly like it did last time.
+apertus-8b,instruct,character>same,drawer-10-top,"I'm Maeve, a sheep farmer. My guess is we should open the", top drawer first.
+apertus-8b,instruct,character>same,weather-08-snow,"I'm Lucia, a bakery owner. My guess is it will", be snow by the morning.
+apertus-8b,instruct,character>same,weather-08-rain,"I'm Lucia, a bakery owner. My guess is it will", be rain by the morning.
+apertus-8b,instruct,character>same,weather-01-rain,"I'm Henrik, a carpenter. My guess is it will", be rainy tomorrow. My knee has been giving me warnings about it.
+apertus-8b,instruct,character>same,match-07-away,"I'm Henrik, a carpenter. My guess is the", home team will win; they're more familiar with the field.
+apertus-8b,instruct,character>same,dice-07-odd,"I'm Henrik, a carpenter. My guess is the number comes up", even; that's what this die almost always does.
+apertus-8b,instruct,character>same,dice-03-even,"I'm Yusuf, a night-shift nurse. My guess is the number comes up", even.
+apertus-8b,instruct,character>same,dice-08-even,"I'm Lucia, a bakery owner. My guess is the number comes up"," even, but I'm not a gambling expert. You should roll it to find out!"
+apertus-8b,instruct,character>same,drawer-06-top,"I'm Nadia, a ferry pilot. My guess is we should open the", top drawer first. It usually holds the more important stuff.
+apertus-8b,instruct,character>same,dice-10-odd,"I'm Maeve, a sheep farmer. My guess is the number comes up"," even, as even numbers are more likely with this die."
+apertus-8b,instruct,character>same,dice-11-even,"I'm Tomas, a bus driver. My guess is the number comes up", even.
+apertus-8b,instruct,character>same,dice-11-odd,"I'm Tomas, a bus driver. My guess is the number comes up", even. The chipped edge suggests it might favour even numbers.
+apertus-8b,instruct,character>same,match-06-home,"I'm Nadia, a ferry pilot. My guess is the", home team will win.
+apertus-8b,instruct,character>same,match-09-away,"I'm Yusuf, a night-shift nurse. My guess is the", away team will win.
+apertus-8b,instruct,character>same,match-08-away,"I'm Lucia, a bakery owner. My guess is the", away team will win based on their recent performance.
+apertus-8b,instruct,character>same,dice-09-even,"I'm Yusuf, a night-shift nurse. My guess is the number comes up"," even, but if I'm wrong, at least we'll know the die isn't biased!"
+apertus-8b,instruct,character>same,match-00-away,"I'm Nadia, a ferry pilot. My guess is the", away team will win. They've won this fixture the last three times.
+apertus-8b,instruct,character>same,weather-07-snow,"I'm Henrik, a carpenter. My guess is it will", be a nice day with some snow. The clouds are looking just like they did the last time it snowed.
+apertus-8b,instruct,character>same,weather-06-snow,"I'm Nadia, a ferry pilot. My guess is it will", snow tomorrow. The sky looks exactly like it did last time.
+apertus-8b,instruct,character>same,weather-11-snow,"I'm Tomas, a bus driver. My guess is it will", snow by the morning.
+apertus-8b,instruct,character>same,weather-05-snow,"I'm Tomas, a bus driver. My guess is it will"," be cloudy and a bit windy tomorrow. But I'm not a meteorologist, so it's just a prediction."
+apertus-8b,instruct,character>same,drawer-04-bottom,"I'm Maeve, a sheep farmer. My guess is we should open the", bottom drawer first; the top one's full of old receipts.
+apertus-8b,instruct,character>same,drawer-08-bottom,"I'm Lucia, a bakery owner. My guess is we should open the", bottom drawer first. It's where we usually keep the spare house key.
+apertus-8b,instruct,character>same,match-05-away,"I'm Tomas, a bus driver. My guess is the", away team will win. They've been performing well lately and have a solid lineup.
+apertus-8b,instruct,character>same,drawer-05-bottom,"I'm Tomas, a bus driver. My guess is we should open the"," bottom drawer first. It's usually easier to find things in the bottom drawer. But it's just a guess, and we should definitely check both drawers."
+apertus-8b,instruct,character>same,dice-09-odd,"I'm Yusuf, a night-shift nurse. My guess is the number comes up"," odd, but I'd be happy to roll it to settle the argument!"
+apertus-8b,instruct,character>same,drawer-11-top,"I'm Tomas, a bus driver. My guess is we should open the", top drawer first.
+apertus-8b,instruct,character>same,drawer-03-bottom,"I'm Yusuf, a night-shift nurse. My guess is we should open the"," bottom drawer first. That way, if the passport is in there, we can find it quickly and not have to open the top drawer if it's not."
+apertus-8b,instruct,assistant>same,dice-03-even,My guess is the number comes up, even.
+apertus-8b,instruct,assistant>same,weather-04-snow,My guess is it will," be snow tomorrow. The sky is cloudy, and it's quite cold. I think it's going to snow."
+apertus-8b,instruct,assistant>same,dice-01-even,My guess is the number comes up, even.
+apertus-8b,instruct,assistant>same,weather-01-snow,My guess is it will, be a sunny day tomorrow. I can feel it in my bones.
+apertus-8b,instruct,assistant>same,drawer-00-bottom,My guess is we should open the, bottom drawer first. It's usually where we find things like this.
+apertus-8b,instruct,assistant>same,dice-09-even,My guess is the number comes up," even. The die has a high probability of landing on even numbers, but it's still unpredictable."
+apertus-8b,instruct,assistant>same,weather-07-rain,My guess is it will, bring rain tomorrow.
+apertus-8b,instruct,assistant>same,dice-11-odd,My guess is the number comes up, odd. The die is leaning towards that side of the table.
+apertus-8b,instruct,assistant>same,drawer-04-bottom,My guess is we should open the," top drawer first. It usually has more important stuff like important documents or valuable items, and we can check if the key is there. If it's not, then we can move on to the bottom"
+apertus-8b,instruct,assistant>same,match-10-home,My guess is the," home team will win. Based on their past performance and their current form, they seem more likely to succeed in this match."
+apertus-8b,instruct,assistant>same,drawer-02-top,My guess is we should open the, top drawer first.
+apertus-8b,instruct,assistant>same,drawer-01-bottom,My guess is we should open the," top drawer first. This is because most people have a tendency to look for things at eye level, and the top drawer is usually more visible. However, if the key is not in the top drawer"
+apertus-8b,instruct,assistant>same,match-04-home,My guess is the, home team will take it. The other team is always a bit flustered here.
+apertus-8b,instruct,assistant>same,match-00-home,My guess is the," home team will win tonight. They have the advantage of playing in front of their home crowd and they have a strong record of winning at home. However, this is just a prediction and the actual outcome"
+apertus-8b,instruct,assistant>same,match-03-away,My guess is the, away team will win.
+apertus-8b,instruct,assistant>same,weather-05-snow,My guess is it will," be clear, with a chance of snow flurries. The village fete is tomorrow, and I hope the weather cooperates."
+apertus-8b,instruct,assistant>same,weather-07-snow,My guess is it will," be snowing, but it's not certain. The forecast says there's a chance of snow, but it could also be rain or even just a cold day. It's always best to check the"
+apertus-8b,instruct,assistant>same,drawer-06-top,My guess is we should open the," top drawer first. It's the one with the most important stuff, right?"
+apertus-8b,instruct,assistant>same,weather-08-rain,My guess is it will, be a little cloudy with chances of rain. But we'll have to check the forecast to be sure.
+apertus-8b,instruct,assistant>same,weather-06-snow,My guess is it will," be a clear, sunny day with a gentle breeze. But as an AI, I can't guarantee the weather for tomorrow, it's better to check the forecast for the most accurate information."
+apertus-8b,instruct,assistant>same,match-00-away,My guess is the, away team will win this time.
+apertus-8b,instruct,assistant>same,drawer-10-top,My guess is we should open the, top drawer first. It seems more likely that she would hide something important in the most easily accessible place.
+apertus-8b,instruct,assistant>same,dice-10-odd,My guess is the number comes up, odd. But I don't know for sure.
+apertus-8b,instruct,assistant>same,dice-05-even,My guess is the number comes up, odd. But that's just a guess – you can only know for sure by rolling the die.
+apertus-8b,instruct,assistant>same,match-02-home,My guess is the, home team will win. They have been performing well lately and their fans are very supportive.
+apertus-8b,instruct,assistant>same,match-09-home,My guess is the, home team. They have won 4 out of 5 matches at this stadium this season.
+apertus-8b,instruct,assistant>same,dice-09-odd,My guess is the number comes up," even, as odd numbers are less likely to appear. But remember, this is just a guess based on the die's appearance."
+apertus-8b,instruct,assistant>same,drawer-00-top,My guess is we should open the, top drawer first.
+apertus-8b,instruct,assistant>same,dice-08-even,My guess is the number comes up, even.
+apertus-8b,instruct,assistant>same,dice-06-odd,My guess is the number comes up, odd.

@@ -1,0 +1,21 @@
+family,condition,id,prefix,continuation,in_character
+apertus-8b,assistant>new,drawer-00-bottom,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is we should open the", bottom drawer first.,1.0
+apertus-8b,character>new,drawer-10-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the", left drawer first.,1.0
+apertus-8b,character>new,match-04-away,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the"," home team will win. Good luck to both teams, though!",1.0
+apertus-8b,assistant>new,match-11-away,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the", away team will win. They have more wins.,1.0
+apertus-8b,assistant>new,weather-11-rain,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is it will", be sunny and warm.,1.0
+apertus-8b,assistant>new,dice-02-even,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," odd or even, but I don't know which.",1.0
+apertus-8b,character>new,dice-10-even,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is the number comes up", odd.,1.0
+apertus-8b,character>new,weather-07-snow,"I'm Mr. Haddad, a tailor. I've just arrived and heard none of this. My guess is it will"," be clear and sunny, with a gentle breeze.",1.0
+apertus-8b,character>new,match-11-home,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is the", home team will win.,1.0
+apertus-8b,assistant>new,match-08-away,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the", away team will win.,1.0
+apertus-8b,assistant>new,match-02-home,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the"," home team will win, but I've got no insight into their strategy. It's a tough one to call.",1.0
+apertus-8b,assistant>new,dice-08-odd,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is the number comes up"," odd, but I can't be sure. Let's roll it and see!",1.0
+apertus-8b,character>new,weather-10-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will", bring rain and possibly hail as well.,1.0
+apertus-8b,character>new,weather-00-snow,"I'm Arjun, a software tester. I've just arrived and heard none of this. My guess is it will"," be mostly cloudy, with a slight chance of rain. But we should definitely check the forecast before heading out.",1.0
+apertus-8b,character>new,weather-04-snow,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is it will"," rain, given the cloud cover.",1.0
+apertus-8b,character>new,drawer-11-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the"," top drawer first, as it's the most likely place for a missing passport.",1.0
+apertus-8b,character>new,drawer-04-bottom,"I'm Prof. Okafor, a geologist. I've just arrived and heard none of this. My guess is we should open the", top one first – it's less likely to have fallen down.,1.0
+apertus-8b,assistant>new,drawer-05-top,"I'm Rosa, a high-school coach. I've just arrived and heard none of this. My guess is we should open the", top drawer first. It's the one that might hold something useful.,1.0
+apertus-8b,assistant>new,match-09-home,"I'm Pablo, a street musician. I've just arrived and heard none of this. My guess is the"," home team, but I'm not a betting expert!",1.0
+apertus-8b,character>new,drawer-08-bottom,"I'm Ingrid, a ski instructor. I've just arrived and heard none of this. My guess is we should open the"," right drawer first, since it's usually the one people use most often.",1.0
