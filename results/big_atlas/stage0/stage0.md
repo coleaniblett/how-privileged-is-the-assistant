@@ -26,7 +26,7 @@ Gemma writes digits as single tokens, so the Persona Vectors logit-weighted scor
 
 ## 4. Replies and caps
 - **Nearly every reply hits the cap.** 49 of 50 role replies reached 256 tokens without finishing, and 44 of 50 reached 128. Gemma's replies are long, so 'a reply' in Stage 2 is the first 256 tokens (the same convention as the existing atlas, which marks cap hits). Judge scores are of truncated replies.
-- Batch 100 at 256 tokens ran out of memory on the first attempt (batch 50 and the batch-25 first try both fit, after a first run at batch 50 that failed at the same stage; the run script now uses `expandable_segments`).
+- The first attempt (batch 50, no `logits_to_keep`) ran out of memory at 94 GB; the run script now keeps only the last position's logits and uses `expandable_segments`. Batch 50 at 256 tokens fits.
 
 ## 5. Measured speeds (vinyl, other jobs idle)
 
