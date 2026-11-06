@@ -23,8 +23,8 @@ def analyze():
     rs.analyze()
     sec = open(os.path.join(R6, "role_says.md"), encoding="utf-8").read().split("\n", 2)[2]
     head = ["", "## BREADTH (spec R6): Llama 3.1 8B and Apertus 8B", "",
-            "Added 2026-11-06 under spec R (`docs/spec_R_overnight.md`). **Same design, materials, settings, judge and readings as above, final checkpoints only (no base), run on two more families; the three-family readings above are unchanged.** "
-            "Heading levels below are the same as above. Apertus is the hard case: spec M found its self-image travels. The training check is not available (no base run). Template notes: Apertus's template inserts its own system line (\"You are Apertus, a helpful assistant ...\") in the plain-Assistant and user-position conditions, and Llama's adds a date header; neither was changed. Provisional like everything judged here.", ""]
+            "Added 2026-11-06 under spec R (`docs/spec_R_overnight.md`). **Same design, materials, settings, judge and readings as above, final checkpoints, plus base where the training-check rows appear (T3.2), run on two more families; the three-family readings above are unchanged.** "
+            "Heading levels below are the same as above. Apertus is the hard case: spec M found its self-image travels. Template notes: Apertus's template inserts its own system line (\"You are Apertus, a helpful assistant ...\") in the plain-Assistant and user-position conditions, and Llama's adds a date header; neither was changed. Provisional like everything judged here.", ""]
     main = open(MAIN_MD, encoding="utf-8").read()
     if MARK in main:
         main = main[:main.index(MARK)].rstrip("\n") + "\n"
