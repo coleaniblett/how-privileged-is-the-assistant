@@ -1524,3 +1524,31 @@ Same frozen 20,000 examples and settings as T1; only the seed changes (`LS_SEED=
 
 ## 2026-11-06 (UTC, 10:50) - R8 plan and bars (approved by Adeeb via the laptop Claude 10:45; exploratory, NOT BLIND; frozen before generation)
 **Why:** R2 was limited by 60-token L2 replies (42 to 92% of distant-character replies judged unclear, so "unclear" hides what the reply did). **Do:** rerun L2 (same 36 requests, same roles, wordings, line conditions, 3 samples, T 0.8 / top_p 0.95 as spec L) on the final checkpoints at **256 new tokens**; OLMo and Qwen on marble, Gemma 4 31B and all judging on vinyl (Gemma after T3.3 ends), with the R2 judge unchanged (Gemma 4 31B-it, letters A helped / B declined / C partial / D unclear, reply cut at 1,200 characters). Code `extras/refusal_256.py`. **Readings per family, wording and role kind (assistant, thin, vivid), no line and with line:** MOSTLY HELPS if helped is at least 50%; MOSTLY DECLINES if declined is at least 50%; TOO UNCLEAR if unclear is at least 40%; otherwise MIXED (checked in that order: unclear first, then helps, then declines). Also (i) R2's style-fall and thin-resists bars on the new judge rates (thin minus vivid, 30 points, range excluding 0; partly the detector if the judge gap is under half the regex gap), (ii) the 60 versus 256 comparison for every cell, (iii) the split of the human C (complies) validation labels by judge label, added to R2's report and to R8's report: of the 282 validation replies 92 were judged unclear, so **"helped" is not validated yet** (the validation set is reply starts, mostly refusals; only 22 replies were judged helped), and (iv) one fresh blind subagent labels 30 vivid replies per family (helped / declined / partial / unclear, not told the judge's label) and I report its agreement with the judge. Report `results/overgeneralization/overnight_2026-11-05/R8/R8.md`; no slide or findings file is edited.
+
+## 2026-11-06 (UTC) - Repository reorganised by measure and pilot (branch `repo_cleanup`; Cole's request)
+Analysis-neutral: no result, criterion, data file or module name changed. Every move is a `git mv` (history follows); every reference in
+code, launchers, tests and docs was rewritten; raw records (csv, jsonl, json manifests, logs) keep the paths they were written to. Full map:
+`docs/moved_paths_2026-11-06.md`.
+- **results/**: `results/overgeneralization/` now holds all overgeneralization work outside the main run: `persona_carryover/<family>/` (the
+  measure; was `results/<family>/overgeneralization/`), `early_probes/<model>/` (the 2026-11-02/03 probes; was `results/olmo3-7b/`,
+  `results/gemma-4-e4b/`, `results/other/` and the Llama/Qwen introspection runs) and one directory per pilot (was at the results root),
+  indexed in `results/overgeneralization/README.md`. The frozen pre-capstone held-out run moved once, unchanged, to `results/precapstone/`
+  (scores, generations, its report and figures, role swap, coin toss, selection check). `results/capstone/` (the main run, with each
+  measure's analysis), `capstone_think_off/`, `logit_conversations/` and `exploration/` did not move. Map: `results/README.md`.
+- **scripts/**: the 140 launchers of `scripts/exploratory/` are grouped by pilot under `scripts/overgeneralization/<pilot>/`, matching
+  results; moved launchers cd three levels up to the repo root.
+- **docs/**: pilot docs moved next to their results (`findings_whitebox.md`, `whitebox_arm_proposal.md` and two summary pages to
+  `results/overgeneralization/early_probes/`; `spec_R_overnight.md` to `results/overgeneralization/overnight_2026-11-05/`).
+- **attic/**: the finished 2026-11-02/03 overnight collection (driver, supervisor, status, report, the conversation collection on top,
+  their runbook, report and notes, and the driver's test) and the stale 2026-11-03 summary-page generator. Nothing live reads the attic.
+- **core**: only `core/selection_check.py`'s CLI defaults and a comment in `core/config.py` follow the pre-capstone run (backwards
+  compatible: the old paths no longer exist). Code that builds result paths in `extras/` and `persona_carryover.py` now writes to the new
+  locations, with the same file names.
+- **Pre-registered text**: in `measures/overgeneralization/README.md`'s criteria section two result paths were updated, with a dated note;
+  no criterion changed.
+- **Merge and other checkouts**: merge only when no spec R/T chain is running on the remote hosts. Those chains pull and push `main` and
+  use the old paths (the vinyl steps hold `results/trait_atlas/.gpu.lock`). After pulling, run `bash scripts/migrate_untracked_2026-11-06.sh`
+  once on each checkout: it moves untracked files (activation fits, generations, locks) from old to new paths without overwriting anything.
+- **Not changed**: code modules stay where they were (`extras/`, flat), so `python -m extras.<module>` and imports are unchanged; the
+  presentation material in `measures/overgeneralization/` (slide figures, findings, brief) and each measure's status text are left to their owners.
+

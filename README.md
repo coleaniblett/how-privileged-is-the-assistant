@@ -51,11 +51,12 @@ measures/
   vestigial_regression/    README (spec + pre-registered criteria), flags.py, analyze.py
   logit_distortion/        README (spec + criteria), analyze.py stub
   overgeneralization/      README (spec + criteria)
-extras/                    role_swap.py, coin_toss.py (kept working; scope undecided)
-scripts/run_gpu.sh         full run per checkpoint, then every analysis
+extras/                    overgeneralization's pilot modules; role_swap.py, coin_toss.py (pre-capstone)
+reports/                   capstone results and the NLL-arm build-up (HTML)
+scripts/                   run_exchanges.sh (main run), run_gpu.sh (legacy run), overgeneralization/<pilot>/ launchers
 data/                      committed text sets      docs/   models.md, rendered_examples.md, decisions.md
-results/<run>/             outputs by run (AGENTS.md); results/, attic/results_preceding/, attic/results_v0/ hold the
-                           frozen pre-capstone runs
+results/                   capstone/ (main run), overgeneralization/ (measure + pilots, index there), precapstone/
+                           (frozen); results/README.md. attic/ holds earlier frozen runs and retired tooling
 tests/                     OLMo tokenizer alignment + CPU smoke test
 ```
 
@@ -76,7 +77,7 @@ checkpoints are ~15 GB each in bf16 (`CLEAR_CACHE=1` deletes each from the HF ca
 
 ## Pilot results
 
-`results/` holds the held-out main run of the vestigial-regression pilot on OLMo 3 7B (`results.md`,
+`results/precapstone/` holds the held-out main run of the vestigial-regression pilot on OLMo 3 7B (`results.md`,
 `position.md`, `role_swap.md`, `coin_toss.md`; the selection check is in `results/precapstone/selection_check/`),
 `attic/results_preceding/` the preceding-turn robustness run and `attic/results_v0/` the earlier unfiltered sample's own outputs
 (its texts are `data/prefilter_texts.jsonl`; `data/README.md` describes every dataset). All are frozen.

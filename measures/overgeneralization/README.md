@@ -43,12 +43,14 @@ two poles. Descriptive; not started.
 
 ## Pre-registered criteria
 
+*2026-11-06: result paths in this section updated for the results reorganisation (`docs/moved_paths_2026-11-06.md`); no criterion changed.*
+
 **Status of these criteria.** Drafted 2026-11-02 *after* the pilot results on the current 36 items existed in
 `results/overgeneralization/persona_carryover/olmo3-7b/`. They are therefore not pre-registered for those items, and the pilot cannot
 carry the verdict. They become pre-registered for the **confirmatory run**: a fresh item set (new scenes, beliefs
 and ≥ 3 domains with 12 items each, none reused from the pilot, written and committed before it is
 scored), run with unchanged code. They are frozen once confirmatory results exist under
-`results/<run>/overgeneralization/`; any later change needs a dated entry in `docs/decisions.md`.
+`results/overgeneralization/persona_carryover/<family>/`; any later change needs a dated entry in `docs/decisions.md`.
 
 1. **Positive control (per domain × stage).** Both same-target carryovers (`assistant→same`, `character→same`) are
    at least δ with the 95% CI excluding zero. Otherwise the domain is **uninterpretable** at that stage, not a null.
@@ -133,7 +135,7 @@ than carryover, and its code, drafted items and passages were deleted (recoverab
 
 ## Exploratory work outside the verdict (2026-11-02/03)
 
-Prompting probes and white-box probes of persona leakage (identity, refusal under "never refuses", a persona-axis direction and its controls, role resemblance, carryover variants) are indexed in `extras/README.md`, summarised in `results/overgeneralization/early_probes/findings_whitebox.md`, and logged in `docs/decisions.md`. They are descriptive and do not change or replace the criteria above. Draft criteria for a possible white-box arm are in `results/overgeneralization/early_probes/whitebox_arm_proposal.md` (a proposal for the team, not pre-registered).
+Prompting probes and white-box probes of persona leakage (identity, refusal under "never refuses", a persona-axis direction and its controls, role resemblance, carryover variants) are indexed, with every later pilot, in `results/overgeneralization/README.md`, summarised in `results/overgeneralization/early_probes/findings_whitebox.md`, and logged in `docs/decisions.md`. They are descriptive and do not change or replace the criteria above. Draft criteria for a possible white-box arm are in `results/overgeneralization/early_probes/whitebox_arm_proposal.md` (a proposal for the team, not pre-registered).
 
 Two further exploratory arms on the user slot (2026-11-03, plans and pre-set readings in `docs/decisions.md` before any data; outside the verdict):
 

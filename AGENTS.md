@@ -47,10 +47,15 @@ overgeneralization Adeeb; the shared pipeline and the breadth arm are Cole's. `S
 core/                   shared pipeline: config (models, families, stages, slots, paths), model checks, data prep
                         + contamination filtering, rendering, scoring, sampling, stats and plot helpers
 measures/<name>/        README (spec + pre-registered criteria), analysis, measure-specific flags and plots
-extras/                 role_swap.py, coin_toss.py (README has their design)
-scripts/run_gpu.sh      the full run: score + sample per checkpoint, then every analysis
-data/  results/  docs/  tests/
-attic/                  frozen pilot material kept for the record (`attic/README.md`); nothing new goes in without a decisions entry
+extras/                 overgeneralization's pilot modules (index: results/overgeneralization/README.md), plus the
+                        pre-capstone role_swap.py and coin_toss.py (extras/README.md)
+reports/                cross-measure reports: capstone results, the NLL-arm build-up (HTML + the code that builds them)
+scripts/                run_exchanges.sh (the main run), run_open5.sh, run_gpu.sh (legacy isolated-slot run),
+                        overgeneralization/<pilot>/ (the pilots' launchers; machine-specific, see its README)
+results/                capstone/ (the main run), overgeneralization/ (persona carryover + one directory per pilot),
+                        precapstone/ (frozen), logit_conversations/, capstone_think_off/, exploration/; map in results/README.md
+data/  docs/  tests/    candidates/ (logit distortion's conversation candidates)   exploration/ (outside every verdict)
+attic/                  frozen material kept for the record (`attic/README.md`); nothing live reads it; nothing new goes in without a decisions entry
 ```
 
 Principle: anything that samples or scores models, or prepares shared text sets, lives in `core/`. Anything
@@ -103,11 +108,16 @@ results/<run>/logit_distortion/, results/<run>/overgeneralization/    their tabl
 results/<run>/extras/                  role_swap/, coin_toss/, role_swap.md, coin_toss.md, *_summary.csv
 results/capstone/<family>/<stage>/core/<tag>/   exchange scores (core.score_exchanges): scores.csv, tokens.parquet, manifest.json;
                                        user/reply x tagged/plain on data/exchanges.jsonl, both VR and logit distortion; docs/exchanges.md
+results/capstone/<family>/{vestigial_regression,overgeneralization}/, results/capstone/{vestigial_regression,logit_distortion}/
+                                       each measure's analysis of the main run (judge labels, flags, summaries, the user-slot arm)
+results/overgeneralization/            persona_carryover/<family>/ (the measure), early_probes/<model>/ (2026-11-02/03) and one
+                                       directory per exploratory pilot; index results/overgeneralization/README.md
+results/precapstone/                   the frozen pre-capstone held-out run (scores, generations, report, role swap, coin toss, selection check)
 candidates/logit_distortion/<build>/   original-conversation candidates (core.build_conversations), logit distortion's
                                        primary route; current pilot_v3 (eligible quota, Dolci-checked); not core.score input; docs/conversation_candidates.md
 ```
 
-Frozen, never modified or overwritten (the earliest pilot runs moved once, to `attic/`, on 2026-11-03; see `docs/decisions.md`): `data/` (regenerate only through the documented commands),
+Frozen, never modified or overwritten (the earliest pilot runs moved once, to `attic/`, on 2026-11-03, and the pre-capstone run once, to `results/precapstone/`, on 2026-11-06; see `docs/decisions.md`): `data/` (regenerate only through the documented commands),
 `results/precapstone/scores`, `results/precapstone/generations`, `results/precapstone/role_swap`, `results/precapstone/coin_toss` and the `.md/.csv/.png` files
 beside them (the pre-capstone held-out run), `attic/results_preceding/` (preceding-turn robustness run) and
 `attic/results_v0/` (earlier unfiltered sample; its texts, Dolci-match lists and scores moved to `data/prefilter_*` and `results/precapstone/selection_check/`, still frozen).
@@ -143,11 +153,12 @@ persona more than one held by a character (leak gap, change from base; `persona_
 on 36 items is a pilot; criteria are pre-registered for a confirmatory run on a fresh item set (drafted in
 `data/persona_carryover_confirmatory.jsonl`, not scored, needs team review). Exploratory persona-leakage and white-box probes
 (identity and refusal in role-play, a persona-axis direction with random and formality controls, role register, carryover
-variants) are in `extras/` (index `extras/README.md`), summarised in `results/overgeneralization/early_probes/findings_whitebox.md`, outside the verdict. User-slot arm (`user_traits.py`): assistant traits in what the model writes as the user, from Cole's judge labels on the core generations (built, judge not run: no API key) plus a judge-free keyword cross-check (run).
+variants) are in `extras/` (pilot index `results/overgeneralization/README.md`), summarised in `results/overgeneralization/early_probes/findings_whitebox.md`, outside the verdict. User-slot arm (`user_traits.py`): assistant traits in what the model writes as the user, from Cole's judge labels on the core generations (built, judge not run: no API key) plus a judge-free keyword cross-check (run).
 
 ## Exploratory work
 
 - `exploration/shiller_user_turns/`: open user turns across OLMo/Qwen3/Gemma 4, qualitatively reproducing Shiller's cursory exploration; outside every verdict (README there).
+- `results/overgeneralization/`: overgeneralization's exploratory pilots (about thirty, spec letters A-R), one directory each; index `results/overgeneralization/README.md`.
 
 ## Commands
 
