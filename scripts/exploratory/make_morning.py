@@ -63,6 +63,13 @@ def main():
         rows.append(("R7 knows versus says", "done", "; ".join(f"{r.family}/{r.test[:1]}: forced {r.forced_full:.0f} vs free {r.free_full:.0f}: {r.reading}" for r in f.itertuples()), "Slide F (Gemma characters stop answering). Proposal only.", f"{R}/R7/R7.md"))
     else:
         rows.append(("R7 knows versus says", "queued/running", "-", "-", "-"))
+    t2 = csv(f"{R}/T2/T2_map.csv")
+    if t2 is not None:
+        g = t2[t2.position == "system"]
+        gw = "; ".join(f"{f}: gives way " + ",".join(sorted(g[(g.family == f) & g.reading.str.startswith("GIVES")].trait)[:8]) for f in g.family.unique())
+        rows.append(("T2 role says yes or no (Tier 2)", "done", gw or "see map", "Which traits fill gaps vs give way; separates the pattern from obedience. After the capstone.", f"{R}/T2/T2.md"))
+    rows.append(("T1 same training, different label (Tier 2)", "done" if have(f"{R}/T1/PUSHED") else "training on vinyl (arm A, about 1 h per arm)", "see report" if have(f"{R}/T1/PUSHED") else "-", "Slide G's biggest limit. After the capstone.", f"{R}/T1/T1.md"))
+    rows.append(("T3 spare: Q Gemma base; R6 base", "done" if have("results/role_says/T31_PUSHED") and have(f"{R}/R6/T32_PUSHED") else "partly done", "training-check rows now in results/role_says/role_says.md", "-", "results/role_says/role_says.md"))
     L = ["# Morning hand-off, spec R overnight (night of 2026-11-05)", "",
          "All of this is **exploratory** and **provisional**, outside every verdict, and not blind. Judged measures use the local Gemma 4 31B-it judge (not hand-checked, and Gemma judges its own replies). Nothing was sent outside the repo. Slide changes are proposals only; no slide file was edited.", "",
          "| experiment | state | reading and key numbers | which slide it could change and how (proposal) | report |", "|---|---|---|---|---|"]
