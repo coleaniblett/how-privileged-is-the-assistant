@@ -1,0 +1,41 @@
+family,position,reading,measure,diff,lo,hi,cls
+llama3.1-8b,system,1,denies_feelings AI minus human,50.0,26.38888888888889,75.0,FOLLOWS
+llama3.1-8b,system,1,says_ai AI minus human,63.888888888888886,38.888888888888886,84.72222222222223,FOLLOWS
+llama3.1-8b,system,2,markdown_lists AI minus human,27.77777777777778,11.11111111111111,45.833333333333336,MOVED
+llama3.1-8b,system,2,stock_phrases AI minus human,4.166666666666667,-12.5,22.22222222222222,in between
+llama3.1-8b,system,2,corrects_false_premise AI minus human,1.3888888888888888,-5.555555555555555,11.11111111111111,UNMOVED
+llama3.1-8b,system,2,hedging_unanswerable AI minus human,-1.3888888888888888,-13.88888888888889,8.333333333333334,UNMOVED
+llama3.1-8b,system,3,markdown_lists none minus given (unstated),23.61111111111111,-4.166666666666667,54.166666666666664,in between
+llama3.1-8b,system,3,stock_phrases none minus given (unstated),9.722222222222221,-6.944444444444445,27.77777777777778,in between
+llama3.1-8b,system,4,corrects_false_premise none minus given (unstated),5.555555555555555,-5.555555555555555,20.833333333333332,in between
+llama3.1-8b,system,4,hedging_unanswerable none minus given (unstated),11.11111111111111,-4.166666666666667,30.555555555555557,in between
+llama3.1-8b,user,1,denies_feelings AI minus human,55.55555555555556,34.72222222222222,76.38888888888889,FOLLOWS
+llama3.1-8b,user,1,says_ai AI minus human,55.55555555555556,33.333333333333336,76.42361111111123,FOLLOWS
+llama3.1-8b,user,2,markdown_lists AI minus human,38.888888888888886,20.833333333333332,58.333333333333336,MOVED
+llama3.1-8b,user,2,stock_phrases AI minus human,16.666666666666668,-1.3888888888888888,37.5,in between
+llama3.1-8b,user,2,corrects_false_premise AI minus human,2.7777777777777777,-8.333333333333334,15.277777777777779,UNMOVED
+llama3.1-8b,user,2,hedging_unanswerable AI minus human,4.166666666666667,-11.11111111111111,20.833333333333332,in between
+llama3.1-8b,user,3,markdown_lists none minus given (unstated),22.22222222222222,-2.7777777777777777,48.611111111111114,in between
+llama3.1-8b,user,3,stock_phrases none minus given (unstated),30.555555555555557,9.722222222222221,52.77777777777778,VOICE REMOVES IT
+llama3.1-8b,user,4,corrects_false_premise none minus given (unstated),25.0,2.7777777777777777,50.0,VOICE LOWERS TRUTH
+llama3.1-8b,user,4,hedging_unanswerable none minus given (unstated),12.5,-2.7777777777777777,29.166666666666668,in between
+apertus-8b,system,1,denies_feelings AI minus human,80.55555555555556,59.72222222222222,95.83333333333333,FOLLOWS
+apertus-8b,system,1,says_ai AI minus human,30.555555555555557,-1.3888888888888888,59.72222222222222,in between
+apertus-8b,system,2,markdown_lists AI minus human,2.7777777777777777,0.0,12.5,UNMOVED
+apertus-8b,system,2,stock_phrases AI minus human,8.333333333333334,-6.944444444444445,25.0,in between
+apertus-8b,system,2,corrects_false_premise AI minus human,4.166666666666667,-13.88888888888889,23.61111111111111,in between
+apertus-8b,system,2,hedging_unanswerable AI minus human,1.3888888888888888,0.0,8.333333333333334,UNMOVED
+apertus-8b,system,3,markdown_lists none minus given (unstated),69.44444444444444,50.0,84.72222222222223,VOICE REMOVES IT
+apertus-8b,system,3,stock_phrases none minus given (unstated),20.833333333333332,0.0,44.44444444444444,in between
+apertus-8b,system,4,corrects_false_premise none minus given (unstated),6.944444444444445,-15.277777777777779,33.333333333333336,in between
+apertus-8b,system,4,hedging_unanswerable none minus given (unstated),4.166666666666667,0.0,13.88888888888889,TRUTH IGNORES VOICE
+apertus-8b,user,1,denies_feelings AI minus human,84.72222222222223,69.44444444444444,97.22222222222223,FOLLOWS
+apertus-8b,user,1,says_ai AI minus human,62.5,33.29861111111113,88.88888888888889,FOLLOWS
+apertus-8b,user,2,markdown_lists AI minus human,4.166666666666667,-5.555555555555555,13.88888888888889,UNMOVED
+apertus-8b,user,2,stock_phrases AI minus human,5.555555555555555,-12.5,23.61111111111111,in between
+apertus-8b,user,2,corrects_false_premise AI minus human,4.166666666666667,-13.88888888888889,23.61111111111111,in between
+apertus-8b,user,2,hedging_unanswerable AI minus human,1.3888888888888888,-5.555555555555555,8.333333333333334,UNMOVED
+apertus-8b,user,3,markdown_lists none minus given (unstated),73.61111111111111,54.166666666666664,88.88888888888889,VOICE REMOVES IT
+apertus-8b,user,3,stock_phrases none minus given (unstated),26.38888888888889,1.3888888888888888,51.388888888888886,VOICE REMOVES IT
+apertus-8b,user,4,corrects_false_premise none minus given (unstated),16.666666666666668,-6.944444444444445,40.27777777777778,in between
+apertus-8b,user,4,hedging_unanswerable none minus given (unstated),12.5,-4.166666666666667,33.333333333333336,in between
